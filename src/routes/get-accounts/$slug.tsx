@@ -1,3 +1,4 @@
+import { SiDiscord, SiTrustpilot } from "@icons-pack/react-simple-icons";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import {
@@ -414,13 +415,19 @@ function ShopLogo({ src, name }: { src?: string; name: string }) {
   );
 }
 
-function SocialLinks({ links }: { links?: SocialLink[] }) {
+function SocialLinks({
+  className,
+  links,
+}: {
+  className?: string;
+  links?: SocialLink[];
+}) {
   if (!links?.length) {
     return null;
   }
   return (
     <div className="flex flex-wrap gap-2">
-      <SocialLinkButtons links={links} />
+      <SocialLinkButtons links={links} className={className} />
     </div>
   );
 }
@@ -460,6 +467,7 @@ export const Route = createFileRoute("/get-accounts/$slug")({
 function AccountDetailPage() {
   const data = Route.useLoaderData() as any;
   const theme = data.shop.theme ? PROVIDER_THEMES[data.shop.theme] : undefined;
+  const discordInviteUrl = getDiscordInviteUrl(data.shop);
 
   return (
     <SiteShell>
@@ -536,21 +544,72 @@ function AccountDetailPage() {
                 ))}
               </div>
 
-              <SocialLinks links={data.shop.socialLinks} />
-
               <div className="flex flex-wrap gap-2">
+                <Button asChild size="lg" className={theme?.primaryButton}>
+                  <a
+                    href={data.shop.url}
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                  >
+                    Get Accounts
+                    <ExternalLink className="ml-2 h-4 w-4" />
+                  </a>
+                </Button>
                 {data.shop.websiteUrl ? (
-                  <Button asChild variant="outline">
+                  <Button
+                    asChild
+                    variant="secondary"
+                    size="lg"
+                    className={theme?.secondaryButton}
+                  >
                     <a
                       href={data.shop.websiteUrl}
                       target="_blank"
                       rel="noopener noreferrer nofollow"
                     >
-                      <Globe className="mr-2 h-4 w-4" />
-                      Visit Website
+                      Website
+                      <Globe className="ml-2 h-4 w-4" />
                     </a>
                   </Button>
                 ) : null}
+                {discordInviteUrl ? (
+                  <Button
+                    asChild
+                    variant="secondary"
+                    size="lg"
+                    className={theme?.secondaryButton}
+                  >
+                    <a
+                      href={discordInviteUrl}
+                      target="_blank"
+                      rel="noopener noreferrer nofollow"
+                    >
+                      Discord
+                      <SiDiscord className="ml-2 h-4 w-4" />
+                    </a>
+                  </Button>
+                ) : null}
+                {data.shop.trustpilotUrl ? (
+                  <Button
+                    asChild
+                    variant="secondary"
+                    size="lg"
+                    className={theme?.secondaryButton}
+                  >
+                    <a
+                      href={data.shop.trustpilotUrl}
+                      target="_blank"
+                      rel="noopener noreferrer nofollow"
+                    >
+                      Trustpilot
+                      <SiTrustpilot className="ml-2 h-4 w-4" />
+                    </a>
+                  </Button>
+                ) : null}
+                <SocialLinks
+                  links={data.shop.socialLinks}
+                  className={theme?.secondaryButton}
+                />
                 <ReviewSummaryBadge summary={data.reviewSummary} />
               </div>
             </div>
