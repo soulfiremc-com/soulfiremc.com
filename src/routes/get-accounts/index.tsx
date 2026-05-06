@@ -19,6 +19,7 @@ import {
   useQueryStates,
 } from "nuqs";
 import { Suspense, useMemo, useState } from "react";
+import { PaymentMethods } from "@/components/payment-methods";
 import { ReviewInlineActions } from "@/components/review-inline-actions";
 import { ReviewTurnstileProvider } from "@/components/review-turnstile-provider";
 import { SiteShell } from "@/components/site-shell";
@@ -494,6 +495,7 @@ function ProviderCard({
           ) : provider.linkDiscountMessage ? (
             <LinkDiscountNotice message={provider.linkDiscountMessage} />
           ) : null}
+          <PaymentMethods methods={provider.paymentMethods} />
           <div className="flex flex-wrap gap-2">
             <Button asChild className={theme?.primaryButton}>
               <a href={provider.url} target="_blank" rel="noopener nofollow">

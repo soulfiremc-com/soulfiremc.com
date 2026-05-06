@@ -44,6 +44,7 @@ export type Provider = {
   couponDiscount?: string;
   startDate?: string;
   gallery?: { src: string; alt: string }[];
+  paymentMethods?: string[];
   socialLinks?: SocialLink[];
 };
 
@@ -189,6 +190,7 @@ export const PROVIDERS: Provider[] = [
     ],
     sponsor: true,
     sponsorTheme: "green",
+    paymentMethods: ["Card", "Crypto"],
     socialLinks: [
       { platform: "discord", url: "https://discord.gg/legionproxy" },
       { platform: "telegram", url: "https://t.me/legionproxy" },
@@ -214,6 +216,7 @@ export const PROVIDERS: Provider[] = [
     couponCode: "SOULFIREMC",
     couponDiscount:
       "15% off IPv4/IPv6/ISP - 39% off Residential - 10% off Mobile proxies",
+    paymentMethods: ["PayPal", "Visa", "Mastercard", "Crypto"],
     socialLinks: [
       {
         platform: "teams",
@@ -251,6 +254,7 @@ export const PROVIDERS: Provider[] = [
     badges: ["bedrock-udp", "high-quality", "residential", "mobile", "isp"],
     couponCode: "THORDATA",
     couponDiscount: "20% off",
+    paymentMethods: ["Wallet", "Card", "Crypto", "PayPal", "Alipay"],
     socialLinks: [
       { platform: "whatsapp", url: "https://wa.me/qr/6G5OORTHEZC2I1" },
       {
@@ -279,6 +283,7 @@ export const PROVIDERS: Provider[] = [
       "80M+ rotating residential IPs from 195 countries, plus fast datacenter proxies. Offers 10 free proxies to get started.",
     url: "https://www.webshare.io/?referral_code=36gneippfiwt&utm_source=get-proxies&utm_campaign=soulfire",
     badges: ["free-tier", "residential", "datacenter", "budget-friendly"],
+    paymentMethods: ["Card", "Apple Pay", "Google Pay"],
     socialLinks: [
       { platform: "email", url: "mailto:support@webshare.io" },
       { platform: "facebook", url: "https://www.facebook.com/webshareproxy/" },
@@ -296,6 +301,7 @@ export const PROVIDERS: Provider[] = [
       "55M+ residential IPs with 99.9% success rate. Unlimited bandwidth plans available for high-volume bot testing.",
     url: "https://proxyscrape.com/?ref=mge4mtc&utm_source=get-proxies&utm_campaign=soulfire",
     badges: ["bedrock-udp", "unlimited-bandwidth", "residential"],
+    paymentMethods: ["Card", "PayPal", "Alipay", "Crypto", "Local methods"],
     socialLinks: [
       {
         platform: "facebook",
@@ -324,6 +330,7 @@ export const PROVIDERS: Provider[] = [
       "datacenter",
       "isp",
     ],
+    paymentMethods: ["Card", "PayPal", "Crypto"],
     socialLinks: [
       { platform: "email", url: "mailto:support@plainproxies.com" },
       {
@@ -350,6 +357,7 @@ export const PROVIDERS: Provider[] = [
       "mobile",
       "isp",
     ],
+    paymentMethods: ["Checkout varies"],
     socialLinks: [
       { platform: "email", url: "mailto:support@flameproxies.com" },
       { platform: "x", url: "https://x.com/flameproxies_" },
@@ -373,6 +381,7 @@ export const PROVIDERS: Provider[] = [
       "isp",
       "mobile",
     ],
+    paymentMethods: ["Card", "Crypto"],
     socialLinks: [
       { platform: "email", url: "mailto:support@flashproxy.io" },
       { platform: "discord", url: "https://discord.gg/zbyAvBHaEv" },
@@ -394,6 +403,14 @@ export const PROVIDERS: Provider[] = [
       "residential",
       "datacenter",
       "mobile",
+    ],
+    paymentMethods: [
+      "Credit card",
+      "PayPal",
+      "Alipay",
+      "Payoneer",
+      "Wire transfer",
+      "Amazon Marketplace",
     ],
     socialLinks: [
       { platform: "whatsapp", url: "https://wa.me/972543536332" },
@@ -424,6 +441,14 @@ export const PROVIDERS: Provider[] = [
       "residential",
       "datacenter",
     ],
+    paymentMethods: [
+      "Credit card",
+      "PayPal",
+      "Alipay",
+      "Apple Pay",
+      "Google Pay",
+      "Wire transfer",
+    ],
     socialLinks: [
       { platform: "email", url: "mailto:hello@oxylabs.io" },
       {
@@ -447,6 +472,15 @@ export const PROVIDERS: Provider[] = [
       "115M+ ethically-sourced residential IPs across 195+ locations. User-friendly with 99.86% success rate. Great for SMBs.",
     url: "https://visit.decodo.com/K0rr7e?utm_source=get-proxies&utm_campaign=soulfire",
     badges: ["bedrock-udp", "high-quality", "residential", "datacenter"],
+    paymentMethods: [
+      "Card",
+      "PayPal",
+      "Apple Pay",
+      "Google Pay",
+      "Alipay",
+      "Crypto",
+      "Wallet",
+    ],
     socialLinks: [
       { platform: "email", url: "mailto:sales@decodo.com" },
       {
@@ -472,6 +506,7 @@ export const PROVIDERS: Provider[] = [
       "datacenter",
       "isp",
     ],
+    paymentMethods: ["Credit card", "PayPal", "Google Pay", "Alipay", "Crypto"],
     socialLinks: [
       { platform: "email", url: "mailto:support@iproyal.com" },
       { platform: "discord", url: "https://discord.com/invite/SUA5yjpnZQ" },
@@ -492,6 +527,14 @@ export const PROVIDERS: Provider[] = [
       "85M+ residential IPs with ISP-based network for fast speeds. Direct ISP connectivity reduces latency.",
     url: "https://netnut.io?ref=odblmzc&utm_source=get-proxies&utm_campaign=soulfire",
     badges: ["high-quality", "residential", "isp"],
+    paymentMethods: [
+      "PayPal",
+      "Visa",
+      "Mastercard",
+      "Amex",
+      "Bank wire",
+      "Bitcoin",
+    ],
     socialLinks: [
       { platform: "email", url: "mailto:sales@netnut.io" },
       { platform: "facebook", url: "https://www.facebook.com/NetNut.io" },

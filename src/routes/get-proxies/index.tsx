@@ -17,6 +17,7 @@ import {
   useQueryStates,
 } from "nuqs";
 import { Suspense, useMemo, useState } from "react";
+import { PaymentMethods } from "@/components/payment-methods";
 import { ReviewInlineActions } from "@/components/review-inline-actions";
 import { ReviewTurnstileProvider } from "@/components/review-turnstile-provider";
 import { SiteShell } from "@/components/site-shell";
@@ -337,6 +338,7 @@ function ProviderCard({
               discount={provider.couponDiscount}
             />
           )}
+          <PaymentMethods methods={provider.paymentMethods} />
           <div className="flex flex-wrap gap-2">
             <Button asChild>
               <a

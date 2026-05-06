@@ -20,6 +20,7 @@ import type {
 } from "schema-dts";
 import { ItemReviewsSection } from "@/components/item-reviews-section";
 import { JsonLd } from "@/components/json-ld";
+import { PaymentMethods } from "@/components/payment-methods";
 import { ReviewSummaryBadge } from "@/components/review-summary-badge";
 import { SiteShell } from "@/components/site-shell";
 import { SocialLinkButtons } from "@/components/social-link-buttons";
@@ -337,6 +338,7 @@ function ProxyProviderPageContent({
                 discount={provider.couponDiscount}
               />
             ) : null}
+            <PaymentMethods methods={provider.paymentMethods} />
             <div className="flex flex-wrap gap-2">
               <Button asChild size="lg">
                 <a

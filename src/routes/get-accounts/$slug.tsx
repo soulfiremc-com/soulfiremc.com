@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { Suspense, useState } from "react";
 import { ItemReviewsSection } from "@/components/item-reviews-section";
+import { PaymentMethods } from "@/components/payment-methods";
 import { ReviewSummaryBadge } from "@/components/review-summary-badge";
 import { SiteShell } from "@/components/site-shell";
 import {
@@ -543,6 +544,7 @@ function AccountDetailPage() {
                   <ProviderBadge key={badge} badge={badge} />
                 ))}
               </div>
+              <PaymentMethods methods={data.shop.paymentMethods} />
 
               <div className="flex flex-wrap gap-2">
                 <Button asChild size="lg" className={theme?.primaryButton}>

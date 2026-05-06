@@ -65,6 +65,7 @@ export type Shop = {
   discordUrl?: string;
   trustpilotUrl?: string;
   socialLinks?: SocialLink[];
+  paymentMethods?: string[];
   startDate?: string;
   gallery?: { src: string; alt: string }[];
   listings: Partial<Record<Category, Listing>>;
@@ -82,6 +83,7 @@ export type Provider = {
   discordUrl?: string;
   trustpilotUrl?: string;
   socialLinks?: SocialLink[];
+  paymentMethods?: string[];
   startDate?: string;
   gallery?: { src: string; alt: string }[];
   badges: Badge[];
@@ -256,6 +258,7 @@ export const SHOPS: Shop[] = [
     websiteUrl: "https://ravealts.com",
     discordUrl: "https://discord.ravealts.com",
     trustpilotUrl: "https://www.trustpilot.com/review/ravealts.com",
+    paymentMethods: ["Card", "Klarna", "Crypto"],
     socialLinks: [
       { platform: "youtube", url: "https://www.youtube.com/@ravealts" },
       { platform: "tiktok", url: "https://www.tiktok.com/@ravealts" },
@@ -302,6 +305,7 @@ export const SHOPS: Shop[] = [
     name: "Luma MFA",
     logo: "/accounts/luma.png",
     url: "https://discord.gg/5Wc4tA2ypY",
+    paymentMethods: ["Discord checkout"],
     startDate: "Nov 2025",
     listings: {
       "mfa-accounts": {
@@ -355,6 +359,7 @@ export const SHOPS: Shop[] = [
     websiteUrl: "https://nicealts.com",
     discordUrl: "https://discord.gg/QdFhNQ5rcv",
     trustpilotUrl: "https://www.trustpilot.com/review/nicealts.com",
+    paymentMethods: ["Website checkout"],
     startDate: "Mar 2025",
     listings: {
       "nfa-accounts": {
@@ -371,6 +376,7 @@ export const SHOPS: Shop[] = [
     name: "Aqua MFA",
     logo: "/accounts/aquamfa.png",
     url: "https://discord.gg/87XFhsS35V",
+    paymentMethods: ["Discord checkout"],
     startDate: "Aug 2025",
     listings: {
       "mfa-accounts": {
@@ -392,6 +398,7 @@ export const SHOPS: Shop[] = [
     websiteUrl: "https://4d4pshop.com",
     discordUrl: "https://discord.com/invite/4d4pshop",
     trustpilotUrl: "https://www.trustpilot.com/review/4d4pshop.com",
+    paymentMethods: ["Card", "Apple Pay", "Google Pay", "PayPal", "Crypto"],
     socialLinks: [{ platform: "telegram", url: "https://t.me/shop4d4ps" }],
     startDate: "2019",
     listings: {
@@ -420,6 +427,7 @@ export const SHOPS: Shop[] = [
     url: "https://zzxgp.me",
     websiteUrl: "https://shop.zzxgp.me",
     discordUrl: "https://discord.zzxgp.me",
+    paymentMethods: ["Crypto"],
     startDate: "Dec 2025",
     listings: {
       "nfa-accounts": {
@@ -447,6 +455,7 @@ export const SHOPS: Shop[] = [
     name: "YYY",
     logo: "/accounts/yyy.png",
     url: "https://discord.gg/rmxayvwc5K",
+    paymentMethods: ["Discord checkout"],
     startDate: "Apr 2025",
     listings: {
       "nfa-accounts": {
@@ -464,6 +473,7 @@ export const SHOPS: Shop[] = [
     url: "https://mogalts.win",
     websiteUrl: "https://mogalts.win",
     discordUrl: "https://discord.gg/mogalts",
+    paymentMethods: ["Apple Pay", "Google Pay", "BTC", "LTC"],
     startDate: "Nov 2025",
     listings: {
       "nfa-accounts": {
@@ -484,6 +494,7 @@ export const SHOPS: Shop[] = [
     url: "https://localts.store/?campaign=soulfire",
     websiteUrl: "https://localts.info",
     discordUrl: "https://invite.localts.store",
+    paymentMethods: ["Website checkout"],
     startDate: "Jun 2023",
     listings: {
       "nfa-accounts": {
@@ -517,6 +528,7 @@ export const SHOPS: Shop[] = [
     url: "https://skycron.mysellauth.com",
     websiteUrl: "https://skycron.mysellauth.com",
     discordUrl: "https://discord.gg/5sZNDb4UMy",
+    paymentMethods: ["Checkout varies"],
     startDate: "Feb 2026",
     listings: {
       "nfa-accounts": {
@@ -571,6 +583,7 @@ export const PROVIDERS: Provider[] = (
         discordUrl: shop.discordUrl,
         trustpilotUrl: shop.trustpilotUrl,
         socialLinks: shop.socialLinks,
+        paymentMethods: shop.paymentMethods,
         startDate: shop.startDate,
         gallery: shop.gallery,
         category,
