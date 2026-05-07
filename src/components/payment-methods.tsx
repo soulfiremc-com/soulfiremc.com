@@ -27,23 +27,30 @@ import type { ElementType } from "react";
 type PaymentLogoConfig =
   | {
       Icon: ElementType;
+      asset?: never;
+      mark?: never;
+    }
+  | {
+      asset: string;
+      Icon?: never;
       mark?: never;
     }
   | {
       Icon?: never;
+      asset?: never;
       mark: string;
     };
 
 const paymentLogos: Record<string, PaymentLogoConfig> = {
   alipay: { Icon: SiAlipay },
-  amazonpay: { mark: "a" },
+  amazonpay: { asset: "/payment-methods/amazon-pay.svg" },
   amex: { Icon: SiAmericanexpress },
   applepay: { Icon: SiApplepay },
   banktransfer: { Icon: Landmark },
   bankwire: { Icon: Landmark },
-  bancontact: { mark: "BC" },
+  bancontact: { asset: "/payment-methods/bancontact.svg" },
   binancegiftcardpaypalskrill: { Icon: SiBinance },
-  blik: { mark: "B" },
+  blik: { asset: "/payment-methods/blik.svg" },
   bitcoin: { Icon: SiBitcoin },
   btc: { Icon: SiBitcoin },
   card: { Icon: CreditCard },
@@ -52,7 +59,7 @@ const paymentLogos: Record<string, PaymentLogoConfig> = {
   creditcard: { Icon: CreditCard },
   crypto: { Icon: SiBitcoin },
   discordcheckout: { Icon: SiDiscord },
-  eps: { mark: "eps" },
+  eps: { asset: "/payment-methods/eps.svg" },
   googlepay: { Icon: SiGooglepay },
   klarna: { Icon: SiKlarna },
   link: { Icon: LinkIcon },
@@ -63,7 +70,7 @@ const paymentLogos: Record<string, PaymentLogoConfig> = {
   paypal: { Icon: SiPaypal },
   payoneer: { Icon: SiPayoneer },
   paysafecard: { Icon: SiPaysafe },
-  skrill: { mark: "S" },
+  skrill: { asset: "/payment-methods/skrill.svg" },
   visa: { Icon: SiVisa },
   wallet: { Icon: WalletCards },
   websitecheckout: { Icon: WalletCards },
@@ -99,6 +106,17 @@ function getPaymentLogo(method: string): PaymentLogoConfig {
 
 function PaymentMethodLogo({ method }: { method: string }) {
   const logo = getPaymentLogo(method);
+
+  if (logo.asset) {
+    return (
+      <img
+        alt=""
+        aria-hidden="true"
+        className="h-3.5 max-w-10 shrink-0 object-contain"
+        src={logo.asset}
+      />
+    );
+  }
 
   if (logo.mark) {
     return (
