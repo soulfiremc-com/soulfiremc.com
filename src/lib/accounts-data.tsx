@@ -376,7 +376,7 @@ export const SHOPS: Shop[] = [
     name: "Aqua MFA",
     logo: "/accounts/aquamfa.png",
     url: "https://discord.gg/87XFhsS35V",
-    paymentMethods: ["BLIK", "Crypto"],
+    paymentMethods: ["BLIK", "Crypto", "Card"],
     startDate: "Aug 2025",
     listings: {
       "mfa-accounts": {
