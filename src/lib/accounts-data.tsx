@@ -359,7 +359,7 @@ export const SHOPS: Shop[] = [
     websiteUrl: "https://nicealts.com",
     discordUrl: "https://discord.gg/QdFhNQ5rcv",
     trustpilotUrl: "https://www.trustpilot.com/review/nicealts.com",
-    paymentMethods: ["Card", "Amazon Pay", "Apple Pay", "Google Pay"],
+    paymentMethods: ["Card", "Amazon Pay", "Apple Pay", "Google Pay", "Crypto"],
     startDate: "Mar 2025",
     listings: {
       "nfa-accounts": {
