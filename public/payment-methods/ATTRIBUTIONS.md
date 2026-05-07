@@ -1,7 +1,13 @@
 # Payment Method Logo Sources
 
-- `amazon-pay.svg`: Amazon Pay brand asset from Amazon Pay documentation.
-- `blik.svg`: BLIK logo from the public BLIK website.
-- `bancontact.svg`: Bancontact logo from Wikimedia Commons, sourced from Bancontact.
-- `eps.svg`: Eps-Überweisung logo from Wikimedia Commons by StuzzaGmbh, licensed under CC BY-SA 4.0.
-- `skrill.svg`: Skrill logo from Wikimedia Commons, sourced from Skrill.
+The logos in this directory are from the Datatrans payment logos repository:
+<https://github.com/datatrans/payment-logos>
+
+Datatrans publishes the repository under the Creative Commons
+Attribution-ShareAlike 4.0 International license.
+
+- `amazon-pay.svg`: `assets/apm/amazon-pay.svg`
+- `bancontact.svg`: `assets/apm/bancontact.svg`
+- `blik.svg`: `assets/apm/blik.svg`
+- `eps.svg`: `assets/apm/eps.svg`
+- `skrill.svg`: `assets/apm/skrill.svg`
