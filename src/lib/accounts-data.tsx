@@ -317,7 +317,7 @@ export const SHOPS: Shop[] = [
     name: "Luma MFA",
     logo: "/accounts/luma.png",
     url: "https://discord.gg/5Wc4tA2ypY",
-    paymentMethods: ["Discord checkout"],
+    paymentMethods: ["Crypto", "PayPal"],
     startDate: "Nov 2025",
     listings: {
       "mfa-accounts": {
@@ -569,7 +569,7 @@ export const SHOPS: Shop[] = [
     url: "https://skycron.mysellauth.com",
     websiteUrl: "https://skycron.mysellauth.com",
     discordUrl: "https://discord.gg/5sZNDb4UMy",
-    paymentMethods: ["Checkout varies"],
+    paymentMethods: ["Crypto", "PayPal", "Rewarble Gift Card (Card)"],
     startDate: "Feb 2026",
     listings: {
       "nfa-accounts": {
