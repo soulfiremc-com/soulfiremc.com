@@ -505,6 +505,8 @@ export const SHOPS: Shop[] = [
       "Card",
       "Bancontact",
       "EPS",
+      "Cash App",
+      "Bank Transfer",
     ],
     startDate: "Nov 2025",
     listings: {
