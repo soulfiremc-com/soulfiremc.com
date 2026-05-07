@@ -376,12 +376,12 @@ export const SHOPS: Shop[] = [
     name: "Aqua MFA",
     logo: "/accounts/aquamfa.png",
     url: "https://discord.gg/87XFhsS35V",
-    paymentMethods: ["Discord checkout"],
+    paymentMethods: ["BLIK", "Crypto"],
     startDate: "Aug 2025",
     listings: {
       "mfa-accounts": {
         summary:
-          "Cheap MFA accounts with instant delivery and lifetime warranty.",
+          "Cheap MFA accounts with instant delivery, lifetime warranty, and over 400 accounts sold.",
         badges: ["high-quality", "instant-delivery", "lifetime-warranty"],
         price: "$4.00-$5.50",
         priceValue: 4.0,
@@ -398,7 +398,13 @@ export const SHOPS: Shop[] = [
     websiteUrl: "https://4d4pshop.com",
     discordUrl: "https://discord.com/invite/4d4pshop",
     trustpilotUrl: "https://www.trustpilot.com/review/4d4pshop.com",
-    paymentMethods: ["Card", "Apple Pay", "Google Pay", "PayPal", "Crypto"],
+    paymentMethods: [
+      "Card",
+      "Apple Pay",
+      "Google Pay",
+      "Crypto",
+      "Binance Gift Card (PayPal/Paysafecard/Skrill)",
+    ],
     socialLinks: [{ platform: "telegram", url: "https://t.me/shop4d4ps" }],
     startDate: "2019",
     listings: {
@@ -494,7 +500,14 @@ export const SHOPS: Shop[] = [
     url: "https://localts.store/?campaign=soulfire",
     websiteUrl: "https://localts.info",
     discordUrl: "https://invite.localts.store",
-    paymentMethods: ["Website checkout"],
+    paymentMethods: [
+      "Crypto",
+      "Card",
+      "Apple Pay",
+      "Google Pay",
+      "Link",
+      "Amazon Pay",
+    ],
     startDate: "Jun 2023",
     listings: {
       "nfa-accounts": {
