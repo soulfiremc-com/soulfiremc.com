@@ -258,7 +258,19 @@ export const SHOPS: Shop[] = [
     websiteUrl: "https://ravealts.com",
     discordUrl: "https://discord.ravealts.com",
     trustpilotUrl: "https://www.trustpilot.com/review/ravealts.com",
-    paymentMethods: ["Card", "Klarna", "Crypto"],
+    paymentMethods: [
+      "Crypto",
+      "Link",
+      "Card",
+      "Apple Pay",
+      "Google Pay",
+      "Klarna",
+      "EPS",
+      "Bancontact",
+      "Amazon Pay",
+      "Cash App",
+      "Bank Transfer",
+    ],
     socialLinks: [
       { platform: "youtube", url: "https://www.youtube.com/@ravealts" },
       { platform: "tiktok", url: "https://www.tiktok.com/@ravealts" },
@@ -486,7 +498,14 @@ export const SHOPS: Shop[] = [
     url: "https://mogalts.win",
     websiteUrl: "https://mogalts.win",
     discordUrl: "https://discord.gg/mogalts",
-    paymentMethods: ["Apple Pay", "Google Pay", "BTC", "LTC"],
+    paymentMethods: [
+      "Apple Pay",
+      "Google Pay",
+      "Crypto",
+      "Card",
+      "Bancontact",
+      "EPS",
+    ],
     startDate: "Nov 2025",
     listings: {
       "nfa-accounts": {
