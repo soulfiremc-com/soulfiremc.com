@@ -14,16 +14,10 @@ const securityHeaders = {
   "X-Content-Type-Options": "nosniff",
 };
 
-type Changefreq =
-  | "always"
-  | "hourly"
-  | "daily"
-  | "weekly"
-  | "monthly"
-  | "yearly"
-  | "never";
+type Changefreq = "daily" | "weekly";
 
-const TOP_LEVEL_LANDING_PAGES = new Set([
+const DAILY_PAGES = new Set([
+  "/",
   "/blog",
   "/docs",
   "/download",
@@ -33,34 +27,23 @@ const TOP_LEVEL_LANDING_PAGES = new Set([
   "/resources",
 ]);
 
-const LEGAL_PAGES = new Set([
-  "/cookie-policy",
-  "/imprint",
-  "/privacy-policy",
-  "/terms-of-service",
-]);
-
 function getSitemapSettings(path: string): {
   priority: number;
   changefreq: Changefreq;
 } {
-  if (path === "/") return { priority: 1.0, changefreq: "weekly" };
-  if (TOP_LEVEL_LANDING_PAGES.has(path))
-    return { priority: 0.9, changefreq: "weekly" };
-  if (path.startsWith("/blog/"))
-    return { priority: 0.7, changefreq: "monthly" };
+  if (path === "/") return { priority: 1.0, changefreq: "daily" };
+  if (DAILY_PAGES.has(path)) return { priority: 0.9, changefreq: "daily" };
+  if (path.startsWith("/blog/")) return { priority: 0.7, changefreq: "weekly" };
   if (path.startsWith("/docs/openapi/"))
-    return { priority: 0.3, changefreq: "monthly" };
-  if (path.startsWith("/docs/"))
-    return { priority: 0.7, changefreq: "monthly" };
+    return { priority: 0.3, changefreq: "weekly" };
+  if (path.startsWith("/docs/")) return { priority: 0.7, changefreq: "weekly" };
   if (
     path.startsWith("/get-accounts/") ||
     path.startsWith("/get-proxies/") ||
     path.startsWith("/resources/")
   )
-    return { priority: 0.6, changefreq: "monthly" };
-  if (LEGAL_PAGES.has(path)) return { priority: 0.3, changefreq: "yearly" };
-  return { priority: 0.5, changefreq: "monthly" };
+    return { priority: 0.6, changefreq: "weekly" };
+  return { priority: 0.5, changefreq: "weekly" };
 }
 
 export default defineConfig(() => ({
