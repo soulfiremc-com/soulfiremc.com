@@ -202,7 +202,7 @@ export const PROVIDERS: Provider[] = [
     logo: "/providers/proxyseller.png",
     summary:
       "Dedicated datacenter proxies in 40+ countries. Unlimited bandwidth with 72-hour refund policy. From $0.9/IP.",
-    url: "https://proxy-seller.com/?partner=GRJY71PA3XWPPP&utm_source=get-proxies&utm_campaign=soulfire",
+    url: "https://proxy-seller.com/?utm_source=soulfiremc&utm_medium=referral&utm_campaign=partner_promo&utm_term=soulfiremc&partner=GRJY71PA3XWPPP",
     badges: [
       "sponsor",
       "budget-friendly",
