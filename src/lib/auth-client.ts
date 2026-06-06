@@ -21,7 +21,9 @@ const clientOptions = {
     adminClient(),
     lastLoginMethodClient(),
     dashClient(),
-    sentinelClient(),
+    sentinelClient({
+      identifyUrl: import.meta.env.VITE_BETTER_AUTH_IDENTIFY_URL
+    }),
   ],
 };
 
