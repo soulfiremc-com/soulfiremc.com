@@ -1,20 +1,45 @@
-import { ImageResponse } from "@takumi-rs/image-response/wasm";
-import takumiWasmModule from "@takumi-rs/wasm/next";
+import { extractResourceUrls, fetchResources } from "@takumi-rs/helpers";
+import { extractEmojis } from "@takumi-rs/helpers/emoji";
+import { fromJsx } from "@takumi-rs/helpers/jsx";
+import init, { Renderer } from "@takumi-rs/wasm";
+import takumiWasmModule from "@takumi-rs/wasm/auto";
 import type { ReactElement } from "react";
 import logoSvgUrl from "@/assets/logo-square.svg?inline";
 
 const baseImageOptions = {
   format: "webp" as const,
-  headers: {
-    "Cache-Control": "public, immutable, max-age=31536000",
-  },
   height: 630,
-  module: takumiWasmModule,
   width: 1200,
 };
 
-export function createOgImageResponse(element: ReactElement) {
-  return new ImageResponse(element, baseImageOptions);
+const imageHeaders = {
+  "Cache-Control": "public, immutable, max-age=31536000",
+  "Content-Type": "image/webp",
+};
+
+let rendererPromise: Promise<Renderer> | undefined;
+
+function getRenderer() {
+  rendererPromise ??= init({ module_or_path: takumiWasmModule }).then(
+    () => new Renderer(),
+  );
+  return rendererPromise;
+}
+
+export async function createOgImageResponse(element: ReactElement) {
+  const renderer = await getRenderer();
+  const { node: originalNode, stylesheets } = await fromJsx(element);
+  const node = extractEmojis(originalNode, "twemoji");
+  const fetchedResources = await fetchResources(extractResourceUrls(node));
+
+  const image = renderer.render(node, {
+    ...baseImageOptions,
+    fetchedResources,
+    stylesheets,
+  });
+
+  const body = new Uint8Array(image).buffer as ArrayBuffer;
+  return new Response(body, { headers: imageHeaders });
 }
 
 export const soulfireLogoDataUri = logoSvgUrl;
