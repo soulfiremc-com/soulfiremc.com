@@ -56,6 +56,22 @@ function getDb(): Db {
   return nextDb;
 }
 
+function createLazyClient(connectionString: string): Client {
+  const client = new Client({ connectionString });
+  const query = client.query.bind(client);
+  let connectPromise: Promise<Client> | undefined;
+
+  function connect() {
+    connectPromise ??= client.connect();
+    return connectPromise;
+  }
+
+  client.query = ((...args: Parameters<Client["query"]>) =>
+    connect().then(() => query(...args))) as Client["query"];
+
+  return client;
+}
+
 export function runWithHyperdriveDatabase<T>(
   hyperdrive: Hyperdrive,
   callback: () => T | Promise<T>,
@@ -67,11 +83,7 @@ async function runWithHyperdriveClient<T>(
   hyperdrive: Hyperdrive,
   callback: () => T | Promise<T>,
 ): Promise<T> {
-  const client = new Client({
-    connectionString: hyperdrive.connectionString,
-  });
-
-  await client.connect();
+  const client = createLazyClient(hyperdrive.connectionString);
 
   return dbContextStorage.run(
     {
