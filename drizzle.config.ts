@@ -9,9 +9,4 @@ export default defineConfig({
   },
   verbose: true,
   strict: true,
-  entities: {
-    roles: {
-      provider: "neon",
-    },
-  },
 });

@@ -183,14 +183,14 @@ function PrivacyPolicy() {
           <tr>
             <td>
               <a
-                href="https://neon.tech"
+                href="https://www.cloudflare.com"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Neon
+                Cloudflare
               </a>
             </td>
-            <td>PostgreSQL database hosting</td>
+            <td>Website hosting and database connection pooling</td>
             <td>All account and session data</td>
           </tr>
           <tr>
