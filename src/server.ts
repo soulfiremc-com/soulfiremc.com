@@ -9,8 +9,12 @@ const securityHeaders = [
 ] as const;
 
 export default {
-  fetch: async (request: Request, env: CloudflareEnv) => {
-    const response = await runWithHyperdriveDatabase(env.HYPERDRIVE, () =>
+  fetch: async (
+    request: Request,
+    env: CloudflareEnv,
+    ctx: ExecutionContext,
+  ) => {
+    const response = await runWithHyperdriveDatabase(env.HYPERDRIVE, ctx, () =>
       handler.fetch(request),
     );
 
