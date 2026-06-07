@@ -12,9 +12,9 @@ export default {
   fetch: async (
     request: Request,
     env: CloudflareEnv,
-    ctx: ExecutionContext,
+    _ctx: ExecutionContext,
   ) => {
-    const response = await runWithHyperdriveDatabase(env.HYPERDRIVE, ctx, () =>
+    const response = await runWithHyperdriveDatabase(env.HYPERDRIVE, () =>
       handler.fetch(request),
     );
 

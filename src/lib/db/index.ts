@@ -1,7 +1,7 @@
 import { AsyncLocalStorage } from "node:async_hooks";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 import { drizzle } from "drizzle-orm/node-postgres";
-import { Pool } from "pg";
+import { Client } from "pg";
 import * as generatedAuthSchema from "./auth-schema";
 import * as schema from "./schema";
 
@@ -57,38 +57,29 @@ function getDb(): Db {
 }
 
 export function runWithHyperdriveDatabase<T>(
-  hyperdrive: Hyperdrive | undefined,
-  ctx: ExecutionContext,
+  hyperdrive: Hyperdrive,
   callback: () => T | Promise<T>,
 ): Promise<T> | T {
-  if (!hyperdrive) {
-    return callback();
-  }
-
-  return runWithHyperdrivePool(hyperdrive, ctx, callback);
+  return runWithHyperdriveClient(hyperdrive, callback);
 }
 
-async function runWithHyperdrivePool<T>(
+async function runWithHyperdriveClient<T>(
   hyperdrive: Hyperdrive,
-  ctx: ExecutionContext,
   callback: () => T | Promise<T>,
 ): Promise<T> {
-  const pool = new Pool({
+  const client = new Client({
     connectionString: hyperdrive.connectionString,
-    max: 5,
   });
 
-  try {
-    return await dbContextStorage.run(
-      {
-        connectionString: hyperdrive.connectionString,
-        db: drizzle(pool, { schema: dbSchema }),
-      },
-      callback,
-    );
-  } finally {
-    ctx.waitUntil(pool.end());
-  }
+  await client.connect();
+
+  return dbContextStorage.run(
+    {
+      connectionString: hyperdrive.connectionString,
+      db: drizzle(client, { schema: dbSchema }),
+    },
+    callback,
+  );
 }
 
 export const db = new Proxy(
