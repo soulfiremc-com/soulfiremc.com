@@ -1,6 +1,6 @@
 "use client";
 
-import { UserButton } from "@daveyplate/better-auth-ui";
+import { UserButton } from "@/components/auth/user/user-button";
 
 export function UserNav() {
   return <UserButton size="icon" />;

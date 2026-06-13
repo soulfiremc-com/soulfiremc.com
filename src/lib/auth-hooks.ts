@@ -1,24 +1,6 @@
-import { createAuthHooks } from "@daveyplate/better-auth-tanstack";
+import { useSession as useBetterAuthSession } from "@better-auth-ui/react";
 import { authClient } from "@/lib/auth-client";
 
-export const authHooks = createAuthHooks(authClient);
-
-export const {
-  useSession,
-  usePrefetchSession,
-  useToken,
-  useListAccounts,
-  useListSessions,
-  useListDeviceSessions,
-  useListPasskeys,
-  useUpdateUser,
-  useUnlinkAccount,
-  useRevokeOtherSessions,
-  useRevokeSession,
-  useRevokeSessions,
-  useSetActiveSession,
-  useRevokeDeviceSession,
-  useDeletePasskey,
-  useAuthQuery,
-  useAuthMutation,
-} = authHooks;
+export function useSession() {
+  return useBetterAuthSession(authClient);
+}

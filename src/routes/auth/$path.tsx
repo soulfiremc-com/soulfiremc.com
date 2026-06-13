@@ -1,8 +1,16 @@
-import { AuthView } from "@daveyplate/better-auth-ui";
-import { createFileRoute } from "@tanstack/react-router";
+import { viewPaths } from "@better-auth-ui/core";
+import { createFileRoute, redirect } from "@tanstack/react-router";
+import { Auth } from "@/components/auth/auth";
 import { SiteShell } from "@/components/site-shell";
 
+const validAuthPathSegments = new Set(Object.values(viewPaths.auth));
+
 export const Route = createFileRoute("/auth/$path")({
+  beforeLoad({ params: { path } }) {
+    if (!validAuthPathSegments.has(path)) {
+      throw redirect({ to: "/" });
+    }
+  },
   component: AuthPage,
 });
 
@@ -12,7 +20,7 @@ function AuthPage() {
   return (
     <SiteShell>
       <main className="flex min-h-[60vh] items-center justify-center p-4">
-        <AuthView path={path} />
+        <Auth path={path} />
       </main>
     </SiteShell>
   );

@@ -1,4 +1,17 @@
-import { EmailTemplate } from "@daveyplate/better-auth-ui/server";
+import {
+  Body,
+  Button,
+  Container,
+  Head,
+  Heading,
+  Hr,
+  Html,
+  Img,
+  Preview,
+  Section,
+  Text,
+} from "@react-email/components";
+import type { ReactNode } from "react";
 import { sendEmail } from "@/lib/resend";
 
 interface BaseEmailParams {
@@ -29,6 +42,105 @@ const imageUrl = `${baseUrl}/apple-icon.png`;
 const fromAddress = "SoulFire Auth <auth@transactional.soulfiremc.com>";
 const replyTo = "SoulFire Support <support@transactional.soulfiremc.com>";
 
+function AuthEmailTemplate({
+  action,
+  children,
+  heading,
+  preview = heading,
+  url,
+}: {
+  action?: string;
+  children: ReactNode;
+  heading: string;
+  preview?: string;
+  url?: string;
+}) {
+  return (
+    <Html>
+      <Head />
+      <Preview>{preview}</Preview>
+      <Body style={emailStyles.body}>
+        <Container style={emailStyles.container}>
+          <Section style={emailStyles.logoSection}>
+            <Img
+              src={imageUrl}
+              alt={`${siteName} logo`}
+              width="48"
+              height="48"
+              style={emailStyles.logo}
+            />
+          </Section>
+          <Heading style={emailStyles.heading}>{heading}</Heading>
+          <Section style={emailStyles.content}>{children}</Section>
+          {url && action ? (
+            <Section style={emailStyles.actionSection}>
+              <Button href={url} style={emailStyles.button}>
+                {action}
+              </Button>
+            </Section>
+          ) : null}
+          <Hr style={emailStyles.separator} />
+          <Text style={emailStyles.footer}>
+            If you did not request this, you can ignore this email.
+          </Text>
+        </Container>
+      </Body>
+    </Html>
+  );
+}
+
+const emailStyles = {
+  body: {
+    margin: 0,
+    backgroundColor: "#f6f6f6",
+    color: "#171717",
+    fontFamily: "Geist, sans-serif",
+  },
+  container: {
+    margin: "0 auto",
+    padding: "40px 20px",
+    maxWidth: "560px",
+  },
+  logoSection: {
+    marginBottom: "24px",
+  },
+  logo: {
+    borderRadius: "10px",
+  },
+  heading: {
+    margin: "0 0 20px",
+    fontSize: "24px",
+    lineHeight: "32px",
+    fontWeight: 700,
+  },
+  content: {
+    fontSize: "15px",
+    lineHeight: "24px",
+  },
+  actionSection: {
+    marginTop: "28px",
+  },
+  button: {
+    backgroundColor: "#171717",
+    borderRadius: "8px",
+    color: "#ffffff",
+    display: "inline-block",
+    fontSize: "14px",
+    fontWeight: 600,
+    padding: "12px 18px",
+    textDecoration: "none",
+  },
+  separator: {
+    borderColor: "#dedede",
+    margin: "32px 0 16px",
+  },
+  footer: {
+    color: "#737373",
+    fontSize: "13px",
+    lineHeight: "20px",
+  },
+} as const;
+
 export const authNotifications = {
   async sendPasswordReset({ user, url }: EmailWithUrlParams) {
     const name = user.name ?? user.email.split("@")[0];
@@ -37,23 +149,17 @@ export const authNotifications = {
       user.email,
       replyTo,
       `Your password reset request for ${siteName}`,
-      EmailTemplate({
-        action: "Reset Password",
-        content: (
-          <>
-            <p>{`Hello ${name},`}</p>
-            <p>
-              You have requested to reset your password. Please click the button
-              below to confirm your request.
-            </p>
-          </>
-        ),
-        heading: "Password reset request",
-        siteName,
-        baseUrl,
-        imageUrl,
-        url,
-      }),
+      <AuthEmailTemplate
+        action="Reset Password"
+        heading="Password reset request"
+        url={url}
+      >
+        <Text>{`Hello ${name},`}</Text>
+        <Text>
+          You have requested to reset your password. Please click the button
+          below to confirm your request.
+        </Text>
+      </AuthEmailTemplate>,
     );
   },
 
@@ -64,20 +170,14 @@ export const authNotifications = {
       user.email,
       replyTo,
       `Verify your email address for ${siteName}`,
-      EmailTemplate({
-        action: "Verify Email",
-        content: (
-          <>
-            <p>{`Hello ${name},`}</p>
-            <p>Click the button below to verify your email address.</p>
-          </>
-        ),
-        heading: "Verify your email address",
-        siteName,
-        baseUrl,
-        imageUrl,
-        url,
-      }),
+      <AuthEmailTemplate
+        action="Verify Email"
+        heading="Verify your email address"
+        url={url}
+      >
+        <Text>{`Hello ${name},`}</Text>
+        <Text>Click the button below to verify your email address.</Text>
+      </AuthEmailTemplate>,
     );
   },
 
@@ -88,23 +188,17 @@ export const authNotifications = {
       user.email,
       replyTo,
       `Your email change verification for ${siteName}`,
-      EmailTemplate({
-        action: "Change Email",
-        content: (
-          <>
-            <p>{`Hello ${name},`}</p>
-            <p>
-              You have requested to change your email. Please click the button
-              below to confirm your request.
-            </p>
-          </>
-        ),
-        heading: "Email change verification",
-        siteName,
-        baseUrl,
-        imageUrl,
-        url,
-      }),
+      <AuthEmailTemplate
+        action="Change Email"
+        heading="Email change verification"
+        url={url}
+      >
+        <Text>{`Hello ${name},`}</Text>
+        <Text>
+          You have requested to change your email. Please click the button below
+          to confirm your request.
+        </Text>
+      </AuthEmailTemplate>,
     );
   },
 
@@ -115,23 +209,17 @@ export const authNotifications = {
       user.email,
       replyTo,
       `Your account deletion request for ${siteName}`,
-      EmailTemplate({
-        action: "Delete Account",
-        content: (
-          <>
-            <p>{`Hello ${name},`}</p>
-            <p>
-              You have requested to delete your account. Please click the button
-              below to confirm your request.
-            </p>
-          </>
-        ),
-        heading: "Account deletion request",
-        siteName,
-        baseUrl,
-        imageUrl,
-        url,
-      }),
+      <AuthEmailTemplate
+        action="Delete Account"
+        heading="Account deletion request"
+        url={url}
+      >
+        <Text>{`Hello ${name},`}</Text>
+        <Text>
+          You have requested to delete your account. Please click the button
+          below to confirm your request.
+        </Text>
+      </AuthEmailTemplate>,
     );
   },
 
@@ -142,21 +230,13 @@ export const authNotifications = {
       user.email,
       replyTo,
       `Your verification code for ${siteName}`,
-      EmailTemplate({
-        content: (
-          <>
-            <p>{`Hello ${name},`}</p>
-            <p>
-              Your verification code is <strong>{otp}</strong>.
-            </p>
-            <p>If you did not request this, please ignore this email.</p>
-          </>
-        ),
-        heading: "Two-factor authentication code",
-        siteName,
-        baseUrl,
-        imageUrl,
-      }),
+      <AuthEmailTemplate heading="Two-factor authentication code">
+        <Text>{`Hello ${name},`}</Text>
+        <Text>
+          Your verification code is <strong>{otp}</strong>.
+        </Text>
+        <Text>If you did not request this, please ignore this email.</Text>
+      </AuthEmailTemplate>,
     );
   },
 
@@ -179,20 +259,12 @@ export const authNotifications = {
       email,
       replyTo,
       subjectMap[type],
-      EmailTemplate({
-        content: (
-          <>
-            <p>
-              Your code is <strong>{otp}</strong>.
-            </p>
-            <p>If you did not request this, please ignore this email.</p>
-          </>
-        ),
-        heading: headingMap[type],
-        siteName,
-        baseUrl,
-        imageUrl,
-      }),
+      <AuthEmailTemplate heading={headingMap[type]}>
+        <Text>
+          Your code is <strong>{otp}</strong>.
+        </Text>
+        <Text>If you did not request this, please ignore this email.</Text>
+      </AuthEmailTemplate>,
     );
   },
 };
