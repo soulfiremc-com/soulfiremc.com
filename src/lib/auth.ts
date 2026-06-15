@@ -1,7 +1,7 @@
 import { dash, sentinel } from "@better-auth/infra";
 import { passkey } from "@better-auth/passkey";
-import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { betterAuth } from "better-auth/minimal";
 import {
   admin,
   captcha,
@@ -21,6 +21,7 @@ import { db } from "@/lib/db";
 import * as generatedAuthSchema from "@/lib/db/auth-schema";
 import { user as authUser } from "@/lib/db/auth-schema";
 import * as schema from "@/lib/db/schema";
+import { runInBackground } from "@/lib/request-context";
 import { authNotifications } from "./auth-notifications";
 
 const USERNAME_ADJECTIVES = [
@@ -147,6 +148,15 @@ export const auth = betterAuth({
     },
     database: {
       generateId: "uuid",
+    },
+    backgroundTasks: {
+      handler: runInBackground,
+    },
+  },
+  session: {
+    cookieCache: {
+      enabled: true,
+      maxAge: 5 * 60,
     },
   },
   experimental: {

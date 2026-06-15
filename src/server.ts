@@ -1,5 +1,6 @@
 import handler from "@tanstack/react-start/server-entry";
 import { runWithHyperdriveDatabase } from "@/lib/db";
+import { runWithExecutionContext } from "@/lib/request-context";
 
 const securityHeaders = [
   ["X-DNS-Prefetch-Control", "on"],
@@ -12,10 +13,10 @@ export default {
   fetch: async (
     request: Request,
     env: CloudflareEnv,
-    _ctx: ExecutionContext,
+    ctx: ExecutionContext,
   ) => {
-    const response = await runWithHyperdriveDatabase(env.HYPERDRIVE, () =>
-      handler.fetch(request),
+    const response = await runWithExecutionContext(ctx, () =>
+      runWithHyperdriveDatabase(env.HYPERDRIVE, () => handler.fetch(request)),
     );
 
     for (const [key, value] of securityHeaders) {
