@@ -22,6 +22,7 @@ import {
   type SocialLink,
   SocialLinkButtons,
 } from "@/components/social-link-buttons";
+import { Badge as UiBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -79,7 +80,7 @@ function GallerySection({
     setOpenIndex((i) => (i !== null ? (i + 1) % images.length : null));
 
   return (
-    <section className="space-y-4">
+    <section className="flex flex-col gap-4">
       <h2 className="text-2xl font-semibold">Gallery</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {images.map((img, i) => (
@@ -177,20 +178,26 @@ function formatNumber(num: number): string {
 function DiscordMemberBadge({ info }: { info: DiscordInviteResponse | null }) {
   if (!info?.approximate_member_count) {
     return (
-      <span className="inline-flex items-center gap-1 rounded-full bg-[#5865F2]/10 px-2.5 py-0.5 text-xs font-medium text-[#5865F2]/50">
-        <Users className="h-3 w-3" />
+      <UiBadge
+        variant="outline"
+        className="border-transparent bg-[#5865F2]/10 text-[#5865F2]/50"
+      >
+        <Users />
         unknown
-      </span>
+      </UiBadge>
     );
   }
 
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <span className="inline-flex cursor-help items-center gap-1 rounded-full bg-[#5865F2]/10 px-2.5 py-0.5 text-xs font-medium text-[#5865F2]">
-          <Users className="h-3 w-3" />
+        <UiBadge
+          variant="outline"
+          className="cursor-help border-transparent bg-[#5865F2]/10 text-[#5865F2]"
+        >
+          <Users />
           {formatNumber(info.approximate_member_count)}
-        </span>
+        </UiBadge>
       </HoverCardTrigger>
       <HoverCardContent className="w-auto text-sm">
         {info.guild?.name && <p className="font-medium">{info.guild.name}</p>}
@@ -224,18 +231,16 @@ function CouponCode({ code, discount }: { code: string; discount?: string }) {
           {code}
         </p>
       </div>
-      <button
+      <Button
         type="button"
+        variant="ghost"
+        size="icon"
         onClick={handleCopy}
-        className="rounded-md p-2 hover:bg-pink-500/10 transition-colors"
+        className="text-muted-foreground hover:bg-pink-500/10"
         aria-label="Copy coupon code"
       >
-        {copied ? (
-          <Check className="h-4 w-4 text-green-500" />
-        ) : (
-          <Copy className="h-4 w-4 text-muted-foreground" />
-        )}
-      </button>
+        {copied ? <Check className="text-green-500" /> : <Copy />}
+      </Button>
     </div>
   );
 }
@@ -381,15 +386,13 @@ function ProviderBadge({ badge }: { badge: Badge }) {
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <span
-          className={cn(
-            "inline-flex cursor-help items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium",
-            config.className,
-          )}
+        <UiBadge
+          variant="outline"
+          className={cn("cursor-help border-transparent", config.className)}
         >
           {config.icon}
           {config.label}
-        </span>
+        </UiBadge>
       </HoverCardTrigger>
       <HoverCardContent className="w-64 text-sm">
         <p>{config.description}</p>
@@ -472,7 +475,7 @@ function AccountDetailPage() {
 
   return (
     <SiteShell>
-      <main className="mx-auto w-full max-w-(--fd-layout-width) space-y-8 px-4 py-12">
+      <main className="mx-auto flex w-full max-w-(--fd-layout-width) flex-col gap-8 px-4 py-12">
         <script
           type="application/ld+json"
           // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
@@ -516,7 +519,7 @@ function AccountDetailPage() {
             >
               <ShopLogo src={data.shop.logo} name={data.shop.name} />
             </div>
-            <div className="flex-1 space-y-4">
+            <div className="flex flex-1 flex-col gap-4">
               <div className="flex flex-wrap items-center gap-3">
                 <h1 className="text-4xl font-bold tracking-tight">
                   {data.shop.name}
@@ -554,7 +557,7 @@ function AccountDetailPage() {
                     rel="noopener noreferrer nofollow"
                   >
                     Get Accounts
-                    <ExternalLink className="ml-2 h-4 w-4" />
+                    <ExternalLink data-icon="inline-end" />
                   </a>
                 </Button>
                 {data.shop.websiteUrl ? (
@@ -570,7 +573,7 @@ function AccountDetailPage() {
                       rel="noopener noreferrer nofollow"
                     >
                       Website
-                      <Globe className="ml-2 h-4 w-4" />
+                      <Globe data-icon="inline-end" />
                     </a>
                   </Button>
                 ) : null}
@@ -587,7 +590,7 @@ function AccountDetailPage() {
                       rel="noopener noreferrer nofollow"
                     >
                       Discord
-                      <SiDiscord className="ml-2 h-4 w-4" />
+                      <SiDiscord data-icon="inline-end" />
                     </a>
                   </Button>
                 ) : null}
@@ -604,7 +607,7 @@ function AccountDetailPage() {
                       rel="noopener noreferrer nofollow"
                     >
                       Trustpilot
-                      <SiTrustpilot className="ml-2 h-4 w-4" />
+                      <SiTrustpilot data-icon="inline-end" />
                     </a>
                   </Button>
                 ) : null}
@@ -634,7 +637,7 @@ function AccountDetailPage() {
 
             return (
               <Card key={provider.category} className="gap-4 p-6">
-                <div className="space-y-2">
+                <div className="flex flex-col gap-2">
                   <h2 className="text-2xl font-semibold">
                     {CATEGORY_CONFIG[provider.category as Category].label}
                   </h2>
@@ -675,7 +678,7 @@ function AccountDetailPage() {
                     rel="noopener noreferrer nofollow"
                   >
                     Buy {CATEGORY_CONFIG[provider.category as Category].label}
-                    <ExternalLink className="ml-2 h-4 w-4" />
+                    <ExternalLink data-icon="inline-end" />
                   </a>
                 </Button>
               </Card>
@@ -696,13 +699,16 @@ function AccountDetailPage() {
           <GallerySection images={data.shop.gallery} />
         ) : null}
 
-        <Link
-          to="/get-accounts"
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        <Button
+          asChild
+          variant="ghost"
+          className="self-start text-muted-foreground"
         >
-          <ArrowLeft className="h-4 w-4" />
-          Browse all account providers
-        </Link>
+          <Link to="/get-accounts">
+            <ArrowLeft data-icon="inline-start" />
+            Browse all account providers
+          </Link>
+        </Button>
       </main>
     </SiteShell>
   );

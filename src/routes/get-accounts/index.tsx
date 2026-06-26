@@ -30,13 +30,21 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Badge as UiBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+} from "@/components/ui/empty";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useReviews } from "@/hooks/use-reviews";
 import {
   BADGE_CONFIG,
@@ -200,7 +208,7 @@ function PriceInfoBadge({ details }: { details: string }) {
     <HoverCard>
       <HoverCardTrigger asChild>
         <span className="inline-flex cursor-help items-center text-muted-foreground hover:text-foreground transition-colors">
-          <Info className="h-3.5 w-3.5" />
+          <Info className="size-3.5" />
           <span className="sr-only">Pricing details</span>
         </span>
       </HoverCardTrigger>
@@ -222,20 +230,26 @@ function formatNumber(num: number): string {
 function DiscordMemberBadge({ info }: { info: DiscordInviteResponse | null }) {
   if (!info?.approximate_member_count) {
     return (
-      <span className="inline-flex items-center gap-1 rounded-full bg-[#5865F2]/10 px-2.5 py-0.5 text-xs font-medium text-[#5865F2]/50">
-        <Users className="h-3 w-3" />
+      <UiBadge
+        variant="outline"
+        className="border-transparent bg-[#5865F2]/10 text-[#5865F2]/50"
+      >
+        <Users />
         unknown
-      </span>
+      </UiBadge>
     );
   }
 
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <span className="inline-flex cursor-help items-center gap-1 rounded-full bg-[#5865F2]/10 px-2.5 py-0.5 text-xs font-medium text-[#5865F2]">
-          <Users className="h-3 w-3" />
+        <UiBadge
+          variant="outline"
+          className="cursor-help border-transparent bg-[#5865F2]/10 text-[#5865F2]"
+        >
+          <Users />
           {formatNumber(info.approximate_member_count)}
-        </span>
+        </UiBadge>
       </HoverCardTrigger>
       <HoverCardContent className="w-auto text-sm">
         {info.guild?.name && <p className="font-medium">{info.guild.name}</p>}
@@ -269,18 +283,16 @@ function CouponCode({ code, discount }: { code: string; discount?: string }) {
           {code}
         </p>
       </div>
-      <button
+      <Button
         type="button"
+        variant="ghost"
+        size="icon"
         onClick={handleCopy}
-        className="rounded-md p-2 hover:bg-pink-500/10 transition-colors"
+        className="text-muted-foreground hover:bg-pink-500/10"
         aria-label="Copy coupon code"
       >
-        {copied ? (
-          <Check className="h-4 w-4 text-green-500" />
-        ) : (
-          <Copy className="h-4 w-4 text-muted-foreground" />
-        )}
-      </button>
+        {copied ? <Check className="text-green-500" /> : <Copy />}
+      </Button>
     </div>
   );
 }
@@ -341,15 +353,16 @@ function ProviderBadge({
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <span
+        <UiBadge
+          variant="outline"
           className={cn(
-            "inline-flex cursor-help items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium",
+            "cursor-help border-transparent",
             classNameOverride ?? config.className,
           )}
         >
           {config.icon}
           {config.label}
-        </span>
+        </UiBadge>
       </HoverCardTrigger>
       <HoverCardContent className="w-64 text-sm">
         <p>{config.description}</p>
@@ -434,7 +447,7 @@ function ProviderCard({
         >
           <ProviderLogo provider={provider} />
         </div>
-        <div className="flex-1 space-y-3">
+        <div className="flex flex-1 flex-col gap-3">
           <div className="flex flex-wrap items-center gap-3">
             <h3 className="text-xl font-semibold">
               <Link
@@ -451,9 +464,10 @@ function ProviderCard({
                 Since {provider.startDate}
               </span>
             )}
-            <span
+            <UiBadge
+              variant="outline"
               className={cn(
-                "inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-2.5 py-0.5 text-sm font-medium text-primary",
+                "border-transparent bg-primary/10 text-sm text-primary",
                 theme?.price,
               )}
             >
@@ -461,7 +475,7 @@ function ProviderCard({
               {provider.priceDetails && (
                 <PriceInfoBadge details={provider.priceDetails} />
               )}
-            </span>
+            </UiBadge>
             <DiscordMemberBadge info={discordInvite} />
             <div className="flex flex-wrap gap-2">
               {provider.badges.map((badge) => (
@@ -500,7 +514,7 @@ function ProviderCard({
             <Button asChild className={theme?.primaryButton}>
               <a href={provider.url} target="_blank" rel="noopener nofollow">
                 Get Accounts
-                <ExternalLink className="ml-2 h-4 w-4" />
+                <ExternalLink data-icon="inline-end" />
               </a>
             </Button>
             {provider.websiteUrl && (
@@ -515,7 +529,7 @@ function ProviderCard({
                   rel="noopener nofollow"
                 >
                   Website
-                  <Globe className="ml-2 h-4 w-4" />
+                  <Globe data-icon="inline-end" />
                 </a>
               </Button>
             )}
@@ -531,7 +545,7 @@ function ProviderCard({
                   rel="noopener nofollow"
                 >
                   Discord
-                  <SiDiscord className="ml-2 h-4 w-4" />
+                  <SiDiscord data-icon="inline-end" />
                 </a>
               </Button>
             )}
@@ -547,7 +561,7 @@ function ProviderCard({
                   rel="noopener nofollow"
                 >
                   Trustpilot
-                  <SiTrustpilot className="ml-2 h-4 w-4" />
+                  <SiTrustpilot data-icon="inline-end" />
                 </a>
               </Button>
             )}
@@ -625,21 +639,6 @@ function MainContent(props: Props) {
     { shallow: false },
   );
 
-  const toggleBadge = (badge: FilterableBadge) => {
-    const newBadges = badges.includes(badge)
-      ? badges.filter((b) => b !== badge)
-      : [...badges, badge];
-    setParams({ badges: newBadges });
-  };
-
-  const toggleCategory = (cat: Category) => {
-    setParams({ category: category === cat ? null : cat });
-  };
-
-  const setSort = (newSort: SortOption) => {
-    setParams({ sort: newSort });
-  };
-
   const clearFilters = () => {
     setParams({ category: null, badges: [], sort: "default" });
   };
@@ -671,61 +670,79 @@ function MainContent(props: Props) {
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   const filterContent = (
-    <div className="space-y-4">
+    <div className="flex flex-col gap-4">
       <div className="flex items-center gap-2">
-        <Filter className="h-4 w-4 text-muted-foreground" />
+        <Filter className="size-4 text-muted-foreground" />
         <span className="text-sm font-medium">Filters</span>
         {hasActiveFilters && (
-          <button
+          <Button
             type="button"
+            variant="ghost"
+            size="sm"
             onClick={clearFilters}
-            className="text-xs text-muted-foreground hover:text-foreground underline ml-auto"
+            className="ml-auto h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
           >
             Clear
-          </button>
+          </Button>
         )}
       </div>
 
       {/* Category Filter */}
-      <div className="space-y-2">
+      <div className="flex flex-col gap-2">
         <span className="text-xs text-muted-foreground">Category:</span>
-        <div className="flex flex-wrap gap-2">
+        <ToggleGroup
+          type="single"
+          value={category ?? ""}
+          onValueChange={(value) =>
+            setParams({ category: value ? (value as Category) : null })
+          }
+          spacing={2}
+          className="flex-wrap"
+        >
           {FILTER_CATEGORIES.map((cat) => {
             const config = CATEGORY_CONFIG[cat];
             const isActive = category === cat;
             return (
-              <button
-                type="button"
+              <ToggleGroupItem
                 key={cat}
-                onClick={() => toggleCategory(cat)}
+                value={cat}
+                size="sm"
                 className={cn(
-                  "inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-medium outline-none transition-all",
+                  "rounded-full px-3 py-1.5 text-xs",
                   isActive
                     ? "bg-primary text-primary-foreground ring-2 ring-offset-2 ring-offset-background ring-primary"
                     : "bg-muted text-muted-foreground hover:bg-muted/80",
                 )}
               >
                 {config.label}
-              </button>
+              </ToggleGroupItem>
             );
           })}
-        </div>
+        </ToggleGroup>
       </div>
 
       {/* Badge Filter */}
-      <div className="space-y-2">
+      <div className="flex flex-col gap-2">
         <span className="text-xs text-muted-foreground">Features:</span>
-        <div className="flex flex-wrap gap-2">
+        <ToggleGroup
+          type="multiple"
+          value={badges}
+          onValueChange={(value) =>
+            setParams({ badges: value as FilterableBadge[] })
+          }
+          spacing={2}
+          className="flex-wrap"
+        >
           {FILTER_BADGES.map((badge) => {
             const config = BADGE_CONFIG[badge];
             const isActive = badges.includes(badge);
             return (
-              <button
-                type="button"
+              <ToggleGroupItem
                 key={badge}
-                onClick={() => toggleBadge(badge)}
+                value={badge}
+                size="sm"
                 className={cn(
-                  "inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-medium outline-none transition-all",
+                  "rounded-full px-3 py-1.5 text-xs",
                   isActive
                     ? cn(
                         config.className,
@@ -735,26 +752,36 @@ function MainContent(props: Props) {
                 )}
               >
                 {config.label}
-              </button>
+              </ToggleGroupItem>
             );
           })}
-        </div>
+        </ToggleGroup>
       </div>
 
       {/* Sort */}
-      <div className="space-y-2">
+      <div className="flex flex-col gap-2">
         <span className="text-xs text-muted-foreground">Sort:</span>
-        <div className="flex flex-wrap gap-2">
+        <ToggleGroup
+          type="single"
+          value={sort}
+          onValueChange={(value) => {
+            if (value) {
+              setParams({ sort: value as SortOption });
+            }
+          }}
+          spacing={2}
+          className="flex-wrap"
+        >
           {SORT_OPTIONS.map((option) => {
             const config = SORT_CONFIG[option];
             const isActive = sort === option;
             return (
-              <button
-                type="button"
+              <ToggleGroupItem
                 key={option}
-                onClick={() => setSort(option)}
+                value={option}
+                size="sm"
                 className={cn(
-                  "inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-medium outline-none transition-all",
+                  "rounded-full px-3 py-1.5 text-xs",
                   isActive
                     ? "bg-primary text-primary-foreground ring-2 ring-offset-2 ring-offset-background ring-primary"
                     : "bg-muted text-muted-foreground hover:bg-muted/80",
@@ -762,10 +789,10 @@ function MainContent(props: Props) {
               >
                 {config.icon}
                 {config.label}
-              </button>
+              </ToggleGroupItem>
             );
           })}
-        </div>
+        </ToggleGroup>
       </div>
     </div>
   );
@@ -773,19 +800,21 @@ function MainContent(props: Props) {
   return (
     <div className="flex flex-col lg:flex-row gap-6 max-w-(--fd-layout-width) mx-auto w-full">
       {/* Mobile filter toggle */}
-      <button
+      <Button
         type="button"
+        variant="outline"
+        size="sm"
         onClick={() => setFiltersOpen(!filtersOpen)}
-        className="lg:hidden inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium hover:bg-muted transition-colors self-start"
+        className="self-start lg:hidden"
       >
-        <Filter className="h-4 w-4" />
+        <Filter data-icon="inline-start" />
         Filters
         {hasActiveFilters && (
           <span className="inline-flex items-center justify-center rounded-full bg-primary px-1.5 text-xs text-primary-foreground">
             {badges.length + (category ? 1 : 0) + (sort !== "default" ? 1 : 0)}
           </span>
         )}
-      </button>
+      </Button>
 
       {/* Mobile filter panel */}
       {filtersOpen && (
@@ -798,20 +827,23 @@ function MainContent(props: Props) {
       </aside>
 
       {/* Main content */}
-      <div className="flex-1 space-y-10">
+      <div className="flex flex-1 flex-col gap-10">
         {filteredProviders.length === 0 ? (
-          <Card className="p-8 text-center">
-            <p className="text-muted-foreground">
-              No providers match the selected filters. Try removing some
-              filters.
-            </p>
-          </Card>
+          <Empty className="border">
+            <EmptyHeader>
+              <EmptyTitle>No providers found</EmptyTitle>
+              <EmptyDescription>
+                No providers match the selected filters. Try removing some
+                filters.
+              </EmptyDescription>
+            </EmptyHeader>
+          </Empty>
         ) : (
           <>
             {/* MFA Accounts Section */}
             {mfaProviders.length > 0 && (
-              <div className="space-y-4">
-                <div className="space-y-1">
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-1">
                   <h2 className="text-2xl font-semibold">
                     MFA Accounts (Full Access / Permanent)
                   </h2>
@@ -847,8 +879,8 @@ function MainContent(props: Props) {
 
             {/* NFA Accounts Section */}
             {nfaProviders.length > 0 && (
-              <div className="space-y-4">
-                <div className="space-y-1">
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-1">
                   <h2 className="text-2xl font-semibold">
                     NFA Accounts (Temporary / Non-Full Access)
                   </h2>
@@ -894,8 +926,8 @@ function MainContent(props: Props) {
 
 function GetAccountsClient(props: Props) {
   return (
-    <main className="px-4 py-12 w-full max-w-(--fd-layout-width) mx-auto space-y-10">
-      <div className="space-y-4 text-center max-w-5xl mx-auto">
+    <main className="mx-auto flex w-full max-w-(--fd-layout-width) flex-col gap-10 px-4 py-12">
+      <div className="mx-auto flex max-w-5xl flex-col gap-4 text-center">
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
           Get Minecraft Accounts
         </h1>
@@ -927,8 +959,8 @@ function GetAccountsClient(props: Props) {
       </ReviewTurnstileProvider>
 
       {/* FAQ Section */}
-      <div className="max-w-3xl mx-auto w-full space-y-4">
-        <div className="space-y-1">
+      <div className="mx-auto flex w-full max-w-3xl flex-col gap-4">
+        <div className="flex flex-col gap-1">
           <h2 className="text-2xl font-semibold">Frequently Asked Questions</h2>
           <p className="text-sm text-muted-foreground">
             Common questions about Minecraft accounts
@@ -946,7 +978,7 @@ function GetAccountsClient(props: Props) {
         </Accordion>
       </div>
 
-      <div className="border-t pt-6 max-w-5xl mx-auto text-center space-y-2">
+      <div className="mx-auto flex max-w-5xl flex-col gap-2 border-t pt-6 text-center">
         <p className="text-sm text-muted-foreground">
           <strong>Source:</strong> Provider list curated from{" "}
           <a

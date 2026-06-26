@@ -1,8 +1,6 @@
 "use client";
 
 import { useLocation } from "@tanstack/react-router";
-import { cva } from "class-variance-authority";
-import { buttonVariants } from "fumadocs-ui/components/ui/button";
 import {
   Collapsible,
   CollapsibleContent,
@@ -10,19 +8,9 @@ import {
 import { ThumbsDown, ThumbsUp } from "lucide-react";
 import { usePostHog } from "posthog-js/react";
 import { type SyntheticEvent, useEffect, useState, useTransition } from "react";
-import { cn } from "@/lib/utils";
-
-const rateButtonVariants = cva(
-  "inline-flex items-center gap-2 px-3 py-2 rounded-full font-medium border text-sm [&_svg]:size-4 disabled:cursor-not-allowed",
-  {
-    variants: {
-      active: {
-        true: "bg-fd-accent text-fd-accent-foreground [&_svg]:fill-current",
-        false: "text-fd-muted-foreground",
-      },
-    },
-  },
-);
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 export interface Feedback {
   opinion: "good" | "bad";
@@ -89,68 +77,60 @@ export function Feedback() {
     >
       <div className="flex flex-row items-center gap-2">
         <p className="text-sm font-medium pe-2">How is this page?</p>
-        <button
-          type="button"
-          disabled={previous !== null}
-          className={cn(
-            rateButtonVariants({
-              active: activeOpinion === "good",
-            }),
-          )}
-          onClick={() => {
-            setOpinion("good");
+        <ToggleGroup
+          type="single"
+          value={activeOpinion ?? ""}
+          onValueChange={(value) => {
+            if (value && previous === null) {
+              setOpinion(value as "good" | "bad");
+            }
           }}
+          spacing={2}
         >
-          <ThumbsUp />
-          Good
-        </button>
-        <button
-          type="button"
-          disabled={previous !== null}
-          className={cn(
-            rateButtonVariants({
-              active: activeOpinion === "bad",
-            }),
-          )}
-          onClick={() => {
-            setOpinion("bad");
-          }}
-        >
-          <ThumbsDown />
-          Bad
-        </button>
+          <ToggleGroupItem
+            value="good"
+            disabled={previous !== null}
+            className="rounded-full data-[state=on]:[&_svg]:fill-current"
+          >
+            <ThumbsUp data-icon="inline-start" />
+            Good
+          </ToggleGroupItem>
+          <ToggleGroupItem
+            value="bad"
+            disabled={previous !== null}
+            className="rounded-full data-[state=on]:[&_svg]:fill-current"
+          >
+            <ThumbsDown data-icon="inline-start" />
+            Bad
+          </ToggleGroupItem>
+        </ToggleGroup>
       </div>
       <CollapsibleContent className="mt-3">
         {previous ? (
           <div className="px-3 py-6 flex flex-col items-center gap-3 bg-fd-card text-fd-muted-foreground text-sm text-center rounded-xl">
             <p>Thank you for your feedback!</p>
             <div className="flex flex-row items-center gap-2">
-              <button
+              <Button
                 type="button"
-                className={cn(
-                  buttonVariants({
-                    color: "secondary",
-                  }),
-                  "text-xs",
-                )}
+                variant="secondary"
+                size="sm"
                 onClick={() => {
                   setOpinion(previous.opinion);
                   setPrevious(null);
                 }}
               >
                 Submit Again
-              </button>
+              </Button>
             </div>
           </div>
         ) : (
           <form className="flex flex-col gap-3" onSubmit={submit}>
-            <textarea
-              // biome-ignore lint/a11y/noAutofocus: We want to autofocus the textarea when it appears
+            <Textarea
               autoFocus
               required
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              className="border rounded-lg bg-fd-secondary text-fd-secondary-foreground p-3 resize-none focus-visible:outline-none placeholder:text-fd-muted-foreground"
+              className="min-h-24 resize-none bg-fd-secondary text-fd-secondary-foreground placeholder:text-fd-muted-foreground"
               placeholder="Leave your feedback..."
               onKeyDown={(e) => {
                 if (!e.shiftKey && e.key === "Enter") {
@@ -158,13 +138,14 @@ export function Feedback() {
                 }
               }}
             />
-            <button
+            <Button
               type="submit"
-              className={cn(buttonVariants({ color: "outline" }), "w-fit px-3")}
+              variant="outline"
+              className="w-fit"
               disabled={isPending}
             >
               Submit
-            </button>
+            </Button>
           </form>
         )}
       </CollapsibleContent>

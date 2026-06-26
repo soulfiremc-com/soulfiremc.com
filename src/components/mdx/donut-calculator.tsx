@@ -1,6 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { Field, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import {
+  NativeSelect,
+  NativeSelectOption,
+} from "@/components/ui/native-select";
 
 const METHODS = [
   {
@@ -71,40 +77,34 @@ export function DonutCalculator() {
         DonutSMP Earnings Calculator
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
-        <label className="block">
-          <span className="mb-1 block text-sm text-fd-muted-foreground">
-            Farming Method
-          </span>
-          <select
+        <Field>
+          <FieldLabel>Farming Method</FieldLabel>
+          <NativeSelect
             value={selectedMethod}
             onChange={(e) => setSelectedMethod(Number(e.target.value))}
-            className="w-full rounded-md border bg-fd-background px-3 py-2 text-sm"
+            className="w-full min-w-full bg-fd-background"
           >
             {METHODS.map((m, i) => (
-              <option key={m.name} value={i}>
+              <NativeSelectOption key={m.name} value={i}>
                 {m.name}
-              </option>
+              </NativeSelectOption>
             ))}
-          </select>
-        </label>
-        <label className="block">
-          <span className="mb-1 block text-sm text-fd-muted-foreground">
-            Number of Bots
-          </span>
-          <input
+          </NativeSelect>
+        </Field>
+        <Field>
+          <FieldLabel>Number of Bots</FieldLabel>
+          <Input
             type="number"
             min={1}
             max={1000}
             value={botCount}
             onChange={(e) => setBotCount(Math.max(1, Number(e.target.value)))}
-            className="w-full rounded-md border bg-fd-background px-3 py-2 text-sm"
+            className="bg-fd-background"
           />
-        </label>
-        <label className="block sm:col-span-2">
-          <span className="mb-1 block text-sm text-fd-muted-foreground">
-            USD per Million (current market rate)
-          </span>
-          <input
+        </Field>
+        <Field className="sm:col-span-2">
+          <FieldLabel>USD per Million (current market rate)</FieldLabel>
+          <Input
             type="number"
             min={0.001}
             max={1}
@@ -113,9 +113,9 @@ export function DonutCalculator() {
             onChange={(e) =>
               setPricePerMillion(Math.max(0.001, Number(e.target.value)))
             }
-            className="w-full rounded-md border bg-fd-background px-3 py-2 text-sm"
+            className="bg-fd-background"
           />
-        </label>
+        </Field>
       </div>
 
       <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">

@@ -24,6 +24,7 @@ import { PaymentMethods } from "@/components/payment-methods";
 import { ReviewSummaryBadge } from "@/components/review-summary-badge";
 import { SiteShell } from "@/components/site-shell";
 import { SocialLinkButtons } from "@/components/social-link-buttons";
+import { Badge as UiBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -76,7 +77,7 @@ function GallerySection({
     setOpenIndex((i) => (i !== null ? (i + 1) % images.length : null));
 
   return (
-    <section className="space-y-4">
+    <section className="flex flex-col gap-4">
       <h2 className="text-2xl font-semibold">Gallery</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {images.map((img, i) => (
@@ -183,18 +184,16 @@ function CouponCode({ code, discount }: { code: string; discount?: string }) {
           {code}
         </p>
       </div>
-      <button
+      <Button
         type="button"
+        variant="ghost"
+        size="icon"
         onClick={handleCopy}
-        className="rounded-md p-2 hover:bg-pink-500/10 transition-colors"
+        className="text-muted-foreground hover:bg-pink-500/10"
         aria-label="Copy coupon code"
       >
-        {copied ? (
-          <Check className="h-4 w-4 text-green-500" />
-        ) : (
-          <Copy className="h-4 w-4 text-muted-foreground" />
-        )}
-      </button>
+        {copied ? <Check className="text-green-500" /> : <Copy />}
+      </Button>
     </div>
   );
 }
@@ -246,15 +245,16 @@ function ProviderBadge({
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <span
+        <UiBadge
+          variant="outline"
           className={cn(
-            "inline-flex cursor-help items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium",
+            "cursor-help border-transparent",
             classNameOverride ?? config.className,
           )}
         >
           {config.icon}
           {config.label}
-        </span>
+        </UiBadge>
       </HoverCardTrigger>
       <HoverCardContent className="w-64 text-sm">
         <p>{config.description}</p>
@@ -276,7 +276,7 @@ function ProxyProviderPageContent({
     : undefined;
 
   return (
-    <main className="mx-auto w-full max-w-(--fd-layout-width) space-y-8 px-4 py-12">
+    <main className="mx-auto flex w-full max-w-(--fd-layout-width) flex-col gap-8 px-4 py-12">
       <JsonLd data={pageJsonLd} />
       <JsonLd data={productJsonLd} />
       <JsonLd data={breadcrumbJsonLd} />
@@ -308,7 +308,7 @@ function ProxyProviderPageContent({
           >
             <ProviderLogo provider={provider} />
           </div>
-          <div className="flex-1 space-y-4">
+          <div className="flex flex-1 flex-col gap-4">
             <div className="flex flex-wrap items-center gap-3">
               <h1 className="text-4xl font-bold tracking-tight">
                 {provider.name}
@@ -347,7 +347,7 @@ function ProxyProviderPageContent({
                   rel="noopener noreferrer nofollow"
                 >
                   Get Proxies
-                  <ExternalLink className="ml-2 h-4 w-4" />
+                  <ExternalLink data-icon="inline-end" />
                 </a>
               </Button>
               <ReviewSummaryBadge summary={reviewSummary} />
@@ -374,13 +374,16 @@ function ProxyProviderPageContent({
         <GallerySection images={provider.gallery} />
       ) : null}
 
-      <Link
-        to="/get-proxies"
-        className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+      <Button
+        asChild
+        variant="ghost"
+        className="self-start text-muted-foreground"
       >
-        <ArrowLeft className="h-4 w-4" />
-        Browse all proxy providers
-      </Link>
+        <Link to="/get-proxies">
+          <ArrowLeft data-icon="inline-start" />
+          Browse all proxy providers
+        </Link>
+      </Button>
     </main>
   );
 }

@@ -27,13 +27,21 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Badge as UiBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+} from "@/components/ui/empty";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useReviews } from "@/hooks/use-reviews";
 import {
   BADGE_CONFIG,
@@ -192,15 +200,13 @@ function ResourceBadge({ badge }: { badge: Badge }) {
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <span
-          className={cn(
-            "inline-flex cursor-help items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium",
-            config.className,
-          )}
+        <UiBadge
+          variant="outline"
+          className={cn("cursor-help border-transparent", config.className)}
         >
           {config.icon}
           {config.label}
-        </span>
+        </UiBadge>
       </HoverCardTrigger>
       <HoverCardContent className="w-64 text-sm">
         <p>{config.description}</p>
@@ -252,7 +258,7 @@ function ResourceCard({
         <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-muted">
           <ResourceLogo resource={resource} />
         </div>
-        <div className="flex-1 space-y-3">
+        <div className="flex flex-1 flex-col gap-3">
           <div className="flex flex-wrap items-center gap-3">
             <h3 className="text-xl font-semibold">
               <Link
@@ -303,7 +309,7 @@ function ResourceCard({
                 target="_blank"
                 rel="noopener noreferrer nofollow"
               >
-                <Download className="mr-2 h-4 w-4" />
+                <Download data-icon="inline-start" />
                 Download
               </a>
             </Button>
@@ -315,7 +321,7 @@ function ResourceCard({
                   rel="noopener noreferrer"
                 >
                   View Source
-                  <ExternalLink className="ml-2 h-4 w-4" />
+                  <ExternalLink data-icon="inline-end" />
                 </a>
               </Button>
             )}
@@ -348,17 +354,6 @@ function MainContent({
       shallow: false,
     },
   );
-
-  const toggleCategory = (cat: Category) => {
-    setParams({ category: category === cat ? null : cat });
-  };
-
-  const toggleTag = (tag: FilterableTag) => {
-    const newTags = tags.includes(tag)
-      ? tags.filter((t) => t !== tag)
-      : [...tags, tag];
-    setParams({ tags: newTags });
-  };
 
   const clearFilters = () => {
     setParams({ category: null, tags: [], sort: "default" });
@@ -415,35 +410,45 @@ function MainContent({
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   const filterContent = (
-    <div className="space-y-4">
+    <div className="flex flex-col gap-4">
       <div className="flex items-center gap-2">
-        <Filter className="h-4 w-4 text-muted-foreground" />
+        <Filter className="size-4 text-muted-foreground" />
         <span className="text-sm font-medium">Filters</span>
         {activeFilterCount > 0 && (
-          <button
+          <Button
             type="button"
+            variant="ghost"
+            size="sm"
             onClick={clearFilters}
-            className="text-xs text-muted-foreground hover:text-foreground underline ml-auto"
+            className="ml-auto h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
           >
             Clear
-          </button>
+          </Button>
         )}
       </div>
-      <div className="space-y-2">
+      <div className="flex flex-col gap-2">
         <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
           Category
         </span>
-        <div className="flex flex-wrap gap-2">
+        <ToggleGroup
+          type="single"
+          value={category ?? ""}
+          onValueChange={(value) =>
+            setParams({ category: value ? (value as Category) : null })
+          }
+          spacing={2}
+          className="flex-wrap"
+        >
           {CATEGORIES.map((cat) => {
             const config = BADGE_CONFIG[cat.value];
             const isActive = category === cat.value;
             return (
-              <button
-                type="button"
+              <ToggleGroupItem
                 key={cat.value}
-                onClick={() => toggleCategory(cat.value)}
+                value={cat.value}
+                size="sm"
                 className={cn(
-                  "inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-medium outline-none transition-all",
+                  "rounded-full px-3 py-1.5 text-xs",
                   isActive
                     ? cn(
                         config.className,
@@ -453,26 +458,34 @@ function MainContent({
                 )}
               >
                 {cat.label}
-              </button>
+              </ToggleGroupItem>
             );
           })}
-        </div>
+        </ToggleGroup>
       </div>
-      <div className="space-y-2">
+      <div className="flex flex-col gap-2">
         <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
           Tags
         </span>
-        <div className="flex flex-wrap gap-2">
+        <ToggleGroup
+          type="multiple"
+          value={tags}
+          onValueChange={(value) =>
+            setParams({ tags: value as FilterableTag[] })
+          }
+          spacing={2}
+          className="flex-wrap"
+        >
           {FILTER_TAGS.map((tag) => {
             const config = BADGE_CONFIG[tag];
             const isActive = tags.includes(tag);
             return (
-              <button
-                type="button"
+              <ToggleGroupItem
                 key={tag}
-                onClick={() => toggleTag(tag)}
+                value={tag}
+                size="sm"
                 className={cn(
-                  "inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-medium outline-none transition-all",
+                  "rounded-full px-3 py-1.5 text-xs",
                   isActive
                     ? cn(
                         config.className,
@@ -482,26 +495,36 @@ function MainContent({
                 )}
               >
                 {config.label}
-              </button>
+              </ToggleGroupItem>
             );
           })}
-        </div>
+        </ToggleGroup>
       </div>
-      <div className="space-y-2">
+      <div className="flex flex-col gap-2">
         <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
           Sort
         </span>
-        <div className="flex flex-wrap gap-2">
+        <ToggleGroup
+          type="single"
+          value={sort}
+          onValueChange={(value) => {
+            if (value) {
+              setParams({ sort: value as (typeof SORT_OPTIONS)[number] });
+            }
+          }}
+          spacing={2}
+          className="flex-wrap"
+        >
           {SORT_OPTIONS.map((option) => {
             const config = SORT_CONFIG[option];
             const isActive = sort === option;
             return (
-              <button
-                type="button"
+              <ToggleGroupItem
                 key={option}
-                onClick={() => setParams({ sort: option })}
+                value={option}
+                size="sm"
                 className={cn(
-                  "inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-medium outline-none transition-all",
+                  "rounded-full px-3 py-1.5 text-xs",
                   isActive
                     ? "bg-primary text-primary-foreground ring-2 ring-offset-2 ring-offset-background ring-primary"
                     : "bg-muted text-muted-foreground hover:bg-muted/80",
@@ -509,10 +532,10 @@ function MainContent({
               >
                 {config.icon}
                 {config.label}
-              </button>
+              </ToggleGroupItem>
             );
           })}
-        </div>
+        </ToggleGroup>
       </div>
     </div>
   );
@@ -520,19 +543,21 @@ function MainContent({
   return (
     <div className="flex flex-col lg:flex-row gap-6 max-w-(--fd-layout-width) mx-auto w-full">
       {/* Mobile filter toggle */}
-      <button
+      <Button
         type="button"
+        variant="outline"
+        size="sm"
         onClick={() => setFiltersOpen(!filtersOpen)}
-        className="lg:hidden inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium hover:bg-muted transition-colors self-start"
+        className="self-start lg:hidden"
       >
-        <Filter className="h-4 w-4" />
+        <Filter data-icon="inline-start" />
         Filters
         {activeFilterCount > 0 && (
           <span className="inline-flex items-center justify-center rounded-full bg-primary px-1.5 text-xs text-primary-foreground">
             {activeFilterCount}
           </span>
         )}
-      </button>
+      </Button>
 
       {/* Mobile filter panel */}
       {filtersOpen && (
@@ -547,13 +572,16 @@ function MainContent({
       {/* Main content */}
       <div className="flex-1">
         {filteredResources.length === 0 ? (
-          <Card className="p-8 text-center">
-            <p className="text-muted-foreground">
-              {resources.length === 0
-                ? "No resources have been added yet. Be the first to contribute!"
-                : "No resources match the selected filters. Try removing some filters."}
-            </p>
-          </Card>
+          <Empty className="border">
+            <EmptyHeader>
+              <EmptyTitle>No resources found</EmptyTitle>
+              <EmptyDescription>
+                {resources.length === 0
+                  ? "No resources have been added yet. Be the first to contribute!"
+                  : "No resources match the selected filters. Try removing some filters."}
+              </EmptyDescription>
+            </EmptyHeader>
+          </Empty>
         ) : (
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
             {filteredResources.map((resource) => (
@@ -588,8 +616,8 @@ function ResourcesClient({
   initialSummaries: Record<string, ReviewSummary>;
 }) {
   return (
-    <main className="px-4 py-12 w-full max-w-(--fd-layout-width) mx-auto space-y-10">
-      <div className="space-y-4 text-center max-w-5xl mx-auto">
+    <main className="mx-auto flex w-full max-w-(--fd-layout-width) flex-col gap-10 px-4 py-12">
+      <div className="mx-auto flex max-w-5xl flex-col gap-4 text-center">
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
           Resources
         </h1>
@@ -618,8 +646,8 @@ function ResourcesClient({
       </ReviewTurnstileProvider>
 
       {/* FAQ Section */}
-      <div className="max-w-3xl mx-auto w-full space-y-4">
-        <div className="space-y-1">
+      <div className="mx-auto flex w-full max-w-3xl flex-col gap-4">
+        <div className="flex flex-col gap-1">
           <h2 className="text-2xl font-semibold">Frequently Asked Questions</h2>
           <p className="text-sm text-muted-foreground">
             Common questions about SoulFire plugins and scripts
@@ -637,7 +665,7 @@ function ResourcesClient({
         </Accordion>
       </div>
 
-      <div className="border-t pt-6 max-w-5xl mx-auto text-center space-y-2">
+      <div className="mx-auto flex max-w-5xl flex-col gap-2 border-t pt-6 text-center">
         <p className="text-sm text-muted-foreground">
           Want to add your plugin or script? Submit a pull request on{" "}
           <a

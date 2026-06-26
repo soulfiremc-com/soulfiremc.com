@@ -1,5 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 
 function PrivacyPolicy() {
@@ -171,17 +179,17 @@ function PrivacyPolicy() {
         the following third-party service providers who process it on our
         behalf:
       </p>
-      <table>
-        <thead>
-          <tr>
-            <th>Service</th>
-            <th>Purpose</th>
-            <th>Data Shared</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Service</TableHead>
+            <TableHead>Purpose</TableHead>
+            <TableHead>Data Shared</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell>
               <a
                 href="https://www.cloudflare.com"
                 target="_blank"
@@ -189,12 +197,14 @@ function PrivacyPolicy() {
               >
                 Cloudflare
               </a>
-            </td>
-            <td>Website hosting and database connection pooling</td>
-            <td>All account and session data</td>
-          </tr>
-          <tr>
-            <td>
+            </TableCell>
+            <TableCell>
+              Website hosting and database connection pooling
+            </TableCell>
+            <TableCell>All account and session data</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
               <a
                 href="https://vercel.com"
                 target="_blank"
@@ -202,12 +212,12 @@ function PrivacyPolicy() {
               >
                 Vercel
               </a>
-            </td>
-            <td>Website hosting and CDN</td>
-            <td>Request metadata (IP, headers)</td>
-          </tr>
-          <tr>
-            <td>
+            </TableCell>
+            <TableCell>Website hosting and CDN</TableCell>
+            <TableCell>Request metadata (IP, headers)</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
               <a
                 href="https://resend.com"
                 target="_blank"
@@ -215,12 +225,12 @@ function PrivacyPolicy() {
               >
                 Resend
               </a>
-            </td>
-            <td>Transactional email delivery</td>
-            <td>Email address, email content</td>
-          </tr>
-          <tr>
-            <td>
+            </TableCell>
+            <TableCell>Transactional email delivery</TableCell>
+            <TableCell>Email address, email content</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
               <a
                 href="https://posthog.com"
                 target="_blank"
@@ -228,12 +238,12 @@ function PrivacyPolicy() {
               >
                 PostHog (EU)
               </a>
-            </td>
-            <td>Product analytics (consent-gated)</td>
-            <td>Usage data, device info, feedback text</td>
-          </tr>
-          <tr>
-            <td>
+            </TableCell>
+            <TableCell>Product analytics (consent-gated)</TableCell>
+            <TableCell>Usage data, device info, feedback text</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
               <a
                 href="https://ahrefs.com"
                 target="_blank"
@@ -241,12 +251,12 @@ function PrivacyPolicy() {
               >
                 Ahrefs
               </a>
-            </td>
-            <td>SEO analytics</td>
-            <td>Page visit data</td>
-          </tr>
-          <tr>
-            <td>
+            </TableCell>
+            <TableCell>SEO analytics</TableCell>
+            <TableCell>Page visit data</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
               <a
                 href="https://www.cloudflare.com"
                 target="_blank"
@@ -254,12 +264,12 @@ function PrivacyPolicy() {
               >
                 Cloudflare
               </a>
-            </td>
-            <td>Turnstile CAPTCHA</td>
-            <td>Browser interaction data for bot detection</td>
-          </tr>
-          <tr>
-            <td>
+            </TableCell>
+            <TableCell>Turnstile CAPTCHA</TableCell>
+            <TableCell>Browser interaction data for bot detection</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
               <a
                 href="https://discord.com"
                 target="_blank"
@@ -267,12 +277,12 @@ function PrivacyPolicy() {
               >
                 Discord
               </a>
-            </td>
-            <td>OAuth login &amp; linked roles</td>
-            <td>OAuth tokens, user ID</td>
-          </tr>
-          <tr>
-            <td>
+            </TableCell>
+            <TableCell>OAuth login &amp; linked roles</TableCell>
+            <TableCell>OAuth tokens, user ID</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
               <a
                 href="https://github.com"
                 target="_blank"
@@ -280,12 +290,12 @@ function PrivacyPolicy() {
               >
                 GitHub
               </a>
-            </td>
-            <td>OAuth login</td>
-            <td>OAuth tokens, user ID</td>
-          </tr>
-          <tr>
-            <td>
+            </TableCell>
+            <TableCell>OAuth login</TableCell>
+            <TableCell>OAuth tokens, user ID</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
               <a
                 href="https://gravatar.com"
                 target="_blank"
@@ -293,12 +303,12 @@ function PrivacyPolicy() {
               >
                 Gravatar
               </a>
-            </td>
-            <td>Avatar fallback</td>
-            <td>MD5 hash of email address</td>
-          </tr>
-          <tr>
-            <td>
+            </TableCell>
+            <TableCell>Avatar fallback</TableCell>
+            <TableCell>MD5 hash of email address</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
               <a
                 href="https://youtube.com"
                 target="_blank"
@@ -306,12 +316,12 @@ function PrivacyPolicy() {
               >
                 YouTube
               </a>
-            </td>
-            <td>Embedded demo video</td>
-            <td>Standard YouTube embed data</td>
-          </tr>
-        </tbody>
-      </table>
+            </TableCell>
+            <TableCell>Embedded demo video</TableCell>
+            <TableCell>Standard YouTube embed data</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
 
       <h2>4. Do We Use Cookies and Tracking Technologies?</h2>
       <p>

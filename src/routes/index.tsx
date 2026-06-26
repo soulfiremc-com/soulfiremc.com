@@ -875,7 +875,7 @@ function ScriptingAnimation() {
               Execution Log
             </span>
           </div>
-          <div className="space-y-0.5">
+          <div className="flex flex-col gap-0.5">
             {visibleLogs.map((log) => (
               <div key={log.phase} className={cn("truncate", log.color)}>
                 {log.text}
@@ -1280,7 +1280,7 @@ function Page() {
           <HeroBackground />
           <div className="relative z-10 max-w-(--fd-layout-width) px-4 md:px-6 py-12 md:py-16">
             <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
-              <div className="space-y-6 text-left">
+              <div className="flex flex-col gap-6 text-left">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-background/80 border border-primary/30 backdrop-blur-sm shadow-sm">
                   <Zap className="h-4 w-4 text-primary" />
                   <AnimatedShinyText className="text-sm font-semibold">
@@ -1291,32 +1291,34 @@ function Page() {
                   The best Minecraft bot tool, undetectable and fast.
                 </h1>
                 <div className="flex flex-col gap-4 sm:flex-row">
-                  <Link to="/download">
-                    <Button
-                      size="lg"
-                      className="gap-2 h-14 px-8 text-lg font-semibold"
-                    >
-                      <Download className="h-6 w-6" />
-                      Get SoulFire
-                    </Button>
-                  </Link>
-                  <a
-                    href={getRequiredEnv(
-                      import.meta.env.VITE_GITHUB_LINK,
-                      "VITE_GITHUB_LINK",
-                    )}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Button
+                    asChild
+                    size="lg"
+                    className="h-14 px-8 text-lg font-semibold"
                   >
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      className="gap-2 h-14 px-8 text-lg font-semibold bg-background/80 backdrop-blur-sm border-2"
+                    <Link to="/download">
+                      <Download data-icon="inline-start" />
+                      Get SoulFire
+                    </Link>
+                  </Button>
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="lg"
+                    className="h-14 border-2 bg-background/80 px-8 text-lg font-semibold backdrop-blur-sm"
+                  >
+                    <a
+                      href={getRequiredEnv(
+                        import.meta.env.VITE_GITHUB_LINK,
+                        "VITE_GITHUB_LINK",
+                      )}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
-                      <SiGithub className="h-6 w-6" />
+                      <SiGithub data-icon="inline-start" />
                       Star on GitHub
-                    </Button>
-                  </a>
+                    </a>
+                  </Button>
                 </div>
               </div>
               <div className="relative rounded-2xl border bg-background/80 backdrop-blur p-2 shadow-xl overflow-hidden">
@@ -1357,7 +1359,7 @@ function Page() {
       {/* Features */}
       {/** biome-ignore lint/correctness/useUniqueElementIds: Need this for static links */}
       <section className="py-16" id="features">
-        <div className="flex flex-col space-y-4 mb-12">
+        <div className="mb-12 flex flex-col gap-4">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
             Features
           </h2>
@@ -1375,7 +1377,7 @@ function Page() {
       {/* FAQ */}
       <section className="py-16">
         <div className="w-full max-w-3xl mx-auto">
-          <div className="flex flex-col space-y-4 mb-12">
+          <div className="mb-12 flex flex-col gap-4">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
               Frequently Asked Questions
             </h2>
@@ -1395,7 +1397,7 @@ function Page() {
       {/* Visual Scripting Section */}
       <section className="py-16">
         <div className="w-full max-w-4xl mx-auto">
-          <div className="flex flex-col space-y-4 mb-12">
+          <div className="mb-12 flex flex-col gap-4">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
               Visual Scripting, No Code Required
             </h2>
@@ -1453,12 +1455,12 @@ function Page() {
             </div>
           </div>
           <div className="flex mt-8">
-            <Link to="/docs/$" params={{ _splat: "scripting" }}>
-              <Button variant="outline" className="gap-2">
+            <Button asChild variant="outline">
+              <Link to="/docs/$" params={{ _splat: "scripting" }}>
                 Explore scripting docs
-                <ArrowRight className="w-4 h-4" />
-              </Button>
-            </Link>
+                <ArrowRight data-icon="inline-end" />
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
@@ -1466,7 +1468,7 @@ function Page() {
       {/* Terminal Demo Section */}
       <section className="py-16">
         <div className="w-full max-w-4xl mx-auto">
-          <div className="flex flex-col space-y-4 mb-12">
+          <div className="mb-12 flex flex-col gap-4">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
               CLI Mode for Power Users
             </h2>
@@ -1478,12 +1480,12 @@ function Page() {
           </div>
           <TerminalAnimation />
           <div className="flex mt-8">
-            <Link to="/docs/$" params={{ _splat: "reference/commands" }}>
-              <Button variant="outline" className="gap-2">
+            <Button asChild variant="outline">
+              <Link to="/docs/$" params={{ _splat: "reference/commands" }}>
                 View all commands
-                <ArrowRight className="w-4 h-4" />
-              </Button>
-            </Link>
+                <ArrowRight data-icon="inline-end" />
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
@@ -1499,7 +1501,7 @@ function Page() {
       <section className="py-16" id="final-cta">
         <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border bg-background px-8 py-16 md:py-24">
           <RetroGrid lineWidth={2} fade={false} className="opacity-30" />
-          <div className="relative z-10 flex flex-col items-center text-center space-y-6">
+          <div className="relative z-10 flex flex-col items-center gap-6 text-center">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
               Ready to Get Started?
             </h2>
@@ -1508,25 +1510,25 @@ function Page() {
               their Minecraft servers with SoulFire
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mt-4">
-              <Link to="/download">
-                <Button size="lg" className="gap-2 h-12 px-8">
-                  <Download className="w-5 h-5" />
+              <Button asChild size="lg" className="h-12 px-8">
+                <Link to="/download">
+                  <Download data-icon="inline-start" />
                   <span>Get SoulFire</span>
-                </Button>
-              </Link>
-              <a
-                href={getRequiredEnv(
-                  import.meta.env.VITE_GITHUB_LINK,
-                  "VITE_GITHUB_LINK",
-                )}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Button variant="outline" size="lg" className="gap-2 h-12 px-8">
-                  <SiGithub className="w-5 h-5" />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="lg" className="h-12 px-8">
+                <a
+                  href={getRequiredEnv(
+                    import.meta.env.VITE_GITHUB_LINK,
+                    "VITE_GITHUB_LINK",
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <SiGithub data-icon="inline-start" />
                   <span>View on GitHub</span>
-                </Button>
-              </a>
+                </a>
+              </Button>
             </div>
           </div>
         </div>

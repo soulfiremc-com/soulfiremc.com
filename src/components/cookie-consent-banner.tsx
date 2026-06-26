@@ -40,11 +40,11 @@ const CookieConsentBanner = () => {
   return (
     <div className="fixed bottom-0 left-0 z-50 sm:bottom-4 sm:left-4">
       <Card className="m-3 shadow-lg sm:max-w-md">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <CardHeader className="flex flex-row items-center justify-between gap-2 pb-2">
           <CardTitle className="text-lg">We use cookies</CardTitle>
-          <Cookie className="h-5 w-5" />
+          <Cookie className="size-5" />
         </CardHeader>
-        <CardContent className="space-y-2">
+        <CardContent className="flex flex-col gap-2">
           <CardDescription className="text-sm">
             We use tracking cookies to understand how you use the product and
             help us improve it. Please accept cookies to help us improve.

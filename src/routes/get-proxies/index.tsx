@@ -28,13 +28,21 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Badge as UiBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+} from "@/components/ui/empty";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useReviews } from "@/hooks/use-reviews";
 import {
   BADGE_CONFIG,
@@ -151,18 +159,16 @@ function CouponCode({ code, discount }: { code: string; discount?: string }) {
           {code}
         </p>
       </div>
-      <button
+      <Button
         type="button"
+        variant="ghost"
+        size="icon"
         onClick={handleCopy}
-        className="rounded-md p-2 hover:bg-pink-500/10 transition-colors"
+        className="text-muted-foreground hover:bg-pink-500/10"
         aria-label="Copy coupon code"
       >
-        {copied ? (
-          <Check className="h-4 w-4 text-green-500" />
-        ) : (
-          <Copy className="h-4 w-4 text-muted-foreground" />
-        )}
-      </button>
+        {copied ? <Check className="text-green-500" /> : <Copy />}
+      </Button>
     </div>
   );
 }
@@ -222,15 +228,16 @@ function ProviderBadge({
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <span
+        <UiBadge
+          variant="outline"
           className={cn(
-            "inline-flex cursor-help items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium",
+            "cursor-help border-transparent",
             classNameOverride ?? config.className,
           )}
         >
           {config.icon}
           {config.label}
-        </span>
+        </UiBadge>
       </HoverCardTrigger>
       <HoverCardContent className="w-64 text-sm">
         <p>{config.description}</p>
@@ -291,7 +298,7 @@ function ProviderCard({
         <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-muted">
           <ProviderLogo provider={provider} />
         </div>
-        <div className="flex-1 space-y-3">
+        <div className="flex flex-1 flex-col gap-3">
           <div className="flex flex-wrap items-center gap-3">
             <h3 className="text-xl font-semibold">
               <Link
@@ -347,7 +354,7 @@ function ProviderCard({
                 rel="noopener noreferrer nofollow"
               >
                 Get Proxies
-                <ExternalLink className="ml-2 h-4 w-4" />
+                <ExternalLink data-icon="inline-end" />
               </a>
             </Button>
             <SocialLinkButtons links={provider.socialLinks} />
@@ -377,13 +384,6 @@ function MainContent({
   const [{ badges, sort }, setParams] = useQueryStates(proxiesSearchParams, {
     shallow: false,
   });
-
-  const toggleFilter = (badge: FilterableBadge) => {
-    const newBadges = badges.includes(badge)
-      ? badges.filter((b) => b !== badge)
-      : [...badges, badge];
-    setParams({ badges: newBadges });
-  };
 
   const clearFilters = () => {
     setParams({ badges: [], sort: "default" });
@@ -438,33 +438,45 @@ function MainContent({
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   const filterContent = (
-    <div className="space-y-4">
+    <div className="flex flex-col gap-4">
       <div className="flex items-center gap-2">
-        <Filter className="h-4 w-4 text-muted-foreground" />
+        <Filter className="size-4 text-muted-foreground" />
         <span className="text-sm font-medium">Filter by type</span>
         {(badges.length > 0 || sort !== "default") && (
-          <button
+          <Button
             type="button"
+            variant="ghost"
+            size="sm"
             onClick={clearFilters}
-            className="text-xs text-muted-foreground hover:text-foreground underline ml-auto"
+            className="ml-auto h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
           >
             Clear
-          </button>
+          </Button>
         )}
       </div>
-      <div className="space-y-2">
+      <div className="flex flex-col gap-2">
         <span className="text-xs text-muted-foreground">Sort:</span>
-        <div className="flex flex-wrap gap-2">
+        <ToggleGroup
+          type="single"
+          value={sort}
+          onValueChange={(value) => {
+            if (value) {
+              setParams({ sort: value as (typeof SORT_OPTIONS)[number] });
+            }
+          }}
+          spacing={2}
+          className="flex-wrap"
+        >
           {SORT_OPTIONS.map((option) => {
             const config = SORT_CONFIG[option];
             const isActive = sort === option;
             return (
-              <button
-                type="button"
+              <ToggleGroupItem
                 key={option}
-                onClick={() => setParams({ sort: option })}
+                value={option}
+                size="sm"
                 className={cn(
-                  "inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-medium outline-none transition-all",
+                  "rounded-full px-3 py-1.5 text-xs",
                   isActive
                     ? "bg-primary text-primary-foreground ring-2 ring-offset-2 ring-offset-background ring-primary"
                     : "bg-muted text-muted-foreground hover:bg-muted/80",
@@ -472,22 +484,30 @@ function MainContent({
               >
                 {config.icon}
                 {config.label}
-              </button>
+              </ToggleGroupItem>
             );
           })}
-        </div>
+        </ToggleGroup>
       </div>
-      <div className="flex flex-wrap gap-2">
+      <ToggleGroup
+        type="multiple"
+        value={badges}
+        onValueChange={(value) =>
+          setParams({ badges: value as FilterableBadge[] })
+        }
+        spacing={2}
+        className="flex-wrap"
+      >
         {FILTER_BADGES.map((badge) => {
           const config = BADGE_CONFIG[badge];
           const isActive = badges.includes(badge);
           return (
-            <button
-              type="button"
+            <ToggleGroupItem
               key={badge}
-              onClick={() => toggleFilter(badge)}
+              value={badge}
+              size="sm"
               className={cn(
-                "inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-medium outline-none transition-all",
+                "rounded-full px-3 py-1.5 text-xs",
                 isActive
                   ? cn(
                       config.className,
@@ -497,29 +517,31 @@ function MainContent({
               )}
             >
               {config.label}
-            </button>
+            </ToggleGroupItem>
           );
         })}
-      </div>
+      </ToggleGroup>
     </div>
   );
 
   return (
     <div className="flex flex-col lg:flex-row gap-6 max-w-(--fd-layout-width) mx-auto w-full">
       {/* Mobile filter toggle */}
-      <button
+      <Button
         type="button"
+        variant="outline"
+        size="sm"
         onClick={() => setFiltersOpen(!filtersOpen)}
-        className="lg:hidden inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium hover:bg-muted transition-colors self-start"
+        className="self-start lg:hidden"
       >
-        <Filter className="h-4 w-4" />
+        <Filter data-icon="inline-start" />
         Filters
         {(badges.length > 0 || sort !== "default") && (
           <span className="inline-flex items-center justify-center rounded-full bg-primary px-1.5 text-xs text-primary-foreground">
             {badges.length + (sort !== "default" ? 1 : 0)}
           </span>
         )}
-      </button>
+      </Button>
 
       {/* Mobile filter panel */}
       {filtersOpen && (
@@ -534,12 +556,15 @@ function MainContent({
       {/* Main content */}
       <div className="flex-1">
         {filteredProviders.length === 0 ? (
-          <Card className="p-8 text-center">
-            <p className="text-muted-foreground">
-              No providers match the selected filters. Try removing some
-              filters.
-            </p>
-          </Card>
+          <Empty className="border">
+            <EmptyHeader>
+              <EmptyTitle>No providers found</EmptyTitle>
+              <EmptyDescription>
+                No providers match the selected filters. Try removing some
+                filters.
+              </EmptyDescription>
+            </EmptyHeader>
+          </Empty>
         ) : (
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
             {filteredProviders.map((provider) => (
@@ -574,8 +599,8 @@ function GetProxiesClient({
   initialSummaries: Record<string, ReviewSummary>;
 }) {
   return (
-    <main className="px-4 py-12 w-full max-w-(--fd-layout-width) mx-auto space-y-10">
-      <div className="space-y-4 text-center max-w-5xl mx-auto">
+    <main className="mx-auto flex w-full max-w-(--fd-layout-width) flex-col gap-10 px-4 py-12">
+      <div className="mx-auto flex max-w-5xl flex-col gap-4 text-center">
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
           Get Proxies
         </h1>
@@ -604,8 +629,8 @@ function GetProxiesClient({
       </ReviewTurnstileProvider>
 
       {/* FAQ Section */}
-      <div className="max-w-3xl mx-auto w-full space-y-4">
-        <div className="space-y-1">
+      <div className="mx-auto flex w-full max-w-3xl flex-col gap-4">
+        <div className="flex flex-col gap-1">
           <h2 className="text-2xl font-semibold">Frequently Asked Questions</h2>
           <p className="text-sm text-muted-foreground">
             Common questions about proxies for SoulFire
@@ -623,7 +648,7 @@ function GetProxiesClient({
         </Accordion>
       </div>
 
-      <div className="border-t pt-6 max-w-5xl mx-auto text-center space-y-2">
+      <div className="mx-auto flex max-w-5xl flex-col gap-2 border-t pt-6 text-center">
         <p className="text-sm text-muted-foreground">
           <strong>Disclosure:</strong> This page contains affiliate links. When
           you purchase through these links, we may earn a commission at no extra

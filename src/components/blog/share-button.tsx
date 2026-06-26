@@ -5,9 +5,11 @@ import { toast } from "sonner";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Button } from "../ui/button";
 
 interface ShareButtonProps {
   title: string;
@@ -47,26 +49,30 @@ export function ShareButton({ title, description, url }: ShareButtonProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button
+        <Button
           type="button"
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          variant="ghost"
+          size="sm"
+          className="px-2 text-muted-foreground hover:text-foreground"
           aria-label="Share this post"
         >
-          <Share2 className="w-4 h-4" />
+          <Share2 />
           Share
-        </button>
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={handleCopyLink}>
-          <Copy className="w-4 h-4 mr-2" />
-          Copy Link
-        </DropdownMenuItem>
-        {supportsWebShare && (
-          <DropdownMenuItem onClick={handleNativeShare}>
-            <Share2 className="w-4 h-4 mr-2" />
-            Share via...
+        <DropdownMenuGroup>
+          <DropdownMenuItem onClick={handleCopyLink}>
+            <Copy />
+            Copy Link
           </DropdownMenuItem>
-        )}
+          {supportsWebShare && (
+            <DropdownMenuItem onClick={handleNativeShare}>
+              <Share2 />
+              Share via...
+            </DropdownMenuItem>
+          )}
+        </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
   );

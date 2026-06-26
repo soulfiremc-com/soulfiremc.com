@@ -1,4 +1,5 @@
 import { MessageSquareText } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import type { ReviewSummary } from "@/lib/review-core";
 import { cn } from "@/lib/utils";
 import { ReviewStars } from "./review-stars";
@@ -14,22 +15,24 @@ export function ReviewSummaryBadge({
 }) {
   if (summary.reviewCount === 0 || summary.averageRating === null) {
     return (
-      <div
+      <Badge
+        variant="outline"
         className={cn(
-          "inline-flex items-center gap-2 rounded-full border border-dashed px-3 py-1.5 text-sm text-muted-foreground",
+          "gap-2 border-dashed px-3 py-1.5 text-sm text-muted-foreground",
           className,
         )}
       >
-        <MessageSquareText className="h-3.5 w-3.5" />
+        <MessageSquareText className="size-3.5" />
         No ratings yet
-      </div>
+      </Badge>
     );
   }
 
   return (
-    <div
+    <Badge
+      variant="outline"
       className={cn(
-        "inline-flex items-center gap-2 rounded-full border bg-background/80 px-3 py-1.5 text-sm shadow-sm",
+        "gap-2 bg-background/80 px-3 py-1.5 text-sm shadow-sm",
         className,
       )}
     >
@@ -40,6 +43,6 @@ export function ReviewSummaryBadge({
       <span className="text-muted-foreground">
         {summary.reviewCount} rating{summary.reviewCount === 1 ? "" : "s"}
       </span>
-    </div>
+    </Badge>
   );
 }

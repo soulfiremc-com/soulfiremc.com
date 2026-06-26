@@ -22,6 +22,7 @@ import { ItemReviewsSection } from "@/components/item-reviews-section";
 import { JsonLd } from "@/components/json-ld";
 import { ReviewSummaryBadge } from "@/components/review-summary-badge";
 import { SiteShell } from "@/components/site-shell";
+import { Badge as UiBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -73,7 +74,7 @@ function GallerySection({
     setOpenIndex((i) => (i !== null ? (i + 1) % images.length : null));
 
   return (
-    <section className="space-y-4">
+    <section className="flex flex-col gap-4">
       <h2 className="text-2xl font-semibold">Gallery</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {images.map((img, i) => (
@@ -192,15 +193,13 @@ function ResourceBadge({ badge }: { badge: Badge }) {
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <span
-          className={cn(
-            "inline-flex cursor-help items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium",
-            config.className,
-          )}
+        <UiBadge
+          variant="outline"
+          className={cn("cursor-help border-transparent", config.className)}
         >
           {config.icon}
           {config.label}
-        </span>
+        </UiBadge>
       </HoverCardTrigger>
       <HoverCardContent className="w-64 text-sm">
         <p>{config.description}</p>
@@ -218,7 +217,7 @@ function ResourceDetailPageContent({
   writtenReviews,
 }: ResourceDetailPageData) {
   return (
-    <main className="mx-auto w-full max-w-5xl space-y-8 px-4 py-12">
+    <main className="mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 py-12">
       <JsonLd data={pageJsonLd} />
       <JsonLd data={softwareJsonLd} />
       <JsonLd data={breadcrumbJsonLd} />
@@ -243,7 +242,7 @@ function ResourceDetailPageContent({
           <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-muted">
             <ResourceLogo resource={resource} />
           </div>
-          <div className="flex-1 space-y-4">
+          <div className="flex flex-1 flex-col gap-4">
             <div className="flex flex-wrap items-center gap-3">
               <h1 className="text-4xl font-bold tracking-tight">
                 {resource.name}
@@ -279,7 +278,7 @@ function ResourceDetailPageContent({
                   target="_blank"
                   rel="noopener noreferrer nofollow"
                 >
-                  <Download className="mr-2 h-4 w-4" />
+                  <Download data-icon="inline-start" />
                   Download {resource.name}
                 </a>
               </Button>
@@ -291,7 +290,7 @@ function ResourceDetailPageContent({
                     rel="noopener noreferrer"
                   >
                     View Source
-                    <ExternalLink className="ml-2 h-4 w-4" />
+                    <ExternalLink data-icon="inline-end" />
                   </a>
                 </Button>
               ) : null}
@@ -314,13 +313,16 @@ function ResourceDetailPageContent({
         <GallerySection images={resource.gallery} />
       ) : null}
 
-      <Link
-        to="/resources"
-        className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+      <Button
+        asChild
+        variant="ghost"
+        className="self-start text-muted-foreground"
       >
-        <ArrowLeft className="h-4 w-4" />
-        Browse all resources
-      </Link>
+        <Link to="/resources">
+          <ArrowLeft data-icon="inline-start" />
+          Browse all resources
+        </Link>
+      </Button>
     </main>
   );
 }

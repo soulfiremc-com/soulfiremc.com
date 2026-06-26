@@ -1,5 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 
 function CookiePolicy() {
@@ -86,44 +94,48 @@ function CookiePolicy() {
         switched off. They are set in response to actions you take, such as
         signing in or filling in forms.
       </p>
-      <table>
-        <thead>
-          <tr>
-            <th>Cookie / Storage</th>
-            <th>Provider</th>
-            <th>Purpose</th>
-            <th>Duration</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Cookie / Storage</TableHead>
+            <TableHead>Provider</TableHead>
+            <TableHead>Purpose</TableHead>
+            <TableHead>Duration</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell>
               <code>better-auth.session_token</code>
-            </td>
-            <td>SoulFire (better-auth)</td>
-            <td>Maintains your authenticated session after signing in</td>
-            <td>Session / up to 7 days</td>
-          </tr>
-          <tr>
-            <td>
+            </TableCell>
+            <TableCell>SoulFire (better-auth)</TableCell>
+            <TableCell>
+              Maintains your authenticated session after signing in
+            </TableCell>
+            <TableCell>Session / up to 7 days</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
               <code>discord_oauth_state</code>
-            </td>
-            <td>SoulFire</td>
-            <td>CSRF protection during Discord OAuth linked roles flow</td>
-            <td>Short-lived (minutes)</td>
-          </tr>
-          <tr>
-            <td>
+            </TableCell>
+            <TableCell>SoulFire</TableCell>
+            <TableCell>
+              CSRF protection during Discord OAuth linked roles flow
+            </TableCell>
+            <TableCell>Short-lived (minutes)</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
               <code>cf_clearance</code> / Turnstile cookies
-            </td>
-            <td>Cloudflare</td>
-            <td>
+            </TableCell>
+            <TableCell>Cloudflare</TableCell>
+            <TableCell>
               CAPTCHA verification to protect authentication forms from bots
-            </td>
-            <td>Session / up to 30 minutes</td>
-          </tr>
-        </tbody>
-      </table>
+            </TableCell>
+            <TableCell>Session / up to 30 minutes</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
 
       <h3>Analytics Cookies (Consent Required)</h3>
       <p>
@@ -132,21 +144,21 @@ function CookiePolicy() {
         <strong>after you accept analytics cookies</strong> via our cookie
         consent banner.
       </p>
-      <table>
-        <thead>
-          <tr>
-            <th>Cookie / Storage</th>
-            <th>Provider</th>
-            <th>Purpose</th>
-            <th>Duration</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Cookie / Storage</TableHead>
+            <TableHead>Provider</TableHead>
+            <TableHead>Purpose</TableHead>
+            <TableHead>Duration</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell>
               <code>ph_*</code> cookies
-            </td>
-            <td>
+            </TableCell>
+            <TableCell>
               <a
                 href="https://posthog.com"
                 target="_blank"
@@ -155,35 +167,35 @@ function CookiePolicy() {
                 PostHog
               </a>{" "}
               (EU-hosted)
-            </td>
-            <td>
+            </TableCell>
+            <TableCell>
               Product analytics &mdash; tracks page views, feature usage, and
               user interactions. Data is hosted in the EU (
               <code>eu.i.posthog.com</code>).
-            </td>
-            <td>Persistent (up to 1 year)</td>
-          </tr>
-        </tbody>
-      </table>
+            </TableCell>
+            <TableCell>Persistent (up to 1 year)</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
 
       <h3>Performance / SEO Cookies</h3>
       <p>
         These cookies are used for website performance monitoring and SEO
         analysis.
       </p>
-      <table>
-        <thead>
-          <tr>
-            <th>Cookie / Storage</th>
-            <th>Provider</th>
-            <th>Purpose</th>
-            <th>Duration</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Ahrefs analytics cookies</td>
-            <td>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Cookie / Storage</TableHead>
+            <TableHead>Provider</TableHead>
+            <TableHead>Purpose</TableHead>
+            <TableHead>Duration</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell>Ahrefs analytics cookies</TableCell>
+            <TableCell>
               <a
                 href="https://ahrefs.com"
                 target="_blank"
@@ -191,34 +203,36 @@ function CookiePolicy() {
               >
                 Ahrefs
               </a>
-            </td>
-            <td>SEO analytics and website performance monitoring</td>
-            <td>Session / persistent</td>
-          </tr>
-        </tbody>
-      </table>
+            </TableCell>
+            <TableCell>
+              SEO analytics and website performance monitoring
+            </TableCell>
+            <TableCell>Session / persistent</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
 
       <h3>Third-Party Cookies</h3>
       <p>
         The following third-party services embedded on our website may set their
         own cookies:
       </p>
-      <table>
-        <thead>
-          <tr>
-            <th>Service</th>
-            <th>Purpose</th>
-            <th>More Info</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>YouTube</td>
-            <td>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Service</TableHead>
+            <TableHead>Purpose</TableHead>
+            <TableHead>More Info</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell>YouTube</TableCell>
+            <TableCell>
               Embedded demo video on the homepage. YouTube may set cookies and
               collect viewing data.
-            </td>
-            <td>
+            </TableCell>
+            <TableCell>
               <a
                 href="https://policies.google.com/privacy"
                 target="_blank"
@@ -226,15 +240,15 @@ function CookiePolicy() {
               >
                 Google Privacy Policy
               </a>
-            </td>
-          </tr>
-          <tr>
-            <td>Gravatar</td>
-            <td>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Gravatar</TableCell>
+            <TableCell>
               Avatar images loaded from Gravatar. Requests include an MD5 hash
               of the user&apos;s email.
-            </td>
-            <td>
+            </TableCell>
+            <TableCell>
               <a
                 href="https://automattic.com/privacy/"
                 target="_blank"
@@ -242,36 +256,36 @@ function CookiePolicy() {
               >
                 Automattic Privacy Policy
               </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
 
       <h3>Local Storage</h3>
       <p>
         In addition to cookies, we use browser local storage for the following:
       </p>
-      <table>
-        <thead>
-          <tr>
-            <th>Key</th>
-            <th>Purpose</th>
-            <th>Duration</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Key</TableHead>
+            <TableHead>Purpose</TableHead>
+            <TableHead>Duration</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell>
               <code>docs-feedback-&#123;url&#125;</code>
-            </td>
-            <td>
+            </TableCell>
+            <TableCell>
               Remembers whether you&apos;ve already submitted feedback on a
               documentation page
-            </td>
-            <td>Persistent (until cleared)</td>
-          </tr>
-        </tbody>
-      </table>
+            </TableCell>
+            <TableCell>Persistent (until cleared)</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
 
       <h2>4. How to Manage Cookies</h2>
       <h3>Cookie Consent Banner</h3>
