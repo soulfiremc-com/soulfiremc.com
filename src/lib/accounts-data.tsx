@@ -616,6 +616,27 @@ export const SHOPS: Shop[] = [
       },
     },
   },
+  {
+    slug: "lunaralts",
+    name: "LunarAlts",
+    logo: "/accounts/lunaralts.png",
+    url: "https://lunaralts.xyz",
+    websiteUrl: "https://lunaralts.xyz",
+    discordUrl: "https://discord.gg/aeuY56KBrG",
+    paymentMethods: ["Crypto"],
+    startDate: "May 2026",
+    listings: {
+      "nfa-accounts": {
+        summary:
+          "Premium cookie NFAs with multiple ban-check tiers, from Hypixel-banned budget alts up to Hypixel-unbanned accounts. Instant delivery through a SellAuth checkout.",
+        badges: ["high-quality", "instant-delivery"],
+        price: "2-10¢",
+        priceValue: 0.02,
+        priceDetails:
+          "Prices range from 2¢ for Hypixel-banned alts up to 10¢ for Hypixel-unbanned accounts, with various ban checks available. Accounts are delivered instantly after checkout.",
+      },
+    },
+  },
   // {
   //   slug: "brano",
   //   name: "Brano",
