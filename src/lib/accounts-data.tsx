@@ -446,6 +446,37 @@ export const SHOPS: Shop[] = [
     },
   },
   {
+    slug: "alts-fast",
+    name: "Alts.fast",
+    logo: "/accounts/altsfast.png",
+    url: "https://alts.fast/?referral=SOULFIRE",
+    websiteUrl: "https://alts.fast",
+    discordUrl: "https://discord.gg/altshop",
+    paymentMethods: [
+      "Card",
+      "Apple Pay",
+      "Google Pay",
+      "Bank Transfer",
+      "PIX",
+      "Crypto",
+    ],
+    socialLinks: [{ platform: "telegram", url: "https://t.me/altsfast" }],
+    startDate: "May 2026",
+    listings: {
+      "mfa-accounts": {
+        summary:
+          "Full-access accounts pre-checked on Hypixel and DonutSMP before delivery, with a 7-day replacement warranty (permanent against locks) and automated instant delivery. Also offers Hypixel ranked, DonutSMP playtime, and caped accounts.",
+        badges: ["affiliate", "high-quality", "instant-delivery"],
+        price: "$7.99+",
+        priceValue: 7.99,
+        linkDiscountMessage:
+          "Register using the link below for a 10% discount at checkout",
+        priceDetails:
+          "Regular alts start at $7.99 (clean or Hypixel-banned tiers), Hypixel ranked from $13.99, caped accounts from $11.00, and DonutSMP playtime accounts from $3.00. Every order includes a 7-day replacement warranty with free replacements and no forms, plus permanent warranty against account locks. Card and Apple Pay deliver in seconds, crypto confirms within minutes.",
+      },
+    },
+  },
+  {
     slug: "zzxgp",
     name: "ZZXGP",
     logo: "/accounts/zzxgp.png",
