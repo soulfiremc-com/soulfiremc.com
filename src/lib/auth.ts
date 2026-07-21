@@ -146,6 +146,9 @@ export const auth = betterAuth({
     enabled: true,
     storage: "database",
   },
+  verification: {
+    storeIdentifier: "hashed",
+  },
   advanced: {
     ipAddress: {
       ipAddressHeaders: ["cf-connecting-ip", "x-forwarded-for"],
@@ -168,6 +171,7 @@ export const auth = betterAuth({
     joins: true,
   },
   account: {
+    encryptOAuthTokens: true,
     accountLinking: {
       enabled: true,
     },
