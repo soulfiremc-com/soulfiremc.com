@@ -211,6 +211,7 @@ export const auth = betterAuth({
       await authNotifications.sendPasswordReset({ user, url });
     },
     autoSignIn: true,
+    revokeSessionsOnPasswordReset: true,
   },
   emailVerification: {
     async sendVerificationEmail({ user, url }): Promise<void> {
