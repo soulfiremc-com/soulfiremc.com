@@ -12,7 +12,7 @@ async function generateAuthSchema() {
   try {
     // Run the better-auth CLI to generate the schema
     execSync(
-      "pnpm dlx @better-auth/cli@latest generate --config ./auth.loader.ts --output ./src/lib/db/auth-schema.ts",
+      "pnpm dlx @better-auth/cli@latest generate --config ./src/lib/auth.ts --output ./src/lib/db/auth-schema.ts --yes",
       {
         stdio: "inherit",
         cwd: process.cwd(),
@@ -62,6 +62,11 @@ async function generateAuthSchema() {
 
     // Write the modified content back
     writeFileSync(OUTPUT_PATH, processedContent);
+
+    execSync("pnpm exec biome check --write ./src/lib/db/auth-schema.ts", {
+      stdio: "inherit",
+      cwd: process.cwd(),
+    });
 
     console.log("Auth schema generated with RLS enabled!");
     console.log(`File saved to: ${OUTPUT_PATH}`);

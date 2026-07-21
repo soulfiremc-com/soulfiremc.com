@@ -142,6 +142,10 @@ export const auth = betterAuth({
       ...generatedAuthSchema,
     },
   }),
+  rateLimit: {
+    enabled: true,
+    storage: "database",
+  },
   advanced: {
     ipAddress: {
       ipAddressHeaders: ["cf-connecting-ip", "x-forwarded-for"],
