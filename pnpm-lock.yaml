@@ -71,15 +71,6 @@ importers:
       '@tailwindcss/vite':
         specifier: ^4.3.3
         version: 4.3.3(vite@8.1.5(@types/node@26.1.1)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))
-      '@takumi-rs/helpers':
-        specifier: ^2.4.1
-        version: 2.4.1(preact@10.29.7)(react@19.2.8)
-      '@takumi-rs/image-response':
-        specifier: ^2.4.1
-        version: 2.4.1(csstype@3.2.3)(preact@10.29.7)(react@19.2.8)
-      '@takumi-rs/wasm':
-        specifier: ^2.4.1
-        version: 2.4.1(csstype@3.2.3)(preact@10.29.7)(react@19.2.8)
       '@tanstack/devtools-vite':
         specifier: ^0.8.1
         version: 0.8.1(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(vite@8.1.5(@types/node@26.1.1)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))
@@ -227,6 +218,9 @@ importers:
       tailwind-merge:
         specifier: ^3.6.0
         version: 3.6.0
+      takumi-js:
+        specifier: ^2.4.1
+        version: 2.4.1(csstype@3.2.3)(preact@10.29.7)(react@19.2.8)
       vaul:
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -3425,10 +3419,6 @@ packages:
         optional: true
       react:
         optional: true
-
-  '@takumi-rs/image-response@2.4.1':
-    resolution: {integrity: sha512-k0Ruzaat9z0M8eL2pWs3bltf/p/69KODGF4L/Yt9csshwvzp5SEK4/WpIJ5EXRwQEbTjh9IChSrpgfkRWj2AvA==}
-    engines: {node: '>=18'}
 
   '@takumi-rs/wasm@2.4.1':
     resolution: {integrity: sha512-VhJtfCCRs+vxGCAFEkeu3/UI0VpToX6ys7KfeNBUTtVb9SGtkxBFxXixwmorALW0kzUuRkLHUl2HpylvlKk7Xg==}
@@ -10660,14 +10650,6 @@ snapshots:
     optionalDependencies:
       preact: 10.29.7
       react: 19.2.8
-
-  '@takumi-rs/image-response@2.4.1(csstype@3.2.3)(preact@10.29.7)(react@19.2.8)':
-    dependencies:
-      takumi-js: 2.4.1(csstype@3.2.3)(preact@10.29.7)(react@19.2.8)
-    transitivePeerDependencies:
-      - csstype
-      - preact
-      - react
 
   '@takumi-rs/wasm@2.4.1(csstype@3.2.3)(preact@10.29.7)(react@19.2.8)':
     dependencies:

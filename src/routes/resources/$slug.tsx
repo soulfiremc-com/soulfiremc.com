@@ -328,7 +328,7 @@ function ResourceDetailPageContent({
 }
 
 const resourceDetailLoader = createServerFn({ method: "GET" })
-  .inputValidator((value: { reviewsPage: number; slug: string }) => value)
+  .validator((value: { reviewsPage: number; slug: string }) => value)
   .handler(async ({ data }) => {
     const resource = getResourceBySlug(data.slug);
     if (!resource) {

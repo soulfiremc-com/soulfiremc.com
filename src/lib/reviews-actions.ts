@@ -137,7 +137,7 @@ function getSubmittedCommentStatus({
 }
 
 export const getReviewsServerFn = createServerFn({ method: "GET" })
-  .inputValidator(getReviewsInputSchema)
+  .validator(getReviewsInputSchema)
   .handler(async ({ data }): Promise<GetReviewsResult> => {
     const slugs = data.slugs.map((slug) => slug.trim()).filter(Boolean);
     if (slugs.length === 0) {
@@ -193,7 +193,7 @@ export const getReviewsServerFn = createServerFn({ method: "GET" })
   });
 
 export const submitReviewServerFn = createServerFn({ method: "POST" })
-  .inputValidator(submitReviewInputSchema)
+  .validator(submitReviewInputSchema)
   .handler(async ({ data }): Promise<SubmitReviewResult> => {
     const request = getRequest();
     const session = await auth.api.getSession({ headers: request.headers });
@@ -273,7 +273,7 @@ export const getPendingReviewCommentsServerFn = createServerFn({
 });
 
 export const moderateReviewCommentServerFn = createServerFn({ method: "POST" })
-  .inputValidator(moderateReviewCommentInputSchema)
+  .validator(moderateReviewCommentInputSchema)
   .handler(async ({ data }): Promise<ModerateReviewCommentResult> => {
     const session = await getAdminSession();
     if (!session) {
@@ -286,7 +286,7 @@ export const moderateReviewCommentServerFn = createServerFn({ method: "POST" })
   });
 
 export const deleteReviewServerFn = createServerFn({ method: "POST" })
-  .inputValidator(deleteReviewInputSchema)
+  .validator(deleteReviewInputSchema)
   .handler(async ({ data }): Promise<DeleteReviewResult> => {
     const session = await auth.api.getSession({
       headers: getRequest().headers,

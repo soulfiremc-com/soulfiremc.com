@@ -1,6 +1,5 @@
 import { createOpenAPI } from "fumadocs-openapi/server";
-import type { ApiPageProps } from "fumadocs-openapi/ui";
-import type { ClientApiPageProps } from "fumadocs-openapi/ui/create-client";
+import type { OpenAPIPageProps_Spec } from "fumadocs-openapi/ui";
 import openApiDocument from "../../../public/sf-openapi.json" with {
   type: "json",
 };
@@ -8,8 +7,7 @@ import openApiDocument from "../../../public/sf-openapi.json" with {
 export type OpenApiPageLike = {
   data: {
     description?: string;
-    getClientAPIPageProps: () => Promise<ClientApiPageProps>;
-    getAPIPageProps: () => ApiPageProps;
+    getOpenAPIPageProps: () => OpenAPIPageProps_Spec;
     title: string;
     type?: string;
   };
@@ -45,17 +43,24 @@ type OpenApiSection = {
   id: string;
 };
 
-type OpenApiDocument = {
-  dereferenced: {
-    paths?: Record<string, Record<string, unknown>>;
-    webhooks?: Record<string, Record<string, unknown>>;
-  };
+type OpenApiContentDocument = {
+  paths?: Record<string, Record<string, unknown>>;
+  webhooks?: Record<string, Record<string, unknown>>;
 };
 
+type OpenApiInput = Exclude<
+  NonNullable<NonNullable<Parameters<typeof createOpenAPI>[0]>["input"]>,
+  string[]
+>;
+type OpenApiInputDocument = Exclude<
+  OpenApiInput[string],
+  string | (() => unknown)
+>;
+
 export const openapi = createOpenAPI({
-  input: async () => ({
-    sf: openApiDocument as Record<string, unknown>,
-  }),
+  input: {
+    sf: openApiDocument as unknown as OpenApiInputDocument,
+  },
 });
 
 export function isOpenApiPage(page: {
@@ -99,12 +104,12 @@ export async function getOpenApiStructuredData(page: OpenApiPageLike) {
 async function getOpenApiSections(
   page: OpenApiPageLike,
 ): Promise<OpenApiSection[]> {
-  const props = page.data.getAPIPageProps();
-  const document = await resolveDocument(props.document);
+  const props = page.data.getOpenAPIPageProps();
+  const document = props.payload.bundled as OpenApiContentDocument;
   const sections: OpenApiSection[] = [];
 
   for (const item of props.operations ?? []) {
-    const pathItem = document.dereferenced.paths?.[item.path] as
+    const pathItem = document.paths?.[item.path] as
       | Record<string, unknown>
       | undefined;
     const operation = pathItem?.[item.method] as OpenApiOperation | undefined;
@@ -125,7 +130,7 @@ async function getOpenApiSections(
   }
 
   for (const item of props.webhooks ?? []) {
-    const pathItem = document.dereferenced.webhooks?.[item.name] as
+    const pathItem = document.webhooks?.[item.name] as
       | Record<string, unknown>
       | undefined;
     const operation = pathItem?.[item.method] as OpenApiOperation | undefined;
@@ -235,14 +240,6 @@ function formatSectionContent({
   }
 
   return lines.join("\n\n");
-}
-
-async function resolveDocument(document: ApiPageProps["document"]) {
-  if (typeof document === "string") {
-    return (await openapi.getSchema(document)) as OpenApiDocument;
-  }
-
-  return (await document) as OpenApiDocument;
 }
 
 function toHeadingId(method: string, value: string) {

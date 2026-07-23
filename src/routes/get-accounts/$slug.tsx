@@ -256,7 +256,7 @@ function LinkDiscountNotice({ message }: { message: string }) {
 }
 
 const accountDetailLoader = createServerFn({ method: "GET" })
-  .inputValidator((value: { reviewsPage: number; slug: string }) => value)
+  .validator((value: { reviewsPage: number; slug: string }) => value)
   .handler(async ({ data }) => {
     const shop = getShopBySlug(data.slug);
     if (!shop) {

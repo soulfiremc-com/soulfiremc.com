@@ -17,7 +17,7 @@ import {
 import { getMDXComponents } from "@/mdx-components";
 
 const blogPostLoader = createServerFn({ method: "GET" })
-  .inputValidator(z.object({ slug: z.string().min(1) }))
+  .validator(z.object({ slug: z.string().min(1) }))
   .handler(async ({ data }) => {
     const post = await getBlogPostData(data.slug);
     if (!post) {

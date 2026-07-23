@@ -8,7 +8,7 @@ import {
 import { createServerFn } from "@tanstack/react-start";
 import type { SerializedPageTree } from "fumadocs-core/source/client";
 import { useFumadocsLoader } from "fumadocs-core/source/client";
-import type { ClientApiPageProps } from "fumadocs-openapi/ui/create-client";
+import type { OpenAPIPageProps_Spec } from "fumadocs-openapi/ui";
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import {
   DocsBody,
@@ -59,7 +59,7 @@ type DocsPageLoaderData = BaseDocsLoaderData & {
 };
 
 type OpenApiPageLoaderData = BaseDocsLoaderData & {
-  props: ClientApiPageProps;
+  props: OpenAPIPageProps_Spec;
   type: "openapi";
 };
 
@@ -68,7 +68,7 @@ type DocsLoaderData = DocsPageLoaderData | OpenApiPageLoaderData;
 const serverLoader = createServerFn({
   method: "GET",
 })
-  .inputValidator(docsSlugsInputSchema)
+  .validator(docsSlugsInputSchema)
   .handler(async ({ data: slugs }) => {
     const source = await getSource();
     const page = source.getPage(slugs);
@@ -86,11 +86,11 @@ const serverLoader = createServerFn({
         description: page.data.description,
         imageUrl,
         pageTree,
-        props: await (
+        props: (
           page.data as unknown as {
-            getClientAPIPageProps: () => Promise<ClientApiPageProps>;
+            getOpenAPIPageProps: () => OpenAPIPageProps_Spec;
           }
-        ).getClientAPIPageProps(),
+        ).getOpenAPIPageProps(),
         title,
         url: page.url,
       };
