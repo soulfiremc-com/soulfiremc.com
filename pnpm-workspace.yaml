@@ -6,6 +6,8 @@ allowBuilds:
   sharp: false
   vue-demi: false
   workerd: false
+minimumReleaseAgeExclude:
+  - '@fumadocs/base-ui@16.12.0'
 onlyBuiltDependencies:
   - '@tailwindcss/oxide'
   - core-js

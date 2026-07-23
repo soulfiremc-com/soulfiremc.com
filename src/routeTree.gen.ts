@@ -9,109 +9,49 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TermsOfServiceRouteImport } from './routes/terms-of-service'
-import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
-import { Route as PricingRouteImport } from './routes/pricing'
-import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
-import { Route as LlmsFullDottxtRouteImport } from './routes/llms-full[.]txt'
-import { Route as ImprintRouteImport } from './routes/imprint'
-import { Route as GithubRouteImport } from './routes/github'
-import { Route as DownloadRouteImport } from './routes/download'
-import { Route as DonateRouteImport } from './routes/donate'
-import { Route as DocsDotmdxRouteImport } from './routes/docs[.]mdx'
-import { Route as DiscordRouteImport } from './routes/discord'
-import { Route as DemoVideoRouteImport } from './routes/demo-video'
-import { Route as CookiePolicyRouteImport } from './routes/cookie-policy'
-import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ResourcesIndexRouteImport } from './routes/resources/index'
-import { Route as GetProxiesIndexRouteImport } from './routes/get-proxies/index'
-import { Route as GetAccountsIndexRouteImport } from './routes/get-accounts/index'
-import { Route as BlogIndexRouteImport } from './routes/blog/index'
-import { Route as ResourcesSlugRouteImport } from './routes/resources/$slug'
-import { Route as GetProxiesSlugRouteImport } from './routes/get-proxies/$slug'
-import { Route as GetAccountsSlugRouteImport } from './routes/get-accounts/$slug'
-import { Route as DocsChar123Char125DotmdxRouteImport } from './routes/docs/{$}[.]mdx'
-import { Route as DocsSplatRouteImport } from './routes/docs/$'
-import { Route as BlogFeedDotxmlRouteImport } from './routes/blog/feed[.]xml'
-import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
-import { Route as AuthPathRouteImport } from './routes/auth/$path'
-import { Route as ApiSearchRouteImport } from './routes/api/search'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as CookiePolicyRouteImport } from './routes/cookie-policy'
+import { Route as DemoVideoRouteImport } from './routes/demo-video'
+import { Route as DiscordRouteImport } from './routes/discord'
+import { Route as DocsDotmdxRouteImport } from './routes/docs[.]mdx'
+import { Route as DonateRouteImport } from './routes/donate'
+import { Route as DownloadRouteImport } from './routes/download'
+import { Route as GithubRouteImport } from './routes/github'
+import { Route as ImprintRouteImport } from './routes/imprint'
+import { Route as LlmsFullDottxtRouteImport } from './routes/llms-full[.]txt'
+import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
+import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
+import { Route as TermsOfServiceRouteImport } from './routes/terms-of-service'
 import { Route as AccountPathRouteImport } from './routes/account/$path'
-import { Route as OgDocsImageDotwebpRouteImport } from './routes/og/docs/image[.]webp'
+import { Route as ApiSearchRouteImport } from './routes/api/search'
+import { Route as AuthPathRouteImport } from './routes/auth/$path'
+import { Route as BlogIndexRouteImport } from './routes/blog/index'
+import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
+import { Route as BlogFeedDotxmlRouteImport } from './routes/blog/feed[.]xml'
+import { Route as DocsSplatRouteImport } from './routes/docs/$'
+import { Route as DocsChar123Char125DotmdxRouteImport } from './routes/docs/{$}[.]mdx'
+import { Route as GetAccountsIndexRouteImport } from './routes/get-accounts/index'
+import { Route as GetAccountsSlugRouteImport } from './routes/get-accounts/$slug'
+import { Route as GetProxiesIndexRouteImport } from './routes/get-proxies/index'
+import { Route as GetProxiesSlugRouteImport } from './routes/get-proxies/$slug'
+import { Route as ResourcesIndexRouteImport } from './routes/resources/index'
+import { Route as ResourcesSlugRouteImport } from './routes/resources/$slug'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as OgDocsImageDotwebpRouteImport } from './routes/og/docs/image[.]webp'
 import { Route as ApiDiscordLinkedRoleIndexRouteImport } from './routes/api/discord/linked-role/index'
-import { Route as OgSiteChar123Char125ImageDotwebpRouteImport } from './routes/og/site/{$}/image[.]webp'
-import { Route as OgResourcesChar123Char125ImageDotwebpRouteImport } from './routes/og/resources/{$}/image[.]webp'
-import { Route as OgProxiesChar123Char125ImageDotwebpRouteImport } from './routes/og/proxies/{$}/image[.]webp'
-import { Route as OgDocsChar123Char125ImageDotwebpRouteImport } from './routes/og/docs/{$}/image[.]webp'
-import { Route as OgBlogChar123Char125ImageDotwebpRouteImport } from './routes/og/blog/{$}/image[.]webp'
-import { Route as OgAccountsChar123Char125ImageDotwebpRouteImport } from './routes/og/accounts/{$}/image[.]webp'
 import { Route as ApiDiscordLinkedRoleCallbackRouteImport } from './routes/api/discord/linked-role/callback'
+import { Route as OgAccountsChar123Char125ImageDotwebpRouteImport } from './routes/og/accounts/{$}/image[.]webp'
+import { Route as OgBlogChar123Char125ImageDotwebpRouteImport } from './routes/og/blog/{$}/image[.]webp'
+import { Route as OgDocsChar123Char125ImageDotwebpRouteImport } from './routes/og/docs/{$}/image[.]webp'
+import { Route as OgProxiesChar123Char125ImageDotwebpRouteImport } from './routes/og/proxies/{$}/image[.]webp'
+import { Route as OgResourcesChar123Char125ImageDotwebpRouteImport } from './routes/og/resources/{$}/image[.]webp'
+import { Route as OgSiteChar123Char125ImageDotwebpRouteImport } from './routes/og/site/{$}/image[.]webp'
 
-const TermsOfServiceRoute = TermsOfServiceRouteImport.update({
-  id: '/terms-of-service',
-  path: '/terms-of-service',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
-  id: '/privacy-policy',
-  path: '/privacy-policy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PricingRoute = PricingRouteImport.update({
-  id: '/pricing',
-  path: '/pricing',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
-  id: '/llms.txt',
-  path: '/llms.txt',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LlmsFullDottxtRoute = LlmsFullDottxtRouteImport.update({
-  id: '/llms-full.txt',
-  path: '/llms-full.txt',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ImprintRoute = ImprintRouteImport.update({
-  id: '/imprint',
-  path: '/imprint',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GithubRoute = GithubRouteImport.update({
-  id: '/github',
-  path: '/github',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DownloadRoute = DownloadRouteImport.update({
-  id: '/download',
-  path: '/download',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DonateRoute = DonateRouteImport.update({
-  id: '/donate',
-  path: '/donate',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DocsDotmdxRoute = DocsDotmdxRouteImport.update({
-  id: '/docs.mdx',
-  path: '/docs.mdx',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DiscordRoute = DiscordRouteImport.update({
-  id: '/discord',
-  path: '/discord',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoVideoRoute = DemoVideoRouteImport.update({
-  id: '/demo-video',
-  path: '/demo-video',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CookiePolicyRoute = CookiePolicyRouteImport.update({
-  id: '/cookie-policy',
-  path: '/cookie-policy',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -119,24 +59,84 @@ const AdminRoute = AdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const CookiePolicyRoute = CookiePolicyRouteImport.update({
+  id: '/cookie-policy',
+  path: '/cookie-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ResourcesIndexRoute = ResourcesIndexRouteImport.update({
-  id: '/resources/',
-  path: '/resources/',
+const DemoVideoRoute = DemoVideoRouteImport.update({
+  id: '/demo-video',
+  path: '/demo-video',
   getParentRoute: () => rootRouteImport,
 } as any)
-const GetProxiesIndexRoute = GetProxiesIndexRouteImport.update({
-  id: '/get-proxies/',
-  path: '/get-proxies/',
+const DiscordRoute = DiscordRouteImport.update({
+  id: '/discord',
+  path: '/discord',
   getParentRoute: () => rootRouteImport,
 } as any)
-const GetAccountsIndexRoute = GetAccountsIndexRouteImport.update({
-  id: '/get-accounts/',
-  path: '/get-accounts/',
+const DocsDotmdxRoute = DocsDotmdxRouteImport.update({
+  id: '/docs.mdx',
+  path: '/docs.mdx',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DonateRoute = DonateRouteImport.update({
+  id: '/donate',
+  path: '/donate',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DownloadRoute = DownloadRouteImport.update({
+  id: '/download',
+  path: '/download',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GithubRoute = GithubRouteImport.update({
+  id: '/github',
+  path: '/github',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImprintRoute = ImprintRouteImport.update({
+  id: '/imprint',
+  path: '/imprint',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LlmsFullDottxtRoute = LlmsFullDottxtRouteImport.update({
+  id: '/llms-full.txt',
+  path: '/llms-full.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
+  id: '/llms.txt',
+  path: '/llms.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsOfServiceRoute = TermsOfServiceRouteImport.update({
+  id: '/terms-of-service',
+  path: '/terms-of-service',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountPathRoute = AccountPathRouteImport.update({
+  id: '/account/$path',
+  path: '/account/$path',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiSearchRoute = ApiSearchRouteImport.update({
+  id: '/api/search',
+  path: '/api/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthPathRoute = AuthPathRouteImport.update({
+  id: '/auth/$path',
+  path: '/auth/$path',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
@@ -144,19 +144,19 @@ const BlogIndexRoute = BlogIndexRouteImport.update({
   path: '/blog/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ResourcesSlugRoute = ResourcesSlugRouteImport.update({
-  id: '/resources/$slug',
-  path: '/resources/$slug',
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const GetProxiesSlugRoute = GetProxiesSlugRouteImport.update({
-  id: '/get-proxies/$slug',
-  path: '/get-proxies/$slug',
+const BlogFeedDotxmlRoute = BlogFeedDotxmlRouteImport.update({
+  id: '/blog/feed.xml',
+  path: '/blog/feed.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
-const GetAccountsSlugRoute = GetAccountsSlugRouteImport.update({
-  id: '/get-accounts/$slug',
-  path: '/get-accounts/$slug',
+const DocsSplatRoute = DocsSplatRouteImport.update({
+  id: '/docs/$',
+  path: '/docs/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DocsChar123Char125DotmdxRoute =
@@ -165,44 +165,44 @@ const DocsChar123Char125DotmdxRoute =
     path: '/docs/{$}.mdx',
     getParentRoute: () => rootRouteImport,
   } as any)
-const DocsSplatRoute = DocsSplatRouteImport.update({
-  id: '/docs/$',
-  path: '/docs/$',
+const GetAccountsIndexRoute = GetAccountsIndexRouteImport.update({
+  id: '/get-accounts/',
+  path: '/get-accounts/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogFeedDotxmlRoute = BlogFeedDotxmlRouteImport.update({
-  id: '/blog/feed.xml',
-  path: '/blog/feed.xml',
+const GetAccountsSlugRoute = GetAccountsSlugRouteImport.update({
+  id: '/get-accounts/$slug',
+  path: '/get-accounts/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogSlugRoute = BlogSlugRouteImport.update({
-  id: '/blog/$slug',
-  path: '/blog/$slug',
+const GetProxiesIndexRoute = GetProxiesIndexRouteImport.update({
+  id: '/get-proxies/',
+  path: '/get-proxies/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthPathRoute = AuthPathRouteImport.update({
-  id: '/auth/$path',
-  path: '/auth/$path',
+const GetProxiesSlugRoute = GetProxiesSlugRouteImport.update({
+  id: '/get-proxies/$slug',
+  path: '/get-proxies/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiSearchRoute = ApiSearchRouteImport.update({
-  id: '/api/search',
-  path: '/api/search',
+const ResourcesIndexRoute = ResourcesIndexRouteImport.update({
+  id: '/resources/',
+  path: '/resources/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AccountPathRoute = AccountPathRouteImport.update({
-  id: '/account/$path',
-  path: '/account/$path',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const OgDocsImageDotwebpRoute = OgDocsImageDotwebpRouteImport.update({
-  id: '/og/docs/image.webp',
-  path: '/og/docs/image.webp',
+const ResourcesSlugRoute = ResourcesSlugRouteImport.update({
+  id: '/resources/$slug',
+  path: '/resources/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OgDocsImageDotwebpRoute = OgDocsImageDotwebpRouteImport.update({
+  id: '/og/docs/image.webp',
+  path: '/og/docs/image.webp',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiDiscordLinkedRoleIndexRoute =
@@ -211,34 +211,10 @@ const ApiDiscordLinkedRoleIndexRoute =
     path: '/api/discord/linked-role/',
     getParentRoute: () => rootRouteImport,
   } as any)
-const OgSiteChar123Char125ImageDotwebpRoute =
-  OgSiteChar123Char125ImageDotwebpRouteImport.update({
-    id: '/og/site/{$}/image.webp',
-    path: '/og/site/{$}/image.webp',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const OgResourcesChar123Char125ImageDotwebpRoute =
-  OgResourcesChar123Char125ImageDotwebpRouteImport.update({
-    id: '/og/resources/{$}/image.webp',
-    path: '/og/resources/{$}/image.webp',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const OgProxiesChar123Char125ImageDotwebpRoute =
-  OgProxiesChar123Char125ImageDotwebpRouteImport.update({
-    id: '/og/proxies/{$}/image.webp',
-    path: '/og/proxies/{$}/image.webp',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const OgDocsChar123Char125ImageDotwebpRoute =
-  OgDocsChar123Char125ImageDotwebpRouteImport.update({
-    id: '/og/docs/{$}/image.webp',
-    path: '/og/docs/{$}/image.webp',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const OgBlogChar123Char125ImageDotwebpRoute =
-  OgBlogChar123Char125ImageDotwebpRouteImport.update({
-    id: '/og/blog/{$}/image.webp',
-    path: '/og/blog/{$}/image.webp',
+const ApiDiscordLinkedRoleCallbackRoute =
+  ApiDiscordLinkedRoleCallbackRouteImport.update({
+    id: '/api/discord/linked-role/callback',
+    path: '/api/discord/linked-role/callback',
     getParentRoute: () => rootRouteImport,
   } as any)
 const OgAccountsChar123Char125ImageDotwebpRoute =
@@ -247,10 +223,34 @@ const OgAccountsChar123Char125ImageDotwebpRoute =
     path: '/og/accounts/{$}/image.webp',
     getParentRoute: () => rootRouteImport,
   } as any)
-const ApiDiscordLinkedRoleCallbackRoute =
-  ApiDiscordLinkedRoleCallbackRouteImport.update({
-    id: '/api/discord/linked-role/callback',
-    path: '/api/discord/linked-role/callback',
+const OgBlogChar123Char125ImageDotwebpRoute =
+  OgBlogChar123Char125ImageDotwebpRouteImport.update({
+    id: '/og/blog/{$}/image.webp',
+    path: '/og/blog/{$}/image.webp',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const OgDocsChar123Char125ImageDotwebpRoute =
+  OgDocsChar123Char125ImageDotwebpRouteImport.update({
+    id: '/og/docs/{$}/image.webp',
+    path: '/og/docs/{$}/image.webp',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const OgProxiesChar123Char125ImageDotwebpRoute =
+  OgProxiesChar123Char125ImageDotwebpRouteImport.update({
+    id: '/og/proxies/{$}/image.webp',
+    path: '/og/proxies/{$}/image.webp',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const OgResourcesChar123Char125ImageDotwebpRoute =
+  OgResourcesChar123Char125ImageDotwebpRouteImport.update({
+    id: '/og/resources/{$}/image.webp',
+    path: '/og/resources/{$}/image.webp',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const OgSiteChar123Char125ImageDotwebpRoute =
+  OgSiteChar123Char125ImageDotwebpRouteImport.update({
+    id: '/og/site/{$}/image.webp',
+    path: '/og/site/{$}/image.webp',
     getParentRoute: () => rootRouteImport,
   } as any)
 
@@ -548,95 +548,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/terms-of-service': {
-      id: '/terms-of-service'
-      path: '/terms-of-service'
-      fullPath: '/terms-of-service'
-      preLoaderRoute: typeof TermsOfServiceRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/privacy-policy': {
-      id: '/privacy-policy'
-      path: '/privacy-policy'
-      fullPath: '/privacy-policy'
-      preLoaderRoute: typeof PrivacyPolicyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/pricing': {
-      id: '/pricing'
-      path: '/pricing'
-      fullPath: '/pricing'
-      preLoaderRoute: typeof PricingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/llms.txt': {
-      id: '/llms.txt'
-      path: '/llms.txt'
-      fullPath: '/llms.txt'
-      preLoaderRoute: typeof LlmsDottxtRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/llms-full.txt': {
-      id: '/llms-full.txt'
-      path: '/llms-full.txt'
-      fullPath: '/llms-full.txt'
-      preLoaderRoute: typeof LlmsFullDottxtRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/imprint': {
-      id: '/imprint'
-      path: '/imprint'
-      fullPath: '/imprint'
-      preLoaderRoute: typeof ImprintRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/github': {
-      id: '/github'
-      path: '/github'
-      fullPath: '/github'
-      preLoaderRoute: typeof GithubRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/download': {
-      id: '/download'
-      path: '/download'
-      fullPath: '/download'
-      preLoaderRoute: typeof DownloadRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/donate': {
-      id: '/donate'
-      path: '/donate'
-      fullPath: '/donate'
-      preLoaderRoute: typeof DonateRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/docs.mdx': {
-      id: '/docs.mdx'
-      path: '/docs.mdx'
-      fullPath: '/docs.mdx'
-      preLoaderRoute: typeof DocsDotmdxRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/discord': {
-      id: '/discord'
-      path: '/discord'
-      fullPath: '/discord'
-      preLoaderRoute: typeof DiscordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo-video': {
-      id: '/demo-video'
-      path: '/demo-video'
-      fullPath: '/demo-video'
-      preLoaderRoute: typeof DemoVideoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/cookie-policy': {
-      id: '/cookie-policy'
-      path: '/cookie-policy'
-      fullPath: '/cookie-policy'
-      preLoaderRoute: typeof CookiePolicyRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -646,102 +562,95 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/cookie-policy': {
+      id: '/cookie-policy'
+      path: '/cookie-policy'
+      fullPath: '/cookie-policy'
+      preLoaderRoute: typeof CookiePolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/resources/': {
-      id: '/resources/'
-      path: '/resources'
-      fullPath: '/resources/'
-      preLoaderRoute: typeof ResourcesIndexRouteImport
+    '/demo-video': {
+      id: '/demo-video'
+      path: '/demo-video'
+      fullPath: '/demo-video'
+      preLoaderRoute: typeof DemoVideoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/get-proxies/': {
-      id: '/get-proxies/'
-      path: '/get-proxies'
-      fullPath: '/get-proxies/'
-      preLoaderRoute: typeof GetProxiesIndexRouteImport
+    '/discord': {
+      id: '/discord'
+      path: '/discord'
+      fullPath: '/discord'
+      preLoaderRoute: typeof DiscordRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/get-accounts/': {
-      id: '/get-accounts/'
-      path: '/get-accounts'
-      fullPath: '/get-accounts/'
-      preLoaderRoute: typeof GetAccountsIndexRouteImport
+    '/docs.mdx': {
+      id: '/docs.mdx'
+      path: '/docs.mdx'
+      fullPath: '/docs.mdx'
+      preLoaderRoute: typeof DocsDotmdxRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog/': {
-      id: '/blog/'
-      path: '/blog'
-      fullPath: '/blog/'
-      preLoaderRoute: typeof BlogIndexRouteImport
+    '/donate': {
+      id: '/donate'
+      path: '/donate'
+      fullPath: '/donate'
+      preLoaderRoute: typeof DonateRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/resources/$slug': {
-      id: '/resources/$slug'
-      path: '/resources/$slug'
-      fullPath: '/resources/$slug'
-      preLoaderRoute: typeof ResourcesSlugRouteImport
+    '/download': {
+      id: '/download'
+      path: '/download'
+      fullPath: '/download'
+      preLoaderRoute: typeof DownloadRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/get-proxies/$slug': {
-      id: '/get-proxies/$slug'
-      path: '/get-proxies/$slug'
-      fullPath: '/get-proxies/$slug'
-      preLoaderRoute: typeof GetProxiesSlugRouteImport
+    '/github': {
+      id: '/github'
+      path: '/github'
+      fullPath: '/github'
+      preLoaderRoute: typeof GithubRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/get-accounts/$slug': {
-      id: '/get-accounts/$slug'
-      path: '/get-accounts/$slug'
-      fullPath: '/get-accounts/$slug'
-      preLoaderRoute: typeof GetAccountsSlugRouteImport
+    '/imprint': {
+      id: '/imprint'
+      path: '/imprint'
+      fullPath: '/imprint'
+      preLoaderRoute: typeof ImprintRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/docs/{$}.mdx': {
-      id: '/docs/{$}.mdx'
-      path: '/docs/{$}.mdx'
-      fullPath: '/docs/{$}.mdx'
-      preLoaderRoute: typeof DocsChar123Char125DotmdxRouteImport
+    '/llms-full.txt': {
+      id: '/llms-full.txt'
+      path: '/llms-full.txt'
+      fullPath: '/llms-full.txt'
+      preLoaderRoute: typeof LlmsFullDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/docs/$': {
-      id: '/docs/$'
-      path: '/docs/$'
-      fullPath: '/docs/$'
-      preLoaderRoute: typeof DocsSplatRouteImport
+    '/llms.txt': {
+      id: '/llms.txt'
+      path: '/llms.txt'
+      fullPath: '/llms.txt'
+      preLoaderRoute: typeof LlmsDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog/feed.xml': {
-      id: '/blog/feed.xml'
-      path: '/blog/feed.xml'
-      fullPath: '/blog/feed.xml'
-      preLoaderRoute: typeof BlogFeedDotxmlRouteImport
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog/$slug': {
-      id: '/blog/$slug'
-      path: '/blog/$slug'
-      fullPath: '/blog/$slug'
-      preLoaderRoute: typeof BlogSlugRouteImport
+    '/privacy-policy': {
+      id: '/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof PrivacyPolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/auth/$path': {
-      id: '/auth/$path'
-      path: '/auth/$path'
-      fullPath: '/auth/$path'
-      preLoaderRoute: typeof AuthPathRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/search': {
-      id: '/api/search'
-      path: '/api/search'
-      fullPath: '/api/search'
-      preLoaderRoute: typeof ApiSearchRouteImport
+    '/terms-of-service': {
+      id: '/terms-of-service'
+      path: '/terms-of-service'
+      fullPath: '/terms-of-service'
+      preLoaderRoute: typeof TermsOfServiceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/account/$path': {
@@ -751,11 +660,95 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccountPathRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/og/docs/image.webp': {
-      id: '/og/docs/image.webp'
-      path: '/og/docs/image.webp'
-      fullPath: '/og/docs/image.webp'
-      preLoaderRoute: typeof OgDocsImageDotwebpRouteImport
+    '/api/search': {
+      id: '/api/search'
+      path: '/api/search'
+      fullPath: '/api/search'
+      preLoaderRoute: typeof ApiSearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/$path': {
+      id: '/auth/$path'
+      path: '/auth/$path'
+      fullPath: '/auth/$path'
+      preLoaderRoute: typeof AuthPathRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/feed.xml': {
+      id: '/blog/feed.xml'
+      path: '/blog/feed.xml'
+      fullPath: '/blog/feed.xml'
+      preLoaderRoute: typeof BlogFeedDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/docs/$': {
+      id: '/docs/$'
+      path: '/docs/$'
+      fullPath: '/docs/$'
+      preLoaderRoute: typeof DocsSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/docs/{$}.mdx': {
+      id: '/docs/{$}.mdx'
+      path: '/docs/{$}.mdx'
+      fullPath: '/docs/{$}.mdx'
+      preLoaderRoute: typeof DocsChar123Char125DotmdxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/get-accounts/': {
+      id: '/get-accounts/'
+      path: '/get-accounts'
+      fullPath: '/get-accounts/'
+      preLoaderRoute: typeof GetAccountsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/get-accounts/$slug': {
+      id: '/get-accounts/$slug'
+      path: '/get-accounts/$slug'
+      fullPath: '/get-accounts/$slug'
+      preLoaderRoute: typeof GetAccountsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/get-proxies/': {
+      id: '/get-proxies/'
+      path: '/get-proxies'
+      fullPath: '/get-proxies/'
+      preLoaderRoute: typeof GetProxiesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/get-proxies/$slug': {
+      id: '/get-proxies/$slug'
+      path: '/get-proxies/$slug'
+      fullPath: '/get-proxies/$slug'
+      preLoaderRoute: typeof GetProxiesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resources/': {
+      id: '/resources/'
+      path: '/resources'
+      fullPath: '/resources/'
+      preLoaderRoute: typeof ResourcesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resources/$slug': {
+      id: '/resources/$slug'
+      path: '/resources/$slug'
+      fullPath: '/resources/$slug'
+      preLoaderRoute: typeof ResourcesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/auth/$': {
@@ -765,6 +758,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/og/docs/image.webp': {
+      id: '/og/docs/image.webp'
+      path: '/og/docs/image.webp'
+      fullPath: '/og/docs/image.webp'
+      preLoaderRoute: typeof OgDocsImageDotwebpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/discord/linked-role/': {
       id: '/api/discord/linked-role/'
       path: '/api/discord/linked-role'
@@ -772,39 +772,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiDiscordLinkedRoleIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/og/site/{$}/image.webp': {
-      id: '/og/site/{$}/image.webp'
-      path: '/og/site/{$}/image.webp'
-      fullPath: '/og/site/{$}/image.webp'
-      preLoaderRoute: typeof OgSiteChar123Char125ImageDotwebpRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/og/resources/{$}/image.webp': {
-      id: '/og/resources/{$}/image.webp'
-      path: '/og/resources/{$}/image.webp'
-      fullPath: '/og/resources/{$}/image.webp'
-      preLoaderRoute: typeof OgResourcesChar123Char125ImageDotwebpRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/og/proxies/{$}/image.webp': {
-      id: '/og/proxies/{$}/image.webp'
-      path: '/og/proxies/{$}/image.webp'
-      fullPath: '/og/proxies/{$}/image.webp'
-      preLoaderRoute: typeof OgProxiesChar123Char125ImageDotwebpRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/og/docs/{$}/image.webp': {
-      id: '/og/docs/{$}/image.webp'
-      path: '/og/docs/{$}/image.webp'
-      fullPath: '/og/docs/{$}/image.webp'
-      preLoaderRoute: typeof OgDocsChar123Char125ImageDotwebpRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/og/blog/{$}/image.webp': {
-      id: '/og/blog/{$}/image.webp'
-      path: '/og/blog/{$}/image.webp'
-      fullPath: '/og/blog/{$}/image.webp'
-      preLoaderRoute: typeof OgBlogChar123Char125ImageDotwebpRouteImport
+    '/api/discord/linked-role/callback': {
+      id: '/api/discord/linked-role/callback'
+      path: '/api/discord/linked-role/callback'
+      fullPath: '/api/discord/linked-role/callback'
+      preLoaderRoute: typeof ApiDiscordLinkedRoleCallbackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/og/accounts/{$}/image.webp': {
@@ -814,11 +786,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OgAccountsChar123Char125ImageDotwebpRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/discord/linked-role/callback': {
-      id: '/api/discord/linked-role/callback'
-      path: '/api/discord/linked-role/callback'
-      fullPath: '/api/discord/linked-role/callback'
-      preLoaderRoute: typeof ApiDiscordLinkedRoleCallbackRouteImport
+    '/og/blog/{$}/image.webp': {
+      id: '/og/blog/{$}/image.webp'
+      path: '/og/blog/{$}/image.webp'
+      fullPath: '/og/blog/{$}/image.webp'
+      preLoaderRoute: typeof OgBlogChar123Char125ImageDotwebpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/og/docs/{$}/image.webp': {
+      id: '/og/docs/{$}/image.webp'
+      path: '/og/docs/{$}/image.webp'
+      fullPath: '/og/docs/{$}/image.webp'
+      preLoaderRoute: typeof OgDocsChar123Char125ImageDotwebpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/og/proxies/{$}/image.webp': {
+      id: '/og/proxies/{$}/image.webp'
+      path: '/og/proxies/{$}/image.webp'
+      fullPath: '/og/proxies/{$}/image.webp'
+      preLoaderRoute: typeof OgProxiesChar123Char125ImageDotwebpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/og/resources/{$}/image.webp': {
+      id: '/og/resources/{$}/image.webp'
+      path: '/og/resources/{$}/image.webp'
+      fullPath: '/og/resources/{$}/image.webp'
+      preLoaderRoute: typeof OgResourcesChar123Char125ImageDotwebpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/og/site/{$}/image.webp': {
+      id: '/og/site/{$}/image.webp'
+      path: '/og/site/{$}/image.webp'
+      fullPath: '/og/site/{$}/image.webp'
+      preLoaderRoute: typeof OgSiteChar123Char125ImageDotwebpRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -873,7 +873,6 @@ export const routeTree = rootRouteImport
   ._addFileTypes<FileRouteTypes>()
 
 import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
 declare module '@tanstack/react-start' {
   interface Register {
     ssr: true
