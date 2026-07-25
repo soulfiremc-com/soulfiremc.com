@@ -6,6 +6,7 @@ import { NuqsAdapter } from "nuqs/adapters/tanstack-router";
 import { AuthProvider } from "@/components/auth/auth-provider";
 import { AuthTurnstile } from "@/components/auth-turnstile";
 import { Toaster } from "@/components/ui/sonner";
+import { adminPlugin } from "@/lib/auth/admin-plugin";
 import { deleteUserPlugin } from "@/lib/auth/delete-user-plugin";
 import { lastLoginMethodPlugin } from "@/lib/auth/last-login-method-plugin.ts";
 import { passkeyPlugin } from "@/lib/auth/passkey-plugin";
@@ -42,6 +43,7 @@ function AuthUIProviders({ children }: { children: React.ReactNode }) {
         passkeyPlugin(),
         captchaPlugin({ render: AuthTurnstile }),
         deleteUserPlugin({ sendDeleteAccountVerification: true }),
+        adminPlugin(),
         themePlugin({ useTheme }),
         lastLoginMethodPlugin(),
       ]}

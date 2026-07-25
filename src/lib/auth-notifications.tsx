@@ -12,6 +12,7 @@ import {
   Section,
   Text,
 } from "react-email";
+import { AUTH_UI_BASE_PATHS, AUTH_UI_VIEW_PATHS } from "@/lib/auth-ui-config";
 import { sendEmail } from "@/lib/resend";
 
 interface BaseEmailParams {
@@ -204,6 +205,17 @@ export const authNotifications = {
 
   async sendDeleteAccountVerification({ user, url }: EmailWithUrlParams) {
     const name = user.name ?? user.email.split("@")[0];
+    const deleteUrl = new URL(url);
+    const redirectUrl = new URL(
+      `${AUTH_UI_BASE_PATHS.auth}/${AUTH_UI_VIEW_PATHS.auth.redirect}`,
+      baseUrl,
+    );
+
+    redirectUrl.searchParams.set(
+      "redirectTo",
+      `${deleteUrl.pathname}${deleteUrl.search}${deleteUrl.hash}`,
+    );
+
     await sendEmail(
       fromAddress,
       user.email,
@@ -212,7 +224,7 @@ export const authNotifications = {
       <AuthEmailTemplate
         action="Delete Account"
         heading="Account deletion request"
-        url={url}
+        url={redirectUrl.toString()}
       >
         <Text>{`Hello ${name},`}</Text>
         <Text>
