@@ -7,6 +7,7 @@ import { AuthProvider } from "@/components/auth/auth-provider";
 import { AuthTurnstile } from "@/components/auth-turnstile";
 import { Toaster } from "@/components/ui/sonner";
 import { deleteUserPlugin } from "@/lib/auth/delete-user-plugin";
+import { lastLoginMethodPlugin } from "@/lib/auth/last-login-method-plugin.ts";
 import { passkeyPlugin } from "@/lib/auth/passkey-plugin";
 import { themePlugin } from "@/lib/auth/theme-plugin";
 import { usernamePlugin } from "@/lib/auth/username-plugin";
@@ -18,7 +19,6 @@ import {
 } from "@/lib/auth-ui-config";
 import { PostHogProvider } from "@/lib/integrations/posthog";
 import { AuthLink } from "./auth-link";
-import {lastLoginMethodPlugin} from "@/lib/auth/last-login-method-plugin.ts";
 
 function AuthUIProviders({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
