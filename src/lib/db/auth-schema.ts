@@ -29,6 +29,7 @@ export const user = pgTable("user", {
   banned: boolean("banned").default(false),
   banReason: text("ban_reason"),
   banExpires: timestamp("ban_expires"),
+  lastLoginMethod: text("last_login_method"),
   lastActiveAt: timestamp("last_active_at"),
 }).enableRLS();
 
@@ -102,6 +103,8 @@ export const twoFactor = pgTable(
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
     verified: boolean("verified").default(true),
+    failedVerificationCount: integer("failed_verification_count").default(0),
+    lockedUntil: timestamp("locked_until"),
   },
   (table) => [
     index("twoFactor_secret_idx").on(table.secret),

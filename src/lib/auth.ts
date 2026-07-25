@@ -261,7 +261,9 @@ export const auth = betterAuth({
     admin(),
     jwt(),
     openAPI(),
-    lastLoginMethod(),
+    lastLoginMethod({
+      storeInDatabase: true,
+    }),
     haveIBeenPwned({
       customPasswordCompromisedMessage: "Please choose a more secure password.",
     }),

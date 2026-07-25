@@ -18,6 +18,7 @@ import {
 } from "@/lib/auth-ui-config";
 import { PostHogProvider } from "@/lib/integrations/posthog";
 import { AuthLink } from "./auth-link";
+import {lastLoginMethodPlugin} from "@/lib/auth/last-login-method-plugin.ts";
 
 function AuthUIProviders({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
@@ -42,6 +43,7 @@ function AuthUIProviders({ children }: { children: React.ReactNode }) {
         captchaPlugin({ render: AuthTurnstile }),
         deleteUserPlugin({ sendDeleteAccountVerification: true }),
         themePlugin({ useTheme }),
+        lastLoginMethodPlugin(),
       ]}
       localization={{
         auth: {
