@@ -8,8 +8,8 @@ allowBuilds:
   workerd: false
 minimumReleaseAgeExclude:
   - '@fumadocs/base-ui@16.12.0'
-  - '@better-auth-ui/core@1.6.29'
-  - '@better-auth-ui/react@1.6.29'
+  - '@better-auth-ui/core@1.6.29 || 1.6.30'
+  - '@better-auth-ui/react@1.6.29 || 1.6.30'
 onlyBuiltDependencies:
   - '@tailwindcss/oxide'
   - core-js
