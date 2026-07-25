@@ -6,6 +6,7 @@ import react from "@vitejs/plugin-react";
 import mdx from "fumadocs-mdx/vite";
 import { defineConfig } from "vite";
 import * as MdxConfig from "./source.config";
+import { AUTH_UI_BASE_PATHS } from "./src/lib/auth-ui-config";
 
 const securityHeaders = {
   "X-DNS-Prefetch-Control": "on",
@@ -99,7 +100,8 @@ export default defineConfig(() => ({
             path === "/github" ||
             path === "/donate" ||
             path === "/demo-video" ||
-            path === "/admin"
+            path === "/admin" ||
+            path.startsWith(`${AUTH_UI_BASE_PATHS.settings}/`)
           ),
         onSuccess: ({ page }: { page: { path: string } }) => ({
           sitemap: getSitemapSettings(page.path),

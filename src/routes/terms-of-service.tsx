@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
+import { AUTH_UI_VIEW_PATHS } from "@/lib/auth-ui-config";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 
 function TermsOfService() {
@@ -202,7 +203,10 @@ function TermsOfService() {
       <h2>11. Account Termination</h2>
       <p>
         You may delete your account at any time from your{" "}
-        <Link to="/account/$path" params={{ path: "settings" }}>
+        <Link
+          to="/account/$path"
+          params={{ path: AUTH_UI_VIEW_PATHS.settings.account }}
+        >
           account settings
         </Link>
         . Upon deletion, your personal data will be removed in accordance with

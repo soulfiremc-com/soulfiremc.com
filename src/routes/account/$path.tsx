@@ -7,8 +7,11 @@ import { Settings } from "@/components/auth/settings/settings";
 import { SiteShell } from "@/components/site-shell";
 import { auth } from "@/lib/auth";
 import { authClient } from "@/lib/auth-client";
+import { AUTH_UI_VIEW_PATHS } from "@/lib/auth-ui-config";
 
-const validAccountPathSegments = new Set(["settings", "security"]);
+const validAccountPathSegments = new Set(
+  Object.values(AUTH_UI_VIEW_PATHS.settings),
+);
 
 export const Route = createFileRoute("/account/$path")({
   async beforeLoad({ params: { path }, context: { queryClient }, location }) {
@@ -28,7 +31,7 @@ export const Route = createFileRoute("/account/$path")({
     if (!session) {
       throw redirect({
         to: "/auth/$path",
-        params: { path: "sign-in" },
+        params: { path: AUTH_UI_VIEW_PATHS.auth.signIn },
         search: { redirectTo: location.href },
       });
     }

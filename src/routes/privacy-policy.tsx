@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { AUTH_UI_VIEW_PATHS } from "@/lib/auth-ui-config";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 
 function PrivacyPolicy() {
@@ -384,7 +385,10 @@ function PrivacyPolicy() {
         <li>
           <strong>Deletion</strong> &mdash; request deletion of your account and
           associated data. You can initiate account deletion from your{" "}
-          <Link to="/account/$path" params={{ path: "settings" }}>
+          <Link
+            to="/account/$path"
+            params={{ path: AUTH_UI_VIEW_PATHS.settings.account }}
+          >
             account settings
           </Link>
           .

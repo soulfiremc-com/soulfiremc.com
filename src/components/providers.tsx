@@ -11,6 +11,11 @@ import { passkeyPlugin } from "@/lib/auth/passkey-plugin";
 import { themePlugin } from "@/lib/auth/theme-plugin";
 import { usernamePlugin } from "@/lib/auth/username-plugin";
 import { authClient } from "@/lib/auth-client";
+import {
+  AUTH_UI_BASE_PATHS,
+  AUTH_UI_VIEW_PATHS,
+  DEFAULT_AUTH_REDIRECT_PATH,
+} from "@/lib/auth-ui-config";
 import { PostHogProvider } from "@/lib/integrations/posthog";
 import { AuthLink } from "./auth-link";
 
@@ -22,9 +27,9 @@ function AuthUIProviders({ children }: { children: React.ReactNode }) {
       authClient={authClient}
       navigate={navigate}
       Link={AuthLink}
-      redirectTo="/account/settings"
-      basePaths={{ settings: "/account" }}
-      viewPaths={{ settings: { account: "settings" } }}
+      redirectTo={DEFAULT_AUTH_REDIRECT_PATH}
+      basePaths={AUTH_UI_BASE_PATHS}
+      viewPaths={AUTH_UI_VIEW_PATHS}
       socialProviders={["google", "discord", "github"]}
       emailAndPassword={{
         forgotPassword: true,
