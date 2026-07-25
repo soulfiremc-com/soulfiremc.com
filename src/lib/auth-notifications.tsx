@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import {
   Body,
   Button,
@@ -11,7 +12,6 @@ import {
   Section,
   Text,
 } from "react-email";
-import type { ReactNode } from "react";
 import { sendEmail } from "@/lib/resend";
 
 interface BaseEmailParams {
