@@ -12,7 +12,7 @@ import { Fingerprint } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
-import { passkeyPluginLookup } from "@/lib/auth/plugin-lookups";
+import { passkeyPlugin } from "@/lib/auth/passkey-plugin";
 import { cn } from "@/lib/utils";
 
 export type PasskeyButtonProps = {
@@ -29,8 +29,7 @@ export type PasskeyButtonProps = {
  */
 export function PasskeyButton({ view }: PasskeyButtonProps) {
   const { authClient, localization, redirectTo, navigate } = useAuth();
-  const { localization: passkeyLocalization } =
-    useAuthPlugin(passkeyPluginLookup);
+  const { localization: passkeyLocalization } = useAuthPlugin(passkeyPlugin);
 
   const { mutate: signInPasskey, isPending: passkeyPending } = useSignInPasskey(
     authClient as PasskeyAuthClient,

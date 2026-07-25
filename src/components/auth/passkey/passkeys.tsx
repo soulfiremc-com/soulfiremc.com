@@ -11,7 +11,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { passkeyPluginLookup } from "@/lib/auth/plugin-lookups";
+import { passkeyPlugin } from "@/lib/auth/passkey-plugin";
 import { cn } from "@/lib/utils";
 
 import { AddPasskeyDialog } from "./add-passkey-dialog";
@@ -25,8 +25,7 @@ export type PasskeysProps = {
 
 export function Passkeys({ className }: PasskeysProps) {
   const { authClient } = useAuth();
-  const { localization: passkeyLocalization } =
-    useAuthPlugin(passkeyPluginLookup);
+  const { localization: passkeyLocalization } = useAuthPlugin(passkeyPlugin);
 
   const { data: passkeys, isPending } = useListPasskeys(
     authClient as PasskeyAuthClient,

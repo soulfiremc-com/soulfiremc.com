@@ -11,7 +11,7 @@ import {
 } from "@better-auth-ui/react";
 import { useIsMutating } from "@tanstack/react-query";
 import { Eye, EyeOff } from "lucide-react";
-import { type SyntheticEvent, useId, useState } from "react";
+import { type SyntheticEvent, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -20,6 +20,7 @@ import {
   FieldDescription,
   FieldError,
   FieldGroup,
+  FieldLabel,
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
@@ -29,7 +30,6 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
 import { cn } from "@/lib/utils";
 import { AdditionalField } from "./additional-field";
@@ -78,10 +78,6 @@ export function SignUp({
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const nameId = useId();
-  const emailId = useId();
-  const passwordId = useId();
-  const confirmPasswordId = useId();
 
   const { mutate: signUpEmail, isPending: signUpEmailPending } = useSignUpEmail(
     authClient,
@@ -91,10 +87,12 @@ export function SignUp({
         setConfirmPassword("");
         resetFetchOptions();
       },
-      onSuccess: () => {
+      onSuccess: (_data, { email }) => {
         if (emailAndPassword?.requireEmailVerification) {
-          toast.success(localization.auth.verificationEmailSent);
-          navigate({ to: `${basePaths.auth}/${viewPaths.auth.signIn}` });
+          sessionStorage.setItem("better-auth-ui.verify-email", email);
+          navigate({
+            to: `${basePaths.auth}/${viewPaths.auth.verifyEmail}`,
+          });
         } else {
           navigate({ to: redirectTo });
         }
@@ -204,10 +202,12 @@ export function SignUp({
               <FieldGroup>
                 {emailAndPassword.name !== false && (
                   <Field data-invalid={!!fieldErrors.name}>
-                    <Label htmlFor={nameId}>{localization.auth.name}</Label>
+                    <FieldLabel htmlFor="name">
+                      {localization.auth.name}
+                    </FieldLabel>
 
                     <Input
-                      id={nameId}
+                      id="name"
                       name="name"
                       type="text"
                       autoComplete="name"
@@ -236,10 +236,12 @@ export function SignUp({
                 )}
 
                 <Field data-invalid={!!fieldErrors.email}>
-                  <Label htmlFor={emailId}>{localization.auth.email}</Label>
+                  <FieldLabel htmlFor="email">
+                    {localization.auth.email}
+                  </FieldLabel>
 
                   <Input
-                    id={emailId}
+                    id="email"
                     name="email"
                     type="email"
                     autoComplete="email"
@@ -283,13 +285,13 @@ export function SignUp({
                 )}
 
                 <Field data-invalid={!!fieldErrors.password}>
-                  <Label htmlFor={passwordId}>
+                  <FieldLabel htmlFor="password">
                     {localization.auth.password}
-                  </Label>
+                  </FieldLabel>
 
                   <InputGroup>
                     <InputGroupInput
-                      id={passwordId}
+                      id="password"
                       name="password"
                       type={isPasswordVisible ? "text" : "password"}
                       autoComplete="new-password"
@@ -333,6 +335,7 @@ export function SignUp({
 
                     <InputGroupAddon align="inline-end">
                       <InputGroupButton
+                        size="icon-xs"
                         aria-label={
                           isPasswordVisible
                             ? localization.auth.hidePassword
@@ -344,7 +347,7 @@ export function SignUp({
                             : localization.auth.showPassword
                         }
                         onClick={() => {
-                          setIsPasswordVisible(!isPasswordVisible);
+                          setIsPasswordVisible((visible) => !visible);
                         }}
                       >
                         {isPasswordVisible ? <EyeOff /> : <Eye />}
@@ -357,13 +360,13 @@ export function SignUp({
 
                 {emailAndPassword?.confirmPassword && (
                   <Field data-invalid={!!fieldErrors.confirmPassword}>
-                    <Label htmlFor={confirmPasswordId}>
+                    <FieldLabel htmlFor="confirmPassword">
                       {localization.auth.confirmPassword}
-                    </Label>
+                    </FieldLabel>
 
                     <InputGroup>
                       <InputGroupInput
-                        id={confirmPasswordId}
+                        id="confirmPassword"
                         name="confirmPassword"
                         type={isConfirmPasswordVisible ? "text" : "password"}
                         autoComplete="new-password"
@@ -410,6 +413,7 @@ export function SignUp({
 
                       <InputGroupAddon align="inline-end">
                         <InputGroupButton
+                          size="icon-xs"
                           aria-label={
                             isConfirmPasswordVisible
                               ? localization.auth.hidePassword
@@ -421,9 +425,7 @@ export function SignUp({
                               : localization.auth.showPassword
                           }
                           onClick={() =>
-                            setIsConfirmPasswordVisible(
-                              !isConfirmPasswordVisible,
-                            )
+                            setIsConfirmPasswordVisible((visible) => !visible)
                           }
                         >
                           {isConfirmPasswordVisible ? <EyeOff /> : <Eye />}
@@ -460,9 +462,9 @@ export function SignUp({
                   </Button>
 
                   {plugins.flatMap((plugin) =>
-                    (plugin.authButtons ?? []).map((AuthButton) => (
+                    (plugin.authButtons ?? []).map((AuthButton, index) => (
                       <AuthButton
-                        key={`${plugin.id}-${AuthButton.displayName ?? AuthButton.name}`}
+                        key={`${plugin.id}-${index.toString()}`}
                         view="signUp"
                       />
                     )),

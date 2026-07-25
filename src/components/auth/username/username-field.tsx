@@ -8,17 +8,16 @@ import {
 } from "@better-auth-ui/react";
 import { useDebouncer } from "@tanstack/react-pacer";
 import { Check, X } from "lucide-react";
-import { useId, useState } from "react";
+import { useState } from "react";
 import type { AdditionalFieldProps } from "@/components/auth/additional-field";
-import { Field, FieldError } from "@/components/ui/field";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
-import { usernamePluginLookup } from "@/lib/auth/plugin-lookups";
+import { usernamePlugin } from "@/lib/auth/username-plugin";
 
 /**
  * Renderer for the `username` additional field. Owns availability checking,
@@ -37,10 +36,10 @@ export function UsernameField({
     minUsernameLength,
     maxUsernameLength,
     isUsernameAvailable: checkAvailability,
-  } = useAuthPlugin(usernamePluginLookup);
+    usernamePrefix,
+  } = useAuthPlugin(usernamePlugin);
 
   const currentUsername = String(field.defaultValue ?? "");
-  const fieldId = useId();
   const [value, setValue] = useState(currentUsername);
   const [error, setError] = useState<string>();
 
@@ -81,11 +80,17 @@ export function UsernameField({
 
   return (
     <Field data-invalid={!!error}>
-      <Label htmlFor={fieldId}>{field.label}</Label>
+      <FieldLabel htmlFor={name}>{field.label}</FieldLabel>
 
       <InputGroup>
+        {usernamePrefix && (
+          <InputGroupAddon align="inline-start">
+            {usernamePrefix}
+          </InputGroupAddon>
+        )}
+
         <InputGroupInput
-          id={fieldId}
+          id={name}
           name={name}
           type="text"
           autoComplete="username"

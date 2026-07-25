@@ -5,15 +5,14 @@ import { Fingerprint } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { passkeyPluginLookup } from "@/lib/auth/plugin-lookups";
+import { passkeyPlugin } from "@/lib/auth/passkey-plugin";
 
 export type PasskeysEmptyProps = {
   onAddPress: () => void;
 };
 
 export function PasskeysEmpty({ onAddPress }: PasskeysEmptyProps) {
-  const { localization: passkeyLocalization } =
-    useAuthPlugin(passkeyPluginLookup);
+  const { localization: passkeyLocalization } = useAuthPlugin(passkeyPlugin);
 
   return (
     <Card className="border-0 bg-transparent shadow-none ring-0">

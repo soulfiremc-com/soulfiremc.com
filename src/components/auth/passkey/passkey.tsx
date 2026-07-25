@@ -6,7 +6,7 @@ import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { passkeyPluginLookup } from "@/lib/auth/plugin-lookups";
+import { passkeyPlugin } from "@/lib/auth/passkey-plugin";
 
 import {
   DeletePasskeyDialog,
@@ -19,8 +19,7 @@ export type PasskeyProps = {
 
 export function Passkey({ passkey }: PasskeyProps) {
   const { localization } = useAuth();
-  const { localization: passkeyLocalization } =
-    useAuthPlugin(passkeyPluginLookup);
+  const { localization: passkeyLocalization } = useAuthPlugin(passkeyPlugin);
   const [deleteOpen, setDeleteOpen] = useState(false);
 
   const passkeyName = passkey.name || passkeyLocalization.passkey;

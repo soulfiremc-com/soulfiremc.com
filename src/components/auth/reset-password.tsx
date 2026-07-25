@@ -2,7 +2,7 @@
 
 import { useAuth, useResetPassword } from "@better-auth-ui/react";
 import { Eye, EyeOff } from "lucide-react";
-import { type SyntheticEvent, useEffect, useId, useState } from "react";
+import { type SyntheticEvent, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,7 @@ import {
   FieldDescription,
   FieldError,
   FieldGroup,
+  FieldLabel,
 } from "@/components/ui/field";
 import {
   InputGroup,
@@ -19,7 +20,6 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
 import { cn } from "@/lib/utils";
 
@@ -60,8 +60,6 @@ export function ResetPassword({ className }: ResetPasswordProps) {
     password?: string;
     confirmPassword?: string;
   }>({});
-  const passwordId = useId();
-  const confirmPasswordId = useId();
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -114,11 +112,13 @@ export function ResetPassword({ className }: ResetPasswordProps) {
         <form onSubmit={handleSubmit}>
           <FieldGroup>
             <Field data-invalid={!!fieldErrors.password}>
-              <Label htmlFor={passwordId}>{localization.auth.password}</Label>
+              <FieldLabel htmlFor="password">
+                {localization.auth.password}
+              </FieldLabel>
 
               <InputGroup>
                 <InputGroupInput
-                  id={passwordId}
+                  id="password"
                   name="password"
                   type={isPasswordVisible ? "text" : "password"}
                   autoComplete="new-password"
@@ -160,6 +160,7 @@ export function ResetPassword({ className }: ResetPasswordProps) {
 
                 <InputGroupAddon align="inline-end">
                   <InputGroupButton
+                    size="icon-xs"
                     aria-label={
                       isPasswordVisible
                         ? localization.auth.hidePassword
@@ -171,7 +172,7 @@ export function ResetPassword({ className }: ResetPasswordProps) {
                         : localization.auth.showPassword
                     }
                     onClick={() => {
-                      setIsPasswordVisible(!isPasswordVisible);
+                      setIsPasswordVisible((visible) => !visible);
                     }}
                   >
                     {isPasswordVisible ? <EyeOff /> : <Eye />}
@@ -184,13 +185,13 @@ export function ResetPassword({ className }: ResetPasswordProps) {
 
             {emailAndPassword?.confirmPassword && (
               <Field data-invalid={!!fieldErrors.confirmPassword}>
-                <Label htmlFor={confirmPasswordId}>
+                <FieldLabel htmlFor="confirmPassword">
                   {localization.auth.confirmPassword}
-                </Label>
+                </FieldLabel>
 
                 <InputGroup>
                   <InputGroupInput
-                    id={confirmPasswordId}
+                    id="confirmPassword"
                     name="confirmPassword"
                     type={isConfirmPasswordVisible ? "text" : "password"}
                     autoComplete="new-password"
@@ -232,6 +233,7 @@ export function ResetPassword({ className }: ResetPasswordProps) {
 
                   <InputGroupAddon align="inline-end">
                     <InputGroupButton
+                      size="icon-xs"
                       aria-label={
                         isConfirmPasswordVisible
                           ? localization.auth.hidePassword
@@ -243,7 +245,7 @@ export function ResetPassword({ className }: ResetPasswordProps) {
                           : localization.auth.showPassword
                       }
                       onClick={() => {
-                        setIsConfirmPasswordVisible(!isConfirmPasswordVisible);
+                        setIsConfirmPasswordVisible((visible) => !visible);
                       }}
                     >
                       {isConfirmPasswordVisible ? <EyeOff /> : <Eye />}

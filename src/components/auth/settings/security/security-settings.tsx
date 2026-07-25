@@ -29,8 +29,8 @@ export function SecuritySettings({ className }: SecuritySettingsProps) {
       <ActiveSessions />
       {plugins.flatMap(
         (plugin) =>
-          plugin.securityCards?.map((Card) => (
-            <Card key={`${plugin.id}-${Card.displayName ?? Card.name}`} />
+          plugin.securityCards?.map((Card, index) => (
+            <Card key={`${plugin.id}-${index.toString()}`} />
           )) ?? [],
       )}
     </div>

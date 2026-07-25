@@ -7,7 +7,7 @@ import {
   useAuthPlugin,
 } from "@better-auth-ui/react";
 import { Fingerprint } from "lucide-react";
-import { type SyntheticEvent, useId } from "react";
+import type { SyntheticEvent } from "react";
 
 import {
   AlertDialog,
@@ -20,11 +20,10 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Field, FieldError } from "@/components/ui/field";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
-import { passkeyPluginLookup } from "@/lib/auth/plugin-lookups";
+import { passkeyPlugin } from "@/lib/auth/passkey-plugin";
 
 export type AddPasskeyDialogProps = {
   open: boolean;
@@ -36,9 +35,7 @@ export function AddPasskeyDialog({
   onOpenChange,
 }: AddPasskeyDialogProps) {
   const { authClient, localization } = useAuth();
-  const { localization: passkeyLocalization } =
-    useAuthPlugin(passkeyPluginLookup);
-  const passkeyNameId = useId();
+  const { localization: passkeyLocalization } = useAuthPlugin(passkeyPlugin);
 
   const { mutate: addPasskey, isPending: isAdding } = useAddPasskey(
     authClient as PasskeyAuthClient,
@@ -74,10 +71,12 @@ export function AddPasskeyDialog({
           </AlertDialogHeader>
 
           <Field>
-            <Label htmlFor={passkeyNameId}>{passkeyLocalization.name}</Label>
+            <FieldLabel htmlFor="passkey-name">
+              {passkeyLocalization.name}
+            </FieldLabel>
 
             <Input
-              id={passkeyNameId}
+              id="passkey-name"
               name="name"
               autoFocus
               placeholder={localization.settings.optional}

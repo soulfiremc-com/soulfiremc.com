@@ -75,7 +75,7 @@ function AvatarGroup({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="avatar-group"
       className={cn(
-        "group/avatar-group flex gap-0 *:data-[slot=avatar]:-ml-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background first:*:data-[slot=avatar]:ml-0",
+        "group/avatar-group flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background",
         className,
       )}
       {...props}

@@ -10,14 +10,13 @@ import {
   useSession,
   useUpdateUser,
 } from "@better-auth-ui/react";
-import { type SyntheticEvent, useId, useState } from "react";
+import { type SyntheticEvent, useState } from "react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Field, FieldError } from "@/components/ui/field";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 import { cn } from "@/lib/utils";
@@ -45,7 +44,6 @@ export function UserProfile({ className }: UserProfileProps) {
   const [fieldErrors, setFieldErrors] = useState<{
     name?: string;
   }>({});
-  const nameId = useId();
 
   async function handleSubmit(e: SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -95,12 +93,12 @@ export function UserProfile({ className }: UserProfileProps) {
             <ChangeAvatar />
 
             <Field data-invalid={!!fieldErrors.name}>
-              <Label htmlFor={nameId}>{localization.auth.name}</Label>
+              <FieldLabel htmlFor="name">{localization.auth.name}</FieldLabel>
 
               {session ? (
                 <Input
                   key={session?.user.name}
-                  id={nameId}
+                  id="name"
                   name="name"
                   autoComplete="name"
                   defaultValue={session?.user.name}

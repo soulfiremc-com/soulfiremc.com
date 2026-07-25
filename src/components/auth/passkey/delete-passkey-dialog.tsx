@@ -19,11 +19,10 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Field } from "@/components/ui/field";
+import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
-import { passkeyPluginLookup } from "@/lib/auth/plugin-lookups";
+import { passkeyPlugin } from "@/lib/auth/passkey-plugin";
 
 export type ListedPasskey = {
   id: string;
@@ -43,8 +42,7 @@ export function DeletePasskeyDialog({
   passkey,
 }: DeletePasskeyDialogProps) {
   const { authClient, localization } = useAuth();
-  const { localization: passkeyLocalization } =
-    useAuthPlugin(passkeyPluginLookup);
+  const { localization: passkeyLocalization } = useAuthPlugin(passkeyPlugin);
 
   const passkeyName = passkey.name || passkeyLocalization.passkey;
   const previewId = `delete-passkey-preview-${passkey.id}`;
@@ -74,9 +72,9 @@ export function DeletePasskeyDialog({
         </AlertDialogHeader>
 
         <Field>
-          <Label htmlFor={previewId}>
+          <FieldLabel htmlFor={previewId}>
             {passkey.name || passkeyLocalization.passkey}
-          </Label>
+          </FieldLabel>
 
           <Input id={previewId} value={passkeyName} readOnly disabled />
         </Field>

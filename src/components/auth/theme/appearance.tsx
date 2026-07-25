@@ -7,7 +7,7 @@ import {
   useAuthPlugin,
 } from "@better-auth-ui/react";
 import { Monitor, Moon, Sun } from "lucide-react";
-import { useEffect, useId, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -16,9 +16,8 @@ import {
   FieldLabel,
   FieldTitle,
 } from "@/components/ui/field";
-import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { themePluginLookup } from "@/lib/auth/plugin-lookups";
+import { themePlugin } from "@/lib/auth/theme-plugin";
 import { cn } from "@/lib/utils";
 
 export type AppearanceProps = {
@@ -35,11 +34,8 @@ export type AppearanceProps = {
  * @returns A JSX element containing the theme selector card.
  */
 export function Appearance({ className }: AppearanceProps) {
-  const { useTheme, localization } = useAuthPlugin(themePluginLookup);
+  const { useTheme, localization } = useAuthPlugin(themePlugin);
   const { theme, setTheme, themes = [] } = useTheme();
-  const systemId = useId();
-  const lightId = useId();
-  const darkId = useId();
 
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => setIsMounted(true), []);
@@ -51,7 +47,7 @@ export function Appearance({ className }: AppearanceProps) {
       <Card className={cn(className)}>
         <CardContent>
           <Field>
-            <Label>{localization.theme}</Label>
+            <FieldLabel>{localization.theme}</FieldLabel>
 
             <RadioGroup
               value={isMounted ? theme : ""}
@@ -60,7 +56,7 @@ export function Appearance({ className }: AppearanceProps) {
               disabled={!isMounted || !theme}
             >
               {themes.includes("system") && (
-                <FieldLabel htmlFor={systemId}>
+                <FieldLabel htmlFor="system">
                   <Field orientation="horizontal">
                     <FieldContent className="gap-2">
                       <div className="flex items-center gap-2 justify-between">
@@ -70,7 +66,7 @@ export function Appearance({ className }: AppearanceProps) {
                           {localization.system}
                         </FieldTitle>
 
-                        <RadioGroupItem value="system" id={systemId} />
+                        <RadioGroupItem value="system" id="system" />
                       </div>
 
                       <ThemePreviewSystem className="w-full" />
@@ -80,7 +76,7 @@ export function Appearance({ className }: AppearanceProps) {
               )}
 
               {themes.includes("light") && (
-                <FieldLabel htmlFor={lightId}>
+                <FieldLabel htmlFor="light">
                   <Field orientation="horizontal">
                     <FieldContent className="gap-2">
                       <div className="flex items-center gap-2 justify-between">
@@ -90,7 +86,7 @@ export function Appearance({ className }: AppearanceProps) {
                           {localization.light}
                         </FieldTitle>
 
-                        <RadioGroupItem value="light" id={lightId} />
+                        <RadioGroupItem value="light" id="light" />
                       </div>
 
                       <ThemePreviewLight className="w-full" />
@@ -100,7 +96,7 @@ export function Appearance({ className }: AppearanceProps) {
               )}
 
               {themes.includes("dark") && (
-                <FieldLabel htmlFor={darkId}>
+                <FieldLabel htmlFor="dark">
                   <Field orientation="horizontal">
                     <FieldContent className="gap-2">
                       <div className="flex items-center gap-2 justify-between">
@@ -110,7 +106,7 @@ export function Appearance({ className }: AppearanceProps) {
                           {localization.dark}
                         </FieldTitle>
 
-                        <RadioGroupItem value="dark" id={darkId} />
+                        <RadioGroupItem value="dark" id="dark" />
                       </div>
 
                       <ThemePreviewDark className="w-full" />
