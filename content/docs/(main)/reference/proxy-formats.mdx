@@ -106,7 +106,7 @@ SoulFire defaults to `-1` bots per proxy, which means unlimited.
 It still tries to distribute bots evenly across the available proxies.
 
 If you set a hard limit such as `10`, SoulFire only allows 10 bots per proxy.
-If you ask for more bots than `bots per proxy * number of proxies`, SoulFire reduces the session to the maximum possible amount.
+Bots that cannot lease proxy capacity remain queued until capacity becomes available.
 
 ## Proxy settings reference
 

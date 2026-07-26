@@ -31,12 +31,12 @@ This is useful for beginners, but can be limiting for power users.
 An advantage of dedicated mode is also that multiple GUIs and CLIs can connect to the same server
 as well as multiple servers can be run on the same machine on different ports. (Very useful for SF hosts)
 
-While a CLI is similar to a dedicated server, it lacks the ability for other clients to connect
-and also a CLI can only use settings for sessions that were specified when the CLI was started up.
+While a CLI is similar to a dedicated server, it does not accept connections from other clients
+and its startup flags configure the local integrated server.
 
 ## How to start the server in dedicated mode
 
-Make sure your machine is using Java 21.
+Make sure your machine is using Java 25.
 Next you can download the latest dedicated server `.jar` binary from the [download page](/download)
 and run it with the following command:
 
@@ -85,7 +85,7 @@ To connect to the server, you need an access token.
 When you run a dedicated server, you get an interactive shell, just like with Minecraft servers.
 You can use the `generate-token api` command to generate an access token.
 Keep this token secure and only share it with people you trust and want to connect to your server.
-It allows anyone with access to it to connect to your server via the GUI or CLI and start bot sessions.
+It allows anyone with access to it to connect to your server through the GUI or CLI and control bots with your permissions.
 
 ## Docker images
 
@@ -96,6 +96,6 @@ You can find examples of how to use those Docker images in the [Docker guide](/d
 
 ## What now?
 
-You've successfully set up a dedicated server. Now go to the GUI or CLI and connect to it and try running some bot sessions!
+You've successfully set up a dedicated server. Now connect to it from the GUI, CLI, or SDK and try running some bots.
 Dedicated servers use the same underlying code as integrated servers, so the experience should be the same.
-Servers do most of the heavy work, they run the bot sessions, check proxies, authenticate accounts, and more.
+Servers do most of the heavy work. They run bot connections, check proxies, authenticate accounts, and more.

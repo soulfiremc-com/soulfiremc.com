@@ -42,10 +42,10 @@ Make sure the instance is already in a usable state:
 - **Bot Settings** point at the correct target server and version
 - accounts are imported if the target server needs them
 - proxies are imported only if you actually need them
-- the instance session is running
+- the bots you want to automate are running
 - you can open the instance **Terminal** or use the CLI shell
 
-If you are still setting up the instance, start with [Run Your First Session in GUI Mode](/docs/start-here/gui-mode), [Import Accounts](/docs/how-to/import-accounts), and [Import Proxies](/docs/how-to/import-proxies).
+If you are still setting up the instance, start with [Run Your First Bots in GUI Mode](/docs/start-here/gui-mode), [Import Accounts](/docs/how-to/import-accounts), and [Import Proxies](/docs/how-to/import-proxies).
 
 ## Start automation
 
@@ -54,10 +54,10 @@ If you are still setting up the instance, start with [Run Your First Session in 
 Open the instance and go to **Automation Settings**.
 For a first run, the defaults are usually the right place to start.
 
-### 2. Start the session
+### 2. Start the bots
 
 Automation acts on running bots.
-If the instance is stopped, start it first from **Overview** or with the normal session commands.
+Start the bots you want to automate from **Overview** or with `bots start`.
 
 ### 3. Run an automation command
 
@@ -171,7 +171,7 @@ If you need custom reactions, event graphs, or integration-heavy workflows, stay
 
 If automation appears idle, stuck, or inconsistent:
 
-1. make sure the session is actually running
+1. make sure the affected bots are actually running
 2. confirm `enabled` is on for the affected bots
 3. run `automation status`
 4. run `automation teamstatus`

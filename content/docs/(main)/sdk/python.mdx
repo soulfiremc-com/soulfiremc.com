@@ -1,0 +1,112 @@
+---
+title: Python SDK
+description: Connect, provision, control, and monitor SoulFire bots from synchronous or asyncio Python.
+icon: Code
+---
+
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+## Install
+
+```bash
+pip install soulfire-sdk
+```
+
+## Connect with asyncio
+
+<Steps>
+  <Step>
+    ### Create the client
+
+    ```python
+    import os
+
+    from soulfire import SoulFire
+
+    soulfire = SoulFire.connect(
+        "https://soulfire.example.com",
+        token=os.environ["SOULFIRE_TOKEN"],
+    )
+    ```
+  </Step>
+
+  <Step>
+    ### Select and start a bot
+
+    ```python
+    instance = soulfire.instance("instance-uuid")
+    bot = instance.bot("bot-uuid")
+
+    await bot.start()
+    await bot.send_chat("Hello from Python")
+    ```
+  </Step>
+</Steps>
+
+Use the client as an async context manager when possible:
+
+```python
+async with SoulFire.connect(
+    "https://soulfire.example.com",
+    token=os.environ["SOULFIRE_TOKEN"],
+) as soulfire:
+    await soulfire.instance("instance-uuid").bot("bot-uuid").start()
+```
+
+## Control a group
+
+```python
+await instance.start(count=25)
+await instance.stop(bot_ids=["bot-uuid-1", "bot-uuid-2"])
+await instance.restart()
+```
+
+`restart()` with no selection reconnects bots that are already desired.
+It does not start stopped bots.
+
+## Watch desired and runtime status
+
+The stream begins with a complete snapshot and then sends updates:
+
+```python
+async for event in instance.watch_bot_statuses():
+    event_type = event.WhichOneof("event")
+    if event_type == "snapshot":
+        print(event.snapshot.bots)
+    elif event_type == "update":
+        print(event.update.profile_id, event.update.runtime_state)
+    elif event_type == "removed_bot_id":
+        print("Removed", event.removed_bot_id)
+```
+
+Use `await bot.status()` for a one-off status read.
+
+## Provision a local dedicated server
+
+```python
+soulfire = await SoulFire.install(
+    directory=".soulfire",
+    on_log=print,
+)
+
+try:
+    await soulfire.instance("instance-uuid").bot("bot-uuid").start()
+finally:
+    await soulfire.close()
+```
+
+## Use the synchronous client
+
+`SoulFireSync` exposes the same hierarchy without `await`:
+
+```python
+from soulfire import SoulFireSync
+
+with SoulFireSync.connect(
+    "https://soulfire.example.com",
+    token=os.environ["SOULFIRE_TOKEN"],
+) as soulfire:
+    bot = soulfire.instance("instance-uuid").bot("bot-uuid")
+    bot.start()
+    bot.send_chat("Hello from synchronous Python")
+```

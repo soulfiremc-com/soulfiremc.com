@@ -1,0 +1,117 @@
+---
+title: TypeScript SDK
+description: Connect, provision, control, and monitor SoulFire bots from TypeScript.
+icon: Code
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+## Install
+
+```bash
+pnpm add @soulfiremc/sdk
+```
+
+The package requires Node.js 22 or newer for local server installation.
+Connecting from a browser only requires `fetch`.
+
+## Connect to an existing server
+
+<Steps>
+  <Step>
+    ### Create the client
+
+    ```ts
+    import { SoulFire } from "@soulfiremc/sdk";
+
+    const soulfire = SoulFire.connect({
+      baseUrl: "https://soulfire.example.com",
+      token: process.env.SOULFIRE_TOKEN,
+    });
+    ```
+  </Step>
+
+  <Step>
+    ### Select and start a bot
+
+    ```ts
+    const instance = soulfire.instance("instance-uuid");
+    const bot = instance.bot("bot-uuid");
+
+    await bot.start();
+    await bot.sendChat("Hello from TypeScript");
+    ```
+  </Step>
+</Steps>
+
+Starting a bot persists its desired state.
+SoulFire keeps the bot running according to its reconnect settings until you call `stop()`.
+
+## Control a group
+
+```ts
+await instance.start({ count: 25 });
+await instance.stop({ botIds: ["bot-uuid-1", "bot-uuid-2"] });
+await instance.restart();
+```
+
+`restart()` with no selection reconnects bots that are already desired.
+It does not start stopped bots.
+
+## Watch desired and runtime status
+
+The stream begins with a complete snapshot and then sends updates:
+
+```ts
+const controller = new AbortController();
+
+for await (const event of instance.watchBotStatuses({
+  signal: controller.signal,
+})) {
+  switch (event.event.case) {
+    case "snapshot":
+      console.log(event.event.value.bots);
+      break;
+    case "update":
+      console.log(event.event.value);
+      break;
+    case "removedBotId":
+      console.log("Removed", event.event.value);
+      break;
+  }
+}
+```
+
+Use `await bot.status()` for a one-off status read.
+
+## Provision a local dedicated server
+
+```ts
+const soulfire = await SoulFire.install({
+  directory: ".soulfire",
+  onLog: console.log,
+});
+
+try {
+  const bot = soulfire.instance("instance-uuid").bot("bot-uuid");
+  await bot.start();
+} finally {
+  await soulfire.close();
+}
+```
+
+<Callout type="info">
+  Local installation is a Node.js feature and is excluded from the browser execution path.
+</Callout>
+
+## Use an unwrapped RPC
+
+The package exports generated Protobuf definitions for the complete API:
+
+```ts
+import { InstanceService } from "@soulfiremc/sdk/generated/soulfire/instance_pb";
+
+const instances = soulfire.service(InstanceService);
+const response = await instances.listInstances({});
+```

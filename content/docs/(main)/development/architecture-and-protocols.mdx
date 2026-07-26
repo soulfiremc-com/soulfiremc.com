@@ -22,9 +22,10 @@ At a high level, SoulFire looks like this:
 1. **Bootstrap and launcher** prepare startup, properties, and mixin loading.
 2. **Fabric** loads SoulFire itself as a mod and also loads your external plugin jar as another Fabric mod.
 3. **SoulFireServer** manages the global server process, settings, auth, RPC server, and instances.
-4. **InstanceManager** manages one instance: config, accounts, proxies, metrics, and session lifecycle.
-5. **BotConnection** owns one bot's headless Minecraft client copy plus settings, metadata, scheduler, and control state.
-6. **Plugins** listen to events, register settings pages, and optionally use Mixins for deeper integration.
+4. **InstanceManager** manages one compartment: config, accounts, proxies, metrics, and automation.
+5. **BotStateManager** persists each bot's desired state and reconciles connection attempts.
+6. **BotConnection** owns one bot's headless Minecraft client copy plus settings, metadata, scheduler, and control state.
+7. **Plugins** listen to events, register settings pages, and optionally use Mixins for deeper integration.
 
 What matters for plugin authors is simple:
 
@@ -48,7 +49,8 @@ The internal plugins use the same event, settings, metadata, and control primiti
 | Class | Responsibility |
 | --- | --- |
 | `SoulFireServer` | global server process, RPC server, auth, server settings, instance registry |
-| `InstanceManager` | one instance, its settings, bot list, session lifecycle, instance metrics |
+| `InstanceManager` | one permission and configuration compartment with settings, accounts, proxies, automation, and metrics |
+| `BotStateManager` | durable per-bot intent, connection queueing, reconnect policy, and runtime status |
 | `BotConnection` | one bot, including the cloned headless Minecraft client |
 | `SoulFireAPI` | global event bus and plugin registry |
 
@@ -68,6 +70,7 @@ That matters for plugin authors because your settings page becomes a first-class
 SoulFire's internal action protocol for live bot control is described in `bot.proto`.
 That service includes:
 
+- per-bot desired state, restart, and status streaming
 - movement state updates
 - rotation updates
 - hotbar selection

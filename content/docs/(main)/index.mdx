@@ -1,6 +1,6 @@
 ---
 title: Docs
-description: Install SoulFire, run your first session, automate bots, and look up product details.
+description: Install SoulFire, connect your first bots, automate them, and look up product details.
 icon: Compass
 ---
 
@@ -21,7 +21,7 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 <Callout type="info">
   New users should usually start with the local GUI path:
-  choose a setup, install SoulFire, then run the first session in the desktop app.
+  choose a setup, install SoulFire, then connect your first bots in the desktop app.
 </Callout>
 
 SoulFire is a Minecraft bot framework for server testing, automation, and development.
@@ -48,7 +48,7 @@ Follow these pages in order if this is your first time with SoulFire.
   </Card>
   <Card
     icon={<Workflow />}
-    title="Run Your First Session"
+    title="Run Your First Bots"
     href="/docs/start-here/gui-mode"
   >
     Create an instance, configure a target, and start bots from the GUI.
@@ -63,6 +63,9 @@ Follow these pages in order if this is your first time with SoulFire.
   </Card>
   <Card icon={<Wrench />} title="How-to Guides" href="/docs/how-to">
     Complete specific tasks such as importing accounts, proxies, and plugins.
+  </Card>
+  <Card icon={<Code />} title="SDK" href="/docs/sdk">
+    Build TypeScript or Python applications over SoulFire's gRPC-Web API.
   </Card>
   <Card icon={<Bot />} title="Automation" href="/docs/automation">
     Run the current native automation modes and tune their operator-facing settings.

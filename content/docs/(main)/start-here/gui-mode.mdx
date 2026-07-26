@@ -1,6 +1,6 @@
 ---
-title: Run Your First Session in GUI Mode
-description: Start an instance, configure it, and launch your first SoulFire session from the GUI.
+title: Run Your First Bots in GUI Mode
+description: Create an instance, configure it, and connect your first SoulFire bots from the GUI.
 icon: Monitor
 ---
 
@@ -9,7 +9,7 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 ## When to use GUI Mode
 
-GUI mode is the best starting point if you want to run SoulFire interactively, inspect instance state, and change settings without memorizing commands.
+GUI mode is the best starting point if you want to run SoulFire interactively, inspect bot state, and change settings without memorizing commands.
 
 <Callout type="info">
   New users should usually start with `Integrated server (local)`.
@@ -21,9 +21,9 @@ GUI mode is the best starting point if you want to run SoulFire interactively, i
 
 - Install the desktop app from [Start Here](/docs/start-here).
 - If you want to connect to a remote server, have the server URL and access token ready.
-- If you only want to explore the interface, `Demo server` is useful, but it does not replace a real session.
+- If you only want to explore the interface, `Demo server` is useful, but it does not connect real bots.
 
-## Start your first session
+## Connect your first bots
 
 <Steps>
   <Step>
@@ -46,7 +46,7 @@ GUI mode is the best starting point if you want to run SoulFire interactively, i
   <Step>
     ### Configure the target server
 
-    Open **Bot Settings** and set the server address, bot amount, join delays, protocol version, and timeouts.
+    Open **Bot Settings** and set the server address, join delays, protocol version, and timeouts.
     For most first runs, the defaults are enough except for the target server address.
   </Step>
 
@@ -65,17 +65,17 @@ GUI mode is the best starting point if you want to run SoulFire interactively, i
   </Step>
 
   <Step>
-    ### Start and monitor the session
+    ### Start and monitor bots
 
-    Return to **Overview** and click **Start**.
-    Use **Terminal** to watch activity and run commands, **Pause** to temporarily halt the session, and **Stop** to end it completely.
+    Return to **Overview**. Enter how many stopped bots you want to connect and click **Start**, or click **Start all**.
+    Each account is controlled independently. You can start, restart, or stop an individual bot from its context menu.
   </Step>
 </Steps>
 
 ## Where common tasks live
 
 - **Instances**: Create, open, and delete instances.
-- **Overview**: Start, pause, stop, and inspect the current instance.
+- **Overview**: Start, restart, stop, and inspect bots in the current instance.
 - **Terminal**: Run SoulFire commands for the current instance.
 - **Account Settings**: Import Microsoft, Bedrock, or offline accounts.
 - **Proxy Settings**: Import and check proxies.

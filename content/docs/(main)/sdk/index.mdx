@@ -1,0 +1,72 @@
+---
+title: SoulFire SDK
+description: Choose a gRPC-Web SDK and understand SoulFire's instance and bot model.
+icon: Blocks
+---
+
+import { Cards, Card } from 'fumadocs-ui/components/card';
+import { Callout } from 'fumadocs-ui/components/callout';
+
+The SoulFire SDK lets an application provision or connect to a SoulFire server, select an instance, and control each configured account as an independent bot.
+Use it when you want Mineflayer-style application code while keeping SoulFire's Minecraft client, plugins, automation, proxies, permissions, and remote operation.
+
+<Callout type="info">
+  Both SDKs use gRPC-Web exclusively.
+  They work through ordinary HTTP infrastructure and support SoulFire's server streams without exposing a separate native gRPC transport.
+</Callout>
+
+## Choose a language
+
+<Cards>
+  <Card title="TypeScript" href="/docs/sdk/typescript">
+    Use `@soulfiremc/sdk` in browsers or JavaScript runtimes with `fetch`.
+  </Card>
+  <Card title="Python" href="/docs/sdk/python">
+    Use `soulfire-sdk` from synchronous or asyncio applications.
+  </Card>
+</Cards>
+
+## The object model
+
+```text
+SoulFire
+└── instance(instanceId)
+    ├── bots()
+    ├── start(), stop(), restart()
+    ├── watchBotStatuses()
+    └── bot(botId)
+        ├── start(), stop(), restart(), status()
+        ├── events()
+        └── movement, world, interaction, and chat calls
+```
+
+An instance is a permission and configuration compartment.
+It groups accounts, settings, proxies, scripts, and automation, but it does not have a lifecycle.
+
+Each account is one bot.
+SoulFire stores a sparse desired-state row only when that bot should be running.
+The runtime controller then connects, queues, retries, or stops that bot independently.
+
+## Selection behavior
+
+Instance methods accept either explicit bot IDs or a count:
+
+- No selection starts stopped bots, stops desired bots, or restarts desired bots.
+- An explicit ID list targets exactly those bots.
+- A count selects from bots relevant to the action.
+- Count selection follows the instance's **Shuffle accounts** setting.
+
+## Local and remote use
+
+Use `SoulFire.connect` when an operator already gave you a server URL, token, and instance ID.
+You only need permission for that instance to script its bots.
+
+Use `SoulFire.install` when your application should download a SoulFire dedicated server and a Java 25 runtime, start them locally, and return an authenticated client.
+Downloaded artifacts are verified and reused.
+
+## Go further
+
+- [TypeScript SDK](/docs/sdk/typescript)
+- [Python SDK](/docs/sdk/python)
+- [Bot Control And Direct Access](/docs/development/bot-control-and-direct-access)
+- [API Reference](/docs/openapi)

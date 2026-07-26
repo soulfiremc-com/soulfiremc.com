@@ -7,7 +7,7 @@ icon: BellRing
 import { Callout } from 'fumadocs-ui/components/callout';
 
 The event system is the first extension seam you should use.
-It is much cheaper to maintain than Mixins, and SoulFire already exposes a meaningful amount of lifecycle, session, bot, chat, packet, and settings behavior through events.
+It is much cheaper to maintain than Mixins, and SoulFire already exposes a meaningful amount of server lifecycle, bot, chat, packet, and settings behavior through events.
 
 ## How listener registration works
 
@@ -58,10 +58,6 @@ These are the main lifecycle hooks currently exposed:
 | `ServerSettingsRegistryInitEvent` | global | while the server settings registry is being assembled |
 | `InstanceSettingsRegistryInitEvent` | instance | while an instance settings registry is being assembled |
 | `InstanceInitEvent` | instance | immediately after an `InstanceManager` is created |
-| `SessionStartEvent` | instance | when an instance session starts |
-| `SessionTickEvent` | instance | on each instance tick while the session is ticking |
-| `SessionBotRemoveEvent` | instance | when a disconnected bot is evicted from the active bot map |
-| `SessionEndedEvent` | instance | when the session ends |
 
 ## Bot events
 
@@ -71,6 +67,7 @@ These are the current bot-facing events exposed in `com.soulfiremc.server.api.ev
 | --- | --- |
 | `PreBotConnectEvent` | async pre-connect hook before the bot joins |
 | `BotConnectionInitEvent` | right after the `BotConnection` object exists |
+| `BotConnectionRemovedEvent` | after a disconnected bot is removed from its instance |
 | `BotPreTickEvent` | bot tick hook before the tick body finishes |
 | `BotPostTickEvent` | bot tick hook after the tick body finishes |
 | `BotPreEntityTickEvent` | before entity tracking logic ticks |

@@ -17,7 +17,8 @@ If it isn't, head to [Start Here](/docs/start-here) first.
 
 Through MCP, an AI assistant can:
 
-- Create, configure, start, and stop bot instances
+- Create and configure instances
+- Start, stop, and restart configured bots independently
 - Control individual bots (movement, rotation, inventory)
 - Execute Brigadier commands
 - Manage Minecraft accounts and proxies
@@ -92,7 +93,6 @@ SoulFire exposes more than 40 MCP tools, grouped into a few categories:
 - `delete_instance`: Permanently delete an instance
 - `get_instance_info`: Get detailed instance information and configuration
 - `update_instance_meta`: Update an instance name or icon
-- `change_instance_state`: Start, pause, or stop an instance
 - `update_instance_config_entry`: Update a configuration setting
 - `get_audit_log`: View the instance audit log
 
@@ -107,6 +107,8 @@ SoulFire exposes more than 40 MCP tools, grouped into a few categories:
 - `tab_complete_command`: Get tab-completion suggestions
 
 ### Bot Control
+- `set_bots_desired_state`: Keep selected bots running or stopped
+- `restart_bots`: Reconnect selected bots
 - `get_bot_list`: List all bots in an instance
 - `get_bot_info`: Get detailed bot information
 - `set_bot_movement`: Control WASD, jump, sneak, sprint
@@ -160,10 +162,10 @@ Once connected, you can talk to SoulFire in plain language:
 > **AI**: I'll create the instance and add the accounts for you.
 > *Creates instance, then adds 5 accounts with names bot1-bot5*
 
-> **You**: Configure the instance to connect to play.example.com and start it
+> **You**: Configure the instance to connect to play.example.com and start all five bots
 
-> **AI**: I'll update the server address and start the instance.
-> *Updates config, changes instance state to RUNNING*
+> **AI**: I'll update the server address and set those bots to running.
+> *Updates config, then sets the five bot IDs to the running desired state*
 
 > **You**: How are the bots doing? Show me their health and positions.
 

@@ -6,14 +6,14 @@ icon: Flag
 
 ## What are command line flags?
 
-Command line flags in the CLI are used to configure the client before starting a session.
+Command line flags in the CLI are used to configure the client before connecting bots.
 These options change the behavior of the bots and how the CLI interacts with the server.
 
 ## List of flags
 
 | Flag                                        | Default                                                | Description                                                                                                                                                                   |
 |---------------------------------------------|--------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `-s`, `--start`                             | `false`                                                | Whether to start the session automatically                                                                                                                                    |
+| `-s`, `--start`                             | `false`                                                | Whether to set every configured bot to running automatically                                                                                                                  |
 | `--account-file`                            | `null`                                                 | File to load accounts from                                                                                                                                                    |
 | `--account-type`                            | `null`                                                 | Type of accounts in the account file                                                                                                                                          |
 | `--proxy-file`                              | `null`                                                 | File to load proxies from                                                                                                                                                     |
@@ -21,7 +21,6 @@ These options change the behavior of the bots and how the CLI interacts with the
 | `-h`, `--help`                              | `false`                                                | Show this help message and exit.                                                                                                                                              |
 | `-V`, `--version`                           | `false`                                                | Print version information and exit.                                                                                                                                           |
 | `--bot-address`                             | `127.0.0.1:25565`                                      | Address to connect to                                                                                                                                                         |
-| `--bot-amount`                              | `1`                                                    | Amount of bots to connect                                                                                                                                                     |
 | `--bot-join-delay-min`                      | `1000`                                                 | Minimum delay between joins in milliseconds                                                                                                                                   |
 | `--bot-join-delay-max`                      | `3000`                                                 | Maximum delay between joins in milliseconds                                                                                                                                   |
 | `--bot-protocol-version`                    | `RELEASE\|772`                                         | Minecraft protocol version to use                                                                                                                                             |
@@ -30,7 +29,7 @@ These options change the behavior of the bots and how the CLI interacts with the
 | `--bot-connect-timeout`                     | `30`                                                   | Connect timeout in seconds                                                                                                                                                    |
 | `--bot-resolve-srv`                         | `true`                                                 | Try to resolve SRV records from the address                                                                                                                                   |
 | `--bot-concurrent-connects`                 | `1`                                                    | Max amount of bots attempting to connect at once                                                                                                                              |
-| `--bot-restore-on-reboot`                   | `true`                                                 | Whether the session should be restored after a reboot of the SoulFire machine. If turned off, the session will not be restored after a reboot.                                |
+| `--bot-restore-on-reboot`                   | `true`                                                 | Whether a previously desired bot should reconnect after the SoulFire server restarts. Can be overridden per bot.                                                             |
 | `--account-name-format`                     | `Bot_%d`                                               | The format of the bot names. %d will be replaced with the bot number.                                                                                                         |
 | `--account-shuffle-accounts`                | `false`                                                | Should the accounts order be random when connecting bots?                                                                                                                     |
 | `--account-use-proxies-for-account-auth`    | `false`                                                | Should the imported proxies be used to authenticate accounts? (Contact Microsoft login, input credentials, etc.) Otherwise the SF server will authenticate accounts directly. |

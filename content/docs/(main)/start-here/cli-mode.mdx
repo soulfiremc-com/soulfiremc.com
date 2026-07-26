@@ -13,7 +13,7 @@ import { Callout } from 'fumadocs-ui/components/callout';
   Guide](/docs/start-here/gui-mode) instead.
 </Callout>
 
-CLIs are for power-users that either like to only use their keyboard or want to automate bot sessions.
+CLIs are for power users who prefer a keyboard or want to automate bots.
 SoulFire has those types of advanced users covered with its CLI.
 While the CLI does support many common uses, the GUI has more features.
 To get to know what you can and can't do, read this page.
@@ -27,7 +27,7 @@ The commands on this page use this property to force CLI mode.
 ## Setting up your connection
 
 SoulFires CLI is part of the client distribution. So to run a CLI, you need to have the following:
-Make sure your machine is using Java 21.
+Make sure your machine is using Java 25.
 Next you can download the latest client `.jar` binary from the [download page](/download)
 
 The base command is this:
@@ -41,7 +41,7 @@ If you omit the entire `-Xmx$RAM` part, the CLI will use 25% of your total ram.
 If your machine has 128GB of RAM and you want SF to use 120GB, you can use `-Xmx120G`.
 If you connect to a remote server, the RAM on your machine does not matter, and you can use `-Xmx1G` if you want.
 
-Now you need to decide, are we running the session locally on your machine, or are we using a remote dedicated server for the session?
+Now decide whether the bots run on your machine or on a remote dedicated server.
 
 If locally, skip to the next section, if not, you need to configure how the CLI connects to the remote server.
 For that, configure the JVM properties:
@@ -65,12 +65,12 @@ For a full list, visit the [CLI flags page](/docs/reference/cli-flags)
 Here is an example of how to use them:
 
 ```bash
-java -Xmx$RAM -XX:+EnableDynamicAgentLoading -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -XX:+UseCompactObjectHeaders -XX:+AlwaysActAsServerClassMachine -XX:+UseNUMA -XX:+UseFastUnorderedTimeStamps -XX:+UseVectorCmov -XX:+UseCriticalJavaThreadPriority -Dsf.flags.v2=true -jar SoulFireClient.jar --bot-address 127.0.0.1:25565 --bot-amount 100 --bot-protocol-version 1.20 --bot-join-delay-min 1000 --bot-join-delay-max 3000
+java -Xmx$RAM -XX:+EnableDynamicAgentLoading -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -XX:+UseCompactObjectHeaders -XX:+AlwaysActAsServerClassMachine -XX:+UseNUMA -XX:+UseFastUnorderedTimeStamps -XX:+UseVectorCmov -XX:+UseCriticalJavaThreadPriority -Dsf.flags.v2=true -jar SoulFireClient.jar --account-file accounts.txt --account-type OFFLINE --bot-address 127.0.0.1:25565 --bot-protocol-version 1.20 --bot-join-delay-min 1000 --bot-join-delay-max 3000 --start
 ```
 
 Make sure to replace `$RAM` with the amount of ram you want to allocate to the CLI instance.
-The command above will connect to a local server on port 25565
-and start 100 clients with a delay between 1 and 3 seconds.
+The command above imports the accounts in `accounts.txt`, connects them to a local Minecraft server on port 25565,
+and starts every imported bot with a delay between 1 and 3 seconds.
 
 ## Terminal flags
 

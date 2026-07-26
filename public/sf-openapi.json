@@ -35,7 +35,7 @@
     "description" : "Live bot automation service. See file header for scope and design notes.\n\nPermissions:\n- READ_BOT_INFO: required for WatchBotEvents, GetBlock, FindBlocks,\nListNearbyEntities.\n- UPDATE_BOT_CONFIG: required for SendChat, DigBlock, PlaceBlock, UseItem,\nAttackEntity, InteractEntity, SwingArm, GoTo,\nStopPathfinding.\n\nError handling mirrors BotService:\n- NOT_FOUND: instance or bot does not exist.\n- FAILED_PRECONDITION: bot is not online, target not loaded, or the\nrequested action is not currently valid.\n- OUT_OF_RANGE: target is outside the bot's reach / observation radius.\n- INTERNAL: unexpected server errors."
   }, {
     "name" : "BotService",
-    "description" : "Service for managing and controlling Minecraft bots.\nProvides comprehensive APIs for bot monitoring, movement control,\ninventory management, and interaction with server dialogs.\n\nPermissions:\n- READ_BOT_INFO: Required for GetBotList, GetBotInfo, GetInventoryState,\nRenderBotPov, GetDialog\n- UPDATE_BOT_CONFIG: Required for all other operations that modify bot state\n\nError Handling:\n- NOT_FOUND: Instance or bot does not exist\n- FAILED_PRECONDITION: Bot is not online or required game state is unavailable\n- INTERNAL: Unexpected server errors (check server logs for details)"
+    "description" : "Service for managing and controlling Minecraft bots.\nProvides comprehensive APIs for bot monitoring, movement control,\ninventory management, and interaction with server dialogs.\n\nPermissions:\n- READ_BOT_INFO: Required for GetBotList, GetBotInfo, GetInventoryState,\nRenderBotPov, GetDialog\n- CONTROL_BOTS: Required to start, stop, or restart bots\n- UPDATE_BOT_CONFIG: Required for all other operations that modify bot state\n\nError Handling:\n- NOT_FOUND: Instance or bot does not exist\n- FAILED_PRECONDITION: Bot is not online or required game state is unavailable\n- INTERNAL: Unexpected server errors (check server logs for details)"
   }, {
     "name" : "ClientService",
     "description" : "Service for managing client/user-specific operations.\nAll methods in this service operate on the currently authenticated user,\nidentified via the JWT token in the Authorization header.\nEach method requires a specific GlobalPermission to be granted to the user."
@@ -47,7 +47,7 @@
     "description" : "Service for downloading content from remote URLs through the SoulFire server.\nThis service acts as a proxy, allowing clients to fetch remote resources using\nthe server's network connection and optionally through a configured proxy.\n\nUse cases include:\n- Downloading resources that may be blocked from the client's network\n- Fetching content through a specific proxy for anonymity or geo-unlocking\n- Centralizing external API calls through the server\n\nThe service uses a Reactor Netty HTTP client with:\n- 5-second response timeout\n- Automatic compression support\n- Default Accept, Accept-Language, and User-Agent headers\n\nAuthorization:\n- Requires a valid JWT token\n- Caller must have DOWNLOAD_URL permission for the specified instance\n\nError handling:\n- Returns gRPC INTERNAL status on network errors, timeouts, or server failures\n- The error description contains details about the failure"
   }, {
     "name" : "InstanceService",
-    "description" : "Service for managing SoulFire instances.\nAn instance represents a collection of Minecraft bots that can be started,\nstopped, and configured together. Each instance has its own configuration\nincluding settings, Minecraft accounts, and proxies.\n\nAll operations require appropriate permissions:\n- CREATE_INSTANCE (global): Required to create new instances\n- READ_INSTANCE: Required to list and view instance details\n- UPDATE_INSTANCE_META: Required to change instance name/icon\n- UPDATE_INSTANCE_CONFIG: Required to modify settings, accounts, and proxies\n- DELETE_INSTANCE: Required to delete an instance\n- CHANGE_INSTANCE_STATE: Required to start/stop/pause the instance\n- READ_INSTANCE_AUDIT_LOGS: Required to view audit logs\n- READ_BOT_INFO: Required to read account metadata"
+    "description" : "Service for managing SoulFire instances.\nAn instance is a permission and configuration compartment for independently\ncontrolled Minecraft bots, settings, accounts, proxies, and automation.\n\nAll operations require appropriate permissions:\n- CREATE_INSTANCE (global): Required to create new instances\n- READ_INSTANCE: Required to list and view instance details\n- UPDATE_INSTANCE_META: Required to change instance name/icon\n- UPDATE_INSTANCE_CONFIG: Required to modify settings, accounts, and proxies\n- DELETE_INSTANCE: Required to delete an instance\n- READ_INSTANCE_AUDIT_LOGS: Required to view audit logs\n- READ_BOT_INFO: Required to read account metadata"
   }, {
     "name" : "LoginService",
     "description" : "Service for authenticating users via email-based passwordless login.\n\nAuthentication Flow:\n1. Client calls Login with the user's email address\n2. If the email is registered, a six-digit code is sent to that email\n3. Client receives an auth_flow_token and EmailCode response\n4. User enters the code from their email\n5. Client calls EmailCode with the auth_flow_token and the code\n6. If valid, client receives a JWT token; if invalid, receives a Failure\n\nSecurity Features:\n- Rate limited to 20 requests per 10 minutes per origin to prevent brute force attacks\n- Auth flow tokens expire after 15 minutes\n- Same response for registered and unregistered emails to prevent email enumeration\n- Invalid codes return the same error as expired/invalid flow tokens to prevent timing attacks\n\nError Handling:\n- RESOURCE_EXHAUSTED: Rate limit exceeded (too many login attempts)\n- UNAUTHENTICATED: No origin header provided (required for rate limiting)\n- INTERNAL: Unexpected server error during processing"
@@ -4597,6 +4597,192 @@
         }
       }
     },
+    "/v1/instances/{instance_id}/bots:restart" : {
+      "post" : {
+        "summary" : "Restart bots",
+        "description" : "Forces the selected bots to establish fresh connections.",
+        "operationId" : "restartBots",
+        "x-soulfire-transport" : "http-json-transcoding",
+        "x-soulfire-grpc-service" : "soulfire.v1.BotService",
+        "x-soulfire-grpc-method" : "RestartBots",
+        "x-soulfire-unary-only" : true,
+        "tags" : [ "BotService" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOTS" ],
+        "x-soulfire-scope" : "instance.bot",
+        "x-soulfire-side-effects" : [ "Persists running intent and reconnects the selected bots." ],
+        "parameters" : [ {
+          "name" : "instance_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "x-protobuf-type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "title" : "RestartBotsRequestBody",
+                "type" : "object",
+                "additionalProperties" : false,
+                "description" : "Reconnects a batch of bots and leaves their desired state set to running.",
+                "properties" : {
+                  "botIds" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string",
+                      "x-protobuf-type" : "string"
+                    },
+                    "format" : "uuid"
+                  }
+                },
+                "required" : [ "botIds" ]
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful response.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/soulfire.v1.RestartBotsResponse"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Missing or invalid API authorization header.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SoulFireGrpcError"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "The authenticated user does not have the required permission.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SoulFireGrpcError"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Unexpected server-side failure while handling the RPC.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SoulFireGrpcError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/instances/{instance_id}/bots:setDesiredState" : {
+      "post" : {
+        "summary" : "Set bot desired state",
+        "description" : "Persists whether the selected bots should be running or stopped.\nThe request returns after the desired state is durable. Connections are\nreconciled asynchronously and can be observed through WatchBotStatuses.",
+        "operationId" : "setBotsDesiredState",
+        "x-soulfire-transport" : "http-json-transcoding",
+        "x-soulfire-grpc-service" : "soulfire.v1.BotService",
+        "x-soulfire-grpc-method" : "SetBotsDesiredState",
+        "x-soulfire-unary-only" : true,
+        "tags" : [ "BotService" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOTS" ],
+        "x-soulfire-scope" : "instance.bot",
+        "x-soulfire-execution" : "Returns after desired state is persisted",
+        "x-soulfire-side-effects" : [ "Starts or stops the selected bots asynchronously." ],
+        "parameters" : [ {
+          "name" : "instance_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "x-protobuf-type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "title" : "SetBotsDesiredStateRequestBody",
+                "type" : "object",
+                "additionalProperties" : false,
+                "description" : "Changes persistent desired state for a batch of configured bots.",
+                "properties" : {
+                  "botIds" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string",
+                      "x-protobuf-type" : "string"
+                    },
+                    "format" : "uuid"
+                  },
+                  "desiredState" : {
+                    "$ref" : "#/components/schemas/soulfire.v1.BotDesiredState"
+                  }
+                },
+                "required" : [ "botIds", "desiredState" ]
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful response.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/soulfire.v1.SetBotsDesiredStateResponse"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Missing or invalid API authorization header.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SoulFireGrpcError"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "The authenticated user does not have the required permission.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SoulFireGrpcError"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Unexpected server-side failure while handling the RPC.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SoulFireGrpcError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/instances/{instance_id}/bots/{bot_id}/container/text-inputs/{field_id}:set" : {
       "post" : {
         "summary" : "Set container text",
@@ -6320,101 +6506,10 @@
         }
       }
     },
-    "/v1/instances/{id}:changeState" : {
-      "post" : {
-        "summary" : "Change instance state",
-        "description" : "Changes the lifecycle state of an instance.\nUsed to start, pause, resume, or stop bot sessions.\nThe operation blocks until the state transition is complete.",
-        "operationId" : "changeInstanceState",
-        "x-soulfire-transport" : "http-json-transcoding",
-        "x-soulfire-grpc-service" : "soulfire.v1.InstanceService",
-        "x-soulfire-grpc-method" : "ChangeInstanceState",
-        "x-soulfire-unary-only" : true,
-        "tags" : [ "InstanceService" ],
-        "x-soulfire-permissions" : [ "CHANGE_INSTANCE_STATE" ],
-        "x-soulfire-scope" : "instance",
-        "x-soulfire-execution" : "Blocking until transition completes",
-        "x-soulfire-side-effects" : [ "Starts, pauses, resumes, or stops the instance." ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "required" : true,
-          "description" : "The unique identifier (UUID) of the instance.",
-          "schema" : {
-            "type" : "string",
-            "x-protobuf-type" : "string",
-            "format" : "uuid"
-          }
-        } ],
-        "requestBody" : {
-          "required" : true,
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "title" : "ChangeInstanceStateRequestBody",
-                "type" : "object",
-                "additionalProperties" : false,
-                "description" : "Request to change the lifecycle state of an instance.\nUsed to start, pause, resume, or stop an instance.",
-                "properties" : {
-                  "state" : {
-                    "description" : "The target state for the instance. Valid transitions:\n- STOPPED -> RUNNING: Starts the instance\n- RUNNING -> PAUSED: Pauses bot ticking\n- PAUSED -> RUNNING: Resumes bot ticking\n- RUNNING/PAUSED -> STOPPED: Stops the instance\nThe server will handle intermediate states (STARTING, STOPPING) automatically.",
-                    "allOf" : [ {
-                      "$ref" : "#/components/schemas/soulfire.v1.InstanceState"
-                    } ]
-                  }
-                },
-                "required" : [ "state" ]
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "Response after successfully changing instance state.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/soulfire.v1.InstanceStateChangeResponse"
-                }
-              }
-            }
-          },
-          "401" : {
-            "description" : "Missing or invalid API authorization header.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/SoulFireGrpcError"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "The authenticated user does not have the required permission.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/SoulFireGrpcError"
-                }
-              }
-            }
-          },
-          "500" : {
-            "description" : "Unexpected server-side failure while handling the RPC.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/SoulFireGrpcError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/v1/instances" : {
       "post" : {
         "summary" : "Create instance",
-        "description" : "Creates a new instance with the given friendly name.\nThe instance starts in STOPPED state with default configuration.",
+        "description" : "Creates a new instance with the given friendly name.",
         "operationId" : "createInstance",
         "x-soulfire-transport" : "http-json-transcoding",
         "x-soulfire-grpc-service" : "soulfire.v1.InstanceService",
@@ -6423,7 +6518,7 @@
         "tags" : [ "InstanceService" ],
         "x-soulfire-permissions" : [ "CREATE_INSTANCE" ],
         "x-soulfire-scope" : "instance",
-        "x-soulfire-side-effects" : [ "Creates a new instance in the stopped state." ],
+        "x-soulfire-side-effects" : [ "Creates a new instance with no desired bots." ],
         "requestBody" : {
           "required" : true,
           "content" : {
@@ -6756,7 +6851,7 @@
     "/v1/instances/{id}" : {
       "delete" : {
         "summary" : "Delete instance",
-        "description" : "Permanently deletes an instance and all its data.\nIf the instance is running, it will be stopped first.\nThis operation cannot be undone.",
+        "description" : "Permanently deletes an instance and all its data.\nConnected bots are stopped before the instance is deleted.\nThis operation cannot be undone.",
         "operationId" : "deleteInstance",
         "x-soulfire-transport" : "http-json-transcoding",
         "x-soulfire-grpc-service" : "soulfire.v1.InstanceService",
@@ -6770,7 +6865,7 @@
           "name" : "id",
           "in" : "path",
           "required" : true,
-          "description" : "The unique identifier (UUID) of the instance to delete.\nThe instance will be stopped if running before deletion.",
+          "description" : "The unique identifier (UUID) of the instance to delete.\nAll connected bots are stopped before deletion.",
           "schema" : {
             "type" : "string",
             "x-protobuf-type" : "string",
@@ -10511,6 +10606,11 @@
         },
         "required" : [ "success" ]
       },
+      "soulfire.v1.BotDesiredState" : {
+        "type" : "string",
+        "description" : "Persistent operator intent for a bot.",
+        "enum" : [ "BOT_DESIRED_STATE_UNSPECIFIED", "BOT_DESIRED_STATE_STOPPED", "BOT_DESIRED_STATE_RUNNING" ]
+      },
       "soulfire.v1.BotGetDialogResponse" : {
         "type" : "object",
         "additionalProperties" : false,
@@ -10539,9 +10639,15 @@
               "type" : "null"
             } ],
             "description" : "Live state of the bot including full inventory data.\nWill be absent if the bot is offline or player data is not available.\nWhen present, includes complete inventory slot information."
+          },
+          "status" : {
+            "description" : "Persistent desired state and current controller state.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/soulfire.v1.BotStatus"
+            } ]
           }
         },
-        "required" : [ ]
+        "required" : [ "status" ]
       },
       "soulfire.v1.BotInventoryClickResponse" : {
         "type" : "object",
@@ -11484,18 +11590,6 @@
         "properties" : { },
         "required" : [ ]
       },
-      "soulfire.v1.InstanceState" : {
-        "type" : "string",
-        "description" : "Represents the lifecycle state of an instance session.\nState transitions follow a specific flow:\nSTOPPED -> STARTING -> RUNNING <-> PAUSED -> STOPPING -> STOPPED",
-        "enum" : [ "STARTING", "RUNNING", "PAUSED", "STOPPING", "STOPPED" ]
-      },
-      "soulfire.v1.InstanceStateChangeResponse" : {
-        "type" : "object",
-        "additionalProperties" : false,
-        "description" : "Response after successfully changing instance state.\nThe operation completes when the state transition is finished.\nEmpty response indicates success.",
-        "properties" : { },
-        "required" : [ ]
-      },
       "soulfire.v1.InstanceUpdateAccountResponse" : {
         "type" : "object",
         "additionalProperties" : false,
@@ -11850,6 +11944,19 @@
           }
         },
         "required" : [ "results" ]
+      },
+      "soulfire.v1.RestartBotsResponse" : {
+        "type" : "object",
+        "additionalProperties" : false,
+        "properties" : {
+          "bots" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/soulfire.v1.BotStatus"
+            }
+          }
+        },
+        "required" : [ "bots" ]
       },
       "soulfire.v1.ScriptEdge" : {
         "type" : "object",
@@ -12222,6 +12329,19 @@
           }
         },
         "required" : [ "settings" ]
+      },
+      "soulfire.v1.SetBotsDesiredStateResponse" : {
+        "type" : "object",
+        "additionalProperties" : false,
+        "properties" : {
+          "bots" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/soulfire.v1.BotStatus"
+            }
+          }
+        },
+        "required" : [ "bots" ]
       },
       "soulfire.v1.SetInstanceMetadataEntryResponse" : {
         "type" : "object",
@@ -12765,6 +12885,38 @@
         },
         "required" : [ "x", "y", "z", "xRot", "yRot", "health", "maxHealth", "foodLevel", "saturationLevel", "selectedHotbarSlot", "dimension", "experienceLevel", "experienceProgress", "gameMode" ]
       },
+      "soulfire.v1.BotStatus" : {
+        "type" : "object",
+        "additionalProperties" : false,
+        "description" : "Durable intent and current controller state for one configured bot.",
+        "properties" : {
+          "profileId" : {
+            "type" : "string",
+            "x-protobuf-type" : "string",
+            "format" : "uuid"
+          },
+          "desiredState" : {
+            "$ref" : "#/components/schemas/soulfire.v1.BotDesiredState"
+          },
+          "runtimeState" : {
+            "$ref" : "#/components/schemas/soulfire.v1.BotRuntimeState"
+          },
+          "lastError" : {
+            "anyOf" : [ {
+              "type" : "string",
+              "x-protobuf-type" : "string"
+            }, {
+              "type" : "null"
+            } ]
+          },
+          "updatedAt" : {
+            "type" : "string",
+            "format" : "date-time",
+            "x-protobuf-type" : "google.protobuf.Timestamp"
+          }
+        },
+        "required" : [ "profileId", "desiredState", "runtimeState", "updatedAt" ]
+      },
       "soulfire.v1.ContainerLayout" : {
         "type" : "object",
         "additionalProperties" : false,
@@ -12923,9 +13075,15 @@
               "type" : "null"
             } ],
             "description" : "Last known account (player) name of the bot, for convenient display in\nlist views without joining against the instance account configuration.\nAbsent if the name is unknown."
+          },
+          "status" : {
+            "description" : "Persistent desired state and current controller state.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/soulfire.v1.BotStatus"
+            } ]
           }
         },
-        "required" : [ "profileId", "isOnline", "connectionPhase" ]
+        "required" : [ "profileId", "isOnline", "connectionPhase", "status" ]
       },
       "soulfire.v1.BotRenderPovMetadata" : {
         "type" : "object",
@@ -13774,25 +13932,25 @@
             "type" : "string",
             "x-protobuf-type" : "uint64",
             "pattern" : "^(0|[1-9][0-9]*)$",
-            "description" : "Cumulative packets sent across all bots since session start."
+            "description" : "Cumulative packets sent across all bots since the server started."
           },
           "packetsReceivedTotal" : {
             "type" : "string",
             "x-protobuf-type" : "uint64",
             "pattern" : "^(0|[1-9][0-9]*)$",
-            "description" : "Cumulative packets received across all bots since session start."
+            "description" : "Cumulative packets received across all bots since the server started."
           },
           "bytesSentTotal" : {
             "type" : "string",
             "x-protobuf-type" : "uint64",
             "pattern" : "^(0|[1-9][0-9]*)$",
-            "description" : "Cumulative bytes sent across all bots since session start."
+            "description" : "Cumulative bytes sent across all bots since the server started."
           },
           "bytesReceivedTotal" : {
             "type" : "string",
             "x-protobuf-type" : "uint64",
             "pattern" : "^(0|[1-9][0-9]*)$",
-            "description" : "Cumulative bytes received across all bots since session start."
+            "description" : "Cumulative bytes received across all bots since the server started."
           },
           "packetsSentPerSecond" : {
             "x-protobuf-type" : "double",
@@ -14362,16 +14520,48 @@
             "maximum" : 4294967295,
             "description" : "Total bots configured across all instances."
           },
-          "activeInstances" : {
+          "totalBotsDesired" : {
             "type" : "integer",
             "format" : "int64",
             "x-protobuf-type" : "uint32",
             "minimum" : 0,
             "maximum" : 4294967295,
-            "description" : "Number of active (non-stopped) instances."
+            "description" : "Total bots desired to be running across all instances."
+          },
+          "instancesWithDesiredBots" : {
+            "type" : "integer",
+            "format" : "int64",
+            "x-protobuf-type" : "uint32",
+            "minimum" : 0,
+            "maximum" : 4294967295,
+            "description" : "Instances with at least one desired bot."
+          },
+          "totalBotsStarting" : {
+            "type" : "integer",
+            "format" : "int64",
+            "x-protobuf-type" : "uint32",
+            "minimum" : 0,
+            "maximum" : 4294967295,
+            "description" : "Bots currently queued or starting."
+          },
+          "totalBotsRetrying" : {
+            "type" : "integer",
+            "format" : "int64",
+            "x-protobuf-type" : "uint32",
+            "minimum" : 0,
+            "maximum" : 4294967295,
+            "description" : "Bots waiting for an automatic reconnect."
+          },
+          "totalBotsFailed" : {
+            "type" : "integer",
+            "format" : "int64",
+            "x-protobuf-type" : "uint32",
+            "minimum" : 0,
+            "maximum" : 4294967295,
+            "description" : "Desired bots whose latest connection attempt failed."
           }
         },
-        "required" : [ "timestamp", "processCpuLoad", "systemCpuLoad", "heapUsedBytes", "heapCommittedBytes", "heapMaxBytes", "nonHeapUsedBytes", "threadCount", "daemonThreadCount", "gcCollectionCount", "gcCollectionTimeMs", "uptimeMs", "availableProcessors", "totalBotsOnline", "totalBotsTotal", "activeInstances" ]
+        "required" : [ "timestamp", "processCpuLoad", "systemCpuLoad", "heapUsedBytes", "heapCommittedBytes", "heapMaxBytes", "nonHeapUsedBytes", "threadCount", "daemonThreadCount", "gcCollectionCount", "gcCollectionTimeMs", "uptimeMs", "availableProcessors", "totalBotsOnline", "totalBotsTotal", "totalBotsDesired", "instancesWithDesiredBots", "totalBotsStarting", "totalBotsRetrying", "totalBotsFailed" ]
       },
       "soulfire.v1.InstanceAuditLogResponse.AuditLogEntry" : {
         "type" : "object",
@@ -14430,12 +14620,6 @@
               "$ref" : "#/components/schemas/soulfire.v1.InstanceConfig"
             } ]
           },
-          "state" : {
-            "description" : "The current lifecycle state of the instance.",
-            "allOf" : [ {
-              "$ref" : "#/components/schemas/soulfire.v1.InstanceState"
-            } ]
-          },
           "instancePermissions" : {
             "type" : "array",
             "items" : {
@@ -14469,9 +14653,15 @@
             "format" : "date-time",
             "x-protobuf-type" : "google.protobuf.Timestamp",
             "description" : "Timestamp of when the configuration was last modified.\nUsed for conditional requests via if_modified_since."
+          },
+          "botSummary" : {
+            "description" : "Aggregate desired and runtime state for the instance's bots.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/soulfire.v1.BotFleetSummary"
+            } ]
           }
         },
-        "required" : [ "friendlyName", "icon", "config", "state", "lastModified" ]
+        "required" : [ "friendlyName", "icon", "config", "lastModified", "botSummary" ]
       },
       "soulfire.v1.InstanceNotModified" : {
         "type" : "object",
@@ -14508,21 +14698,21 @@
             "x-protobuf-type" : "string",
             "description" : "The icon identifier for the instance (used for UI display)."
           },
-          "state" : {
-            "description" : "The current lifecycle state of the instance.",
-            "allOf" : [ {
-              "$ref" : "#/components/schemas/soulfire.v1.InstanceState"
-            } ]
-          },
           "instancePermissions" : {
             "type" : "array",
             "items" : {
               "$ref" : "#/components/schemas/soulfire.v1.InstancePermissionState"
             },
             "description" : "The permissions the current user has on this instance.\nEach permission indicates whether a specific action is allowed."
+          },
+          "botSummary" : {
+            "description" : "Aggregate desired and runtime state for the instance's bots.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/soulfire.v1.BotFleetSummary"
+            } ]
           }
         },
-        "required" : [ "id", "friendlyName", "icon", "state" ]
+        "required" : [ "id", "friendlyName", "icon", "botSummary" ]
       },
       "soulfire.v1.NearbyEntity" : {
         "type" : "object",
@@ -15264,6 +15454,11 @@
         "type" : "string",
         "description" : "Minecraft game modes that determine player capabilities.",
         "enum" : [ "GAME_MODE_UNSPECIFIED", "GAME_MODE_SURVIVAL", "GAME_MODE_CREATIVE", "GAME_MODE_ADVENTURE", "GAME_MODE_SPECTATOR" ]
+      },
+      "soulfire.v1.BotRuntimeState" : {
+        "type" : "string",
+        "description" : "Current state of SoulFire's per-bot connection controller.",
+        "enum" : [ "BOT_RUNTIME_STATE_UNSPECIFIED", "BOT_RUNTIME_STATE_STOPPED", "BOT_RUNTIME_STATE_QUEUED", "BOT_RUNTIME_STATE_STARTING", "BOT_RUNTIME_STATE_RUNNING", "BOT_RUNTIME_STATE_RETRYING", "BOT_RUNTIME_STATE_STOPPING", "BOT_RUNTIME_STATE_FAILED" ]
       },
       "soulfire.v1.SlotRegion" : {
         "type" : "object",
@@ -16076,7 +16271,7 @@
       "soulfire.v1.InstanceAuditLogResponse.AuditLogEntryType" : {
         "type" : "string",
         "description" : "Types of actions that are recorded in the audit log.",
-        "enum" : [ "EXECUTE_COMMAND", "START_SESSION", "PAUSE_SESSION", "RESUME_SESSION", "STOP_SESSION", "AUTOMATION_START", "AUTOMATION_PAUSE", "AUTOMATION_RESUME", "AUTOMATION_STOP", "AUTOMATION_UPDATE_SETTINGS", "AUTOMATION_APPLY_PRESET", "AUTOMATION_RESET_MEMORY", "AUTOMATION_RESET_COORDINATION", "AUTOMATION_RELEASE_CLAIMS" ]
+        "enum" : [ "EXECUTE_COMMAND", "AUTOMATION_START", "AUTOMATION_PAUSE", "AUTOMATION_RESUME", "AUTOMATION_STOP", "AUTOMATION_UPDATE_SETTINGS", "AUTOMATION_APPLY_PRESET", "AUTOMATION_RESET_MEMORY", "AUTOMATION_RESET_COORDINATION", "AUTOMATION_RELEASE_CLAIMS", "BOT_DESIRED_STATE_CHANGE", "BOT_RESTART" ]
       },
       "soulfire.v1.InstancePermissionState" : {
         "type" : "object",
@@ -16096,6 +16291,56 @@
           }
         },
         "required" : [ "instancePermission", "granted" ]
+      },
+      "soulfire.v1.BotFleetSummary" : {
+        "type" : "object",
+        "additionalProperties" : false,
+        "description" : "Aggregate bot state for an instance.",
+        "properties" : {
+          "totalBots" : {
+            "type" : "integer",
+            "format" : "int64",
+            "x-protobuf-type" : "uint32",
+            "minimum" : 0,
+            "maximum" : 4294967295
+          },
+          "desiredBots" : {
+            "type" : "integer",
+            "format" : "int64",
+            "x-protobuf-type" : "uint32",
+            "minimum" : 0,
+            "maximum" : 4294967295
+          },
+          "onlineBots" : {
+            "type" : "integer",
+            "format" : "int64",
+            "x-protobuf-type" : "uint32",
+            "minimum" : 0,
+            "maximum" : 4294967295
+          },
+          "startingBots" : {
+            "type" : "integer",
+            "format" : "int64",
+            "x-protobuf-type" : "uint32",
+            "minimum" : 0,
+            "maximum" : 4294967295
+          },
+          "retryingBots" : {
+            "type" : "integer",
+            "format" : "int64",
+            "x-protobuf-type" : "uint32",
+            "minimum" : 0,
+            "maximum" : 4294967295
+          },
+          "failedBots" : {
+            "type" : "integer",
+            "format" : "int64",
+            "x-protobuf-type" : "uint32",
+            "minimum" : 0,
+            "maximum" : 4294967295
+          }
+        },
+        "required" : [ "totalBots", "desiredBots", "onlineBots", "startingBots", "retryingBots", "failedBots" ]
       },
       "soulfire.v1.WorldPosition" : {
         "type" : "object",
@@ -16872,7 +17117,7 @@
       "soulfire.v1.InstancePermission" : {
         "type" : "string",
         "description" : "Permissions that apply to a specific instance.\nThese permissions are scoped to individual instances and control what operations\na user can perform on that instance. Checked via PermissionContext.instance() method.\nPermission grants are stored per-user per-instance in the database.",
-        "enum" : [ "INSTANCE_COMMAND_EXECUTION", "READ_INSTANCE", "UPDATE_INSTANCE_META", "UPDATE_INSTANCE_CONFIG", "DELETE_INSTANCE", "CHANGE_INSTANCE_STATE", "AUTHENTICATE_MC_ACCOUNT", "CHECK_PROXY", "DOWNLOAD_URL", "ACCESS_OBJECT_STORAGE", "INSTANCE_SUBSCRIBE_LOGS", "READ_INSTANCE_AUDIT_LOGS", "READ_BOT_INFO", "UPDATE_BOT_CONFIG" ]
+        "enum" : [ "INSTANCE_COMMAND_EXECUTION", "READ_INSTANCE", "UPDATE_INSTANCE_META", "UPDATE_INSTANCE_CONFIG", "DELETE_INSTANCE", "AUTHENTICATE_MC_ACCOUNT", "CHECK_PROXY", "DOWNLOAD_URL", "ACCESS_OBJECT_STORAGE", "INSTANCE_SUBSCRIBE_LOGS", "READ_INSTANCE_AUDIT_LOGS", "READ_BOT_INFO", "UPDATE_BOT_CONFIG", "CONTROL_BOTS", "EXECUTE_SCRIPTS" ]
       },
       "soulfire.v1.StringSetting.InputType" : {
         "type" : "string",
