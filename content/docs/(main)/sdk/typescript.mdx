@@ -85,6 +85,115 @@ for await (const event of instance.watchBotStatuses({
 
 Use `await bot.status()` for a one-off status read.
 
+## Stream live bot events
+
+`events()` stays open while the bot is stopped and follows the configured account across reconnects.
+Its default filter includes status, state changes, chat, lifecycle, inventory, and damage:
+
+```ts
+for await (const event of bot.events()) {
+  switch (event.event.case) {
+    case "chat":
+      console.log(event.event.value.plainText);
+      break;
+    case "inventory":
+      console.log(event.event.value.state?.slots);
+      break;
+    case "status":
+      console.log(event.event.value.runtimeState);
+      break;
+  }
+}
+```
+
+Pass an `AbortSignal` in the call options when the stream belongs to a cancellable task.
+
+## Control a live bot
+
+Live actions resolve after the Minecraft game thread executes them.
+Failed and cancelled actions throw `SoulFireActionError` with the action ID and structured server result.
+
+```ts
+import { ClickType } from "@soulfiremc/sdk";
+
+await bot.sendChat("Hello from TypeScript");
+await bot.selectHotbar(0);
+await bot.clickInventory(12, ClickType.LEFT_CLICK);
+await bot.transferInventorySlot(12);
+await bot.moveInventoryStack(12, 36);
+
+await bot.setMovement({ forward: true, sprint: true });
+await bot.look(90, 0);
+await bot.resetMovement();
+```
+
+World and interaction methods include `getBlock`, `findBlocks`, `listNearbyEntities`, `digBlock`, `placeBlock`, `useItem`, `releaseItem`, `attackEntity`, `interactEntity`, `swingArm`, and `respawn`.
+`goTo` returns a progress stream, while `stopPathfinding` cancels the current path.
+
+## Coordinate multiple controllers
+
+Control leases are optional.
+Acquiring one prevents another client from issuing actions for that configured bot until the lease is released or expires:
+
+```ts
+const lease = await bot.acquireControl(30);
+
+try {
+  await bot.sendChat("This action carries the lease token");
+  await lease.renew(30);
+} finally {
+  await lease.release();
+}
+```
+
+## Compose behaviors
+
+The included behaviors are public-API building blocks, not server-side modes:
+
+```ts
+import {
+  attackNearest,
+  collectBlocks,
+  runBehaviors,
+} from "@soulfiremc/sdk";
+
+const controller = new AbortController();
+
+await runBehaviors(
+  bot,
+  [
+    collectBlocks({ blockIds: ["minecraft:oak_log"], maxCount: 16 }),
+    attackNearest({ entityTypes: ["minecraft:zombie"] }),
+  ],
+  { signal: controller.signal },
+);
+```
+
+The package also exports `followEntity`, `autoEat`, and `build`.
+
+## Provision instances and accounts
+
+Operators can create a compartmentalized instance, authenticate a Minecraft account, and add it to that instance:
+
+```ts
+import { AccountTypeDeviceCode } from "@soulfiremc/sdk";
+
+const instance = await soulfire.createInstance("automation");
+
+for await (const step of instance.loginDeviceCode({
+  service: AccountTypeDeviceCode.MICROSOFT_JAVA_DEVICE_CODE,
+})) {
+  if (step.data.case === "deviceCode") {
+    console.log(step.data.value.verificationUri, step.data.value.userCode);
+  }
+  if (step.data.case === "account") {
+    await instance.addAccounts([step.data.value]);
+  }
+}
+```
+
+The high-level instance wrapper also supports listing instances, metadata and setting updates, account refresh, credentials authentication, and account or proxy batch operations.
+
 ## Provision a local dedicated server
 
 ```ts
@@ -96,13 +205,20 @@ const soulfire = await SoulFire.install({
 try {
   const bot = soulfire.instance("instance-uuid").bot("bot-uuid");
   await bot.start();
+
+  console.log(soulfire.localServer?.version);
+  console.log(soulfire.localServerLogs);
+
+  await soulfire.restartLocalServer();
+  await soulfire.stopLocalServer();
 } finally {
   await soulfire.close();
 }
 ```
 
 <Callout type="info">
-  Local installation is a Node.js feature and is excluded from the browser execution path.
+  Local installation and process management are Node.js features and are excluded from the browser execution path.
+  Restarting preserves the installation directory, port, release, and root API token.
 </Callout>
 
 ## Use an unwrapped RPC

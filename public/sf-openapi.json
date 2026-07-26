@@ -32,10 +32,10 @@
     "name" : "AutomationService"
   }, {
     "name" : "BotLiveService",
-    "description" : "Live bot automation service. See file header for scope and design notes.\n\nPermissions:\n- READ_BOT_INFO: required for WatchBotEvents, GetBlock, FindBlocks,\nListNearbyEntities.\n- UPDATE_BOT_CONFIG: required for SendChat, DigBlock, PlaceBlock, UseItem,\nAttackEntity, InteractEntity, SwingArm, GoTo,\nStopPathfinding.\n\nError handling mirrors BotService:\n- NOT_FOUND: instance or bot does not exist.\n- FAILED_PRECONDITION: bot is not online, target not loaded, or the\nrequested action is not currently valid.\n- OUT_OF_RANGE: target is outside the bot's reach / observation radius.\n- INTERNAL: unexpected server errors."
+    "description" : "Live bot automation service. See file header for scope and design notes.\n\nPermissions:\n- READ_BOT_INFO: required for WatchBotEvents, GetBlock, FindBlocks,\nListNearbyEntities.\n- CONTROL_BOT_ACTIONS: required for chat, interactions, pathfinding, and\nexclusive control leases.\n\nError handling mirrors BotService:\n- NOT_FOUND: instance or bot does not exist.\n- FAILED_PRECONDITION: bot is not online, target not loaded, or the\nrequested action is not currently valid.\n- OUT_OF_RANGE: target is outside the bot's reach / observation radius.\n- INTERNAL: unexpected server errors."
   }, {
     "name" : "BotService",
-    "description" : "Service for managing and controlling Minecraft bots.\nProvides comprehensive APIs for bot monitoring, movement control,\ninventory management, and interaction with server dialogs.\n\nPermissions:\n- READ_BOT_INFO: Required for GetBotList, GetBotInfo, GetInventoryState,\nRenderBotPov, GetDialog\n- CONTROL_BOTS: Required to start, stop, or restart bots\n- UPDATE_BOT_CONFIG: Required for all other operations that modify bot state\n\nError Handling:\n- NOT_FOUND: Instance or bot does not exist\n- FAILED_PRECONDITION: Bot is not online or required game state is unavailable\n- INTERNAL: Unexpected server errors (check server logs for details)"
+    "description" : "Service for managing and controlling Minecraft bots.\nProvides comprehensive APIs for bot monitoring, movement control,\ninventory management, and interaction with server dialogs.\n\nPermissions:\n- READ_BOT_INFO: Required for GetBotList, GetBotInfo, GetInventoryState,\nRenderBotPov, GetDialog\n- CONTROL_BOTS: Required to start, stop, or restart bots\n- UPDATE_BOT_CONFIG: Required for persistent per-bot setting changes\n- CONTROL_BOT_ACTIONS: Required for live movement, inventory, and dialog actions\n\nError Handling:\n- NOT_FOUND: Instance or bot does not exist\n- FAILED_PRECONDITION: Bot is not online or required game state is unavailable\n- INTERNAL: Unexpected server errors (check server logs for details)"
   }, {
     "name" : "ClientService",
     "description" : "Service for managing client/user-specific operations.\nAll methods in this service operate on the currently authenticated user,\nidentified via the JWT token in the Authorization header.\nEach method requires a specific GlobalPermission to be granted to the user."
@@ -2183,6 +2183,106 @@
         }
       }
     },
+    "/v1/instances/{instance_id}/bots/{bot_id}/control:acquire" : {
+      "post" : {
+        "summary" : "Acquire bot control",
+        "description" : "Acquires exclusive action control for a bot. While the lease is active,\naction calls must include its token in the X-SoulFire-Control-Token\nrequest header.",
+        "operationId" : "acquireBotControl",
+        "x-soulfire-transport" : "http-json-transcoding",
+        "x-soulfire-grpc-service" : "soulfire.v1.BotLiveService",
+        "x-soulfire-grpc-method" : "AcquireBotControl",
+        "x-soulfire-unary-only" : true,
+        "tags" : [ "BotLiveService" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOT_ACTIONS" ],
+        "x-soulfire-scope" : "instance.bot",
+        "x-soulfire-side-effects" : [ "Prevents other clients from issuing actions until the lease is released or expires." ],
+        "parameters" : [ {
+          "name" : "instance_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "x-protobuf-type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "bot_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "x-protobuf-type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "title" : "AcquireBotControlRequestBody",
+                "type" : "object",
+                "additionalProperties" : false,
+                "description" : "Exclusive control lease for coordinating multiple SDK clients, scripts, and\nbuilt-in automation against the same bot.",
+                "properties" : {
+                  "ttlSeconds" : {
+                    "type" : "integer",
+                    "format" : "int64",
+                    "x-protobuf-type" : "uint32",
+                    "minimum" : 0,
+                    "maximum" : 4294967295,
+                    "description" : "Requested lease lifetime. The server clamps this to its configured range."
+                  }
+                },
+                "required" : [ ]
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful response.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/soulfire.v1.AcquireBotControlResponse"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Missing or invalid API authorization header.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SoulFireGrpcError"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "The authenticated user does not have the required permission.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SoulFireGrpcError"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Unexpected server-side failure while handling the RPC.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SoulFireGrpcError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/instances/{instance_id}/bots/{bot_id}/actions/attack" : {
       "post" : {
         "summary" : "Attack entity",
@@ -2193,7 +2293,7 @@
         "x-soulfire-grpc-method" : "AttackEntity",
         "x-soulfire-unary-only" : true,
         "tags" : [ "BotLiveService" ],
-        "x-soulfire-permissions" : [ "UPDATE_BOT_CONFIG" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOT_ACTIONS" ],
         "x-soulfire-scope" : "instance.bot",
         "x-soulfire-preconditions" : [ "Bot must be online.", "Target entity must be observable and within reach." ],
         "x-soulfire-execution" : "Immediate",
@@ -2297,11 +2397,11 @@
         "x-soulfire-grpc-method" : "DigBlock",
         "x-soulfire-unary-only" : true,
         "tags" : [ "BotLiveService" ],
-        "x-soulfire-permissions" : [ "UPDATE_BOT_CONFIG" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOT_ACTIONS" ],
         "x-soulfire-scope" : "instance.bot",
         "x-soulfire-preconditions" : [ "Bot must be online.", "Target block must be within reach and loaded." ],
-        "x-soulfire-execution" : "Immediate",
-        "x-soulfire-side-effects" : [ "Begins or cancels block breaking at the target." ],
+        "x-soulfire-execution" : "Completes when the block is broken, cancelled, or the action fails.",
+        "x-soulfire-side-effects" : [ "Breaks or cancels breaking the target block." ],
         "parameters" : [ {
           "name" : "instance_id",
           "in" : "path",
@@ -2627,7 +2727,7 @@
         "x-soulfire-grpc-method" : "InteractEntity",
         "x-soulfire-unary-only" : true,
         "tags" : [ "BotLiveService" ],
-        "x-soulfire-permissions" : [ "UPDATE_BOT_CONFIG" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOT_ACTIONS" ],
         "x-soulfire-scope" : "instance.bot",
         "x-soulfire-preconditions" : [ "Bot must be online.", "Target entity must be observable and within reach." ],
         "x-soulfire-execution" : "Immediate",
@@ -2849,7 +2949,7 @@
         "x-soulfire-grpc-method" : "PlaceBlock",
         "x-soulfire-unary-only" : true,
         "tags" : [ "BotLiveService" ],
-        "x-soulfire-permissions" : [ "UPDATE_BOT_CONFIG" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOT_ACTIONS" ],
         "x-soulfire-scope" : "instance.bot",
         "x-soulfire-preconditions" : [ "Bot must be online.", "Target adjacent position must be within reach and loaded." ],
         "x-soulfire-execution" : "Immediate",
@@ -2950,6 +3050,381 @@
         }
       }
     },
+    "/v1/instances/{instance_id}/bots/{bot_id}/control:release" : {
+      "post" : {
+        "summary" : "Release bot control",
+        "operationId" : "releaseBotControl",
+        "x-soulfire-transport" : "http-json-transcoding",
+        "x-soulfire-grpc-service" : "soulfire.v1.BotLiveService",
+        "x-soulfire-grpc-method" : "ReleaseBotControl",
+        "x-soulfire-unary-only" : true,
+        "tags" : [ "BotLiveService" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOT_ACTIONS" ],
+        "x-soulfire-scope" : "instance.bot",
+        "parameters" : [ {
+          "name" : "instance_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "x-protobuf-type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "bot_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "x-protobuf-type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "title" : "ReleaseBotControlRequestBody",
+                "type" : "object",
+                "additionalProperties" : false,
+                "properties" : {
+                  "token" : {
+                    "type" : "string",
+                    "x-protobuf-type" : "string"
+                  }
+                },
+                "required" : [ "token" ]
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful response.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/soulfire.v1.ReleaseBotControlResponse"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Missing or invalid API authorization header.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SoulFireGrpcError"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "The authenticated user does not have the required permission.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SoulFireGrpcError"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Unexpected server-side failure while handling the RPC.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SoulFireGrpcError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/instances/{instance_id}/bots/{bot_id}/actions/release-item" : {
+      "post" : {
+        "summary" : "Release item",
+        "description" : "Releases an item that is currently being used, such as firing a drawn bow\nor stopping eating.",
+        "operationId" : "releaseItem",
+        "x-soulfire-transport" : "http-json-transcoding",
+        "x-soulfire-grpc-service" : "soulfire.v1.BotLiveService",
+        "x-soulfire-grpc-method" : "ReleaseItem",
+        "x-soulfire-unary-only" : true,
+        "tags" : [ "BotLiveService" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOT_ACTIONS" ],
+        "x-soulfire-scope" : "instance.bot",
+        "x-soulfire-preconditions" : [ "Bot must be online." ],
+        "x-soulfire-execution" : "Completes after the release is performed on the bot game thread.",
+        "parameters" : [ {
+          "name" : "instance_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "x-protobuf-type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "bot_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "x-protobuf-type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "title" : "ReleaseItemRequestBody",
+                "type" : "object",
+                "additionalProperties" : false,
+                "properties" : { },
+                "required" : [ ]
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful response.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/soulfire.v1.ReleaseItemResponse"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Missing or invalid API authorization header.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SoulFireGrpcError"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "The authenticated user does not have the required permission.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SoulFireGrpcError"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Unexpected server-side failure while handling the RPC.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SoulFireGrpcError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/instances/{instance_id}/bots/{bot_id}/control:renew" : {
+      "post" : {
+        "summary" : "Renew bot control",
+        "operationId" : "renewBotControl",
+        "x-soulfire-transport" : "http-json-transcoding",
+        "x-soulfire-grpc-service" : "soulfire.v1.BotLiveService",
+        "x-soulfire-grpc-method" : "RenewBotControl",
+        "x-soulfire-unary-only" : true,
+        "tags" : [ "BotLiveService" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOT_ACTIONS" ],
+        "x-soulfire-scope" : "instance.bot",
+        "parameters" : [ {
+          "name" : "instance_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "x-protobuf-type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "bot_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "x-protobuf-type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "title" : "RenewBotControlRequestBody",
+                "type" : "object",
+                "additionalProperties" : false,
+                "properties" : {
+                  "token" : {
+                    "type" : "string",
+                    "x-protobuf-type" : "string"
+                  },
+                  "ttlSeconds" : {
+                    "type" : "integer",
+                    "format" : "int64",
+                    "x-protobuf-type" : "uint32",
+                    "minimum" : 0,
+                    "maximum" : 4294967295
+                  }
+                },
+                "required" : [ "token" ]
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful response.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/soulfire.v1.RenewBotControlResponse"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Missing or invalid API authorization header.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SoulFireGrpcError"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "The authenticated user does not have the required permission.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SoulFireGrpcError"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Unexpected server-side failure while handling the RPC.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SoulFireGrpcError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/instances/{instance_id}/bots/{bot_id}/actions:respawn" : {
+      "post" : {
+        "summary" : "Respawn bot",
+        "description" : "Respawns a dead bot.",
+        "operationId" : "respawn",
+        "x-soulfire-transport" : "http-json-transcoding",
+        "x-soulfire-grpc-service" : "soulfire.v1.BotLiveService",
+        "x-soulfire-grpc-method" : "Respawn",
+        "x-soulfire-unary-only" : true,
+        "tags" : [ "BotLiveService" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOT_ACTIONS" ],
+        "x-soulfire-scope" : "instance.bot",
+        "x-soulfire-preconditions" : [ "Bot must be online and dead." ],
+        "x-soulfire-execution" : "Completes after the respawn request is sent.",
+        "parameters" : [ {
+          "name" : "instance_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "x-protobuf-type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "bot_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "x-protobuf-type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "title" : "RespawnRequestBody",
+                "type" : "object",
+                "additionalProperties" : false,
+                "properties" : { },
+                "required" : [ ]
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful response.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/soulfire.v1.RespawnResponse"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Missing or invalid API authorization header.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SoulFireGrpcError"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "The authenticated user does not have the required permission.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SoulFireGrpcError"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Unexpected server-side failure while handling the RPC.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SoulFireGrpcError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/instances/{instance_id}/bots/{bot_id}/chat:send" : {
       "post" : {
         "summary" : "Send chat",
@@ -2960,10 +3435,10 @@
         "x-soulfire-grpc-method" : "SendChat",
         "x-soulfire-unary-only" : true,
         "tags" : [ "BotLiveService" ],
-        "x-soulfire-permissions" : [ "UPDATE_BOT_CONFIG" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOT_ACTIONS" ],
         "x-soulfire-scope" : "instance.bot",
         "x-soulfire-preconditions" : [ "Bot must be online." ],
-        "x-soulfire-execution" : "Queued for the next game tick.",
+        "x-soulfire-execution" : "Completes after the message has been submitted on the bot game thread.",
         "x-soulfire-side-effects" : [ "Transmits the message to the Minecraft server." ],
         "parameters" : [ {
           "name" : "instance_id",
@@ -3058,7 +3533,7 @@
         "x-soulfire-grpc-method" : "StopPathfinding",
         "x-soulfire-unary-only" : true,
         "tags" : [ "BotLiveService" ],
-        "x-soulfire-permissions" : [ "UPDATE_BOT_CONFIG" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOT_ACTIONS" ],
         "x-soulfire-scope" : "instance.bot",
         "x-soulfire-execution" : "Immediate",
         "x-soulfire-side-effects" : [ "Cancels any in-progress pathfinding session for this bot." ],
@@ -3135,7 +3610,7 @@
         "x-soulfire-grpc-method" : "SwingArm",
         "x-soulfire-unary-only" : true,
         "tags" : [ "BotLiveService" ],
-        "x-soulfire-permissions" : [ "UPDATE_BOT_CONFIG" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOT_ACTIONS" ],
         "x-soulfire-scope" : "instance.bot",
         "x-soulfire-preconditions" : [ "Bot must be online." ],
         "x-soulfire-execution" : "Immediate",
@@ -3231,7 +3706,7 @@
         "x-soulfire-grpc-method" : "UseItem",
         "x-soulfire-unary-only" : true,
         "tags" : [ "BotLiveService" ],
-        "x-soulfire-permissions" : [ "UPDATE_BOT_CONFIG" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOT_ACTIONS" ],
         "x-soulfire-scope" : "instance.bot",
         "x-soulfire-preconditions" : [ "Bot must be online." ],
         "x-soulfire-execution" : "Immediate",
@@ -3330,7 +3805,7 @@
         "x-soulfire-grpc-method" : "ClickContainerButton",
         "x-soulfire-unary-only" : true,
         "tags" : [ "BotService" ],
-        "x-soulfire-permissions" : [ "UPDATE_BOT_CONFIG" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOT_ACTIONS" ],
         "x-soulfire-scope" : "instance.bot",
         "x-soulfire-execution" : "Queued for the next game tick",
         "x-soulfire-side-effects" : [ "Activates the selected container-specific action button." ],
@@ -3419,7 +3894,7 @@
         "x-soulfire-grpc-method" : "ClickDialogButton",
         "x-soulfire-unary-only" : true,
         "tags" : [ "BotService" ],
-        "x-soulfire-permissions" : [ "UPDATE_BOT_CONFIG" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOT_ACTIONS" ],
         "x-soulfire-scope" : "instance.bot",
         "x-soulfire-execution" : "Immediate",
         "x-soulfire-side-effects" : [ "Invokes a dialog action and usually clears the local dialog state." ],
@@ -3508,7 +3983,7 @@
         "x-soulfire-grpc-method" : "ClickInventorySlot",
         "x-soulfire-unary-only" : true,
         "tags" : [ "BotService" ],
-        "x-soulfire-permissions" : [ "UPDATE_BOT_CONFIG" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOT_ACTIONS" ],
         "x-soulfire-scope" : "instance.bot",
         "x-soulfire-preconditions" : [ "Bot must be online.", "Player and game mode state must be available." ],
         "x-soulfire-execution" : "Immediate",
@@ -3626,7 +4101,7 @@
         "x-soulfire-grpc-method" : "CloseContainer",
         "x-soulfire-unary-only" : true,
         "tags" : [ "BotService" ],
-        "x-soulfire-permissions" : [ "UPDATE_BOT_CONFIG" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOT_ACTIONS" ],
         "x-soulfire-scope" : "instance.bot",
         "x-soulfire-preconditions" : [ "Bot must be online.", "Player state must be available." ],
         "x-soulfire-execution" : "Immediate",
@@ -3706,7 +4181,7 @@
         "x-soulfire-grpc-method" : "CloseDialog",
         "x-soulfire-unary-only" : true,
         "tags" : [ "BotService" ],
-        "x-soulfire-permissions" : [ "UPDATE_BOT_CONFIG" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOT_ACTIONS" ],
         "x-soulfire-scope" : "instance.bot",
         "x-soulfire-execution" : "Immediate",
         "x-soulfire-side-effects" : [ "Closes the current dialog and clears the local dialog state." ],
@@ -4084,7 +4559,7 @@
         "x-soulfire-grpc-method" : "MouseClick",
         "x-soulfire-unary-only" : true,
         "tags" : [ "BotService" ],
-        "x-soulfire-permissions" : [ "UPDATE_BOT_CONFIG" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOT_ACTIONS" ],
         "x-soulfire-scope" : "instance.bot",
         "x-soulfire-preconditions" : [ "Bot must be online.", "Player, level, and game mode state must be available." ],
         "x-soulfire-execution" : "Immediate",
@@ -4186,7 +4661,7 @@
         "x-soulfire-grpc-method" : "OpenInventory",
         "x-soulfire-unary-only" : true,
         "tags" : [ "BotService" ],
-        "x-soulfire-permissions" : [ "UPDATE_BOT_CONFIG" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOT_ACTIONS" ],
         "x-soulfire-scope" : "instance.bot",
         "x-soulfire-preconditions" : [ "Bot must be online.", "Player state must be available." ],
         "x-soulfire-execution" : "Immediate",
@@ -4528,7 +5003,7 @@
         "x-soulfire-grpc-method" : "ResetMovement",
         "x-soulfire-unary-only" : true,
         "tags" : [ "BotService" ],
-        "x-soulfire-permissions" : [ "UPDATE_BOT_CONFIG" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOT_ACTIONS" ],
         "x-soulfire-scope" : "instance.bot",
         "x-soulfire-execution" : "Queued for the next game tick",
         "x-soulfire-side-effects" : [ "Clears all movement inputs." ],
@@ -4793,7 +5268,7 @@
         "x-soulfire-grpc-method" : "SetContainerText",
         "x-soulfire-unary-only" : true,
         "tags" : [ "BotService" ],
-        "x-soulfire-permissions" : [ "UPDATE_BOT_CONFIG" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOT_ACTIONS" ],
         "x-soulfire-scope" : "instance.bot",
         "x-soulfire-execution" : "Queued for the next game tick",
         "x-soulfire-side-effects" : [ "Updates the selected container text input." ],
@@ -4902,7 +5377,7 @@
         "x-soulfire-grpc-method" : "SetHotbarSlot",
         "x-soulfire-unary-only" : true,
         "tags" : [ "BotService" ],
-        "x-soulfire-permissions" : [ "UPDATE_BOT_CONFIG" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOT_ACTIONS" ],
         "x-soulfire-scope" : "instance.bot",
         "x-soulfire-execution" : "Queued for the next game tick",
         "x-soulfire-side-effects" : [ "Changes the selected hotbar slot." ],
@@ -4991,7 +5466,7 @@
         "x-soulfire-grpc-method" : "SetMovementState",
         "x-soulfire-unary-only" : true,
         "tags" : [ "BotService" ],
-        "x-soulfire-permissions" : [ "UPDATE_BOT_CONFIG" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOT_ACTIONS" ],
         "x-soulfire-scope" : "instance.bot",
         "x-soulfire-execution" : "Queued for the next game tick",
         "x-soulfire-side-effects" : [ "Updates the persisted movement control state." ],
@@ -5149,7 +5624,7 @@
         "x-soulfire-grpc-method" : "SetRotation",
         "x-soulfire-unary-only" : true,
         "tags" : [ "BotService" ],
-        "x-soulfire-permissions" : [ "UPDATE_BOT_CONFIG" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOT_ACTIONS" ],
         "x-soulfire-scope" : "instance.bot",
         "x-soulfire-execution" : "Queued for the next game tick",
         "x-soulfire-side-effects" : [ "Updates the bot's look direction." ],
@@ -5266,7 +5741,7 @@
         "x-soulfire-grpc-method" : "SubmitDialog",
         "x-soulfire-unary-only" : true,
         "tags" : [ "BotService" ],
-        "x-soulfire-permissions" : [ "UPDATE_BOT_CONFIG" ],
+        "x-soulfire-permissions" : [ "CONTROL_BOT_ACTIONS" ],
         "x-soulfire-scope" : "instance.bot",
         "x-soulfire-execution" : "Immediate",
         "x-soulfire-side-effects" : [ "Submits the current dialog and clears the local dialog state." ],
@@ -10440,6 +10915,16 @@
         },
         "required" : [ "code", "grpc-code" ]
       },
+      "soulfire.v1.AcquireBotControlResponse" : {
+        "type" : "object",
+        "additionalProperties" : false,
+        "properties" : {
+          "lease" : {
+            "$ref" : "#/components/schemas/soulfire.v1.BotControlLease"
+          }
+        },
+        "required" : [ "lease" ]
+      },
       "soulfire.v1.ApplyAutomationPresetResponse" : {
         "type" : "object",
         "additionalProperties" : false,
@@ -10459,8 +10944,12 @@
       "soulfire.v1.AttackEntityResponse" : {
         "type" : "object",
         "additionalProperties" : false,
-        "properties" : { },
-        "required" : [ ]
+        "properties" : {
+          "result" : {
+            "$ref" : "#/components/schemas/soulfire.v1.BotActionResult"
+          }
+        },
+        "required" : [ "result" ]
       },
       "soulfire.v1.AutomationActionResponse" : {
         "type" : "object",
@@ -11083,8 +11572,12 @@
       "soulfire.v1.DigBlockResponse" : {
         "type" : "object",
         "additionalProperties" : false,
-        "properties" : { },
-        "required" : [ ]
+        "properties" : {
+          "result" : {
+            "$ref" : "#/components/schemas/soulfire.v1.BotActionResult"
+          }
+        },
+        "required" : [ "result" ]
       },
       "soulfire.v1.DownloadResponse" : {
         "type" : "object",
@@ -11628,8 +12121,12 @@
       "soulfire.v1.InteractEntityResponse" : {
         "type" : "object",
         "additionalProperties" : false,
-        "properties" : { },
-        "required" : [ ]
+        "properties" : {
+          "result" : {
+            "$ref" : "#/components/schemas/soulfire.v1.BotActionResult"
+          }
+        },
+        "required" : [ "result" ]
       },
       "soulfire.v1.InvalidateSelfSessionsResponse" : {
         "type" : "object",
@@ -11823,8 +12320,12 @@
       "soulfire.v1.PlaceBlockResponse" : {
         "type" : "object",
         "additionalProperties" : false,
-        "properties" : { },
-        "required" : [ ]
+        "properties" : {
+          "result" : {
+            "$ref" : "#/components/schemas/soulfire.v1.BotActionResult"
+          }
+        },
+        "required" : [ "result" ]
       },
       "soulfire.v1.PreviousLogResponse" : {
         "type" : "object",
@@ -11922,6 +12423,32 @@
         },
         "required" : [ "released", "state" ]
       },
+      "soulfire.v1.ReleaseBotControlResponse" : {
+        "type" : "object",
+        "additionalProperties" : false,
+        "properties" : { },
+        "required" : [ ]
+      },
+      "soulfire.v1.ReleaseItemResponse" : {
+        "type" : "object",
+        "additionalProperties" : false,
+        "properties" : {
+          "result" : {
+            "$ref" : "#/components/schemas/soulfire.v1.BotActionResult"
+          }
+        },
+        "required" : [ "result" ]
+      },
+      "soulfire.v1.RenewBotControlResponse" : {
+        "type" : "object",
+        "additionalProperties" : false,
+        "properties" : {
+          "lease" : {
+            "$ref" : "#/components/schemas/soulfire.v1.BotControlLease"
+          }
+        },
+        "required" : [ "lease" ]
+      },
       "soulfire.v1.ResetAutomationCoordinationStateResponse" : {
         "type" : "object",
         "additionalProperties" : false,
@@ -11944,6 +12471,16 @@
           }
         },
         "required" : [ "results" ]
+      },
+      "soulfire.v1.RespawnResponse" : {
+        "type" : "object",
+        "additionalProperties" : false,
+        "properties" : {
+          "result" : {
+            "$ref" : "#/components/schemas/soulfire.v1.BotActionResult"
+          }
+        },
+        "required" : [ "result" ]
       },
       "soulfire.v1.RestartBotsResponse" : {
         "type" : "object",
@@ -12162,8 +12699,12 @@
       "soulfire.v1.SendChatResponse" : {
         "type" : "object",
         "additionalProperties" : false,
-        "properties" : { },
-        "required" : [ ]
+        "properties" : {
+          "result" : {
+            "$ref" : "#/components/schemas/soulfire.v1.BotActionResult"
+          }
+        },
+        "required" : [ "result" ]
       },
       "soulfire.v1.ServerConfig" : {
         "type" : "object",
@@ -12359,8 +12900,12 @@
       "soulfire.v1.SwingArmResponse" : {
         "type" : "object",
         "additionalProperties" : false,
-        "properties" : { },
-        "required" : [ ]
+        "properties" : {
+          "result" : {
+            "$ref" : "#/components/schemas/soulfire.v1.BotActionResult"
+          }
+        },
+        "required" : [ "result" ]
       },
       "soulfire.v1.UpdateAutomationBotSettingsResponse" : {
         "type" : "object",
@@ -12420,8 +12965,12 @@
       "soulfire.v1.UseItemResponse" : {
         "type" : "object",
         "additionalProperties" : false,
-        "properties" : { },
-        "required" : [ ]
+        "properties" : {
+          "result" : {
+            "$ref" : "#/components/schemas/soulfire.v1.BotActionResult"
+          }
+        },
+        "required" : [ "result" ]
       },
       "soulfire.v1.UserCreateResponse" : {
         "type" : "object",
@@ -12533,6 +13082,22 @@
         },
         "required" : [ "diagnostics" ]
       },
+      "soulfire.v1.BotControlLease" : {
+        "type" : "object",
+        "additionalProperties" : false,
+        "properties" : {
+          "token" : {
+            "type" : "string",
+            "x-protobuf-type" : "string"
+          },
+          "expiresAt" : {
+            "type" : "string",
+            "format" : "date-time",
+            "x-protobuf-type" : "google.protobuf.Timestamp"
+          }
+        },
+        "required" : [ "token", "expiresAt" ]
+      },
       "soulfire.v1.AutomationInstanceSettings" : {
         "type" : "object",
         "additionalProperties" : false,
@@ -12618,6 +13183,29 @@
           }
         },
         "required" : [ "botId", "accountName", "success", "message" ]
+      },
+      "soulfire.v1.BotActionResult" : {
+        "type" : "object",
+        "additionalProperties" : false,
+        "properties" : {
+          "actionId" : {
+            "type" : "string",
+            "x-protobuf-type" : "string",
+            "format" : "uuid"
+          },
+          "status" : {
+            "$ref" : "#/components/schemas/soulfire.v1.BotActionStatus"
+          },
+          "error" : {
+            "anyOf" : [ {
+              "type" : "string",
+              "x-protobuf-type" : "string"
+            }, {
+              "type" : "null"
+            } ]
+          }
+        },
+        "required" : [ "actionId", "status" ]
       },
       "soulfire.v1.ServerDialog" : {
         "type" : "object",
@@ -15352,6 +15940,11 @@
         },
         "required" : [ "id", "username", "role", "email", "createdAt", "updatedAt", "minIssuedAt" ]
       },
+      "soulfire.v1.BotActionStatus" : {
+        "type" : "string",
+        "description" : "Final outcome of an imperative bot action.",
+        "enum" : [ "BOT_ACTION_STATUS_UNSPECIFIED", "BOT_ACTION_STATUS_COMPLETED", "BOT_ACTION_STATUS_CANCELLED", "BOT_ACTION_STATUS_FAILED" ]
+      },
       "soulfire.v1.DialogType" : {
         "type" : "string",
         "description" : "Dialog types matching Minecraft's dialog registry.\nDetermines the overall structure and behavior of the dialog.",
@@ -17117,7 +17710,7 @@
       "soulfire.v1.InstancePermission" : {
         "type" : "string",
         "description" : "Permissions that apply to a specific instance.\nThese permissions are scoped to individual instances and control what operations\na user can perform on that instance. Checked via PermissionContext.instance() method.\nPermission grants are stored per-user per-instance in the database.",
-        "enum" : [ "INSTANCE_COMMAND_EXECUTION", "READ_INSTANCE", "UPDATE_INSTANCE_META", "UPDATE_INSTANCE_CONFIG", "DELETE_INSTANCE", "AUTHENTICATE_MC_ACCOUNT", "CHECK_PROXY", "DOWNLOAD_URL", "ACCESS_OBJECT_STORAGE", "INSTANCE_SUBSCRIBE_LOGS", "READ_INSTANCE_AUDIT_LOGS", "READ_BOT_INFO", "UPDATE_BOT_CONFIG", "CONTROL_BOTS", "EXECUTE_SCRIPTS" ]
+        "enum" : [ "INSTANCE_COMMAND_EXECUTION", "READ_INSTANCE", "UPDATE_INSTANCE_META", "UPDATE_INSTANCE_CONFIG", "DELETE_INSTANCE", "AUTHENTICATE_MC_ACCOUNT", "CHECK_PROXY", "DOWNLOAD_URL", "ACCESS_OBJECT_STORAGE", "INSTANCE_SUBSCRIBE_LOGS", "READ_INSTANCE_AUDIT_LOGS", "READ_BOT_INFO", "UPDATE_BOT_CONFIG", "CONTROL_BOTS", "EXECUTE_SCRIPTS", "CONTROL_BOT_ACTIONS" ]
       },
       "soulfire.v1.StringSetting.InputType" : {
         "type" : "string",

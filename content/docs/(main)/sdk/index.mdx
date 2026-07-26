@@ -30,14 +30,17 @@ Use it when you want Mineflayer-style application code while keeping SoulFire's 
 
 ```text
 SoulFire
+├── instances(), createInstance()
+├── installed server status, logs, restart, and stop
 └── instance(instanceId)
-    ├── bots()
-    ├── start(), stop(), restart()
+    ├── accounts, proxies, settings, and Minecraft authentication
+    ├── bots(), start(), stop(), restart()
     ├── watchBotStatuses()
     └── bot(botId)
-        ├── start(), stop(), restart(), status()
-        ├── events()
-        └── movement, world, interaction, and chat calls
+        ├── desired state and persistent events
+        ├── world queries and pathfinding
+        ├── chat, interaction, inventory, and movement
+        └── optional exclusive control lease
 ```
 
 An instance is a permission and configuration compartment.
@@ -46,6 +49,27 @@ It groups accounts, settings, proxies, scripts, and automation, but it does not 
 Each account is one bot.
 SoulFire stores a sparse desired-state row only when that bot should be running.
 The runtime controller then connects, queues, retries, or stops that bot independently.
+
+## Bot automation
+
+Bot event streams stay attached to the configured account while it is stopped and across reconnects.
+The default SDK filter includes status, state changes, chat, lifecycle, inventory, and damage events.
+
+Action calls resolve after the Minecraft game thread executes them.
+A failed or cancelled action includes a stable action ID and a structured result.
+Pathfinding reports progress as a server stream and supports block, coordinate, and moving entity goals.
+
+Both packages also include small composable behaviors for collecting blocks, following entities, attacking nearby entities, eating, and placing a sequence of blocks.
+These behaviors use the public bot API, so applications can combine them with their own logic.
+
+## Multiple controllers
+
+Control leases are optional.
+An authorized client can normally issue actions without one.
+After a client acquires an exclusive lease for a bot, other controllers cannot act on that bot until the lease is released or expires.
+
+The lease belongs to the configured account identity instead of a transient Minecraft connection.
+It therefore remains the right coordination primitive when a bot reconnects.
 
 ## Selection behavior
 
@@ -63,6 +87,7 @@ You only need permission for that instance to script its bots.
 
 Use `SoulFire.install` when your application should download a SoulFire dedicated server and a Java 25 runtime, start them locally, and return an authenticated client.
 Downloaded artifacts are verified and reused.
+The returned client can inspect captured logs, check the process, and restart or stop the managed server.
 
 ## Go further
 
