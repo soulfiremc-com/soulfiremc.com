@@ -22,7 +22,11 @@ import * as generatedAuthSchema from "@/lib/db/auth-schema";
 import { user as authUser } from "@/lib/db/auth-schema";
 import * as schema from "@/lib/db/schema";
 import { runInBackground } from "@/lib/request-context";
-import { authNotifications } from "./auth-notifications";
+import {
+  authNotifications,
+  EMAIL_OTP_EXPIRATION_SECONDS,
+  TWO_FACTOR_OTP_EXPIRATION_MINUTES,
+} from "./auth-notifications";
 
 const USERNAME_ADJECTIVES = [
   "amber",
@@ -228,8 +232,16 @@ export const auth = betterAuth({
   user: {
     changeEmail: {
       enabled: true,
-      async sendChangeEmailConfirmation({ user, url }): Promise<void> {
-        await authNotifications.sendChangeEmailConfirmation({ user, url });
+      async sendChangeEmailConfirmation({
+        user,
+        newEmail,
+        url,
+      }): Promise<void> {
+        await authNotifications.sendChangeEmailConfirmation({
+          user,
+          newEmail,
+          url,
+        });
       },
     },
     deleteUser: {
@@ -242,7 +254,9 @@ export const auth = betterAuth({
   plugins: [
     emailHarmony(),
     twoFactor({
+      issuer: "SoulFire",
       otpOptions: {
+        period: TWO_FACTOR_OTP_EXPIRATION_MINUTES,
         storeOTP: "hashed",
         async sendOTP({ user, otp }): Promise<void> {
           await authNotifications.sendTwoFactorOTP({ user, otp });
@@ -251,8 +265,14 @@ export const auth = betterAuth({
     }),
     username(),
     emailOTP({
+      expiresIn: EMAIL_OTP_EXPIRATION_SECONDS,
+      disableSignUp: true,
       storeOTP: "hashed",
-      sendVerificationOnSignUp: false,
+      overrideDefaultEmailVerification: true,
+      changeEmail: {
+        enabled: true,
+        verifyCurrentEmail: true,
+      },
       async sendVerificationOTP({ email, otp, type }): Promise<void> {
         await authNotifications.sendEmailOTP({ email, otp, type });
       },

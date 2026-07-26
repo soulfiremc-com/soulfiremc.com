@@ -8,9 +8,11 @@ import { AuthTurnstile } from "@/components/auth-turnstile";
 import { Toaster } from "@/components/ui/sonner";
 import { adminPlugin } from "@/lib/auth/admin-plugin";
 import { deleteUserPlugin } from "@/lib/auth/delete-user-plugin";
+import { emailOtpPlugin } from "@/lib/auth/email-otp-plugin";
 import { lastLoginMethodPlugin } from "@/lib/auth/last-login-method-plugin.ts";
 import { passkeyPlugin } from "@/lib/auth/passkey-plugin";
 import { themePlugin } from "@/lib/auth/theme-plugin";
+import { twoFactorPlugin } from "@/lib/auth/two-factor-plugin";
 import { usernamePlugin } from "@/lib/auth/username-plugin";
 import { authClient } from "@/lib/auth-client";
 import {
@@ -20,6 +22,23 @@ import {
 } from "@/lib/auth-ui-config";
 import { PostHogProvider } from "@/lib/integrations/posthog";
 import { AuthLink } from "./auth-link";
+
+const authUiPlugins = [
+  usernamePlugin({ isUsernameAvailable: true }),
+  emailOtpPlugin({
+    emailVerification: true,
+    passwordReset: true,
+    changeEmail: true,
+    verifyCurrentEmail: true,
+  }),
+  twoFactorPlugin(),
+  passkeyPlugin(),
+  captchaPlugin({ render: AuthTurnstile }),
+  deleteUserPlugin({ sendDeleteAccountVerification: true }),
+  adminPlugin(),
+  themePlugin({ useTheme }),
+  lastLoginMethodPlugin(),
+];
 
 function AuthUIProviders({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
@@ -38,15 +57,7 @@ function AuthUIProviders({ children }: { children: React.ReactNode }) {
         name: false,
         requireEmailVerification: true,
       }}
-      plugins={[
-        usernamePlugin({ isUsernameAvailable: true }),
-        passkeyPlugin(),
-        captchaPlugin({ render: AuthTurnstile }),
-        deleteUserPlugin({ sendDeleteAccountVerification: true }),
-        adminPlugin(),
-        themePlugin({ useTheme }),
-        lastLoginMethodPlugin(),
-      ]}
+      plugins={authUiPlugins}
       localization={{
         auth: {
           name: "Display Name",

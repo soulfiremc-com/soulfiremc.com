@@ -2,8 +2,14 @@ import { viewPaths } from "@better-auth-ui/core";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { Auth } from "@/components/auth/auth";
 import { SiteShell } from "@/components/site-shell";
+import { emailOtpPlugin } from "@/lib/auth/email-otp-plugin";
+import { twoFactorPlugin } from "@/lib/auth/two-factor-plugin";
 
-const validAuthPathSegments = new Set(Object.values(viewPaths.auth));
+const validAuthPathSegments = new Set([
+  ...Object.values(viewPaths.auth),
+  emailOtpPlugin().viewPaths.auth.emailOtp,
+  twoFactorPlugin().viewPaths.auth.twoFactor,
+]);
 
 export const Route = createFileRoute("/auth/$path")({
   beforeLoad({ params: { path } }) {
