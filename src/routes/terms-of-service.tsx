@@ -82,8 +82,8 @@ function TermsOfService() {
       </ul>
       <p>
         You may register using email and password, social login (Discord or
-        GitHub), email OTP (magic link), or WebAuthn passkeys. You must be at
-        least 13 years of age to create an account.
+        GitHub), email OTP, or WebAuthn passkeys. You must be at least 13 years
+        of age to create an account.
       </p>
       <p>
         We reserve the right to suspend or terminate accounts that violate these
