@@ -5,6 +5,7 @@ import {
   parseAdditionalFieldValue,
 } from "@better-auth-ui/core";
 import {
+  AuthPrompts,
   useAuth,
   useFetchOptions,
   useSignUpEmail,
@@ -185,6 +186,7 @@ export function SignUp({
 
   return (
     <Card className={cn("w-full max-w-sm", className)}>
+      <AuthPrompts view="signUp" />
       <CardHeader>
         <CardTitle className="text-xl font-semibold">
           {localization.auth.signUp}
