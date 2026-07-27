@@ -18,6 +18,7 @@ export type OtpFieldProps = {
   length: number;
   value: string;
   onChange: (value: string) => void;
+  onComplete?: (value: string) => void;
   autoFocus?: boolean;
   className?: string;
   errorMessage?: string;
@@ -50,6 +51,7 @@ export function OtpField({
   length,
   name,
   onChange,
+  onComplete,
   value,
 }: OtpFieldProps) {
   const inputId = useId();
@@ -73,6 +75,9 @@ export function OtpField({
         pattern={REGEXP_ONLY_DIGITS}
         value={value}
         onChange={(next) => onChange(normalizeCode(next))}
+        onComplete={(completedCode) =>
+          onComplete?.(normalizeCode(completedCode))
+        }
       >
         <InputOTPGroup>
           {Array.from({ length }, (_, slotIndex) => (

@@ -20,6 +20,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 import { emailOtpPlugin } from "@/lib/auth/email-otp-plugin";
 import { cn } from "@/lib/utils";
+import { OpenEmailButton } from "../open-email-button";
 import { OtpField } from "../otp-field";
 
 type ChangeEmailStep = "email" | "currentCode" | "newCode";
@@ -121,6 +122,20 @@ export function ChangeEmailOtp({ className }: ChangeEmailOtpProps) {
 
   const isPending = isSending || isRequesting || isChanging;
 
+  const submitCode = (completedCode: string) => {
+    if (isPending || state.step === "email") return;
+
+    if (state.step === "currentCode") {
+      requestEmailChangeOtp({
+        newEmail: state.newEmail,
+        otp: completedCode,
+      });
+      return;
+    }
+
+    changeEmailOtp({ newEmail: state.newEmail, otp: completedCode });
+  };
+
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -143,12 +158,7 @@ export function ChangeEmailOtp({ className }: ChangeEmailOtpProps) {
       return;
     }
 
-    if (state.step === "currentCode") {
-      requestEmailChangeOtp({ newEmail: state.newEmail, otp: code });
-      return;
-    }
-
-    changeEmailOtp({ newEmail: state.newEmail, otp: code });
+    submitCode(code);
   };
 
   const codeTarget =
@@ -222,7 +232,12 @@ export function ChangeEmailOtp({ className }: ChangeEmailOtpProps) {
                   name="otp"
                   value={code}
                   onChange={setCode}
+                  onComplete={submitCode}
                 />
+
+                {codeTarget && (
+                  <OpenEmailButton email={codeTarget} variant="secondary" />
+                )}
               </div>
             )}
           </CardContent>

@@ -1,11 +1,6 @@
 "use client";
 
 import {
-  clearTwoFactorMethods,
-  readTwoFactorMethods,
-  type TwoFactorMethod,
-} from "@better-auth-ui/core/plugins";
-import {
   type TwoFactorAuthClient,
   useAuth,
   useAuthPlugin,
@@ -33,6 +28,11 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
+import {
+  clearTwoFactorMethods,
+  readTwoFactorMethods,
+  type TwoFactorMethod,
+} from "@/lib/auth/two-factor-methods";
 import { twoFactorPlugin } from "@/lib/auth/two-factor-plugin";
 import {
   RESEND_COOLDOWN_SECONDS,
@@ -125,10 +125,31 @@ export function TwoFactorChallenge({ className }: TwoFactorChallengeProps) {
 
   const isPending =
     isSendingOtp || isVerifyingTotp || isVerifyingOtp || isVerifyingBackupCode;
+  const needsOtpRequest = method === "otp" && !otpRequested;
 
   const switchMethod = (next: ChallengeMethod) => {
     setCode("");
     setMethod(next);
+  };
+
+  const verifyCode = (completedCode: string) => {
+    if (
+      isPending ||
+      needsOtpRequest ||
+      method === "backup" ||
+      completedCode.length !== codeLength
+    ) {
+      return;
+    }
+
+    const trust = trustDeviceEnabled ? { trustDevice } : {};
+
+    if (method === "otp") {
+      verifyTwoFactorOtp({ code: completedCode, ...trust });
+      return;
+    }
+
+    verifyTotp({ code: completedCode, ...trust });
   };
 
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
@@ -145,15 +166,8 @@ export function TwoFactorChallenge({ className }: TwoFactorChallengeProps) {
       return;
     }
 
-    if (method === "otp") {
-      verifyTwoFactorOtp({ code, ...trust });
-      return;
-    }
-
-    verifyTotp({ code, ...trust });
+    verifyCode(code);
   };
-
-  const needsOtpRequest = method === "otp" && !otpRequested;
 
   const description =
     method === "backup"
@@ -220,6 +234,7 @@ export function TwoFactorChallenge({ className }: TwoFactorChallengeProps) {
                 name="code"
                 value={code}
                 onChange={setCode}
+                onComplete={verifyCode}
               />
             )}
 
