@@ -1,0 +1,140 @@
+---
+title: Beat-game API reference
+description: Public modules, lifecycle handles, stores, coordinators, events, errors, phases, and behavior exports.
+icon: BookOpen
+---
+
+## Entry points
+
+| Module | Contents |
+| --- | --- |
+| `@soulfiremc/beat-game` | Effect runner, behaviors, planner, driver, models, errors, in-memory store, and coordinator |
+| `@soulfiremc/beat-game/promise` | Promise lifecycle and async iterable facade |
+| `@soulfiremc/beat-game/node` | Crash-safe `JsonFileBeatGameCheckpointStore` |
+
+The universal module has no Node file-system import and can be bundled for a
+browser or worker.
+
+## Run functions
+
+| Function | Purpose |
+| --- | --- |
+| `beatGame(bot, options)` | Start one real `SoulFireBot` |
+| `beatGameWithDriver(driver, options)` | Start one custom or test driver |
+| `beatGameTeam(bots, options)` | Start a coordinated real-bot team |
+| `beatGameTeamWithDrivers(drivers, options)` | Start a coordinated custom-driver team |
+
+`BeatGameRun` contains `events`, `snapshots`, `awaitCompletion`, `pause`,
+`resume`, `stop`, and `snapshot`. `BeatGameTeamRun` applies lifecycle actions
+to every member and awaits all results.
+
+## Planner phases
+
+Runs move through:
+
+1. `PREPARE_OVERWORLD`
+2. `ENTER_NETHER`
+3. `COLLECT_NETHER_RESOURCES`
+4. `RETURN_TO_OVERWORLD`
+5. `LOCATE_STRONGHOLD`
+6. `ACTIVATE_END_PORTAL`
+7. `FIGHT_ENDER_DRAGON`
+8. `COMPLETE`
+
+Every transition uses a fresh observation.
+
+## Checkpoint stores
+
+`BeatGameCheckpointStore` defines:
+
+```ts
+interface BeatGameCheckpointStore {
+  load(runId: string): Effect.Effect<
+    BeatGameCheckpoint | undefined,
+    BeatGameCheckpointError
+  >;
+
+  save(
+    checkpoint: BeatGameCheckpoint,
+    expectedRevision: number | undefined,
+  ): Effect.Effect<BeatGameCheckpoint, BeatGameCheckpointError>;
+
+  remove(
+    runId: string,
+    expectedRevision?: number,
+  ): Effect.Effect<void, BeatGameCheckpointError>;
+}
+```
+
+Checkpoints include schema version, run and team identity, bot and instance
+identity, role, revision, connection epoch, planner state, world memory, and
+timestamps. The planner state retains `currentActionId` while work is
+uncertain. `lastStableAction` records the evidence and player and inventory
+revisions that made the latest action safe to checkpoint.
+
+## Coordinator
+
+`BeatGameCoordinator` defines member registration, status updates, claims,
+requirement publication, discovery publication, snapshots, and reset.
+
+Claims have expiry and fencing tokens. Team snapshots contain a fenced leader,
+aggregate requirements, members, active claims, and shared discoveries.
+
+## Event types
+
+The ordered stream includes:
+
+- run lifecycle events;
+- checkpoint save and restore;
+- phase and objective changes;
+- requirement discovery, updates, claims, and satisfaction;
+- action start, retry, success, and failure;
+- disconnect and recovery;
+- death and item recovery;
+- team claim changes;
+- diagnostic observation revisions;
+- diagnostics.
+
+Every event has a monotonic `sequence`, timestamp, run ID, instance ID, bot ID,
+and phase.
+
+## Error classes
+
+| Error | Meaning |
+| --- | --- |
+| `BeatGameProtocolError` | Invalid configuration or incompatible protocol state |
+| `BeatGameObservationError` | A required observation failed |
+| `BeatGameActionError` | An action failed or timed out |
+| `BeatGamePathfindingError` | Path planning or execution failed |
+| `BeatGameRequirementError` | No acquisition route satisfied a requirement |
+| `BeatGameCheckpointError` | Validation or compare-and-set persistence failed |
+| `BeatGameCoordinationError` | Membership, claim, or shared-state operation failed |
+| `BeatGameCancelled` | The run was explicitly stopped or its scope was interrupted |
+
+Errors include run, instance, bot, phase, current action, retryability, and an
+underlying cause when available.
+
+## Behavior groups
+
+Resource and world behaviors:
+
+`acquire`, `collectBlocks`, `excavate`, `explore`, `fish`, `farm`, `breed`,
+`buildStructure`, and `transferContainerItems`.
+
+Combat and safety behaviors:
+
+`attackEntity`, `attackNearest`, `rangedAttack`, `flee`, `guard`,
+`eatWhenNeeded`, `respawnAndRecover`, `equipBestArmor`, and
+`keepTotemEquipped`.
+
+Inventory behaviors:
+
+`craft`, `craftItem`, `smelt`, `brew`, `trade`, and `maintainLoadout`.
+
+Progression behaviors:
+
+`buildNetherPortal`, `castNetherPortal`, `enterPortal`, `throwEnderPearl`,
+`throwEyeOfEnder`, `triangulateStronghold`, `activateEndPortal`, and
+`fightEnderDragon`.
+
+The behavior names are TypeScript APIs, not SoulFire core RPC names.

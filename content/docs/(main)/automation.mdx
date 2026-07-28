@@ -1,200 +1,68 @@
 ---
-title: Automation
-description: Run SoulFire's current native automation modes, tune the key settings, and inspect what the coordinator is doing.
+title: Choose an automation layer
+description: Pick direct commands, visual scripts, durable tasks, SDK workflows, or the TypeScript beat-game runner.
 icon: Bot
 ---
 
-import { Bot, Settings, Terminal, TriangleAlert, Workflow } from 'lucide-react';
+import { Bot, Blocks, Code2, Terminal, Workflow } from 'lucide-react';
 import { Cards, Card } from 'fumadocs-ui/components/card';
 import { Callout } from 'fumadocs-ui/components/callout';
 
+SoulFire provides several automation layers. Choose the narrowest one that
+owns the decision you need.
+
+| Goal | Use |
+| --- | --- |
+| Run one operator action | [Commands](/docs/reference/commands) |
+| React to chat, timers, or events in the GUI | [Visual scripting](/docs/scripting) |
+| Keep a reusable action near the game loop | [Durable tasks](/docs/sdk/tasks) |
+| Build an application from observations and actions | [Official SDK](/docs/sdk) |
+| Run first-party progression policy | [Beat-game runner](/docs/sdk/automation) |
+| Add server-owned domain capabilities | [Plugins](/docs/sdk/plugins) |
+
+## SoulFire is the remote client
+
+SoulFire owns Minecraft protocol state, pathfinding, direct inputs, control
+arbitration, and reusable tasks. Applications own their goals and decide how
+to combine those capabilities.
+
+The first-party beat-game planner therefore runs in
+`@soulfiremc/beat-game`, not inside the SoulFire server or SoulFireClient. The
+TypeScript worker can restart from checkpoints, coordinate a team, call
+plugin-defined RPCs, and replace policy steps without changing SoulFire core.
+
 <Callout type="info">
-  This page covers the currently shipped native automation surface for users and operators.
-  It documents the commands and settings you can use today, not roadmap-only features.
+  SoulFireClient does not contain a native beat-game dashboard. Run and
+  observe the application from your TypeScript worker, logs, or your own
+  operator interface.
 </Callout>
 
-## What native automation is
+## Reusable tasks versus policy
 
-SoulFire currently ships with a built-in automation controller for common progression-style goals.
-Today, that surface is centered on:
+A collect-blocks task is reusable. It stays close to the game loop and can
+continue according to its disconnect policy. Deciding that a team needs eight
+logs before entering the Nether is game policy and belongs in the worker.
 
-- starting a full beat-the-game automation run
-- starting an acquisition goal for a specific target
-- pausing, resuming, stopping, and inspecting that work
-- tuning a small set of collaboration, recovery, and safety settings
-
-Use native automation when you want SoulFire to drive progression goals for you.
-Use [Scripting](/docs/scripting) when you want event-driven behavior such as chat reactions, menu flows, timed actions, or custom logic graphs.
-
-## Choose the right tool
-
-| If you want to... | Use... | Why |
-| --- | --- | --- |
-| Run a built-in progression controller | Native automation | This is the current built-in operator surface |
-| Make bots react to events, chat, or GUI flows | [Scripting](/docs/scripting) | The node system is better for event-driven behavior |
-| Drive bots manually with targeted commands | [Commands](/docs/reference/commands) | Better for one-off operator control |
-| Build new low-level logic or integrations | [Development](/docs/development) | That is plugin-authoring work, not operator automation |
-
-## Before you start
-
-Make sure the instance is already in a usable state:
-
-- **Bot Settings** point at the correct target server and version
-- accounts are imported if the target server needs them
-- proxies are imported only if you actually need them
-- the bots you want to automate are running
-- you can open the instance **Terminal** or use the CLI shell
-
-If you are still setting up the instance, start with [Run Your First Bots in GUI Mode](/docs/start-here/gui-mode), [Import Accounts](/docs/how-to/import-accounts), and [Import Proxies](/docs/how-to/import-proxies).
-
-## Start automation
-
-### 1. Review Automation Settings
-
-Open the instance and go to **Automation Settings**.
-For a first run, the defaults are usually the right place to start.
-
-### 2. Start the bots
-
-Automation acts on running bots.
-Start the bots you want to automate from **Overview** or with `bots start`.
-
-### 3. Run an automation command
-
-Use the instance terminal in the GUI, the CLI shell, or a dedicated-server console with the correct instance selected.
-
-Start a full progression run:
-
-```bash
-automation beat
-```
-
-Start an acquisition goal for a specific target:
-
-```bash
-automation get ender_pearl 12
-```
-
-`automation get <target> <count>` accepts an item or automation target.
-If you are unsure which target names are accepted, use terminal suggestions or start with normal Minecraft item ids.
-
-### 4. Watch status and adjust
-
-The two most useful inspection commands are:
-
-```bash
-automation status
-automation teamstatus
-```
-
-`automation status` shows what each selected bot thinks it is doing right now.
-`automation teamstatus` shows instance-level shared state such as collaboration mode, role policy, End-entry throttling, and high-level progression counters.
-
-## Day-to-day control
-
-Pause automation without clearing the current goal:
-
-```bash
-automation pause
-```
-
-Resume paused bots:
-
-```bash
-automation resume
-```
-
-Stop automation completely:
-
-```bash
-automation stop
-```
-
-Temporarily turn shared collaboration on or off for the visible instance:
-
-```bash
-automation collaboration true
-automation collaboration false
-```
-
-If you are debugging a single bot, turning collaboration off is often the fastest way to reduce noise.
-
-## Key settings
-
-These are the current native automation settings exposed to users and operators.
-
-| Setting | Scope | Default | Use it for |
-| --- | --- | --- | --- |
-| `enabled` | Bot | `true` | Master switch for native automation on a specific bot |
-| `team-collaboration` | Instance | `true` | Lets bots share goals, roles, and team state |
-| `role-policy` | Instance | `STATIC_TEAM` | Chooses whether bots use coordinated roles or behave independently |
-| `shared-end-entry` | Instance | `true` | Prevents every bot from entering the End at once |
-| `max-end-bots` | Instance | `3` | Caps how many bots may be active in the End simultaneously |
-| `allow-death-recovery` | Bot | `true` | Lets a bot try to recover items and continue after death |
-| `memory-scan-radius` | Bot | `48` | Controls how large the automation memory scan area is |
-| `memory-scan-interval-ticks` | Bot | `20` | Controls how often full memory scans run |
-| `retreat-health-threshold` | Bot | `8` | Tells automation when to disengage because health is low |
-| `retreat-food-threshold` | Bot | `12` | Tells automation when to interrupt itself to eat |
-
-## Practical operator advice
-
-### First run
-
-Leave collaboration enabled, keep shared End entry enabled, and do not change the scan or retreat settings until you have a specific reason.
-
-### Single-bot debugging
-
-Set `team-collaboration` to off or change `role-policy` to `INDEPENDENT`.
-That removes most team-side coordination from the picture and makes status output easier to read.
-
-### Stabilizing larger runs
-
-If bots are dying or dogpiling the same phase, keep `shared-end-entry` on and lower `max-end-bots` before you start changing lower-level settings.
-
-### Performance tuning
-
-Do not start by shrinking the memory scan settings.
-Reduce bot count, reduce concurrency, and simplify the environment first.
-
-## What native automation is not
-
-Native automation is not a replacement for every other SoulFire automation feature.
-
-- It is not the same thing as [visual scripting](/docs/scripting).
-- It is not the right tool for chat handlers, menu interaction flows, or webhook-driven logic.
-- It is not the plugin-authoring API.
-- It is not yet a dedicated user-facing automation API surface separate from the normal server and command model.
-
-If you need custom reactions, event graphs, or integration-heavy workflows, stay in [Scripting](/docs/scripting).
-
-## When something looks wrong
-
-If automation appears idle, stuck, or inconsistent:
-
-1. make sure the affected bots are actually running
-2. confirm `enabled` is on for the affected bots
-3. run `automation status`
-4. run `automation teamstatus`
-5. disable collaboration while debugging
-
-If the problem is still unclear, go straight to [Troubleshooting](/docs/troubleshooting), especially [Scripts And Automation](/docs/troubleshooting/scripts-and-automation).
+The same distinction applies to plugins. A plugin can intentionally expose a
+typed server-side capability. The application still decides when that
+capability serves its plan.
 
 ## Related pages
 
 <Cards>
-  <Card icon={<Terminal />} title="CLI Mode" href="/docs/start-here/cli-mode">
-    Use SoulFire from a terminal or SSH session.
+  <Card icon={<Workflow />} title="Beat-game runner" href="/docs/sdk/automation">
+    Run checkpointed single-bot and coordinated team progression.
   </Card>
-  <Card icon={<Settings />} title="GUI Navigation" href="/docs/how-to/gui-navigation">
-    Find where the instance settings and terminal live in the interface.
+  <Card icon={<Code2 />} title="Official SDK" href="/docs/sdk">
+    Build Effect, Promise, async Python, or synchronous Python applications.
   </Card>
-  <Card icon={<Workflow />} title="Scripting" href="/docs/scripting">
-    Build event-driven automation with the node editor.
+  <Card icon={<Blocks />} title="Durable tasks" href="/docs/sdk/tasks">
+    Use general-purpose work that runs beside the Minecraft game loop.
   </Card>
-  <Card icon={<TriangleAlert />} title="Troubleshooting" href="/docs/troubleshooting">
-    Diagnose automation, scripting, proxy, and remote-server problems by symptom.
+  <Card icon={<Terminal />} title="Commands" href="/docs/reference/commands">
+    Execute bounded operator actions.
   </Card>
-  <Card icon={<Bot />} title="Commands" href="/docs/reference/commands">
-    See the built-in command surface, including automation commands.
+  <Card icon={<Bot />} title="Visual scripting" href="/docs/scripting">
+    Build GUI-managed event and flow graphs.
   </Card>
 </Cards>

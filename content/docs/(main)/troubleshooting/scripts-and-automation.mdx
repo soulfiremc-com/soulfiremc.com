@@ -1,6 +1,6 @@
 ---
 title: Scripts And Automation
-description: Diagnose visual scripting and native automation issues by shrinking the problem to the smallest failing flow.
+description: Diagnose visual scripts and SDK workers by shrinking the problem to the smallest failing action.
 icon: Bug
 ---
 
@@ -8,10 +8,10 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 ## Start by deciding which automation layer is failing
 
-SoulFire has two different automation layers:
+Start by identifying the process that owns the failing policy:
 
 - **visual scripting** in the node editor
-- **native automation** driven by automation commands and automation settings
+- **SDK applications**, including `@soulfiremc/beat-game`
 
 If you do not separate those first, the wrong troubleshooting steps will waste your time.
 
@@ -62,25 +62,27 @@ If you skip that step, you are often guessing from symptoms instead of state.
 `On Pre Entity Tick` and `On Post Entity Tick` are not general-purpose places for expensive graphs.
 If a graph only works when you simplify it, move the heavy work out of tick timing before assuming the engine is broken.
 
-## If native automation looks idle or stuck
+## If an SDK runner looks idle or stuck
 
-Check the simple operator path first:
+Check the worker before changing SoulFire settings:
 
-1. confirm the affected bots are running
-2. confirm automation is enabled on the affected bots
-3. run `automation status`
-4. run `automation teamstatus`
-5. disable collaboration while debugging one bot
+1. Confirm the TypeScript process is still running.
+2. Read its latest beat-game event and snapshot.
+3. Confirm the bot is connected and its connection epoch is current.
+4. Inspect the active task and control lease.
+5. Retry with one bot and an in-memory coordinator.
+6. Check for a checkpoint compare-and-set conflict.
 
-If a single-bot test works and the collaborative run does not, the team layer is the right place to inspect next.
+If one bot works and a team does not, inspect shared claims, coordinator
+membership, and the End-entry quota.
 
 ## Separate "wrong tool" from "broken tool"
 
-Native automation is for built-in progression goals.
 Visual scripting is for event-driven behavior and custom flows.
 
 If you are trying to implement chat-driven behavior, inventory menus, or custom timed reactions, [Scripting](/docs/scripting) is usually the right layer.
-If you are trying to run the built-in progression controller, [Automation](/docs/automation) is the right layer.
+If you are running first-party progression policy, use the
+[beat-game runner](/docs/sdk/automation).
 
 ## If the issue appeared after an update
 
@@ -96,7 +98,8 @@ Instead, write down:
 That is the information that turns a vague regression into a reproducible one.
 
 <Callout type="info">
-  A minimal graph that still fails is more valuable than a large "real" script that fails for unknown reasons.
+  A minimal graph or SDK action that still fails is more valuable than a
+  large workflow that fails for unknown reasons.
 </Callout>
 
 ## Related pages

@@ -1,0 +1,137 @@
+---
+title: Customize beat-game strategy
+description: Replace policy steps, compose behaviors, add safety logic, and call plugin-defined RPCs.
+icon: SlidersHorizontal
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+Strategy hooks replace one policy action while keeping the runner's normal
+timeout, retry, claim, checkpoint, event, and control lifecycle.
+
+## Replace one policy step
+
+```ts
+import { Effect } from "effect";
+import { beatGame } from "@soulfiremc/beat-game";
+
+const run = yield* beatGame(bot, {
+  hooks: {
+    fightEnderDragon: ({ driver, strategy }) =>
+      customDragonFight(driver, strategy).pipe(Effect.as(true)),
+  },
+});
+```
+
+A hook should perform one stable unit of work and return. The planner reads a
+fresh observation before it advances. Returning from a hook is not, by itself,
+proof that the world changed.
+
+Available hooks cover:
+
+- death recovery;
+- eating and retreat;
+- equipment preparation;
+- requirement acquisition;
+- Nether construction and entry;
+- portal return;
+- eye throwing and stronghold search;
+- End portal activation;
+- the dragon fight.
+
+## Compose exported behaviors
+
+Use behavior programs when the built-in phase planner is not needed:
+
+```ts
+import {
+  collectBlocks,
+  craftItem,
+  equipBestArmor,
+} from "@soulfiremc/beat-game";
+
+yield* collectBlocks(driver, {
+  blockIds: ["minecraft:oak_log"],
+  count: 8,
+  searchRadius: 48,
+});
+
+yield* craftItem(driver, {
+  resultItemId: "minecraft:shield",
+  count: 1,
+});
+
+yield* equipBestArmor(driver);
+```
+
+Behaviors call generic server tasks where one already models the work. Portal
+casting, item throwing, and stronghold triangulation remain TypeScript
+programs composed from lower-level operations.
+
+## Call a plugin-defined RPC
+
+Require the generated companion SDK before starting the run, then close over
+the typed plugin client in a hook:
+
+```ts
+const combat = yield* soulfire.plugins.require(combatPlugin);
+
+const run = yield* beatGame(bot, {
+  hooks: {
+    fightEnderDragon: ({ checkpoint }) =>
+      combat.fightDragon({
+        instanceId: checkpoint.instanceId,
+        botId: checkpoint.botId,
+      }).pipe(
+        Effect.map((result) => result.defeated),
+      ),
+  },
+});
+```
+
+The plugin owns the optional domain behavior. It can also expose a durable
+task when work must continue through an SDK disconnect. SoulFire core does not
+gain a dragon-specific RPC.
+
+Use `soulfire.plugins.reflective(pluginId)` when no generated companion package
+is available. Reflective calls still validate protobuf input and plugin
+compatibility.
+
+## Tune the default strategy
+
+```ts
+const run = yield* beatGame(bot, {
+  strategy: {
+    portalStrategy: PortalStrategy.CAST,
+    minimumHealth: 10,
+    eatBelowFood: 15,
+    maximumActionRetries: 7,
+    actionTimeoutMs: 180_000,
+    path: {
+      allowMining: true,
+      allowPlacing: true,
+      maxFallDistance: 2,
+    },
+  },
+});
+```
+
+Strategy options are a deep partial for `path`. Invalid counts, thresholds,
+timeouts, and path limits fail before the run starts.
+
+<Callout type="warn">
+  Do not put an infinite loop inside a hook. Return after one stable action so
+  pause, stop, retry, checkpointing, and team claims remain responsive.
+</Callout>
+
+## Deploy as a worker
+
+For a long-lived deployment:
+
+1. Place the worker close to SoulFire to reduce action latency.
+2. Use a durable checkpoint store.
+3. Use one shared coordinator for multi-process teams.
+4. Drain the event stream into structured logs or telemetry.
+5. Let the process manager restart the worker with the same run identity.
+6. Treat `BeatGameCheckpointError` conflicts as another active writer, not as
+   a transient network failure.

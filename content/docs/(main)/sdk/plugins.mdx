@@ -69,28 +69,10 @@ settings registry. Use `context.commands().register(...)` for a Brigadier root
 command. These declarations are validated during `onLoad` and installed before
 the corresponding lifecycle event runs.
 
-Automation plugins can register an extension through
-`context.automation().register(...)`. Extensions receive the instance
-coordinator on every team tick and may also receive the observed bot and world
-memory. Higher priorities run first. SoulFire catches extension failures and
-disables an extension after three consecutive failures, so one strategy cannot
-take down the coordinator.
-
-```java
-context.automation().register(new PluginAutomationExtension() {
-  public String id() {
-    return "warehouse-observer";
-  }
-
-  public int priority() {
-    return 100;
-  }
-
-  public void onObservation(PluginAutomationExtensionContext context) {
-    context.worldMemory().ifPresent(memory -> observeWarehouses(memory));
-  }
-});
-```
+Plugins do not extend a native progression planner. Applications call plugin
+RPCs, subscribe to plugin events, or start plugin tasks through the official
+SDK. This keeps plugin APIs useful to any application instead of coupling them
+to one server-owned objective graph.
 
 ## Generate a companion SDK
 
@@ -214,6 +196,31 @@ the catalog.
 Reflective calls validate request JSON against the discovered protobuf input
 type. The response contains the dynamic message, its full type name, and a JSON
 representation.
+
+## Call a plugin from beat-game strategy
+
+The beat-game package accepts Effect strategy hooks. Require a typed companion
+module first, then close over its client:
+
+```ts
+const combat = yield* soulfire.plugins.require(combatPlugin);
+
+const run = yield* beatGame(bot, {
+  hooks: {
+    fightEnderDragon: ({ checkpoint }) =>
+      combat.fightDragon({
+        instanceId: checkpoint.instanceId,
+        botId: checkpoint.botId,
+      }).pipe(
+        Effect.map((result) => result.defeated),
+      ),
+  },
+});
+```
+
+The hook still runs inside the runner's timeout, retry, checkpoint, claim, and
+control lifecycle. Use a plugin-defined durable task instead of a unary RPC
+when the server must keep working after the SDK process disconnects.
 
 ## Run plugin-defined tasks
 

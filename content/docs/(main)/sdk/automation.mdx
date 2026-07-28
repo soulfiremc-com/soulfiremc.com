@@ -1,154 +1,195 @@
 ---
-title: Automation
-description: Coordinate persistent multi-bot goals, shared memory, roles, claims, and recovery through the SoulFire SDK.
+title: Beat-game runner
+description: Run checkpointed single-bot and multi-bot progression through the Effect-first TypeScript SDK.
 icon: Workflow
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Steps } from 'fumadocs-ui/components/steps';
 
-`instance.automation` is the typed control surface for SoulFire's persistent
-automation engine. It can run one goal across selected bots, coordinate team
-roles and shared knowledge, and report meaningful state changes without
-requiring an SDK process to poll every bot.
+`@soulfiremc/beat-game` is a separate first-party application package. It
+uses SoulFire's public observations, direct actions, pathfinding, control
+leases, generic tasks, and plugin APIs. SoulFire itself does not contain a
+beat-game planner.
 
-Use durable bot tasks for one bounded job such as pathfinding, combat, or
-building. Use instance automation when SoulFire should keep planning,
-recovering, and coordinating a team toward a larger objective.
+<Callout type="info">
+  SoulFire handles Minecraft mechanics close to the connection. Your
+  TypeScript process owns goals, recovery policy, checkpoints, and team
+  coordination.
+</Callout>
 
-## Start and observe a goal
+## Run one bot
 
-An empty bot selection means every applicable bot in the instance. Supplying
-bot IDs scopes the command and stream to that group.
+<Steps>
 
-<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
+### Install the packages
+
+```bash
+pnpm add @soulfiremc/sdk @soulfiremc/beat-game effect
+```
+
+### Connect and start the runner
+
+<Tabs items={['Effect', 'Promise']}>
   <Tab value="Effect">
     ```ts
+    import { SoulFire } from "@soulfiremc/sdk/node";
+    import { beatGame } from "@soulfiremc/beat-game";
     import { Effect, Stream } from "effect";
 
-    const automation = soulfire.instance(instanceId).automation;
+    const program = Effect.scoped(
+      Effect.gen(function* () {
+        const soulfire = yield* SoulFire.connect({
+          baseUrl: "https://soulfire.example.com",
+          token: process.env.SOULFIRE_TOKEN,
+        });
+        const bot = soulfire.instance(instanceId).bot(botId);
+        const run = yield* beatGame(bot);
 
-    yield* automation.startBeat(botIds);
+        yield* Effect.forkScoped(
+          run.events.pipe(
+            Stream.runForEach((event) =>
+              Effect.logInfo(event.type, {
+                phase: event.phase,
+                sequence: event.sequence,
+              })
+            ),
+          ),
+        );
 
-    yield* automation.events({ botIds }).pipe(
-      Stream.runForEach((event) =>
-        Effect.logInfo(event.summary ?? "automation update", {
-          kind: event.kind,
-          botId: event.botId,
-          droppedBefore: event.droppedBefore,
-        })
-      ),
+        return yield* run.awaitCompletion;
+      }),
     );
+
+    const result = await Effect.runPromise(program);
     ```
   </Tab>
   <Tab value="Promise">
     ```ts
-    const automation = soulfire.instance(instanceId).automation;
+    import { SoulFire } from "@soulfiremc/sdk/node/promise";
+    import { beatGame } from "@soulfiremc/beat-game/promise";
 
-    await automation.acquire("minecraft:bread", 64, botIds);
+    await using soulfire = await SoulFire.connect({
+      baseUrl: "https://soulfire.example.com",
+      token: process.env.SOULFIRE_TOKEN,
+    });
 
-    for await (const event of automation.events({ botIds })) {
-      console.log(event.kind, event.summary);
+    const bot = soulfire.instance(instanceId).bot(botId);
+    const run = await beatGame(bot);
+
+    for await (const event of run.events) {
+      console.log(event.sequence, event.phase, event.type);
     }
-    ```
-  </Tab>
-  <Tab value="Async Python">
-    ```python
-    automation = soulfire.instance(instance_id).automation
 
-    await automation.start_beat(bot_ids)
-
-    async for event in automation.events(bot_ids=bot_ids):
-        print(event.kind, event.summary, event.dropped_before)
-    ```
-  </Tab>
-  <Tab value="Sync Python">
-    ```python
-    automation = soulfire.instance(instance_id).automation
-
-    automation.acquire("minecraft:bread", 64, bot_ids)
-
-    for event in automation.events(bot_ids=bot_ids):
-        print(event.kind, event.summary)
+    const result = await run.awaitCompletion();
     ```
   </Tab>
 </Tabs>
 
-The stream begins with a typed team snapshot. Later events identify:
+### Keep the worker alive
 
-- Bot connections and disconnections.
-- Goal, beat phase, current action, pause, and resume changes.
-- Progress, action stalls, timeouts, deaths, and recovery attempts.
-- Team and per-bot objective changes.
-- Shared claim and shared-memory changes.
-- Goal completion and reported failures.
-- Heartbeats when the state is unchanged.
+`awaitCompletion` ends when the dragon is confirmed absent and the final
+checkpoint reaches `COMPLETE`. Keep the surrounding Effect scope or Promise
+process alive for the whole run. Closing it interrupts tasks, releases
+control, and ends subscriptions.
 
-Each event can include the current bot, team, or coordination state. Consumers
-can update a local view directly instead of issuing a second request for every
-change.
+</Steps>
 
-## Read state and memory
+## Add restart persistence
 
-Read current state independently of the stream when an application starts,
-detects a gap, or needs a detailed memory sample:
+Every run has a checkpoint store. The default store is in memory. Use the
+Node-only JSON store when one worker should survive a restart:
 
 ```ts
-const team = yield* automation.teamState();
-const coordination = yield* automation.coordinationState(32);
-const bot = yield* automation.botState(botId);
-const memory = yield* automation.memory(botId, 64);
+import { JsonFileBeatGameCheckpointStore } from
+  "@soulfiremc/beat-game/node";
+
+const checkpointStore =
+  new JsonFileBeatGameCheckpointStore("./soulfire-runs");
+
+const run = yield* beatGame(bot, {
+  runId: "survival-01",
+  checkpointStore,
+});
 ```
 
-```python
-team = await automation.team_state()
-coordination = await automation.coordination_state(32)
-bot_state = await automation.bot_state(bot_id)
-memory = await automation.memory(bot_id, 64)
-```
+Restart with the same `runId`, instance, bot, team ID, and directory. The
+store validates the complete checkpoint, locks each run file, and uses
+compare-and-set revisions to reject a second writer.
 
-Team state contains resource quotas, roles, objectives, and each connected
-bot's current goal. Coordination state contains shared blocks, target claims,
-eye samples, and team requirement counts. Bot memory contains the bounded
-world observations used by that bot's planner.
+The runner also saves the current action identity and last stable action
+evidence. Durable tasks use deterministic idempotency keys and deadlines, so
+a restarted worker can attach to work that the SoulFire server still owns
+instead of duplicating it.
 
-## Control collaboration
+For a shared database, implement `BeatGameCheckpointStore` with `load`,
+`save`, and `remove`. `save` must enforce `expectedRevision`.
 
-The SDK wraps all persisted automation settings and coordination controls:
+## Run a coordinated team
 
 ```ts
-yield* automation.setCollaboration(true);
-yield* automation.setSharedClaims(true);
-yield* automation.setMaxEndBots(2);
-yield* automation.setQuotaOverride("minecraft:blaze_rod", 12);
-yield* automation.setRoleOverride(AutomationTeamRole.NETHER_RUNNER, [botId]);
+import {
+  InMemoryBeatGameCoordinator,
+  beatGameTeam,
+} from "@soulfiremc/beat-game";
+
+const bots = botIds.map((botId) =>
+  soulfire.instance(instanceId).bot(botId)
+);
+
+const team = yield* beatGameTeam(bots, {
+  teamId: "release-run",
+  checkpointStore,
+  coordinator: new InMemoryBeatGameCoordinator(),
+});
+
+const results = yield* team.awaitCompletion;
 ```
 
-```python
-await automation.set_collaboration(True)
-await automation.set_shared_claims(True)
-await automation.set_max_end_bots(2)
-await automation.set_quota_override("minecraft:blaze_rod", 12)
+The default assignment is deterministic. Team state includes roles, shared
+requirement counts, discoveries, expiring claims, leader fencing, and an
+End-entry quota. The in-memory coordinator is for one process. Implement
+`BeatGameCoordinator` with Redis, Postgres, or another shared system before
+running workers in separate processes.
+
+## Pause, resume, stop, and inspect
+
+Effect run handles expose effects:
+
+```ts
+yield* run.pause;
+const current = yield* run.snapshot;
+yield* run.resume;
+yield* run.stop;
 ```
 
-You can also apply a preset, choose a role policy, override the team objective,
-update per-bot recovery and scan settings, release claims, reset bot memory,
-or reset all shared coordination state.
+Promise handles expose methods:
 
-## Handle stream gaps
+```ts
+await run.pause();
+const current = await run.snapshot();
+await run.resume();
+await run.stop();
+```
 
-Automation observation is deliberately backpressure-aware. SoulFire does not
-let a slow dashboard block bot planning or the Minecraft game loop. If the
-transport cannot accept an event, the server drops that event and reports the
-count in `droppedBefore` or `dropped_before` on the next delivery.
+Stopping interrupts an active observation, task, or action. A stopped run
+fails `awaitCompletion` with `BeatGameCancelled` and retains its checkpoint.
 
-<Callout type="warn">
-  When the dropped count is nonzero, refresh `teamState` or `team_state` and
-  coordination state before applying more deltas. The next event contains
-  current typed state, but it may not cover every bot affected by the gap.
-</Callout>
+## What the server still does
 
-Reading streams and snapshots requires `READ_BOT_INFO`. Starting, pausing,
-resuming, stopping, resetting, and releasing claims require
-`INSTANCE_COMMAND_EXECUTION`. Persisted instance and bot settings use their
-corresponding update permissions.
+The runner deliberately uses SoulFire's durable generic tasks for work such as
+collecting blocks, attacking, crafting, building, smelting, exploring, and
+automatic equipment management. It uses direct actions and observations for
+game-specific workflows such as throwing an eye, casting a portal, and
+filling End frames.
+
+This boundary lets another application use the same generic tasks without
+inheriting the beat-game plan.
+
+## Next steps
+
+- [Customize strategy and call plugins](/docs/sdk/beat-game-customization)
+- [Beat-game API reference](/docs/sdk/beat-game-reference)
+- [Tasks](/docs/sdk/tasks)
+- [Plugin-defined APIs](/docs/sdk/plugins)
