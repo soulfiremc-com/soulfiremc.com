@@ -1281,7 +1281,7 @@ function Page() {
           <div className="relative z-10 max-w-(--fd-layout-width) px-4 md:px-6 py-12 md:py-16">
             <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
               <div className="flex flex-col gap-6 text-left">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-background/80 border border-primary/30 backdrop-blur-sm shadow-sm">
+                <div className="inline-flex self-start items-center gap-2 rounded-full border border-primary/30 bg-background/80 px-4 py-2 shadow-sm backdrop-blur-sm">
                   <Zap className="h-4 w-4 text-primary" />
                   <AnimatedShinyText className="text-sm font-semibold">
                     the last bot tool you'll ever need.
