@@ -1,0 +1,209 @@
+---
+title: Behavior composition
+description: Compose SoulFire tasks into cancellable application workflows with Effect, Promises, or asyncio.
+icon: Workflow
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+Behavior combinators coordinate application-level workflows. Use them to
+decide what a bot should do next while durable tasks keep movement, combat,
+inventory, and survival timing beside the Minecraft game loop.
+
+## Build a workflow
+
+This workflow gathers logs, retries a bounded build, and guarantees cleanup:
+
+<Tabs items={['Effect', 'Promise', 'Async Python']}>
+  <Tab value="Effect">
+    ```ts
+    import {
+      cleanup,
+      collectBlocks,
+      retry,
+      sequence,
+    } from "@soulfiremc/sdk";
+
+    const prepareShelter = cleanup(
+      sequence(
+        collectBlocks({
+          blockIds: [],
+          tags: ["minecraft:logs"],
+          count: 16,
+        }),
+        retry(buildShelter, {
+          attempts: 3,
+          delayMs: 500,
+          backoff: 2,
+        }),
+      ),
+      releaseTemporaryClaims,
+    );
+
+    const results = yield* prepareShelter.run(bot);
+    ```
+  </Tab>
+  <Tab value="Promise">
+    ```ts
+    import {
+      cleanup,
+      collectBlocks,
+      retry,
+      sequence,
+    } from "@soulfiremc/sdk/promise";
+
+    const prepareShelter = cleanup(
+      sequence(
+        collectBlocks({
+          blockIds: [],
+          tags: ["minecraft:logs"],
+          count: 16,
+        }),
+        retry(buildShelter, {
+          attempts: 3,
+          delayMs: 500,
+          backoff: 2,
+        }),
+      ),
+      releaseTemporaryClaims,
+    );
+
+    const results = await prepareShelter.run(bot, { signal });
+    ```
+  </Tab>
+  <Tab value="Async Python">
+    ```python
+    from soulfire import cleanup, retry, sequence
+
+
+    prepare_shelter = cleanup(
+        sequence(
+            CollectBlocks(
+                block_ids=(),
+                tags=("minecraft:logs",),
+                count=16,
+            ),
+            retry(
+                build_shelter,
+                attempts=3,
+                delay=0.5,
+                backoff=2,
+            ),
+        ),
+        release_temporary_claims,
+    )
+
+    results = await prepare_shelter.run(bot)
+    ```
+  </Tab>
+</Tabs>
+
+`sequence` preserves result order and stops at the first failure. Prefer a
+durable server task inside each behavior instead of a client-side loop of
+atomic movement calls.
+
+## Choose a combinator
+
+| Combinator | Use it when |
+| --- | --- |
+| `sequence` | Every step must run in order |
+| `parallel` | Independent work may run concurrently |
+| `race` | The first successful strategy should win |
+| `repeat` | A step should run a fixed number of times |
+| `retry` | A transient failure may recover |
+| `timeout` | Work needs a hard application deadline |
+| `until` | Repeat until a result satisfies a predicate |
+| `conditional` | Choose a branch from current state |
+| `fallback` | Try alternatives in order until one succeeds |
+| `cleanup` | A finalizer must run after success, failure, or cancellation |
+| `scopedLease` / `scoped_lease` | A workflow needs exclusive bot control |
+
+Effect `parallel` uses fibers and accepts Effect concurrency. Promise
+`parallel` accepts a numeric concurrency limit and propagates a linked
+`AbortSignal`. Python `parallel` uses `asyncio.TaskGroup`, so sibling work is
+cancelled when one child fails.
+
+`race` means first successful result. A failed contender does not end the race
+while another contender can still succeed. Losing Effect fibers, Promise
+operations, and Python tasks are interrupted or cancelled.
+
+## Bound retries
+
+Always give retries a finite attempt count. Delay and backoff are optional:
+
+<Tabs items={['Effect', 'Promise', 'Async Python']}>
+  <Tab value="Effect">
+    ```ts
+    const resilient = retry(operation, {
+      attempts: 5,
+      delayMs: 250,
+      backoff: 2,
+      maximumDelayMs: 4_000,
+    });
+    ```
+  </Tab>
+  <Tab value="Promise">
+    ```ts
+    const resilient = retry(operation, {
+      attempts: 5,
+      delayMs: 250,
+      backoff: 2,
+      maximumDelayMs: 4_000,
+    });
+    ```
+  </Tab>
+  <Tab value="Async Python">
+    ```python
+    resilient = retry(
+        operation,
+        attempts=5,
+        delay=0.25,
+        backoff=2,
+        maximum_delay=4,
+    )
+    ```
+  </Tab>
+</Tabs>
+
+Parent cancellation stops a retry before the next attempt. A timeout also
+cancels the running operation. The Promise timeout does not depend on a custom
+behavior honoring cancellation before it returns to the caller, though native
+SDK operations do receive the linked signal.
+
+## Hold exclusive control
+
+Use a scoped lease when a workflow must exclude other SDK controllers:
+
+<Tabs items={['Effect', 'Promise', 'Async Python']}>
+  <Tab value="Effect">
+    ```ts
+    const exclusive = scopedLease(prepareShelter, 30);
+    const result = yield* exclusive.run(bot);
+    ```
+  </Tab>
+  <Tab value="Promise">
+    ```ts
+    const exclusive = scopedLease(prepareShelter, 30);
+    const result = await exclusive.run(bot, { signal });
+    ```
+  </Tab>
+  <Tab value="Async Python">
+    ```python
+    exclusive = scoped_lease(prepare_shelter, ttl_seconds=30)
+    result = await exclusive.run(bot)
+    ```
+  </Tab>
+</Tabs>
+
+Effect users can also acquire a lease directly with
+`bot.acquireControlScoped()`. Promise users can use `await using` with the
+returned control lease. Python leases implement `async with`. Each form
+releases the lease when its scope exits.
+
+<Callout type="info">
+  Behavior composition is an orchestration layer. A workflow does not move
+  time-sensitive game logic back into the client process. Native and plugin
+  tasks still own their server-side lifecycle, resource arbitration,
+  reconnect policy, progress, and typed result.
+</Callout>

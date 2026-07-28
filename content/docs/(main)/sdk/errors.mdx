@@ -1,0 +1,110 @@
+---
+title: Errors, retries, and cancellation
+description: Handle SoulFire connection, RPC, action, task, plugin, and compatibility failures without losing diagnostic context.
+icon: TriangleAlert
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+SoulFire keeps transport failures separate from rejected game actions and
+failed durable tasks. This distinction tells an application whether to retry a
+request, change its input, inspect task progress, or ask for another
+permission.
+
+## Error families
+
+| Failure | Meaning | Typical response |
+| --- | --- | --- |
+| Connection or compatibility | Handshake, API version, or required capability failed | Stop startup and report the incompatibility |
+| RPC | The remote call failed before producing a semantic result | Inspect code and `retryable` |
+| Action | The server processed an atomic action but did not complete it | Inspect the action result and correct state or input |
+| Task | A durable task reached a failed or cancelled terminal state | Inspect failure code, progress, and retryability |
+| Plugin | Discovery, descriptor, compatibility, or plugin invocation failed | Check installation, version, and grants |
+| Local lifecycle | A session, lease, container, or client is already closed | Reopen the scoped resource |
+
+## Effect error channels
+
+The Effect entry point exposes tagged errors. Handle expected cases without
+catching defects:
+
+```ts
+const program = bot.chat.send("hello").pipe(
+  Effect.catchTag("SoulFireRpcError", (error) =>
+    error.retryable
+      ? Effect.retry(
+          bot.chat.send("hello"),
+          Schedule.exponential("100 millis").pipe(
+            Schedule.compose(Schedule.recurs(4)),
+          ),
+        )
+      : Effect.fail(error)
+  ),
+);
+```
+
+`SoulFireRpcError` preserves the operation name, ConnectRPC code, request ID,
+retryability, and original cause. Connection, task, plugin, and behavior
+operations use their own tagged error types.
+
+Effect interruption cancels the underlying request or stream. Acquire clients,
+sessions, leases, and local server processes in a scope so interruption also
+runs their finalizers.
+
+## Promise and Python errors
+
+The Promise facade rejects with the typed error value from the Effect channel.
+It does not leak an Effect `FiberFailure`.
+
+```ts
+try {
+  await bot.chat.send("hello");
+} catch (error) {
+  if (error instanceof SoulFireRpcError && error.retryable) {
+    console.warn(error.code, error.requestId, error.cause);
+  } else {
+    throw error;
+  }
+}
+```
+
+Python RPC failures raise `SoulFireRpcError` with matching diagnostic fields:
+
+```python
+try:
+    await bot.chat.send("hello")
+except SoulFireRpcError as error:
+    if not error.retryable:
+        raise
+    print(error.code, error.request_id, error.cause)
+```
+
+Pass `AbortSignal` and ConnectRPC call options in TypeScript. Pass
+`timeout_ms` in Python. Python async chat waits use the standard
+`asyncio.timeout` cancellation model.
+
+## Retry safely
+
+Retry only when both conditions hold:
+
+- The error reports `retryable`.
+- Repeating the operation cannot duplicate a game-side mutation.
+
+Use an idempotency key for supported mutations and task starts. SoulFire
+stores the completed response for the key within its bounded retention window.
+A retry with the same key receives the original result instead of repeating
+the action.
+
+Do not retry invalid arguments, denied permissions, stale entity epochs,
+closed containers, unreachable path goals, or deterministic plugin
+validation errors without changing the request.
+
+<Callout type="warning">
+  A transport timeout does not prove that the server did nothing. Use an
+  idempotency key or query the durable task handle before submitting the same
+  mutation again.
+</Callout>
+
+Include the request ID, operation, server version, SDK version, bot ID, and
+task ID in production logs. Do not log access tokens, plugin secrets, chat
+credentials, or raw packet payloads that can contain private data.

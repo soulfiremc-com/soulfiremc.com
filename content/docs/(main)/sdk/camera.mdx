@@ -1,0 +1,215 @@
+---
+title: Cameras and world maps
+description: Capture bot views, stream rendered frames with backpressure, and sample map-ready world data.
+icon: Camera
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+`bot.camera` is the shared visualization API for SDK applications,
+SoulFireClient, dashboards, and viewers. It exposes the server's software
+renderer without requiring a graphical Minecraft client.
+
+## Capture one frame
+
+The camera follows the bot's eyes by default. Set any position or rotation
+field to place a free camera. Unset fields continue to follow the bot.
+
+<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
+  <Tab value="Effect">
+    ```ts
+    import { decodeCameraImage } from "@soulfiremc/sdk";
+
+    const capture = yield* bot.camera.capture({
+      width: 1280,
+      height: 720,
+      cameraX: 120.5,
+      cameraY: 80,
+      cameraZ: -32.5,
+      yRot: 180,
+      xRot: -20,
+      fov: 80,
+      maxDistance: 256,
+      includeHud: false,
+      includeHands: false,
+      includeDebugTrace: true,
+    });
+
+    const png = decodeCameraImage(capture);
+    ```
+  </Tab>
+  <Tab value="Promise">
+    ```ts
+    import {
+      SoulFire,
+      decodeCameraImage,
+    } from "@soulfiremc/sdk/promise";
+
+    const capture = await bot.camera.capture({
+      width: 1280,
+      height: 720,
+      includeHud: false,
+      includeHands: false,
+    });
+
+    const png = decodeCameraImage(capture);
+    ```
+  </Tab>
+  <Tab value="Async Python">
+    ```python
+    from soulfire import CameraRenderOptions
+
+    png = await bot.camera.capture_bytes(
+        CameraRenderOptions(
+            width=1280,
+            height=720,
+            camera_x=120.5,
+            camera_y=80,
+            camera_z=-32.5,
+            yaw=180,
+            pitch=-20,
+            fov=80,
+            max_distance=256,
+            include_hud=False,
+            include_hands=False,
+            include_debug_trace=True,
+        )
+    )
+    ```
+  </Tab>
+  <Tab value="Sync Python">
+    ```python
+    png = bot.camera.capture_bytes(
+        CameraRenderOptions(
+            width=1280,
+            height=720,
+            include_hud=False,
+        )
+    )
+    ```
+  </Tab>
+</Tabs>
+
+The response includes the effective width, height, FOV, render distance,
+camera transform, HUD state, and hand state. When debug traces are enabled it
+also includes renderer timings, cache activity, submitted geometry, visible
+entities, text samples, notable events, and detailed failures.
+
+## Stream frames
+
+Use a frame stream when the consumer needs a live viewport. The server renders
+only when the transport can accept another message. It skips scheduled frames
+instead of building an unbounded queue, and the next delivered frame reports
+the skipped count in `droppedBefore` or `dropped_before`.
+
+<Tabs items={['Effect', 'Promise', 'Async Python']}>
+  <Tab value="Effect">
+    ```ts
+    yield* bot.camera.frames({
+      width: 854,
+      height: 480,
+      intervalMs: 250,
+      includeHud: false,
+    }).pipe(
+      Stream.runForEach((frame) =>
+        storeFrame(
+          frame.sequence,
+          frame.droppedBefore,
+          decodeCameraImage(frame.render!),
+        )
+      ),
+    );
+    ```
+  </Tab>
+  <Tab value="Promise">
+    ```ts
+    for await (const frame of bot.camera.frames({
+      width: 854,
+      height: 480,
+      intervalMs: 250,
+    })) {
+      await storeFrame(
+        frame.sequence,
+        frame.droppedBefore,
+        decodeCameraImage(frame.render!),
+      );
+    }
+    ```
+  </Tab>
+  <Tab value="Async Python">
+    ```python
+    async for frame in bot.camera.frames(
+        CameraRenderOptions(width=854, height=480),
+        interval_ms=250,
+    ):
+        await store_frame(
+            frame.sequence,
+            frame.dropped_before,
+            decode_camera_image(frame.render),
+        )
+    ```
+  </Tab>
+</Tabs>
+
+<Callout type="info">
+  The stream interval is clamped to 100 through 60,000 milliseconds. That
+  limits software rendering to 10 frames per second. A disconnected bot or
+  unavailable world ends the stream with a typed RPC failure.
+</Callout>
+
+## Sample a top-down world map
+
+World-map snapshots cover loaded client-side terrain around the bot or an
+explicit center. Each grid column records whether its chunk is loaded. Loaded
+surface samples can include height, block ID, biome ID, sky light, and block
+light. Entity overlays are optional.
+
+<Tabs items={['Effect', 'Async Python']}>
+  <Tab value="Effect">
+    ```ts
+    const map = yield* bot.camera.worldMap({
+      centerX: 120,
+      centerZ: -32,
+      radius: 128,
+      sampleStep: 2,
+      includeEntities: true,
+    });
+
+    for (const column of map.columns) {
+      terrain.set(column.x, column.z, column);
+    }
+    ```
+  </Tab>
+  <Tab value="Async Python">
+    ```python
+    world_map = await bot.camera.world_map(
+        WorldMapOptions(
+            center_x=120,
+            center_z=-32,
+            radius=128,
+            sample_step=2,
+            include_entities=True,
+        )
+    )
+
+    for column in world_map.columns:
+        terrain[column.x, column.z] = column
+    ```
+  </Tab>
+</Tabs>
+
+The radius is clamped to 256 blocks and the sample step to 1 through 16. Use a
+larger step for overview maps and step 1 for local inspection. A snapshot also
+includes the dimension, vertical bounds, game-time revision, and sampling
+timestamp so consumers can reject stale data.
+
+## Required capabilities
+
+Applications can request these capabilities during the SDK handshake:
+
+- `bot.camera.capture.v1`
+- `bot.camera.stream.v1`
+- `bot.camera.world-map.v1`
+
+All camera and map calls require `READ_BOT_INFO` for the containing instance.

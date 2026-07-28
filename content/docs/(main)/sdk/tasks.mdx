@@ -1,0 +1,1121 @@
+---
+title: Durable tasks
+description: Start, observe, cancel, and reconnect to long-running SoulFire bot work.
+icon: ListChecks
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+Durable tasks execute on the SoulFire server beside the Minecraft game loop.
+Use them for work that has progress, cancellation, retries, reconnect policy,
+or control conflicts.
+
+Current first-party task types include:
+
+- Pathfinding to a goal
+- Finding and mining matching blocks
+- Clearing an inclusive cuboid with bounded excavation
+- Building transformed and partitioned inline schematics
+- Crafting shaped and shapeless recipes
+- Cooking items in a furnace, blast furnace, or smoker
+- Brewing potions in batches of up to three bottles
+- Executing an exact number of villager trades
+- Following a moving entity
+- Chasing and attacking an entity
+- Leading moving targets with bows and crossbows
+- Hunting the nearest entities that match a safe selector
+- Escaping from selected threats until a safety radius is clear
+- Guarding a position or protecting a live entity
+- Finding a bed and sleeping
+- Fishing with server-timed bite detection
+- Finding mature crops, harvesting them, and replanting them
+- Starting compatible animal breeding pairs with confirmed feeding
+- Exploring a bounded frontier with coordinated fleet claims
+- Stashing and withdrawing transactional item batches
+- Maintaining bounded inventory loadouts from storage
+- Monitoring hunger and eating
+- Monitoring death and respawning
+- Keeping the strongest available armor equipped
+- Keeping a totem in the offhand
+
+## Excavate a cuboid
+
+Use `excavate` to clear every diggable block between two inclusive corners.
+SoulFire chooses the nearest remaining block, plans each route beside the
+game loop, selects tools through the pathfinder, and never mines outside the
+requested cuboid.
+
+<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
+  <Tab value="Effect">
+    ```ts
+    const task = yield* bot.tasks.excavate(
+      { x: 10, y: 60, z: 10, dimension: "minecraft:overworld" },
+      { x: 17, y: 64, z: 17, dimension: "minecraft:overworld" },
+      {
+        maximumBlocks: 128,
+        path: { allowPlacing: true },
+      },
+    );
+
+    const result = yield* task.result();
+    ```
+  </Tab>
+  <Tab value="Promise">
+    ```ts
+    const task = await bot.tasks.excavate(
+      { x: 10, y: 60, z: 10, dimension: "minecraft:overworld" },
+      { x: 17, y: 64, z: 17, dimension: "minecraft:overworld" },
+      {
+        maximumBlocks: 128,
+        path: { allowPlacing: true },
+      },
+    );
+
+    const result = await task.result();
+    ```
+  </Tab>
+  <Tab value="Async Python">
+    ```python
+    task = await bot.tasks.excavate(
+        BlockPosition(
+            x=10,
+            y=60,
+            z=10,
+            dimension="minecraft:overworld",
+        ),
+        BlockPosition(
+            x=17,
+            y=64,
+            z=17,
+            dimension="minecraft:overworld",
+        ),
+        maximum_blocks=128,
+        options=PathfindOptions(allow_placing=True),
+    )
+
+    result = await task.result()
+    ```
+  </Tab>
+  <Tab value="Sync Python">
+    ```python
+    task = bot.tasks.excavate(
+        BlockPosition(
+            x=10,
+            y=60,
+            z=10,
+            dimension="minecraft:overworld",
+        ),
+        BlockPosition(
+            x=17,
+            y=64,
+            z=17,
+            dimension="minecraft:overworld",
+        ),
+        maximum_blocks=128,
+        options=PathfindOptions(allow_placing=True),
+    )
+
+    result = task.result()
+    ```
+  </Tab>
+</Tabs>
+
+The server rejects cuboids larger than 32,768 blocks and regions whose chunks
+are not loaded yet. `maximumBlocks` or `maximum_blocks` bounds one run. The
+typed result distinguishes a cleared area, a reached block budget, and a
+region with no reachable blocks. It also reports skipped and unreachable
+positions. Cancellation or suspension stops the active route and releases
+movement, rotation, hand, and inventory resources.
+
+## Build an inline schematic
+
+`build` accepts a language-native blueprint made of block offsets relative to
+an origin. SoulFire transforms the whole blueprint on the server, orders
+placements from the bottom up, navigates between them, selects exact
+materials, and verifies the resulting block state.
+
+<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
+  <Tab value="Effect">
+    ```ts
+    const task = yield* bot.tasks.build(
+      origin,
+      [
+        {
+          offset: { x: 0, y: 0, z: 0 },
+          blockId: "minecraft:oak_stairs",
+          properties: { facing: "north", half: "bottom" },
+        },
+        {
+          offset: { x: 1, y: 0, z: 0 },
+          blockId: "minecraft:oak_planks",
+        },
+      ],
+      {
+        rotation: BuildRotation.CLOCKWISE_90,
+        mirror: BuildMirror.X,
+        substitutions: {
+          "minecraft:oak_planks": ["minecraft:spruce_planks"],
+        },
+        path: { allowPlacing: true },
+        breakIncorrectBlocks: true,
+      },
+    );
+
+    const result = yield* task.result();
+    ```
+  </Tab>
+  <Tab value="Promise">
+    ```ts
+    const task = await bot.tasks.build(
+      origin,
+      schematic.blocks,
+      {
+        rotation: BuildRotation.CLOCKWISE_90,
+        substitutions: schematic.substitutions,
+        path: { allowPlacing: true },
+        breakIncorrectBlocks: true,
+      },
+    );
+
+    const result = await task.result();
+    ```
+  </Tab>
+  <Tab value="Async Python">
+    ```python
+    task = await bot.tasks.build(
+        origin,
+        [
+            SchematicBlock(
+                0,
+                0,
+                0,
+                "minecraft:oak_stairs",
+                {"facing": "north", "half": "bottom"},
+            ),
+            SchematicBlock(1, 0, 0, "minecraft:oak_planks"),
+        ],
+        rotation=BUILD_ROTATION_CLOCKWISE_90,
+        mirror=BUILD_MIRROR_X,
+        substitutions={
+            "minecraft:oak_planks": ["minecraft:spruce_planks"],
+        },
+        options=PathfindOptions(allow_placing=True),
+        break_incorrect_blocks=True,
+    )
+
+    result = await task.result()
+    ```
+  </Tab>
+  <Tab value="Sync Python">
+    ```python
+    task = bot.tasks.build(
+        origin,
+        schematic.blocks,
+        rotation=BUILD_ROTATION_CLOCKWISE_90,
+        substitutions=schematic.substitutions,
+        options=PathfindOptions(allow_placing=True),
+        break_incorrect_blocks=True,
+    )
+
+    result = task.result()
+    ```
+  </Tab>
+</Tabs>
+
+Offsets and directional properties rotate and mirror together. A substitution
+list is ordered, so the first available replacement wins. Existing exact
+states count as complete without consuming material. Every requested block
+gets an outcome such as placed, already correct, missing material,
+unreachable, unsupported, state mismatch, or blocked by an incorrect block.
+
+For a coordinated build, start the same blueprint on each bot with the same
+`partitionCount` or `partition_count` and a distinct zero-based partition
+index. SoulFire applies transforms and ordering before partitioning, which
+makes every bot agree on ownership without a client-side coordinator.
+Pathfinding may place navigation scaffolds when `allowPlacing` or
+`allow_placing` is enabled. Task suspension preserves its current placement,
+and cancellation releases every claimed control resource.
+
+## Start a task and keep its handle
+
+<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
+  <Tab value="Effect">
+    ```ts
+    const task = yield* bot.tasks.autoEat(
+      ["minecraft:bread"],
+      { maximumMeals: 1 },
+    );
+
+    const result = yield* task.result();
+    ```
+  </Tab>
+  <Tab value="Promise">
+    ```ts
+    const task = await bot.tasks.autoEat(
+      ["minecraft:bread"],
+      { maximumMeals: 1 },
+    );
+
+    const result = await task.result();
+    ```
+  </Tab>
+  <Tab value="Async Python">
+    ```python
+    task = await bot.tasks.auto_eat(
+        ["minecraft:bread"],
+        maximum_meals=1,
+    )
+
+    result = await task.result()
+    ```
+  </Tab>
+  <Tab value="Sync Python">
+    ```python
+    task = bot.tasks.auto_eat(
+        ["minecraft:bread"],
+        maximum_meals=1,
+    )
+
+    result = task.result()
+    ```
+  </Tab>
+</Tabs>
+
+A task handle exposes its stable ID and latest snapshot. Use it to refresh,
+watch revisions, wait for completion, decode the typed result, or cancel the
+task.
+
+## Craft, smelt, and brew
+
+Recipe discovery and production use the same bot-scoped API. `list` returns
+the recipes known to the bot. `craft`, `smelt`, and `brew` create durable
+tasks that own inventory, container, movement, and hand resources while they
+run.
+
+<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
+  <Tab value="Effect">
+    ```ts
+    const task = yield* bot.recipes.brew(
+      { fingerprint: waterPotionFingerprint },
+      { itemIds: ["minecraft:nether_wart"] },
+      3,
+      {
+        expectedResult: { fingerprint: awkwardPotionFingerprint },
+        station: brewingStandPosition,
+      },
+    );
+
+    const result = yield* task.result();
+    ```
+  </Tab>
+  <Tab value="Promise">
+    ```ts
+    const task = await bot.recipes.smelt(
+      { itemIds: ["minecraft:raw_iron"] },
+      8,
+      {
+        fuel: { tags: ["minecraft:coals"] },
+        station: furnacePosition,
+      },
+    );
+
+    const result = await task.result();
+    ```
+  </Tab>
+  <Tab value="Async Python">
+    ```python
+    task = await bot.recipes.craft(
+        "display:42",
+        count=3,
+        station=crafting_table_position,
+    )
+
+    result = await task.result()
+    ```
+  </Tab>
+  <Tab value="Sync Python">
+    ```python
+    task = bot.recipes.smelt(
+        ItemSelector(item_ids=["minecraft:raw_iron"]),
+        count=8,
+        fuel=ItemSelector(tags=["minecraft:coals"]),
+        station=furnace_position,
+    )
+
+    result = task.result()
+    ```
+  </Tab>
+</Tabs>
+
+Craft counts are recipe operations. A recipe that produces four items per
+operation still reports one completed craft. Smelt and brew counts are input
+items. Brewing groups compatible bottles into batches of three, so one
+ingredient can produce up to three outputs. Use an item fingerprint when the
+potion's data components matter, and use `expectedResult` or
+`expected_result` to reject a mix whose predicted output changed. Recipes
+that fit the player inventory grid need no station. Production tasks accept
+an explicit station position and navigate to it. A station is optional when
+the compatible menu is already open.
+
+## Trade with a villager
+
+Open the villager menu with `bot.actions.interactEntity` before inspecting or
+executing trades. SoulFire reads the live merchant offers, including adjusted
+costs, uses, stock, experience, demand, and price data.
+
+<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
+  <Tab value="Effect">
+    ```ts
+    const offers = yield* bot.recipes.listVillagerTrades();
+    const offer = offers.offers[0]!;
+
+    const task = yield* bot.recipes.villagerTrade(offer.offerIndex, 3, {
+      expectedResult: { itemIds: [offer.result!.itemId] },
+    });
+    const result = yield* task.result();
+    ```
+  </Tab>
+  <Tab value="Promise">
+    ```ts
+    const offers = await bot.recipes.listVillagerTrades();
+    const offer = offers.offers[0]!;
+
+    const task = await bot.recipes.villagerTrade(offer.offerIndex, 3, {
+      expectedResult: { itemIds: [offer.result!.itemId] },
+      closeWhenDone: true,
+    });
+    const result = await task.result();
+    ```
+  </Tab>
+  <Tab value="Async Python">
+    ```python
+    offers = await bot.recipes.list_villager_trades()
+    offer = offers.offers[0]
+
+    task = await bot.recipes.villager_trade(
+        offer.offer_index,
+        count=3,
+        expected_result=ItemSelector(item_ids=[offer.result.item_id]),
+    )
+    result = await task.result()
+    ```
+  </Tab>
+  <Tab value="Sync Python">
+    ```python
+    offers = bot.recipes.list_villager_trades()
+    offer = offers.offers[0]
+
+    task = bot.recipes.villager_trade(
+        offer.offer_index,
+        count=3,
+        expected_result=ItemSelector(item_ids=[offer.result.item_id]),
+        close_when_done=True,
+    )
+    result = task.result()
+    ```
+  </Tab>
+</Tabs>
+
+`expectedResult` and `expected_result` protect against a stale offer index.
+The task refuses to continue if the merchant changes that offer, runs one
+trade at a time so the count is exact, and stops before taking an output when
+the inventory cannot hold it.
+
+## Hunt matching entities
+
+Use `attackNearest` or `attack_nearest` for a bounded hunt. The SDK defaults
+to one defeated target and completes immediately when none is observable.
+Use the `run*` form for a persistent guard loop that waits for future
+matches.
+
+```ts
+const hunt = yield* bot.tasks.attackNearest(
+  { entityTypes: ["minecraft:zombie"] },
+  {
+    radius: 48,
+    maximumTargets: 3,
+    weapon: { tags: ["minecraft:swords"] },
+  },
+);
+
+const result = yield* hunt.result();
+```
+
+```python
+hunt = await bot.tasks.attack_nearest(
+    EntitySelector(entity_types=["minecraft:zombie"]),
+    radius=48,
+    maximum_targets=3,
+    weapon=ItemSelector(tags=["minecraft:swords"]),
+)
+
+result = await hunt.result()
+```
+
+The selector must constrain a type, category, identity, tag, name,
+equipment, effect, or owner. SoulFire rejects an unconstrained selector.
+Combat automatically ranks and equips the strongest matching melee weapon,
+respects attack cooldown, chases through Pathfinder v2, and restores the
+previous hotbar selection when the task stops.
+
+## Use a bow or crossbow
+
+Use `rangedAttack` or `ranged_attack` when a bot should keep its distance and
+fire at a specific observed entity. The task can lead a moving target,
+compensate for arrow gravity, strafe while aiming, and move back into its
+configured range when the target closes in or escapes.
+
+```ts
+const archer = yield* bot.tasks.rangedAttack(target, {
+  minimumRange: 10,
+  maximumRange: 32,
+  maximumShots: 6,
+  weapon: { itemIds: ["minecraft:bow"] },
+  bowDrawTicks: 20,
+  leadTarget: true,
+  compensateGravity: true,
+  strafe: true,
+});
+
+const result = yield* archer.result();
+```
+
+```python
+archer = await bot.tasks.ranged_attack(
+    target,
+    minimum_range=10,
+    maximum_range=32,
+    maximum_shots=6,
+    weapon=ItemSelector(item_ids=["minecraft:bow"]),
+    bow_draw_ticks=20,
+    lead_target=True,
+    compensate_gravity=True,
+    strafe=True,
+)
+
+result = await archer.result()
+```
+
+The task accepts bows and crossbows, finds compatible ammunition through the
+vanilla projectile rules, and reports distinct outcomes for a defeated
+target, a lost target, a shot limit, missing ammunition, and a missing
+weapon. The target reference is scoped to the current bot connection. A
+reconnect invalidates it instead of risking an attack on a recycled entity
+ID. Cancellation stops charging or aiming, releases movement inputs, and
+restores the previously selected hotbar slot.
+
+Use `flee` when movement away from a threat is the goal:
+
+```ts
+const escape = yield* bot.tasks.flee(
+  { categories: [EntityCategory.HOSTILE] },
+  {
+    triggerRadius: 8,
+    safeDistance: 20,
+    safeSeconds: 3,
+  },
+);
+```
+
+The trigger radius decides when SoulFire starts moving. The larger safe
+distance decides when the dynamic path is complete. `runFlee` and
+`run_flee` keep monitoring after an escape, while the bounded form completes
+after the area stays safe for the requested number of seconds.
+
+## Guard a position or protect an entity
+
+Use `guard` for a fixed block position and `protect` for a live,
+connection-scoped entity. SoulFire searches around the protected subject,
+intercepts matching threats, limits pursuit distance, and returns to the
+subject after combat.
+
+```ts
+const defense = yield* bot.tasks.guard(
+  { x: 120, y: 64, z: -32 },
+  { categories: [EntityCategory.HOSTILE] },
+  {
+    guardRadius: 16,
+    maximumPursuitDistance: 24,
+    weapon: { tags: ["minecraft:swords"] },
+  },
+);
+
+const result = yield* defense.result();
+```
+
+```python
+defense = await bot.tasks.guard(
+    BlockPosition(x=120, y=64, z=-32),
+    EntitySelector(categories=[ENTITY_CATEGORY_HOSTILE]),
+    guard_radius=16,
+    maximum_pursuit_distance=24,
+    weapon=ItemSelector(tags=["minecraft:swords"]),
+)
+
+result = await defense.result()
+```
+
+The bounded calls complete after the area stays clear for `clearSeconds` or
+`clear_seconds`. Set target or attack limits when the task should end on a
+specific combat budget. Use `runGuard`, `run_guard`, `runProtect`, or
+`run_protect` for a persistent defense that keeps waiting for new threats.
+Entity protection follows the subject as it moves and ends safely if the
+subject becomes unavailable.
+
+Threat selectors follow the same safety rule as target acquisition. They must
+constrain at least one type, category, identity, tag, name, equipment item,
+effect, or owner.
+
+## Find a bed and sleep
+
+The durable sleep task can use a specific bed or discover the nearest loaded
+bed, navigate into range, interact, and wait for server confirmation:
+
+```ts
+const rest = yield* bot.tasks.sleep({
+  searchRadius: 24,
+  waitUntilPossible: true,
+  path: {
+    allowMining: false,
+    allowPlacing: false,
+  },
+});
+
+const result = yield* rest.result();
+```
+
+```python
+rest = await bot.tasks.sleep(
+    search_radius=24,
+    wait_until_possible=True,
+    options=PathfindOptions(
+        allow_mining=False,
+        allow_placing=False,
+    ),
+)
+
+result = await rest.result()
+```
+
+The bounded form fails when the server rejects sleep. Set
+`waitUntilPossible` or `wait_until_possible` to keep retrying through daytime
+or another temporary restriction. `runSleep` and `run_sleep` enable that
+waiting behavior by default and cancel the remote task when the stream owner
+disconnects.
+
+Use the atomic TypeScript `bot.sleep({ bed })` or Python
+`await bot.sleep(bed)` action when the application already has an exact
+reachable bed and does not need discovery or navigation. Use `bot.wake()` to
+leave the bed.
+
+## Fish with server-timed bite detection
+
+Fishing timing stays on the SoulFire game thread. The task selects a matching
+rod, casts, watches the synchronized hook state for a bite, reels in, and
+repeats:
+
+```ts
+const fishing = yield* bot.tasks.fish({
+  maximumCatches: 3,
+  rod: { itemIds: ["minecraft:fishing_rod"] },
+  restoreSelectedSlot: true,
+});
+
+const result = yield* fishing.result();
+```
+
+```python
+fishing = await bot.tasks.fish(
+    maximum_catches=3,
+    rod=ItemSelector(item_ids=["minecraft:fishing_rod"]),
+    restore_selected_slot=True,
+)
+
+result = await fishing.result()
+```
+
+The bounded form defaults to one confirmed bite and reel. `runFish` and
+`run_fish` keep fishing until cancellation by default. The result reports
+confirmed catches and failed casts. SoulFire reels in an active line during
+cleanup and restores the previous hotbar selection when requested.
+
+## Farm and replant mature crops
+
+The farm task scans a bounded area, walks to the nearest mature crop, uses the
+correct harvest interaction, and replants destructive crops:
+
+<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
+  <Tab value="Effect">
+    ```ts
+    const harvest = yield* bot.tasks.farm({
+      cropIds: ["minecraft:wheat", "minecraft:carrots"],
+      center: farmCenter,
+      radius: 16,
+      maximumHarvests: 24,
+      replant: true,
+    });
+
+    const result = yield* harvest.result();
+    ```
+  </Tab>
+  <Tab value="Promise">
+    ```ts
+    const harvest = await bot.tasks.farm({
+      cropIds: ["minecraft:wheat", "minecraft:carrots"],
+      center: farmCenter,
+      radius: 16,
+      maximumHarvests: 24,
+      replant: true,
+    });
+
+    const result = await harvest.result();
+    ```
+  </Tab>
+  <Tab value="Async Python">
+    ```python
+    harvest = await bot.tasks.farm(
+        ["minecraft:wheat", "minecraft:carrots"],
+        center=farm_center,
+        radius=16,
+        maximum_harvests=24,
+        replant=True,
+    )
+
+    result = await harvest.result()
+    ```
+  </Tab>
+  <Tab value="Sync Python">
+    ```python
+    harvest = bot.tasks.farm(
+        ["minecraft:wheat", "minecraft:carrots"],
+        center=farm_center,
+        radius=16,
+        maximum_harvests=24,
+        replant=True,
+    )
+
+    result = harvest.result()
+    ```
+  </Tab>
+</Tabs>
+
+Crop selectors are block IDs. The server supports wheat, carrots, potatoes,
+beetroots, torchflower crops, pitcher crops, nether wart, cocoa, sweet berry
+bushes, and both cave-vine block variants. An empty selector includes every
+supported crop.
+
+Wheat, root crops, nether wart, cocoa, torchflowers, and pitcher plants are
+broken and replanted with their matching item. Sweet berries and glow berries
+are harvested by interaction, so their plant remains in place. The task saves
+cocoa attachment geometry before breaking it and confirms every replant from
+the synchronized world state.
+
+`farm` defaults to one harvest and completes when no mature crop is available.
+`runFarm` and `run_farm` default to an unlimited worker that waits between
+scans. A replanting worker stops with `NO_REPLANT_ITEM` when it cannot obtain
+the required seed or crop item. Results report harvested, replanted, and failed
+harvest counts.
+
+## Breed compatible animals
+
+The breeding task selects two compatible adult animals in a bounded area,
+finds an inventory item accepted as food by both, walks to each animal, and
+feeds them:
+
+<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
+  <Tab value="Effect">
+    ```ts
+    const breeding = yield* bot.tasks.breed({
+      animals: { entityTypes: ["minecraft:cow"] },
+      food: { itemIds: ["minecraft:wheat"] },
+      center: penCenter,
+      radius: 20,
+      maximumPairs: 2,
+    });
+
+    const result = yield* breeding.result();
+    ```
+  </Tab>
+  <Tab value="Promise">
+    ```ts
+    const breeding = await bot.tasks.breed({
+      animals: { entityTypes: ["minecraft:cow"] },
+      food: { itemIds: ["minecraft:wheat"] },
+      center: penCenter,
+      radius: 20,
+      maximumPairs: 2,
+    });
+
+    const result = await breeding.result();
+    ```
+  </Tab>
+  <Tab value="Async Python">
+    ```python
+    breeding = await bot.tasks.breed(
+        EntitySelector(entity_types=["minecraft:cow"]),
+        food=ItemSelector(item_ids=["minecraft:wheat"]),
+        center=pen_center,
+        radius=20,
+        maximum_pairs=2,
+    )
+
+    result = await breeding.result()
+    ```
+  </Tab>
+  <Tab value="Sync Python">
+    ```python
+    breeding = bot.tasks.breed(
+        EntitySelector(entity_types=["minecraft:cow"]),
+        food=ItemSelector(item_ids=["minecraft:wheat"]),
+        center=pen_center,
+        radius=20,
+        maximum_pairs=2,
+    )
+
+    result = breeding.result()
+    ```
+  </Tab>
+</Tabs>
+
+Omit `animals` to consider every observable animal subtype. Omit `food` to
+let SoulFire choose any inventory item that both selected animals recognize
+as breeding food. The optional selectors can narrow either side without
+hard-coding food tables in the SDK. SoulFire supports same-type pairs and the
+vanilla horse and donkey cross. It excludes sterile mules.
+
+A successful entity-interaction call is not enough to count a feed. SoulFire
+waits for the server's love-mode entity event for each animal. The result
+therefore reports `pairsStarted` or `pairs_started`, not a guessed offspring
+count. Minecraft may still delay or prevent offspring after both parents enter
+love mode.
+
+`breed` defaults to one pair and reports `NO_COMPATIBLE_PAIR` or `NO_FOOD`
+when it cannot begin. `runBreed` and `run_breed` wait for future eligible
+animals or food and continue until cancellation by default.
+
+## Explore a coordinated frontier
+
+The exploration task divides a circular area into pathfinding waypoints and
+claims each waypoint before moving. Bots in the same instance that use the
+same `purpose` avoid frontier cells already claimed by another bot:
+
+<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
+  <Tab value="Effect">
+    ```ts
+    const scouting = yield* bot.tasks.explore({
+      origin: basePosition,
+      radius: 512,
+      waypointSpacing: 64,
+      maximumWaypoints: 8,
+      returnToOrigin: true,
+      purpose: "village-scouting",
+    });
+
+    const result = yield* scouting.result();
+    ```
+  </Tab>
+  <Tab value="Promise">
+    ```ts
+    const scouting = await bot.tasks.explore({
+      origin: basePosition,
+      radius: 512,
+      waypointSpacing: 64,
+      maximumWaypoints: 8,
+      returnToOrigin: true,
+      purpose: "village-scouting",
+    });
+
+    const result = await scouting.result();
+    ```
+  </Tab>
+  <Tab value="Async Python">
+    ```python
+    scouting = await bot.tasks.explore(
+        origin=base_position,
+        radius=512,
+        waypoint_spacing=64,
+        maximum_waypoints=8,
+        return_to_origin=True,
+        purpose="village-scouting",
+    )
+
+    result = await scouting.result()
+    ```
+  </Tab>
+  <Tab value="Sync Python">
+    ```python
+    scouting = bot.tasks.explore(
+        origin=base_position,
+        radius=512,
+        waypoint_spacing=64,
+        maximum_waypoints=8,
+        return_to_origin=True,
+        purpose="village-scouting",
+    )
+
+    result = scouting.result()
+    ```
+  </Tab>
+</Tabs>
+
+Omit `origin` to center the frontier on the bot's position when the task
+starts. `waypointSpacing` or `waypoint_spacing` controls the distance between
+frontier cells. A smaller spacing observes the area more densely but requires
+more pathfinding work. The `purpose` is a coordination namespace, so use the
+same value for bots sharing a survey and different values for independent
+surveys.
+
+`explore` defaults to one waypoint. Set a finite `maximumWaypoints` or
+`maximum_waypoints` for bounded work. `runExplore` and `run_explore` visit
+every claimable cell in the finite frontier unless cancelled. The optional
+return policy walks back to the origin after exploration. Results report
+visited waypoints, failed routes, approximate horizontal distance, and the
+final position.
+
+## Stash and withdraw supplies
+
+The storage tasks walk to a block container, open it, and apply a semantic
+transfer batch. Applications describe items and counts instead of scripting
+menu slots:
+
+<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
+  <Tab value="Effect">
+    ```ts
+    const supplies = yield* bot.tasks.withdraw(
+      storageChest,
+      [
+        {
+          selector: { itemIds: ["minecraft:bread"] },
+          count: 16,
+        },
+        {
+          selector: { tags: ["minecraft:coals"] },
+          count: 8,
+          allowPartial: true,
+        },
+      ],
+    );
+
+    const result = yield* supplies.result();
+    ```
+  </Tab>
+  <Tab value="Promise">
+    ```ts
+    const supplies = await bot.tasks.withdraw(
+      storageChest,
+      [
+        {
+          selector: { itemIds: ["minecraft:bread"] },
+          count: 16,
+        },
+        {
+          selector: { tags: ["minecraft:coals"] },
+          count: 8,
+          allowPartial: true,
+        },
+      ],
+    );
+
+    const result = await supplies.result();
+    ```
+  </Tab>
+  <Tab value="Async Python">
+    ```python
+    supplies = await bot.tasks.withdraw(
+        storage_chest,
+        [
+            ContainerTransferSpec(
+                selector=ItemSelector(item_ids=["minecraft:bread"]),
+                count=16,
+            ),
+            ContainerTransferSpec(
+                selector=ItemSelector(tags=["minecraft:coals"]),
+                count=8,
+                allow_partial=True,
+            ),
+        ],
+    )
+
+    result = await supplies.result()
+    ```
+  </Tab>
+  <Tab value="Sync Python">
+    ```python
+    supplies = bot.tasks.withdraw(
+        storage_chest,
+        [
+            ContainerTransferSpec(
+                selector=ItemSelector(item_ids=["minecraft:bread"]),
+                count=16,
+            ),
+            ContainerTransferSpec(
+                selector=ItemSelector(tags=["minecraft:coals"]),
+                count=8,
+                allow_partial=True,
+            ),
+        ],
+    )
+
+    result = supplies.result()
+    ```
+  </Tab>
+</Tabs>
+
+Use `stash` to move items from the player inventory into the container and
+`withdraw` for the opposite direction. Selectors support IDs, tags,
+fingerprints, names, enchantments, stack counts, and remaining durability.
+Each exact operation must be fully satisfiable. SoulFire preflights the whole
+batch before sending any menu click, so a later exact operation cannot leave
+earlier operations applied. Set `allowPartial` or `allow_partial` on an
+operation when best-effort movement is intentional.
+
+The task closes its menu by default and always closes it after failure or
+cancellation. Results preserve every requested selector and count, report the
+actual count moved per operation, and identify a partially satisfied batch.
+The lower-level container handle remains useful when an application already
+stands beside an open menu and needs interactive transfers.
+
+## Maintain a loadout
+
+Loadout maintenance turns a chest or other block container into a semantic
+supply source and overflow destination. A requirement has a minimum that
+triggers restocking, a target to restore, and an optional maximum that
+triggers an excess deposit.
+
+```ts
+const loadout = yield* bot.tasks.maintainLoadout(
+  storageChest,
+  [
+    {
+      selector: { itemIds: ["minecraft:bread"] },
+      minimumCount: 8,
+      targetCount: 16,
+      maximumCount: 24,
+    },
+    {
+      selector: { tags: ["minecraft:arrows"] },
+      minimumCount: 32,
+      targetCount: 64,
+    },
+  ],
+  {
+    checkIntervalTicks: 100,
+    closeContainer: true,
+  },
+);
+```
+
+```python
+loadout = await bot.tasks.maintain_loadout(
+    storage_chest,
+    [
+        LoadoutRequirementSpec(
+            ItemSelector(item_ids=["minecraft:bread"]),
+            minimum_count=8,
+            target_count=16,
+            maximum_count=24,
+        ),
+        LoadoutRequirementSpec(
+            ItemSelector(tags=["minecraft:arrows"]),
+            minimum_count=32,
+            target_count=64,
+        ),
+    ],
+    check_interval_ticks=100,
+    close_container=True,
+)
+```
+
+The unbounded form keeps monitoring until cancellation. Use
+`balanceLoadout` or `balance_loadout` for a one-shot rebalance, or set a
+finite rebalance limit. Transfers are preflighted as batches and use partial
+movement deliberately, so a temporarily empty chest produces a typed
+container-exhausted result for one-shot work instead of corrupting menu
+state. Results report final counts, whether each requirement is satisfied,
+and cumulative withdrawn and deposited counts.
+
+## Attach ownership to a stream
+
+`run*` methods start a task and stream all revisions. Their default disconnect
+policy is `CANCEL_WITH_CALL`.
+
+```ts
+yield* bot.tasks.runAutoRespawn({
+  maximumRespawns: 1,
+}).pipe(Stream.runDrain);
+```
+
+```python
+async for event in bot.tasks.run_auto_respawn(maximum_respawns=1):
+    print(event.task.status, event.task.progress)
+```
+
+Interrupting the Effect stream, aborting the Promise iterator, or cancelling
+the Python iterator cancels the server task. Use a detached task handle when
+the work should survive the SDK process.
+
+## Observe progress
+
+```ts
+const task = yield* bot.tasks.attackEntity(target);
+
+yield* task.events().pipe(
+  Stream.runForEach((event) =>
+    Effect.logInfo(event.task?.progress.message ?? "Working")
+  ),
+);
+```
+
+Progress includes a message, current count, optional total, and optional
+fraction. Terminal snapshots include a typed result or structured failure.
+
+## Cancel explicitly
+
+<Tabs items={['Effect', 'Promise', 'Async Python']}>
+  <Tab value="Effect">
+    ```ts
+    yield* task.cancel("Target changed");
+    ```
+  </Tab>
+  <Tab value="Promise">
+    ```ts
+    await task.cancel("Target changed");
+    ```
+  </Tab>
+  <Tab value="Async Python">
+    ```python
+    await task.cancel("Target changed")
+    ```
+  </Tab>
+</Tabs>
+
+Cancellation is idempotent for a terminal task.
+
+## Choose conflict and reconnect policy
+
+Tasks declare resources such as movement, rotation, hands, inventory,
+containers, chat, and automation. Independent work can run together. Conflicts
+can reject, queue, replace, or suspend lower-priority tasks.
+
+Reconnect policy controls what happens when the Minecraft connection changes:
+
+- Fail the task because connection-scoped references are no longer valid.
+- Pause and resume after reconnect.
+- Continue when the task can safely reacquire state.
+
+<Callout type="info">
+  Entity references carry a connection epoch because Minecraft network entity
+  IDs can be reused after reconnect.
+</Callout>
+
+## Reattach to a detached task
+
+Store the task ID returned by `start`. A later SDK process can call
+`bot.tasks.get(taskId, resultSchema)` in TypeScript or
+`bot.tasks.get(task_id, result_type)` in Python, then resume watching its
+revisions.
+
+Use an idempotency key when retrying task creation after an uncertain network
+failure. SoulFire returns the existing task when the owner, bot, key, and input
+match.

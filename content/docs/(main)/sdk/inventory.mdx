@@ -1,0 +1,181 @@
+---
+title: Inventory and containers
+description: Query items and perform revision-safe transfers with scoped container handles.
+icon: PackageOpen
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+Use `bot.inventory` for item queries and short mutations. Open storage through a
+container handle when several operations must stay attached to the same menu.
+The handle carries the latest revision into every transfer and rejects a stale
+or replaced menu.
+
+## Open, transfer, and close
+
+<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
+  <Tab value="Effect">
+    ```ts
+    yield* Effect.scoped(
+      Effect.gen(function* () {
+        const chest = yield* bot.inventory.openScoped(chestPosition);
+
+        yield* chest.deposit(
+          { itemIds: ["minecraft:cobblestone"] },
+          64,
+        );
+        yield* chest.withdraw(
+          { tags: ["minecraft:foods"] },
+          16,
+        );
+      }),
+    );
+    ```
+  </Tab>
+  <Tab value="Promise">
+    ```ts
+    await using chest = await bot.inventory.open(chestPosition);
+
+    await chest.deposit(
+      { itemIds: ["minecraft:cobblestone"] },
+      64,
+    );
+    await chest.withdraw(
+      { tags: ["minecraft:foods"] },
+      16,
+    );
+    ```
+  </Tab>
+  <Tab value="Async Python">
+    ```python
+    async with await bot.inventory.open(chest_position) as chest:
+        await chest.deposit(
+            ItemSelector(item_ids=["minecraft:cobblestone"]),
+            64,
+        )
+        await chest.withdraw(
+            ItemSelector(tags=["minecraft:foods"]),
+            16,
+        )
+    ```
+  </Tab>
+  <Tab value="Sync Python">
+    ```python
+    with bot.inventory.open(chest_position) as chest:
+        chest.deposit(
+            ItemSelector(item_ids=["minecraft:cobblestone"]),
+            64,
+        )
+        chest.withdraw(
+            ItemSelector(tags=["minecraft:foods"]),
+            16,
+        )
+    ```
+  </Tab>
+</Tabs>
+
+`deposit` searches the main inventory and hotbar, then moves an exact count
+into the container. `withdraw` performs the inverse operation. Both first
+plan the complete transfer. SoulFire does not start clicking when the source
+count or destination capacity is insufficient.
+
+## Inspect current state
+
+Read `container.snapshot` without another RPC. It contains:
+
+- Container and state IDs
+- A stable content revision
+- Container type and semantic layout
+- Every slot and its inventory area
+- Cursor contents
+- Selected hotbar slot
+
+Call `refresh` when another actor may have changed the menu. If a different
+menu is now open, the handle marks itself closed and raises
+`SoulFireContainerClosedError`.
+
+## Choose the best item
+
+SoulFire can rank the bot's tools, melee weapons, armor, food, and safe
+scaffold blocks. Every recommendation includes its slot, item snapshot,
+total score, and the factors that produced that score.
+
+<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
+  <Tab value="Effect">
+    ```ts
+    const tool = yield* bot.inventory.bestTool(blockPosition, {
+      preferHotbar: true,
+      preferHighDurability: true,
+      preferredEnchantmentIds: ["minecraft:fortune"],
+      excludedEnchantmentIds: ["minecraft:vanishing_curse"],
+    });
+
+    if (tool !== undefined) {
+      yield* Effect.logInfo(tool.factors);
+    }
+    ```
+  </Tab>
+  <Tab value="Promise">
+    ```ts
+    const food = await bot.inventory.bestFood({
+      selector: { tags: ["minecraft:foods"] },
+    });
+    ```
+  </Tab>
+  <Tab value="Async Python">
+    ```python
+    tool = await bot.inventory.best_tool(
+        block_position,
+        prefer_hotbar=True,
+        prefer_high_durability=True,
+        preferred_enchantment_ids=["minecraft:fortune"],
+        excluded_enchantment_ids=["minecraft:vanishing_curse"],
+    )
+    ```
+  </Tab>
+  <Tab value="Sync Python">
+    ```python
+    armor = bot.inventory.best_armor(
+        "chest",
+        prefer_high_durability=True,
+    )
+    ```
+  </Tab>
+</Tabs>
+
+Tool rankings use the loaded target block and the bot's real mining
+calculation. Weapon rankings consider attack damage and speed. Armor rankings
+consider defense, toughness, and knockback resistance. Food rankings reject
+harmful consumables and compare nutrition with saturation. Scaffold rankings
+only include safe, non-falling block items.
+
+Use `rank` when you want several candidates. Enchantment preferences add a
+visible score factor, while exclusions remove a candidate entirely. The
+response carries the inventory revision so a later mutation can reject stale
+input.
+
+## Retry safely
+
+Supply an idempotency key when retrying an operation after an uncertain
+network result:
+
+```ts
+yield* chest.deposit(selector, 64, {
+  idempotencyKey: crypto.randomUUID(),
+});
+```
+
+The server binds the key to the authenticated user, bot, operation, and
+request fingerprint. Reusing it with different input is rejected.
+
+<Callout type="info">
+  The SDK also exposes `snapshot`, `count`, `find`, `move`, `transfer`, `toss`,
+  `rank`, `selectHotbar`, `equip`, and `unequip` for one-off inventory
+  operations. `unequip` moves a main-hand, offhand, or armor item into the
+  first compatible empty player slot.
+  Generated protocol clients remain available for unusual container fields.
+</Callout>
+
+Continue with [durable production tasks](/docs/sdk/tasks) for crafting,
+smelting, brewing, and exact-count villager trading.

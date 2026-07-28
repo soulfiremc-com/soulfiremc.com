@@ -1,97 +1,141 @@
 ---
 title: SoulFire SDK
-description: Choose a gRPC-Web SDK and understand SoulFire's instance and bot model.
+description: Build typed, event-driven Minecraft automation with the official TypeScript and Python SDKs.
 icon: Blocks
 ---
 
 import { Cards, Card } from 'fumadocs-ui/components/card';
 import { Callout } from 'fumadocs-ui/components/callout';
 
-The SoulFire SDK lets an application provision or connect to a SoulFire server, select an instance, and control each configured account as an independent bot.
-Use it when you want Mineflayer-style application code while keeping SoulFire's Minecraft client, plugins, automation, proxies, permissions, and remote operation.
+The SoulFire SDK is the official programming interface for Minecraft
+automation. Your application controls one bot or a fleet while SoulFire owns
+the Minecraft connections, reconnect policy, permissions, task execution, and
+plugin runtime.
 
 <Callout type="info">
-  Both SDKs use gRPC-Web exclusively.
-  They work through ordinary HTTP infrastructure and support SoulFire's server streams without exposing a separate native gRPC transport.
+  The TypeScript SDK is Effect-first and includes a complete Promise facade.
+  The Python SDK requires CPython 3.14 and provides native async and sync
+  clients.
 </Callout>
 
 ## Choose a language
 
 <Cards>
   <Card title="TypeScript" href="/docs/sdk/typescript">
-    Install `@soulfiremc/sdk` from npm or JSR for browsers and JavaScript runtimes with `fetch`.
+    Use typed Effect operations, streams, scopes, layers, and tagged failures,
+    or import the Promise facade.
   </Card>
   <Card title="Python" href="/docs/sdk/python">
-    Use `soulfire` from synchronous or asyncio applications.
+    Use `AsyncSoulFire` for structured-concurrency applications or `SoulFire`
+    for synchronous scripts.
+  </Card>
+  <Card title="Durable tasks" href="/docs/sdk/tasks">
+    Run pathfinding, combat, following, eating, and respawning beside the
+    Minecraft game loop.
+  </Card>
+  <Card title="Live events and state" href="/docs/sdk/events">
+    Stream Minecraft activity or maintain synchronized entities, blocks,
+    weather, player-list, boss-bar, and scoreboard state.
+  </Card>
+  <Card title="Player actions" href="/docs/sdk/actions">
+    Mount and drive vehicles, edit signs and books, answer resource packs,
+    toggle flight, and manage creative slots.
+  </Card>
+  <Card title="Coordinated automation" href="/docs/sdk/automation">
+    Run persistent fleet goals with team roles, shared knowledge, claims,
+    recovery, and a typed state-change stream.
+  </Card>
+  <Card title="Fleet orchestration" href="/docs/sdk/fleets">
+    Select bots by live state and metadata, distribute work, and supervise
+    typed task groups with bounded concurrency.
+  </Card>
+  <Card title="Cameras and world maps" href="/docs/sdk/camera">
+    Capture free-camera images, stream POV frames with backpressure, and sample
+    map-ready terrain and entity overlays.
+  </Card>
+  <Card title="Server administration" href="/docs/sdk/administration">
+    Manage settings, users, logs, metrics, scripts, commands, downloads,
+    plugin metrics, and audit history.
+  </Card>
+  <Card title="Behavior composition" href="/docs/sdk/behaviors">
+    Combine native tasks with sequence, parallel, race, retry, timeout,
+    fallback, cleanup, and scoped control.
+  </Card>
+  <Card title="Plugin APIs" href="/docs/sdk/plugins">
+    Call typed plugin RPCs, consume plugin streams, or invoke an unknown plugin
+    through discovered protobuf descriptors.
+  </Card>
+  <Card title="Raw protocol access" href="/docs/sdk/protocol">
+    Inspect active packet schemas, observe filtered traffic, and use the
+    permission-gated native packet escape hatch.
   </Card>
 </Cards>
 
-## The object model
+## How the SDK is organized
 
 ```text
 SoulFire
-├── instances(), createInstance()
-├── installed server status, logs, restart, and stop
+├── server metadata and negotiated capabilities
+├── administrative services and scoped telemetry
+├── plugin catalog and reflective RPC
 └── instance(instanceId)
-    ├── accounts, proxies, settings, and Minecraft authentication
-    ├── bots(), start(), stop(), restart()
-    ├── watchBotStatuses()
+    ├── fleet lifecycle and status streams
+    ├── selectors, work distribution, and task groups
+    ├── coordinated automation, memory, roles, and claims
     └── bot(botId)
-        ├── desired state and persistent events
-        ├── world queries and pathfinding
-        ├── chat, interaction, inventory, and movement
-        └── optional exclusive control lease
+        ├── session and synchronized state
+        ├── world, registry, inventory, recipes, and chat
+        ├── camera captures, frame streams, and world maps
+        ├── typed player actions and path planning
+        ├── advanced native protocol access
+        └── durable tasks
 ```
 
-An instance is a permission and configuration compartment.
-It groups accounts, settings, proxies, scripts, and automation, but it does not have a lifecycle.
+An instance is a permission and configuration boundary. Each configured
+Minecraft account is an independently controlled bot. Starting a bot persists
+the desired state, so SoulFire can reconnect it without keeping the SDK
+process alive.
 
-Each account is one bot.
-SoulFire stores a sparse desired-state row only when that bot should be running.
-The runtime controller then connects, queues, retries, or stops that bot independently.
+## Actions, streams, and tasks
 
-## Bot automation
+Use an atomic action for bounded work such as sending chat, clicking one slot,
+or interacting with a block. `sleep` is also atomic from the application's
+perspective, but it does not complete until the Minecraft server confirms that
+the bot entered bed. `wake` leaves the current bed. Action results include a
+stable action ID and confirm whether game-thread execution completed,
+cancelled, or failed.
 
-Bot event streams stay attached to the configured account while it is stopped and across reconnects.
-The default SDK filter includes status, state changes, chat, lifecycle, inventory, and damage events.
+Use a stream to observe chat, lifecycle changes, inventory, entities, blocks,
+task progress, or plugin events. Streams preserve cancellation and
+backpressure.
 
-Action calls resolve after the Minecraft game thread executes them.
-A failed or cancelled action includes a stable action ID and a structured result.
-Pathfinding reports progress as a server stream and supports block, coordinate, and moving entity goals.
+Use a durable task for continuous work. Tasks have stable IDs, progress,
+resource claims, reconnect policies, typed results, and explicit cancellation.
+This keeps combat, following, and survival behavior near the game loop instead
+of turning every tick into a network round trip.
 
-Both packages also include small composable behaviors for collecting blocks, following entities, attacking nearby entities, eating, and placing a sequence of blocks.
-These behaviors use the public bot API, so applications can combine them with their own logic.
+## Compatibility and extensions
 
-## Multiple controllers
+Every connection begins with a capability handshake. The SDK checks the core
+API version, requested features, and required plugin versions before returning
+a ready client.
 
-Control leases are optional.
-An authorized client can normally issue actions without one.
-After a client acquires an exclusive lease for a bot, other controllers cannot act on that bot until the lease is released or expires.
+Plugins can register protobuf RPC services and durable task types. Their
+descriptors are discoverable at runtime, so applications can use a published
+companion package or call an unfamiliar plugin reflectively.
 
-The lease belongs to the configured account identity instead of a transient Minecraft connection.
-It therefore remains the right coordination primitive when a bot reconnects.
+## Next steps
 
-## Selection behavior
-
-Instance methods accept either explicit bot IDs or a count:
-
-- No selection starts stopped bots, stops desired bots, or restarts desired bots.
-- An explicit ID list targets exactly those bots.
-- A count selects from bots relevant to the action.
-- Count selection follows the instance's **Shuffle accounts** setting.
-
-## Local and remote use
-
-Use `SoulFire.connect` when an operator already gave you a server URL, token, and instance ID.
-You only need permission for that instance to script its bots.
-
-Use `SoulFire.install` when your application should download a SoulFire dedicated server and a Java 25 runtime, start them locally, and return an authenticated client.
-Downloaded artifacts are verified and reused.
-The returned client can inspect captured logs, check the process, and restart or stop the managed server.
-
-## Go further
-
-- [TypeScript SDK](/docs/sdk/typescript)
-- [Python SDK](/docs/sdk/python)
-- [Bot Control And Direct Access](/docs/development/bot-control-and-direct-access)
-- [API Reference](/docs/openapi)
+- [Start with TypeScript](/docs/sdk/typescript)
+- [Start with Python](/docs/sdk/python)
+- [Run and supervise durable tasks](/docs/sdk/tasks)
+- [Observe live events and synchronized state](/docs/sdk/events)
+- [Control vehicles and player actions](/docs/sdk/actions)
+- [Coordinate persistent automation](/docs/sdk/automation)
+- [Select and orchestrate fleets](/docs/sdk/fleets)
+- [Capture cameras and world maps](/docs/sdk/camera)
+- [Administer a SoulFire server](/docs/sdk/administration)
+- [Compose application workflows](/docs/sdk/behaviors)
+- [Call plugin-defined APIs](/docs/sdk/plugins)
+- [Use raw protocol access](/docs/sdk/protocol)
+- [Read the generated API reference](/docs/openapi)

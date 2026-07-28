@@ -1,0 +1,167 @@
+---
+title: Pathfinding
+description: Plan, inspect, execute, follow, and cancel durable SoulFire paths.
+icon: Route
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+SoulFire plans and executes paths on the server beside the Minecraft game
+loop. The SDK supplies typed goals, planning policy, durable task handles, and
+progress streams.
+
+## Build a goal
+
+The goal helpers cover exact blocks, nearby world positions, moving entities,
+XZ columns, Y levels, block breaking, block placement, retreat, and
+first-completed composites.
+
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
+    ```ts
+    const goal = goals.any([
+      goals.near(
+        {
+          dimension: "minecraft:overworld",
+          x: 120,
+          y: 68,
+          z: -40,
+        },
+        2,
+      ),
+      goals.awayFromEntity(hostile.reference, 24),
+    ]);
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python
+    goal = goals.any(
+        [
+            goals.near(
+                WorldTarget(
+                    dimension="minecraft:overworld",
+                    x=120,
+                    y=68,
+                    z=-40,
+                ),
+                2,
+            ),
+            goals.away_from_entity(hostile.reference, 24),
+        ]
+    )
+    ```
+  </Tab>
+</Tabs>
+
+Entity goals should carry the target's connection epoch. SoulFire rejects a
+stale reference after reconnect instead of following a different entity that
+reused the same network ID.
+
+## Preview a path
+
+Planning does not move the bot and requires only read access:
+
+```ts
+const plan = yield* bot.pathfinder.plan(goal, {
+  path: {
+    allowMining: false,
+    allowPlacing: true,
+    searchTimeoutSeconds: 10,
+    placeBlockPenalty: 12,
+  },
+  includeDescriptions: true,
+});
+```
+
+```python
+plan = await bot.pathfinder.plan(
+    goal,
+    options=PathfindOptions(
+        allow_mining=False,
+        allow_placing=True,
+        search_timeout_seconds=10,
+        place_block_penalty=12,
+    ),
+    include_descriptions=True,
+)
+```
+
+The plan reports whether the route is complete, partial, unreachable, expired,
+or cancelled. It includes ordered movement steps, blocks to break, blocks to
+place, the maximum execution budget, and an explanation for partial plans.
+
+Use preview for user confirmation, cost estimates, build material checks, and
+debug visualizations. The world can change after planning, so execution still
+replans when required.
+
+## Execute a durable path
+
+`goTo` or `go_to` returns a task handle immediately. `run` streams the task
+until it reaches a terminal state.
+
+<Tabs items={['TypeScript Effect', 'TypeScript Promise', 'Python async']}>
+  <Tab value="TypeScript Effect">
+    ```ts
+    const task = yield* bot.pathfinder.goTo(goal, {
+      path: {
+        allowMining: true,
+        allowPlacing: true,
+        timeoutSeconds: 120,
+      },
+      idempotencyKey: crypto.randomUUID(),
+    });
+
+    const result = yield* task.result();
+    ```
+  </Tab>
+  <Tab value="TypeScript Promise">
+    ```ts
+    const task = await bot.pathfinder.goTo(goal, {
+      path: { allowMining: true, allowPlacing: true },
+    });
+
+    const result = await task.result();
+    ```
+  </Tab>
+  <Tab value="Python async">
+    ```python
+    task = await bot.pathfinder.go_to(
+        goal,
+        options=PathfindOptions(
+            allow_mining=True,
+            allow_placing=True,
+            timeout_seconds=120,
+        ),
+        idempotency_key=str(uuid.uuid4()),
+    )
+
+    result = await task.result()
+    ```
+  </Tab>
+</Tabs>
+
+The task retains progress, ownership, priority, resource conflicts, deadline,
+reconnect policy, and cancellation state. It can keep running when the SDK
+process disconnects if its selected policy allows that.
+
+## Follow a moving entity
+
+```ts
+const task = yield* bot.pathfinder.follow(hostile.reference, 3, {
+  targetUnavailableTimeoutSeconds: 10,
+});
+```
+
+The server resolves the entity on each replan. Following fails clearly when
+the connection epoch changes or the target remains unavailable beyond the
+configured grace period.
+
+<Callout type="warning">
+  Mining and placement change the world. Leave both disabled for observation
+  and navigation-only tools, or acquire an appropriate control lease and
+  permission before enabling them.
+</Callout>
+
+Use the [task APIs](/docs/sdk/tasks) for cancellation, disconnect policy,
+resource arbitration, and multi-bot coordination.

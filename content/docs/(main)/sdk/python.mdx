@@ -1,210 +1,197 @@
 ---
 title: Python SDK
-description: Connect, provision, control, and monitor SoulFire bots from synchronous or asyncio Python.
+description: Use SoulFire from native async or synchronous CPython 3.14 applications.
 icon: Code
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+The Python SDK requires CPython 3.14 or newer. `AsyncSoulFire` is the primary
+client for automation services. `SoulFire` provides the same hierarchy through
+a real synchronous transport for scripts, notebooks, and command-line tools.
 
 ## Install
 
 ```bash
-pip install soulfire
+python -m pip install soulfire
 ```
 
-## Connect with asyncio
+## Connect and send chat
 
-<Steps>
-  <Step>
-    ### Create the client
+<Tabs items={['Async', 'Sync']}>
+  <Tab value="Async">
+    ```python
+    import os
 
+    from soulfire import AsyncSoulFire
+
+
+    async with AsyncSoulFire.connect(
+        "https://soulfire.example.com",
+        token=os.environ["SOULFIRE_TOKEN"],
+    ) as soulfire:
+        bot = soulfire.instance("instance-uuid").bot("bot-uuid")
+        await bot.start()
+        await bot.chat.send("Hello from SoulFire")
+    ```
+  </Tab>
+  <Tab value="Sync">
     ```python
     import os
 
     from soulfire import SoulFire
 
-    soulfire = SoulFire.connect(
+
+    with SoulFire.connect(
         "https://soulfire.example.com",
         token=os.environ["SOULFIRE_TOKEN"],
-    )
+    ) as soulfire:
+        bot = soulfire.instance("instance-uuid").bot("bot-uuid")
+        bot.start()
+        bot.chat.send("Hello from SoulFire")
     ```
-  </Step>
+  </Tab>
+</Tabs>
 
+The connection handshake rejects an incompatible server or missing required
+plugin before application work begins.
+
+## Use structured concurrency
+
+Python 3.14 `TaskGroup` gives fleet operations one cancellation and failure
+boundary:
+
+```python
+async with asyncio.TaskGroup() as group:
+    for bot_id in bot_ids:
+        bot = soulfire.instance(instance_id).bot(bot_id)
+        group.create_task(bot.chat.send("Ready"))
+```
+
+Use `asyncio.timeout()` when a workflow needs one scoped deadline.
+Concurrent failures remain available through `ExceptionGroup`.
+
+## Stream events
+
+<Tabs items={['Async', 'Sync']}>
+  <Tab value="Async">
+    ```python
+    async for event in bot.events():
+        print(event.WhichOneof("event"))
+    ```
+  </Tab>
+  <Tab value="Sync">
+    ```python
+    for event in bot.events():
+        print(event.WhichOneof("event"))
+    ```
+  </Tab>
+</Tabs>
+
+The stream stays associated with the configured bot across Minecraft
+reconnects.
+
+## Observe synchronized state
+
+<Steps>
   <Step>
-    ### Select and start a bot
+    ### Open a session
 
     ```python
-    instance = soulfire.instance("instance-uuid")
-    bot = instance.bot("bot-uuid")
+    session = await bot.observe()
+    ```
+  </Step>
+  <Step>
+    ### Read state and consume changes
 
-    await bot.start()
-    await bot.send_chat("Hello from Python")
+    ```python
+    async with session:
+        print(session.state.player)
+
+        async for event in session.events():
+            print(event)
     ```
   </Step>
 </Steps>
 
-Use the client as an async context manager when possible:
+The session merges snapshots and deltas, resumes streams when possible, and
+requests a new snapshot when continuity is lost.
+
+## Interact with blocks and beds
+
+Use `interact_block` for doors, buttons, beds, redstone controls, and modded
+interactive blocks:
 
 ```python
-async with SoulFire.connect(
-    "https://soulfire.example.com",
-    token=os.environ["SOULFIRE_TOKEN"],
-) as soulfire:
-    await soulfire.instance("instance-uuid").bot("bot-uuid").start()
-```
-
-## Control a group
-
-```python
-await instance.start(count=25)
-await instance.stop(bot_ids=["bot-uuid-1", "bot-uuid-2"])
-await instance.restart()
-```
-
-`restart()` with no selection reconnects bots that are already desired.
-It does not start stopped bots.
-
-## Watch desired and runtime status
-
-The stream begins with a complete snapshot and then sends updates:
-
-```python
-async for event in instance.watch_bot_statuses():
-    event_type = event.WhichOneof("event")
-    if event_type == "snapshot":
-        print(event.snapshot.bots)
-    elif event_type == "update":
-        print(event.update.profile_id, event.update.runtime_state)
-    elif event_type == "removed_bot_id":
-        print("Removed", event.removed_bot_id)
-```
-
-Use `await bot.status()` for a one-off status read.
-
-## Stream live bot events
-
-`events()` stays open while the bot is stopped and follows the configured account across reconnects.
-Its default filter includes status, state changes, chat, lifecycle, inventory, and damage:
-
-```python
-async for event in bot.events():
-    event_type = event.WhichOneof("event")
-    if event_type == "chat":
-        print(event.chat.plain_text)
-    elif event_type == "inventory":
-        print(event.inventory.state.slots)
-    elif event_type == "status":
-        print(event.status.runtime_state)
-```
-
-## Control a live bot
-
-Action calls return after the Minecraft game thread executes them.
-Failed and cancelled actions raise `SoulFireActionError`, which contains the action ID and structured server result.
-
-```python
-from soulfire.bot_pb2 import LEFT_CLICK
-
-await bot.send_chat("Hello from Python")
-await bot.select_hotbar(0)
-await bot.click_inventory(12, LEFT_CLICK)
-await bot.transfer_inventory_slot(12)
-await bot.move_inventory_stack(12, 36)
-
-await bot.set_movement(forward=True, sprint=True)
-await bot.look(90, 0)
-await bot.reset_movement()
-```
-
-World and interaction methods include `get_block`, `find_blocks`, `list_nearby_entities`, `dig_block`, `place_block`, `use_item`, `release_item`, `attack_entity`, `interact_entity`, `swing_arm`, and `respawn`.
-`go_to` returns an async progress iterator, while `stop_pathfinding` cancels the current path.
-
-## Coordinate multiple controllers
-
-Control leases are optional.
-Acquiring one prevents another client from issuing actions for that configured bot until the lease is released or expires:
-
-```python
-lease = await bot.acquire_control(ttl_seconds=30)
-try:
-    await bot.send_chat("This action carries the lease token")
-    await lease.renew(ttl_seconds=30)
-finally:
-    await lease.release()
-```
-
-## Compose behaviors
-
-```python
-from soulfire import AttackNearest, CollectBlocks, run_behaviors
-
-await run_behaviors(
-    bot,
-    [
-        CollectBlocks(["minecraft:oak_log"], max_count=16),
-        AttackNearest(["minecraft:zombie"]),
-    ],
-)
-```
-
-The package also exports `FollowEntity`, `AutoEat`, and `Build`.
-Each behavior uses the same public bot API that is available to application code.
-
-## Provision instances and accounts
-
-```python
-from soulfire.common_pb2 import MICROSOFT_JAVA_DEVICE_CODE
-
-instance = await soulfire.create_instance("automation")
-
-async for step in instance.login_device_code(MICROSOFT_JAVA_DEVICE_CODE):
-    if step.WhichOneof("data") == "device_code":
-        print(step.device_code.verification_uri, step.device_code.user_code)
-    elif step.WhichOneof("data") == "account":
-        await instance.add_accounts([step.account])
-```
-
-The high-level instance wrapper also supports listing instances, metadata and setting updates, account refresh, credentials authentication, and account or proxy batch operations.
-
-## Provision a local dedicated server
-
-```python
-soulfire = await SoulFire.install(
-    directory=".soulfire",
-    on_log=print,
+await bot.interact_block(
+    button_position,
+    BLOCK_FACE_NORTH,
 )
 
-try:
-    await soulfire.instance("instance-uuid").bot("bot-uuid").start()
-
-    print(soulfire.local_server.version)
-    print(soulfire.local_server_logs)
-
-    await soulfire.restart_local_server()
-    await soulfire.stop_local_server()
-finally:
-    await soulfire.close()
+await bot.sleep(bed_position)
+await bot.wake()
 ```
 
-<Callout type="info">
-  Restarting preserves the installation directory, port, release, and root API token.
+SoulFire checks that the target block is loaded and reachable. `sleep` waits
+for the server-confirmed sleeping state, so an occupied bed or an invalid
+sleep attempt fails instead of appearing successful.
+
+## Run durable tasks
+
+```python
+task = await bot.tasks.auto_eat(
+    ["minecraft:bread", "minecraft:cooked_beef"],
+    food_level=14,
+    maximum_meals=1,
+)
+
+result = await task.result()
+print(result.meals_eaten)
+```
+
+The same operation is synchronous through `bot.tasks.auto_eat(...)` and
+`task.result()`. See [durable tasks](/docs/sdk/tasks) for ownership,
+cancellation, and progress.
+
+## Craft and smelt
+
+Production operations live beside recipe discovery:
+
+```python
+from soulfire.inventory_pb2 import ItemSelector
+
+
+recipes = await bot.recipes.list(result_item_id="minecraft:iron_ingot")
+task = await bot.recipes.smelt(
+    ItemSelector(item_ids=["minecraft:raw_iron"]),
+    count=8,
+    fuel=ItemSelector(tags=["minecraft:coals"]),
+    station=furnace_position,
+)
+result = await task.result()
+```
+
+Use `bot.recipes.craft(recipe_id, ...)` for a recipe returned by `list`.
+Inventory-sized recipes need no station. The synchronous client exposes the
+same methods without `await`.
+
+## Use generated protocol clients
+
+Generated protobuf messages and ConnectRPC clients remain available as an
+advanced escape hatch:
+
+```python
+from soulfire.instance_connect import InstanceServiceClient
+
+instances = soulfire.service(InstanceServiceClient)
+```
+
+<Callout type="warn">
+  Generated clients expose the wire contract directly. Prefer the high-level
+  object model when it covers the operation.
 </Callout>
 
-## Use the synchronous client
-
-`SoulFireSync` exposes the same hierarchy without `await`:
-
-```python
-from soulfire import SoulFireSync
-
-with SoulFireSync.connect(
-    "https://soulfire.example.com",
-    token=os.environ["SOULFIRE_TOKEN"],
-) as soulfire:
-    bot = soulfire.instance("instance-uuid").bot("bot-uuid")
-    bot.start()
-    bot.send_chat("Hello from synchronous Python")
-```
-
-The synchronous client exposes the same bot, instance, authentication, lease, and managed-server methods without `await`.
+Continue with [durable tasks](/docs/sdk/tasks) or
+[plugin-defined APIs](/docs/sdk/plugins).

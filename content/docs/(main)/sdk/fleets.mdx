@@ -1,0 +1,278 @@
+---
+title: Fleet orchestration
+description: Select bots by live and persistent state, distribute work, and supervise typed task groups.
+icon: Network
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+`instance.fleet` turns a set of configured accounts into a reusable execution
+group. The same selector can start or stop bots, partition input data, launch
+one durable task per bot, merge task events, aggregate results, and cancel the
+whole group.
+
+## Build a selector
+
+A selector can combine:
+
+- Explicit bot IDs, account names, and account types.
+- Desired state, runtime state, online state, and connection phase.
+- Persistent account metadata.
+- Dimension, distance from a point, health, food, and ping.
+- Required server capabilities.
+- A final custom predicate.
+- Ordering and a result limit.
+
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
+    ```ts
+    const builders = {
+      online: true,
+      runtimeStates: [BotRuntimeState.RUNNING],
+      dimensions: ["minecraft:overworld"],
+      minimumHealth: 12,
+      near: {
+        x: 120,
+        y: 64,
+        z: -32,
+        radius: 256,
+        dimension: "minecraft:overworld",
+      },
+      metadata: [{
+        namespace: "fleet",
+        key: "role",
+        equals: "builder",
+      }],
+      orderBy: "health",
+      limit: 8,
+    } satisfies FleetSelector;
+
+    const selected = yield* instance.fleet.select(builders);
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python
+    builders = FleetSelector(
+        online=True,
+        runtime_states=(BOT_RUNTIME_STATE_RUNNING,),
+        dimensions=("minecraft:overworld",),
+        minimum_health=12,
+        near=FleetRadius(
+            x=120,
+            y=64,
+            z=-32,
+            radius=256,
+            dimension="minecraft:overworld",
+        ),
+        metadata=(
+            FleetMetadataSelector(
+                namespace="fleet",
+                key="role",
+                equals="builder",
+            ),
+        ),
+        order_by="health",
+        limit=8,
+    )
+
+    selected = await instance.fleet.select(builders)
+    ```
+  </Tab>
+</Tabs>
+
+Fleet selection reads one bot-list snapshot and one instance configuration
+snapshot. Persistent metadata comes from the configured account, while
+position and health come from current live state. A bot that disconnects after
+selection can still reject the following operation, so group reports always
+retain per-bot failures.
+
+`requiredCapabilities` and `required_capabilities` validate capabilities
+negotiated for the connected SoulFire server. They fail early when the server
+cannot run the requested operation.
+
+## Control matching bots
+
+Lifecycle methods resolve a selector and submit the resulting IDs as one batch:
+
+<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
+  <Tab value="Effect">
+    ```ts
+    const statuses = yield* instance.fleet.start(builders);
+    ```
+  </Tab>
+  <Tab value="Promise">
+    ```ts
+    const statuses = await instance.fleet.restart(builders);
+    ```
+  </Tab>
+  <Tab value="Async Python">
+    ```python
+    statuses = await instance.fleet.start(builders)
+    ```
+  </Tab>
+  <Tab value="Sync Python">
+    ```python
+    statuses = instance.fleet.stop(builders)
+    ```
+  </Tab>
+</Tabs>
+
+## Distribute input
+
+Round-robin distribution is the default. Contiguous distribution keeps
+adjacent input items together. Both modes can cap work per bot and reject an
+under-capacity selection.
+
+```ts
+const assignments = yield* instance.fleet.distribute(
+  schematicSections,
+  builders,
+  {
+    strategy: "round-robin",
+    maximumItemsPerBot: 16,
+  },
+);
+```
+
+```python
+assignments = await instance.fleet.distribute(
+    schematic_sections,
+    builders,
+    strategy="contiguous",
+    maximum_items_per_bot=16,
+)
+```
+
+Every assignment contains the selected `FleetBot` descriptor and its ordered
+items. Empty assignments remain visible, which makes the selected team and
+partition indices stable.
+
+## Start a typed task group
+
+`startTasks` or `start_tasks` accepts a generated task input type and result
+type. The input can be one shared value or a factory that receives the bot,
+its stable index, and the total selected count.
+
+<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
+  <Tab value="Effect">
+    ```ts
+    import {
+      BuildTaskResultSchema,
+      BuildTaskSchema,
+    } from "@soulfiremc/sdk/generated/soulfire/task_pb";
+
+    const group = yield* instance.fleet.startTasks(
+      builders,
+      BuildTaskSchema,
+      (bot, index, total) => ({
+        ...buildInputFor(assignments[index]!.items),
+        partitionIndex: index,
+        partitionCount: total,
+      }),
+      BuildTaskResultSchema,
+      {
+        concurrency: 4,
+        idempotencyKey: deploymentId,
+      },
+    );
+    ```
+  </Tab>
+  <Tab value="Promise">
+    ```ts
+    const group = await instance.fleet.startTasks(
+      builders,
+      BuildTaskSchema,
+      (bot, index, total) => buildInputFor(bot, index, total),
+      BuildTaskResultSchema,
+      { concurrency: 4 },
+    );
+    ```
+  </Tab>
+  <Tab value="Async Python">
+    ```python
+    group = await instance.fleet.start_tasks(
+        builders,
+        lambda bot, index, total: build_task_for(
+            assignments[index].items,
+            partition_index=index,
+            partition_count=total,
+        ),
+        BuildTaskResult,
+        options=FleetTaskStartOptions(
+            concurrency=4,
+            idempotency_key=deployment_id,
+        ),
+    )
+    ```
+  </Tab>
+  <Tab value="Sync Python">
+    ```python
+    group = instance.fleet.start_tasks(
+        builders,
+        shared_task_input,
+        BuildTaskResult,
+        options=FleetTaskStartOptions(concurrency=4),
+    )
+    ```
+  </Tab>
+</Tabs>
+
+The concurrency limit applies to task-start RPCs. Tasks continue concurrently
+on the SoulFire server after they start. A group idempotency key is suffixed
+with the bot ID in Python so retries remain unique per bot.
+
+Start failures do not discard tasks that started successfully. Inspect
+`startFailures` or `start_failures`, then supervise the remaining members.
+
+## Merge events and results
+
+The group merges each task's server stream while preserving its originating
+bot:
+
+```ts
+yield* group.events().pipe(
+  Stream.runForEach(({ bot, event }) =>
+    Effect.logInfo(`${bot.id}: ${event.task?.summary ?? "task update"}`)
+  ),
+);
+
+const report = yield* group.results();
+```
+
+```python
+async for update in group.events():
+    print(update.bot.id, update.event.task.summary)
+
+report = await group.results()
+```
+
+`report.fulfilled` and `report.rejected` preserve selection order and bot
+identity. Use `requireResults` or `require_results` when any rejection should
+raise a `FleetTaskGroupError` containing the complete report.
+
+## Cancel as a group
+
+```ts
+const cancellation = yield* group.cancel(
+  "deployment superseded",
+  { concurrency: 4 },
+);
+```
+
+```python
+cancellation = await group.cancel(
+    "deployment superseded",
+    concurrency=4,
+)
+```
+
+Cancellation also returns an aggregate report, so one unreachable bot does
+not hide successful cancellations.
+
+<Callout type="info">
+  Fleet orchestration uses durable server tasks. Closing the SDK process does
+  not cancel them unless the task's disconnect policy says it should. Keep the
+  group handle or persist its `taskIds` or member task IDs when another process
+  may resume supervision.
+</Callout>

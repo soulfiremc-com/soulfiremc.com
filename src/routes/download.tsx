@@ -434,7 +434,7 @@ function DownloadConfigurator(props: {
                   ? { download: "" }
                   : { target: "_blank", rel: "noopener noreferrer" })}
               >
-                click here
+                retry the download
               </a>{" "}
               to try again.
             </CredenzaDescription>

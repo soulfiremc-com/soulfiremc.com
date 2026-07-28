@@ -1,0 +1,294 @@
+---
+title: Live events and synchronized state
+description: Observe bot activity and maintain a replayable local view of the Minecraft world.
+icon: Radio
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+`bot.events()` exposes the ordered server stream. `bot.observe()` consumes that
+same stream and maintains an immutable application-facing state model. Use the
+raw stream for transient activity such as sounds and particles. Use a session
+for entities, blocks, the tab list, boss bars, weather, and scoreboards.
+
+## Watch an entire instance
+
+`instance.events()` multiplexes every selected bot onto one connection. Each
+item identifies the source through `botProfileId` or `bot_profile_id`, then
+carries the normal `BotEvent` envelope. This is the practical choice for fleet
+telemetry, shared chat handling, dashboards, and coordinators that should not
+open one stream per account.
+
+<Tabs items={['TypeScript Effect', 'TypeScript Promise', 'Python async', 'Python sync']}>
+  <Tab value="TypeScript Effect">
+    ```ts
+    yield* instance.events({
+      botEvents: {
+        includeChat: true,
+        includeLifecycle: true,
+        includeStateDeltas: true,
+      },
+      botIds: selectedBotIds,
+    }).pipe(
+      Stream.runForEach((item) =>
+        Effect.logInfo("bot event", {
+          botId: item.botProfileId,
+          event: item.event,
+        })
+      ),
+    );
+    ```
+  </Tab>
+  <Tab value="TypeScript Promise">
+    ```ts
+    for await (const item of instance.events({
+      botEvents: {
+        includeChat: true,
+        includeLifecycle: true,
+      },
+    })) {
+      console.log(item.botProfileId, item.event);
+    }
+    ```
+  </Tab>
+  <Tab value="Python async">
+    ```python
+    async for item in instance.events(bot_ids=selected_bot_ids):
+        print(item.bot_profile_id, item.WhichOneof("event"))
+    ```
+  </Tab>
+  <Tab value="Python sync">
+    ```python
+    for item in instance.events(bot_ids=selected_bot_ids):
+        print(item.bot_profile_id, item.WhichOneof("event"))
+    ```
+  </Tab>
+</Tabs>
+
+The default instance filter includes every stateful category and uses the
+server's bounded entity and block radii. Sounds and particles remain opt-in.
+On subscription, each selected bot contributes current status and snapshots
+before live changes. Pass `botIds` in TypeScript or `bot_ids` in Python to
+limit the stream to a stable profile UUID allowlist.
+
+## Open a synchronized session
+
+<Tabs items={['TypeScript Effect', 'TypeScript Promise', 'Python']}>
+  <Tab value="TypeScript Effect">
+    ```ts
+    const session = yield* bot.observe();
+
+    const hostile = session.state.entitySnapshots.get(networkId);
+    const raining = session.state.environment.raining;
+
+    yield* session.events().pipe(
+      Stream.filter((event) => event.event.case === "damage"),
+      Stream.runForEach((event) => Effect.logInfo("damage", event)),
+    );
+    ```
+  </Tab>
+  <Tab value="TypeScript Promise">
+    ```ts
+    await using session = await bot.observe();
+
+    const hostile = session.state.entitySnapshots.get(networkId);
+    const raining = session.state.environment.raining;
+
+    for await (const event of session.events()) {
+      if (event.event.case === "damage") {
+        console.log(event.event.value);
+      }
+    }
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python
+    async with await bot.observe() as session:
+        hostile = session.state.entity_snapshots.get(network_id)
+        raining = session.state.environment.raining
+
+        async for event in session.events():
+            if event.WhichOneof("event") == "damage":
+                print(event.damage)
+    ```
+  </Tab>
+</Tabs>
+
+The default session filter includes state, lifecycle, chat, damage, inventory,
+entities, nearby block updates, environment changes, the player list, boss
+bars, and scoreboard changes. Sounds and particles are opt-in because busy
+servers can emit them at a high rate. Resource-pack offers and removals are
+included by default. Titles are also included by default because they often
+carry gameplay instructions. Chunk events remain opt-in because movement can
+produce a large stream.
+
+## Match chat without managing a session
+
+`bot.chat.waitFor` matches a substring, regular expression, or predicate and
+returns the semantic chat event plus regular-expression captures. Limit a
+matcher to player chat, whispers, system messages, or action-bar messages when
+the same text can appear in several channels.
+
+<Tabs items={['TypeScript Effect', 'TypeScript Promise', 'Python async']}>
+  <Tab value="TypeScript Effect">
+    ```ts
+    const match = yield* bot.chat.waitFor(
+      /code (?<code>\d{4})/u,
+      {
+        sources: [ChatSource.SYSTEM],
+        timeoutMs: 10_000,
+      },
+    );
+
+    yield* Effect.logInfo("received code", {
+      code: match.groups.code,
+    });
+    ```
+  </Tab>
+  <Tab value="TypeScript Promise">
+    ```ts
+    const match = await bot.chat.waitFor(/code (?<code>\d{4})/u, {
+      sources: [ChatSource.SYSTEM],
+      timeoutMs: 10_000,
+    });
+    console.log(match.groups.code);
+    ```
+  </Tab>
+  <Tab value="Python async">
+    ```python
+    match = await bot.chat.wait_for(
+        re.compile(r"code (?P<code>\d{4})"),
+        sources=[CHAT_SOURCE_SYSTEM],
+        timeout_ms=10_000,
+    )
+    print(match.groups["code"])
+    ```
+  </Tab>
+</Tabs>
+
+Use `bot.chat.watch(...)` for every matching message. It returns an Effect
+`Stream` from the Effect entry point, an async iterable from the Promise
+entry point, an async iterator in asynchronous Python, and an iterator in
+synchronous Python.
+
+## State indexes
+
+The session maintains:
+
+- Full semantic entity snapshots, including velocity, equipment, effects,
+  attributes, ownership, passengers, targets, and dropped items.
+- Full block snapshots, including state properties, light, biome, fluid,
+  hardness, tool hints, and interaction metadata.
+- The current player list with latency, game mode, display name, and list
+  presentation fields.
+- World clocks, rain state, rain level, thunder level, and the latest generic
+  game event.
+- Incrementally merged boss bars.
+- Objectives, display slots, scores, teams, and team membership.
+- Pending resource-pack offers with IDs, URLs, hashes, requirements, and
+  prompts.
+- Player, inventory, connection status, stream epoch, and revision metadata.
+
+Entity network IDs are valid only for one connection epoch. Use each
+`EntitySnapshot.reference.connectionEpoch` with its network ID when caching a
+target beyond the current callback.
+
+## Choose event categories
+
+```ts
+await using session = await bot.observe({
+  filter: {
+    includeEntityEvents: true,
+    entityRadius: 64,
+    includeBlockUpdates: true,
+    blockRadius: 24,
+    includeEnvironment: true,
+    includePlayerList: true,
+    includeBossBars: true,
+    includeScoreboard: true,
+    includeResourcePacks: true,
+    includeTitles: true,
+    includeChunks: false,
+    includeSounds: true,
+    includeParticles: false,
+  },
+});
+```
+
+Python accepts the generated `BotEventFilter` message through
+`BotSessionOptions`.
+
+<Callout type="info">
+  The server sends an initial player, inventory, entity, environment, and
+  player-list view when a session attaches to an already connected bot.
+  Sequence gaps or epoch changes clear synchronized state before replacement
+  snapshots are applied.
+</Callout>
+
+## Observe titles and chunk loading
+
+Title events preserve title, subtitle, animation timing, clear, and reset as
+distinct event kinds. Chunk events report loaded and unloaded columns with
+their dimension and chunk coordinates.
+
+```ts
+const stream = bot.events({
+  includeTitles: true,
+  includeChunks: true,
+});
+
+yield* stream.pipe(
+  Stream.runForEach((event) =>
+    Effect.logDebug("transient event", { event: event.event })
+  ),
+);
+
+const loaded = yield* bot.waitForChunks({
+  radiusChunks: 2,
+  timeoutMs: 30_000,
+});
+```
+
+```python
+from soulfire import BotEventFilter
+
+async for event in bot.events(
+    BotEventFilter(include_titles=True, include_chunks=True)
+):
+    print(event.WhichOneof("event"))
+
+loaded = await bot.wait_for_chunks(
+    2,
+    wait_timeout_ms=30_000,
+)
+```
+
+`waitForChunks` and `wait_for_chunks` run on the SoulFire server. They inspect
+the bot's current chunk as it moves and finish only when the complete square
+radius is present. Cancelling the SDK operation cancels its pending server
+wait. The maximum supported radius is 16 chunks and the maximum server wait is
+five minutes.
+
+## Build custom stores and replay tests
+
+Both SDKs expose their reducers independently from the live session.
+
+```ts
+let state = emptyBotSessionState();
+
+for (const event of recordedEvents) {
+  state = reduceBotSessionState(state, event);
+}
+```
+
+```python
+state = empty_bot_session_state()
+
+for event in recorded_events:
+    state = reduce_bot_session_state(state, event)
+```
+
+These pure reducers are useful for Effect `SubscriptionRef` integrations,
+Redux-style stores, deterministic event replays, and testing automation
+without a live Minecraft server.

@@ -1,0 +1,154 @@
+---
+title: Automation
+description: Coordinate persistent multi-bot goals, shared memory, roles, claims, and recovery through the SoulFire SDK.
+icon: Workflow
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+`instance.automation` is the typed control surface for SoulFire's persistent
+automation engine. It can run one goal across selected bots, coordinate team
+roles and shared knowledge, and report meaningful state changes without
+requiring an SDK process to poll every bot.
+
+Use durable bot tasks for one bounded job such as pathfinding, combat, or
+building. Use instance automation when SoulFire should keep planning,
+recovering, and coordinating a team toward a larger objective.
+
+## Start and observe a goal
+
+An empty bot selection means every applicable bot in the instance. Supplying
+bot IDs scopes the command and stream to that group.
+
+<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
+  <Tab value="Effect">
+    ```ts
+    import { Effect, Stream } from "effect";
+
+    const automation = soulfire.instance(instanceId).automation;
+
+    yield* automation.startBeat(botIds);
+
+    yield* automation.events({ botIds }).pipe(
+      Stream.runForEach((event) =>
+        Effect.logInfo(event.summary ?? "automation update", {
+          kind: event.kind,
+          botId: event.botId,
+          droppedBefore: event.droppedBefore,
+        })
+      ),
+    );
+    ```
+  </Tab>
+  <Tab value="Promise">
+    ```ts
+    const automation = soulfire.instance(instanceId).automation;
+
+    await automation.acquire("minecraft:bread", 64, botIds);
+
+    for await (const event of automation.events({ botIds })) {
+      console.log(event.kind, event.summary);
+    }
+    ```
+  </Tab>
+  <Tab value="Async Python">
+    ```python
+    automation = soulfire.instance(instance_id).automation
+
+    await automation.start_beat(bot_ids)
+
+    async for event in automation.events(bot_ids=bot_ids):
+        print(event.kind, event.summary, event.dropped_before)
+    ```
+  </Tab>
+  <Tab value="Sync Python">
+    ```python
+    automation = soulfire.instance(instance_id).automation
+
+    automation.acquire("minecraft:bread", 64, bot_ids)
+
+    for event in automation.events(bot_ids=bot_ids):
+        print(event.kind, event.summary)
+    ```
+  </Tab>
+</Tabs>
+
+The stream begins with a typed team snapshot. Later events identify:
+
+- Bot connections and disconnections.
+- Goal, beat phase, current action, pause, and resume changes.
+- Progress, action stalls, timeouts, deaths, and recovery attempts.
+- Team and per-bot objective changes.
+- Shared claim and shared-memory changes.
+- Goal completion and reported failures.
+- Heartbeats when the state is unchanged.
+
+Each event can include the current bot, team, or coordination state. Consumers
+can update a local view directly instead of issuing a second request for every
+change.
+
+## Read state and memory
+
+Read current state independently of the stream when an application starts,
+detects a gap, or needs a detailed memory sample:
+
+```ts
+const team = yield* automation.teamState();
+const coordination = yield* automation.coordinationState(32);
+const bot = yield* automation.botState(botId);
+const memory = yield* automation.memory(botId, 64);
+```
+
+```python
+team = await automation.team_state()
+coordination = await automation.coordination_state(32)
+bot_state = await automation.bot_state(bot_id)
+memory = await automation.memory(bot_id, 64)
+```
+
+Team state contains resource quotas, roles, objectives, and each connected
+bot's current goal. Coordination state contains shared blocks, target claims,
+eye samples, and team requirement counts. Bot memory contains the bounded
+world observations used by that bot's planner.
+
+## Control collaboration
+
+The SDK wraps all persisted automation settings and coordination controls:
+
+```ts
+yield* automation.setCollaboration(true);
+yield* automation.setSharedClaims(true);
+yield* automation.setMaxEndBots(2);
+yield* automation.setQuotaOverride("minecraft:blaze_rod", 12);
+yield* automation.setRoleOverride(AutomationTeamRole.NETHER_RUNNER, [botId]);
+```
+
+```python
+await automation.set_collaboration(True)
+await automation.set_shared_claims(True)
+await automation.set_max_end_bots(2)
+await automation.set_quota_override("minecraft:blaze_rod", 12)
+```
+
+You can also apply a preset, choose a role policy, override the team objective,
+update per-bot recovery and scan settings, release claims, reset bot memory,
+or reset all shared coordination state.
+
+## Handle stream gaps
+
+Automation observation is deliberately backpressure-aware. SoulFire does not
+let a slow dashboard block bot planning or the Minecraft game loop. If the
+transport cannot accept an event, the server drops that event and reports the
+count in `droppedBefore` or `dropped_before` on the next delivery.
+
+<Callout type="warn">
+  When the dropped count is nonzero, refresh `teamState` or `team_state` and
+  coordination state before applying more deltas. The next event contains
+  current typed state, but it may not cover every bot affected by the gap.
+</Callout>
+
+Reading streams and snapshots requires `READ_BOT_INFO`. Starting, pausing,
+resuming, stopping, resetting, and releasing claims require
+`INSTANCE_COMMAND_EXECUTION`. Persisted instance and bot settings use their
+corresponding update permissions.

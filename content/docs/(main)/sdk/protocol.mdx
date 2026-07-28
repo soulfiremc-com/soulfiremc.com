@@ -1,0 +1,190 @@
+---
+title: Raw protocol access
+description: Observe, inspect, and inject version-dependent Minecraft packets through the SoulFire SDK.
+icon: Binary
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+SoulFire exposes its active native Minecraft packet codec as an advanced SDK
+module. Use it when a typed high-level operation does not exist yet, when a
+server uses a custom packet extension, or when you are diagnosing protocol
+behavior.
+
+Prefer the typed world, inventory, chat, action, and task APIs for normal
+automation. Raw packet code is version-dependent and can put a bot connection
+into an invalid state.
+
+## Check the active protocols
+
+`info` reports both protocol versions involved in a connection:
+
+- `minecraftProtocolVersion` is SoulFire's native client protocol. Packet
+  schemas and encoded bytes in this API always use this version.
+- `remoteProtocolVersion` is the Minecraft server protocol negotiated by
+  ViaVersion.
+- `protocolState` identifies the active native state, such as `play` or
+  `configuration`.
+- The limits describe the maximum encoded packet size and send rate.
+
+<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
+  <Tab value="Effect">
+    ```ts
+    const info = yield* bot.protocol.info();
+
+    yield* Effect.logInfo("Active protocol", {
+      native: info.minecraftVersionName,
+      remote: info.remoteVersionName,
+      state: info.protocolState,
+    });
+    ```
+  </Tab>
+  <Tab value="Promise">
+    ```ts
+    const info = await bot.protocol.info();
+
+    console.log({
+      native: info.minecraftVersionName,
+      remote: info.remoteVersionName,
+      state: info.protocolState,
+    });
+    ```
+  </Tab>
+  <Tab value="Async Python">
+    ```python
+    info = await bot.protocol.info()
+
+    print(
+        info.minecraft_version_name,
+        info.remote_version_name,
+        info.protocol_state,
+    )
+    ```
+  </Tab>
+  <Tab value="Sync Python">
+    ```python
+    info = bot.protocol.info()
+    print(info.minecraft_version_name, info.remote_version_name)
+    ```
+  </Tab>
+</Tabs>
+
+## Discover packet IDs
+
+List the packet names and numeric IDs for the bot's current native protocol
+state:
+
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
+    ```ts
+    import { PacketDirection } from "@soulfiremc/sdk";
+
+    const packets = yield* bot.protocol.schemas(
+      PacketDirection.SERVERBOUND,
+    );
+
+    for (const packet of packets) {
+      yield* Effect.logInfo(`${packet.networkId}: ${packet.name}`);
+    }
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python
+    from soulfire import PACKET_DIRECTION_SERVERBOUND
+
+    packets = await bot.protocol.schemas(PACKET_DIRECTION_SERVERBOUND)
+
+    for packet in packets:
+        print(packet.network_id, packet.name)
+    ```
+  </Tab>
+</Tabs>
+
+Packet discovery reports the active packet registry, not a stable
+cross-version contract. Re-read it after a protocol state transition or a bot
+reconnect.
+
+## Observe packets
+
+Packet observation is available to callers with `READ_BOT_INFO`. Filter at the
+server by direction and canonical packet name so high-volume connections do
+not send irrelevant events to the SDK.
+
+```ts
+import { PacketDirection } from "@soulfiremc/sdk";
+
+yield* bot.protocol.packets({
+  directions: [PacketDirection.CLIENTBOUND],
+  names: ["minecraft:game_event"],
+  includeEncodedPacket: true,
+  maximumEncodedBytes: 4096,
+}).pipe(
+  Stream.runForEach((packet) =>
+    Effect.logInfo("Packet received", {
+      name: packet.name,
+      bytes: packet.encodedPacket.byteLength,
+      droppedBefore: packet.droppedBefore,
+    })
+  ),
+);
+```
+
+The Promise facade returns an `AsyncIterable`, and the Python clients return
+an async iterator or iterator:
+
+```python
+from soulfire import PACKET_DIRECTION_CLIENTBOUND
+
+async for packet in bot.protocol.packets(
+    directions=[PACKET_DIRECTION_CLIENTBOUND],
+    names=["minecraft:game_event"],
+    include_encoded_packet=True,
+    maximum_encoded_bytes=4096,
+):
+    print(packet.name, len(packet.encoded_packet), packet.dropped_before)
+```
+
+The stream respects transport backpressure. If the consumer cannot keep up,
+SoulFire drops observations instead of blocking the bot's network thread. The
+next delivered event reports the number in `droppedBefore` or
+`dropped_before`.
+
+## Send a native packet
+
+`send` accepts one complete unframed native packet. The byte array must contain
+the native protocol packet ID followed by its payload. SoulFire decodes the
+bytes through the active serverbound codec, rejects trailing data, and then
+sends the decoded packet through the normal connection pipeline. ViaVersion
+translates it to the remote server version afterward.
+
+```ts
+const result = yield* bot.protocol.send(encodedPacket, {
+  expectedName: "minecraft:custom_payload",
+});
+
+yield* Effect.logInfo("Packet sent", result);
+```
+
+```python
+result = await bot.protocol.send(
+    encoded_packet,
+    expected_name="minecraft:custom_payload",
+)
+print(result.name, result.encoded_bytes)
+```
+
+Set `expectedName` or `expected_name` whenever the packet type is known. This
+guard prevents bytes built for one packet schema from being sent as another
+packet after a version or state change.
+
+<Callout type="warn">
+  Raw packet sending requires the `RAW_PROTOCOL` instance permission. SoulFire
+  grants it only to administrators by default, limits packets to 1 MiB and 20
+  sends per second per user and bot, and writes every send to the server log.
+</Callout>
+
+Raw observation and injection do not bypass plugin RPCs, task ownership, or the
+normal typed SDK. A SoulFire plugin should expose a typed RPC when an operation
+is reusable. Reserve raw packets for genuinely version-specific work and
+short-lived diagnostics.

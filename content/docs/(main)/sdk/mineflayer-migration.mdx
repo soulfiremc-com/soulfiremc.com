@@ -1,0 +1,190 @@
+---
+title: Migrate from Mineflayer
+description: Move Mineflayer automation to SoulFire's native SDK, durable tasks, synchronized state, and plugin RPC model.
+icon: Replace
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+SoulFire covers the same automation problems as Mineflayer through a
+server-authoritative SDK. It does not emulate Mineflayer's API. Migrate each
+concept to the native SoulFire object model so the application gains durable
+tasks, reconnect-safe state, fleet operations, permissions, and typed plugin
+capabilities.
+
+The parity audit tracks all 306 headings in the
+[official Mineflayer API reference](https://github.com/PrismarineJS/mineflayer/blob/master/docs/api.md).
+Each concept maps to a native API, a language-level convenience, a durable
+server task, a plugin extension, or the permission-gated protocol escape
+hatch.
+
+## Parity dashboard
+
+The July 28, 2026 audit covers all 306 API headings in the pinned Mineflayer
+reference.
+
+| Status | APIs | Meaning |
+| --- | ---: | --- |
+| Native | 201 | Direct protocol API, SDK operation, retained state, or semantic event |
+| Different semantics | 50 | The capability is server-authoritative instead of a mutable in-process object |
+| Server task | 17 | Multi-tick work runs durably near the game loop |
+| SDK convenience | 17 | A language-native helper composes stable SoulFire operations |
+| Plugin extension | 12 | A typed, permissioned plugin contract owns the specialized feature |
+| Raw protocol | 6 | Packet-exact behavior uses the audited low-level escape hatch |
+| Intentionally unsupported | 3 | SoulFire does not inject arbitrary JavaScript into its server process |
+
+The [machine-readable parity matrix](https://github.com/soulfiremc-com/SoulFire/blob/main/docs/mineflayer-parity.json)
+pins the source heading count and digest. CI fails when Mineflayer adds or
+changes a heading until the audit is reviewed again.
+
+## Start with the object model
+
+| Mineflayer concept | SoulFire equivalent |
+| --- | --- |
+| One in-process `bot` | `soulfire.instance(id).bot(id)` remote handle |
+| Mutable `bot.world` | `bot.world` snapshots and bounded queries |
+| EventEmitter state | `bot.events()` or synchronized `bot.observe()` |
+| Movement plugin | `bot.pathfinder` and durable `bot.tasks` |
+| Inventory windows | `bot.inventory` and scoped container handles |
+| Runtime plugin injection | Installed SoulFire plugins with typed SDK companions |
+| Raw packet access | Permissioned `bot.protocol` schema, send, and watch APIs |
+
+`BotSession` retains entities, blocks, inventory, player-list entries, weather,
+boss bars, scoreboards, and stream revision metadata. It discards stale entity
+references when a bot reconnects.
+
+## Replace event listeners
+
+Mineflayer listeners run inside the Minecraft client process. SoulFire streams
+ordered event envelopes over the SDK and can resume after a transient
+transport failure.
+
+<Tabs items={['TypeScript Effect', 'TypeScript Promise', 'Python async']}>
+  <Tab value="TypeScript Effect">
+    ```ts
+    const session = yield* bot.observe();
+
+    yield* session.events().pipe(
+      Stream.filter((event) => event.event.case === "chat"),
+      Stream.runForEach((event) =>
+        Effect.logInfo("chat received", {
+          message: event.event.value.plainText,
+        })
+      ),
+    );
+    ```
+  </Tab>
+  <Tab value="TypeScript Promise">
+    ```ts
+    await using session = await bot.observe();
+
+    for await (const event of session.events()) {
+      if (event.event.case === "chat") {
+        console.log(event.event.value.plainText);
+      }
+    }
+    ```
+  </Tab>
+  <Tab value="Python async">
+    ```python
+    async with await bot.observe() as session:
+        async for event in session.events():
+            if event.WhichOneof("event") == "chat":
+                print(event.chat.plain_text)
+    ```
+  </Tab>
+</Tabs>
+
+Use `session.waitFor(...)`, `session.once(...)`, or their Python equivalents
+for arbitrary one-shot waits. `bot.chat.waitFor(...)` and Python
+`bot.chat.wait_for(...)` provide substring, regular-expression, predicate,
+capture-group, source-filter, and timeout handling for chat. Keep sounds,
+particles, and chunk events opt-in when the application does not need their
+higher event volume.
+
+## Replace direct actions
+
+| Mineflayer operation | SoulFire API |
+| --- | --- |
+| `bot.chat`, `bot.whisper`, tab completion | `bot.chat.send`, `whisper`, `complete` |
+| `blockAt`, `findBlocks`, cursor checks | `bot.world.block`, `queryBlocks`, `raycast` |
+| `nearestEntity` | `bot.world.queryEntities` |
+| `dig`, `placeBlock`, `activateBlock` | `digBlock`, `placeBlock`, `interactBlock` |
+| `attack`, `useOn`, `swingArm` | `attackEntity`, `interactEntity`, `swingArm` |
+| `equip`, `toss`, window transfer | `bot.inventory` semantic transactions |
+| `elytraFly`, creative flight | `startElytraFlight`, `setFlying` |
+| explosion damage helper | `bot.world.estimateExplosionDamage` |
+| `waitForChunksToLoad` | `bot.waitForChunks` |
+
+Actions validate reach, world epoch, dimensions, permissions, and control
+leases on the server. Expected action rejection is a typed failure, not an
+ambiguous local state change.
+
+## Move workflows into tasks
+
+Operations that span ticks belong near the game loop:
+
+```ts
+const task = yield* bot.tasks.collectBlocks({
+  selector: { blockIds: ["minecraft:oak_log"] },
+  count: 16,
+});
+
+const result = yield* task.result();
+```
+
+Pathfinding, combat, collection, building, farming, fishing, crafting,
+smelting, brewing, villager trading, auto-eat, auto-armor, auto-totem, and
+auto-respawn have durable task forms. A task exposes progress, cancellation,
+ownership, disconnect policy, and a typed result.
+
+Client-side behaviors compose tasks with sequence, parallel, race, retry,
+timeout, conditional, fallback, and cleanup operators. Use tasks for
+time-sensitive execution and behaviors for application-level orchestration.
+
+## Replace Mineflayer plugins
+
+A SoulFire plugin runs on the server and declares its public contract. It can
+publish:
+
+- Unary and server-streaming RPCs through the stable web transport.
+- Durable task kinds with typed inputs, progress, and results.
+- Plugin event streams.
+- Automation extensions.
+- Permission descriptors, limits, docs, OpenAPI metadata, and MCP tools.
+
+The SDK discovers installed plugins during the connection handshake. Generate
+a typed companion module for normal use, or invoke a descriptor reflectively
+when building generic tooling.
+
+<Callout type="warning">
+  The SDK cannot load arbitrary JavaScript into the SoulFire server process.
+  Install a reviewed server plugin, grant its declared permissions, and call
+  its typed SDK surface instead.
+</Callout>
+
+## Use the protocol escape hatch sparingly
+
+`bot.protocol` exposes negotiated packet schemas plus audited send and watch
+operations for version-specific work that does not belong in the stable
+domain model. It requires a separate dangerous permission and enforces packet
+size and rate limits.
+
+If a packet-level experiment becomes common application logic, move it into a
+SoulFire plugin and publish a semantic RPC or task contract. That keeps
+Minecraft version details close to the server and gives SDK callers a stable,
+typed API.
+
+## Migration checklist
+
+- Replace process-local bot construction with an instance and bot handle.
+- Replace mutable reads with world snapshots or a synchronized session.
+- Replace EventEmitter listeners with resumable streams.
+- Replace multi-tick loops with durable tasks.
+- Replace runtime plugin injection with typed server plugin capabilities.
+- Acquire a control lease when several callers can command the same bot.
+- Use raw packets only when neither the core SDK nor a plugin models the
+  operation.
+- Test reconnects, cancellation, permission failures, and stale entity
+  references before production rollout.

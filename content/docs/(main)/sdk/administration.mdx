@@ -1,0 +1,267 @@
+---
+title: Server administration
+description: Manage SoulFire settings, users, logs, metrics, scripts, commands, downloads, plugin telemetry, and audit history.
+icon: Settings
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+`soulfire.admin` is the high-level SDK entry point for SoulFire's control
+plane. It uses the same authenticated transport, deadlines, cancellation, and
+typed failure model as bot automation.
+
+## Inspect server state
+
+<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
+  <Tab value="Effect">
+    ```ts
+    const client = yield* soulfire.admin.clientData();
+    const server = yield* soulfire.admin.serverInfo();
+    const metrics = yield* soulfire.admin.serverMetrics();
+    ```
+  </Tab>
+  <Tab value="Promise">
+    ```ts
+    const client = await soulfire.admin.clientData();
+    const server = await soulfire.admin.serverInfo();
+    const metrics = await soulfire.admin.serverMetrics();
+    ```
+  </Tab>
+  <Tab value="Async Python">
+    ```python
+    client_data = await client.admin.client_data()
+    server = await client.admin.server_info()
+    metrics = await client.admin.server_metrics()
+    ```
+  </Tab>
+  <Tab value="Sync Python">
+    ```python
+    client_data = client.admin.client_data()
+    server = client.admin.server_info()
+    metrics = client.admin.server_metrics()
+    ```
+  </Tab>
+</Tabs>
+
+Server information contains current configuration, setting definitions,
+settings pages, and installed plugin metadata. Metrics can be requested with a
+`since` timestamp for incremental dashboard updates. Instance metrics add bot
+health, food, dimension, game-mode, and position distributions.
+
+## Manage settings and users
+
+Granular setting updates avoid replacing unrelated configuration:
+
+```ts
+yield* soulfire.admin.setServerConfigEntry({
+  namespace: "dev",
+  key: "soulfire-debug",
+  value: { kind: { case: "boolValue", value: true } },
+});
+
+const userId = yield* soulfire.admin.createUser({
+  username: "builder",
+  email: "builder@example.com",
+  role: UserRole.USER,
+});
+```
+
+```python
+from google.protobuf.struct_pb2 import Value
+from soulfire.server_pb2 import ServerUpdateConfigEntryRequest
+from soulfire.user_pb2 import USER_ROLE_USER, UserCreateRequest
+
+await client.admin.set_server_config_entry(
+    ServerUpdateConfigEntryRequest(
+        namespace="dev",
+        key="soulfire-debug",
+        value=Value(bool_value=True),
+    )
+)
+
+user_id = await client.admin.create_user(
+    UserCreateRequest(
+        username="builder",
+        email="builder@example.com",
+        role=USER_ROLE_USER,
+    )
+)
+```
+
+The same surface lists and reads users, updates profiles, deletes users,
+revokes sessions, and issues user API tokens.
+
+### Grant plugin permissions
+
+Plugin permissions have a default policy, but administrators can grant or deny
+one permission for one user and one exact resource. A deny overrides defaults
+such as `INSTANCE_OWNER`.
+
+<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
+  <Tab value="Effect">
+    ```ts
+    import { PluginPermissionScope } from "@soulfiremc/sdk";
+
+    yield* soulfire.admin.setUserPluginPermissionGrant(userId, {
+      permissionId: "plugin.skyblock.build_island",
+      scope: PluginPermissionScope.INSTANCE,
+      resourceId: instanceId,
+      granted: true,
+    });
+
+    const grants =
+      yield* soulfire.admin.userPluginPermissionGrants(userId);
+    ```
+  </Tab>
+  <Tab value="Promise">
+    ```ts
+    import { PluginPermissionScope } from "@soulfiremc/sdk/promise";
+
+    await soulfire.admin.setUserPluginPermissionGrant(userId, {
+      permissionId: "plugin.skyblock.build_island",
+      scope: PluginPermissionScope.INSTANCE,
+      resourceId: instanceId,
+      granted: true,
+    });
+    ```
+  </Tab>
+  <Tab value="Async Python">
+    ```python
+    from soulfire import PluginPermissionScope
+
+    await client.admin.set_user_plugin_permission_grant(
+        user_id,
+        "plugin.skyblock.build_island",
+        PluginPermissionScope.PLUGIN_PERMISSION_SCOPE_INSTANCE,
+        resource_id=instance_id,
+        granted=True,
+    )
+    ```
+  </Tab>
+  <Tab value="Sync Python">
+    ```python
+    client.admin.set_user_plugin_permission_grant(
+        user_id,
+        "plugin.skyblock.build_island",
+        PluginPermissionScope.PLUGIN_PERMISSION_SCOPE_INSTANCE,
+        resource_id=instance_id,
+    )
+    ```
+  </Tab>
+</Tabs>
+
+Global permissions omit the resource ID. Instance, bot, and task permissions
+require the matching UUID. SoulFire retains overrides if the owning plugin is
+removed and returns them with `active: false`; reinstalling that plugin does
+not discard or silently reinterpret prior administrator intent.
+
+<Callout type="warn">
+  Token generation and session invalidation are security-sensitive mutations.
+  Store returned tokens as secrets and do not retry these operations
+  automatically.
+</Callout>
+
+## Consume scoped logs
+
+Log scopes can target the whole server, one instance, one bot, one script, or
+personal messages. Historical reads return up to the server's bounded history.
+Subscriptions remain live until cancelled.
+
+<Tabs items={['Effect', 'Async Python']}>
+  <Tab value="Effect">
+    ```ts
+    const scope = {
+      scope: {
+        case: "instance" as const,
+        value: { instanceId: instance.id },
+      },
+    };
+
+    const recent = yield* soulfire.admin.previousLogs({
+      scope,
+      count: 100,
+    });
+
+    yield* soulfire.admin.logs({ scope }).pipe(
+      Stream.runForEach((entry) =>
+        Effect.logInfo(entry.message?.message ?? "")
+      ),
+    );
+    ```
+  </Tab>
+  <Tab value="Async Python">
+    ```python
+    from soulfire.logs_pb2 import InstanceLogScope, LogScope
+
+    scope = LogScope(
+        instance=InstanceLogScope(instance_id=instance.id)
+    )
+
+    recent = await client.admin.previous_logs(scope, count=100)
+
+    async for entry in client.admin.logs(scope):
+        print(entry.message.message)
+    ```
+  </Tab>
+</Tabs>
+
+## Execute commands and inspect audit history
+
+Command execution and completion accept the protocol's explicit global,
+instance, or bot scope. Audit entries preserve the user, action type,
+timestamp, and action-specific data.
+
+```ts
+const result = yield* soulfire.admin.executeCommand({
+  scope: {
+    scope: {
+      case: "instance",
+      value: { instanceId: instance.id },
+    },
+  },
+  command: "help",
+});
+
+const audit = yield* soulfire.admin.auditLog(instance.id);
+```
+
+The admin API also exposes permission-scoped server-side downloads and
+per-instance plugin runtime metrics.
+
+## Manage scripts
+
+The complete script lifecycle is available through the same namespace:
+
+- List, read, create, update, and delete definitions.
+- Validate a graph without saving it.
+- Activate and deactivate saved scripts.
+- Observe execution events and script logs.
+- Read runtime status.
+- Dry-run a trigger with mock inputs.
+- Discover node types and script registry data.
+
+```ts
+const scripts = yield* soulfire.admin.scripts(instance.id);
+
+yield* soulfire.admin.activateScript(
+  instance.id,
+  { scriptId: scripts[0]!.id },
+).pipe(
+  Stream.runForEach((event) => Effect.logDebug(event)),
+);
+```
+
+```python
+scripts = await client.admin.list_scripts(instance.id)
+
+async for event in client.admin.activate_script(
+    instance.id,
+    scripts[0].id,
+):
+    print(event)
+```
+
+Generated service clients remain available through `soulfire.service()` in
+TypeScript and `client.service()` in Python when a newly added or uncommon
+field has not received a convenience method yet.

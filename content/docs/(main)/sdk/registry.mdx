@@ -1,0 +1,110 @@
+---
+title: Minecraft registries
+description: Discover version-correct blocks, items, entities, tags, and protocol features through the bot's active registry.
+icon: Library
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+`bot.registry` reads the Minecraft data associated with the bot's negotiated
+protocol version. Use it instead of embedding numeric IDs, copied data files,
+or assumptions about one server version.
+
+## Identify the active registry
+
+<Tabs items={['TypeScript Effect', 'TypeScript Promise', 'Python async']}>
+  <Tab value="TypeScript Effect">
+    ```ts
+    const registry = yield* bot.registry.identity();
+
+    yield* Effect.logInfo("registry", {
+      minecraftVersion: registry.identity?.minecraftVersion,
+      hash: registry.identity?.registryHash,
+      kinds: registry.supportedKinds,
+    });
+    ```
+  </Tab>
+  <Tab value="TypeScript Promise">
+    ```ts
+    const registry = await bot.registry.identity();
+    console.log(
+      registry.identity?.minecraftVersion,
+      registry.identity?.registryHash,
+    );
+    ```
+  </Tab>
+  <Tab value="Python async">
+    ```python
+    registry = await bot.registry.identity()
+    print(
+        registry.identity.minecraft_version,
+        registry.identity.registry_hash,
+    )
+    ```
+  </Tab>
+</Tabs>
+
+The identity includes the SoulFire version, Minecraft version, protocol
+number, registry hash, supported registry kinds, and negotiated protocol
+features. Treat the hash as the cache key for downloaded registry data.
+
+## Read entries
+
+```ts
+const axes = yield* bot.registry.entries({
+  kind: RegistryKind.ITEM,
+  tags: ["minecraft:axes"],
+  pageSize: 100,
+});
+
+const diamondPickaxe = yield* bot.registry.entry({
+  kind: RegistryKind.ITEM,
+  id: "minecraft:diamond_pickaxe",
+});
+```
+
+```python
+axes = await bot.registry.entries(
+    REGISTRY_KIND_ITEM,
+    tags=["minecraft:axes"],
+    page_size=100,
+)
+
+diamond_pickaxe = await bot.registry.entry(
+    REGISTRY_KIND_ITEM,
+    "minecraft:diamond_pickaxe",
+)
+```
+
+An entry contains its namespaced ID, optional protocol-specific numeric ID,
+display name, semantic properties, and tags. Available kinds include blocks,
+items, entity types, biomes, dimensions, recipes, enchantments, effects,
+attributes, game events, sounds, particles, and containers.
+
+Follow `nextPageToken` or `next_page_token` until it is empty. Keep the
+registry hash with every cached page so data from different protocol versions
+cannot be mixed.
+
+## Inspect tags
+
+`bot.registry.tags(...)` lists tag IDs and their member IDs. Filter by prefix
+when an application only needs one namespace or tag family.
+
+```ts
+const mineableTags = yield* bot.registry.tags({
+  kind: RegistryKind.BLOCK,
+  prefix: "minecraft:mineable/",
+  pageSize: 100,
+});
+```
+
+Tags are the right input for portable selectors. A task that accepts every log,
+pickaxe, hostile entity, or replaceable block should use tag membership rather
+than a hand-maintained list.
+
+<Callout type="info">
+  Registry reads are semantic and version-aware. If an experiment needs an
+  exact packet ID or codec field, inspect the negotiated
+  [protocol schema](/docs/sdk/protocol) separately.
+</Callout>

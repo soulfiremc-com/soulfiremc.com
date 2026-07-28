@@ -24,7 +24,7 @@ type AstNode = {
 
 type RouteFile = FileObject & {
   hashes: string[];
-  populateKey: "blog/[slug]" | "docs/[[...slug]]";
+  populateKey: "blog/[slug]" | "docs/[[..._splat]]";
   routeValue: Record<string, string | string[]>;
 };
 
@@ -33,15 +33,12 @@ async function checkLinks() {
   const publicUrls = await getPublicUrls();
 
   const scanned = await scanURLs({
-    preset: "next",
-    pages: [...publicUrls, ...REDIRECT_URLS].map(
-      (url) => `${url.slice(1)}/page.tsx`,
-    ),
+    preset: "tanstack-start",
     populate: {
-      "docs/[[...slug]]": files
-        .filter((file) => file.populateKey === "docs/[[...slug]]")
+      "docs/[[..._splat]]": files
+        .filter((file) => file.populateKey === "docs/[[..._splat]]")
         .map((file) => ({
-          value: file.routeValue,
+          value: { _splat: file.routeValue.slug },
           hashes: file.hashes,
         })),
       "blog/[slug]": files
@@ -52,6 +49,10 @@ async function checkLinks() {
         })),
     },
   });
+
+  for (const url of [...publicUrls, ...REDIRECT_URLS]) {
+    scanned.urls.set(url, {});
+  }
 
   printErrors(
     await validateFiles(files, {
@@ -97,7 +98,7 @@ async function getDocsFiles(): Promise<RouteFile[]> {
         content,
         url: toDocsUrl(slugs),
         hashes: getHeadings(content),
-        populateKey: "docs/[[...slug]]",
+        populateKey: "docs/[[..._splat]]",
         routeValue: { slug: slugs },
       } satisfies RouteFile;
     }),

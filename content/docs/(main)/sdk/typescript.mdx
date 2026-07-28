@@ -1,243 +1,318 @@
 ---
 title: TypeScript SDK
-description: Connect, provision, control, and monitor SoulFire bots from TypeScript.
+description: Connect to SoulFire with the Effect-first TypeScript SDK or its Promise facade.
 icon: Code
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
-import { Step, Steps } from 'fumadocs-ui/components/steps';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+The root `@soulfiremc/sdk` export is Effect-first. It models connections as
+scoped resources, server streams as `Stream`, expected failures as tagged
+errors, and shared clients as `Layer`.
+
+Use `@soulfiremc/sdk/promise` when the surrounding application uses Promises
+and async iterables. Both entry points expose the same SoulFire capabilities.
 
 ## Install
 
-<Tabs items={['npm', 'JSR']}>
-  <Tab value="npm">
+<Tabs items={['Effect', 'Promise facade']}>
+  <Tab value="Effect">
     ```bash
-    pnpm add @soulfiremc/sdk
+    pnpm add @soulfiremc/sdk effect @effect/platform
     ```
   </Tab>
-  <Tab value="JSR">
+  <Tab value="Promise facade">
     ```bash
-    deno add jsr:@soulfiremc/sdk
+    pnpm add @soulfiremc/sdk effect @effect/platform
     ```
   </Tab>
 </Tabs>
 
-The package requires Node.js 22 or newer for local server installation.
-Connecting from a browser only requires `fetch`.
+Effect and `@effect/platform` are peer dependencies. Keep one compatible Effect
+runtime in the application dependency graph.
 
-## Connect to an existing server
+## Run a managed local server on Node.js
 
-<Steps>
-  <Step>
-    ### Create the client
+Local JVM download and process management use explicit Node.js entry points and
+require Node.js 22 or newer.
 
+<Tabs items={['Effect', 'Promise facade']}>
+  <Tab value="Effect">
     ```ts
+    import { Effect } from "effect";
+    import { SoulFire } from "@soulfiremc/sdk/node";
+
+    await Effect.runPromise(
+      Effect.scoped(
+        Effect.gen(function* () {
+          const soulfire = yield* SoulFire.install();
+          yield* soulfire
+            .instance(instanceId)
+            .bot(botId)
+            .chat
+            .send("Local server ready");
+        }),
+      ),
+    );
+    ```
+  </Tab>
+  <Tab value="Promise facade">
+    ```ts
+    import { SoulFire } from "@soulfiremc/sdk/node/promise";
+
+    await using soulfire = await SoulFire.install();
+    await soulfire
+      .instance(instanceId)
+      .bot(botId)
+      .chat
+      .send("Local server ready");
+    ```
+  </Tab>
+</Tabs>
+
+The universal `@soulfiremc/sdk` and `@soulfiremc/sdk/promise` exports never
+load Node.js process, filesystem, or archive modules.
+
+## Connect and send chat
+
+<Tabs items={['Effect', 'Promise facade']}>
+  <Tab value="Effect">
+    ```ts
+    import { Effect } from "effect";
     import { SoulFire } from "@soulfiremc/sdk";
 
-    const soulfire = SoulFire.connect({
+    const program = Effect.scoped(
+      Effect.gen(function* () {
+        const soulfire = yield* SoulFire.connect({
+          baseUrl: "https://soulfire.example.com",
+          token: process.env.SOULFIRE_TOKEN,
+        });
+
+        const bot = soulfire.instance("instance-uuid").bot("bot-uuid");
+        yield* bot.start();
+        yield* bot.chat.send("Hello from SoulFire");
+      }),
+    );
+
+    await Effect.runPromise(program);
+    ```
+  </Tab>
+  <Tab value="Promise facade">
+    ```ts
+    import { SoulFire } from "@soulfiremc/sdk/promise";
+
+    await using soulfire = await SoulFire.connect({
       baseUrl: "https://soulfire.example.com",
       token: process.env.SOULFIRE_TOKEN,
     });
-    ```
-  </Step>
 
+    const bot = soulfire.instance("instance-uuid").bot("bot-uuid");
+    await bot.start();
+    await bot.chat.send("Hello from SoulFire");
+    ```
+  </Tab>
+</Tabs>
+
+The connection handshake checks server compatibility and required
+capabilities before the client becomes available.
+
+## Use Effect Platform
+
+`@effect/platform` is the general compatibility layer for Effect. SoulFire can
+consume its portable `HttpClient` service instead of relying on a global
+`fetch`:
+
+```ts
+const client = yield* SoulFire.connectWithHttpClient({
+  baseUrl: "https://soulfire.example.com",
+  token,
+});
+```
+
+Use the runtime entry point when SoulFire should provide the HTTP layer:
+
+- `@soulfiremc/sdk/node` uses
+  `@effect/platform-node/NodeHttpClient.layerUndici`.
+- `@soulfiremc/sdk/browser` uses
+  `@effect/platform/FetchHttpClient`.
+- `@soulfiremc/sdk/bun` uses the same portable fetch layer over Bun's native
+  Fetch implementation.
+
+The universal entry point keeps `HttpClient` as an application-provided
+service. This is useful in tests, workers, Deno, and applications with a
+custom client policy. Runtime-specific filesystem, process, socket, and worker
+services can come from `@effect/platform-browser`, `@effect/platform-node`,
+or `@effect/platform-bun` when the application needs them.
+
+For custom integrations, `@soulfiremc/sdk/platform` exports
+`makeEffectHttpClientFetch`.
+
+## Stream bot events
+
+<Tabs items={['Effect', 'Promise facade']}>
+  <Tab value="Effect">
+    ```ts
+    yield* bot.events().pipe(
+      Stream.runForEach((event) =>
+        Effect.logInfo("Bot event", { kind: event.event.case })
+      ),
+    );
+    ```
+  </Tab>
+  <Tab value="Promise facade">
+    ```ts
+    const controller = new AbortController();
+
+    for await (const event of bot.events(undefined, {
+      signal: controller.signal,
+    })) {
+      console.log(event.event.case);
+    }
+    ```
+  </Tab>
+</Tabs>
+
+The stream stays associated with the configured bot across Minecraft
+reconnects. Use `bot.observe()` when the application wants synchronized state
+instead of processing every delta itself.
+
+## Interact with blocks and beds
+
+Use `interactBlock` when the intent is to activate a block rather than place
+against it. SoulFire checks that the target is loaded and reachable.
+
+```ts
+yield* bot.interactBlock({
+  position: buttonPosition,
+  face: BlockFace.NORTH,
+  hand: Hand.MAIN,
+});
+
+yield* bot.sleep({
+  bed: bedPosition,
+  hand: Hand.MAIN,
+});
+
+yield* bot.wake();
+```
+
+`sleep` completes after the server confirms the sleeping state. Invalid
+targets, daytime restrictions, occupied beds, and rejected interactions
+surface as typed action failures.
+
+## Run concurrent fleet work
+
+Effect controls concurrency and interruption without losing error types:
+
+```ts
+yield* Effect.forEach(
+  botIds,
+  (botId) =>
+    soulfire
+      .instance(instanceId)
+      .bot(botId)
+      .chat
+      .send("Ready"),
+  { concurrency: 20, discard: true },
+);
+```
+
+The Promise facade works with ordinary `Promise.all` when that is a better fit
+for the application.
+
+Promise streams are async iterables by default. Convert one to a Web stream
+when a browser, worker, Deno, or Node.js pipeline expects it:
+
+```ts
+import { toReadableStream } from "@soulfiremc/sdk/promise";
+
+const events = toReadableStream(bot.events());
+```
+
+The adapter respects Web Stream backpressure and closes the underlying
+ConnectRPC iterator when the stream is cancelled.
+
+## Execute production tasks
+
+Recipe inspection and execution are available through `bot.recipes`:
+
+```ts
+const recipes = yield* bot.recipes.list({
+  resultItemId: "minecraft:iron_ingot",
+});
+
+const task = yield* bot.recipes.smelt(
+  { itemIds: ["minecraft:raw_iron"] },
+  8,
+  {
+    fuel: { tags: ["minecraft:coals"] },
+    station: furnacePosition,
+  },
+);
+
+yield* task.result();
+```
+
+Crafting and smelting run on the SoulFire server as resource-aware tasks.
+Interrupt the local stream when the task should be call-owned, or retain the
+task handle when it should survive the SDK process.
+
+## Provide a shared layer
+
+<Steps>
   <Step>
-    ### Select and start a bot
+    ### Define a program dependency
 
     ```ts
-    const instance = soulfire.instance("instance-uuid");
-    const bot = instance.bot("bot-uuid");
+    import { Effect } from "effect";
+    import { SoulFireService } from "@soulfiremc/sdk";
 
-    await bot.start();
-    await bot.sendChat("Hello from TypeScript");
+    const announce = Effect.gen(function* () {
+      const soulfire = yield* SoulFireService;
+      yield* soulfire
+        .instance(instanceId)
+        .bot(botId)
+        .chat
+        .send("Ready");
+    });
+    ```
+  </Step>
+  <Step>
+    ### Provide the live client
+
+    ```ts
+    await Effect.runPromise(
+      announce.pipe(
+        Effect.provide(SoulFire.layer({ baseUrl, token })),
+      ),
+    );
     ```
   </Step>
 </Steps>
 
-Starting a bot persists its desired state.
-SoulFire keeps the bot running according to its reconnect settings until you call `stop()`.
+Replace that layer in tests to run application logic without a network
+connection.
 
-## Control a group
+## Use generated protocol definitions
 
-```ts
-await instance.start({ count: 25 });
-await instance.stop({ botIds: ["bot-uuid-1", "bot-uuid-2"] });
-await instance.restart();
-```
-
-`restart()` with no selection reconnects bots that are already desired.
-It does not start stopped bots.
-
-## Watch desired and runtime status
-
-The stream begins with a complete snapshot and then sends updates:
-
-```ts
-const controller = new AbortController();
-
-for await (const event of instance.watchBotStatuses({
-  signal: controller.signal,
-})) {
-  switch (event.event.case) {
-    case "snapshot":
-      console.log(event.event.value.bots);
-      break;
-    case "update":
-      console.log(event.event.value);
-      break;
-    case "removedBotId":
-      console.log("Removed", event.event.value);
-      break;
-  }
-}
-```
-
-Use `await bot.status()` for a one-off status read.
-
-## Stream live bot events
-
-`events()` stays open while the bot is stopped and follows the configured account across reconnects.
-Its default filter includes status, state changes, chat, lifecycle, inventory, and damage:
-
-```ts
-for await (const event of bot.events()) {
-  switch (event.event.case) {
-    case "chat":
-      console.log(event.event.value.plainText);
-      break;
-    case "inventory":
-      console.log(event.event.value.state?.slots);
-      break;
-    case "status":
-      console.log(event.event.value.runtimeState);
-      break;
-  }
-}
-```
-
-Pass an `AbortSignal` in the call options when the stream belongs to a cancellable task.
-
-## Control a live bot
-
-Live actions resolve after the Minecraft game thread executes them.
-Failed and cancelled actions throw `SoulFireActionError` with the action ID and structured server result.
-
-```ts
-import { ClickType } from "@soulfiremc/sdk";
-
-await bot.sendChat("Hello from TypeScript");
-await bot.selectHotbar(0);
-await bot.clickInventory(12, ClickType.LEFT_CLICK);
-await bot.transferInventorySlot(12);
-await bot.moveInventoryStack(12, 36);
-
-await bot.setMovement({ forward: true, sprint: true });
-await bot.look(90, 0);
-await bot.resetMovement();
-```
-
-World and interaction methods include `getBlock`, `findBlocks`, `listNearbyEntities`, `digBlock`, `placeBlock`, `useItem`, `releaseItem`, `attackEntity`, `interactEntity`, `swingArm`, and `respawn`.
-`goTo` returns a progress stream, while `stopPathfinding` cancels the current path.
-
-## Coordinate multiple controllers
-
-Control leases are optional.
-Acquiring one prevents another client from issuing actions for that configured bot until the lease is released or expires:
-
-```ts
-const lease = await bot.acquireControl(30);
-
-try {
-  await bot.sendChat("This action carries the lease token");
-  await lease.renew(30);
-} finally {
-  await lease.release();
-}
-```
-
-## Compose behaviors
-
-The included behaviors are public-API building blocks, not server-side modes:
+High-level modules cover normal application work. Generated protobuf services
+remain available for advanced protocol access:
 
 ```ts
 import {
-  attackNearest,
-  collectBlocks,
-  runBehaviors,
-} from "@soulfiremc/sdk";
+  InstanceService,
+} from "@soulfiremc/sdk/generated/soulfire/instance_pb";
 
-const controller = new AbortController();
-
-await runBehaviors(
-  bot,
-  [
-    collectBlocks({ blockIds: ["minecraft:oak_log"], maxCount: 16 }),
-    attackNearest({ entityTypes: ["minecraft:zombie"] }),
-  ],
-  { signal: controller.signal },
-);
+const client = soulfire.service(InstanceService);
 ```
 
-The package also exports `followEntity`, `autoEat`, and `build`.
-
-## Provision instances and accounts
-
-Operators can create a compartmentalized instance, authenticate a Minecraft account, and add it to that instance:
-
-```ts
-import { AccountTypeDeviceCode } from "@soulfiremc/sdk";
-
-const instance = await soulfire.createInstance("automation");
-
-for await (const step of instance.loginDeviceCode({
-  service: AccountTypeDeviceCode.MICROSOFT_JAVA_DEVICE_CODE,
-})) {
-  if (step.data.case === "deviceCode") {
-    console.log(step.data.value.verificationUri, step.data.value.userCode);
-  }
-  if (step.data.case === "account") {
-    await instance.addAccounts([step.data.value]);
-  }
-}
-```
-
-The high-level instance wrapper also supports listing instances, metadata and setting updates, account refresh, credentials authentication, and account or proxy batch operations.
-
-## Provision a local dedicated server
-
-```ts
-const soulfire = await SoulFire.install({
-  directory: ".soulfire",
-  onLog: console.log,
-});
-
-try {
-  const bot = soulfire.instance("instance-uuid").bot("bot-uuid");
-  await bot.start();
-
-  console.log(soulfire.localServer?.version);
-  console.log(soulfire.localServerLogs);
-
-  await soulfire.restartLocalServer();
-  await soulfire.stopLocalServer();
-} finally {
-  await soulfire.close();
-}
-```
-
-<Callout type="info">
-  Local installation and process management are Node.js features and are excluded from the browser execution path.
-  Restarting preserves the installation directory, port, release, and root API token.
+<Callout type="warn">
+  Generated clients expose the wire contract directly. They do not add the
+  validation, task ownership, cleanup, or stable error behavior of the
+  high-level SDK.
 </Callout>
 
-## Use an unwrapped RPC
-
-The package exports generated Protobuf definitions for the complete API:
-
-```ts
-import { InstanceService } from "@soulfiremc/sdk/generated/soulfire/instance_pb";
-
-const instances = soulfire.service(InstanceService);
-const response = await instances.listInstances({});
-```
+Continue with [durable tasks](/docs/sdk/tasks) or
+[plugin-defined APIs](/docs/sdk/plugins).

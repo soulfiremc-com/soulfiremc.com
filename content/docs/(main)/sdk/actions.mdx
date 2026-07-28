@@ -1,0 +1,214 @@
+---
+title: Player actions
+description: Control movement, vehicles, signs, books, resource packs, flight, and creative inventory.
+icon: Gamepad2
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+Player actions are short, lease-aware operations against one online bot. They
+run on the bot game thread and return a typed action result. Use them for
+immediate interactions. Use [durable tasks](/docs/sdk/tasks) for work that must
+keep making progress across ticks or reconnects.
+
+## Mount and drive vehicles
+
+Mounting interacts with the target entity and waits for the Minecraft server
+to confirm the riding state. Dismounting holds the normal sneak input until the
+server confirms that the bot has left the vehicle.
+
+<Tabs items={['TypeScript Effect', 'TypeScript Promise', 'Async Python', 'Sync Python']}>
+  <Tab value="TypeScript Effect">
+    ```ts
+    const mounted = yield* bot.mount({
+      entityId: horseNetworkId,
+      hand: Hand.MAIN,
+    });
+
+    yield* bot.setVehicleControl({
+      forward: true,
+      sprint: true,
+      yaw: 90,
+    });
+
+    yield* bot.dismount();
+    ```
+  </Tab>
+  <Tab value="TypeScript Promise">
+    ```ts
+    const mounted = await bot.mount({
+      entityId: horseNetworkId,
+      hand: Hand.MAIN,
+    });
+
+    await bot.setVehicleControl({ forward: true, yaw: 90 });
+    await bot.setVehicleControl({ forward: false });
+    await bot.dismount();
+    ```
+  </Tab>
+  <Tab value="Async Python">
+    ```python
+    mounted = await bot.mount(horse_network_id)
+    await bot.set_vehicle_control(forward=True, yaw=90)
+    await bot.set_vehicle_control(forward=False)
+    await bot.dismount()
+    ```
+  </Tab>
+  <Tab value="Sync Python">
+    ```python
+    mounted = bot.mount(horse_network_id)
+    bot.set_vehicle_control(forward=True, yaw=90)
+    bot.set_vehicle_control(forward=False)
+    bot.dismount()
+    ```
+  </Tab>
+</Tabs>
+
+Vehicle controls are persistent inputs. Send `false` for movement flags you
+want to release. The returned vehicle reference contains the connection epoch
+and network ID, so stale references can be rejected after a reconnect.
+
+## Update signs and write books
+
+Sign updates take exactly four plain-text lines. SoulFire verifies the
+dimension, loaded chunk, block type, and interaction distance before sending
+the update.
+
+<Tabs items={['TypeScript Effect', 'Python']}>
+  <Tab value="TypeScript Effect">
+    ```ts
+    yield* bot.updateSign({
+      position: signPosition,
+      frontText: true,
+      lines: ["Depot", "Iron", "Input", ""],
+    });
+
+    yield* bot.writeBook({
+      inventorySlot: 0,
+      pages: ["Shift report", "All systems nominal."],
+      title: "Night shift",
+    });
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python
+    await bot.update_sign(
+        sign_position,
+        ["Depot", "Iron", "Input", ""],
+        front_text=True,
+    )
+
+    await bot.write_book(
+        0,
+        ["Shift report", "All systems nominal."],
+        title="Night shift",
+    )
+    ```
+  </Tab>
+</Tabs>
+
+The book slot is a player hotbar index from zero through eight and must contain
+a writable book. Providing a title signs the book. Page count, page length,
+and title length are checked against the active Minecraft protocol limits.
+
+## Handle server resource packs
+
+Resource-pack offers appear in `session.state.resourcePacks` in TypeScript and
+`session.state.resource_packs` in Python. Each offer includes its ID, URL,
+hash, required flag, and optional prompt. Send the corresponding protocol
+status as your downloader moves through its lifecycle.
+
+<Tabs items={['TypeScript Effect', 'Python']}>
+  <Tab value="TypeScript Effect">
+    ```ts
+    yield* bot.respondResourcePack({
+      packId: offer.packId,
+      response: ResourcePackResponse.ACCEPTED,
+    });
+
+    // Download and validate the pack in your application.
+
+    yield* bot.respondResourcePack({
+      packId: offer.packId,
+      response: ResourcePackResponse.SUCCESSFULLY_LOADED,
+    });
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python
+    await bot.respond_resource_pack(
+        offer.pack_id,
+        ResourcePackResponse.RESOURCE_PACK_RESPONSE_ACCEPTED,
+    )
+
+    # Download and validate the pack in your application.
+
+    await bot.respond_resource_pack(
+        offer.pack_id,
+        ResourcePackResponse.RESOURCE_PACK_RESPONSE_SUCCESSFULLY_LOADED,
+    )
+    ```
+  </Tab>
+</Tabs>
+
+<Callout type="warning">
+  SoulFire reports protocol state but does not download or apply arbitrary
+  server files for your application. Validate URLs, hashes, size limits, and
+  archive contents before reporting a successful load.
+</Callout>
+
+## Flight, elytra, and creative inventory
+
+`setFlying` only enables flight when the current game mode grants the ability.
+`startElytraFlight` requests normal survival elytra flight while the bot is
+airborne. Minecraft remains authoritative and rejects the request when the
+equipped item or movement state is invalid.
+Creative inventory edits require creative mode and accept inventory-menu slots
+from zero through 45.
+
+```ts
+yield* bot.setFlying({ flying: true });
+yield* bot.startElytraFlight();
+
+yield* bot.setCreativeSlot({
+  slot: 36,
+  item: { itemId: "minecraft:stone", count: 64 },
+});
+
+// Omit item to clear the slot.
+yield* bot.setCreativeSlot({ slot: 36 });
+```
+
+```python
+await bot.set_flying(True)
+await bot.start_elytra_flight()
+await bot.set_creative_slot(36, "minecraft:stone", count=64)
+await bot.set_creative_slot(36)
+```
+
+Creative slot edits intentionally use item IDs and counts. For exact custom
+components or version-specific packet fields, use the permission-gated
+[raw protocol API](/docs/sdk/protocol).
+
+## Coordinate multiple action callers
+
+Acquire a bot control lease before a sequence that must not be interrupted by
+another SDK client, script, or automation task.
+
+```ts
+yield* Effect.scoped(
+  Effect.gen(function* () {
+    const lease = yield* bot.acquireControlScoped({ ttlSeconds: 30 });
+    yield* bot.updateSign({
+      position: signPosition,
+      frontText: true,
+      lines: ["Reserved", lease.value.token.slice(0, 8), "", ""],
+    });
+  }),
+);
+```
+
+All action methods automatically attach the active lease token. The server
+also claims granular control resources, so unrelated operations can remain
+independent.
