@@ -1,3 +1,4 @@
+import { waitUntil } from "cloudflare:workers";
 import { dash, sentinel } from "@better-auth/infra";
 import { passkey } from "@better-auth/passkey";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
@@ -21,7 +22,6 @@ import { db } from "@/lib/db";
 import * as generatedAuthSchema from "@/lib/db/auth-schema";
 import { user as authUser } from "@/lib/db/auth-schema";
 import * as schema from "@/lib/db/schema";
-import { runInBackground } from "@/lib/request-context";
 import {
   authNotifications,
   EMAIL_OTP_EXPIRATION_SECONDS,
@@ -161,7 +161,7 @@ export const auth = betterAuth({
       generateId: "uuid",
     },
     backgroundTasks: {
-      handler: runInBackground,
+      handler: waitUntil,
     },
   },
   session: {
