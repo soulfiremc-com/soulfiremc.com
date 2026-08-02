@@ -17,22 +17,15 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: pnpm/action-setup@v6
-        name: Install pnpm
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          run_install: false
-
-      - name: Install Node.js
-        uses: actions/setup-node@v7
-        with:
-          node-version: lts/*
-          cache: 'pnpm'
+          bun-version: 1.3.13
 
       - name: Install dependencies
-        run: pnpm install
+        run: bun ci
 
       - name: Run migrations
-        run: |
-          pnpm drizzle-kit migrate
+        run: bunx drizzle-kit migrate
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}

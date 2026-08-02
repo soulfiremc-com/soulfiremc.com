@@ -80,7 +80,7 @@ The `soulfire-sdk` command can download a registered descriptor, verify its
 catalog hash, and create a publishable companion package:
 
 ```bash
-SOULFIRE_TOKEN=token pnpm exec soulfire-sdk generate \
+SOULFIRE_TOKEN=token bunx soulfire-sdk generate \
   --server https://soulfire.example.com \
   --plugin example \
   --language typescript \
@@ -90,7 +90,7 @@ SOULFIRE_TOKEN=token pnpm exec soulfire-sdk generate \
 Use a descriptor file when generation runs inside the plugin build:
 
 ```bash
-pnpm exec soulfire-sdk generate \
+bunx soulfire-sdk generate \
   --descriptor build/plugin-api.binpb \
   --plugin example \
   --language python \
