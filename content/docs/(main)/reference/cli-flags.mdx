@@ -1,13 +1,13 @@
 ---
-title: Command line flags
-description: Learn how to configure the SoulFire client with command line flags.
+title: Command-Line Flags
+description: Configure the SoulFire client with command-line flags.
 icon: Flag
 ---
 
-## What are command line flags?
+## About command-line flags
 
-Command line flags in the CLI are used to configure the client before connecting bots.
-These options change the behavior of the bots and how the CLI interacts with the server.
+Command-line flags configure the client before it connects bots.
+They control bot behavior and the connection between the CLI and server.
 
 ## List of flags
 
@@ -29,13 +29,13 @@ These options change the behavior of the bots and how the CLI interacts with the
 | `--bot-connect-timeout`                     | `30`                                                   | Connect timeout in seconds                                                                                                                                                    |
 | `--bot-resolve-srv`                         | `true`                                                 | Try to resolve SRV records from the address                                                                                                                                   |
 | `--bot-concurrent-connects`                 | `1`                                                    | Max amount of bots attempting to connect at once                                                                                                                              |
-| `--bot-restore-on-reboot`                   | `true`                                                 | Whether a previously desired bot should reconnect after the SoulFire server restarts. Can be overridden per bot.                                                             |
+| `--bot-restore-on-reboot`                   | `true`                                                 | Reconnects a previously desired bot after a SoulFire server restart. Can be overridden per bot.                                                                              |
 | `--account-name-format`                     | `Bot_%d`                                               | The format of the bot names. %d will be replaced with the bot number.                                                                                                         |
-| `--account-shuffle-accounts`                | `false`                                                | Should the accounts order be random when connecting bots?                                                                                                                     |
-| `--account-use-proxies-for-account-auth`    | `false`                                                | Should the imported proxies be used to authenticate accounts? (Contact Microsoft login, input credentials, etc.) Otherwise the SF server will authenticate accounts directly. |
-| `--account-account-import-concurrency`      | `3`                                                    | For credentials-like auth, how many accounts should be imported at once?                                                                                                      |
+| `--account-shuffle-accounts`                | `false`                                                | Randomizes account order before bots connect                                                                                                                                  |
+| `--account-use-proxies-for-account-auth`    | `false`                                                | Uses imported proxies for Microsoft account authentication. Otherwise, the SoulFire server connects directly.                                                               |
+| `--account-account-import-concurrency`      | `3`                                                    | Maximum number of credential-based account imports at one time                                                                                                                |
 | `--proxy-bots-per-proxy`                    | `-1`                                                   | Amount of bots that can be on a single proxy                                                                                                                                  |
-| `--proxy-shuffle-proxies`                   | `false`                                                | Should the proxy order be random when connecting bots?                                                                                                                        |
+| `--proxy-shuffle-proxies`                   | `false`                                                | Randomizes proxy order before bots connect                                                                                                                                    |
 | `--proxy-proxy-check-address`               | `mc.hypixel.net`                                       | What Minecraft server address to use to check if a proxy is working                                                                                                           |
 | `--proxy-proxy-check-concurrency`           | `10`                                                   | Amount of proxies to check at the same time                                                                                                                                   |
 | `--proxy-proxy-check-timeout`               | `30`                                                   | How long to wait for a proxy check response before considering it failed (seconds)                                                                                            |
@@ -45,14 +45,14 @@ These options change the behavior of the bots and how the CLI interacts with the
 | `--ai-api-max-retries`                      | `5`                                                    | API request max retries                                                                                                                                                       |
 | `--ai-captcha-solver-enabled`               | `false`                                                | Enable the AI Captcha Solver                                                                                                                                                  |
 | `--ai-captcha-solver-prompt`                | `Extract the text from the CAPTCHA image. Only res...` | What the bots instruction is                                                                                                                                                  |
-| `--ai-captcha-solver-model`                 | `llava`                                                | What AI model should be used for detecting the text in the CAPTCHA image                                                                                                      |
-| `--ai-captcha-solver-response-command`      | `%s`                                                   | What command should be ran using the response. Omit / to send a normal message                                                                                                |
-| `--ai-captcha-solver-image-source`          | `MAP_IN_HAND`                                          | Where should the captcha images be taken from                                                                                                                                 |
+| `--ai-captcha-solver-model`                 | `llava`                                                | AI model that reads text from a CAPTCHA image                                                                                                                                 |
+| `--ai-captcha-solver-response-command`      | `%s`                                                   | Command that sends the response. Omit `/` to send a normal message.                                                                                                           |
+| `--ai-captcha-solver-image-source`          | `MAP_IN_HAND`                                          | Source of the CAPTCHA image                                                                                                                                                    |
 | `--ai-captcha-solver-captcha-trigger`       | `CHAT_MESSAGE`                                         | What triggers the captcha solver                                                                                                                                              |
 | `--ai-captcha-solver-text-trigger`          | `/captcha`                                             | What text triggers the captcha solver                                                                                                                                         |
 | `--ai-chat-bot-enabled`                     | `false`                                                | Enable the AI Chat Bot                                                                                                                                                        |
 | `--ai-chat-bot-prompt`                      | `You are a Minecraft chat bot, you chat with playe...` | What the bot is instructed to say                                                                                                                                             |
-| `--ai-chat-bot-model`                       | `nemotron-mini`                                        | What AI model should be used for inference                                                                                                                                    |
+| `--ai-chat-bot-model`                       | `nemotron-mini`                                        | AI model used for chat                                                                                                                                                         |
 | `--ai-chat-bot-keyword`                     | `!ai`                                                  | Only respond to messages containing this keyword                                                                                                                              |
 | `--ai-chat-bot-filter-keyword`              | `true`                                                 | Filter out the keyword from messages sent by the AI                                                                                                                           |
 | `--ai-chat-bot-history-length`              | `10`                                                   | Max number of messages to keep in the conversation history                                                                                                                    |
@@ -88,7 +88,7 @@ These options change the behavior of the bots and how the CLI interacts with the
 | `--auto-totem-delay-max`                    | `2`                                                    | Maximum delay between using totems                                                                                                                                            |
 | `--chat-logger-enabled`                     | `true`                                                 | Log all received chat messages to the terminal                                                                                                                                |
 | `--chat-logger-log-death-messages`          | `true`                                                 | Log all death messages to the terminal                                                                                                                                        |
-| `--chat-logger-deduplicate-amount`          | `1`                                                    | How often should the same message be logged before it will not be logged again? (within 5 seconds)                                                                            |
+| `--chat-logger-deduplicate-amount`          | `1`                                                    | Number of duplicate messages to log within five seconds                                                                                                                       |
 | `--client-brand-enabled`                    | `true`                                                 | Send client brand to the server                                                                                                                                               |
 | `--client-brand-client-brand`               | `vanilla`                                              | The client brand to send to the server                                                                                                                                        |
 | `--client-settings-enabled`                 | `true`                                                 | Send client settings to the server when joining                                                                                                                               |
@@ -125,7 +125,7 @@ These options change the behavior of the bots and how the CLI interacts with the
 | `--forwarding-bypass-enabled`               | `false`                                                | Enable the forwarding bypass                                                                                                                                                  |
 | `--forwarding-bypass-forwarding-mode`       | `LEGACY`                                               | What type of forwarding to use                                                                                                                                                |
 | `--forwarding-bypass-secret`                | `forwarding secret`                                    | Secret key used for forwarding. (Not needed for legacy mode)                                                                                                                  |
-| `--forwarding-bypass-player-address`        | `127.0.0.1`                                            | What the server should use as the player IP. Only used by some forwarding modes.                                                                                              |
+| `--forwarding-bypass-player-address`        | `127.0.0.1`                                            | Player IP sent to the server. Used only by some forwarding modes.                                                                                                             |
 
 ## How to generate this list
 

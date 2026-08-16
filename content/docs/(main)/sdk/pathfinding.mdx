@@ -7,9 +7,8 @@ icon: Route
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
-SoulFire plans and executes paths on the server beside the Minecraft game
-loop. The SDK supplies typed goals, planning policy, durable task handles, and
-progress streams.
+SoulFire plans and runs paths on the server near the Minecraft game loop.
+The SDK provides typed goals, planning options, durable task handles, and progress streams.
 
 ## Build a goal
 
@@ -54,9 +53,8 @@ first-completed composites.
   </Tab>
 </Tabs>
 
-Entity goals should carry the target's connection epoch. SoulFire rejects a
-stale reference after reconnect instead of following a different entity that
-reused the same network ID.
+Add the target's connection epoch to entity goals.
+After reconnect, SoulFire rejects a stale reference instead of following an entity that reused the network ID.
 
 ## Preview a path
 

@@ -1,6 +1,6 @@
 ---
 title: Account Formats
-description: Reference for supported account types, import formats, and account settings in SoulFire.
+description: See supported account types, import formats, and account settings.
 icon: FileUser
 ---
 
@@ -50,7 +50,7 @@ Start the import from SoulFire and complete the device-code login in your browse
 
 ### Microsoft Java Refresh Token
 
-Refresh-token imports are commonly used when you already have tokens from another workflow or provider.
+Use this format when another tool or provider gives you refresh tokens.
 
 ```text
 refresh_token_here
@@ -66,7 +66,7 @@ SoulFire accepts these cookie formats from `login.live.com`:
 - **Cookie Editor JSON**: an array of cookie objects from the Cookie Editor browser extension
 - **Raw cookie header**: semicolon-separated `name=value` pairs
 
-SoulFire exchanges those cookies for a full authentication chain so the account can be refreshed automatically.
+SoulFire exchanges these cookies for tokens that it can refresh.
 
 ### Microsoft Java Access Token
 
@@ -81,7 +81,7 @@ Access-token imports cannot be refreshed. When the token expires, you need to im
 ### Offline
 
 Offline usernames are generally case-sensitive. That means `username` and `UserName` are treated as different accounts.
-Some auth plugins, such as AuthMe, may still reject names that differ only by case.
+Some authentication plugins, such as AuthMe, can reject names that differ only by case.
 
 ```text
 Username

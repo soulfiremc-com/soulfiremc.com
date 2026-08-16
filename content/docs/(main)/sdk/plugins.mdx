@@ -7,9 +7,8 @@ icon: Plug
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
-A SoulFire plugin can register protobuf unary RPCs, server streams, permissions,
-events, and durable task providers. The SDK handshake returns the installed
-plugin catalog and compatibility metadata.
+A SoulFire plugin can register protobuf RPCs, streams, permissions, events, and durable tasks.
+The SDK handshake returns the installed plugins and compatibility metadata.
 
 Applications have two ways to consume a plugin:
 
@@ -18,10 +17,9 @@ Applications have two ways to consume a plugin:
 
 ## Register a plugin API
 
-Plugin declarations belong in `onLoad`. SoulFire gives each plugin an isolated
-`PluginContext` for permissions, protobuf RPC services, durable task providers,
-event types, and SDK package metadata. Runtime work starts in `onEnable` and
-must stop in `onDisable`.
+Declare plugin APIs in `onLoad`.
+Each plugin gets a `PluginContext` for permissions, RPCs, tasks, events, and SDK metadata.
+Start runtime work in `onEnable` and stop it in `onDisable`.
 
 ```java
 public final class ExamplePlugin extends ExternalPlugin {
@@ -64,7 +62,7 @@ instance-scoped plugin calls in the audit log and reports request, failure, and
 latency metrics under the owning plugin.
 
 Use `context.settings().registerServerPage(...)` or
-`registerInstancePage(...)` for settings that should appear in every matching
+`registerInstancePage(...)` for settings that must appear in every matching
 settings registry. Use `context.commands().register(...)` for a Brigadier root
 command. These declarations are validated during `onLoad` and installed before
 the corresponding lifecycle event runs.
@@ -224,7 +222,7 @@ when the server must keep working after the SDK process disconnects.
 
 ## Run plugin-defined tasks
 
-A plugin task provider declares its result type and may declare a typed
+A plugin task provider declares its result type and can declare a typed
 progress detail. SoulFire validates both at runtime before publishing them.
 
 ```java
@@ -298,11 +296,11 @@ option (soulfire.v1.api_method) = {
 };
 ```
 
-SoulFire derives the MCP input schema from the protobuf request and applies the
-same authentication, dynamic permissions, call context, metrics, and audit log
-as a normal plugin gRPC request. Streaming methods cannot opt in. Methods with
+SoulFire creates the MCP input schema from the protobuf request.
+It uses the same authentication, permissions, context, metrics, and audit log
+as plugin gRPC requests. Streaming methods cannot opt in. Methods with
 mutation or destructive permissions must also set
-`mcp_requires_confirmation: true`; their generated tool requires
+`mcp_requires_confirmation: true`. Their generated tool requires
 `confirm=true` on each call.
 
 ## Watch plugin events
@@ -370,7 +368,7 @@ normalized envelope.
 </Tabs>
 
 Every subscription starts with a `READY` envelope. `resumeGap` is true when an
-`afterSequence` value could not be resumed because plugin events are live and
+`afterSequence` value was not resumed because plugin events are live and
 not retained. `droppedBefore` reports events discarded for a slow consumer.
 Reconnect from a fresh domain snapshot when either value signals a gap.
 

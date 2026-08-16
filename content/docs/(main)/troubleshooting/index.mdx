@@ -9,12 +9,11 @@ import { Cards, Card } from 'fumadocs-ui/components/card';
 import { Callout } from 'fumadocs-ui/components/callout';
 
 <Callout type="warning">
-  Change one thing at a time while troubleshooting.
-  If you change proxies, account type, selected bots, protocol version, and
-  worker configuration all at once, you usually lose the real cause.
+  Change one setting at a time.
+  If you change several settings together, you cannot tell which change fixed the problem.
 </Callout>
 
-Use this section when something that should work does not.
+Use this section when SoulFire does not work as expected.
 Start with the symptom that is closest to what you see on screen or in the logs.
 
 ## Before you change anything
@@ -24,11 +23,11 @@ Collect the basics first:
 - the exact SoulFire version
 - whether you are using GUI, CLI, or a dedicated server
 - whether the problem is local or remote
-- the exact error text, not just a paraphrase
+- the exact error text
 - the smallest setup that still reproduces the issue
 - whether the problem disappears when you remove proxies or automation
 
-That saves time both for you and for anyone else trying to reproduce the problem later.
+This information helps other people reproduce the problem.
 
 ## Pick the closest symptom
 
@@ -72,7 +71,7 @@ That saves time both for you and for anyone else trying to reproduce the problem
 
 ## Troubleshoot the narrowest layer first
 
-In practice, SoulFire problems usually break down into layers:
+SoulFire problems usually occur in one of these layers:
 
 1. the client cannot reach the SoulFire server
 2. the SoulFire server is reachable, but the bots cannot join or stay connected to the target server

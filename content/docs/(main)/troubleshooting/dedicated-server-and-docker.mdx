@@ -20,13 +20,13 @@ Your client URL needs to match the way the server is exposed:
 - Traefik with public-IP HTTPS
 - plain HTTP
 
-If those do not match, the client can look broken even when SoulFire itself is fine.
+If they do not match, the client cannot connect even when SoulFire works.
 
 ## Use the setup script management menu
 
 If you used the automated dedicated-server installer, re-run it and use the management menu.
 
-That gives you the fastest path to:
+The menu shows:
 
 - the expected access URL
 - container health
@@ -37,12 +37,12 @@ If the management menu already shows the stack is unhealthy, troubleshoot there 
 
 ## Check HTTPS expectations
 
-Cloudflared and Traefik setups should normally be used through HTTPS.
+Use HTTPS with Cloudflared and Traefik.
 If you chose HTTP-only mode, remember:
 
 - traffic is unencrypted
 - some environments behave worse over plain HTTP
-- browser-like or HTTPS-oriented flows can be confusing in HTTP-only deployments
+- some clients work poorly with HTTP-only deployments
 
 Use HTTP-only mainly for LAN or controlled testing.
 
@@ -76,7 +76,7 @@ Start simple:
 3. inspect logs
 4. retry a basic GUI or CLI login with a fresh token
 
-Only after that should you re-enable extra layers such as proxies, automation, or external integrations.
+After the basic login works, enable proxies, automation, and external integrations one at a time.
 
 ## If remote login fails
 

@@ -7,9 +7,8 @@ icon: ListChecks
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
-Durable tasks execute on the SoulFire server beside the Minecraft game loop.
-Use them for work that has progress, cancellation, retries, reconnect policy,
-or control conflicts.
+Durable tasks run on the SoulFire server near the Minecraft game loop.
+Use them for work that needs progress, cancellation, retries, reconnect rules, or shared control.
 
 Current first-party task types include:
 
@@ -42,9 +41,8 @@ Current first-party task types include:
 ## Excavate a cuboid
 
 Use `excavate` to clear every diggable block between two inclusive corners.
-SoulFire chooses the nearest remaining block, plans each route beside the
-game loop, selects tools through the pathfinder, and never mines outside the
-requested cuboid.
+SoulFire selects the nearest block and plans each route near the game loop.
+The pathfinder selects tools and keeps mining inside the requested cuboid.
 
 <Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
   <Tab value="Effect">
@@ -131,9 +129,9 @@ movement, rotation, hand, and inventory resources.
 ## Build an inline schematic
 
 `build` accepts a language-native blueprint made of block offsets relative to
-an origin. SoulFire transforms the whole blueprint on the server, orders
-placements from the bottom up, navigates between them, selects exact
-materials, and verifies the resulting block state.
+an origin. SoulFire transforms the blueprint on the server and places blocks
+from the bottom up. It navigates between positions, selects exact materials,
+and checks each block state.
 
 <Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
   <Tab value="Effect">
@@ -233,7 +231,7 @@ For a coordinated build, start the same blueprint on each bot with the same
 `partitionCount` or `partition_count` and a distinct zero-based partition
 index. SoulFire applies transforms and ordering before partitioning, which
 makes every bot agree on ownership without a client-side coordinator.
-Pathfinding may place navigation scaffolds when `allowPlacing` or
+Pathfinding can place navigation scaffolds when `allowPlacing` or
 `allow_placing` is enabled. Task suspension preserves its current placement,
 and cancellation releases every claimed control resource.
 
@@ -418,9 +416,9 @@ costs, uses, stock, experience, demand, and price data.
 </Tabs>
 
 `expectedResult` and `expected_result` protect against a stale offer index.
-The task refuses to continue if the merchant changes that offer, runs one
-trade at a time so the count is exact, and stops before taking an output when
-the inventory cannot hold it.
+If the merchant changes the offer, the task stops.
+It runs one trade at a time for an exact count.
+It also stops when the inventory cannot hold the output.
 
 ## Hunt matching entities
 
@@ -455,16 +453,16 @@ result = await hunt.result()
 
 The selector must constrain a type, category, identity, tag, name,
 equipment, effect, or owner. SoulFire rejects an unconstrained selector.
-Combat automatically ranks and equips the strongest matching melee weapon,
-respects attack cooldown, chases through Pathfinder v2, and restores the
-previous hotbar selection when the task stops.
+Combat selects and equips the strongest matching melee weapon.
+It respects attack cooldown and chases through Pathfinder v2.
+When the task stops, it restores the previous hotbar selection.
 
 ## Use a bow or crossbow
 
-Use `rangedAttack` or `ranged_attack` when a bot should keep its distance and
-fire at a specific observed entity. The task can lead a moving target,
-compensate for arrow gravity, strafe while aiming, and move back into its
-configured range when the target closes in or escapes.
+Use `rangedAttack` or `ranged_attack` to keep a bot at a distance and
+fire at a specific observed entity. The task leads moving targets and
+compensates for arrow gravity. It can strafe while aiming and move back into
+the configured range.
 
 ```ts
 const archer = yield* bot.tasks.rangedAttack(target, {
@@ -497,10 +495,9 @@ archer = await bot.tasks.ranged_attack(
 result = await archer.result()
 ```
 
-The task accepts bows and crossbows, finds compatible ammunition through the
-vanilla projectile rules, and reports distinct outcomes for a defeated
-target, a lost target, a shot limit, missing ammunition, and a missing
-weapon. The target reference is scoped to the current bot connection. A
+The task supports bows and crossbows and selects ammunition with the vanilla
+projectile rules. Its result identifies defeated or lost targets, shot limits,
+missing ammunition, and missing weapons. The target reference is scoped to the current bot connection. A
 reconnect invalidates it instead of risking an attack on a recycled entity
 ID. Cancellation stops charging or aiming, releases movement inputs, and
 restores the previously selected hotbar slot.
@@ -557,7 +554,7 @@ result = await defense.result()
 ```
 
 The bounded calls complete after the area stays clear for `clearSeconds` or
-`clear_seconds`. Set target or attack limits when the task should end on a
+`clear_seconds`. Set target or attack limits to end the task on a
 specific combat budget. Use `runGuard`, `run_guard`, `runProtect`, or
 `run_protect` for a persistent defense that keeps waiting for new threats.
 Entity protection follows the subject as it moves and ends safely if the
@@ -719,9 +716,8 @@ harvest counts.
 
 ## Breed compatible animals
 
-The breeding task selects two compatible adult animals in a bounded area,
-finds an inventory item accepted as food by both, walks to each animal, and
-feeds them:
+The breeding task selects two compatible adults in a bounded area.
+It finds suitable food, walks to each animal, and feeds them:
 
 <Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
   <Tab value="Effect">
@@ -787,7 +783,7 @@ vanilla horse and donkey cross. It excludes sterile mules.
 A successful entity-interaction call is not enough to count a feed. SoulFire
 waits for the server's love-mode entity event for each animal. The result
 therefore reports `pairsStarted` or `pairs_started`, not a guessed offspring
-count. Minecraft may still delay or prevent offspring after both parents enter
+count. Minecraft can still delay or prevent offspring after both parents enter
 love mode.
 
 `breed` defaults to one pair and reports `NO_COMPATIBLE_PAIR` or `NO_FOOD`
@@ -1029,10 +1025,9 @@ loadout = await bot.tasks.maintain_loadout(
 
 The unbounded form keeps monitoring until cancellation. Use
 `balanceLoadout` or `balance_loadout` for a one-shot rebalance, or set a
-finite rebalance limit. Transfers are preflighted as batches and use partial
-movement deliberately, so a temporarily empty chest produces a typed
-container-exhausted result for one-shot work instead of corrupting menu
-state. Results report final counts, whether each requirement is satisfied,
+finite rebalance limit. SoulFire plans each transfer batch before it moves
+items. A temporarily empty chest returns a typed container-exhausted result
+without corrupting menu state. Results report final counts, whether each requirement is satisfied,
 and cumulative withdrawn and deposited counts.
 
 ## Attach ownership to a stream
@@ -1053,7 +1048,7 @@ async for event in bot.tasks.run_auto_respawn(maximum_respawns=1):
 
 Interrupting the Effect stream, aborting the Promise iterator, or cancelling
 the Python iterator cancels the server task. Use a detached task handle when
-the work should survive the SDK process.
+the work must survive the SDK process.
 
 ## Observe progress
 

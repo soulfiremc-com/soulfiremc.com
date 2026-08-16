@@ -6,8 +6,8 @@ icon: SlidersHorizontal
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-Strategy hooks replace one policy action while keeping the runner's normal
-timeout, retry, claim, checkpoint, event, and control lifecycle.
+Strategy hooks replace one policy action.
+The runner still manages timeouts, retries, claims, checkpoints, events, and control.
 
 ## Replace one policy step
 
@@ -23,20 +23,20 @@ const run = yield* beatGame(bot, {
 });
 ```
 
-A hook should perform one stable unit of work and return. The planner reads a
-fresh observation before it advances. Returning from a hook is not, by itself,
-proof that the world changed.
+A hook performs one stable unit of work, then returns.
+The planner reads a new observation before it continues.
+A completed hook does not prove that the world changed.
 
 Available hooks cover:
 
-- death recovery;
-- eating and retreat;
-- equipment preparation;
-- requirement acquisition;
-- Nether construction and entry;
-- portal return;
-- eye throwing and stronghold search;
-- End portal activation;
+- death recovery
+- eating and retreat
+- equipment preparation
+- requirement acquisition
+- Nether construction and entry
+- portal return
+- eye throwing and stronghold search
+- End portal activation
 - the dragon fight.
 
 ## Compose exported behaviors

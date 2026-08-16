@@ -7,9 +7,8 @@ icon: Workflow
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
-Behavior combinators coordinate application-level workflows. Use them to
-decide what a bot should do next while durable tasks keep movement, combat,
-inventory, and survival timing beside the Minecraft game loop.
+Behavior combinators build application workflows.
+They choose the next action while durable tasks manage movement, combat, inventory, and survival timing.
 
 ## Build a workflow
 
@@ -108,10 +107,10 @@ atomic movement calls.
 | Combinator | Use it when |
 | --- | --- |
 | `sequence` | Every step must run in order |
-| `parallel` | Independent work may run concurrently |
-| `race` | The first successful strategy should win |
-| `repeat` | A step should run a fixed number of times |
-| `retry` | A transient failure may recover |
+| `parallel` | Run independent work at the same time |
+| `race` | Return the first successful strategy |
+| `repeat` | Run a step a fixed number of times |
+| `retry` | Retry a temporary error |
 | `timeout` | Work needs a hard application deadline |
 | `until` | Repeat until a result satisfies a predicate |
 | `conditional` | Choose a branch from current state |
@@ -167,9 +166,8 @@ Always give retries a finite attempt count. Delay and backoff are optional:
 </Tabs>
 
 Parent cancellation stops a retry before the next attempt. A timeout also
-cancels the running operation. The Promise timeout does not depend on a custom
-behavior honoring cancellation before it returns to the caller, though native
-SDK operations do receive the linked signal.
+cancels the running operation. The Promise timeout can return before custom
+behavior responds to cancellation. Native SDK operations receive the linked signal.
 
 ## Hold exclusive control
 

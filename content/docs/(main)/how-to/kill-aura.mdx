@@ -1,6 +1,6 @@
 ---
 title: Kill Aura
-description: Configure SoulFire's kill-aura plugin for combat testing with sane ranges, cooldown behavior, whitelist protection, and wall checks.
+description: Configure targeting ranges, cooldowns, protected players, and wall checks for combat tests.
 icon: Sword
 ---
 
@@ -9,7 +9,7 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
 
 ## What this is for
 
-`kill-aura` is the built-in combat automation plugin that makes a bot look at nearby targets and attack them when they enter the configured ranges.
+`kill-aura` makes a bot look at and attack nearby targets within configured ranges.
 
 This is useful for:
 
@@ -28,15 +28,15 @@ It only takes over the parts of control needed for targeting, looking, swinging,
 | `look-range` | How close a target must be before the bot starts looking at it |
 | `swing-range` | How close a target must be before the bot swings its arm |
 | `hit-range` | How close a target must be before the bot actually attacks |
-| `check-walls` | Whether targets behind walls should be ignored |
+| `check-walls` | Ignores targets behind walls when enabled |
 | `ignore-cooldown` | Whether to ignore the normal 1.9+ attack cooldown model |
 | `attack-delay-ticks` | Extra randomized delay used for pre-1.9 behavior, or when cooldown is ignored |
 
-The important relationship is:
+Set the ranges in this order:
 
-- `look-range` should usually be the largest
-- `swing-range` should usually be smaller than `look-range`
-- `hit-range` should usually be the smallest and most conservative
+- Use the largest value for `look-range`
+- Use a smaller value for `swing-range`
+- Use the smallest value for `hit-range`
 
 ## Enable and tune kill-aura
 
@@ -79,8 +79,8 @@ The important relationship is:
 
 This controls when the bot begins orienting toward a target.
 
-If it is too small, the bot may react late.
-If it is too large, the bot may look unnatural or overreact to distant entities.
+If the value is too small, the bot can react late.
+If the value is too large, the bot can react to distant entities.
 
 ### Swing range
 
@@ -111,7 +111,7 @@ If you leave `ignore-cooldown` off on modern versions, normal attack readiness r
 
 ## Wall checks and visibility
 
-With `check-walls` enabled, the bot avoids attacking targets it should not really be able to reach or see cleanly.
+With `check-walls` enabled, the bot avoids targets that it cannot clearly see or reach.
 
 That is the safer choice for realistic testing.
 

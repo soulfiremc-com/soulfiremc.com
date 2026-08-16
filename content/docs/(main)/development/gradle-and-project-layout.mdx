@@ -6,12 +6,12 @@ icon: FolderTree
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-Use this page when the template exists but you need to understand what each build file is doing.
-SoulFire plugins are Fabric mods, so the project layout is a normal Fabric Loom layout with SoulFire-specific dependencies and resources layered on top.
+This page explains each build file in the plugin template.
+SoulFire plugins use a Fabric Loom project with SoulFire dependencies and resources.
 
 ## Published coordinates
 
-SoulFire publishes the artifacts most plugin authors care about under the `com.soulfiremc` group:
+SoulFire publishes plugin dependencies under the `com.soulfiremc` group:
 
 | What | Value |
 | --- | --- |
@@ -32,7 +32,7 @@ Check the metadata before you pin a version, especially if you are targeting a r
 
 ## Minimal repositories block
 
-If you want the smallest working setup, these repositories are the important ones:
+These repositories provide the required dependencies:
 
 ```kotlin
 repositories {
@@ -43,8 +43,8 @@ repositories {
 }
 ```
 
-The official template includes more repositories because it mirrors the larger SoulFire build and keeps room for common transitive dependencies.
-If you are unsure, copy the template block as-is.
+The official template contains additional repositories for transitive dependencies.
+If you are unsure, copy the complete block from the template.
 
 ## Minimal dependency shape
 

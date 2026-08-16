@@ -7,10 +7,8 @@ icon: TriangleAlert
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
-SoulFire keeps transport failures separate from rejected game actions and
-failed durable tasks. This distinction tells an application whether to retry a
-request, change its input, inspect task progress, or ask for another
-permission.
+SoulFire separates transport errors, rejected game actions, and failed tasks.
+The error type tells the application whether to retry, change input, inspect progress, or request permission.
 
 ## Error families
 

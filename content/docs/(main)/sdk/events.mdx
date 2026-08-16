@@ -7,18 +7,16 @@ icon: Radio
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
-`bot.events()` exposes the ordered server stream. `bot.observe()` consumes that
-same stream and maintains an immutable application-facing state model. Use the
-raw stream for transient activity such as sounds and particles. Use a session
-for entities, blocks, the tab list, boss bars, weather, and scoreboards.
+`bot.events()` returns the ordered server stream.
+`bot.observe()` reads that stream and maintains an immutable state model.
+Use the raw stream for temporary activity such as sounds and particles.
+Use a session for retained state such as entities, blocks, weather, and scoreboards.
 
 ## Watch an entire instance
 
-`instance.events()` multiplexes every selected bot onto one connection. Each
-item identifies the source through `botProfileId` or `bot_profile_id`, then
-carries the normal `BotEvent` envelope. This is the practical choice for fleet
-telemetry, shared chat handling, dashboards, and coordinators that should not
-open one stream per account.
+`instance.events()` combines events from selected bots into one connection.
+Each `BotEvent` item identifies its bot with `botProfileId` or `bot_profile_id`.
+Use this stream for fleet telemetry, shared chat, dashboards, and coordinators.
 
 <Tabs items={['TypeScript Effect', 'TypeScript Promise', 'Python async', 'Python sync']}>
   <Tab value="TypeScript Effect">
@@ -167,10 +165,10 @@ the same text can appear in several channels.
   </Tab>
 </Tabs>
 
-Use `bot.chat.watch(...)` for every matching message. It returns an Effect
-`Stream` from the Effect entry point, an async iterable from the Promise
-entry point, an async iterator in asynchronous Python, and an iterator in
-synchronous Python.
+Use `bot.chat.watch(...)` for every matching message.
+The Effect entry point returns a `Stream`.
+The Promise entry point returns an async iterable.
+Python returns an async or synchronous iterator.
 
 ## State indexes
 

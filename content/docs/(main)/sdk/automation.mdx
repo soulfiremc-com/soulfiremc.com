@@ -8,10 +8,9 @@ import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { Steps } from 'fumadocs-ui/components/steps';
 
-`@soulfiremc/beat-game` is a separate first-party application package. It
-uses SoulFire's public observations, direct actions, pathfinding, control
-leases, generic tasks, and plugin APIs. SoulFire itself does not contain a
-beat-game planner.
+`@soulfiremc/beat-game` is a separate first-party package.
+It uses SoulFire observations, actions, pathfinding, control leases, tasks, and plugin APIs.
+SoulFire does not contain a beat-game planner.
 
 <Callout type="info">
   SoulFire handles Minecraft mechanics close to the connection. Your
@@ -99,7 +98,7 @@ control, and ends subscriptions.
 ## Add restart persistence
 
 Every run has a checkpoint store. The default store is in memory. Use the
-Node-only JSON store when one worker should survive a restart:
+Node-only JSON store to keep one worker state across restarts:
 
 ```ts
 import { JsonFileBeatGameCheckpointStore } from
@@ -119,9 +118,9 @@ store validates the complete checkpoint, locks each run file, and uses
 compare-and-set revisions to reject a second writer.
 
 The runner also saves the current action identity and last stable action
-evidence. Durable tasks use deterministic idempotency keys and deadlines, so
-a restarted worker can attach to work that the SoulFire server still owns
-instead of duplicating it.
+evidence. Durable tasks use stable idempotency keys and deadlines.
+After a restart, the worker attaches to existing server work instead of
+duplicating it.
 
 For a shared database, implement `BeatGameCheckpointStore` with `load`,
 `save`, and `remove`. `save` must enforce `expectedRevision`.

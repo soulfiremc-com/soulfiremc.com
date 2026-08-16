@@ -7,14 +7,11 @@ icon: Binary
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
-SoulFire exposes its active native Minecraft packet codec as an advanced SDK
-module. Use it when a typed high-level operation does not exist yet, when a
-server uses a custom packet extension, or when you are diagnosing protocol
-behavior.
+The protocol module exposes SoulFire's active Minecraft packet codec.
+Use it for missing high-level operations, custom packet extensions, or protocol debugging.
 
-Prefer the typed world, inventory, chat, action, and task APIs for normal
-automation. Raw packet code is version-dependent and can put a bot connection
-into an invalid state.
+Use the typed world, inventory, chat, action, and task APIs for normal automation.
+Raw packet code depends on the Minecraft version and can break a bot connection.
 
 ## Check the active protocols
 
@@ -179,12 +176,13 @@ guard prevents bytes built for one packet schema from being sent as another
 packet after a version or state change.
 
 <Callout type="warn">
-  Raw packet sending requires the `RAW_PROTOCOL` instance permission. SoulFire
-  grants it only to administrators by default, limits packets to 1 MiB and 20
-  sends per second per user and bot, and writes every send to the server log.
+  Raw packet sending requires the `RAW_PROTOCOL` instance permission.
+  By default, SoulFire grants this permission only to administrators.
+  It limits packets to 1 MiB and 20 sends per second for each user and bot.
+  It writes each send to the server log.
 </Callout>
 
 Raw observation and injection do not bypass plugin RPCs, task ownership, or the
-normal typed SDK. A SoulFire plugin should expose a typed RPC when an operation
+normal typed SDK. A SoulFire plugin can expose a typed RPC when an operation
 is reusable. Reserve raw packets for genuinely version-specific work and
 short-lived diagnostics.

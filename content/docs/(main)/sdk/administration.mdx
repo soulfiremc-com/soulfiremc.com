@@ -7,9 +7,8 @@ icon: Settings
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
-`soulfire.admin` is the high-level SDK entry point for SoulFire's control
-plane. It uses the same authenticated transport, deadlines, cancellation, and
-typed failure model as bot automation.
+Use `soulfire.admin` to manage the SoulFire server.
+It uses the same authentication, timeouts, cancellation, and typed errors as bot automation.
 
 ## Inspect server state
 
@@ -44,10 +43,9 @@ typed failure model as bot automation.
   </Tab>
 </Tabs>
 
-Server information contains current configuration, setting definitions,
-settings pages, and installed plugin metadata. Metrics can be requested with a
-`since` timestamp for incremental dashboard updates. Instance metrics add bot
-health, food, dimension, game-mode, and position distributions.
+Server information includes settings, setting definitions, pages, and plugin metadata.
+Use a `since` timestamp to request only new metrics for a dashboard.
+Instance metrics include bot health, food, dimension, game mode, and position.
 
 ## Manage settings and users
 
@@ -152,9 +150,9 @@ such as `INSTANCE_OWNER`.
 </Tabs>
 
 Global permissions omit the resource ID. Instance, bot, and task permissions
-require the matching UUID. SoulFire retains overrides if the owning plugin is
-removed and returns them with `active: false`; reinstalling that plugin does
-not discard or silently reinterpret prior administrator intent.
+require the matching UUID. SoulFire keeps overrides after you remove their
+plugin and returns them with `active: false`. Reinstalling the plugin does not
+change these values.
 
 <Callout type="warn">
   Token generation and session invalidation are security-sensitive mutations.
@@ -263,5 +261,5 @@ async for event in client.admin.activate_script(
 ```
 
 Generated service clients remain available through `soulfire.service()` in
-TypeScript and `client.service()` in Python when a newly added or uncommon
-field has not received a convenience method yet.
+TypeScript and `client.service()` in Python.
+Use them when a field has no convenience method.

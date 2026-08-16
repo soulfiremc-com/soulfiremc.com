@@ -7,16 +7,14 @@ icon: Gamepad2
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
-Player actions are short, lease-aware operations against one online bot. They
-run on the bot game thread and return a typed action result. Use them for
-immediate interactions. Use [durable tasks](/docs/sdk/tasks) for work that must
-keep making progress across ticks or reconnects.
+Player actions are short operations for one online bot.
+They run on the bot game thread and return a typed result.
+Use [durable tasks](/docs/sdk/tasks) for work that continues across ticks or reconnects.
 
 ## Mount and drive vehicles
 
-Mounting interacts with the target entity and waits for the Minecraft server
-to confirm the riding state. Dismounting holds the normal sneak input until the
-server confirms that the bot has left the vehicle.
+The mount action interacts with an entity and waits for the server to confirm the riding state.
+The dismount action holds sneak until the server confirms that the bot left the vehicle.
 
 <Tabs items={['TypeScript Effect', 'TypeScript Promise', 'Async Python', 'Sync Python']}>
   <Tab value="TypeScript Effect">

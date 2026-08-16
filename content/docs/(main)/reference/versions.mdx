@@ -1,30 +1,29 @@
 ---
 title: Supported Versions
-description: A list of all versions that are supported by SoulFire.
+description: See the Minecraft versions that SoulFire supports.
 icon: GitBranch
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-## What versions does SoulFire support?
+## Supported Minecraft versions
 
 <Callout type="info">
-  SoulFire runs on the **latest Minecraft version** but supports connecting to **Bedrock Edition**, all **Classic**, **Alpha**, **Beta**, **Release** versions, and **April Fools snapshots** through [ViaFabricPlus](https://github.com/ViaVersion/ViaFabricPlus).
+  SoulFire runs on the **latest Minecraft version**.
+  [ViaFabricPlus](https://github.com/ViaVersion/ViaFabricPlus) adds support for Bedrock, Classic, Alpha, Beta, Release, and April Fools versions.
 </Callout>
 
-SoulFire supports a wide range of Minecraft versions thanks to ViaFabricPlus and its underlying Via* libraries.
-SoulFire itself always runs on the latest stable release of Minecraft, and all connections to older versions are translated automatically.
-Below is a list of all versions that are supported by SoulFire.
+SoulFire uses ViaFabricPlus and its Via libraries to support many Minecraft versions.
+SoulFire runs on the latest stable Minecraft release.
+It translates connections to older versions automatically.
 
 ## How does this work?
 
-Thanks to the built-in [ViaFabricPlus](https://github.com/ViaVersion/ViaFabricPlus) mod (which includes [ViaVersion](https://github.com/ViaVersion/ViaVersion),
-[ViaLegacy](https://github.com/RaphiMC/ViaLegacy), [ViaBedrock](https://github.com/RaphiMC/ViaBedrock) and many others),
-a SoulFire bot can connect to all these versions even without the server having ViaVersion installed.
-The packet translation happens "client/bot side".
-This feature takes inspiration from services like [VIAaaS](https://github.com/ViaVersion/VIAaaS)
-and [ViaProxy](https://github.com/RaphiMC/ViaProxy),
-which include client-side translation externally.
+The built-in [ViaFabricPlus](https://github.com/ViaVersion/ViaFabricPlus) mod includes
+[ViaVersion](https://github.com/ViaVersion/ViaVersion), [ViaLegacy](https://github.com/RaphiMC/ViaLegacy),
+and [ViaBedrock](https://github.com/RaphiMC/ViaBedrock).
+SoulFire translates packets on the bot side, so the Minecraft server does not need ViaVersion.
+This design is similar to [VIAaaS](https://github.com/ViaVersion/VIAaaS) and [ViaProxy](https://github.com/RaphiMC/ViaProxy).
 
 ## List of versions
 

@@ -9,19 +9,19 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 If you are not sure whether you need a remote setup, read [Choose Your Setup](/docs/start-here/choose-your-setup) first.
 
-## Automated Setup
+## Automated setup
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/_Uz5kgupFKs?si=utMuK75jVCozQu4t" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-This guide walks you through deploying a SoulFire dedicated server on a remote Linux machine.
-Our interactive setup script installs Docker, handles SSL, and deploys everything for you.
+This guide installs a SoulFire dedicated server on a remote Linux machine.
+The setup script installs Docker, configures HTTPS, and starts SoulFire.
 
 <Steps>
   <Step>
     ### Get a server
 
-    You need a Linux server (VPS) with a public IP address.
-    Debian is the recommended distribution, but any major Linux distro works (Ubuntu, Fedora, Arch, etc.).
+    Get a Linux server (VPS) with a public IP address.
+    Debian is recommended, but Ubuntu, Fedora, and Arch also work.
 
     How much RAM you need depends on how many bots you plan to run:
 
@@ -34,53 +34,56 @@ Our interactive setup script installs Docker, handles SSL, and deploys everythin
     | 1000+      | 32 GB+ | 4+   |
 
     <Callout type="info">
-      Get **20€ in free credits** on [Hetzner Cloud](https://hetzner.cloud/?ref=HWdu4W4iHCgA). It also supports SoulFire development.
+      Get **20€ in free credits** from [Hetzner Cloud](https://hetzner.cloud/?ref=HWdu4W4iHCgA).
+      This referral also supports SoulFire development.
     </Callout>
 
     When creating your server, choose the **Debian** image.
-    Save the server's **public IP address**. You'll need it in the next step.
+    Save the server's **public IP address** for the next step.
   </Step>
 
   <Step>
     ### Connect via SSH
 
-    SSH (Secure Shell) lets you run commands on your server remotely.
-    Open a terminal on your local machine and connect:
+    SSH (Secure Shell) lets you run remote commands on the server.
+    Open a terminal on your computer and connect:
 
     ```bash
     ssh root@your-server-ip
     ```
 
     Replace `your-server-ip` with the IP address from the previous step.
-    You'll be prompted for the password you set when creating the server (or it was emailed to you).
+    Enter the server password when SSH asks for it.
+    You created this password when you created the server, or your provider sent it by email.
 
     On **Windows**, use PowerShell or Windows Terminal. Both have SSH built in.
-    On **macOS/Linux**, your default terminal works out of the box.
+    On **macOS/Linux**, use the default terminal.
 
     <Callout type="info">
-      For better security, consider setting up [SSH key authentication](https://www.ssh.com/academy/ssh/key) instead of passwords.
+      [SSH key authentication](https://www.ssh.com/academy/ssh/key) is safer than password authentication.
     </Callout>
   </Step>
 
   <Step>
     ### Run the setup script
 
-    Once connected to your server, run the following command:
+    After SSH connects, run this command:
 
     ```bash
     wget -qO /tmp/sf-setup.sh https://raw.githubusercontent.com/soulfiremc-com/SoulFire/main/scripts/soulfire-dedicated-setup.sh && sudo bash /tmp/sf-setup.sh
     ```
 
-    The interactive setup will guide you through:
-    - **System updates** and **Docker installation** (if needed)
-    - **SSL configuration**: choose between Cloudflared tunnel, Traefik with domain SSL, Traefik with IP SSL, or plain HTTP
-    - **Deploying SoulFire** via Docker Compose to `/opt/soulfire/`
+    The script asks you to choose these options:
+
+    - **System updates** and **Docker installation**, if required
+    - **HTTPS setup** with Cloudflared, Traefik, or plain HTTP
+    - **SoulFire deployment** with Docker Compose in `/opt/soulfire/`
   </Step>
 
   <Step>
     ### Generate an access token
 
-    After installation, re-run the same command to open the management menu:
+    Run the same command again to open the management menu:
 
     ```bash
     wget -qO /tmp/sf-setup.sh https://raw.githubusercontent.com/soulfiremc-com/SoulFire/main/scripts/soulfire-dedicated-setup.sh && sudo bash /tmp/sf-setup.sh
@@ -92,14 +95,16 @@ Our interactive setup script installs Docker, handles SSL, and deploys everythin
     generate-token api
     ```
 
-    Copy the generated token. You'll need it to connect the GUI client.
+    Copy the token for the next step.
   </Step>
 
   <Step>
     ### Connect the GUI client
 
-    Open SoulFire on your PC ([install it](/docs/start-here) if you haven't) and enter:
-    - **Server URL**: The HTTPS URL you configured (e.g. `https://your-domain.com` or `https://your-server-ip`)
+    [Install SoulFire](/docs/start-here) on your computer, then open it.
+    Enter these values:
+
+    - **Server URL**: The configured HTTPS URL, such as `https://your-domain.com` or `https://your-server-ip`
     - **Access token**: The token from the previous step
 
     You are now connected to your dedicated SoulFire server.
@@ -114,14 +119,14 @@ Re-run the setup script at any time to access the management menu:
 wget -qO /tmp/sf-setup.sh https://raw.githubusercontent.com/soulfiremc-com/SoulFire/main/scripts/soulfire-dedicated-setup.sh && sudo bash /tmp/sf-setup.sh
 ```
 
-From the menu you can:
+The menu has these actions:
 - **Attach** to the SoulFire console to run commands
 - **View logs** of running containers
 - **Update** SoulFire to the latest version
 - **Reconfigure** SSL settings
-- **Uninstall** SoulFire completely
+- **Uninstall** SoulFire
 
 ## Further reading
 
-- [Docker guide](/docs/how-to/docker): manual Docker Compose setup, Pterodactyl/Pelican egg, and advanced HTTPS configuration
-- [Dedicated mode guide](/docs/how-to/dedicated-mode): running SoulFire without Docker (bare metal Java)
+- [Docker guide](/docs/how-to/docker): Manual Docker Compose, Pterodactyl or Pelican, and HTTPS setup
+- [Dedicated mode guide](/docs/how-to/dedicated-mode): Run SoulFire with Java instead of Docker

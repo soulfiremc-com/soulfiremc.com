@@ -17,13 +17,12 @@ import {
   Wrench,
 } from 'lucide-react';
 
-Use this section when you need to go beyond SoulFire's visual scripting system.
-Plugin development is the right tool for advanced users who need low-level hooks, Mixins, protocol interception,
-custom settings pages, direct Minecraft object access, or in-process logic that would be awkward or impossible to model in scripts.
+Use plugins when visual scripting cannot provide the control that you need.
+Plugins can add low-level hooks, Mixins, packet handling, settings pages, and direct access to Minecraft objects.
 
 <Callout type="warning">
-  SoulFire plugin development is intentionally close to the real code.
-  That gives you a lot of power, but it also means version upgrades can break low-level integrations.
+  SoulFire plugins can access internal code.
+  A SoulFire update can break integrations that use this access.
   Keep your plugin version, the current Javadocs, and the current SoulFire source tree aligned.
 </Callout>
 
@@ -45,7 +44,7 @@ Move to plugin development when:
 
 ## Read in this order
 
-If you are building your first SoulFire plugin, use this path:
+For your first plugin, read these pages in order:
 
 1. [Build Your First Plugin](/docs/development/first-plugin) to get one jar loading inside SoulFire
 2. [Environment Setup](/docs/development/environment-setup) to align Java, IntelliJ, and your local source checkout

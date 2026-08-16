@@ -1,6 +1,6 @@
 ---
 title: AI Support
-description: Configure SoulFire's built-in AI integrations, choose compatible providers, and pick sensible models for chat, scripting, and captcha flows.
+description: Configure AI providers and models for chat, scripts, and captcha solving.
 icon: BrainCircuit
 ---
 
@@ -10,24 +10,25 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 <Callout type="info">
   SoulFire has two separate AI stories:
-  [MCP](/docs/how-to/mcp) lets an external AI assistant control SoulFire, while this page covers the built-in AI features where SoulFire itself calls an LLM provider.
+  [MCP](/docs/how-to/mcp) lets an external assistant control SoulFire.
+  This page covers features where SoulFire calls an AI provider.
 </Callout>
 
 ## What AI support exists in SoulFire today
 
-SoulFire currently has one shared AI transport layer and three user-facing AI integrations on top of it:
+SoulFire uses one shared AI connection for three features:
 
 - **AI Settings** define the provider base URL, API key, timeout, and retries.
 - **`LLM Chat`** lets scripts send prompts to an LLM and use the response in a node graph.
 - **`AI Chat Bot`** lets in-game players talk to an AI through chat.
 - **`Captcha Solver`** uses an LLM to solve image-based or text-based captcha flows.
 
-That means you do **not** configure OpenAI, Groq, or Ollama separately for each feature from scratch.
-You usually set the provider once in **AI Settings**, then choose the right model inside each AI feature.
+Configure the provider once in **AI Settings**.
+Then select a model for each AI feature.
 
 ## Configure AI Chat Bot
 
-Use `AI Chat Bot` when you want players to trigger a short AI response in normal in-game chat without building a script graph.
+Use `AI Chat Bot` to answer players in chat without a script graph.
 
 ### What it does
 
@@ -49,7 +50,7 @@ Responses are capped before sending, and blank responses are dropped.
 | **Prompt** | The system prompt that defines the bot's personality and safety boundaries |
 | **Model** | Which model this plugin uses |
 | **Keyword** | The trigger text that must appear in chat |
-| **Filter keyword** | Whether the trigger keyword should be removed from the bot's own reply |
+| **Filter keyword** | Removes the trigger keyword from the bot reply |
 | **History length** | How many recent conversation messages are retained |
 
 ### How to set it up
@@ -69,7 +70,7 @@ The current implementation also supports a reset pattern:
 
 - if a message contains `<keyword> reset`, SoulFire clears that connection's stored conversation history
 
-That is useful when a conversation has drifted or you want to start fresh without restarting the bot.
+Use this command to start a new conversation without restarting the bot.
 
 ### Prompt and history guidance
 
@@ -135,7 +136,7 @@ For image solving, the plugin can source the image from:
 
 #### `CHAT_MESSAGE`
 
-Use this when the server shows or implies an image captcha and also sends a chat line that should trigger solving.
+Use this mode when a chat message tells SoulFire to solve an image captcha.
 
 The default text trigger is:
 
@@ -155,7 +156,8 @@ The default regex is:
 /captcha (\w+)
 ```
 
-That means the plugin expects a capturing group and sends the captured value back through the configured response command.
+The regular expression needs a capture group.
+The plugin sends the captured value with the configured response command.
 
 ### Choose the right image source
 
@@ -229,13 +231,13 @@ This page controls the shared transport used by the current AI features:
 
 | Setting | What it does |
 | --- | --- |
-| **API Base URL** | Which OpenAI-compatible endpoint SoulFire should call |
+| **API Base URL** | The OpenAI-compatible endpoint that SoulFire calls |
 | **API Key** | The credential used for that provider |
 | **API Request Timeout** | How long SoulFire waits before the request fails |
 | **API Max Retries** | How many retries SoulFire attempts before surfacing an error |
 
 The current built-in AI client is OpenAI-compatible.
-That is why providers such as OpenAI, Groq, and Ollama work cleanly, and why gateways such as OpenRouter can also fit.
+This API format supports OpenAI, Groq, Ollama, and gateways such as OpenRouter.
 
 ### `LLM Chat` in scripts
 
@@ -413,7 +415,8 @@ Google AI Studio is worth mentioning because Gemini now has an official OpenAI-c
 - **Best for:** teams that want Gemini through SoulFire's current OpenAI-compatible setup
 - **Good starting model:** `gemini-2.5-flash`
 
-Google's own compatibility docs say the OpenAI-compatible path works by changing the key and base URL, while also noting that the direct Gemini API gives access to more Gemini-specific features.
+Google supports an OpenAI-compatible API through a different key and base URL.
+The direct Gemini API provides more Gemini-specific features.
 For SoulFire, the compatibility path is exactly what matters.
 
 ### How to get the API key
@@ -581,7 +584,7 @@ The provider connection and the actual model choice are not always the same sett
 | Captcha solving | **Captcha Solver** plugin settings |
 
 That separation is important.
-For example, you might run everything through Ollama, but still use:
+For example, you can use Ollama for all features with these models:
 
 - `gpt-oss:20b` for `LLM Chat`
 - a different model for `AI Chat Bot`

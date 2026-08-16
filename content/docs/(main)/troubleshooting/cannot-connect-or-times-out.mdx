@@ -1,6 +1,6 @@
 ---
 title: Cannot Connect Or Times Out
-description: Diagnose remote-login failures, session disconnects, and timeout errors without changing everything at once.
+description: Fix remote login, session disconnect, and timeout errors.
 icon: WifiOff
 ---
 
@@ -8,12 +8,12 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 ## Start by identifying which connection is failing
 
-There are two very different failures that users often describe as "it cannot connect":
+First, identify which connection fails:
 
 1. your GUI or CLI cannot connect to the SoulFire server
 2. SoulFire is running, but the bots cannot stay connected to the target Minecraft server
 
-Work out which one is failing first.
+Use the matching section below.
 
 ## If the GUI or CLI cannot connect to the SoulFire server
 
@@ -35,7 +35,7 @@ generate-token api
 ```
 
 Then retry with that token.
-If an old token suddenly stops working, avoid guessing and rotate it first.
+If an old token stops working, replace it with the new token.
 
 ### Check the deployment mode
 
@@ -49,8 +49,8 @@ If you deliberately chose HTTP-only mode, remember that some setups behave bette
 
 ### Check whether the issue is server access or browser-only access
 
-Being able to open the docs page or another HTTP endpoint does not prove the normal client login flow is correct.
-The real test is a normal GUI or CLI login with a fresh token.
+An open documentation page does not prove that client login works.
+Test a normal GUI or CLI login with a new token.
 
 ## If the bots connect to SoulFire but time out on the target Minecraft server
 
@@ -67,7 +67,7 @@ Test with:
 - higher join delays
 - one known-good account or offline mode where allowed
 
-That tells you quickly whether the failure is load-related or basic connectivity.
+This test separates load problems from connection problems.
 
 ### Check Bot Settings
 
@@ -78,7 +78,7 @@ Verify:
 - connect/read/write timeout values
 
 If local servers also fail, do not assume the remote target is the problem.
-Treat that as a configuration or regression signal.
+This result points to a configuration error or SoulFire regression.
 
 ### Check for server-side login requirements
 
@@ -88,9 +88,9 @@ Some target servers need:
 - specific protocol versions
 - additional chat-based login or registration steps after joining
 
-If the bot spawns but then becomes unusable or disconnects, the session may be missing one of those requirements.
+If the bot spawns and then disconnects, make sure that the session meets these requirements.
 
-### Look at the instance terminal, not just the UI state
+### Read the instance terminal
 
 The instance terminal is usually the fastest place to see whether the disconnect came from:
 
@@ -134,6 +134,6 @@ If that works, add the layers back one at a time.
 - [CLI Flags](/docs/reference/cli-flags)
 
 <Callout type="info">
-  If a new SoulFire version introduced the timeout and an older one did not, write down both exact versions before you change anything else.
-  That makes regressions much easier to confirm.
+  If the timeout started after an update, record the old and new SoulFire versions.
+  This information helps developers reproduce a regression.
 </Callout>

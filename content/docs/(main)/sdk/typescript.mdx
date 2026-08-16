@@ -8,12 +8,11 @@ import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 
-The root `@soulfiremc/sdk` export is Effect-first. It models connections as
-scoped resources, server streams as `Stream`, expected failures as tagged
-errors, and shared clients as `Layer`.
+The root `@soulfiremc/sdk` export uses Effect.
+It represents connections as scoped resources, streams as `Stream`, errors as tagged values, and shared clients as `Layer`.
 
-Use `@soulfiremc/sdk/promise` when the surrounding application uses Promises
-and async iterables. Both entry points expose the same SoulFire capabilities.
+Use `@soulfiremc/sdk/promise` with Promises and async iterables.
+Both entry points provide the same SoulFire features.
 
 ## Install
 
@@ -30,8 +29,8 @@ and async iterables. Both entry points expose the same SoulFire capabilities.
   </Tab>
 </Tabs>
 
-Effect and `@effect/platform` are peer dependencies. Keep one compatible Effect
-runtime in the application dependency graph.
+Effect and `@effect/platform` are peer dependencies.
+Use one compatible Effect runtime in the application.
 
 ## Run a managed local server on Node.js
 
@@ -131,7 +130,7 @@ const client = yield* SoulFire.connectWithHttpClient({
 });
 ```
 
-Use the runtime entry point when SoulFire should provide the HTTP layer:
+Use the runtime entry point when SoulFire provides the HTTP layer:
 
 - `@soulfiremc/sdk/node` uses
   `@effect/platform-node/NodeHttpClient.layerUndici`.
@@ -256,8 +255,8 @@ yield* task.result();
 ```
 
 Crafting and smelting run on the SoulFire server as resource-aware tasks.
-Interrupt the local stream when the task should be call-owned, or retain the
-task handle when it should survive the SDK process.
+Interrupt the local stream for a call-owned task.
+Keep the task handle when the task must survive the SDK process.
 
 ## Provide a shared layer
 

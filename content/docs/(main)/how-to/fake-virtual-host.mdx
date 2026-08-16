@@ -1,6 +1,6 @@
 ---
 title: Fake Virtual Host
-description: Override the hostname and port SoulFire sends in the login handshake when a target network routes players based on the virtual host.
+description: Change the hostname and port in the login handshake for virtual-host routing.
 icon: Globe
 ---
 
@@ -9,14 +9,14 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
 
 ## What this changes
 
-`fake-virtual-host` rewrites the hostname and port in the client's handshake packet before login.
+`fake-virtual-host` changes the hostname and port in the client handshake before login.
 
 That means:
 
 - SoulFire still connects to the address you configured
 - but the server can be told that the client originally targeted a different hostname and port
 
-This matters on networks that route, brand, or authorize connections based on the virtual host seen during login.
+Use this on networks that route or authorize connections by the virtual host.
 
 ## When to use it
 
@@ -44,7 +44,7 @@ It will not repair:
 - invalid credentials
 - wrong target ports at the actual network layer
 
-If the real connection target itself is wrong, faking the handshake host only hides the real issue.
+The plugin cannot fix an incorrect connection address.
 
 ## Configure fake-virtual-host
 
@@ -90,9 +90,9 @@ If the real connection target itself is wrong, faking the handshake host only hi
 
 ### Hostname-based proxy routing
 
-If several logical networks sit behind the same IP, the proxy may use the handshake hostname to decide where the player goes.
+If one IP hosts several networks, the proxy can route players by the handshake hostname.
 
-In that case, you may connect to one entry point but fake the hostname that the proxy expects for the desired route.
+Connect to the shared IP and set the hostname that the proxy expects.
 
 ### Frontends or reverse proxies
 

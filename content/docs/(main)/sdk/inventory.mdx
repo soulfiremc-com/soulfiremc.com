@@ -7,10 +7,9 @@ icon: PackageOpen
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
-Use `bot.inventory` for item queries and short mutations. Open storage through a
-container handle when several operations must stay attached to the same menu.
-The handle carries the latest revision into every transfer and rejects a stale
-or replaced menu.
+Use `bot.inventory` to query or move items.
+Use a container handle for several operations on the same menu.
+The handle includes the latest revision and rejects a stale or replaced menu.
 
 ## Open, transfer, and close
 
@@ -75,10 +74,10 @@ or replaced menu.
   </Tab>
 </Tabs>
 
-`deposit` searches the main inventory and hotbar, then moves an exact count
-into the container. `withdraw` performs the inverse operation. Both first
-plan the complete transfer. SoulFire does not start clicking when the source
-count or destination capacity is insufficient.
+`deposit` moves an exact item count from the inventory or hotbar into the container.
+`withdraw` moves items in the other direction.
+Both methods plan the full transfer before they click any slots.
+They stop if the source has too few items or the destination has too little space.
 
 ## Inspect current state
 
@@ -91,9 +90,8 @@ Read `container.snapshot` without another RPC. It contains:
 - Cursor contents
 - Selected hotbar slot
 
-Call `refresh` when another actor may have changed the menu. If a different
-menu is now open, the handle marks itself closed and raises
-`SoulFireContainerClosedError`.
+Call `refresh` after another actor changes the menu.
+If a different menu is open, the handle closes and raises `SoulFireContainerClosedError`.
 
 ## Choose the best item
 

@@ -1,21 +1,21 @@
 ---
 title: Mixins And Access Wideners
-description: Use Fabric Mixins and access wideners to inject into Minecraft or SoulFire internals when the public event surface is not enough.
+description: Use Fabric Mixins and access wideners when public events are not enough.
 icon: Layers
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-Use this page only when events, settings, metadata, and normal plugin APIs are no longer enough.
-SoulFire plugins are Fabric mods, so you get the normal Fabric toolbox:
+Use Mixins and access wideners only when the public plugin APIs are not enough.
+SoulFire plugins can use these Fabric tools:
 
 - Mixins for behavior changes and hook injection
 - access wideners for changing member visibility
 - direct access to Minecraft classes on the runtime classpath
 
-## External docs you should keep open
+## External documentation
 
-These are the official references that matter most when you start doing low-level integration work:
+Use these references for low-level integration work:
 
 | Topic | Link |
 | --- | --- |
@@ -43,7 +43,7 @@ Reach for Mixins when:
 <Callout type="info">
   SoulFire itself uses Mixins heavily.
   Its own event hooks for chat, packets, ticks, client settings, and movement input are all implemented through Mixins.
-  That makes the SoulFire source tree a practical reference for your plugin Mixins.
+  Use the SoulFire source tree as an example for plugin Mixins.
 </Callout>
 
 ## Required resource files

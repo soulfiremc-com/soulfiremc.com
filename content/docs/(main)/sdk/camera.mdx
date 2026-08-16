@@ -7,14 +7,14 @@ icon: Camera
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
-`bot.camera` is the shared visualization API for SDK applications,
-SoulFireClient, dashboards, and viewers. It exposes the server's software
-renderer without requiring a graphical Minecraft client.
+`bot.camera` provides images for SDK applications, SoulFireClient, dashboards, and viewers.
+It uses the server renderer, so it does not need a graphical Minecraft client.
 
 ## Capture one frame
 
-The camera follows the bot's eyes by default. Set any position or rotation
-field to place a free camera. Unset fields continue to follow the bot.
+By default, the camera follows the bot's eyes.
+Set a position or rotation field to use a free camera.
+Fields without a value continue to follow the bot.
 
 <Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
   <Tab value="Effect">

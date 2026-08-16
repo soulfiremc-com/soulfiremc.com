@@ -7,9 +7,8 @@ icon: Library
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
-`bot.registry` reads the Minecraft data associated with the bot's negotiated
-protocol version. Use it instead of embedding numeric IDs, copied data files,
-or assumptions about one server version.
+`bot.registry` reads Minecraft data for the bot's negotiated protocol version.
+Use it instead of hard-coded numeric IDs, copied data files, or version assumptions.
 
 ## Identify the active registry
 
@@ -45,9 +44,8 @@ or assumptions about one server version.
   </Tab>
 </Tabs>
 
-The identity includes the SoulFire version, Minecraft version, protocol
-number, registry hash, supported registry kinds, and negotiated protocol
-features. Treat the hash as the cache key for downloaded registry data.
+The identity includes versions, protocol number, registry hash, supported data types, and protocol features.
+Use the hash as the cache key for downloaded registry data.
 
 ## Read entries
 
@@ -100,7 +98,7 @@ const mineableTags = yield* bot.registry.tags({
 ```
 
 Tags are the right input for portable selectors. A task that accepts every log,
-pickaxe, hostile entity, or replaceable block should use tag membership rather
+pickaxe, hostile entity, or replaceable block can use tag membership rather
 than a hand-maintained list.
 
 <Callout type="info">

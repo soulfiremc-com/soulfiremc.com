@@ -1,6 +1,6 @@
 ---
 title: Scripts And Automation
-description: Diagnose visual scripts and SDK workers by shrinking the problem to the smallest failing action.
+description: Find problems in visual scripts and SDK workers with a small test.
 icon: Bug
 ---
 
@@ -13,11 +13,11 @@ Start by identifying the process that owns the failing policy:
 - **visual scripting** in the node editor
 - **SDK applications**, including `@soulfiremc/beat-game`
 
-If you do not separate those first, the wrong troubleshooting steps will waste your time.
+Identify the correct layer before you continue.
 
 ## If a visual script trigger fires but the action does not
 
-Reduce the graph until it is boring.
+Reduce the graph to three parts:
 
 The fastest path is usually:
 
@@ -29,7 +29,7 @@ Then add the other nodes back one at a time.
 
 ## Check whether the trigger actually provides a bot
 
-This catches a lot of confusing graphs.
+Some triggers do not provide a bot.
 
 `On Interval`, `On Script Init`, and `On Script End` do not give you a `bot` automatically.
 If your action expects a bot, fetch or loop over bots explicitly.
@@ -55,7 +55,7 @@ That is especially important when:
 - did the expected value exist?
 - did the graph stop before or after the action node?
 
-If you skip that step, you are often guessing from symptoms instead of state.
+Use these results instead of guessing from visible symptoms.
 
 ## Keep tick-trigger work small
 
@@ -76,7 +76,7 @@ Check the worker before changing SoulFire settings:
 If one bot works and a team does not, inspect shared claims, coordinator
 membership, and the End-entry quota.
 
-## Separate "wrong tool" from "broken tool"
+## Choose the correct tool
 
 Visual scripting is for event-driven behavior and custom flows.
 
@@ -93,9 +93,9 @@ Instead, write down:
 - exact SoulFire version
 - smallest failing graph
 - whether the failure still happens without timing nodes
-- whether the failure still happens with just one bot
+- whether the failure still happens with one bot
 
-That is the information that turns a vague regression into a reproducible one.
+This information makes the error easier to reproduce.
 
 <Callout type="info">
   A minimal graph or SDK action that still fails is more valuable than a

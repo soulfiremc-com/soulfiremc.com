@@ -6,7 +6,7 @@ icon: SquareFunction
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-This page mirrors the current node registry in SoulFire. It is grouped by category so you can scan the system the same way the editor presents it.
+This page lists the current SoulFire nodes in the same categories as the editor.
 
 <Callout type="info">
   SoulFire currently ships with **163 built-in nodes** across **17 categories**.
@@ -14,9 +14,9 @@ This page mirrors the current node registry in SoulFire. It is grouped by catego
 
 ## Triggers
 
-- **On Bot Init**: Fires early when the bot connection is initialized, before player is ready.
+- **On Bot Init**: Fires after the bot connection starts but before the player is ready.
 - **On Chat**: Fires when a chat message is received.
-- **On Container Open**: Fires when a container has been opened.
+- **On Container Open**: Fires when a container opens.
 - **On Damage**: Fires when the bot takes damage and health decreases.
 - **On Death**: Fires when the bot dies.
 - **On Disconnect**: Fires when the bot disconnects from the server.
@@ -24,7 +24,7 @@ This page mirrors the current node registry in SoulFire. It is grouped by catego
 - **On Join**: Fires when the bot has fully joined and the player is ready to interact.
 - **On Post Entity Tick**: Fires after entity physics each tick on the tick thread.
 - **On Pre Entity Tick**: Fires before entity physics each tick on the tick thread.
-- **On Script End**: Fires once when the script is being stopped.
+- **On Script End**: Fires once when the script stops.
 - **On Script Init**: Fires once when the script is started.
 
 ## Actions

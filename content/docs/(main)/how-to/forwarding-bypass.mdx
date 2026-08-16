@@ -9,9 +9,9 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
 
 ## What this is for
 
-Use the built-in `forwarding-bypass` plugin when your target server sits behind a proxy setup that expects forwarded player data instead of a normal direct join.
+Use `forwarding-bypass` when a proxy requires forwarded player data instead of a direct login.
 
-This is mainly relevant for:
+The plugin supports:
 
 - BungeeCord-style legacy forwarding
 - BungeeGuard-protected legacy forwarding
@@ -41,7 +41,8 @@ The related CLI flags are:
 
 <Callout type="warn">
   Forwarding is trust-sensitive infrastructure.
-  If you configure the wrong mode or leak the secret, you are not just causing login bugs, you may be creating an authentication bypass.
+  Select the correct mode and protect the secret.
+  An incorrect setup can create an authentication bypass.
 </Callout>
 
 ## Enable forwarding-bypass in SoulFire
@@ -102,7 +103,7 @@ Use the same forwarding secret configured between your Velocity proxy and backen
 Instead of imitating normal forwarded player data, SoulFire appends a marker containing your shared key to the handshake hostname.
 The external proxy plugin reads that marker and forces offline-mode login only for connections carrying a valid key.
 
-That is what allows SoulFire offline-mode bots to join your online-mode proxy network without switching the whole proxy to offline mode.
+This lets offline-mode SoulFire bots join an online-mode proxy without changing the global proxy mode.
 
 ## Set up SoulFireBypass
 
@@ -114,7 +115,7 @@ Use it when:
 
 - your public network still needs normal online-mode authentication for real players
 - you want a controlled exception for SoulFire bots
-- you do not want to disable online mode globally just to run tests
+- you do not want to disable online mode globally for tests
 
 <Callout type="warn">
   Anyone who knows a valid SoulFireBypass key can impersonate a player through the proxy path protected by that plugin.

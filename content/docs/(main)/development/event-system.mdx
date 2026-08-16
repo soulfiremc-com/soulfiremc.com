@@ -1,13 +1,14 @@
 ---
 title: Event System
-description: Understand how SoulFire events are registered, what the current event hierarchy looks like, and which mutable hooks exist before you reach for Mixins.
+description: Register SoulFire events, use the event hierarchy, and change behavior with mutable hooks.
 icon: BellRing
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-The event system is the first extension seam you should use.
-It is much cheaper to maintain than Mixins, and SoulFire already exposes a meaningful amount of server lifecycle, bot, chat, packet, and settings behavior through events.
+Use events before you use Mixins.
+Events cover server lifecycle, bots, chat, packets, and settings.
+They are easier to maintain than Mixins.
 
 ## How listener registration works
 
@@ -16,7 +17,7 @@ Every `Plugin` registers itself in two ways when it is constructed:
 - it registers static listeners declared on the class
 - it registers instance listeners declared on the plugin object
 
-That is why both of these patterns work:
+Both patterns work:
 
 ```java
 @EventHandler
@@ -46,7 +47,8 @@ The public event model is split into three scopes:
 - `SoulFireInstanceEvent`: events that belong to one instance
 - `SoulFireBotEvent`: events that belong to one bot and also imply instance access
 
-That hierarchy means a bot event gives you a `BotConnection`, and from that you can also reach the `InstanceManager` and `SoulFireServer`.
+A bot event provides a `BotConnection`.
+From it, you can access the `InstanceManager` and `SoulFireServer`.
 
 ## Lifecycle events
 
@@ -109,7 +111,7 @@ The event name alone is not enough. You also need to care about timing:
 - `BotPreTickEvent` and `BotPostTickEvent` run in the live bot tick loop
 - `BotPreEntityTickEvent` and `BotPostEntityTickEvent` are even closer to the entity update path
 
-If you need `minecraft().player`, always assume it may still be `null` in early lifecycle hooks.
+In early lifecycle hooks, `minecraft().player` can still be `null`.
 
 ## Custom commands
 

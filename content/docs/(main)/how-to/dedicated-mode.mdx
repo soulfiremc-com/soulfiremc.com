@@ -1,65 +1,62 @@
 ---
 title: Dedicated Mode
-description: Learn how to use SoulFire in dedicated mode.
+description: Run a long-lived SoulFire server that remote clients can use.
 icon: MonitorCog
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-## Who needs a Dedicated Server?
+## When to use a dedicated server
 
 <Callout type="info" emoji="ℹ️">
-  Dedicated servers are for power-users, and are not recommended for beginners.
-  If you're not sure if you need a dedicated server, you probably don't.
+  Dedicated servers need more setup than integrated servers.
+  If you are unsure, start with [GUI Mode](/docs/start-here/gui-mode).
 </Callout>
 
-SoulFire is a Client/server application. The client is a user interface that a user interacts with,
-and the server is the backend that processes the user's requests.
-The server is responsible for managing the data, logic, and rules of the application.
-The server is also responsible for managing the communication between the Bots and the Server.
+SoulFire has a client and a server.
+The client provides the user interface.
+The server manages bot connections, data, permissions, and commands.
 
-## Why Dedicated Mode?
+## Why use dedicated mode?
 
-Dedicated mode brings a few advantages over GUI and CLI mode. For one, the application is long-running.
-That means even if you close the GUI or CLI, the server will still be running in the background.
-This is useful for running the server on a remote machine, or for running the server in the background on your local machine.
+A dedicated server keeps running after you close the GUI or CLI.
+You can run it on a remote machine or as a background process on your computer.
 
-Both GUI and CLI come with an "integrated" server,
-which means the server is started and stopped when the GUI or CLI is started and stopped.
-This is useful for beginners, but can be limiting for power users.
+The GUI and CLI use an integrated server by default.
+The integrated server stops when its client stops.
 
-An advantage of dedicated mode is also that multiple GUIs and CLIs can connect to the same server
-as well as multiple servers can be run on the same machine on different ports. (Very useful for SF hosts)
+Several GUI and CLI clients can connect to one dedicated server.
+You can also run several dedicated servers on different ports.
 
-While a CLI is similar to a dedicated server, it does not accept connections from other clients
-and its startup flags configure the local integrated server.
+CLI mode is different from dedicated mode.
+Its integrated server does not accept connections from other clients.
 
 ## How to start the server in dedicated mode
 
-Make sure your machine is using Java 25.
-Next you can download the latest dedicated server `.jar` binary from the [download page](/download)
-and run it with the following command:
+Install Java 25.
+Then download the latest dedicated server `.jar` from the [download page](/download).
+Run this command:
 
 ```bash
 java -Xmx$RAM -XX:+EnableDynamicAgentLoading -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -XX:+UseCompactObjectHeaders -XX:+AlwaysActAsServerClassMachine -XX:+UseNUMA -XX:+UseFastUnorderedTimeStamps -XX:+UseVectorCmov -XX:+UseCriticalJavaThreadPriority -Dsf.flags.v2=true -jar SoulFireDedicated.jar
 ```
 
-Make sure to replace `$RAM` with the amount of ram you want to allocate to the server.
-If you omit the entire `-Xmx$RAM` part, the server will use 25% of your total ram.
-If your machine has 128GB of RAM and you want SF to use 120GB, you can use `-Xmx120G`.
+Replace `$RAM` with the memory limit for the server.
+If you omit `-Xmx$RAM`, Java uses up to 25% of the total system memory.
+For example, use `-Xmx120G` to set a 120 GB limit.
 
-## What options are available?
+## Server options
 
-A dedicated server runs a server on a specified port and IP.
-You can control the server using the following options:
+A dedicated server listens on a configured IP address and port.
+Use these options:
 
 | Property       | Description                     | Default   |
 |----------------|---------------------------------|-----------|
-| `sf.grpc.host` | The ip the server will run on   | `0.0.0.0` |
-| `sf.grpc.port` | The port the server will run on | `38765`   |
+| `sf.grpc.host` | IP address to listen on | `0.0.0.0` |
+| `sf.grpc.port` | Port to listen on       | `38765`   |
 
-You can specify these options by passing them as system properties to the JVM.
-For example, run the server via:
+Pass these options to Java as system properties.
+This example changes the port:
 
 ```bash
 java -Dsf.grpc.port=12345 -Xmx$RAM -XX:+EnableDynamicAgentLoading -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -XX:+UseCompactObjectHeaders -XX:+AlwaysActAsServerClassMachine -XX:+UseNUMA -XX:+UseFastUnorderedTimeStamps -XX:+UseVectorCmov -XX:+UseCriticalJavaThreadPriority -Dsf.flags.v2=true -jar SoulFireDedicated.jar
@@ -67,35 +64,33 @@ java -Dsf.grpc.port=12345 -Xmx$RAM -XX:+EnableDynamicAgentLoading -XX:+UnlockExp
 
 ## Terminal flags
 
-You can also explicitly enable/disable
-having an interactive CLI in the terminal
-where you can run SoulFire commands by setting `-Dterminal.jline=false` or `-Dterminal.jline=true`.
-JLine is the library that allows for interactive CLI in the terminal,
-it's the same library Minecraft, Velocity and other applications use.
-You can also turn terminal colors explicitly on and off using `-Dterminal.ansi=false` or `-Dterminal.ansi=true`.
+Set `-Dterminal.jline=true` or `-Dterminal.jline=false` to enable or disable the interactive terminal.
+The terminal uses JLine, the same library used by Minecraft and Velocity.
+Set `-Dterminal.ansi=true` or `-Dterminal.ansi=false` to enable or disable terminal colors.
 
 ## Firewall
 
-Ensure that all clients can reach the server by opening the port on your firewall.
-This is not a guide for opening ports in your router, it's the same process as opening a port for a Minecraft server, just for a different port.
+Open the SoulFire port in the server firewall.
+If the server is behind a router, forward the port with the same process as a Minecraft server.
 
-## How to generate an access token?
+## Generate an access token
 
-To connect to the server, you need an access token.
-When you run a dedicated server, you get an interactive shell, just like with Minecraft servers.
-You can use the `generate-token api` command to generate an access token.
-Keep this token secure and only share it with people you trust and want to connect to your server.
-It allows anyone with access to it to connect to your server through the GUI or CLI and control bots with your permissions.
+Clients need an access token to connect.
+Run this command in the interactive server terminal:
+
+```text
+generate-token api
+```
+
+Keep the token secret.
+Anyone with the token can connect through the GUI or CLI and use your permissions.
 
 ## Docker images
 
-Are you a Docker user?
-We have a Docker image available for the dedicated server.
-You can find it on [Docker Hub](https://hub.docker.com/r/alexprogrammerde/soulfire).
-You can find examples of how to use those Docker images in the [Docker guide](/docs/how-to/docker).
+The dedicated server image is available on [Docker Hub](https://hub.docker.com/r/alexprogrammerde/soulfire).
+See the [Docker guide](/docs/how-to/docker) for examples.
 
-## What now?
+## Next steps
 
-You've successfully set up a dedicated server. Now connect to it from the GUI, CLI, or SDK and try running some bots.
-Dedicated servers use the same underlying code as integrated servers, so the experience should be the same.
-Servers do most of the heavy work. They run bot connections, check proxies, authenticate accounts, and more.
+Connect to the server from the GUI, CLI, or SDK.
+The server runs bot connections, checks proxies, and authenticates accounts.

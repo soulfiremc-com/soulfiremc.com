@@ -6,13 +6,14 @@ icon: Gamepad
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-Use this page when you need to make a bot do something that the normal event and settings surface does not model cleanly.
-Your plugin runs inside the same JVM as SoulFire and the headless Minecraft client, so you can work with real runtime objects instead of sending remote commands to another process.
+Use direct access when events and settings cannot express the required bot action.
+Your plugin shares a JVM with SoulFire and the headless Minecraft client.
+It can use runtime objects without remote commands.
 
 <Callout type="warning">
   Direct access is for advanced use cases.
-  If the job can stay in [Scripting](/docs/scripting) or in a higher-level event hook, do that first.
-  The lower you go, the more sensitive your plugin becomes to version changes.
+  Use [Scripting](/docs/scripting) or a public event when possible.
+  Direct internal access can break after a version update.
 </Callout>
 
 ## Core runtime objects
@@ -60,7 +61,7 @@ Then later:
 connection.controlState().resetAll();
 ```
 
-Use this for behavior that should stay active until you explicitly change it.
+Use this for movement that stays active until you change it.
 
 ## Discrete actions with `ControllingTask`
 
@@ -107,7 +108,7 @@ Choose carefully:
 - `maybeRegister(...)` only registers if nothing else is currently controlling the bot
 
 If your plugin is optional background automation, `maybeRegister(...)` is usually safer.
-If your plugin is an explicit active command, taking over with `registerControllingTask(...)` may be correct.
+For an active plugin command, take control with `registerControllingTask(...)`.
 
 ## Direct Minecraft access
 

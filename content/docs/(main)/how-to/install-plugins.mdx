@@ -20,7 +20,7 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
 <Callout type="info">
   If you want to build your own plugin rather than install an existing jar, use the
   [Development](/docs/development) section.
-  That is the correct path for advanced Fabric-plugin work, Mixins, and low-level SoulFire integrations.
+  It covers Fabric plugins, Mixins, and low-level SoulFire integrations.
 </Callout>
 
 ## Enable a built-in plugin
@@ -47,7 +47,8 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
   <Step>
     ### Start or restart affected bots
 
-    Start the bots you want to run, or restart affected bots if you changed settings that only apply when a connection is created.
+    Start the bots that use the plugin.
+    If a changed setting applies only during connection, restart the affected bots.
   </Step>
 </Steps>
 
@@ -72,7 +73,8 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
   <Step>
     ### Restart SoulFire
 
-    New Fabric mods are loaded on startup, so restart the relevant SoulFire server after adding the file.
+    SoulFire loads new Fabric mods during startup.
+    Restart the SoulFire server after you add the file.
   </Step>
 </Steps>
 

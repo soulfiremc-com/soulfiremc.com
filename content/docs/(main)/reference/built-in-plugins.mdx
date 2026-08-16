@@ -4,14 +4,14 @@ description: Reference for the built-in plugins that ship with SoulFire.
 icon: Blocks
 ---
 
-SoulFire ships with several built-in plugins that are available by default.
-These can be enabled or disabled per instance.
+SoulFire includes built-in plugins.
+You can enable or disable each plugin for an instance.
 
 | ID                   | Description                                                                                                            | Author           | License |
 |----------------------|------------------------------------------------------------------------------------------------------------------------|------------------|---------|
 | `ai-captcha-solver`  | Solve captcha images using AI                                                                                          | AlexProgrammerDE | GPL-3.0 |
 | `ai-chat-bot`        | Allow players to chat with an AI                                                                                       | AlexProgrammerDE | GPL-3.0 |
-| `anti-afk`           | Automatically moves x amount of blocks in a random direction to prevent being kicked for being AFK                     | AlexProgrammerDE | GPL-3.0 |
+| `anti-afk`           | Moves a configured distance in a random direction to prevent AFK kicks                                                  | AlexProgrammerDE | GPL-3.0 |
 | `auto-armor`         | Automatically puts on the best armor                                                                                   | AlexProgrammerDE | GPL-3.0 |
 | `auto-chat-message`  | Automatically sends messages in a configured delay                                                                     | AlexProgrammerDE | GPL-3.0 |
 | `auto-eat`           | Automatically eats food when hungry                                                                                    | AlexProgrammerDE | GPL-3.0 |
@@ -20,13 +20,13 @@ These can be enabled or disabled per instance.
 | `auto-register`      | Automatically registers bots on AuthMe servers                                                                         | AlexProgrammerDE | GPL-3.0 |
 | `auto-respawn`       | Automatically respawns after death                                                                                     | AlexProgrammerDE | GPL-3.0 |
 | `auto-totem`         | Automatically puts totems in the offhand slot                                                                          | AlexProgrammerDE | GPL-3.0 |
-| `chat-logger`        | Logs all received chat messages to the terminal. Includes deduplication to prevent spamming the same message too often | AlexProgrammerDE | GPL-3.0 |
+| `chat-logger`        | Logs received chat and removes repeated messages                                                                        | AlexProgrammerDE | GPL-3.0 |
 | `client-brand`       | Sends the client brand to the server                                                                                   | AlexProgrammerDE | GPL-3.0 |
 | `client-settings`    | Sends client settings to the server                                                                                    | AlexProgrammerDE | GPL-3.0 |
 | `fake-virtual-host`  | Fakes the virtual host                                                                                                 | AlexProgrammerDE | GPL-3.0 |
 | `kill-aura`          | Automatically attacks entities                                                                                         | AlexProgrammerDE | GPL-3.0 |
-| `server-list-bypass` | Pings the server list before connecting. (Bypasses anti-bots like EpicGuard)                                           | AlexProgrammerDE | GPL-3.0 |
-| `forwarding-bypass`  | Allows bypassing proxy forwarding                                                                                      | AlexProgrammerDE | GPL-3.0 |
+| `server-list-bypass` | Pings the server list before connecting to pass checks such as EpicGuard                                               | AlexProgrammerDE | GPL-3.0 |
+| `forwarding-bypass`  | Connects through proxy-forwarding setups                                                                               | AlexProgrammerDE | GPL-3.0 |
 
 ## How this list is generated
 
@@ -34,8 +34,7 @@ Run `print-docs plugins` in the console of the GUI, CLI, or dedicated server.
 
 ## Use the built-ins as source references
 
-If you are writing your own plugin, read the built-in plugin source code before inventing your own structure.
-That is the most accurate reference for current SoulFire patterns.
+If you write a plugin, use the built-in plugin source code as a current example.
 
 Useful starting points:
 

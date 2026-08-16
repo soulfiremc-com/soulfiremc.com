@@ -6,8 +6,8 @@ icon: Wrench
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-This page is about getting to a productive plugin workspace quickly.
-The goal is not to understand every SoulFire internal yet. The goal is to have a setup where you can build, debug, and inspect the current API without fighting your tools.
+This page prepares a workspace for SoulFire plugin development.
+The finished workspace can build and debug a plugin and show the current API.
 
 ## Recommended stack
 
@@ -24,12 +24,12 @@ The goal is not to understand every SoulFire internal yet. The goal is to have a
 
 <Callout type="info">
   SoulFire's current build logic and aggregated Javadocs both target Java 25.
-  If you work on an older JDK, you will spend time fighting toolchain problems instead of building the plugin.
+  An older JDK can cause build and toolchain errors.
 </Callout>
 
 ## Clone the repos you need
 
-The most practical layout is keeping these repositories next to each other:
+Clone these repositories into the same parent directory:
 
 ```bash
 git clone https://github.com/soulfiremc-com/SoulFire.git
@@ -41,8 +41,8 @@ Use:
 - `SoulFire` as the source of truth for current internals, built-in plugins, settings, gRPC services, and proto contracts
 - `SoulFirePluginExample` as the scaffold for new external plugins
 
-Do not treat the template as the only source of truth.
-Use the template for layout, then cross-check current behavior in the SoulFire repo and Javadocs.
+Use the template for project structure.
+Use the SoulFire repository and Javadocs for current API behavior.
 
 ## Recommended IntelliJ setup
 
@@ -68,14 +68,14 @@ You do not need to open the whole SoulFire repo as a second module in the same p
 
 ## Keep versions aligned
 
-This matters more for SoulFire than for many ordinary libraries.
+Keep the plugin and SoulFire versions aligned.
 
 - Match your plugin dependency version to the SoulFire version you actually run.
 - Check the current [CodeMC Maven metadata](https://repo.codemc.org/repository/maven-public/com/soulfiremc/mod/maven-metadata.xml) before pinning versions.
 - Treat the example plugin as a scaffold, not as the final word on every low-level API detail.
 
 The current example repository pins an older SoulFire version than the latest CodeMC metadata.
-That is normal for a template repository, but it means you should verify current APIs in the Javadocs and source before copying low-level code unchanged.
+Before you copy low-level code, compare it with the current Javadocs and source.
 
 ## When another IDE is acceptable
 

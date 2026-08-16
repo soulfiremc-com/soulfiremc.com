@@ -7,7 +7,8 @@ icon: ListChecks
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Mermaid } from '../../../../src/components/mdx/mermaid';
 
-These examples are written against the current SoulFire scripting implementation. They focus on the shape of the graph and the reason each node is there.
+These examples use the current SoulFire scripting system.
+Each example explains its graph and nodes.
 
 ## 1. Greet on join
 
@@ -33,7 +34,7 @@ graph LR
 4. Connect `On Join.bot` to `Send Chat.bot`.
 5. Set the message, for example `hello from SoulFire`.
 
-This is the simplest useful script in SoulFire, and it teaches the basic trigger -> action pattern.
+This example shows the basic trigger-to-action pattern.
 
 ## 2. Simple chat command
 
@@ -65,13 +66,13 @@ graph LR
 8. Connect `On Chat.bot` to `Send Chat.bot`.
 9. Set the message to `pong`.
 
-This pattern scales well. Add more checks or route into `Switch` if you want more commands.
+For more commands, add more conditions or connect the result to a `Switch` node.
 
 ## 3. Poll all bots every few seconds
 
 **Goal:** Run the same check for every connected bot on a timer.
 
-This example exists because `On Interval` does not give you a bot directly.
+`On Interval` does not provide a bot, so this example gets the bot list first.
 
 <Mermaid chart="
 graph LR
@@ -217,7 +218,7 @@ graph LR
 
 **How to build it**
 
-1. Use `String Contains` to decide which messages should reach the model.
+1. Use `String Contains` to select messages for the model.
 2. Connect the plain-text message to `LLM Chat.prompt`.
 3. Set a short system prompt.
 4. Connect `LLM Chat.response` to `Send Chat.message`.

@@ -1,6 +1,6 @@
 ---
 title: Choose Your Setup
-description: Decide whether you should start with the local GUI, CLI automation, or a remote dedicated server.
+description: Choose the local GUI, CLI automation, or a remote dedicated server.
 icon: Map
 ---
 
@@ -15,7 +15,7 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 | If you want to... | Start with... | Why |
 | --- | --- | --- |
-| Learn SoulFire with the least setup | [GUI Mode](/docs/start-here/gui-mode) | Best first-run path and easiest to explore |
+| Learn SoulFire with the least setup | [GUI Mode](/docs/start-here/gui-mode) | Easiest way to install and explore SoulFire |
 | Keep bots running on a VPS or shared machine | [Dedicated Server](/docs/start-here/dedicated-server) | Keeps the backend running even when the GUI is closed |
 | Automate from a terminal or run headless | [CLI Mode](/docs/start-here/cli-mode) | Good for scripts, SSH sessions, and keyboard-only workflows |
 | Share one backend with multiple users or clients | [Dedicated Server](/docs/start-here/dedicated-server) | GUI and CLI clients can connect to the same remote server |
@@ -25,22 +25,22 @@ import { Callout } from 'fumadocs-ui/components/callout';
 ### GUI client
 
 The GUI is the desktop app.
-It is the best place to create instances, change settings, inspect state, and work with plugins or scripts.
+Use it to create instances, change settings, view bot state, and manage plugins or scripts.
 
 ### CLI client
 
 The CLI is the terminal client.
-It is useful when you want automation, SSH-based workflows, or a headless environment.
+Use it for automation, SSH sessions, or systems without a desktop.
 
 ### Integrated server
 
-The GUI and CLI both ship with an integrated SoulFire server.
-This lets you run bots locally on your own machine without deploying anything else.
+The GUI and CLI include a SoulFire server.
+You can run bots on your computer without a separate server.
 
 ### Dedicated server
 
-A dedicated server is a separate SoulFire backend that runs on its own machine or as its own process.
-GUI and CLI clients can connect to it remotely.
+A dedicated server runs SoulFire as a separate process, usually on another computer.
+GUI and CLI clients connect to it over the network.
 
 ## Recommended paths
 
@@ -58,7 +58,7 @@ GUI and CLI clients can connect to it remotely.
 
 ### Automation-heavy user
 
-1. Decide whether the CLI should run locally or against a remote server
+1. Decide whether the CLI will use a local or remote server
 2. Read [CLI Mode](/docs/start-here/cli-mode)
 3. Use [Automation](/docs/automation) to choose visual scripting, durable tasks, SDK workflows, or the beat-game runner
 4. Keep [CLI Flags](/docs/reference/cli-flags) open as your reference

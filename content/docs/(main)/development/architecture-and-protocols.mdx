@@ -6,8 +6,8 @@ icon: Network
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-This page is explanation, not the first page you should read.
-Come here after your first plugin loads and you need to trace how SoulFire moves from UI or RPC requests down to bot behavior.
+Read this page after you load your first plugin.
+It explains how a UI or RPC request becomes bot behavior.
 
 <Callout type="info">
   If you only need to build a normal plugin, stay in [Build Your First Plugin](/docs/development/first-plugin),
@@ -17,7 +17,7 @@ Come here after your first plugin loads and you need to trace how SoulFire moves
 
 ## Runtime layers
 
-At a high level, SoulFire looks like this:
+SoulFire has these runtime layers:
 
 1. **Bootstrap and launcher** prepare startup, properties, and mixin loading.
 2. **Fabric** loads SoulFire itself as a mod and also loads your external plugin jar as another Fabric mod.
@@ -27,7 +27,7 @@ At a high level, SoulFire looks like this:
 6. **BotConnection** owns one bot's headless Minecraft client copy plus settings, metadata, scheduler, and control state.
 7. **Plugins** listen to events, register settings pages, and optionally use Mixins for deeper integration.
 
-What matters for plugin authors is simple:
+For plugin authors, the important points are:
 
 - Fabric loads both SoulFire and your plugin jar
 - SoulFire exposes higher-level hooks through events, settings, metadata, and control APIs
@@ -41,8 +41,8 @@ SoulFire has two plugin loading models:
 - **internal plugins** are scanned from `com.soulfiremc.server.plugins` using `@InternalPluginClass`
 - **external plugins** are ordinary Fabric mods that call `SoulFireAPI.registerServerExtension(...)` from a `ModInitializer`
 
-That is why the built-in plugin directory is such a strong reference.
-The internal plugins use the same event, settings, metadata, and control primitives that your external plugin uses.
+The built-in plugin directory contains useful examples.
+Internal and external plugins use the same event, settings, metadata, and control APIs.
 
 ## The core objects
 
@@ -63,7 +63,7 @@ Instead, SoulFire exports structured definitions over gRPC:
 - `instance.proto` exposes instance config, setting definitions, pages, and plugins
 - `common.proto` defines `SettingsDefinition`, `SettingsPage`, `SettingsNamespace`, and `ServerPlugin`
 
-That matters for plugin authors because your settings page becomes a first-class part of the UI and CLI once you register it correctly.
+After registration, your settings page appears in the GUI and CLI.
 
 ## Bot action protocol
 
@@ -87,7 +87,7 @@ The important implementation detail is what happens after the RPC call arrives:
 3. SoulFire schedules a low-level operation through `BotControlAPI` or direct player and gameMode access
 4. control state or staged tasks drive the actual Minecraft-side behavior
 
-This is the same model you should think in when writing a plugin.
+Plugins follow the same process.
 
 ## How low-level actions reach Minecraft
 
@@ -113,7 +113,7 @@ Its wire model lives in `script.proto` and describes:
 - node definitions
 - script graphs and execution metadata
 
-If your use case can stay in scripting, it should.
+If scripting supports your use case, use scripting.
 Plugin development is what you use when you need lower-level access than the script graph model exposes.
 
 ## Why Mixins appear in the architecture
@@ -131,7 +131,8 @@ So when you write a plugin Mixin, you are not leaving the architecture.
 You are using the same extension mechanism SoulFire itself uses for its lowest-level integrations.
 
 <Callout type="info">
-  If you want to trace behavior end to end, start in the proto file, then read the matching gRPC service implementation, then inspect the built-in plugin or mixin that uses the same primitive.
+To trace behavior, start in the proto file.
+Then read the matching gRPC service and the plugin or Mixin that uses the same API.
 </Callout>
 
 ## Best places to trace behavior

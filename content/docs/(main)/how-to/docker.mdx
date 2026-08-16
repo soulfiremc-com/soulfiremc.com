@@ -1,6 +1,6 @@
 ---
 title: Docker
-description: SoulFire + Docker = ❤️
+description: Run the SoulFire dedicated server with Docker Compose.
 icon: Container
 ---
 
@@ -14,26 +14,27 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 Official Docker images are available on [Docker Hub](https://hub.docker.com/r/alexprogrammerde/soulfire).
 They run the SoulFire dedicated server.
-This page is for people who already know Docker and Docker Compose and are comfortable troubleshooting on their own.
+This page assumes that you know Docker and Docker Compose.
 
 ## Pterodactyl/Pelican panel egg
 
 If you want to use Docker without building the container yourself, and you already run Pterodactyl or Pelican, use [the official egg](https://raw.githubusercontent.com/soulfiremc-com/SoulFire/main/soulfire_egg.json).
 
-We recommend pairing it with the [Cloudflared egg](https://github.com/Ym0T/pterodactyl-nginx-egg?tab=readme-ov-file#-cloudflared-tunnel-tutorial) if you want HTTPS in front of SoulFire.
+For HTTPS, use it with the [Cloudflared egg](https://github.com/Ym0T/pterodactyl-nginx-egg?tab=readme-ov-file#-cloudflared-tunnel-tutorial).
 
-## How to install Docker?
+## Install Docker
 
 Use the [official guide](https://docs.docker.com/engine/install).
 
 ## HTTPS setup
 
-SoulFire uses HTTP internally, but if you expose it on a public domain you should put HTTPS in front of it.
-The two practical options are Cloudflared as an HTTPS tunnel or a reverse proxy like Traefik with automatic certificates.
+SoulFire uses HTTP internally.
+For a public server, protect it with HTTPS.
+Use a Cloudflared tunnel or a reverse proxy such as Traefik.
 
-### Cloudflared tunnel (Recommended)
+### Cloudflared tunnel (recommended)
 
-Grab the token from the Cloudflare Zero Trust dashboard.
+Get the token from the Cloudflare Zero Trust dashboard.
 Follow the [official guide](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/) if you need help creating the tunnel token.
 
 ```dotenv filename=".env"

@@ -1,20 +1,20 @@
 ---
 title: Accounts And Authentication
-description: Diagnose Minecraft account import and authentication failures without mixing them up with remote-server access tokens.
+description: Fix Minecraft account import and authentication problems.
 icon: KeyRound
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-## Start by separating two different auth problems
+## Identify the authentication layer
 
-SoulFire has two different authentication layers that people often mix together:
+SoulFire has two separate authentication layers:
 
 - logging a GUI or CLI client into a SoulFire server
 - importing and refreshing Minecraft accounts for bots
 
 If your GUI cannot log into a remote SoulFire server, start with [Cannot Connect Or Times Out](/docs/troubleshooting/cannot-connect-or-times-out).
-This page is mainly about bot account import and Minecraft-side authentication.
+This page covers bot account imports and Minecraft authentication.
 
 ## Identify the account type first
 
@@ -26,13 +26,13 @@ Before changing anything, confirm which type you are trying to import:
 - cookie-based formats
 
 Then compare your input against [Account Formats](/docs/reference/account-formats).
-A lot of "auth is broken" reports turn out to be input-format mistakes.
+An incorrect input format often causes authentication errors.
 
 ## Test without proxies first
 
 If you have proxying enabled for account authentication, disable it and try the same account again.
 
-That is the fastest way to answer an important question:
+This test answers one question:
 
 - does the account itself fail?
 - or does the proxy path fail?
@@ -41,7 +41,7 @@ Only re-enable auth-through-proxy after the plain import path works.
 
 ## Use the current install requirements
 
-Do not troubleshoot authentication on an unsupported runtime and assume the auth provider is at fault.
+Use a supported SoulFire release and Java version before you test authentication.
 
 Before going deeper:
 
@@ -60,11 +60,11 @@ Instead:
 3. test without proxies
 4. test with the exact target server you care about
 
-If one account works and fifty do not, the batch shape is part of the problem.
+If one account works, test a smaller batch before you import all accounts.
 
 ## If import succeeds but joining still fails
 
-That is no longer just an account-import problem.
+The problem now occurs after account import.
 Check:
 
 - whether the target server needs additional in-game login or registration

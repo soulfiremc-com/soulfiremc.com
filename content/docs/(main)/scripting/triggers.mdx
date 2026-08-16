@@ -6,7 +6,8 @@ icon: Zap
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-Triggers are the entry points to a SoulFire script. When a trigger fires, SoulFire starts a run from that trigger node and follows the connected execution path.
+Triggers start SoulFire scripts.
+When a trigger fires, SoulFire runs the connected execution path.
 
 ## Before you pick a trigger
 
@@ -15,8 +16,8 @@ Keep these engine details in mind:
 - A script can contain multiple triggers.
 - Each trigger can fire many times.
 - Trigger runs are limited by script quotas. The current default is **1 concurrent run per script**.
-- Event-based triggers use buffered delivery. Under heavy load, extra events can be dropped instead of piling up forever.
-- `On Pre Entity Tick` and `On Post Entity Tick` run on the tick thread. They are powerful, but they are the easiest way to build a laggy script.
+- Event triggers use a buffer. Under heavy load, SoulFire can discard extra events when the buffer is full.
+- `On Pre Entity Tick` and `On Post Entity Tick` run on the tick thread. Expensive nodes can delay the game loop.
 - `On Interval` does not output a bot. If you need to act on bots, use `Get Bots` and `For Each Bot`.
 
 ## Bot lifecycle triggers
@@ -174,7 +175,7 @@ Use this when you need the world state after movement has been processed, for ex
   Tick triggers are low-level tools. Avoid HTTP requests, LLM calls, long waits, or wide loops in these paths.
 </Callout>
 
-## Which trigger should you use?
+## Choose a trigger
 
 - Use `On Join` for most startup behavior.
 - Use `On Bot Init` only when `On Join` is too late.

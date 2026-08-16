@@ -8,16 +8,16 @@ import { Mermaid } from '../../../../src/components/mdx/mermaid';
 
 ## One product, two roles
 
-In SoulFire there is a distinction between the client and the server.
-This is very similar to Minecraft, where the client is the game you play and the server is the game you connect to.
-In SoulFire, the client tells the server which bots should run and the server owns those bot connections.
+SoulFire has a client and a server, like Minecraft.
+You use the client to control bots.
+The server runs the bot connections.
 
 ## Integrated server (local)
 
-The GUI/CLI comes pre-installed with a SoulFire server.
-This means that you can run bots on your machine without needing to set up a dedicated server.
-This pre-installed server is only accessible from the GUI/CLI and is not meant to be used for remote access from other clients.
-If you want to run bots on a remote machine, set up a dedicated server.
+The GUI and CLI include an integrated SoulFire server.
+It runs bots on your computer without a separate server setup.
+Only the client that started the integrated server can use it.
+For remote access, use a dedicated server.
 
 <Mermaid chart="
 graph LR
@@ -35,11 +35,10 @@ This is the recommended mode for most first-time users.
 
 ## Dedicated server (remote)
 
-The GUI/CLI client is the SoulFire client that connects to a remote server.
-This is useful if you want to run bots on a remote server that you control from another machine.
-This is the recommended way to run SoulFire on a remote server.
-You can not only have multiple users on the same SoulFire dedicated server,
-but you can also run multiple SoulFire dedicated servers on the same machine as well as on different machines.
+A dedicated server runs SoulFire separately from the GUI or CLI.
+Use it to run bots on one machine and control them from another.
+Several users and clients can connect to the same server.
+You can also run several dedicated servers on one or more machines.
 
 <Mermaid chart="
 graph LR
@@ -65,7 +64,7 @@ graph LR
 - The **CLI** is best when you want terminal automation, headless runs, or SSH workflows.
 - Both can run locally with an integrated server or connect to a remote dedicated server.
 
-## Which mode should you choose?
+## Choose a mode
 
 - Choose the integrated server when you want the simplest local setup.
 - Choose a dedicated server when you want a long-running backend, remote access, or multiple clients on the same backend.

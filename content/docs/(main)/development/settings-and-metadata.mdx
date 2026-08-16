@@ -6,9 +6,9 @@ icon: Settings
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-SoulFire settings are not loose JSON blobs.
-They are typed property definitions that the server exports to the GUI and CLI as structured metadata.
-That gives plugin authors a clean way to define options once and have them appear everywhere.
+SoulFire uses typed properties for settings.
+The server sends these properties to the GUI and CLI as structured metadata.
+You define an option once, and SoulFire shows it in each client.
 
 ## How the settings model works
 
@@ -19,7 +19,7 @@ The usual flow is:
 3. register a page with `SettingsPageRegistry`
 4. read values back through a `SettingsSource`
 
-The official example plugin follows exactly this pattern.
+The official example plugin uses this pattern.
 
 ## Scopes
 
@@ -48,7 +48,7 @@ These are the current built-in property families:
 | `MinMaxProperty` | min/max pairs like random delay windows |
 
 Each property is identified by `namespace + key`.
-Use your plugin ID as the namespace unless you have a very good reason not to.
+Use your plugin ID as the namespace.
 
 ## Example settings object
 
@@ -126,7 +126,7 @@ SoulFire also gives you metadata holders.
 Use:
 
 - `metadata()` for transient in-memory state
-- `persistentMetadata()` for data that should survive restarts
+- `persistentMetadata()` for data that must survive restarts
 
 Both instance and bot objects expose metadata holders.
 
@@ -153,10 +153,10 @@ Persistent metadata is best for plugin-owned state such as:
 - cached dialog or workflow progress
 - last completed objective
 - sticky proxy or routing hints
-- cooldown or deduplication state that should survive reconnects
+- cooldown or deduplication state that must survive reconnects
 
 It is not a substitute for user-facing configuration.
-If the user should edit it from the GUI or CLI, it probably belongs in a typed setting instead.
+If users edit the value in the GUI or CLI, use a typed setting instead.
 
 <Callout type="warning">
   `MetadataKey` forbids the `minecraft` namespace.

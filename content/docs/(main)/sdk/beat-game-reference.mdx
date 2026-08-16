@@ -12,8 +12,8 @@ icon: BookOpen
 | `@soulfiremc/beat-game/promise` | Promise lifecycle and async iterable facade |
 | `@soulfiremc/beat-game/node` | Crash-safe `JsonFileBeatGameCheckpointStore` |
 
-The universal module has no Node file-system import and can be bundled for a
-browser or worker.
+The universal module does not import the Node file system.
+You can bundle it for a browser or worker.
 
 ## Run functions
 
@@ -24,9 +24,9 @@ browser or worker.
 | `beatGameTeam(bots, options)` | Start a coordinated real-bot team |
 | `beatGameTeamWithDrivers(drivers, options)` | Start a coordinated custom-driver team |
 
-`BeatGameRun` contains `events`, `snapshots`, `awaitCompletion`, `pause`,
-`resume`, `stop`, and `snapshot`. `BeatGameTeamRun` applies lifecycle actions
-to every member and awaits all results.
+`BeatGameRun` provides `events`, `snapshots`, `awaitCompletion`, `pause`,
+`resume`, `stop`, and `snapshot`.
+`BeatGameTeamRun` applies lifecycle actions to each member and waits for all results.
 
 ## Planner phases
 
@@ -84,15 +84,15 @@ aggregate requirements, members, active claims, and shared discoveries.
 
 The ordered stream includes:
 
-- run lifecycle events;
-- checkpoint save and restore;
-- phase and objective changes;
-- requirement discovery, updates, claims, and satisfaction;
-- action start, retry, success, and failure;
-- disconnect and recovery;
-- death and item recovery;
-- team claim changes;
-- diagnostic observation revisions;
+- run lifecycle events
+- checkpoint save and restore
+- phase and objective changes
+- requirement discovery, updates, claims, and satisfaction
+- action start, retry, success, and failure
+- disconnect and recovery
+- death and item recovery
+- team claim changes
+- diagnostic observation revisions
 - diagnostics.
 
 Every event has a monotonic `sequence`, timestamp, run ID, instance ID, bot ID,

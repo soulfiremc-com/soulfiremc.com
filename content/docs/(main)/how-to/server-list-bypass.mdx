@@ -1,6 +1,6 @@
 ---
 title: Server List Bypass
-description: Use SoulFire's server-list-bypass plugin to ping the server list before join attempts on networks that expect that pre-login behavior.
+description: Ping the server list before joining networks that require this step.
 icon: Radar
 ---
 
@@ -17,11 +17,11 @@ The built-in plugin does one simple thing:
 2. it waits for a random delay
 3. it starts the real join attempt
 
-That matches the behavior described by the plugin itself: bypassing anti-bot systems such as EpicGuard by looking more like a normal player flow.
+This flow can pass anti-bot systems such as EpicGuard that expect a status ping before login.
 
 ## When it helps
 
-This plugin is worth trying when:
+Use this plugin when:
 
 - the target uses an anti-bot layer in front of the real server
 - direct join attempts are rejected, slowed down, or challenged
@@ -78,14 +78,14 @@ If the problem is a dead proxy, a wrong hostname, or broken forwarding, this plu
 
 ## How to tune the delay
 
-The delay is the only real control surface here, so keep it intentional.
+The delay is the main setting.
 
 - Start with the defaults if you have no reason to do otherwise.
 - Increase the delay if the anti-bot layer appears to reject immediate joins after a ping.
 - Keep the range randomized rather than using a single fixed number if you want less uniform behavior.
 - Do not jump straight to large delays unless the network clearly needs them.
 
-A good first-pass workflow is:
+Start with this process:
 
 1. test with one bot and the default delay range
 2. increase the delay slightly if the ping succeeds but the join still looks too abrupt
@@ -100,13 +100,14 @@ When you are not sure whether the plugin is helping, isolate it cleanly:
 3. test one bot
 4. compare the result before touching other settings
 
-That is the fastest way to tell whether this is a real anti-bot handshake issue or an unrelated network problem.
+This test shows whether the problem is the handshake flow or another network setting.
 
 ## Common failure patterns
 
 **The ping works, but the join still fails**
 
-The network may need a different delay, or the problem may not be server-list behavior at all.
+Try a different delay.
+If the error continues, server-list behavior is not the cause.
 Check proxies, forwarding, and host routing next.
 
 **Everything fails with and without the plugin**
@@ -116,7 +117,7 @@ Do not keep tuning this plugin if the status ping makes no difference.
 
 **The network lets one bot in, but larger batches fail**
 
-That is more likely rate limiting, proxy quality, or bot fleet scaling than this plugin specifically.
+This usually means rate limiting, poor proxies, or too many bots.
 
 ## Related pages
 

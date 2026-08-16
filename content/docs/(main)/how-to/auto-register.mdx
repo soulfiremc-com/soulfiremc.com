@@ -17,7 +17,7 @@ The current built-in behavior is simple:
 - if a chat message contains `/login` or `/l`, SoulFire sends the configured login command
 - the command is sent after a random delay in milliseconds
 
-This makes it a practical fit for AuthMe-style flows and similar chat-driven login plugins.
+This works with AuthMe-style flows and similar chat login plugins.
 
 ## What it expects
 
@@ -72,7 +72,7 @@ It is a poor fit for:
   <Step>
     ### Choose the password format
 
-    Set the password value SoulFire should substitute for `%password%`.
+    Set the password that replaces `%password%`.
 
     The current implementation uses one shared configured password string.
   </Step>
@@ -81,7 +81,7 @@ It is a poor fit for:
     ### Configure the send delay
 
     Set a min/max delay in milliseconds before the command is sent.
-    That helps avoid sending the command at the exact same instant every time.
+    The random delay changes the send time for each login.
   </Step>
 </Steps>
 
@@ -89,14 +89,14 @@ It is a poor fit for:
 
 Start with one bot on one server.
 
-You want to confirm:
+Make sure that:
 
 - the server actually shows a prompt containing `/register`, `/reg`, `/login`, or `/l`
 - the command template matches the server's expected syntax
 - the password format is what you intended
 - the server accepts the command after the chosen delay
 
-Once that works, scale up.
+After this test works, increase the bot count.
 
 ## Command examples
 
@@ -123,8 +123,7 @@ Do not assume every server uses the same syntax.
 
 ## Delay guidance
 
-The delay is not a cosmetic setting.
-It changes when the command is sent after the prompt arrives.
+The delay controls when SoulFire sends the command after the prompt.
 
 - Keep the delay low if the server expects a fast response and the chat prompt is reliable.
 - Increase it slightly if the server, proxy, or chat pipeline is noisy and immediate responses misfire.
@@ -145,7 +144,7 @@ Treat the configured password as sensitive.
 
 ## Known limitations
 
-- It reacts to simple string matches in chat, not deep semantic understanding.
+- It uses simple text matches in chat.
 - It does not currently support advanced per-bot password generation logic.
 - It will not help with non-chat registration systems.
 - It depends on the prompt reaching the bot in readable chat text.
@@ -154,7 +153,7 @@ Treat the configured password as sensitive.
 
 **Nothing happens after join**
 
-The server may not be using a prompt format this plugin recognizes, or the message may never reach normal chat.
+The server can use an unsupported prompt format, or the message can bypass normal chat.
 
 **The wrong command is sent**
 

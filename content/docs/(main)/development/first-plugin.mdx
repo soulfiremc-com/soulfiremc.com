@@ -7,8 +7,8 @@ icon: Plug
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 
-This guide takes the shortest path to a real plugin that SoulFire will actually load.
-It uses the official template instead of starting from an empty Fabric project, because the template already includes the SoulFire-specific Fabric, Loom, and plugin wiring.
+This guide builds a plugin that SoulFire can load.
+The official template already contains the required Fabric, Loom, and SoulFire setup.
 
 <Callout type="info">
   The official template repository is [SoulFirePluginExample](https://github.com/soulfiremc-com/SoulFirePluginExample).
@@ -22,12 +22,12 @@ If you are new to Fabric itself, keep [Fabric Documentation](https://docs.fabric
 
 - Install Java 25.
 - Install Git.
-- Use IntelliJ IDEA if possible. It is the least painful option for Fabric Loom, Mixins, and Java plugin work.
+- Use IntelliJ IDEA for Fabric Loom, Mixins, and Java plugin work.
 - Have a working SoulFire install where you can test jars in `minecraft/mods`.
 
 ## Success criteria
 
-By the end of this page, you should have:
+At the end of this guide, you will have:
 
 - a plugin project cloned from the template
 - a `ModInitializer` that registers your `ExternalPlugin`
@@ -80,7 +80,7 @@ By the end of this page, you should have:
     }
     ```
 
-    `SoulFireAPI.registerServerExtension(...)` is the moment your plugin becomes visible to SoulFire.
+    `SoulFireAPI.registerServerExtension(...)` registers the plugin with SoulFire.
   </Step>
 
   <Step>

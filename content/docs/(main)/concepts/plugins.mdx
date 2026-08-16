@@ -9,34 +9,35 @@ import { Callout } from 'fumadocs-ui/components/callout';
 ## SoulFire 2.0: Built on Fabric
 
 <Callout type="info">
-  SoulFire 2.0 was a complete rewrite that transformed SoulFire into a special **Fabric mod** running the official Minecraft client code.
-  **SoulFire plugins are Fabric mods** and are loaded using the standard Fabric mod loader.
+  SoulFire 2.0 runs the official Minecraft client code as a special **Fabric mod**.
+  **SoulFire plugins are Fabric mods** that use the standard Fabric mod loader.
 </Callout>
 
-This architectural choice changes how you should think about extending SoulFire.
+This design lets plugins use Minecraft and Fabric APIs directly.
 
 ### Why Fabric?
 
-- **Perfect vanilla parity**: SoulFire bots use the exact same code as the official Minecraft client, so they behave identically to real players on the server side
-- **Accurate physics and movement**: Bot movement, action prediction, and collision detection are 100% accurate since they use Minecraft's actual physics code
-- **Protocol parity**: Network communication matches the real client exactly, making bots effectively undetectable by anticheats
-- **Faster version updates**: Supporting new Minecraft versions is significantly easier and faster since the Minecraft code is already present
-- **Rapid feature development**: New features can be implemented quickly by building on top of existing Minecraft code
-- **Third-party mod support**: Some existing Fabric mods can work with SoulFire out of the box
+- **Vanilla behavior**: Bots use the official Minecraft client code.
+- **Physics and movement**: Bots use Minecraft's movement, prediction, and collision code.
+- **Protocol behavior**: Network communication follows the official client.
+- **Version updates**: SoulFire can reuse the Minecraft code for new versions.
+- **Feature development**: Developers can build features on existing Minecraft code.
+- **Third-party mods**: Some Fabric mods work with SoulFire without changes.
 
 ## Plugins are Fabric mods
 
 <Callout type="warn">
-  **Important**: SoulFire plugins are now standard Fabric mods. They are loaded by the Fabric mod loader just like any other Fabric mod.
+  SoulFire plugins are standard Fabric mods.
+  The Fabric mod loader loads them during startup.
 </Callout>
 
 Since SoulFire plugins are Fabric mods:
 
-- Plugins follow the standard Fabric mod structure (`fabric.mod.json`, entrypoints, etc.)
+- Plugins use the standard Fabric mod structure, including `fabric.mod.json` and entrypoints
 - Plugins are loaded from the `minecraft/mods` directory by the Fabric mod loader
 - Plugins can use **Mixins** to modify both Minecraft and SoulFire code
 - Plugins have full access to the Minecraft codebase and Fabric APIs
-- Some existing Fabric mods may be compatible with SoulFire without modification
+- Some existing Fabric mods work with SoulFire without changes
 
 <Callout type="info">
   This power is meant for advanced users.
@@ -58,11 +59,11 @@ Some Fabric mods work with SoulFire without modification, but compatibility is n
 
 - Mods that depend on rendering, audio, or other client-only features usually do not work.
 - Mods that change gameplay logic, networking, inventory behavior, or automation are more likely to work.
-- Mixins can touch both Minecraft code and SoulFire code, so plugin power comes with plugin risk.
+- Mixins can change Minecraft and SoulFire code. Install only plugins that you trust.
 
 ## Writing plugins
 
-Any questions regarding how SoulFire works and how to write a plugin can be asked in the [Discord](/discord).
+Ask plugin development questions in [Discord](/discord).
 
 The short version:
 
@@ -71,8 +72,8 @@ The short version:
 3. Register your plugin with `SoulFireAPI.registerServerExtension(...)`
 4. Build a standard Fabric mod jar and place it in `minecraft/mods`
 
-For the real developer workflow, use the new [Development](/docs/development) section.
-It covers environment setup, Gradle, settings pages, the event system, bot control, Mixins, access wideners, internal architecture, and the current Javadocs and source references.
+See [Development](/docs/development) for the full developer workflow.
+It covers setup, Gradle, settings, events, bot control, Mixins, access wideners, architecture, and API references.
 
 ## Related pages
 

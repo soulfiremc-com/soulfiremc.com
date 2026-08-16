@@ -6,14 +6,14 @@ icon: Cable
 
 ## What is MCP?
 
-MCP (Model Context Protocol) is an open standard that lets AI assistants interact with external tools and services.
-SoulFire exposes its full API as MCP tools, so an assistant can control bot instances, execute commands,
-manage configurations, and more through natural language.
+MCP (Model Context Protocol) lets AI assistants use external tools and services.
+SoulFire exposes its API as MCP tools.
+An assistant can control bot instances, run commands, and change settings through natural language.
 
-Make sure SoulFire is already installed and running before you start.
-If it isn't, head to [Start Here](/docs/start-here) first.
+Install and start SoulFire before you continue.
+See [Start Here](/docs/start-here) for installation steps.
 
-## What can AI assistants do with SoulFire?
+## Available actions
 
 Through MCP, an AI assistant can:
 
@@ -27,9 +27,10 @@ Through MCP, an AI assistant can:
 - Work with visual scripts (node-based automation)
 - Query server and instance configuration
 
-## Getting an API Token
+## Get an API token
 
-To authenticate with the MCP endpoint, you need a JWT API token. You can generate one from:
+The MCP endpoint requires a JWT API token.
+Create one in any of these ways:
 
 1. **The SoulFire GUI**: Go to your profile settings and generate an API token
 2. **The CLI**: Use the `generate-token api` command
@@ -43,7 +44,7 @@ The MCP endpoint is available at:
 http://your-server:port/mcp
 ```
 
-This uses the Streamable HTTP transport, which is the standard MCP transport for HTTP-based connections.
+The endpoint uses the Streamable HTTP transport.
 
 ## Connecting Claude Desktop
 
@@ -62,7 +63,8 @@ Add the following to your Claude Desktop MCP configuration file (`claude_desktop
 }
 ```
 
-Replace `your-server:port` with your SoulFire server address and `YOUR_API_TOKEN` with your JWT token.
+Replace `your-server:port` with the SoulFire server address.
+Replace `YOUR_API_TOKEN` with the JWT token.
 
 ## Connecting Claude Code
 
@@ -73,9 +75,9 @@ claude mcp add soulfire --transport http http://your-server:port/mcp \
   --header "Authorization: Bearer YOUR_API_TOKEN"
 ```
 
-## Connecting Other MCP Clients
+## Connect other MCP clients
 
-Any MCP-compatible client can connect to SoulFire. These are the settings you need:
+Use these settings with other MCP clients:
 
 | Parameter | Value |
 |-----------|-------|
@@ -83,9 +85,9 @@ Any MCP-compatible client can connect to SoulFire. These are the settings you ne
 | **URL** | `http://your-server:port/mcp` |
 | **Auth Header** | `Authorization: Bearer YOUR_API_TOKEN` |
 
-## Available Tools
+## Available tools
 
-SoulFire exposes more than 40 MCP tools, grouped into a few categories:
+SoulFire groups its MCP tools by purpose:
 
 ### Instance Management
 - `list_instances`: List all instances visible to the current user
@@ -172,9 +174,9 @@ Once connected, you can talk to SoulFire in plain language:
 > **AI**: Let me check on your bots.
 > *Calls get_bot_list, formats the status information*
 
-## Security Considerations
+## Security
 
-- Use HTTPS in production to encrypt API tokens in transit
+- Use HTTPS to protect API tokens during transfer
 - API tokens have the same permissions as the user who generated them
 - Rotate tokens regularly using the `generate_api_token` tool
-- Use the principle of least privilege. Create dedicated users with limited permissions for AI assistants
+- Create dedicated users with only the permissions that each assistant needs

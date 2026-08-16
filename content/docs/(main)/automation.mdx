@@ -8,8 +8,8 @@ import { Bot, Blocks, Code2, Terminal, Workflow } from 'lucide-react';
 import { Cards, Card } from 'fumadocs-ui/components/card';
 import { Callout } from 'fumadocs-ui/components/callout';
 
-SoulFire provides several automation layers. Choose the narrowest one that
-owns the decision you need.
+SoulFire provides several automation options.
+Choose the simplest option that can do your task.
 
 | Goal | Use |
 | --- | --- |
@@ -22,14 +22,13 @@ owns the decision you need.
 
 ## SoulFire is the remote client
 
-SoulFire owns Minecraft protocol state, pathfinding, direct inputs, control
-arbitration, and reusable tasks. Applications own their goals and decide how
-to combine those capabilities.
+SoulFire manages the Minecraft protocol, pathfinding, direct input, control,
+and reusable tasks. Applications set goals and combine these features.
 
-The first-party beat-game planner therefore runs in
-`@soulfiremc/beat-game`, not inside the SoulFire server or SoulFireClient. The
-TypeScript worker can restart from checkpoints, coordinate a team, call
-plugin-defined RPCs, and replace policy steps without changing SoulFire core.
+The beat-game planner runs in `@soulfiremc/beat-game`.
+It does not run inside the SoulFire server or SoulFireClient.
+The TypeScript worker can resume checkpoints, coordinate teams, and call plugin RPCs.
+You can change its plan without changing SoulFire.
 
 <Callout type="info">
   SoulFireClient does not contain a native beat-game dashboard. Run and
@@ -39,13 +38,13 @@ plugin-defined RPCs, and replace policy steps without changing SoulFire core.
 
 ## Reusable tasks versus policy
 
-A collect-blocks task is reusable. It stays close to the game loop and can
-continue according to its disconnect policy. Deciding that a team needs eight
-logs before entering the Nether is game policy and belongs in the worker.
+A collect-blocks task is reusable.
+It runs near the game loop and follows its disconnect policy.
+The worker decides whether a team needs eight logs before entering the Nether.
 
-The same distinction applies to plugins. A plugin can intentionally expose a
-typed server-side capability. The application still decides when that
-capability serves its plan.
+The same rule applies to plugins.
+A plugin can expose a typed server feature.
+The application decides when to use that feature.
 
 ## Related pages
 

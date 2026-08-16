@@ -1,6 +1,6 @@
 ---
 title: Proxies
-description: Diagnose proxy import, validation, and connection failures without blaming the whole setup too early.
+description: Fix proxy import, validation, and connection problems.
 icon: ShieldAlert
 ---
 
@@ -8,7 +8,7 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 ## The first rule of proxy troubleshooting
 
-If SoulFire works without proxies and fails with proxies, assume the proxy pool is guilty until proven otherwise.
+If SoulFire works without proxies, test the proxy pool first.
 
 Do not keep changing unrelated settings before you test that simple split.
 
@@ -22,7 +22,7 @@ Common mistakes:
 - mixing several proxy types in a file without using a format that supports that
 - importing username/password proxies with the wrong field order
 
-If the format is wrong, every later test is wasted.
+Fix the format before you continue.
 
 ## Test a tiny sample
 
@@ -38,7 +38,8 @@ If that fails, the pool is not good enough for production use yet.
 
 ## Separate gameplay proxies from account-auth proxies
 
-SoulFire can route account authentication through proxies, but that should not be your first test.
+SoulFire can route account authentication through proxies.
+First, test account authentication without proxies.
 
 Start with:
 
@@ -47,7 +48,7 @@ Start with:
 3. confirm one bot can join normally
 4. only then turn proxying back on
 
-This keeps auth failures and gameplay-connect failures from hiding inside the same test.
+This separates authentication problems from gameplay connection problems.
 
 ## Treat timeout-heavy proxies as bad proxies
 
@@ -60,11 +61,11 @@ Usually that means at least one of these:
 - the proxy provider is rate-limiting you
 - the target server is not reachable through that proxy
 
-Replace the proxy or shrink the sample before doing anything more complex.
+Replace the proxy or use a smaller sample before you continue.
 
 ## Match bot count to pool size
 
-If you ask too many bots to share too few proxies, failures become noisy and misleading.
+Too many bots on each proxy can cause unclear errors.
 
 Check:
 

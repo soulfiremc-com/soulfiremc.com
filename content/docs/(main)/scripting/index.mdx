@@ -10,12 +10,13 @@ import { Callout } from 'fumadocs-ui/components/callout';
 import { Mermaid } from '../../../../src/components/mdx/mermaid';
 
 <Callout type="info">
-  SoulFire scripts are built in a visual editor. You connect nodes instead of writing code, but the system still follows a real execution model with triggers, data flow, and per-script limits.
+  Build SoulFire scripts by connecting nodes in the visual editor.
+  Triggers, data flow, and limits control how each script runs.
 </Callout>
 
 <Callout type="info">
-  Stay in scripting if you can.
-  Move to [Development](/docs/development) only when you need something lower-level than the node system can express, such as Mixins, packet interception, custom settings pages, or direct Minecraft and SoulFire object access.
+  Use scripting when the available nodes can express your workflow.
+  Use [Development](/docs/development) for Mixins, packet handling, custom settings pages, or direct object access.
 </Callout>
 
 ## What scripting is in SoulFire
@@ -25,14 +26,17 @@ A SoulFire script is a graph of connected nodes.
 - **Trigger nodes** start a run when something happens.
 - **Action nodes** tell bots to do work.
 - **Data nodes** read state from the world, the bot, or SoulFire itself.
-- **Flow nodes** decide what should run next.
+- **Flow nodes** decide which node runs next.
 - **Utility nodes** transform values so the next node gets the shape it needs.
 
-You build scripts in the **Scripts** tab for an instance. Each script belongs to one instance, can be paused or active, and starts listening for events when it is active.
+Build scripts in the **Scripts** tab of an instance.
+Each script belongs to one instance and can be active or paused.
+An active script listens for events.
 
 ## How scripts actually run
 
-SoulFire scripting is event-driven. A script does not sit in a busy loop. It waits for a trigger, then runs the connected chain for that trigger.
+SoulFire scripts are event-driven.
+A script waits for a trigger, then runs the connected nodes.
 
 <Mermaid chart="
 graph LR
@@ -42,13 +46,13 @@ graph LR
     C -->|No| D[Wait for the next trigger]
 " />
 
-That matters because:
+This model has these effects:
 
 - Idle scripts cost very little.
 - Different triggers in the same script can start separate runs.
 - Concurrency is limited by script quotas. The current default is **1 concurrent trigger run**, not 8.
 - Event-based triggers use backpressure. If a trigger floods faster than SoulFire can process it, extra events can be dropped.
-- `On Pre Entity Tick` and `On Post Entity Tick` run synchronously on the tick thread. Use them only when you truly need per-tick timing.
+- `On Pre Entity Tick` and `On Post Entity Tick` run on the tick thread. Use them only for per-tick timing.
 
 ## The mental model
 

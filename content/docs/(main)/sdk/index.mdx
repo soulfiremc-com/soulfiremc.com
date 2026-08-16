@@ -7,10 +7,9 @@ icon: Blocks
 import { Cards, Card } from 'fumadocs-ui/components/card';
 import { Callout } from 'fumadocs-ui/components/callout';
 
-The SoulFire SDK is the official programming interface for Minecraft
-automation. Your application controls one bot or a fleet while SoulFire owns
-the Minecraft connections, reconnect policy, permissions, task execution, and
-plugin runtime.
+The SoulFire SDK is the official API for Minecraft automation.
+Your application controls one bot or a fleet.
+SoulFire manages connections, reconnects, permissions, tasks, and plugins.
 
 <Callout type="info">
   The TypeScript SDK is Effect-first and includes a complete Promise facade.
@@ -91,34 +90,28 @@ SoulFire
         └── durable tasks
 ```
 
-An instance is a permission and configuration boundary. Each configured
-Minecraft account is an independently controlled bot. Starting a bot persists
-the desired state, so SoulFire can reconnect it without keeping the SDK
-process alive.
+An instance separates permissions and settings.
+Each Minecraft account is a separate bot.
+SoulFire saves the desired bot state and can reconnect it after the SDK process stops.
 
 ## Actions, streams, and tasks
 
-Use an atomic action for bounded work such as sending chat, clicking one slot,
-or interacting with a block. `sleep` is also atomic from the application's
-perspective, but it does not complete until the Minecraft server confirms that
-the bot entered bed. `wake` leaves the current bed. Action results include a
-stable action ID and confirm whether game-thread execution completed,
-cancelled, or failed.
+Use an atomic action for one operation, such as sending chat or clicking a slot.
+The `sleep` action finishes after the Minecraft server confirms that the bot entered a bed.
+The `wake` action leaves the current bed.
+Each result has an action ID and a completed, cancelled, or failed state.
 
-Use a stream to observe chat, lifecycle changes, inventory, entities, blocks,
-task progress, or plugin events. Streams preserve cancellation and
-backpressure.
+Use a stream to observe chat, lifecycle changes, inventory, world state, tasks, or plugins.
+Streams support cancellation and backpressure.
 
-Use a durable task for continuous work. Tasks have stable IDs, progress,
-resource claims, reconnect policies, typed results, and explicit cancellation.
-This keeps combat, following, and survival behavior near the game loop instead
-of turning every tick into a network round trip.
+Use a durable task for continuous work.
+Tasks have stable IDs, progress, resource claims, reconnect policies, typed results, and cancellation.
+Combat, following, and survival tasks run near the game loop.
 
 ## Compatibility and extensions
 
-Every connection begins with a capability handshake. The SDK checks the core
-API version, requested features, and required plugin versions before returning
-a ready client.
+Each connection starts with a capability handshake.
+The SDK checks the API version, requested features, and required plugin versions.
 
 Plugins can register protobuf RPC services and durable task types. Their
 descriptors are discoverable at runtime, so applications can use a published

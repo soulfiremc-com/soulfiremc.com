@@ -7,10 +7,8 @@ icon: Network
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
-`instance.fleet` turns a set of configured accounts into a reusable execution
-group. The same selector can start or stop bots, partition input data, launch
-one durable task per bot, merge task events, aggregate results, and cancel the
-whole group.
+`instance.fleet` creates a reusable group from configured accounts.
+A selector can start or stop bots, divide input, launch tasks, merge events, collect results, and cancel the group.
 
 ## Build a selector
 
@@ -248,7 +246,7 @@ report = await group.results()
 ```
 
 `report.fulfilled` and `report.rejected` preserve selection order and bot
-identity. Use `requireResults` or `require_results` when any rejection should
+identity. Use `requireResults` or `require_results` when any rejection must
 raise a `FleetTaskGroupError` containing the complete report.
 
 ## Cancel as a group
@@ -272,7 +270,6 @@ not hide successful cancellations.
 
 <Callout type="info">
   Fleet orchestration uses durable server tasks. Closing the SDK process does
-  not cancel them unless the task's disconnect policy says it should. Keep the
-  group handle or persist its `taskIds` or member task IDs when another process
-  may resume supervision.
+  not cancel them unless the task's disconnect policy requires cancellation.
+  Keep the group handle or save its `taskIds` so another process can resume supervision.
 </Callout>
