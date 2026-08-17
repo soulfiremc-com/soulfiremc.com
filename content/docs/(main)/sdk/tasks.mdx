@@ -7,22 +7,23 @@ icon: ListChecks
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
-Durable tasks run on the SoulFire server near the Minecraft game loop.
-Use them for work that needs progress, cancellation, retries, reconnect rules, or shared control.
+A durable task runs on the SoulFire server.
+It continues when the SDK program disconnects.
+Use a durable task for progress updates, retries, cancellation, or shared bot control.
 
 Current first-party task types include:
 
 - Pathfinding to a goal
 - Finding and mining matching blocks
-- Clearing an inclusive cuboid with bounded excavation
-- Building transformed and partitioned inline schematics
+- Clearing all blocks in a cuboid
+- Building inline schematics with rotation and mirroring
 - Crafting shaped and shapeless recipes
 - Cooking items in a furnace, blast furnace, or smoker
 - Brewing potions in batches of up to three bottles
-- Executing an exact number of villager trades
+- Completing an exact number of villager trades
 - Following a moving entity
 - Chasing and attacking an entity
-- Leading moving targets with bows and crossbows
+- Aiming bows and crossbows at moving targets
 - Hunting the nearest entities that match a safe selector
 - Escaping from selected threats until a safety radius is clear
 - Guarding a position or protecting a live entity
@@ -30,9 +31,9 @@ Current first-party task types include:
 - Fishing with server-timed bite detection
 - Finding mature crops, harvesting them, and replanting them
 - Starting compatible animal breeding pairs with confirmed feeding
-- Exploring a bounded frontier with coordinated fleet claims
-- Stashing and withdrawing transactional item batches
-- Maintaining bounded inventory loadouts from storage
+- Exploring a limited area without sending two bots to the same place
+- Moving groups of items into or out of storage
+- Keeping a requested inventory loadout from storage
 - Monitoring hunger and eating
 - Monitoring death and respawning
 - Keeping the strongest available armor equipped
@@ -119,19 +120,18 @@ The pathfinder selects tools and keeps mining inside the requested cuboid.
   </Tab>
 </Tabs>
 
-The server rejects cuboids larger than 32,768 blocks and regions whose chunks
-are not loaded yet. `maximumBlocks` or `maximum_blocks` bounds one run. The
-typed result distinguishes a cleared area, a reached block budget, and a
-region with no reachable blocks. It also reports skipped and unreachable
-positions. Cancellation or suspension stops the active route and releases
-movement, rotation, hand, and inventory resources.
+The server rejects cuboids larger than 32,768 blocks.
+It also rejects areas with unloaded chunks.
+Use `maximumBlocks` or `maximum_blocks` to limit the number of blocks in one task.
+The result reports whether SoulFire cleared the area, reached the limit, or found no reachable blocks.
+It also lists skipped and unreachable positions.
+If you stop or pause the task, SoulFire releases all bot controls that the task used.
 
 ## Build an inline schematic
 
-`build` accepts a language-native blueprint made of block offsets relative to
-an origin. SoulFire transforms the blueprint on the server and places blocks
-from the bottom up. It navigates between positions, selects exact materials,
-and checks each block state.
+`build` accepts a blueprint that contains block positions relative to an origin.
+SoulFire rotates or mirrors the blueprint on the server.
+It places blocks from the bottom up and selects the required materials.
 
 <Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
   <Tab value="Effect">
@@ -221,11 +221,10 @@ and checks each block state.
   </Tab>
 </Tabs>
 
-Offsets and directional properties rotate and mirror together. A substitution
-list is ordered, so the first available replacement wins. Existing exact
-states count as complete without consuming material. Every requested block
-gets an outcome such as placed, already correct, missing material,
-unreachable, unsupported, state mismatch, or blocked by an incorrect block.
+Block positions and directions rotate or mirror together.
+SoulFire uses the first available material from the substitution list.
+It does not replace a block that already has the correct state.
+The result gives an outcome for every requested block.
 
 For a coordinated build, start the same blueprint on each bot with the same
 `partitionCount` or `partition_count` and a distinct zero-based partition

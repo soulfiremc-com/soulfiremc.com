@@ -1,6 +1,6 @@
 ---
 title: Choose an automation layer
-description: Pick direct commands, visual scripts, durable tasks, SDK workflows, or the TypeScript beat-game runner.
+description: Choose how to automate SoulFire bots with commands, visual scripts, SDKs, durable tasks, or the beat-game runner.
 icon: Bot
 ---
 
@@ -15,42 +15,40 @@ Choose the simplest option that can do your task.
 | --- | --- |
 | Run one operator action | [Commands](/docs/reference/commands) |
 | React to chat, timers, or events in the GUI | [Visual scripting](/docs/scripting) |
-| Keep a reusable action near the game loop | [Durable tasks](/docs/sdk/tasks) |
-| Build an application from observations and actions | [Official SDK](/docs/sdk) |
-| Run first-party progression policy | [Beat-game runner](/docs/sdk/automation) |
-| Add server-owned domain capabilities | [Plugins](/docs/sdk/plugins) |
+| Run a long task that continues after your program disconnects | [Durable tasks](/docs/sdk/tasks) |
+| Build a TypeScript or Python program | [Official SDK](/docs/sdk) |
+| Automate Minecraft game progress | [Beat-game runner](/docs/sdk/automation) |
+| Add new server features | [Plugins](/docs/sdk/plugins) |
 
-## SoulFire is the remote client
+## What SoulFire manages
 
-SoulFire manages the Minecraft protocol, pathfinding, direct input, control,
-and reusable tasks. Applications set goals and combine these features.
+SoulFire manages Minecraft connections, pathfinding, bot input, and reusable tasks.
+Your application chooses the goals and combines these features.
 
 The beat-game planner runs in `@soulfiremc/beat-game`.
 It does not run inside the SoulFire server or SoulFireClient.
-The TypeScript worker can resume checkpoints, coordinate teams, and call plugin RPCs.
+The TypeScript worker can resume saved progress, coordinate teams, and call plugin APIs.
 You can change its plan without changing SoulFire.
 
 <Callout type="info">
   SoulFireClient does not contain a native beat-game dashboard. Run and
-  observe the application from your TypeScript worker, logs, or your own
-  operator interface.
+  monitor the application from your TypeScript worker, logs, or your own UI.
 </Callout>
 
-## Reusable tasks versus policy
+## Tasks and decisions
 
-A collect-blocks task is reusable.
-It runs near the game loop and follows its disconnect policy.
-The worker decides whether a team needs eight logs before entering the Nether.
+A collect-blocks task only collects blocks.
+The worker decides when to run it and how many blocks the team needs.
 
 The same rule applies to plugins.
-A plugin can expose a typed server feature.
+A plugin can add a typed server feature.
 The application decides when to use that feature.
 
 ## Related pages
 
 <Cards>
   <Card icon={<Workflow />} title="Beat-game runner" href="/docs/sdk/automation">
-    Run checkpointed single-bot and coordinated team progression.
+    Save and resume game progress for one bot or a team.
   </Card>
   <Card icon={<Code2 />} title="Official SDK" href="/docs/sdk">
     Build Effect, Promise, async Python, or synchronous Python applications.
@@ -59,9 +57,9 @@ The application decides when to use that feature.
     Use general-purpose work that runs beside the Minecraft game loop.
   </Card>
   <Card icon={<Terminal />} title="Commands" href="/docs/reference/commands">
-    Execute bounded operator actions.
+    Run one operator action.
   </Card>
   <Card icon={<Bot />} title="Visual scripting" href="/docs/scripting">
-    Build GUI-managed event and flow graphs.
+    Connect triggers and actions in the GUI.
   </Card>
 </Cards>

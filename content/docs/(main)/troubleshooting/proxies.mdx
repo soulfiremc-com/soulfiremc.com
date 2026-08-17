@@ -6,13 +6,13 @@ icon: ShieldAlert
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-## The first rule of proxy troubleshooting
+## Test without proxies first
 
 If SoulFire works without proxies, test the proxy pool first.
 
 Do not keep changing unrelated settings before you test that simple split.
 
-## Check the proxy format first
+## Make sure that the proxy format is correct
 
 Compare your input against [Proxy Formats](/docs/reference/proxy-formats).
 
@@ -44,13 +44,13 @@ First, test account authentication without proxies.
 Start with:
 
 1. no proxies for account authentication
-2. confirm account import works
-3. confirm one bot can join normally
-4. only then turn proxying back on
+2. Make sure that account import works.
+3. Make sure that one bot can join.
+4. Turn proxying on again.
 
 This separates authentication problems from gameplay connection problems.
 
-## Treat timeout-heavy proxies as bad proxies
+## Replace proxies that often time out
 
 If you see repeated proxy connect timeouts, especially on SOCKS pools, do not assume SoulFire is at fault first.
 
@@ -67,7 +67,7 @@ Replace the proxy or use a smaller sample before you continue.
 
 Too many bots on each proxy can cause unclear errors.
 
-Check:
+Review these values:
 
 - how many proxies you actually imported
 - the configured bots-per-proxy limit
@@ -95,7 +95,7 @@ If the problem starts at step 2, the proxy path is already broken.
 - exact timeout or proxy exception text
 
 <Callout type="info">
-  If your proxy provider promises quantity but not stability, expect to discard a meaningful portion of the list.
+  A large proxy list can contain many unstable proxies.
   Proxy quality matters more than list size.
 </Callout>
 

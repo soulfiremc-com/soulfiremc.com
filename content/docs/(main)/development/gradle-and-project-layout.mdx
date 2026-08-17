@@ -1,6 +1,6 @@
 ---
 title: Gradle And Project Layout
-description: Configure Fabric Loom, SoulFire dependencies, Maven repositories, and the required project files for a SoulFire plugin.
+description: Set up Fabric Loom, SoulFire dependencies, Maven repositories, and project files for a plugin.
 icon: FolderTree
 ---
 
@@ -22,7 +22,7 @@ SoulFire publishes plugin dependencies under the `com.soulfiremc` group:
 | Shared metadata | `https://repo.codemc.org/repository/maven-public/com/soulfiremc/shared/maven-metadata.xml` |
 
 The public metadata currently exposes a newer release than the version pinned in the template repository.
-Check the metadata before you pin a version, especially if you are targeting a recent SoulFire build.
+Read the metadata before you select a version, especially for a recent SoulFire build.
 
 ## External references for this page
 
@@ -63,7 +63,7 @@ dependencies {
 }
 ```
 
-Use `implementation` for `com.soulfiremc:mod` because that is the runtime API surface you actually integrate against.
+Use `implementation` for `com.soulfiremc:mod` because your plugin uses this API while SoulFire runs.
 Use `compileOnly` for `shared` unless you know you need it packaged differently.
 
 ## Loom configuration

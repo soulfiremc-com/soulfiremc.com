@@ -46,12 +46,12 @@ graph LR
     C -->|No| D[Wait for the next trigger]
 " />
 
-This model has these effects:
+This design means that:
 
 - Idle scripts cost very little.
 - Different triggers in the same script can start separate runs.
-- Concurrency is limited by script quotas. The current default is **1 concurrent trigger run**, not 8.
-- Event-based triggers use backpressure. If a trigger floods faster than SoulFire can process it, extra events can be dropped.
+- Script limits control how many trigger runs can happen at once. The default is **1 run per script**.
+- Event triggers use a buffer. If the buffer fills, SoulFire can discard new events.
 - `On Pre Entity Tick` and `On Post Entity Tick` run on the tick thread. Use them only for per-tick timing.
 
 ## The mental model
@@ -73,17 +73,18 @@ SoulFire currently ships with **12 trigger nodes**:
 - `On Script Init`
 - `On Script End`
 
-The old idea of a single generic `On Tick` trigger is outdated. The current engine splits tick work into pre-physics and post-physics phases.
+SoulFire does not have one general `On Tick` trigger.
+Use `On Pre Entity Tick` or `On Post Entity Tick` instead.
 
-### 2. Execution edges decide order
+### 2. Execution connections decide the order
 
-Execution edges answer the question "what runs next?"
+An execution connection tells SoulFire which node runs next.
 
 If you connect `On Join -> Send Chat -> Wait -> Pathfind To`, SoulFire runs those nodes in that order when the trigger fires.
 
-### 3. Data edges carry values
+### 3. Data connections carry values
 
-Data edges move values like:
+Data connections move values such as:
 
 - numbers
 - strings
@@ -95,7 +96,8 @@ Data edges move values like:
 - items
 - lists
 
-For example, `On Chat` can output the plain-text message, then `String Contains` can inspect it, then `Branch` can choose a path.
+For example, `On Chat` provides the plain-text message.
+`String Contains` reads it, and `Branch` selects the next path.
 
 ### 4. Not every trigger gives you a bot
 
@@ -135,12 +137,12 @@ Use this table when you are deciding where to start.
 
 ## Common building blocks
 
-These node groups do most of the heavy lifting in real scripts:
+You will use these node groups in most scripts:
 
 - **Actions** for movement, chat, inventory, combat, and pathfinding
 - **Data** for reading bot state, inventory, position, light, weather, effects, and nearby targets
 - **Flow Control** for branching, looping, rate limiting, and iterating over bots or lists
-- **Variables and State** for session data, persistent metadata, and in-memory caches
+- **Variables and State** for session data, saved metadata, and data in memory
 - **Network, Integration, and AI** for web requests, Discord webhooks, and LLM calls
 
 SoulFire currently exposes **163 built-in nodes** across **17 categories**.
@@ -152,7 +154,7 @@ SoulFire currently exposes **163 built-in nodes** across **17 categories**.
 - Use `Print` while building. It is the fastest way to see what your script is doing.
 - Use `Wait`, `Debounce`, or `Rate Limit` before repeated network calls or chat actions.
 - Prefer `Vector3` values for movement-related logic when a node supports them.
-- Store durable data in persistent variables. Use session variables for throwaway run-time state.
+- Store saved data in persistent variables. Use session variables for temporary data.
 
 ## Learn more
 

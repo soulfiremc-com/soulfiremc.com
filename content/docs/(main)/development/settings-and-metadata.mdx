@@ -1,6 +1,6 @@
 ---
 title: Settings And Metadata
-description: Define typed settings, expose plugin pages to the UI, and store transient or persistent plugin state in the SoulFire runtime.
+description: Add typed settings and UI pages, then store plugin data in SoulFire.
 icon: Settings
 ---
 
@@ -40,7 +40,7 @@ These are the current built-in property families:
 | Property type | Use it for |
 | --- | --- |
 | `BooleanProperty` | enable flags and simple toggles |
-| `IntProperty` | bounded integer values |
+| `IntProperty` | integer values with minimum and maximum limits |
 | `DoubleProperty` | decimal values |
 | `StringProperty` | text, URLs, prompts, commands, and other strings |
 | `ComboProperty` | enum-like selections |
@@ -115,17 +115,17 @@ If you use a `MinMaxProperty`, you can either read the full structure or ask Sou
 - `SettingsDefinition`: the type, description, defaults, and validation rules for each property
 - `SettingsPage`: the grouping, ordering, icon, owning plugin, and optional enabled toggle
 
-Those definitions are then shipped over the server and instance gRPC responses.
-That is why the GUI and CLI do not need hardcoded knowledge of your plugin page.
+SoulFire sends these definitions in the server and instance gRPC responses.
+The GUI and CLI use them to build your plugin page.
 
-## Metadata: transient versus persistent
+## Temporary and saved metadata
 
 Plugin state does not always belong in settings.
 SoulFire also gives you metadata holders.
 
 Use:
 
-- `metadata()` for transient in-memory state
+- `metadata()` for temporary data in memory
 - `persistentMetadata()` for data that must survive restarts
 
 Both instance and bot objects expose metadata holders.
@@ -146,9 +146,9 @@ var count = bot.metadata().getOrSet(COUNTER, () -> 0);
 bot.metadata().set(COUNTER, count + 1);
 ```
 
-## Persistent metadata rules
+## Rules for saved metadata
 
-Persistent metadata is best for plugin-owned state such as:
+Use persistent metadata for plugin data such as:
 
 - cached dialog or workflow progress
 - last completed objective

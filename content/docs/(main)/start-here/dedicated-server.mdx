@@ -1,6 +1,6 @@
 ---
 title: Deploy a Dedicated Server (Automated Setup)
-description: Deploy SoulFire on a remote Linux server with the automated Docker-based setup script.
+description: Install SoulFire on a remote Linux server with the Docker setup script.
 icon: Server
 ---
 
@@ -13,7 +13,7 @@ If you are not sure whether you need a remote setup, read [Choose Your Setup](/d
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/_Uz5kgupFKs?si=utMuK75jVCozQu4t" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-This guide installs a SoulFire dedicated server on a remote Linux machine.
+This guide installs a SoulFire dedicated server on a remote Linux server.
 The setup script installs Docker, configures HTTPS, and starts SoulFire.
 
 <Steps>
@@ -73,7 +73,7 @@ The setup script installs Docker, configures HTTPS, and starts SoulFire.
     wget -qO /tmp/sf-setup.sh https://raw.githubusercontent.com/soulfiremc-com/SoulFire/main/scripts/soulfire-dedicated-setup.sh && sudo bash /tmp/sf-setup.sh
     ```
 
-    The script asks you to choose these options:
+    The script asks you about these options:
 
     - **System updates** and **Docker installation**, if required
     - **HTTPS setup** with Cloudflared, Traefik, or plain HTTP
@@ -113,7 +113,7 @@ The setup script installs Docker, configures HTTPS, and starts SoulFire.
 
 ## Managing your server
 
-Re-run the setup script at any time to access the management menu:
+Run the setup script again to open the management menu:
 
 ```bash
 wget -qO /tmp/sf-setup.sh https://raw.githubusercontent.com/soulfiremc-com/SoulFire/main/scripts/soulfire-dedicated-setup.sh && sudo bash /tmp/sf-setup.sh

@@ -1,6 +1,6 @@
 ---
 title: CLI Mode
-description: Run SoulFire from the terminal for automation, SSH workflows, or headless environments.
+description: Run SoulFire from a terminal for automation, SSH, or a server without a desktop.
 icon: Terminal
 ---
 
@@ -13,7 +13,7 @@ import { Callout } from 'fumadocs-ui/components/callout';
   guide](/docs/start-here/gui-mode).
 </Callout>
 
-Use the CLI when you prefer a terminal, need automation, or run SoulFire without a desktop.
+Use the CLI for terminal automation, SSH sessions, or systems without a desktop.
 The GUI supports more features, but the CLI covers the most common tasks.
 
 SoulFire starts in CLI mode when no display is available or when you pass CLI flags to `java`.
@@ -36,9 +36,9 @@ If you omit `-Xmx$RAM`, Java uses up to 25% of the total system memory.
 For example, use `-Xmx120G` to set a 120 GB limit.
 When the bots run on a remote server, `-Xmx1G` is usually enough for the local CLI.
 
-Next, decide whether the bots will run locally or on a remote dedicated server.
+Next, choose where the bots will run.
 For a local server, continue to [CLI flags](#cli-flags).
-For a remote server, set these JVM properties:
+For a remote dedicated server, set these JVM properties:
 
 | Property           | Description               |
 |--------------------|---------------------------|
@@ -53,7 +53,7 @@ java -Dsf.remoteAddress=domain.com -Dsf.remoteToken=abcdefg -Djava.awt.headless=
 
 ## CLI flags
 
-After the CLI connects, it loads available flags from the local or remote server.
+After the CLI connects, it gets the available flags from the server.
 See [CLI Flags](/docs/reference/cli-flags) for the full list.
 
 Here is an example of how to use them:
@@ -78,7 +78,7 @@ Use CLI flags to import profiles, accounts, and proxies.
 You must select an account type when you import accounts.
 The proxy type is optional. SoulFire treats the file as a universal proxy file when you omit the type.
 
-## Executing commands
+## Run commands
 
 The interactive shell accepts the same commands as GUI mode.
 See the [Commands](/docs/reference/commands) reference for details.

@@ -12,61 +12,54 @@ Your application controls one bot or a fleet.
 SoulFire manages connections, reconnects, permissions, tasks, and plugins.
 
 <Callout type="info">
-  The TypeScript SDK is Effect-first and includes a complete Promise facade.
-  The Python SDK requires CPython 3.14 and provides native async and sync
-  clients.
+  The TypeScript SDK supports both Effect and Promises.
+  The Python SDK requires CPython 3.14.
+  It supports asynchronous and synchronous code.
 </Callout>
 
 ## Choose a language
 
 <Cards>
   <Card title="TypeScript" href="/docs/sdk/typescript">
-    Use typed Effect operations, streams, scopes, layers, and tagged failures,
-    or import the Promise facade.
+    Use the Effect API or the Promise API.
   </Card>
   <Card title="Python" href="/docs/sdk/python">
-    Use `AsyncSoulFire` for structured-concurrency applications or `SoulFire`
-    for synchronous scripts.
+    Use `AsyncSoulFire` for asynchronous programs.
+    Use `SoulFire` for synchronous scripts.
   </Card>
   <Card title="Durable tasks" href="/docs/sdk/tasks">
     Run pathfinding, combat, following, eating, and respawning beside the
     Minecraft game loop.
   </Card>
   <Card title="Live events and state" href="/docs/sdk/events">
-    Stream Minecraft activity or maintain synchronized entities, blocks,
-    weather, player-list, boss-bar, and scoreboard state.
+    Watch Minecraft events or keep a local copy of the current world state.
   </Card>
   <Card title="Player actions" href="/docs/sdk/actions">
     Mount and drive vehicles, edit signs and books, answer resource packs,
     toggle flight, and manage creative slots.
   </Card>
   <Card title="Coordinated automation" href="/docs/sdk/automation">
-    Run persistent fleet goals with team roles, shared knowledge, claims,
-    recovery, and a typed state-change stream.
+    Give a group of bots one goal and share progress between them.
   </Card>
-  <Card title="Fleet orchestration" href="/docs/sdk/fleets">
-    Select bots by live state and metadata, distribute work, and supervise
-    typed task groups with bounded concurrency.
+  <Card title="Bot fleets" href="/docs/sdk/fleets">
+    Select bots, divide work between them, and monitor their tasks.
   </Card>
   <Card title="Cameras and world maps" href="/docs/sdk/camera">
-    Capture free-camera images, stream POV frames with backpressure, and sample
-    map-ready terrain and entity overlays.
+    Capture camera images, stream bot views, and collect data for maps.
   </Card>
   <Card title="Server administration" href="/docs/sdk/administration">
     Manage settings, users, logs, metrics, scripts, commands, downloads,
     plugin metrics, and audit history.
   </Card>
-  <Card title="Behavior composition" href="/docs/sdk/behaviors">
-    Combine native tasks with sequence, parallel, race, retry, timeout,
-    fallback, cleanup, and scoped control.
+  <Card title="Combine behaviors" href="/docs/sdk/behaviors">
+    Run tasks in order or in parallel.
+    Add retries, timeouts, fallback tasks, and cleanup.
   </Card>
   <Card title="Plugin APIs" href="/docs/sdk/plugins">
-    Call typed plugin RPCs, consume plugin streams, or invoke an unknown plugin
-    through discovered protobuf descriptors.
+    Call plugin APIs, read plugin event streams, or connect to an unknown plugin.
   </Card>
   <Card title="Raw protocol access" href="/docs/sdk/protocol">
-    Inspect active packet schemas, observe filtered traffic, and use the
-    permission-gated native packet escape hatch.
+    View packet types, watch network traffic, and send native packets.
   </Card>
 </Cards>
 
@@ -92,30 +85,31 @@ SoulFire
 
 An instance separates permissions and settings.
 Each Minecraft account is a separate bot.
-SoulFire saves the desired bot state and can reconnect it after the SDK process stops.
+SoulFire saves the requested bot state.
+It can reconnect the bot after the SDK program stops.
 
 ## Actions, streams, and tasks
 
-Use an atomic action for one operation, such as sending chat or clicking a slot.
-The `sleep` action finishes after the Minecraft server confirms that the bot entered a bed.
+Use an action for one short operation, such as sending chat or clicking a slot.
+The `sleep` action finishes after the server reports that the bot entered a bed.
 The `wake` action leaves the current bed.
-Each result has an action ID and a completed, cancelled, or failed state.
+Each result has an action ID and a final state.
+The final state is completed, cancelled, or failed.
 
-Use a stream to observe chat, lifecycle changes, inventory, world state, tasks, or plugins.
-Streams support cancellation and backpressure.
+Use a stream to receive updates over time.
+For example, a stream can report chat, inventory, world, task, or plugin updates.
 
-Use a durable task for continuous work.
-Tasks have stable IDs, progress, resource claims, reconnect policies, typed results, and cancellation.
-Combat, following, and survival tasks run near the game loop.
+Use a durable task for work that takes time.
+The server continues the task if the SDK program disconnects.
+You can read its progress, stop it, or reconnect to it by ID.
 
 ## Compatibility and extensions
 
-Each connection starts with a capability handshake.
-The SDK checks the API version, requested features, and required plugin versions.
+Each connection starts with a compatibility test.
+The SDK compares API versions, features, and required plugin versions.
 
-Plugins can register protobuf RPC services and durable task types. Their
-descriptors are discoverable at runtime, so applications can use a published
-companion package or call an unfamiliar plugin reflectively.
+Plugins can add RPC services and durable task types.
+An application can use a plugin package or discover the plugin API while it runs.
 
 ## Next steps
 

@@ -1,6 +1,6 @@
 ---
 title: Architecture And Protocols
-description: Understand how SoulFire boots, loads plugins, manages instances and bots, and translates GUI or CLI actions into low-level bot behavior.
+description: Learn how SoulFire starts, loads plugins, manages bots, and processes actions from the GUI or CLI.
 icon: Network
 ---
 
@@ -22,7 +22,7 @@ SoulFire has these runtime layers:
 1. **Bootstrap and launcher** prepare startup, properties, and mixin loading.
 2. **Fabric** loads SoulFire itself as a mod and also loads your external plugin jar as another Fabric mod.
 3. **SoulFireServer** manages the global server process, settings, auth, RPC server, and instances.
-4. **InstanceManager** manages one compartment: config, accounts, proxies, metrics, and automation.
+4. **InstanceManager** manages one separate group of settings, accounts, proxies, metrics, and automation.
 5. **BotStateManager** persists each bot's desired state and reconciles connection attempts.
 6. **BotConnection** owns one bot's headless Minecraft client copy plus settings, metadata, scheduler, and control state.
 7. **Plugins** listen to events, register settings pages, and optionally use Mixins for deeper integration.
@@ -49,7 +49,7 @@ Internal and external plugins use the same event, settings, metadata, and contro
 | Class | Responsibility |
 | --- | --- |
 | `SoulFireServer` | global server process, RPC server, auth, server settings, instance registry |
-| `InstanceManager` | one permission and configuration compartment with settings, accounts, proxies, automation, and metrics |
+| `InstanceManager` | one separate group of permissions, settings, accounts, proxies, automation, and metrics |
 | `BotStateManager` | durable per-bot intent, connection queueing, reconnect policy, and runtime status |
 | `BotConnection` | one bot, including the cloned headless Minecraft client |
 | `SoulFireAPI` | global event bus and plugin registry |

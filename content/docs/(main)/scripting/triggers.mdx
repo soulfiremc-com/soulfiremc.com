@@ -1,6 +1,6 @@
 ---
 title: Triggers
-description: Reference for the current SoulFire scripting triggers, including what each one outputs and when to use it.
+description: Learn when each SoulFire scripting trigger runs and what data it provides.
 icon: Zap
 ---
 
@@ -20,11 +20,11 @@ Keep these engine details in mind:
 - `On Pre Entity Tick` and `On Post Entity Tick` run on the tick thread. Expensive nodes can delay the game loop.
 - `On Interval` does not output a bot. If you need to act on bots, use `Get Bots` and `For Each Bot`.
 
-## Bot lifecycle triggers
+## Bot connection triggers
 
 ### On Bot Init
 
-Fires early when the bot connection is initialized, before the player object is ready.
+Fires when the bot connection starts, before the player object is ready.
 
 | Output | Type | Meaning |
 | --- | --- | --- |
@@ -135,7 +135,7 @@ Fires once when the script starts.
 | --- | --- | --- |
 | `timestamp` | Number | Start time in milliseconds |
 
-Good for initialization, startup logs, and loading shared state.
+Use it for setup, startup logs, and shared data.
 
 ### On Script End
 
@@ -145,13 +145,15 @@ Fires once when the script is stopping.
 | --- | --- | --- |
 | `timestamp` | Number | Stop time in milliseconds |
 
-`On Script End` is executed during shutdown and currently has a **5 second wait window** in the trigger service. Keep cleanup work short.
+`On Script End` runs during shutdown.
+SoulFire waits up to **5 seconds** for this trigger, so keep cleanup work short.
 
 ## Tick triggers
 
 ### On Pre Entity Tick
 
-Fires before entity physics each tick and runs synchronously on the tick thread.
+Fires before entity movement in each tick.
+It runs directly on the tick thread.
 
 | Output | Type | Meaning |
 | --- | --- | --- |
@@ -162,14 +164,16 @@ Use this for aiming, rotation changes, or other logic that must happen before th
 
 ### On Post Entity Tick
 
-Fires after entity physics each tick and runs synchronously on the tick thread.
+Fires after entity movement in each tick.
+It runs directly on the tick thread.
 
 | Output | Type | Meaning |
 | --- | --- | --- |
 | `bot` | Bot | The bot for this tick |
 | `tickCount` | Number | Tick counter for this trigger |
 
-Use this when you need the world state after movement has been processed, for example follow-up combat checks.
+Use this for logic that needs the world state after movement.
+For example, use it for a combat action after movement.
 
 <Callout type="warn">
   Tick triggers are low-level tools. Avoid HTTP requests, LLM calls, long waits, or wide loops in these paths.
@@ -180,7 +184,7 @@ Use this when you need the world state after movement has been processed, for ex
 - Use `On Join` for most startup behavior.
 - Use `On Bot Init` only when `On Join` is too late.
 - Use `On Chat` for anything message-driven.
-- Use `On Interval` when you want predictable polling.
+- Use `On Interval` for a task that runs at a fixed interval.
 - Use `On Pre Entity Tick` and `On Post Entity Tick` only for timing-sensitive logic.
 - Use `On Script Init` and `On Script End` for whole-script setup and cleanup.
 
@@ -189,4 +193,4 @@ Use this when you need the world state after movement has been processed, for ex
 - Using `On Interval` and expecting a `bot` output.
 - Treating `On Pre Entity Tick` as a safe place for expensive work.
 - Using `On Bot Init` for actions that need a loaded player.
-- Forgetting that one script can have multiple triggers, which is usually cleaner than forcing everything through one giant chain.
+- Putting all behavior in one large chain. One script can use several triggers.

@@ -1,17 +1,17 @@
 ---
 title: Dedicated Server And Docker
-description: Diagnose remote-server, Docker, Cloudflared, and Traefik problems before you start changing client-side settings.
+description: Find and fix problems with remote servers, Docker, Cloudflared, or Traefik.
 icon: ServerCrash
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-## Start with the server, not the client
+## Start with the server
 
 If you run SoulFire as a dedicated server, fix the server-side access path first.
 Do not keep changing GUI settings while the remote stack itself is unhealthy.
 
-## Check the selected access mode
+## Make sure that the access mode matches
 
 Your client URL needs to match the way the server is exposed:
 
@@ -35,7 +35,7 @@ The menu shows:
 
 If the management menu already shows the stack is unhealthy, troubleshoot there before touching the GUI client.
 
-## Check HTTPS expectations
+## Use HTTPS when possible
 
 Use HTTPS with Cloudflared and Traefik.
 If you chose HTTP-only mode, remember:
@@ -48,7 +48,7 @@ Use HTTP-only mainly for LAN or controlled testing.
 
 ## If Cloudflared is the failing layer
 
-Check:
+Make sure that these Cloudflared settings are correct:
 
 - the tunnel token
 - the Cloudflare-side tunnel configuration
@@ -58,7 +58,7 @@ If the tunnel is healthy but SoulFire still does not respond, inspect the app co
 
 ## If Traefik is the failing layer
 
-Check:
+Make sure that these Traefik settings are correct:
 
 - the domain or IP you actually configured
 - whether ports `80` and `443` are reachable from the internet
@@ -71,9 +71,9 @@ Do not assume a certificate problem is a SoulFire application problem.
 
 Start simple:
 
-1. check whether the app container is running
-2. check whether it is healthy
-3. inspect logs
+1. Make sure that the app container is running.
+2. Make sure that the container is healthy.
+3. Read the logs.
 4. retry a basic GUI or CLI login with a fresh token
 
 After the basic login works, enable proxies, automation, and external integrations one at a time.
@@ -91,12 +91,13 @@ Do not use `/mcp`, `/webdav`, or `/docs` as the normal client login address.
 
 ## If links and related endpoints look wrong
 
-When a dedicated server is exposed behind another public address, the public address matters for generated links and related endpoints.
+SoulFire uses the public server address to create links and related endpoints.
 
-If the main login works but related URLs are wrong, check the server-side public address configuration before changing the client.
+If related URLs are wrong, make sure that the public server address is correct.
 
 <Callout type="warning">
-  After an update, confirm the base GUI or CLI login works again before you put proxies, automation, WebDAV, or MCP back into the test.
+  After an update, test the basic GUI or CLI login first.
+  Then add proxies, automation, WebDAV, and MCP one at a time.
 </Callout>
 
 ## Related pages

@@ -1,24 +1,24 @@
 ---
 title: Plugin-defined APIs
-description: Consume typed or reflective RPCs exposed by SoulFire server plugins.
+description: Call APIs that SoulFire server plugins provide.
 icon: Plug
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
-A SoulFire plugin can register protobuf RPCs, streams, permissions, events, and durable tasks.
-The SDK handshake returns the installed plugins and compatibility metadata.
+A SoulFire plugin can add RPCs, streams, permissions, events, and durable tasks.
+When the SDK connects, it gets the list of installed plugins and their versions.
 
 Applications have two ways to consume a plugin:
 
-- Install its typed companion package.
-- Download its descriptors and call it reflectively.
+- Install its typed SDK package.
+- Download its API description and call it by name.
 
 ## Register a plugin API
 
 Declare plugin APIs in `onLoad`.
-Each plugin gets a `PluginContext` for permissions, RPCs, tasks, events, and SDK metadata.
+Each plugin gets a `PluginContext` for permissions, RPCs, tasks, events, and SDK information.
 Start runtime work in `onEnable` and stop it in `onDisable`.
 
 ```java
@@ -48,34 +48,28 @@ public final class ExamplePlugin extends ExternalPlugin {
 }
 ```
 
-Protobuf packages must use
-`soulfire.plugin.<plugin_id_with_underscores>.v<api_major>`. Each RPC, task
-provider, and event type declares one or more registered permissions. SoulFire
-uses those declarations for discovery and enforces them for every request or
-event delivery.
+Protobuf packages must use `soulfire.plugin.<plugin_id_with_underscores>.v<api_major>`.
+Each RPC, task provider, and event type declares its required permissions.
+SoulFire applies these permissions to every request and event.
 
-Generated RPC handlers can read `PluginCallContext.current()` after SoulFire
-authorizes the request. It provides the authenticated user, declared
-permissions, parsed instance, bot, and task targets, safe resolvers, the core
-task manager, request metadata, and cancellation state. SoulFire also records
-instance-scoped plugin calls in the audit log and reports request, failure, and
-latency metrics under the owning plugin.
+After SoulFire allows a request, an RPC handler can read `PluginCallContext.current()`.
+This context contains the user, permissions, request targets, task manager, request data, and cancellation state.
+SoulFire records instance plugin calls in the audit log.
+It also records request, error, and response-time metrics for the plugin.
 
 Use `context.settings().registerServerPage(...)` or
 `registerInstancePage(...)` for settings that must appear in every matching
 settings registry. Use `context.commands().register(...)` for a Brigadier root
-command. These declarations are validated during `onLoad` and installed before
-the corresponding lifecycle event runs.
+command. SoulFire validates these declarations during `onLoad`.
+It installs them before the related lifecycle event runs.
 
-Plugins do not extend a native progression planner. Applications call plugin
-RPCs, subscribe to plugin events, or start plugin tasks through the official
-SDK. This keeps plugin APIs useful to any application instead of coupling them
-to one server-owned objective graph.
+Applications call plugin RPCs, read plugin events, or start plugin tasks through the SDK.
+These APIs work with any application.
 
 ## Generate a companion SDK
 
-The `soulfire-sdk` command can download a registered descriptor, verify its
-catalog hash, and create a publishable companion package:
+The `soulfire-sdk` command downloads a registered API description.
+It validates the catalog hash and creates a package that you can publish:
 
 ```bash
 SOULFIRE_TOKEN=token bunx soulfire-sdk generate \
@@ -95,25 +89,21 @@ bunx soulfire-sdk generate \
   --output packages/soulfire-plugin-example
 ```
 
-The TypeScript output uses Effect as its primary API and works through the
-official Promise facade without maintaining a second implementation. Python
-output requires CPython 3.14 and includes native async and sync clients. Both
-packages contain the verified descriptor, compatibility metadata, generated
-protobuf types, typed event stream methods, and a module ready for
-`plugins.require(...)`.
+The TypeScript output supports Effect and Promises.
+The Python output requires CPython 3.14 and supports asynchronous and synchronous code.
+Both packages contain the validated API description, version data, generated protobuf types, and typed event methods.
+They also contain a module for `plugins.require(...)`.
 
-Registered plugin tasks include request, result, optional progress-detail, and
-permission descriptors. The generator turns those descriptors into typed task
-factory methods for Effect, Promise, async Python, and sync Python.
+Registered plugin tasks describe their request, result, progress data, and permissions.
+The generator creates typed task methods for each supported API style.
 
-The generator requires Node.js 22 or newer. It uses a pinned Buf binary and
-pinned remote generator revisions, so a plugin build does not depend on locally
-installed `protoc` plugins.
+The generator requires Node.js 22 or newer.
+It uses fixed versions of Buf and the remote generators.
+You do not need to install `protoc` plugins.
 
 ## Require a typed companion module
 
-The companion module checks that the installed plugin version and services are
-compatible before creating its client.
+The companion module compares the installed plugin version and services before it creates a client.
 
 <Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
   <Tab value="Effect">

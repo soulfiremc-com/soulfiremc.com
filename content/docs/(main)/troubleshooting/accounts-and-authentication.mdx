@@ -18,7 +18,7 @@ This page covers bot account imports and Minecraft authentication.
 
 ## Identify the account type first
 
-Before changing anything, confirm which type you are trying to import:
+Before you change anything, identify the account type:
 
 - offline
 - Microsoft Java
@@ -32,10 +32,7 @@ An incorrect input format often causes authentication errors.
 
 If you have proxying enabled for account authentication, disable it and try the same account again.
 
-This test answers one question:
-
-- does the account itself fail?
-- or does the proxy path fail?
+This test shows whether the account or the proxy causes the error.
 
 Only re-enable auth-through-proxy after the plain import path works.
 
@@ -45,7 +42,7 @@ Use a supported SoulFire release and Java version before you test authentication
 
 Before going deeper:
 
-- make sure you are on the current SoulFire release you intend to run
+- make sure that you use the SoulFire release that you intend to run
 - use the Java/runtime version required by the current install docs
 - retest with one account before importing a large batch
 
@@ -65,7 +62,7 @@ If one account works, test a smaller batch before you import all accounts.
 ## If import succeeds but joining still fails
 
 The problem now occurs after account import.
-Check:
+Find out whether:
 
 - whether the target server needs additional in-game login or registration
 - whether proxies are only failing after the join step

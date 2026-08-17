@@ -1,6 +1,6 @@
 ---
 title: Bot Control And Direct Access
-description: Use ControlState, ControllingTask, BotConnection, and direct Minecraft access when you need in-process control beyond the public scripting surface.
+description: Control bots directly with ControlState, ControllingTask, BotConnection, and Minecraft classes.
 icon: Gamepad
 ---
 
@@ -23,7 +23,7 @@ It can use runtime objects without remote commands.
 | `SoulFireServer` | the whole SoulFire server process |
 | `InstanceManager` | one instance, its settings, bots, and lifecycle |
 | `BotConnection` | one connected bot, its Minecraft client copy, settings, scheduler, metadata, and control state |
-| `ControlState` | persistent WASD, jump, sneak, and sprint input flags |
+| `ControlState` | WASD, jump, sneak, and sprint inputs that stay active until you reset them |
 | `BotControlAPI` | single-tick or staged controlling tasks |
 
 ## Thread-local direct access
@@ -47,7 +47,7 @@ Use the `Optional` variants when you are not certain the code is running under t
 `ControlState` is the low-level source of truth for movement inputs.
 SoulFire's own keyboard input mixin reads these booleans and turns them into the real Minecraft `Input` object for the bot.
 
-That makes `ControlState` the right tool for persistent movement toggles:
+Use `ControlState` for movement that stays active until you reset it:
 
 ```java
 var state = connection.controlState();
@@ -132,7 +132,7 @@ They are not guaranteed to exist in early lifecycle stages.
 
 ## How GUI and CLI actions map to this layer
 
-SoulFire's own gRPC `BotService` uses the same primitives plugin authors do:
+SoulFire's gRPC `BotService` uses the same building blocks as plugins:
 
 - movement RPCs update `ControlState`
 - rotation, hotbar, inventory, mouse, and dialog actions register `ControllingTask.singleTick(...)`

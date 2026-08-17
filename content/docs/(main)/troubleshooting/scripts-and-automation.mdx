@@ -6,7 +6,7 @@ icon: Bug
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-## Start by deciding which automation layer is failing
+## Identify the failed automation layer
 
 Start by identifying the process that owns the failing policy:
 
@@ -27,7 +27,7 @@ The fastest path is usually:
 
 Then add the other nodes back one at a time.
 
-## Check whether the trigger actually provides a bot
+## Find out whether the trigger provides a bot
 
 Some triggers do not provide a bot.
 
@@ -38,7 +38,8 @@ For the details, see [Scripting](/docs/scripting) and [Triggers](/docs/scripting
 
 ## Remove timing nodes while isolating
 
-If `Wait`, debounce, or other timing behavior is involved, remove it temporarily and confirm the simple path works first.
+If the graph uses timing nodes, remove them temporarily.
+Then make sure that the simple path works.
 
 That is especially important when:
 
@@ -46,7 +47,7 @@ That is especially important when:
 - `Send Chat` appears to run but nothing visible happens
 - the graph only breaks once a delay or branch is added
 
-## Use `Print` aggressively
+## Use `Print` to trace the graph
 
 `Print` is usually the fastest way to answer:
 
@@ -64,14 +65,14 @@ If a graph only works when you simplify it, move the heavy work out of tick timi
 
 ## If an SDK runner looks idle or stuck
 
-Check the worker before changing SoulFire settings:
+Review the worker before you change SoulFire settings:
 
-1. Confirm the TypeScript process is still running.
+1. Make sure that the TypeScript process is still running.
 2. Read its latest beat-game event and snapshot.
-3. Confirm the bot is connected and its connection epoch is current.
+3. Make sure that the bot is connected and its connection epoch is current.
 4. Inspect the active task and control lease.
 5. Retry with one bot and an in-memory coordinator.
-6. Check for a checkpoint compare-and-set conflict.
+6. Look for a checkpoint compare-and-set conflict.
 
 If one bot works and a team does not, inspect shared claims, coordinator
 membership, and the End-entry quota.
@@ -86,7 +87,7 @@ If you are running first-party progression policy, use the
 
 ## If the issue appeared after an update
 
-Do not keep editing the graph until it stops reproducing.
+Do not edit the graph until the error disappears.
 
 Instead, write down:
 

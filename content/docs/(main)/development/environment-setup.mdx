@@ -39,7 +39,7 @@ git clone https://github.com/soulfiremc-com/SoulFirePluginExample.git
 Use:
 
 - `SoulFire` as the source of truth for current internals, built-in plugins, settings, gRPC services, and proto contracts
-- `SoulFirePluginExample` as the scaffold for new external plugins
+- `SoulFirePluginExample` as the starting template for new plugins
 
 Use the template for project structure.
 Use the SoulFire repository and Javadocs for current API behavior.
@@ -71,8 +71,9 @@ You do not need to open the whole SoulFire repo as a second module in the same p
 Keep the plugin and SoulFire versions aligned.
 
 - Match your plugin dependency version to the SoulFire version you actually run.
-- Check the current [CodeMC Maven metadata](https://repo.codemc.org/repository/maven-public/com/soulfiremc/mod/maven-metadata.xml) before pinning versions.
-- Treat the example plugin as a scaffold, not as the final word on every low-level API detail.
+- Read the current [CodeMC Maven metadata](https://repo.codemc.org/repository/maven-public/com/soulfiremc/mod/maven-metadata.xml) before you select a version.
+- Use the example plugin as a starting template.
+- Use the current Javadocs for low-level API details.
 
 The current example repository pins an older SoulFire version than the latest CodeMC metadata.
 Before you copy low-level code, compare it with the current Javadocs and source.

@@ -6,7 +6,7 @@ icon: WifiOff
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-## Start by identifying which connection is failing
+## Identify the failed connection
 
 First, identify which connection fails:
 
@@ -17,7 +17,7 @@ Use the matching section below.
 
 ## If the GUI or CLI cannot connect to the SoulFire server
 
-### Check the server URL
+### Make sure that the server URL is correct
 
 Make sure the client is using the actual server URL for the access mode you deployed:
 
@@ -26,7 +26,7 @@ Make sure the client is using the actual server URL for the access mode you depl
 
 Do not paste `/docs`, `/mcp`, or `/webdav` into the normal server login field.
 
-### Check the access token
+### Use a new access token
 
 Generate a fresh token from the server side:
 
@@ -37,17 +37,17 @@ generate-token api
 Then retry with that token.
 If an old token stops working, replace it with the new token.
 
-### Check the deployment mode
+### Make sure that the deployment works
 
 If this is a dedicated server:
 
 - re-run the setup script management menu
-- check container health and logs
-- confirm the access URL shown there still matches the address you use in the client
+- view the container health and logs
+- make sure that the shown access URL matches the address in the client
 
 If you deliberately chose HTTP-only mode, remember that some setups behave better behind HTTPS.
 
-### Check whether the issue is server access or browser-only access
+### Test the client connection
 
 An open documentation page does not prove that client login works.
 Test a normal GUI or CLI login with a new token.
@@ -69,9 +69,9 @@ Test with:
 
 This test separates load problems from connection problems.
 
-### Check Bot Settings
+### Review Bot Settings
 
-Verify:
+Make sure that these values are correct:
 
 - target server address
 - protocol version
@@ -80,7 +80,7 @@ Verify:
 If local servers also fail, do not assume the remote target is the problem.
 This result points to a configuration error or SoulFire regression.
 
-### Check for server-side login requirements
+### Review the server login requirements
 
 Some target servers need:
 

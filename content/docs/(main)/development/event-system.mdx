@@ -1,6 +1,6 @@
 ---
 title: Event System
-description: Register SoulFire events, use the event hierarchy, and change behavior with mutable hooks.
+description: Listen for SoulFire events and change behavior through event data.
 icon: BellRing
 ---
 
@@ -98,7 +98,7 @@ Use these when they match your need:
 - `BotShouldRespawnEvent`: set `shouldRespawn`
 
 <Callout type="info">
-  SoulFire currently exposes `AbstractCancellable`, but the public event surface mostly relies on mutable event objects rather than broad cancellation.
+  SoulFire provides `AbstractCancellable`, but most public events use data that a listener can change.
   For many low-level hooks, replacing a packet or mutating the outgoing value is the intended extension model.
 </Callout>
 
@@ -123,10 +123,10 @@ SoulFire posts this event after its built-in commands are already registered.
 Use a Mixin only when:
 
 - there is no event at the right timing point
-- you need access to data that the event surface does not expose
+- you need data that the event API does not provide
 - you need to alter control flow inside Minecraft or SoulFire internals
 
-Before writing the Mixin, check whether one of the packet or client-setting events already covers the use case.
+Before you write a Mixin, make sure that an existing packet or client-setting event cannot do the work.
 
 ## Reference code to study
 

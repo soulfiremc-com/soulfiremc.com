@@ -1,6 +1,6 @@
 ---
 title: Build Your First Plugin
-description: Create a working SoulFire plugin from the official template and load it into SoulFire as a Fabric mod.
+description: Build a SoulFire plugin from the official template and load it as a Fabric mod.
 icon: Plug
 ---
 
@@ -12,7 +12,7 @@ The official template already contains the required Fabric, Loom, and SoulFire s
 
 <Callout type="info">
   The official template repository is [SoulFirePluginExample](https://github.com/soulfiremc-com/SoulFirePluginExample).
-  Treat it as your starting scaffold, then cross-check the current [Javadocs](https://ci.codemc.io/job/AlexProgrammerDE/job/SoulFire/javadoc/)
+  Use it as your starting template. Then compare it with the current [Javadocs](https://ci.codemc.io/job/AlexProgrammerDE/job/SoulFire/javadoc/)
   and current [SoulFire source](https://github.com/soulfiremc-com/SoulFire) for low-level APIs.
 </Callout>
 
@@ -149,15 +149,15 @@ The official example plugin shows the standard pattern:
 
 That makes your settings appear in the GUI, CLI, and exported instance metadata automatically.
 
-## Verify that it loaded
+## Make sure that the plugin loaded
 
 Use the built-in plugin inspection tools:
 
-- open the instance UI and check **Plugins**
+- open the instance UI and view **Plugins**
 - run `plugins` in the terminal
 - run `print-docs plugins` if you want the current built-in plugin documentation output
 
-If the mod failed before registration, check the startup logs first.
+If the mod failed before registration, read the startup logs first.
 Fabric loading problems, missing dependencies, and bad mixin config usually fail before SoulFire ever sees your `ExternalPlugin`.
 
 If Fabric itself is complaining, go back to:
