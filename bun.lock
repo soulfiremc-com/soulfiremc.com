@@ -6,8 +6,8 @@
       "name": "soulfiremc.com",
       "dependencies": {
         "@base-ui/react": "^1.7.0",
-        "@better-auth-ui/core": "^1.7.3",
-        "@better-auth-ui/react": "^1.7.3",
+        "@better-auth-ui/core": "^1.7.4",
+        "@better-auth-ui/react": "^1.7.4",
         "@better-auth/agent-auth": "^0.6.2",
         "@better-auth/api-key": "^1.7.1",
         "@better-auth/infra": "^0.4.1",
@@ -181,9 +181,9 @@
 
     "@base-ui/utils": ["@base-ui/utils@0.3.2", "", { "dependencies": { "@babel/runtime": "^7.29.2", "@floating-ui/utils": "^0.2.12", "reselect": "^5.2.0", "use-sync-external-store": "^1.6.0" }, "peerDependencies": { "@types/react": "^17 || ^18 || ^19", "react": "^17 || ^18 || ^19", "react-dom": "^17 || ^18 || ^19" }, "optionalPeers": ["@types/react"] }, "sha512-oWy1aq/I2GmYjpl4PhEAhzflF8VPGKgZeq0xAWTbfD5KBWyxcN0ZP2+WHSUm/5Z6lVMBDLReLcoXwSYoRc/zNQ=="],
 
-    "@better-auth-ui/core": ["@better-auth-ui/core@1.7.3", "", { "dependencies": { "uqr": "^0.1.3" }, "peerDependencies": { "@better-auth/agent-auth": ">=0.6.2", "@better-auth/api-key": ">=1.7.0", "@better-auth/oauth-provider": ">=1.7.0", "@better-auth/passkey": ">=1.7.0", "@better-auth/sso": ">=1.7.0", "@better-auth/stripe": ">=1.7.0", "@commet/better-auth": ">=8.1.0", "@creem_io/better-auth": ">=1.1.4", "@dodopayments/better-auth": ">=1.6.5", "@mikkelscheike/email-provider-links": ">=5.2.1", "@polar-sh/better-auth": ">=1.7.0", "@tanstack/query-core": ">=5.101.2", "autumn-js": ">=1.2.53", "better-auth": ">=1.7.0" }, "optionalPeers": ["@better-auth/api-key", "@better-auth/oauth-provider", "@better-auth/passkey", "@better-auth/sso", "@better-auth/stripe", "@commet/better-auth", "@creem_io/better-auth", "@dodopayments/better-auth", "@polar-sh/better-auth", "autumn-js"] }, "sha512-/u4bG80NdsC0lYs3MUkLowWms7esEYl91oUn7eAJ/IDCTGsJ5XoSthTdgtrXKiJA/NdRGqPhgORIl3A4wWPqwA=="],
+    "@better-auth-ui/core": ["@better-auth-ui/core@1.7.4", "", { "dependencies": { "libphonenumber-js": "^1.13.11", "uqr": "^0.1.3" }, "peerDependencies": { "@better-auth/agent-auth": ">=0.6.2", "@better-auth/api-key": ">=1.7.0", "@better-auth/oauth-provider": ">=1.7.0", "@better-auth/passkey": ">=1.7.0", "@better-auth/sso": ">=1.7.0", "@better-auth/stripe": ">=1.7.0", "@commet/better-auth": ">=8.1.0", "@creem_io/better-auth": ">=1.1.4", "@dodopayments/better-auth": ">=1.6.5", "@mikkelscheike/email-provider-links": ">=5.2.1", "@polar-sh/better-auth": ">=1.7.0", "@tanstack/query-core": ">=5.101.2", "autumn-js": ">=1.2.53", "better-auth": ">=1.7.0" }, "optionalPeers": ["@better-auth/api-key", "@better-auth/oauth-provider", "@better-auth/passkey", "@better-auth/sso", "@better-auth/stripe", "@commet/better-auth", "@creem_io/better-auth", "@dodopayments/better-auth", "@polar-sh/better-auth", "autumn-js"] }, "sha512-XCHQihxT3tf6MXt2b7liZlVu9gxe7aaeEvmBf/eWXtairRuVofhYxi7sCZwwQgc87gOi6HUbLqmy9i8uiQTDhg=="],
 
-    "@better-auth-ui/react": ["@better-auth-ui/react@1.7.3", "", { "peerDependencies": { "@better-auth-ui/core": "*", "@better-auth/api-key": ">=1.7.0", "@better-auth/passkey": ">=1.7.0", "@tanstack/query-core": ">=5.101.2", "@tanstack/react-query": ">=5.101.2", "better-auth": ">=1.7.0", "clsx": ">=2.0.0", "react": ">=19.2.6", "react-dom": ">=19.2.6", "react-email": ">=6.0.0", "tailwind-merge": ">=3.5.0", "tailwindcss": ">=4.3.2", "zod": ">=4.4.3" }, "optionalPeers": ["react-email"] }, "sha512-iac8PQrPaMd192DN88d2FveBs1rozs/ra3T5sIHYEfQCNCP4Xsc4vPTfRZfpSL5f1j25kiEEjb6/Cq4XK6Dpmw=="],
+    "@better-auth-ui/react": ["@better-auth-ui/react@1.7.4", "", { "peerDependencies": { "@better-auth-ui/core": "*", "@better-auth/api-key": ">=1.7.0", "@better-auth/passkey": ">=1.7.0", "@tanstack/query-core": ">=5.101.2", "@tanstack/react-query": ">=5.101.2", "better-auth": ">=1.7.0", "clsx": ">=2.0.0", "react": ">=19.2.6", "react-dom": ">=19.2.6", "react-email": ">=6.0.0", "tailwind-merge": ">=3.5.0", "tailwindcss": ">=4.3.2", "zod": ">=4.4.3" }, "optionalPeers": ["react-email"] }, "sha512-zbQhWdWH3F59HyEZLUeP3N08+MyF3c4/tflTltoIJnQY/OAIP9Ueu6zoMRWZuhS7s/RnjqEHRV4simAfggErJQ=="],
 
     "@better-auth/agent-auth": ["@better-auth/agent-auth@0.6.2", "", { "dependencies": { "@simplewebauthn/server": "^13.3.0", "better-call": "1.3.2", "jose": "^6.0.0", "zod": "^4.3.6" }, "peerDependencies": { "@better-auth/core": ">=1.4.0", "better-auth": ">=1.4.0" } }, "sha512-bXJ31rkZtCd27TuUfaAqNLbeZOMfJih5fO9HGq8mrU/23E9ljxScCkIPA3RJmUJ0SBGtaHA9GKVwIlFce0slvg=="],
 
@@ -1925,7 +1925,7 @@
 
     "leac": ["leac@0.6.0", "", {}, "sha512-y+SqErxb8h7nE/fiEX07jsbuhrpO9lL8eca7/Y1nuWV2moNlXhyd59iDGcRf6moVyDMbmTNzL40SUyrFU/yDpg=="],
 
-    "libphonenumber-js": ["libphonenumber-js@1.13.9", "", {}, "sha512-VNS5vWMM7r0P66BYv+TQJATxExEgLxN+34hfHDVhDkUsGAE4cRg0shCNSLTXNKm7nIUscC7AfB51TjxEeF7msQ=="],
+    "libphonenumber-js": ["libphonenumber-js@1.13.11", "", {}, "sha512-ETER2kMaIFTI/Nh1a8Gk03dUF/SL0VZqtI+CcVHZxp5WIHYwNS7S+uiYZDYCvLy3lOR4/DAD5jf0h5WkePPpqg=="],
 
     "lightningcss": ["lightningcss@1.33.0", "", { "dependencies": { "detect-libc": "2.1.2" }, "optionalDependencies": { "lightningcss-android-arm64": "1.33.0", "lightningcss-darwin-arm64": "1.33.0", "lightningcss-darwin-x64": "1.33.0", "lightningcss-freebsd-x64": "1.33.0", "lightningcss-linux-arm-gnueabihf": "1.33.0", "lightningcss-linux-arm64-gnu": "1.33.0", "lightningcss-linux-arm64-musl": "1.33.0", "lightningcss-linux-x64-gnu": "1.33.0", "lightningcss-linux-x64-musl": "1.33.0", "lightningcss-win32-arm64-msvc": "1.33.0", "lightningcss-win32-x64-msvc": "1.33.0" } }, "sha512-WkUDrojuJs0xkgGf2udWxa3yGBRxPtxUkB79i6aCZLRgc7PM8fZe9TosfPDcvEpQZbuFASnHYmRLBLUbmLOIIA=="],
 
@@ -2759,6 +2759,8 @@
 
     "@better-auth/infra/better-call": ["better-call@1.3.7", "", { "dependencies": { "@better-auth/utils": "0.4.2", "@better-fetch/fetch": "1.3.1", "rou3": "0.7.12", "set-cookie-parser": "3.1.2" }, "optionalDependencies": { "zod": "4.4.3" } }, "sha512-Al51/hjp2SSp6CRTa3F2ptcx4yQVS1xWKoY6jcVXqNYOap6mHFP2jUBn5EwIL4iIed1/Sq4hlQ+Umm6EflZG+w=="],
 
+    "@better-auth/infra/libphonenumber-js": ["libphonenumber-js@1.13.9", "", {}, "sha512-VNS5vWMM7r0P66BYv+TQJATxExEgLxN+34hfHDVhDkUsGAE4cRg0shCNSLTXNKm7nIUscC7AfB51TjxEeF7msQ=="],
+
     "@better-auth/kysely-adapter/@better-auth/core": ["@better-auth/core@1.7.1", "", { "dependencies": { "@opentelemetry/semantic-conventions": "^1.41.1", "@standard-schema/spec": "^1.1.0", "zod": "^4.3.6" }, "peerDependencies": { "@better-auth/utils": "0.4.2", "@better-fetch/fetch": "1.3.1", "@cloudflare/workers-types": ">=4", "@opentelemetry/api": "^1.9.0", "better-call": "1.4.0", "jose": "^6.1.0", "kysely": "^0.28.5 || ^0.29.0", "nanostores": "^1.0.1" }, "optionalPeers": ["@cloudflare/workers-types", "@opentelemetry/api"] }, "sha512-eZ9lqcnVLMZ3QtUByRo4VZqkB1ESyRddd9NfWjBdDPgh+jcwLScoIUAqhtHLR8zaSUJZah8OLGlkzObyPdUH7A=="],
 
     "@better-auth/memory-adapter/@better-auth/core": ["@better-auth/core@1.7.1", "", { "dependencies": { "@opentelemetry/semantic-conventions": "^1.41.1", "@standard-schema/spec": "^1.1.0", "zod": "^4.3.6" }, "peerDependencies": { "@better-auth/utils": "0.4.2", "@better-fetch/fetch": "1.3.1", "@cloudflare/workers-types": ">=4", "@opentelemetry/api": "^1.9.0", "better-call": "1.4.0", "jose": "^6.1.0", "kysely": "^0.28.5 || ^0.29.0", "nanostores": "^1.0.1" }, "optionalPeers": ["@cloudflare/workers-types", "@opentelemetry/api"] }, "sha512-eZ9lqcnVLMZ3QtUByRo4VZqkB1ESyRddd9NfWjBdDPgh+jcwLScoIUAqhtHLR8zaSUJZah8OLGlkzObyPdUH7A=="],
@@ -2878,6 +2880,8 @@
     "better-auth/@better-auth/core": ["@better-auth/core@1.7.1", "", { "dependencies": { "@opentelemetry/semantic-conventions": "^1.41.1", "@standard-schema/spec": "^1.1.0", "zod": "^4.3.6" }, "peerDependencies": { "@better-auth/utils": "0.4.2", "@better-fetch/fetch": "1.3.1", "@cloudflare/workers-types": ">=4", "@opentelemetry/api": "^1.9.0", "better-call": "1.4.0", "jose": "^6.1.0", "kysely": "^0.28.5 || ^0.29.0", "nanostores": "^1.0.1" }, "optionalPeers": ["@cloudflare/workers-types", "@opentelemetry/api"] }, "sha512-eZ9lqcnVLMZ3QtUByRo4VZqkB1ESyRddd9NfWjBdDPgh+jcwLScoIUAqhtHLR8zaSUJZah8OLGlkzObyPdUH7A=="],
 
     "better-auth/better-call": ["better-call@1.4.0", "", { "dependencies": { "@better-auth/utils": "^0.5.0", "@better-fetch/fetch": "^1.3.1", "rou3": "^0.9.1", "set-cookie-parser": "^3.1.2" }, "peerDependencies": { "zod": "^4.0.0" }, "optionalPeers": ["zod"] }, "sha512-bBKOT4vv1kZLDgxVePdilk/Jwkn+dtRRsmi3DzHcDP+WnswyVl6dR59l2HEeP/0cB+bDoopASAesWDPIdd/zZA=="],
+
+    "better-auth-harmony/libphonenumber-js": ["libphonenumber-js@1.13.9", "", {}, "sha512-VNS5vWMM7r0P66BYv+TQJATxExEgLxN+34hfHDVhDkUsGAE4cRg0shCNSLTXNKm7nIUscC7AfB51TjxEeF7msQ=="],
 
     "better-call/@better-auth/utils": ["@better-auth/utils@0.3.1", "", {}, "sha512-+CGp4UmZSUrHHnpHhLPYu6cV+wSUSvVbZbNykxhUDocpVNTo9uFFxw/NqJlh1iC4wQ9HKKWGCKuZ5wUgS0v6Kg=="],
 
