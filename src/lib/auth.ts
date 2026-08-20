@@ -159,6 +159,7 @@ export const auth = betterAuth({
     },
     database: {
       generateId: "uuid",
+      joins: true,
     },
     backgroundTasks: {
       handler: waitUntil,
@@ -170,9 +171,6 @@ export const auth = betterAuth({
       maxAge: 5 * 60,
       strategy: "jwe",
     },
-  },
-  experimental: {
-    joins: true,
   },
   account: {
     encryptOAuthTokens: true,
