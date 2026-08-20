@@ -1,10 +1,10 @@
-import { ChangeEmailConfirmationEmail } from "@/components/auth/email/change-email-confirmation";
-import { DeleteAccountVerificationEmail } from "@/components/auth/email/delete-account-verification";
-import { EmailVerificationEmail } from "@/components/auth/email/email-verification";
-import { OtpEmail } from "@/components/auth/email/otp-email";
-import { ResetPasswordEmail } from "@/components/auth/email/reset-password";
-import { AUTH_UI_BASE_PATHS, AUTH_UI_VIEW_PATHS } from "@/lib/auth-ui-config";
-import { sendEmail } from "@/lib/resend";
+import { ChangeEmailConfirmationEmail } from "../components/auth/email/change-email-confirmation";
+import { DeleteAccountVerificationEmail } from "../components/auth/email/delete-account-verification";
+import { EmailVerificationEmail } from "../components/auth/email/email-verification";
+import { OtpEmail } from "../components/auth/email/otp-email";
+import { ResetPasswordEmail } from "../components/auth/email/reset-password";
+import { AUTH_UI_BASE_PATHS, AUTH_UI_VIEW_PATHS } from "./auth-ui-config";
+import { sendEmail } from "./resend";
 
 interface BaseEmailParams {
   user: {

@@ -10,9 +10,9 @@ async function generateAuthSchema() {
   console.log("Generating better-auth schema...");
 
   try {
-    // Run the better-auth CLI to generate the schema
+    // Run the Better Auth CLI to generate the schema
     execSync(
-      "bunx @better-auth/cli@latest generate --config ./src/lib/auth.ts --output ./src/lib/db/auth-schema.ts --yes",
+      "bunx auth@latest generate --config ./src/lib/auth.ts --output ./src/lib/db/auth-schema.ts --yes",
       {
         stdio: "inherit",
         cwd: process.cwd(),

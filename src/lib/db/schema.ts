@@ -12,7 +12,7 @@ import {
   uniqueIndex,
   uuid,
 } from "drizzle-orm/pg-core";
-import { user } from "@/lib/db/auth-schema";
+import { user } from "./auth-schema";
 
 export const reviewCommentStatus = pgEnum("review_comment_status", [
   "approved",
