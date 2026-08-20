@@ -1,5 +1,5 @@
-import { ensureSession as ensureSessionClient } from "@better-auth-ui/react";
-import { ensureSession as ensureSessionServer } from "@better-auth-ui/react/server";
+import { ensureSession } from "@better-auth-ui/core";
+import { ensureSessionServer } from "@better-auth-ui/core/server";
 import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
 import { createIsomorphicFn } from "@tanstack/react-start";
 import { getRequestHeaders } from "@tanstack/react-start/server";
@@ -19,14 +19,14 @@ export const Route = createFileRoute("/account/$path")({
       throw notFound();
     }
 
-    const ensureSession = createIsomorphicFn()
+    const getSession = createIsomorphicFn()
       .server(() =>
         ensureSessionServer(queryClient, auth, {
           headers: getRequestHeaders(),
         }),
       )
-      .client(() => ensureSessionClient(queryClient, authClient));
-    const session = await ensureSession();
+      .client(() => ensureSession(queryClient, authClient));
+    const session = await getSession();
 
     if (!session) {
       throw redirect({

@@ -1,9 +1,7 @@
-import {
-  deleteUserPlugin as coreDeleteUserPlugin,
-  passkeyPlugin as corePasskeyPlugin,
-  themePlugin as coreThemePlugin,
-  usernamePlugin as coreUsernamePlugin,
-} from "@better-auth-ui/core/plugins";
+import { deleteUserPlugin as coreDeleteUserPlugin } from "@better-auth-ui/core/plugins/delete-user";
+import { passkeyPlugin as corePasskeyPlugin } from "@better-auth-ui/core/plugins/passkey";
+import { themePlugin as coreThemePlugin } from "@better-auth-ui/core/plugins/theme";
+import { usernamePlugin as coreUsernamePlugin } from "@better-auth-ui/core/plugins/username";
 
 import type { AuthPlugin } from "./auth-plugin";
 

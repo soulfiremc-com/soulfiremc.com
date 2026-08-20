@@ -1,6 +1,6 @@
 import { dashClient, sentinelClient } from "@better-auth/infra/client";
 import { passkeyClient } from "@better-auth/passkey/client";
-import type { AuthClient } from "@better-auth-ui/react";
+import type { AuthClient } from "@better-auth-ui/core";
 import type { BetterAuthClientPlugin } from "better-auth";
 import {
   adminClient,

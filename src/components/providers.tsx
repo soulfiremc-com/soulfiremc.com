@@ -1,4 +1,4 @@
-import { captchaPlugin } from "@better-auth-ui/react/plugins";
+import { captchaPlugin } from "@better-auth-ui/react/plugins/captcha";
 import { useNavigate } from "@tanstack/react-router";
 import { RootProvider } from "fumadocs-ui/provider/tanstack";
 import { ThemeProvider, useTheme } from "next-themes";

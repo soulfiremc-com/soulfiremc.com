@@ -1,6 +1,6 @@
 "use client";
 
-import type { CaptchaRenderProps } from "@better-auth-ui/react/plugins";
+import type { CaptchaRenderProps } from "@better-auth-ui/react/plugins/captcha";
 import { type RefObject, useCallback, useEffect, useRef } from "react";
 import {
   type BoundTurnstileObject,

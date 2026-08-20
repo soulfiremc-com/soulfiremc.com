@@ -5,8 +5,8 @@ import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import react from "@vitejs/plugin-react";
 import mdx from "fumadocs-mdx/vite";
 import { defineConfig } from "vite";
-import * as MdxConfig from "./source.config";
-import { AUTH_UI_BASE_PATHS } from "./src/lib/auth-ui-config";
+import * as MdxConfig from "./source.config.ts";
+import { AUTH_UI_BASE_PATHS } from "./src/lib/auth-ui-config.ts";
 
 const securityHeaders = {
   "X-DNS-Prefetch-Control": "on",
