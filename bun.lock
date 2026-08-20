@@ -6,8 +6,8 @@
       "name": "soulfiremc.com",
       "dependencies": {
         "@base-ui/react": "^1.7.0",
-        "@better-auth-ui/core": "^1.7.2",
-        "@better-auth-ui/react": "^1.7.2",
+        "@better-auth-ui/core": "^1.7.3",
+        "@better-auth-ui/react": "^1.7.3",
         "@better-auth/agent-auth": "^0.6.2",
         "@better-auth/api-key": "^1.7.1",
         "@better-auth/infra": "^0.4.1",
@@ -176,9 +176,9 @@
 
     "@base-ui/utils": ["@base-ui/utils@0.3.2", "", { "dependencies": { "@babel/runtime": "^7.29.2", "@floating-ui/utils": "^0.2.12", "reselect": "^5.2.0", "use-sync-external-store": "^1.6.0" }, "peerDependencies": { "@types/react": "^17 || ^18 || ^19", "react": "^17 || ^18 || ^19", "react-dom": "^17 || ^18 || ^19" }, "optionalPeers": ["@types/react"] }, "sha512-oWy1aq/I2GmYjpl4PhEAhzflF8VPGKgZeq0xAWTbfD5KBWyxcN0ZP2+WHSUm/5Z6lVMBDLReLcoXwSYoRc/zNQ=="],
 
-    "@better-auth-ui/core": ["@better-auth-ui/core@1.7.2", "", { "dependencies": { "uqr": "^0.1.3" }, "peerDependencies": { "@better-auth/agent-auth": ">=0.6.2", "@better-auth/api-key": ">=1.7.0", "@better-auth/oauth-provider": ">=1.7.0", "@better-auth/passkey": ">=1.7.0", "@better-auth/sso": ">=1.7.0", "@better-auth/stripe": ">=1.7.0", "@mikkelscheike/email-provider-links": ">=5.2.1", "@polar-sh/better-auth": ">=1.7.0", "@tanstack/query-core": ">=5.101.2", "better-auth": ">=1.7.0" }, "optionalPeers": ["@better-auth/api-key", "@better-auth/oauth-provider", "@better-auth/passkey", "@better-auth/sso", "@better-auth/stripe", "@polar-sh/better-auth"] }, "sha512-gynVpn11yNL5WJtXkNDwcSTkcUY+m6hSP9dzIj0HcRmJBYLa8oxl6RM4PInTx5QwDBgTHY3pwDBl4/KqBbpKrw=="],
+    "@better-auth-ui/core": ["@better-auth-ui/core@1.7.3", "", { "dependencies": { "uqr": "^0.1.3" }, "peerDependencies": { "@better-auth/agent-auth": ">=0.6.2", "@better-auth/api-key": ">=1.7.0", "@better-auth/oauth-provider": ">=1.7.0", "@better-auth/passkey": ">=1.7.0", "@better-auth/sso": ">=1.7.0", "@better-auth/stripe": ">=1.7.0", "@commet/better-auth": ">=8.1.0", "@creem_io/better-auth": ">=1.1.4", "@dodopayments/better-auth": ">=1.6.5", "@mikkelscheike/email-provider-links": ">=5.2.1", "@polar-sh/better-auth": ">=1.7.0", "@tanstack/query-core": ">=5.101.2", "autumn-js": ">=1.2.53", "better-auth": ">=1.7.0" }, "optionalPeers": ["@better-auth/api-key", "@better-auth/oauth-provider", "@better-auth/passkey", "@better-auth/sso", "@better-auth/stripe", "@commet/better-auth", "@creem_io/better-auth", "@dodopayments/better-auth", "@polar-sh/better-auth", "autumn-js"] }, "sha512-/u4bG80NdsC0lYs3MUkLowWms7esEYl91oUn7eAJ/IDCTGsJ5XoSthTdgtrXKiJA/NdRGqPhgORIl3A4wWPqwA=="],
 
-    "@better-auth-ui/react": ["@better-auth-ui/react@1.7.2", "", { "peerDependencies": { "@better-auth-ui/core": "*", "@better-auth/api-key": ">=1.7.0", "@better-auth/passkey": ">=1.7.0", "@tanstack/query-core": ">=5.101.2", "@tanstack/react-query": ">=5.101.2", "better-auth": ">=1.7.0", "clsx": ">=2.0.0", "react": ">=19.2.6", "react-dom": ">=19.2.6", "react-email": ">=6.0.0", "tailwind-merge": ">=3.5.0", "tailwindcss": ">=4.3.2", "zod": ">=4.4.3" }, "optionalPeers": ["react-email"] }, "sha512-eTVvs+6JUZv1Vo0VDWYhwNruow2kE6iGoAioiqvw2tpqf7SDkZ21H4SCnSFUT4WxhXiTGBTNchINMMKVpX0JqA=="],
+    "@better-auth-ui/react": ["@better-auth-ui/react@1.7.3", "", { "peerDependencies": { "@better-auth-ui/core": "*", "@better-auth/api-key": ">=1.7.0", "@better-auth/passkey": ">=1.7.0", "@tanstack/query-core": ">=5.101.2", "@tanstack/react-query": ">=5.101.2", "better-auth": ">=1.7.0", "clsx": ">=2.0.0", "react": ">=19.2.6", "react-dom": ">=19.2.6", "react-email": ">=6.0.0", "tailwind-merge": ">=3.5.0", "tailwindcss": ">=4.3.2", "zod": ">=4.4.3" }, "optionalPeers": ["react-email"] }, "sha512-iac8PQrPaMd192DN88d2FveBs1rozs/ra3T5sIHYEfQCNCP4Xsc4vPTfRZfpSL5f1j25kiEEjb6/Cq4XK6Dpmw=="],
 
     "@better-auth/agent-auth": ["@better-auth/agent-auth@0.6.2", "", { "dependencies": { "@simplewebauthn/server": "^13.3.0", "better-call": "1.3.2", "jose": "^6.0.0", "zod": "^4.3.6" }, "peerDependencies": { "@better-auth/core": ">=1.4.0", "better-auth": ">=1.4.0" } }, "sha512-bXJ31rkZtCd27TuUfaAqNLbeZOMfJih5fO9HGq8mrU/23E9ljxScCkIPA3RJmUJ0SBGtaHA9GKVwIlFce0slvg=="],
 
