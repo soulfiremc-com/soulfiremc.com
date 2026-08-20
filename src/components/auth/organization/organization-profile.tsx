@@ -1,12 +1,12 @@
 "use client";
 
+import { parseAdditionalFieldValue } from "@better-auth-ui/core";
+import type { OrganizationAuthClient } from "@better-auth-ui/core/plugins/organization";
+import { useAuth, useAuthPlugin } from "@better-auth-ui/react";
 import {
-  type OrganizationAuthClient,
   useActiveOrganization,
-  useAuth,
-  useAuthPlugin,
   useUpdateOrganization,
-} from "@better-auth-ui/react";
+} from "@better-auth-ui/react/plugins/organization";
 import { type SyntheticEvent, useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -18,6 +18,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 import { organizationPlugin } from "@/lib/auth/organization-plugin";
 import { cn } from "@/lib/utils";
+import { AdditionalField } from "../additional-field";
 import { ChangeOrganizationLogo } from "./change-organization-logo";
 import { SlugField } from "./slug-field";
 
@@ -29,13 +30,11 @@ export type OrganizationProfileProps = {
  * Profile card for the active organization: logo (when enabled), display name, and slug.
  */
 export function OrganizationProfile({ className }: OrganizationProfileProps) {
-  const { authClient, localization } = useAuth();
-  const { localization: organizationLocalization } =
+  const { authClient, localization } = useAuth<OrganizationAuthClient>();
+  const { additionalFields, localization: organizationLocalization } =
     useAuthPlugin(organizationPlugin);
 
-  const { data: activeOrganization } = useActiveOrganization(
-    authClient as OrganizationAuthClient,
-  );
+  const { data: activeOrganization } = useActiveOrganization(authClient);
 
   const [slug, setSlug] = useState(activeOrganization?.slug ?? "");
 
@@ -44,22 +43,35 @@ export function OrganizationProfile({ className }: OrganizationProfileProps) {
   }, [activeOrganization?.slug]);
 
   const { mutate: commitOrganizationUpdate, isPending } = useUpdateOrganization(
-    authClient as OrganizationAuthClient,
+    authClient,
     {
       onSuccess: () =>
         toast.success(organizationLocalization.organizationUpdatedSuccess),
     },
   );
 
-  function handleSubmit(e: SyntheticEvent<HTMLFormElement>) {
+  async function handleSubmit(e: SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!activeOrganization) return;
-
     const formData = new FormData(e.currentTarget);
     const name = formData.get("name") as string;
+    const additionalValues: Record<string, unknown> = {};
+    try {
+      for (const field of additionalFields) {
+        const value = parseAdditionalFieldValue(
+          field,
+          formData.get(field.name) as string | null,
+        );
+        await field.validate?.(value);
+        if (value !== undefined) additionalValues[field.name] = value;
+      }
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : String(error));
+      return;
+    }
 
     commitOrganizationUpdate({
-      data: { name, slug },
+      data: { name, slug, ...additionalValues },
     });
   }
 
@@ -113,6 +125,22 @@ export function OrganizationProfile({ className }: OrganizationProfileProps) {
                 <Skeleton className="h-8 w-full rounded-md" />
               </Field>
             )}
+
+            {activeOrganization &&
+              additionalFields.map((field) => (
+                <AdditionalField
+                  key={field.name}
+                  field={{
+                    ...field,
+                    defaultValue: (
+                      activeOrganization as Record<string, unknown>
+                    )[field.name] as never,
+                  }}
+                  isPending={isPending}
+                  name={field.name}
+                  optionalLabel={localization.settings.optional}
+                />
+              ))}
 
             <Button
               type="submit"

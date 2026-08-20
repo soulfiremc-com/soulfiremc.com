@@ -1,11 +1,8 @@
 "use client";
 
-import {
-  type OrganizationAuthClient,
-  useAuth,
-  useAuthPlugin,
-  useListOrganizations,
-} from "@better-auth-ui/react";
+import type { OrganizationAuthClient } from "@better-auth-ui/core/plugins/organization";
+import { useAuth, useAuthPlugin } from "@better-auth-ui/react";
+import { useListOrganizations } from "@better-auth-ui/react/plugins/organization";
 import { Fragment, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -27,14 +24,21 @@ export type OrganizationsProps = {
  * Owns `CreateOrganizationDialog` open state and the create actions.
  */
 export function Organizations({ className }: OrganizationsProps) {
-  const { authClient } = useAuth();
-  const { localization: organizationLocalization } =
-    useAuthPlugin(organizationPlugin);
+  const { authClient } = useAuth<OrganizationAuthClient>();
+  const {
+    allowOrganizationCreation,
+    localization: organizationLocalization,
+    organizationLimit,
+  } = useAuthPlugin(organizationPlugin);
 
   const [createOpen, setCreateOpen] = useState(false);
 
   const { data: organizations, isPending: organizationsPending } =
-    useListOrganizations(authClient as OrganizationAuthClient);
+    useListOrganizations(authClient);
+  const canCreate =
+    allowOrganizationCreation &&
+    (organizationLimit === undefined ||
+      (organizations?.length ?? 0) < organizationLimit);
 
   return (
     <>
@@ -45,14 +49,16 @@ export function Organizations({ className }: OrganizationsProps) {
               {organizationLocalization.organizations}
             </h2>
 
-            <Button
-              className="shrink-0"
-              size="sm"
-              disabled={organizationsPending}
-              onClick={() => setCreateOpen(true)}
-            >
-              {organizationLocalization.createOrganization}
-            </Button>
+            {allowOrganizationCreation && (
+              <Button
+                className="shrink-0"
+                size="sm"
+                disabled={organizationsPending || !canCreate}
+                onClick={() => setCreateOpen(true)}
+              >
+                {organizationLocalization.createOrganization}
+              </Button>
+            )}
           </div>
 
           <Card className="p-0">
@@ -64,7 +70,10 @@ export function Organizations({ className }: OrganizationsProps) {
                   </Item>
                 </ItemGroup>
               ) : !organizations?.length ? (
-                <OrganizationsEmpty onCreatePress={() => setCreateOpen(true)} />
+                <OrganizationsEmpty
+                  canCreate={canCreate}
+                  onCreatePress={() => setCreateOpen(true)}
+                />
               ) : (
                 <ItemGroup className="gap-0">
                   {organizations.map((organization, index) => (
@@ -80,10 +89,12 @@ export function Organizations({ className }: OrganizationsProps) {
         </div>
       </div>
 
-      <CreateOrganizationDialog
-        open={createOpen}
-        onOpenChange={setCreateOpen}
-      />
+      {canCreate && (
+        <CreateOrganizationDialog
+          open={createOpen}
+          onOpenChange={setCreateOpen}
+        />
+      )}
     </>
   );
 }

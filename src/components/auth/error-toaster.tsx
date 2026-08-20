@@ -1,5 +1,9 @@
-import { authMutationKeys, authQueryKeys } from "@better-auth-ui/core";
-import { oneTapMutationKeys } from "@better-auth-ui/core/plugins";
+import {
+  authMutationKeys,
+  authQueryKeys,
+  isSessionNotFreshError,
+} from "@better-auth-ui/core";
+import { oneTapMutationKeys } from "@better-auth-ui/core/plugins/one-tap";
 import {
   matchMutation,
   matchQuery,
@@ -20,6 +24,7 @@ export function ErrorToaster() {
       previousQueryOnError?.(error, query);
 
       if (!matchQuery({ queryKey: authQueryKeys.all }, query)) return;
+      if (isSessionNotFreshError(error)) return;
 
       const err = error as BetterFetchError;
       if (err?.error?.code === "EMAIL_NOT_VERIFIED") return;
@@ -47,6 +52,7 @@ export function ErrorToaster() {
       if (!matchMutation({ mutationKey: authMutationKeys.all }, mutation)) {
         return;
       }
+      if (isSessionNotFreshError(error)) return;
 
       const err = error as BetterFetchError;
       if (

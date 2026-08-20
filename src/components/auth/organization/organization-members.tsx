@@ -1,14 +1,12 @@
 "use client";
 
+import type { OrganizationAuthClient } from "@better-auth-ui/core/plugins/organization";
+import { useAuth, useAuthPlugin, useSession } from "@better-auth-ui/react";
 import {
-  type OrganizationAuthClient,
   useActiveOrganization,
-  useAuth,
-  useAuthPlugin,
   useHasPermission,
   useListOrganizationMembers,
-  useSession,
-} from "@better-auth-ui/react";
+} from "@better-auth-ui/react/plugins/organization";
 import type { Member } from "better-auth/client";
 import { ChevronUp, Filter, Search, X } from "lucide-react";
 import { type ComponentProps, type ReactNode, useMemo, useState } from "react";
@@ -60,28 +58,25 @@ export function OrganizationMembers({
   className,
   ...props
 }: OrganizationMembersProps & ComponentProps<"div">) {
-  const { authClient } = useAuth();
-  const { localization: organizationLocalization, roles } =
-    useAuthPlugin(organizationPlugin);
+  const { authClient } = useAuth<OrganizationAuthClient>();
+  const {
+    localization: organizationLocalization,
+    membershipLimit,
+    roles,
+  } = useAuthPlugin(organizationPlugin);
 
   const { data: session } = useSession(authClient);
   const { data: activeOrganization, isPending: activeOrganizationPending } =
-    useActiveOrganization(authClient as OrganizationAuthClient);
+    useActiveOrganization(authClient);
   const { data: membersData, isPending: membersPending } =
-    useListOrganizationMembers(authClient as OrganizationAuthClient);
+    useListOrganizationMembers(authClient);
 
-  const { isPending: updatePermissionPending } = useHasPermission(
-    authClient as OrganizationAuthClient,
-    {
-      permissions: { member: ["update"] },
-    },
-  );
-  const { isPending: deletePermissionPending } = useHasPermission(
-    authClient as OrganizationAuthClient,
-    {
-      permissions: { member: ["delete"] },
-    },
-  );
+  const { isPending: updatePermissionPending } = useHasPermission(authClient, {
+    permissions: { member: ["update"] },
+  });
+  const { isPending: deletePermissionPending } = useHasPermission(authClient, {
+    permissions: { member: ["delete"] },
+  });
 
   const isPending =
     activeOrganizationPending ||
@@ -127,6 +122,9 @@ export function OrganizationMembers({
   const isOwner = membersData?.members.some(
     (member) => member.role === "owner" && member.userId === session?.user.id,
   );
+  const atMembershipLimit =
+    membershipLimit !== undefined &&
+    (membersData?.members.length ?? 0) >= membershipLimit;
 
   function toggleSort(column: string) {
     setSortDescriptor((current) => {
@@ -150,7 +148,7 @@ export function OrganizationMembers({
         <Button
           className="shrink-0"
           size="sm"
-          disabled={isPending}
+          disabled={isPending || atMembershipLimit}
           onClick={() => setInviteOpen(true)}
         >
           {organizationLocalization.inviteMember}

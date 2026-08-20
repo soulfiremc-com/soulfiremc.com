@@ -1,13 +1,12 @@
 "use client";
 
-import {
-  type OrganizationAuthClient,
-  useAuth,
-  useAuthPlugin,
-  useCreateOrganization,
-} from "@better-auth-ui/react";
+import { parseAdditionalFieldValue } from "@better-auth-ui/core";
+import type { OrganizationAuthClient } from "@better-auth-ui/core/plugins/organization";
+import { useAuth, useAuthPlugin } from "@better-auth-ui/react";
+import { useCreateOrganization } from "@better-auth-ui/react/plugins/organization";
 import { Briefcase } from "lucide-react";
-import { type SyntheticEvent, useEffect, useState } from "react";
+import { type SyntheticEvent, useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Dialog,
@@ -22,6 +21,7 @@ import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { organizationPlugin } from "@/lib/auth/organization-plugin";
+import { AdditionalField } from "../additional-field";
 import { SlugField, sanitizeSlug } from "./slug-field";
 
 /** Props for the `CreateOrganizationDialog` component. */
@@ -34,24 +34,53 @@ export function CreateOrganizationDialog({
   open,
   onOpenChange,
 }: CreateOrganizationDialogProps) {
-  const { authClient, localization } = useAuth();
-  const { localization: organizationLocalization } =
+  const { authClient, localization } = useAuth<OrganizationAuthClient>();
+  const { additionalFields, localization: organizationLocalization } =
     useAuthPlugin(organizationPlugin);
 
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
   const [slugEdited, setSlugEdited] = useState(false);
   const [nameError, setNameError] = useState<string>();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const submissionLocked = useRef(false);
 
   const { mutate: createOrganization, isPending: isCreating } =
-    useCreateOrganization(authClient as OrganizationAuthClient, {
+    useCreateOrganization(authClient, {
       onSuccess: () => onOpenChange(false),
+      onSettled: () => {
+        submissionLocked.current = false;
+        setIsSubmitting(false);
+      },
     });
 
-  const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    createOrganization({ name, slug });
+    if (submissionLocked.current) return;
+
+    submissionLocked.current = true;
+    setIsSubmitting(true);
+    const formData = new FormData(e.currentTarget);
+    const additionalValues: Record<string, unknown> = {};
+    try {
+      for (const field of additionalFields) {
+        const value = parseAdditionalFieldValue(
+          field,
+          formData.get(field.name) as string | null,
+        );
+        await field.validate?.(value);
+        if (value !== undefined) additionalValues[field.name] = value;
+      }
+    } catch (error) {
+      submissionLocked.current = false;
+      setIsSubmitting(false);
+      toast.error(error instanceof Error ? error.message : String(error));
+      return;
+    }
+    createOrganization({ name, slug, ...additionalValues });
   };
+
+  const isPending = isCreating || isSubmitting;
 
   useEffect(() => {
     if (!open) {
@@ -104,7 +133,7 @@ export function CreateOrganizationDialog({
                   setNameError(localization.auth.fieldRequired);
                 }}
                 aria-invalid={!!nameError}
-                disabled={isCreating}
+                disabled={isPending}
               />
 
               <FieldError>{nameError}</FieldError>
@@ -117,21 +146,31 @@ export function CreateOrganizationDialog({
                 setSlug(value);
                 setSlugEdited(true);
               }}
-              disabled={isCreating}
+              disabled={isPending}
             />
+
+            {additionalFields.map((field) => (
+              <AdditionalField
+                key={field.name}
+                field={field}
+                isPending={isPending}
+                name={field.name}
+                optionalLabel={localization.settings.optional}
+              />
+            ))}
           </div>
 
           <DialogFooter>
             <DialogClose
               className={buttonVariants({ variant: "outline" })}
-              disabled={isCreating}
+              disabled={isPending}
               type="button"
             >
               {localization.settings.cancel}
             </DialogClose>
 
-            <Button type="submit" disabled={isCreating}>
-              {isCreating && <Spinner />}
+            <Button type="submit" disabled={isPending}>
+              {isPending && <Spinner />}
 
               {organizationLocalization.createOrganization}
             </Button>

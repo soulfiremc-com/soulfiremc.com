@@ -1,13 +1,11 @@
 "use client";
 
+import type { OrganizationAuthClient } from "@better-auth-ui/core/plugins/organization";
+import { useAuth, useSession } from "@better-auth-ui/react";
 import {
-  type OrganizationAuthClient,
   useActiveOrganization,
-  useAuth,
   useListOrganizationMembers,
-  useSession,
-} from "@better-auth-ui/react";
-
+} from "@better-auth-ui/react/plugins/organization";
 import { ApiKeys } from "./api-keys";
 
 export type OrganizationApiKeysProps = {
@@ -23,15 +21,12 @@ export type OrganizationApiKeysProps = {
  * `apiKey` statements), so we gate on role directly.
  */
 export function OrganizationApiKeys({ className }: OrganizationApiKeysProps) {
-  const { authClient } = useAuth();
+  const { authClient } = useAuth<OrganizationAuthClient>();
   const { data: session } = useSession(authClient);
 
   const { data: activeOrganization, isPending: activeOrganizationPending } =
-    useActiveOrganization(authClient as OrganizationAuthClient);
-
-  const { data: membersData } = useListOrganizationMembers(
-    authClient as OrganizationAuthClient,
-  );
+    useActiveOrganization(authClient);
+  const { data: membersData } = useListOrganizationMembers(authClient);
 
   const canManageApiKeys = membersData?.members.some(
     (member) => member.role === "owner" && member.userId === session?.user.id,

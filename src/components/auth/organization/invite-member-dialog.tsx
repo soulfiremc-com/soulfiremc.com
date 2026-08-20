@@ -1,13 +1,15 @@
 "use client";
 
+import type { OrganizationAuthClient } from "@better-auth-ui/core/plugins/organization";
+import { useAuth, useAuthPlugin } from "@better-auth-ui/react";
 import {
-  type OrganizationAuthClient,
-  useAuth,
-  useAuthPlugin,
+  useActiveOrganization,
   useInviteMember,
-} from "@better-auth-ui/react";
+  useListOrganizationInvitations,
+  useListTeams,
+} from "@better-auth-ui/react/plugins/organization";
 import { UserPlus } from "lucide-react";
-import { type SyntheticEvent, useEffect, useState } from "react";
+import { type SyntheticEvent, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
@@ -47,12 +49,25 @@ export function InviteMemberDialog({
   open,
   onOpenChange,
 }: InviteMemberDialogProps) {
-  const { authClient, localization } = useAuth();
-  const { localization: organizationLocalization, roles } =
-    useAuthPlugin(organizationPlugin);
+  const { authClient, localization } = useAuth<OrganizationAuthClient>();
+  const {
+    invitationLimit,
+    localization: organizationLocalization,
+    roles,
+    teams: teamsEnabled,
+  } = useAuthPlugin(organizationPlugin);
+  const { data: activeOrganization } = useActiveOrganization(authClient);
+  const teams = useListTeams(authClient, {
+    query: { organizationId: activeOrganization?.id },
+    enabled: teamsEnabled,
+  });
+  const invitations = useListOrganizationInvitations(authClient);
 
   const [role, setRole] = useState(() => pickDefaultRole(Object.keys(roles)));
+  const [teamId, setTeamId] = useState("");
   const [emailError, setEmailError] = useState<string>();
+  const activeOrganizationId = activeOrganization?.id;
+  const previousOrganizationId = useRef(activeOrganizationId);
 
   useEffect(() => {
     setRole((current) => {
@@ -62,11 +77,16 @@ export function InviteMemberDialog({
   }, [roles]);
 
   useEffect(() => {
+    const organizationChanged =
+      previousOrganizationId.current !== activeOrganizationId;
+
+    if (open || organizationChanged) setTeamId("");
     if (!open) setEmailError(undefined);
-  }, [open]);
+    previousOrganizationId.current = activeOrganizationId;
+  }, [open, activeOrganizationId]);
 
   const { mutate: inviteMember, isPending: isInviting } = useInviteMember(
-    authClient as OrganizationAuthClient,
+    authClient,
     {
       onSuccess: () => {
         onOpenChange(false);
@@ -80,16 +100,26 @@ export function InviteMemberDialog({
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!isRoleValid) return;
+    if (!isRoleValid || atInvitationLimit) return;
 
     const formData = new FormData(e.target as HTMLFormElement);
     const email = formData.get("email") as string;
 
+    const selectedTeamId = teams.data?.some((team) => team.id === teamId)
+      ? teamId
+      : undefined;
+
     inviteMember({
       email: email.trim(),
       role: role as Parameters<typeof inviteMember>[0]["role"],
+      teamId: selectedTeamId,
     });
   };
+
+  const atInvitationLimit =
+    invitationLimit !== undefined &&
+    (invitations.data?.filter((invitation) => invitation.status === "pending")
+      .length ?? 0) >= invitationLimit;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -160,6 +190,32 @@ export function InviteMemberDialog({
 
               <FieldError />
             </Field>
+
+            {teamsEnabled && (
+              <Field>
+                <FieldLabel htmlFor="invite-member-team">
+                  {organizationLocalization.team}
+                </FieldLabel>
+                <Select
+                  value={teamId}
+                  onValueChange={(value) => setTeamId(value ?? "")}
+                  disabled={isInviting}
+                >
+                  <SelectTrigger id="invite-member-team" className="w-full">
+                    <SelectValue
+                      placeholder={organizationLocalization.selectTeam}
+                    />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {teams.data?.map((team) => (
+                      <SelectItem key={team.id} value={team.id}>
+                        {team.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </Field>
+            )}
           </div>
 
           <DialogFooter>
@@ -171,7 +227,10 @@ export function InviteMemberDialog({
               {localization.settings.cancel}
             </DialogClose>
 
-            <Button type="submit" disabled={isInviting || !isRoleValid}>
+            <Button
+              type="submit"
+              disabled={isInviting || !isRoleValid || atInvitationLimit}
+            >
               {isInviting && <Spinner />}
 
               {organizationLocalization.inviteMember}
