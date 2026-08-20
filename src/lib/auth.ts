@@ -1,6 +1,7 @@
 import { waitUntil } from "cloudflare:workers";
 import { dash, sentinel } from "@better-auth/infra";
 import { passkey } from "@better-auth/passkey";
+import type { BetterAuthOptions } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { betterAuth } from "better-auth/minimal";
 import {
@@ -304,4 +305,4 @@ export const auth = betterAuth({
     "http://localhost:5173",
     "http://127.0.0.1:5173",
   ],
-});
+} satisfies BetterAuthOptions);
