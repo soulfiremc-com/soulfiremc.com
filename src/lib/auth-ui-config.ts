@@ -15,6 +15,7 @@ export const AUTH_UI_VIEW_PATHS = {
   settings: {
     ...viewPaths.settings,
     account: "settings",
+    activity: "activity",
   },
 } satisfies ViewPaths;
 

@@ -37,7 +37,7 @@ const authUiPlugins = [
   captchaPlugin({ render: AuthTurnstile }),
   deleteUserPlugin({ sendDeleteAccountVerification: true }),
   adminPlugin(),
-  dashPlugin(),
+  dashPlugin({ organization: false }),
   themePlugin({ useTheme }),
   lastLoginMethodPlugin(),
 ];
