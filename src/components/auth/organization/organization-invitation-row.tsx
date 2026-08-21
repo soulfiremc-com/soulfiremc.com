@@ -1,5 +1,6 @@
 "use client";
 
+import { formatAdditionalFieldValue } from "@better-auth-ui/core";
 import {
   memberRoleLabels,
   type OrganizationAuthClient,
@@ -37,8 +38,11 @@ export function OrganizationInvitationRow({
   invitation,
 }: OrganizationInvitationRowProps) {
   const { authClient } = useAuth<OrganizationAuthClient>();
-  const { localization: organizationLocalization, roles } =
-    useAuthPlugin(organizationPlugin);
+  const {
+    modelFields: { invitation: invitationFields },
+    localization: organizationLocalization,
+    roles,
+  } = useAuthPlugin(organizationPlugin);
 
   const {
     data: cancelInvitationPermission,
@@ -78,7 +82,21 @@ export function OrganizationInvitationRow({
 
   return (
     <TableRow>
-      <TableCell className="font-medium text-sm">{invitation.email}</TableCell>
+      <TableCell>
+        <div className="flex flex-col gap-1">
+          <span className="font-medium text-sm">{invitation.email}</span>
+          {invitationFields.map((field) => {
+            const value = formatAdditionalFieldValue(
+              (invitation as unknown as Record<string, unknown>)[field.name],
+            );
+            return value ? (
+              <span className="text-xs text-muted-foreground" key={field.name}>
+                {field.label}: {value}
+              </span>
+            ) : null;
+          })}
+        </div>
+      </TableCell>
 
       <TableCell className="text-muted-foreground text-xs tabular-nums whitespace-nowrap">
         {new Date(invitation.createdAt).toLocaleString(undefined, {
@@ -108,6 +126,14 @@ export function OrganizationInvitationRow({
               disabled={resendPending}
               onClick={() =>
                 resendInvitation({
+                  ...Object.fromEntries(
+                    invitationFields.flatMap((field) => {
+                      const value = (
+                        invitation as unknown as Record<string, unknown>
+                      )[field.name];
+                      return value === undefined ? [] : [[field.name, value]];
+                    }),
+                  ),
                   email: invitation.email,
                   organizationId: invitation.organizationId,
                   role: invitation.role as Parameters<

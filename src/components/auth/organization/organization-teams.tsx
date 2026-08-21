@@ -1,5 +1,10 @@
 "use client";
 
+import {
+  type AdditionalFields,
+  fieldsWithModelValues,
+  parseAdditionalFieldValues,
+} from "@better-auth-ui/core";
 import type { OrganizationAuthClient } from "@better-auth-ui/core/plugins/organization";
 import { useAuth, useAuthPlugin } from "@better-auth-ui/react";
 import {
@@ -28,11 +33,14 @@ import {
 } from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
 import { organizationPlugin } from "@/lib/auth/organization-plugin";
+import { AdditionalField } from "../additional-field";
 
 export function OrganizationTeams() {
-  const { authClient } = useAuth<OrganizationAuthClient>();
+  const { authClient, localization: authLocalization } =
+    useAuth<OrganizationAuthClient>();
   const { data: activeOrganization } = useActiveOrganization(authClient);
-  const { localization } = useAuthPlugin(organizationPlugin);
+  const { localization, modelFields, teamPolicy } =
+    useAuthPlugin(organizationPlugin);
   const teams = useListTeams(authClient, {
     query: { organizationId: activeOrganization?.id },
   });
@@ -41,13 +49,34 @@ export function OrganizationTeams() {
     onSuccess: () => toast.success(localization.teamCreated),
   });
 
-  function handleCreate(event: FormEvent<HTMLFormElement>) {
+  const [isCreatingFields, setIsCreatingFields] = useState(false);
+  const teamLimitReached =
+    teamPolicy.maximumTeams !== undefined &&
+    (teams.data?.length ?? 0) >= teamPolicy.maximumTeams;
+
+  async function handleCreate(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
     const name = String(new FormData(form).get("name") ?? "").trim();
-    if (!name || !activeOrganization) return;
-    createTeam.mutate({ name, organizationId: activeOrganization.id });
-    form.reset();
+    if (!name || !activeOrganization || teamLimitReached) return;
+
+    setIsCreatingFields(true);
+    try {
+      const values = await parseAdditionalFieldValues(
+        modelFields.team,
+        new FormData(form),
+      );
+      createTeam.mutate(
+        { ...values, name, organizationId: activeOrganization.id },
+        {
+          onSuccess: () => form.reset(),
+          onSettled: () => setIsCreatingFields(false),
+        },
+      );
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : String(error));
+      setIsCreatingFields(false);
+    }
   }
 
   return (
@@ -59,15 +88,43 @@ export function OrganizationTeams() {
             {localization.teamsDescription}
           </p>
         </div>
-        <form className="flex items-end gap-2" onSubmit={handleCreate}>
+        <form
+          className="grid w-full gap-3 sm:max-w-xl sm:grid-cols-2"
+          onSubmit={handleCreate}
+        >
           <Field>
             <FieldLabel htmlFor="new-team-name">{localization.name}</FieldLabel>
-            <Input id="new-team-name" name="name" required />
+            <Input
+              id="new-team-name"
+              name="name"
+              required
+              disabled={teamLimitReached}
+            />
           </Field>
-          <Button type="submit" disabled={createTeam.isPending}>
+          {modelFields.team.map((field) => (
+            <AdditionalField
+              key={field.name}
+              field={field}
+              name={field.name}
+              isPending={createTeam.isPending || isCreatingFields}
+              optionalLabel={authLocalization.settings.optional}
+            />
+          ))}
+          <Button
+            className="self-end"
+            type="submit"
+            disabled={
+              createTeam.isPending || isCreatingFields || teamLimitReached
+            }
+          >
             {createTeam.isPending && <Spinner />}
             {localization.createTeam}
           </Button>
+          {teamLimitReached && (
+            <p className="text-sm text-destructive sm:col-span-2" role="alert">
+              {localization.teamLimitReached}
+            </p>
+          )}
         </form>
       </div>
       {teams.isPending ? (
@@ -79,6 +136,10 @@ export function OrganizationTeams() {
             organizationId={activeOrganization?.id ?? ""}
             organizationMembers={members.data?.members ?? []}
             team={team}
+            teamFields={modelFields.team}
+            teamCount={teams.data?.length ?? 0}
+            maximumMembersPerTeam={teamPolicy.maximumMembersPerTeam}
+            allowRemovingAllTeams={teamPolicy.allowRemovingAllTeams}
           />
         ))
       ) : (
@@ -99,13 +160,21 @@ function TeamCard({
   organizationId,
   organizationMembers,
   team,
+  teamFields,
+  teamCount,
+  maximumMembersPerTeam,
+  allowRemovingAllTeams,
 }: {
   organizationId: string;
   organizationMembers: Array<{
     userId: string;
     user: { name: string; email: string };
   }>;
-  team: { id: string; name: string };
+  team: { id: string; name: string; [key: string]: unknown };
+  teamFields: AdditionalFields;
+  teamCount: number;
+  maximumMembersPerTeam?: number;
+  allowRemovingAllTeams: boolean;
 }) {
   const { authClient, localization: authLocalization } =
     useAuth<OrganizationAuthClient>();
@@ -116,17 +185,46 @@ function TeamCard({
   const updateTeam = useUpdateTeam(authClient);
   const removeTeam = useRemoveTeam(authClient);
   const [name, setName] = useState(team.name);
+  const [isUpdatingFields, setIsUpdatingFields] = useState(false);
   const [userId, setUserId] = useState("");
   const addMember = useAddTeamMember(authClient, {
     onSuccess: () => setUserId(""),
   });
   const removeMember = useRemoveTeamMember(authClient);
   const memberIds = new Set(teamMembers.data?.map((member) => member.userId));
+  const memberLimitReached =
+    maximumMembersPerTeam !== undefined &&
+    (teamMembers.data?.length ?? 0) >= maximumMembersPerTeam;
+  const canRemoveTeam = allowRemovingAllTeams || teamCount > 1;
+
+  const handleUpdate = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsUpdatingFields(true);
+    try {
+      const values = await parseAdditionalFieldValues(
+        teamFields,
+        new FormData(event.currentTarget),
+      );
+      updateTeam.mutate(
+        {
+          teamId: team.id,
+          data: { ...values, name, organizationId },
+        },
+        { onSettled: () => setIsUpdatingFields(false) },
+      );
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : String(error));
+      setIsUpdatingFields(false);
+    }
+  };
 
   return (
     <Card>
       <CardContent className="flex flex-col gap-4 pt-6">
-        <div className="flex flex-col items-end gap-2 sm:flex-row">
+        <form
+          className="grid items-end gap-3 sm:grid-cols-2"
+          onSubmit={handleUpdate}
+        >
           <Field className="flex-1">
             <FieldLabel htmlFor={`team-name-${team.id}`}>
               {localization.name}
@@ -137,20 +235,30 @@ function TeamCard({
               onChange={(event) => setName(event.target.value)}
             />
           </Field>
+          {fieldsWithModelValues(teamFields, team).map((field) => (
+            <AdditionalField
+              key={field.name}
+              field={field}
+              name={field.name}
+              isPending={updateTeam.isPending || isUpdatingFields}
+              optionalLabel={authLocalization.settings.optional}
+            />
+          ))}
           <Button
-            disabled={updateTeam.isPending}
+            type="submit"
+            disabled={updateTeam.isPending || isUpdatingFields}
             variant="outline"
-            onClick={() =>
-              updateTeam.mutate({
-                teamId: team.id,
-                data: { name, organizationId },
-              })
-            }
           >
             {authLocalization.settings.saveChanges}
           </Button>
           <Button
-            disabled={removeTeam.isPending}
+            type="button"
+            disabled={removeTeam.isPending || !canRemoveTeam}
+            title={
+              canRemoveTeam
+                ? localization.deleteTeam
+                : localization.lastTeamRemovalDisabled
+            }
             variant="destructive"
             onClick={() => {
               if (!window.confirm(localization.deleteTeam)) return;
@@ -159,13 +267,19 @@ function TeamCard({
           >
             {localization.deleteTeam}
           </Button>
-        </div>
+        </form>
+        {!canRemoveTeam && (
+          <p className="text-sm text-muted-foreground">
+            {localization.lastTeamRemovalDisabled}
+          </p>
+        )}
         <div className="flex items-end gap-2">
           <Field className="flex-1">
             <FieldLabel>{localization.addTeamMember}</FieldLabel>
             <Select
               value={userId}
               onValueChange={(value) => setUserId(value ?? "")}
+              disabled={memberLimitReached}
             >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder={localization.selectMember} />
@@ -182,7 +296,7 @@ function TeamCard({
             </Select>
           </Field>
           <Button
-            disabled={!userId || addMember.isPending}
+            disabled={!userId || addMember.isPending || memberLimitReached}
             onClick={() =>
               userId &&
               addMember.mutate({ teamId: team.id, userId, organizationId })
@@ -191,6 +305,11 @@ function TeamCard({
             {localization.addTeamMember}
           </Button>
         </div>
+        {memberLimitReached && (
+          <p className="text-sm text-destructive" role="alert">
+            {localization.teamMemberLimitReached}
+          </p>
+        )}
         <div className="flex flex-col gap-2">
           {teamMembers.data?.map((teamMember) => {
             const member = organizationMembers.find(

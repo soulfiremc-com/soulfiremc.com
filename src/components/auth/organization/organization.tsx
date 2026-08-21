@@ -7,6 +7,7 @@ import type {
 import { useAuth, useAuthenticate, useAuthPlugin } from "@better-auth-ui/react";
 import { useActiveOrganization } from "@better-auth-ui/react/plugins/organization";
 import {
+  ShieldCheck as RolesIcon,
   Settings as SettingsIcon,
   UsersRound as TeamsIcon,
   User2 as UserIcon,
@@ -17,6 +18,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { organizationPlugin } from "@/lib/auth/organization-plugin";
 import { cn } from "@/lib/utils";
 import { OrganizationPeople } from "./organization-people";
+import { OrganizationRoles } from "./organization-roles";
 import { OrganizationSettings } from "./organization-settings";
 import { OrganizationTeams } from "./organization-teams";
 
@@ -55,6 +57,7 @@ export function Organization({
     slug,
     slugPrefix,
     teams,
+    dynamicAccessControl,
   } = useAuthPlugin(organizationPlugin);
 
   const { data: activeOrganization, isPending } =
@@ -63,6 +66,7 @@ export function Organization({
     () => plugins.flatMap((plugin) => plugin.organizationTabs ?? []),
     [plugins],
   );
+  const rolesEnabled = dynamicAccessControl?.enabled === true;
 
   useEffect(() => {
     if (!isPending && !activeOrganization) {
@@ -80,20 +84,29 @@ export function Organization({
   ]);
 
   const currentView = useMemo(() => {
-    if (view) return view;
+    if (view) return view === "roles" && !rolesEnabled ? undefined : view;
 
     const match = [
-      ...Object.entries(organizationViewPaths.organization),
+      ...Object.entries(organizationViewPaths.organization).filter(
+        ([name]) => rolesEnabled || name !== "roles",
+      ),
       ...extensionTabs.map((tab) => [tab.id, tab.path] as const),
     ].find(([, segment]) => segment === path);
 
     return match?.[0] as OrganizationView | undefined;
-  }, [extensionTabs, view, path, organizationViewPaths.organization]);
+  }, [
+    extensionTabs,
+    view,
+    path,
+    organizationViewPaths.organization,
+    rolesEnabled,
+  ]);
 
   if (!currentView) {
-    const validPaths = Object.values(organizationViewPaths.organization).join(
-      ", ",
-    );
+    const validPaths = Object.entries(organizationViewPaths.organization)
+      .filter(([name]) => rolesEnabled || name !== "roles")
+      .map(([, segment]) => segment)
+      .join(", ");
     throw new Error(
       `[Better Auth UI] Unknown organization path "${path}". Valid paths are: ${validPaths}`,
     );
@@ -143,6 +156,23 @@ export function Organization({
             </TabsTrigger>
           )}
 
+          {rolesEnabled && (
+            <TabsTrigger
+              value="roles"
+              className="gap-1"
+              onClick={() =>
+                navigate({
+                  to: slug
+                    ? `${basePaths.organization}/${slugPrefix}${slug}/${organizationViewPaths.organization.roles}`
+                    : `${basePaths.organization}/${organizationViewPaths.organization.roles}`,
+                })
+              }
+            >
+              <RolesIcon className="text-muted-foreground" />
+              {organizationLocalization.roles}
+            </TabsTrigger>
+          )}
+
           {extensionTabs.map((tab) => (
             <TabsTrigger
               key={tab.id}
@@ -178,7 +208,12 @@ export function Organization({
       </div>
 
       <TabsContent value="settings" tabIndex={-1}>
-        <OrganizationSettings />
+        {activeOrganization && (
+          <OrganizationSettings
+            organizationId={activeOrganization.id}
+            organizationSlug={activeOrganization.slug}
+          />
+        )}
       </TabsContent>
 
       <TabsContent value="people" tabIndex={-1}>
@@ -188,6 +223,12 @@ export function Organization({
       {teams && (
         <TabsContent value="teams" tabIndex={-1}>
           <OrganizationTeams />
+        </TabsContent>
+      )}
+
+      {rolesEnabled && (
+        <TabsContent value="roles" tabIndex={-1}>
+          <OrganizationRoles organizationId={activeOrganization?.id ?? ""} />
         </TabsContent>
       )}
 
