@@ -20,3 +20,5 @@ export const AUTH_UI_VIEW_PATHS = {
 } satisfies ViewPaths;
 
 export const DEFAULT_AUTH_REDIRECT_PATH = `${AUTH_UI_BASE_PATHS.settings}/${AUTH_UI_VIEW_PATHS.settings.account}`;
+
+export const ADMIN_REVIEW_PATH = "reviews";

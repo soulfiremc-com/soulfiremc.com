@@ -25,6 +25,8 @@ import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as TermsOfServiceRouteImport } from './routes/terms-of-service'
 import { Route as AccountPathRouteImport } from './routes/account/$path'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as AdminPathRouteImport } from './routes/admin/$path'
 import { Route as ApiSearchRouteImport } from './routes/api/search'
 import { Route as AuthPathRouteImport } from './routes/auth/$path'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
@@ -128,6 +130,16 @@ const AccountPathRoute = AccountPathRouteImport.update({
   id: '/account/$path',
   path: '/account/$path',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPathRoute = AdminPathRouteImport.update({
+  id: '/$path',
+  path: '/$path',
+  getParentRoute: () => AdminRoute,
 } as any)
 const ApiSearchRoute = ApiSearchRouteImport.update({
   id: '/api/search',
@@ -256,7 +268,7 @@ const OgSiteChar123Char125ImageDotwebpRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
+  '/admin': typeof AdminRouteWithChildren
   '/cookie-policy': typeof CookiePolicyRoute
   '/demo-video': typeof DemoVideoRoute
   '/discord': typeof DiscordRoute
@@ -271,6 +283,7 @@ export interface FileRoutesByFullPath {
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/account/$path': typeof AccountPathRoute
+  '/admin/$path': typeof AdminPathRoute
   '/api/search': typeof ApiSearchRoute
   '/auth/$path': typeof AuthPathRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -280,6 +293,7 @@ export interface FileRoutesByFullPath {
   '/get-accounts/$slug': typeof GetAccountsSlugRoute
   '/get-proxies/$slug': typeof GetProxiesSlugRoute
   '/resources/$slug': typeof ResourcesSlugRoute
+  '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/get-accounts/': typeof GetAccountsIndexRoute
   '/get-proxies/': typeof GetProxiesIndexRoute
@@ -297,7 +311,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
   '/cookie-policy': typeof CookiePolicyRoute
   '/demo-video': typeof DemoVideoRoute
   '/discord': typeof DiscordRoute
@@ -312,6 +325,7 @@ export interface FileRoutesByTo {
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/account/$path': typeof AccountPathRoute
+  '/admin/$path': typeof AdminPathRoute
   '/api/search': typeof ApiSearchRoute
   '/auth/$path': typeof AuthPathRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -321,6 +335,7 @@ export interface FileRoutesByTo {
   '/get-accounts/$slug': typeof GetAccountsSlugRoute
   '/get-proxies/$slug': typeof GetProxiesSlugRoute
   '/resources/$slug': typeof ResourcesSlugRoute
+  '/admin': typeof AdminIndexRoute
   '/blog': typeof BlogIndexRoute
   '/get-accounts': typeof GetAccountsIndexRoute
   '/get-proxies': typeof GetProxiesIndexRoute
@@ -339,7 +354,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
+  '/admin': typeof AdminRouteWithChildren
   '/cookie-policy': typeof CookiePolicyRoute
   '/demo-video': typeof DemoVideoRoute
   '/discord': typeof DiscordRoute
@@ -354,6 +369,7 @@ export interface FileRoutesById {
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/account/$path': typeof AccountPathRoute
+  '/admin/$path': typeof AdminPathRoute
   '/api/search': typeof ApiSearchRoute
   '/auth/$path': typeof AuthPathRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -363,6 +379,7 @@ export interface FileRoutesById {
   '/get-accounts/$slug': typeof GetAccountsSlugRoute
   '/get-proxies/$slug': typeof GetProxiesSlugRoute
   '/resources/$slug': typeof ResourcesSlugRoute
+  '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/get-accounts/': typeof GetAccountsIndexRoute
   '/get-proxies/': typeof GetProxiesIndexRoute
@@ -397,6 +414,7 @@ export interface FileRouteTypes {
     | '/privacy-policy'
     | '/terms-of-service'
     | '/account/$path'
+    | '/admin/$path'
     | '/api/search'
     | '/auth/$path'
     | '/blog/$slug'
@@ -406,6 +424,7 @@ export interface FileRouteTypes {
     | '/get-accounts/$slug'
     | '/get-proxies/$slug'
     | '/resources/$slug'
+    | '/admin/'
     | '/blog/'
     | '/get-accounts/'
     | '/get-proxies/'
@@ -423,7 +442,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/admin'
     | '/cookie-policy'
     | '/demo-video'
     | '/discord'
@@ -438,6 +456,7 @@ export interface FileRouteTypes {
     | '/privacy-policy'
     | '/terms-of-service'
     | '/account/$path'
+    | '/admin/$path'
     | '/api/search'
     | '/auth/$path'
     | '/blog/$slug'
@@ -447,6 +466,7 @@ export interface FileRouteTypes {
     | '/get-accounts/$slug'
     | '/get-proxies/$slug'
     | '/resources/$slug'
+    | '/admin'
     | '/blog'
     | '/get-accounts'
     | '/get-proxies'
@@ -479,6 +499,7 @@ export interface FileRouteTypes {
     | '/privacy-policy'
     | '/terms-of-service'
     | '/account/$path'
+    | '/admin/$path'
     | '/api/search'
     | '/auth/$path'
     | '/blog/$slug'
@@ -488,6 +509,7 @@ export interface FileRouteTypes {
     | '/get-accounts/$slug'
     | '/get-proxies/$slug'
     | '/resources/$slug'
+    | '/admin/'
     | '/blog/'
     | '/get-accounts/'
     | '/get-proxies/'
@@ -506,7 +528,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AdminRoute: typeof AdminRoute
+  AdminRoute: typeof AdminRouteWithChildren
   CookiePolicyRoute: typeof CookiePolicyRoute
   DemoVideoRoute: typeof DemoVideoRoute
   DiscordRoute: typeof DiscordRoute
@@ -659,6 +681,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/account/$path'
       preLoaderRoute: typeof AccountPathRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/$path': {
+      id: '/admin/$path'
+      path: '/$path'
+      fullPath: '/admin/$path'
+      preLoaderRoute: typeof AdminPathRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/api/search': {
       id: '/api/search'
@@ -824,9 +860,21 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AdminRouteChildren {
+  AdminPathRoute: typeof AdminPathRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminPathRoute: AdminPathRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AdminRoute: AdminRoute,
+  AdminRoute: AdminRouteWithChildren,
   CookiePolicyRoute: CookiePolicyRoute,
   DemoVideoRoute: DemoVideoRoute,
   DiscordRoute: DiscordRoute,
@@ -873,6 +921,7 @@ export const routeTree = rootRouteImport
   ._addFileTypes<FileRouteTypes>()
 
 import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
 declare module '@tanstack/react-start' {
   interface Register {
     ssr: true
