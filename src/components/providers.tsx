@@ -7,6 +7,7 @@ import { AuthProvider } from "@/components/auth/auth-provider";
 import { AuthTurnstile } from "@/components/auth-turnstile";
 import { Toaster } from "@/components/ui/sonner";
 import { adminPlugin } from "@/lib/auth/admin-plugin";
+import { dashPlugin } from "@/lib/auth/dash-plugin";
 import { deleteUserPlugin } from "@/lib/auth/delete-user-plugin";
 import { emailOtpPlugin } from "@/lib/auth/email-otp-plugin";
 import { lastLoginMethodPlugin } from "@/lib/auth/last-login-method-plugin.ts";
@@ -36,6 +37,7 @@ const authUiPlugins = [
   captchaPlugin({ render: AuthTurnstile }),
   deleteUserPlugin({ sendDeleteAccountVerification: true }),
   adminPlugin(),
+  dashPlugin(),
   themePlugin({ useTheme }),
   lastLoginMethodPlugin(),
 ];
