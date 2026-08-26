@@ -400,7 +400,7 @@ export const SHOPS: Shop[] = [
     listings: {
       "mfa-accounts": {
         summary:
-          "Cheap MFA accounts with instant delivery, lifetime warranty, and over 400 accounts sold.",
+          "Cheap MFA accounts with instant delivery, lifetime warranty, and over 825 accounts sold.",
         badges: ["high-quality", "instant-delivery", "lifetime-warranty"],
         price: "$4.00-$5.50",
         priceValue: 4.0,
