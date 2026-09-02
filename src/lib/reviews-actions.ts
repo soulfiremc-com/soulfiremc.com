@@ -144,11 +144,10 @@ export const getReviewsServerFn = createServerFn({ method: "GET" })
       return { summaries: {}, userReviews: {} };
     }
 
-    const session = await auth.api.getSession({
-      headers: getRequest().headers,
-    });
-
     try {
+      const session = await auth.api.getSession({
+        headers: getRequest().headers,
+      });
       const [summaries, userReviews] = await Promise.all([
         getReviewSummaries(data.itemType, slugs),
         session?.user

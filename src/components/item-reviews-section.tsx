@@ -32,15 +32,12 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import { useReviews } from "@/hooks/use-reviews";
-import type {
-  ItemType,
-  PaginatedPublicReviewRecords,
-  ReviewSummary,
-} from "@/lib/review-core";
+import type { ItemType } from "@/lib/review-core";
 import { reviewsPageParser } from "@/lib/reviews-search-params";
-import { cn } from "@/lib/utils";
+import { cn, generateN } from "@/lib/utils";
 import { ReviewStarInput, ReviewStars } from "./review-stars";
 
 function initial(name: string) {
@@ -67,22 +64,13 @@ function handleMutationError(
 export function ItemReviewsSection({
   itemType,
   slug,
-  initialSummary,
-  initialWrittenReviews,
 }: {
   itemType: ItemType;
   slug: string;
-  initialSummary: ReviewSummary;
-  initialWrittenReviews: PaginatedPublicReviewRecords;
 }) {
   return (
     <ReviewTurnstileProvider>
-      <ItemReviewsSectionContent
-        itemType={itemType}
-        slug={slug}
-        initialSummary={initialSummary}
-        initialWrittenReviews={initialWrittenReviews}
-      />
+      <ItemReviewsSectionContent itemType={itemType} slug={slug} />
     </ReviewTurnstileProvider>
   );
 }
@@ -90,13 +78,9 @@ export function ItemReviewsSection({
 function ItemReviewsSectionContent({
   itemType,
   slug,
-  initialSummary,
-  initialWrittenReviews,
 }: {
   itemType: ItemType;
   slug: string;
-  initialSummary: ReviewSummary;
-  initialWrittenReviews: PaginatedPublicReviewRecords;
 }) {
   const [reviewPage, setReviewPage] = useQueryState(
     "reviewsPage",
@@ -104,14 +88,6 @@ function ItemReviewsSectionContent({
   );
   const activeReviewPage = Math.max(1, reviewPage);
   const reviewSlugs = useMemo(() => [slug], [slug]);
-  const initialSummaryMap = useMemo(
-    () => ({ [slug]: initialSummary }),
-    [initialSummary, slug],
-  );
-  const initialWrittenReviewMap = useMemo(
-    () => ({ [slug]: initialWrittenReviews }),
-    [initialWrittenReviews, slug],
-  );
   const {
     summaries,
     userReviews,
@@ -121,15 +97,13 @@ function ItemReviewsSectionContent({
     upsertReview,
     deleteReview,
   } = useReviews(itemType, reviewSlugs, {
-    initialSummaries: initialSummaryMap,
     includeWrittenReviews: true,
-    initialWrittenReviews: initialWrittenReviewMap,
     writtenReviewsPage: activeReviewPage,
   });
 
-  const summary = summaries[slug] ?? initialSummary;
+  const summary = summaries[slug];
   const currentReview = userReviews[slug];
-  const reviewPageData = writtenReviews[slug] ?? initialWrittenReviews;
+  const reviewPageData = writtenReviews[slug];
   const visibleReviews = reviewPageData.entries;
   const pending = pendingBySlug[slug] ?? false;
 
@@ -215,7 +189,22 @@ function ItemReviewsSectionContent({
 
         <Card className="gap-4 px-6 py-5">
           <CardContent>
-            {summary.averageRating !== null ? (
+            {loading ? (
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                <div className="flex items-end gap-3">
+                  <Skeleton className="h-12 w-20" />
+                  <div className="flex flex-col gap-2 pb-1">
+                    <Skeleton className="h-5 w-28" />
+                    <Skeleton className="h-4 w-36" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-3 sm:min-w-64">
+                  {generateN(2).map((skeletonId) => (
+                    <Skeleton key={skeletonId} className="h-20 rounded-xl" />
+                  ))}
+                </div>
+              </div>
+            ) : summary.averageRating !== null ? (
               <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                 <div className="flex items-end gap-3">
                   <span className="text-5xl font-bold tracking-tight tabular-nums">
@@ -388,7 +377,23 @@ function ItemReviewsSectionContent({
             ) : null}
           </div>
 
-          {hasWrittenReviews ? (
+          {loading ? (
+            <div className="grid gap-4">
+              {generateN(3).map((skeletonId) => (
+                <Card key={skeletonId} className="gap-4 p-5">
+                  <div className="flex items-center gap-3">
+                    <Skeleton className="size-10 rounded-full" />
+                    <div className="flex flex-col gap-2">
+                      <Skeleton className="h-4 w-32" />
+                      <Skeleton className="h-4 w-44" />
+                    </div>
+                  </div>
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-3/4" />
+                </Card>
+              ))}
+            </div>
+          ) : hasWrittenReviews ? (
             <div className="grid gap-4">
               {visibleReviews.map((entry) => (
                 <Card key={entry.id} className="gap-4 p-5">

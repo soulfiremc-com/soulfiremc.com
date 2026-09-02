@@ -1,5 +1,5 @@
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/react-start";
 import {
   ArrowLeft,
   Calendar,
@@ -47,17 +47,12 @@ import {
   type Provider,
   SPONSOR_THEMES,
 } from "@/lib/proxies-data";
-import type {
-  PaginatedPublicReviewRecords,
-  ReviewSummary,
-} from "@/lib/review-core";
 import {
   emptyReviewSummary,
   getAggregateRatingJsonLd,
-  getPaginatedWrittenReviews,
   getReviewJsonLd,
-  getReviewSummaries,
-} from "@/lib/reviews";
+} from "@/lib/review-core";
+import { reviewsQueryOptions } from "@/lib/reviews-query";
 import { validateReviewsSearch } from "@/lib/reviews-search-params";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 import { cn } from "@/lib/utils";
@@ -213,8 +208,7 @@ type ProxyDetailPageData = {
   pageJsonLd: WithContext<WebPage>;
   productJsonLd: WithContext<Product>;
   provider: Provider;
-  reviewSummary: ReviewSummary;
-  writtenReviews: PaginatedPublicReviewRecords;
+  reviewsPage: number;
 };
 
 function ProviderLogo({ provider }: { provider: Provider }) {
@@ -263,22 +257,64 @@ function ProviderBadge({
   );
 }
 
+function ProxyProductStructuredData({
+  productJsonLd,
+  provider,
+  reviewsPage,
+}: Pick<ProxyDetailPageData, "productJsonLd" | "provider" | "reviewsPage">) {
+  const { data } = useSuspenseQuery(
+    reviewsQueryOptions({
+      itemType: "proxy",
+      slugs: [provider.slug],
+      includeWrittenReviews: true,
+      reviewsPage,
+    }),
+  );
+  const reviewSummary = data.summaries[provider.slug] ?? emptyReviewSummary();
+  const aggregateRating = getAggregateRatingJsonLd(reviewSummary);
+  const reviewJsonLd = data.writtenReviews
+    ? getReviewJsonLd(data.writtenReviews.entries)
+    : undefined;
+  const enrichedProductJsonLd = {
+    ...productJsonLd,
+    ...(aggregateRating ? { aggregateRating } : {}),
+    ...(reviewJsonLd ? { review: reviewJsonLd } : {}),
+  } satisfies WithContext<Product>;
+
+  return <JsonLd data={enrichedProductJsonLd} />;
+}
+
 function ProxyProviderPageContent({
   breadcrumbJsonLd,
   pageJsonLd,
   productJsonLd,
   provider,
-  reviewSummary,
-  writtenReviews,
+  reviewsPage,
 }: ProxyDetailPageData) {
   const theme = provider.sponsorTheme
     ? SPONSOR_THEMES[provider.sponsorTheme]
     : undefined;
+  const reviewsQuery = useQuery(
+    reviewsQueryOptions({
+      itemType: "proxy",
+      slugs: [provider.slug],
+      includeWrittenReviews: true,
+      reviewsPage,
+    }),
+  );
+  const reviewSummary =
+    reviewsQuery.data?.summaries[provider.slug] ?? emptyReviewSummary();
 
   return (
     <main className="mx-auto flex w-full max-w-(--fd-layout-width) flex-col gap-8 px-4 py-12">
       <JsonLd data={pageJsonLd} />
-      <JsonLd data={productJsonLd} />
+      <Suspense fallback={<JsonLd data={productJsonLd} />}>
+        <ProxyProductStructuredData
+          productJsonLd={productJsonLd}
+          provider={provider}
+          reviewsPage={reviewsPage}
+        />
+      </Suspense>
       <JsonLd data={breadcrumbJsonLd} />
 
       <nav className="flex items-center gap-1.5 text-sm text-muted-foreground">
@@ -361,14 +397,7 @@ function ProxyProviderPageContent({
         </div>
       </Card>
 
-      <Suspense>
-        <ItemReviewsSection
-          itemType="proxy"
-          slug={provider.slug}
-          initialSummary={reviewSummary}
-          initialWrittenReviews={writtenReviews}
-        />
-      </Suspense>
+      <ItemReviewsSection itemType="proxy" slug={provider.slug} />
 
       {provider.gallery && provider.gallery.length > 0 ? (
         <GallerySection images={provider.gallery} />
@@ -388,138 +417,122 @@ function ProxyProviderPageContent({
   );
 }
 
-const proxyDetailLoader = createServerFn({ method: "GET" })
-  .validator((value: { reviewsPage: number; slug: string }) => value)
-  .handler(async ({ data }) => {
-    const provider = getProviderBySlug(data.slug);
-    if (!provider) {
-      throw notFound();
-    }
+function getProxyDetailPageData({
+  reviewsPage,
+  slug,
+}: {
+  reviewsPage: number;
+  slug: string;
+}): ProxyDetailPageData {
+  const provider = getProviderBySlug(slug);
+  if (!provider) {
+    throw notFound();
+  }
 
-    const reviewSummaries = await getReviewSummaries("proxy", [
-      provider.slug,
-    ]).catch(
-      () =>
-        ({}) as Record<
-          string,
-          { averageRating: number | null; reviewCount: number }
-        >,
-    );
-    const reviewSummary =
-      reviewSummaries[provider.slug] ?? emptyReviewSummary();
-    const writtenReviews = await getPaginatedWrittenReviews(
-      "proxy",
-      provider.slug,
-      reviewSummary.reviewCount,
-      { page: data.reviewsPage },
-    ).catch(() => ({
-      entries: [],
-      page: 1,
-      pageSize: 8,
-      totalCount: 0,
-      totalPages: 0,
-    }));
-
-    const productJsonLd = {
-      "@context": "https://schema.org",
-      "@type": "Product",
-      "@id": `https://soulfiremc.com/get-proxies/${provider.slug}#product`,
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "@id": `https://soulfiremc.com/get-proxies/${provider.slug}#product`,
+    name: provider.name,
+    description: provider.summary,
+    image: provider.logo
+      ? `https://soulfiremc.com${provider.logo}`
+      : "https://soulfiremc.com/logo.png",
+    brand: {
+      "@type": "Brand",
       name: provider.name,
-      description: provider.summary,
-      image: provider.logo
-        ? `https://soulfiremc.com${provider.logo}`
-        : "https://soulfiremc.com/logo.png",
-      brand: {
-        "@type": "Brand",
+    },
+    url: `https://soulfiremc.com/get-proxies/${provider.slug}`,
+    category: "Proxy Service",
+    ...(provider.startDate && { dateCreated: provider.startDate }),
+    ...(provider.gallery &&
+      provider.gallery.length > 0 && {
+        image: provider.gallery.map(
+          (img): ImageObject => ({
+            "@type": "ImageObject",
+            url: `https://soulfiremc.com${img.src}`,
+            name: img.alt,
+          }),
+        ),
+      }),
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": `https://soulfiremc.com/get-proxies/${provider.slug}#breadcrumb`,
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://soulfiremc.com",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Get Proxies",
+        item: "https://soulfiremc.com/get-proxies",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
         name: provider.name,
+        item: `https://soulfiremc.com/get-proxies/${provider.slug}`,
       },
-      url: `https://soulfiremc.com/get-proxies/${provider.slug}`,
-      category: "Proxy Service",
-      ...(provider.startDate && { dateCreated: provider.startDate }),
-      ...(getAggregateRatingJsonLd(reviewSummary) && {
-        aggregateRating: getAggregateRatingJsonLd(reviewSummary),
-      }),
-      ...(getReviewJsonLd(writtenReviews.entries) && {
-        review: getReviewJsonLd(writtenReviews.entries),
-      }),
-      ...(provider.gallery &&
-        provider.gallery.length > 0 && {
-          image: provider.gallery.map(
-            (img): ImageObject => ({
-              "@type": "ImageObject",
-              url: `https://soulfiremc.com${img.src}`,
-              name: img.alt,
-            }),
-          ),
-        }),
-    };
+    ],
+  };
 
-    const breadcrumbJsonLd = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
+  const pageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `https://soulfiremc.com/get-proxies/${provider.slug}#webpage`,
+    name: `${provider.name} - Proxy Provider for SoulFire`,
+    description: provider.summary,
+    url: `https://soulfiremc.com/get-proxies/${provider.slug}`,
+    inLanguage: "en-US",
+    breadcrumb: {
       "@id": `https://soulfiremc.com/get-proxies/${provider.slug}#breadcrumb`,
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "Home",
-          item: "https://soulfiremc.com",
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "Get Proxies",
-          item: "https://soulfiremc.com/get-proxies",
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: provider.name,
-          item: `https://soulfiremc.com/get-proxies/${provider.slug}`,
-        },
-      ],
-    };
+    },
+    mainEntity: {
+      "@id": `https://soulfiremc.com/get-proxies/${provider.slug}#product`,
+    },
+    isPartOf: {
+      "@type": "WebSite",
+      name: "SoulFire",
+      url: "https://soulfiremc.com",
+    },
+  };
 
-    const pageJsonLd = {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "@id": `https://soulfiremc.com/get-proxies/${provider.slug}#webpage`,
-      name: `${provider.name} - Proxy Provider for SoulFire`,
-      description: provider.summary,
-      url: `https://soulfiremc.com/get-proxies/${provider.slug}`,
-      inLanguage: "en-US",
-      breadcrumb: {
-        "@id": `https://soulfiremc.com/get-proxies/${provider.slug}#breadcrumb`,
-      },
-      mainEntity: {
-        "@id": `https://soulfiremc.com/get-proxies/${provider.slug}#product`,
-      },
-      isPartOf: {
-        "@type": "WebSite",
-        name: "SoulFire",
-        url: "https://soulfiremc.com",
-      },
-    };
-
-    return {
-      breadcrumbJsonLd: JSON.parse(JSON.stringify(breadcrumbJsonLd)),
-      pageJsonLd: JSON.parse(JSON.stringify(pageJsonLd)),
-      productJsonLd: JSON.parse(JSON.stringify(productJsonLd)),
-      provider,
-      reviewSummary,
-      writtenReviews: JSON.parse(JSON.stringify(writtenReviews)),
-    };
-  });
+  return {
+    breadcrumbJsonLd: JSON.parse(JSON.stringify(breadcrumbJsonLd)),
+    pageJsonLd: JSON.parse(JSON.stringify(pageJsonLd)),
+    productJsonLd: JSON.parse(JSON.stringify(productJsonLd)),
+    provider,
+    reviewsPage,
+  };
+}
 
 export const Route = createFileRoute("/get-proxies/$slug")({
   validateSearch: validateReviewsSearch,
   loaderDeps: ({ search }) => ({
     reviewsPage: search.reviewsPage ?? 1,
   }),
-  loader: async ({ deps, params }) =>
-    proxyDetailLoader({
-      data: { reviewsPage: deps.reviewsPage, slug: params.slug },
-    }),
+  loader: ({ context, deps, params }) => {
+    const data = getProxyDetailPageData({
+      reviewsPage: deps.reviewsPage,
+      slug: params.slug,
+    });
+    void context.queryClient.prefetchQuery(
+      reviewsQueryOptions({
+        itemType: "proxy",
+        slugs: [data.provider.slug],
+        includeWrittenReviews: true,
+        reviewsPage: data.reviewsPage,
+      }),
+    );
+    return data;
+  },
   head: ({ loaderData }) => {
     const data = loaderData;
 

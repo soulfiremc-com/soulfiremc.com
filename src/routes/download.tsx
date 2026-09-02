@@ -1,4 +1,5 @@
 import { SiGithub } from "@icons-pack/react-simple-icons";
+import { queryOptions, useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, useRouterState } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import {
@@ -47,7 +48,7 @@ import {
 } from "@/lib/download-links";
 import { getClientReleaseManifest, getServerVersion } from "@/lib/releases";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
-import { cn } from "@/lib/utils";
+import { cn, generateN } from "@/lib/utils";
 
 const FALLBACK_CPU = {
   id: "x64",
@@ -309,8 +310,8 @@ function DownloadConfigurator(props: {
           point you to the best download.
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-8">
-        <div className="space-y-3">
+      <CardContent className="flex flex-col gap-8">
+        <div className="flex flex-col gap-3">
           <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
             Operating system
           </p>
@@ -348,7 +349,7 @@ function DownloadConfigurator(props: {
             ))}
           </div>
         </div>
-        <div className="space-y-3">
+        <div className="flex flex-col gap-3">
           <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
             CPU architecture
           </p>
@@ -512,17 +513,20 @@ function DownloadSelectionSkeleton() {
             point you to the best download.
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-8">
-          <div className="space-y-3">
+        <CardContent className="flex flex-col gap-8">
+          <div className="flex flex-col gap-3">
             <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
               Operating system
             </p>
             <div className="grid gap-4 sm:grid-cols-3">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="rounded-xl border bg-background p-4">
+              {generateN(3).map((skeletonId) => (
+                <div
+                  key={skeletonId}
+                  className="rounded-xl border bg-background p-4"
+                >
                   <div className="flex items-center gap-3">
                     <Skeleton className="size-11 rounded-lg" />
-                    <div className="space-y-2">
+                    <div className="flex flex-col gap-2">
                       <Skeleton className="h-4 w-16" />
                       <Skeleton className="h-3 w-24" />
                     </div>
@@ -531,16 +535,19 @@ function DownloadSelectionSkeleton() {
               ))}
             </div>
           </div>
-          <div className="space-y-3">
+          <div className="flex flex-col gap-3">
             <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
               CPU architecture
             </p>
             <div className="grid gap-4 sm:grid-cols-2">
-              {[1, 2].map((i) => (
-                <div key={i} className="rounded-xl border bg-background p-4">
+              {generateN(2).map((skeletonId) => (
+                <div
+                  key={skeletonId}
+                  className="rounded-xl border bg-background p-4"
+                >
                   <div className="flex items-center gap-3">
                     <Skeleton className="size-9 rounded-lg" />
-                    <div className="space-y-2">
+                    <div className="flex flex-col gap-2">
                       <Skeleton className="h-4 w-28" />
                       <Skeleton className="h-3 w-36" />
                     </div>
@@ -577,6 +584,7 @@ type DownloadPageContentProps = {
   clientDownloads: DownloadLinkMap;
   releaseDate: string | null;
   releaseName: string;
+  releasePending: boolean;
   serverDownloads: ReturnType<typeof createServerDownloads>;
 };
 
@@ -584,13 +592,14 @@ function DownloadPageContent({
   clientDownloads,
   releaseDate,
   releaseName,
+  releasePending,
   serverDownloads,
 }: DownloadPageContentProps) {
   return (
-    <main className="mx-auto w-full max-w-(--fd-layout-width) space-y-10 px-4 py-12">
-      <div className="space-y-6">
-        <div className="space-y-4">
-          <div className="space-y-2">
+    <main className="mx-auto flex w-full max-w-(--fd-layout-width) flex-col gap-10 px-4 py-12">
+      <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
               Download SoulFire
             </h1>
@@ -602,7 +611,11 @@ function DownloadPageContent({
           </div>
           <div className="text-sm text-muted-foreground">
             Latest release:{" "}
-            <span className="font-medium text-foreground">{releaseName}</span>
+            {releasePending ? (
+              <Skeleton className="inline-block h-4 w-24 align-middle" />
+            ) : (
+              <span className="font-medium text-foreground">{releaseName}</span>
+            )}
             {releaseDate ? (
               <>
                 {" "}
@@ -633,7 +646,7 @@ function DownloadPageContent({
               Understand how SoulFire operates before launching your first test.
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="flex flex-col gap-4">
             <p className="text-muted-foreground">
               Follow the start-here docs for a full walkthrough, including
               account setup, plugins, and tuning tips for realistic bot testing.
@@ -655,7 +668,7 @@ function DownloadPageContent({
               Prefer to learn visually? Use the live GUI demo in your browser.
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="flex flex-col gap-4">
             <p className="text-muted-foreground">
               Explore every screen, test presets, and share the experience with
               your team by opening the fully interactive SoulFire demo.
@@ -679,7 +692,7 @@ function DownloadPageContent({
               advanced automations.
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="flex flex-col gap-4">
             {serverDownloads.map((item) => (
               <div
                 key={item.name}
@@ -721,7 +734,7 @@ function DownloadPageContent({
               SoulFire is free and open source. Donations help keep it that way.
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="flex flex-col gap-4">
             <p className="text-muted-foreground">
               If SoulFire saves you time or you just want to say thanks,
               consider buying the developer a coffee. Every contribution helps
@@ -762,6 +775,20 @@ const downloadPageLoader = createServerFn({ method: "GET" }).handler(
   },
 );
 
+const downloadPageQueryOptions = queryOptions({
+  queryKey: ["download", "latest-release"],
+  queryFn: () => downloadPageLoader(),
+  staleTime: 5 * 60_000,
+  gcTime: 30 * 60_000,
+});
+
+const fallbackDownloadData = {
+  clientDownloads: createClientDownloads(null),
+  releaseDate: null,
+  releaseName: "Latest version",
+  serverDownloads: createServerDownloads("latest"),
+};
+
 export const Route = createFileRoute("/download")({
   validateSearch: validateDownloadSearch,
   head: () => ({
@@ -774,12 +801,15 @@ export const Route = createFileRoute("/download")({
     }),
     links: getCanonicalLinks("/download"),
   }),
-  loader: async () => downloadPageLoader(),
+  loader: ({ context }) => {
+    void context.queryClient.prefetchQuery(downloadPageQueryOptions);
+  },
   component: DownloadPage,
 });
 
 function DownloadPage() {
-  const data = Route.useLoaderData();
+  const downloadQuery = useQuery(downloadPageQueryOptions);
+  const data = downloadQuery.data ?? fallbackDownloadData;
 
   return (
     <SiteShell>
@@ -787,6 +817,7 @@ function DownloadPage() {
         clientDownloads={data.clientDownloads}
         releaseDate={data.releaseDate}
         releaseName={data.releaseName}
+        releasePending={downloadQuery.isPending}
         serverDownloads={data.serverDownloads}
       />
     </SiteShell>

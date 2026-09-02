@@ -1,5 +1,5 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/react-start";
 import {
   ArrowDownWideNarrow,
   BookOpen,
@@ -53,8 +53,12 @@ import {
   RESOURCES,
   type Resource,
 } from "@/lib/resources-data";
-import type { ReviewSummary, UserReviewRecord } from "@/lib/review-core";
-import { getAggregateRatingJsonLd, getReviewSummaries } from "@/lib/reviews";
+import {
+  getAggregateRatingJsonLd,
+  type ReviewSummary,
+  type UserReviewRecord,
+} from "@/lib/review-core";
+import { reviewsQueryOptions } from "@/lib/reviews-query";
 import { parseAsNativeOrDelimitedArrayOf } from "@/lib/search-param-parsers";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 import { cn } from "@/lib/utils";
@@ -339,15 +343,11 @@ function ResourceCard({
   );
 }
 
-function MainContent({
-  initialSummaries,
-}: {
-  initialSummaries: Record<string, ReviewSummary>;
-}) {
+function MainContent() {
   const resources = RESOURCES;
   const slugs = useMemo(() => resources.map((r) => r.slug), []);
   const { summaries, userReviews, pendingBySlug, upsertReview, deleteReview } =
-    useReviews("resource", slugs, { initialSummaries });
+    useReviews("resource", slugs);
   const [{ category, tags, sort }, setParams] = useQueryStates(
     resourcesSearchParams,
     {
@@ -588,13 +588,7 @@ function MainContent({
               <ResourceCard
                 key={resource.slug}
                 resource={resource}
-                reviewSummary={
-                  summaries[resource.slug] ??
-                  initialSummaries[resource.slug] ?? {
-                    averageRating: null,
-                    reviewCount: 0,
-                  }
-                }
+                reviewSummary={summaries[resource.slug]}
                 userReview={userReviews[resource.slug]}
                 reviewPending={pendingBySlug[resource.slug] ?? false}
                 onRate={(slug, rating) =>
@@ -610,11 +604,7 @@ function MainContent({
   );
 }
 
-function ResourcesClient({
-  initialSummaries,
-}: {
-  initialSummaries: Record<string, ReviewSummary>;
-}) {
+function ResourcesClient() {
   return (
     <main className="mx-auto flex w-full max-w-(--fd-layout-width) flex-col gap-10 px-4 py-12">
       <div className="mx-auto flex max-w-5xl flex-col gap-4 text-center">
@@ -641,7 +631,7 @@ function ResourcesClient({
 
       <ReviewTurnstileProvider>
         <Suspense>
-          <MainContent initialSummaries={initialSummaries} />
+          <MainContent />
         </Suspense>
       </ReviewTurnstileProvider>
 
@@ -687,113 +677,121 @@ function ResourcesClient({
   );
 }
 
-const resourcesPageLoader = createServerFn({ method: "GET" }).handler(
-  async () => {
-    const reviewSummaries = await getReviewSummaries(
-      "resource",
-      RESOURCES.map((resource) => resource.slug),
-    ).catch(
-      () =>
-        ({}) as Record<
-          string,
-          { averageRating: number | null; reviewCount: number }
-        >,
-    );
+const resourceReviewSlugs = RESOURCES.map((resource) => resource.slug);
+const resourceReviewsQueryOptions = reviewsQueryOptions({
+  itemType: "resource",
+  slugs: resourceReviewSlugs,
+});
 
-    const faqJsonLd = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: resourcesFaqItems.map((item) => ({
-        "@type": "Question" as const,
-        name: item.question,
-        acceptedAnswer: {
-          "@type": "Answer" as const,
-          text: item.answerHtml,
-        },
-      })),
-    };
+function createResourcesItemListJsonLd(
+  reviewSummaries?: Record<string, ReviewSummary>,
+) {
+  return JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": "https://soulfiremc.com/resources#resource-list",
+    name: "SoulFire Plugins & Scripts",
+    description:
+      "Community plugins and scripts for SoulFire Minecraft bot automation.",
+    numberOfItems: RESOURCES.length,
+    itemListElement: RESOURCES.map((resource, index) => {
+      const reviewSummary = reviewSummaries?.[resource.slug];
+      const aggregateRating = reviewSummary
+        ? getAggregateRatingJsonLd(reviewSummary)
+        : undefined;
 
-    const breadcrumbJsonLd = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "@id": "https://soulfiremc.com/resources#breadcrumb",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "Home",
-          item: "https://soulfiremc.com",
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "Resources",
-          item: "https://soulfiremc.com/resources",
-        },
-      ],
-    };
-
-    const pageJsonLd = {
-      "@context": "https://schema.org",
-      "@type": "CollectionPage",
-      name: "SoulFire Resources",
-      description:
-        "Community SoulFire plugins and scripts. Browse the registry to find plugins and scripts that extend your Minecraft bot automation.",
-      url: "https://soulfiremc.com/resources",
-      inLanguage: "en-US",
-      isPartOf: {
-        "@type": "WebSite",
-        name: "SoulFire",
-        url: "https://soulfiremc.com",
-      },
-      breadcrumb: {
-        "@id": "https://soulfiremc.com/resources#breadcrumb",
-      },
-      mainEntity: {
-        "@id": "https://soulfiremc.com/resources#resource-list",
-      },
-    };
-
-    const itemListJsonLd = {
-      "@context": "https://schema.org",
-      "@type": "ItemList",
-      "@id": "https://soulfiremc.com/resources#resource-list",
-      name: "SoulFire Plugins & Scripts",
-      description:
-        "Community plugins and scripts for SoulFire Minecraft bot automation.",
-      numberOfItems: RESOURCES.length,
-      itemListElement: RESOURCES.map((resource, index) => {
-        const aggregateRating = getAggregateRatingJsonLd(
-          reviewSummaries[resource.slug] ?? {
-            averageRating: null,
-            reviewCount: 0,
-          },
-        );
-
-        return {
-          "@type": "ListItem",
-          position: index + 1,
+      return {
+        "@type": "ListItem",
+        position: index + 1,
+        url: `https://soulfiremc.com/resources/${resource.slug}`,
+        item: {
+          "@type": "SoftwareApplication",
+          name: resource.name,
+          description: resource.description,
           url: `https://soulfiremc.com/resources/${resource.slug}`,
-          item: {
-            "@type": "SoftwareApplication",
-            name: resource.name,
-            description: resource.description,
-            url: `https://soulfiremc.com/resources/${resource.slug}`,
-            ...(aggregateRating && { aggregateRating }),
-          },
-        };
-      }),
-    };
+          ...(aggregateRating ? { aggregateRating } : {}),
+        },
+      };
+    }),
+  });
+}
 
-    return {
-      breadcrumbJsonLd: JSON.stringify(breadcrumbJsonLd),
-      faqJsonLd: JSON.stringify(faqJsonLd),
-      itemListJsonLd: JSON.stringify(itemListJsonLd),
-      pageJsonLd: JSON.stringify(pageJsonLd),
-      reviewSummaries,
-    };
-  },
-);
+function ResourcesItemListStructuredData() {
+  const { data } = useSuspenseQuery(resourceReviewsQueryOptions);
+
+  return (
+    <script
+      type="application/ld+json"
+      // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
+      dangerouslySetInnerHTML={{
+        __html: createResourcesItemListJsonLd(data.summaries),
+      }}
+    />
+  );
+}
+
+const resourcesPageData = (() => {
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: resourcesFaqItems.map((item) => ({
+      "@type": "Question" as const,
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer" as const,
+        text: item.answerHtml,
+      },
+    })),
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": "https://soulfiremc.com/resources#breadcrumb",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://soulfiremc.com",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Resources",
+        item: "https://soulfiremc.com/resources",
+      },
+    ],
+  };
+
+  const pageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "SoulFire Resources",
+    description:
+      "Community SoulFire plugins and scripts. Browse the registry to find plugins and scripts that extend your Minecraft bot automation.",
+    url: "https://soulfiremc.com/resources",
+    inLanguage: "en-US",
+    isPartOf: {
+      "@type": "WebSite",
+      name: "SoulFire",
+      url: "https://soulfiremc.com",
+    },
+    breadcrumb: {
+      "@id": "https://soulfiremc.com/resources#breadcrumb",
+    },
+    mainEntity: {
+      "@id": "https://soulfiremc.com/resources#resource-list",
+    },
+  };
+
+  return {
+    breadcrumbJsonLd: JSON.stringify(breadcrumbJsonLd),
+    faqJsonLd: JSON.stringify(faqJsonLd),
+    itemListJsonLd: createResourcesItemListJsonLd(),
+    pageJsonLd: JSON.stringify(pageJsonLd),
+  };
+})();
 
 export const Route = createFileRoute("/resources/")({
   validateSearch: validateResourcesSearch,
@@ -808,36 +806,44 @@ export const Route = createFileRoute("/resources/")({
     }),
     links: getCanonicalLinks("/resources"),
   }),
-  loader: async () => resourcesPageLoader(),
+  loader: ({ context }) => {
+    void context.queryClient.prefetchQuery(resourceReviewsQueryOptions);
+  },
   component: ResourcesPage,
 });
 
 function ResourcesPage() {
-  const data = Route.useLoaderData();
-
   return (
     <SiteShell>
       <script
         type="application/ld+json"
         // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
-        dangerouslySetInnerHTML={{ __html: data.pageJsonLd }}
+        dangerouslySetInnerHTML={{ __html: resourcesPageData.pageJsonLd }}
+      />
+      <Suspense
+        fallback={
+          <script
+            type="application/ld+json"
+            // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
+            dangerouslySetInnerHTML={{
+              __html: resourcesPageData.itemListJsonLd,
+            }}
+          />
+        }
+      >
+        <ResourcesItemListStructuredData />
+      </Suspense>
+      <script
+        type="application/ld+json"
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
+        dangerouslySetInnerHTML={{ __html: resourcesPageData.faqJsonLd }}
       />
       <script
         type="application/ld+json"
         // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
-        dangerouslySetInnerHTML={{ __html: data.itemListJsonLd }}
+        dangerouslySetInnerHTML={{ __html: resourcesPageData.breadcrumbJsonLd }}
       />
-      <script
-        type="application/ld+json"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
-        dangerouslySetInnerHTML={{ __html: data.faqJsonLd }}
-      />
-      <script
-        type="application/ld+json"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
-        dangerouslySetInnerHTML={{ __html: data.breadcrumbJsonLd }}
-      />
-      <ResourcesClient initialSummaries={data.reviewSummaries} />
+      <ResourcesClient />
     </SiteShell>
   );
 }

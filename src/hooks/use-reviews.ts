@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useCallback, useMemo, useState } from "react";
 import { useReviewTurnstile } from "@/components/review-turnstile-provider";
 import { useSession } from "@/lib/auth-hooks";
 import {
@@ -8,27 +9,16 @@ import {
   type ItemType,
   type PaginatedPublicReviewRecords,
   type ReviewSummary,
-  type UserReviewRecord,
 } from "@/lib/review-core";
 import {
   deleteReviewServerFn,
-  getReviewsServerFn,
   submitReviewServerFn,
 } from "@/lib/reviews-actions";
+import { normalizeReviewSlugs, reviewsQueryOptions } from "@/lib/reviews-query";
 
 type UseReviewsOptions = {
-  initialSummaries?: Record<string, ReviewSummary>;
   includeWrittenReviews?: boolean;
-  initialWrittenReviews?: Record<string, PaginatedPublicReviewRecords>;
   writtenReviewsPage?: number;
-};
-
-type ReviewState = {
-  summaries: Record<string, ReviewSummary>;
-  userReviews: Record<string, UserReviewRecord>;
-  writtenReviews: Record<string, PaginatedPublicReviewRecords>;
-  loading: boolean;
-  pendingBySlug: Record<string, boolean>;
 };
 
 type MutationError = "unauthorized" | "verification" | null;
@@ -42,122 +32,71 @@ function withEmptySummaries(
   );
 }
 
+function emptyWrittenReviews(page: number): PaginatedPublicReviewRecords {
+  return {
+    entries: [],
+    page,
+    pageSize: 8,
+    totalCount: 0,
+    totalPages: 0,
+  };
+}
+
 export function useReviews(
   itemType: ItemType,
   slugs: string[],
   options?: UseReviewsOptions,
 ) {
+  const queryClient = useQueryClient();
   const { data: session, isPending: sessionPending } = useSession();
   const { executeTurnstile } = useReviewTurnstile();
   const includeWrittenReviews = options?.includeWrittenReviews ?? false;
   const writtenReviewsPage = Math.max(1, options?.writtenReviewsPage ?? 1);
-  const normalizedSlugs = useMemo(
-    () => slugs.map((slug) => slug.trim()).filter(Boolean),
-    [slugs],
-  );
-  const refreshRequestIdRef = useRef(0);
-
-  const [state, setState] = useState<ReviewState>({
-    summaries: withEmptySummaries(normalizedSlugs, options?.initialSummaries),
-    userReviews: {},
-    writtenReviews: options?.initialWrittenReviews ?? {},
-    loading: normalizedSlugs.length > 0,
-    pendingBySlug: {},
+  const normalizedSlugs = useMemo(() => normalizeReviewSlugs(slugs), [slugs]);
+  const queryOptions = reviewsQueryOptions({
+    itemType,
+    slugs: normalizedSlugs,
+    includeWrittenReviews,
+    reviewsPage: writtenReviewsPage,
+    viewerId: session?.user.id,
   });
-
-  const refreshReviews = useCallback(
-    async (targetSlugs: string[]) => {
-      refreshRequestIdRef.current += 1;
-      const requestId = refreshRequestIdRef.current;
-
-      if (targetSlugs.length === 0) {
-        setState((prev) => ({ ...prev, loading: false }));
-        return;
-      }
-
-      const data = await getReviewsServerFn({
-        data: {
-          itemType,
-          slugs: targetSlugs,
-          includeWrittenReviews:
-            includeWrittenReviews && targetSlugs.length === 1,
-          reviewsPage: writtenReviewsPage,
-        },
-      });
-
-      setState((prev) => {
-        if (requestId !== refreshRequestIdRef.current) {
-          return prev;
-        }
-
-        const nextSummaries = { ...prev.summaries };
-        for (const slug of targetSlugs) {
-          nextSummaries[slug] = data.summaries[slug] ?? emptyReviewSummary();
-        }
-
-        const nextUserReviews = { ...prev.userReviews };
-        for (const slug of targetSlugs) {
-          delete nextUserReviews[slug];
-        }
-        Object.assign(nextUserReviews, data.userReviews);
-
-        const nextWrittenReviews = { ...prev.writtenReviews };
-        if (includeWrittenReviews && targetSlugs.length === 1) {
-          nextWrittenReviews[targetSlugs[0]] = data.writtenReviews ?? {
-            entries: [],
-            page: writtenReviewsPage,
-            pageSize: 8,
-            totalCount: 0,
-            totalPages: 0,
-          };
-        }
-
-        return {
-          ...prev,
-          summaries: nextSummaries,
-          userReviews: nextUserReviews,
-          writtenReviews: nextWrittenReviews,
-          loading: false,
-        };
-      });
-    },
-    [includeWrittenReviews, itemType, writtenReviewsPage],
+  const reviewsQuery = useQuery({
+    ...queryOptions,
+    enabled: normalizedSlugs.length > 0,
+  });
+  const [pendingBySlug, setPendingBySlug] = useState<Record<string, boolean>>(
+    {},
   );
 
-  useEffect(() => {
-    setState((prev) => ({
-      ...prev,
-      summaries: withEmptySummaries(normalizedSlugs, options?.initialSummaries),
-      writtenReviews: options?.initialWrittenReviews ?? prev.writtenReviews,
-      loading: normalizedSlugs.length > 0,
-    }));
+  const summaries = useMemo(
+    () => withEmptySummaries(normalizedSlugs, reviewsQuery.data?.summaries),
+    [normalizedSlugs, reviewsQuery.data?.summaries],
+  );
+  const writtenReviews = useMemo(() => {
+    if (!includeWrittenReviews || normalizedSlugs.length !== 1) {
+      return {};
+    }
 
-    let cancelled = false;
-
-    refreshReviews(normalizedSlugs).catch(() => {
-      if (!cancelled) {
-        setState((prev) => ({ ...prev, loading: false }));
-      }
-    });
-
-    return () => {
-      cancelled = true;
+    return {
+      [normalizedSlugs[0]]:
+        reviewsQuery.data?.writtenReviews ??
+        emptyWrittenReviews(writtenReviewsPage),
     };
   }, [
+    includeWrittenReviews,
     normalizedSlugs,
-    options?.initialSummaries,
-    options?.initialWrittenReviews,
-    refreshReviews,
+    reviewsQuery.data?.writtenReviews,
+    writtenReviewsPage,
   ]);
 
+  const refreshReviews = useCallback(async () => {
+    await queryClient.invalidateQueries({
+      queryKey: ["reviews", itemType],
+    });
+  }, [itemType, queryClient]);
+
   const setPending = useCallback((slug: string, value: boolean) => {
-    setState((prev) => ({
-      ...prev,
-      pendingBySlug: {
-        ...prev.pendingBySlug,
-        [slug]: value,
-      },
-    }));
+    setPendingBySlug((current) => ({ ...current, [slug]: value }));
   }, []);
 
   const upsertReview = useCallback(
@@ -173,11 +112,11 @@ export function useReviews(
         return { error: "unauthorized" };
       }
 
-      if (state.loading || state.pendingBySlug[slug]) {
+      if (reviewsQuery.isPending || pendingBySlug[slug]) {
         return { error: null };
       }
 
-      const needsTurnstile = !state.userReviews[slug];
+      const needsTurnstile = !reviewsQuery.data?.userReviews[slug];
       let turnstileToken: string | null = null;
 
       setPending(slug, true);
@@ -207,7 +146,7 @@ export function useReviews(
           return { error: result.error };
         }
 
-        await refreshReviews([slug]);
+        await refreshReviews();
         return { error: null };
       } finally {
         setPending(slug, false);
@@ -216,13 +155,13 @@ export function useReviews(
     [
       executeTurnstile,
       itemType,
+      pendingBySlug,
       refreshReviews,
+      reviewsQuery.data?.userReviews,
+      reviewsQuery.isPending,
       session?.user,
       sessionPending,
       setPending,
-      state.loading,
-      state.pendingBySlug,
-      state.userReviews,
     ],
   );
 
@@ -232,7 +171,7 @@ export function useReviews(
         return { error: "unauthorized" };
       }
 
-      if (state.loading || state.pendingBySlug[slug]) {
+      if (reviewsQuery.isPending || pendingBySlug[slug]) {
         return { error: null };
       }
 
@@ -250,7 +189,7 @@ export function useReviews(
           return { error: result.error };
         }
 
-        await refreshReviews([slug]);
+        await refreshReviews();
         return { error: null };
       } finally {
         setPending(slug, false);
@@ -258,21 +197,21 @@ export function useReviews(
     },
     [
       itemType,
+      pendingBySlug,
       refreshReviews,
+      reviewsQuery.isPending,
       session?.user,
       sessionPending,
       setPending,
-      state.loading,
-      state.pendingBySlug,
     ],
   );
 
   return {
-    summaries: state.summaries,
-    userReviews: state.userReviews,
-    writtenReviews: state.writtenReviews,
-    loading: state.loading,
-    pendingBySlug: state.pendingBySlug,
+    summaries,
+    userReviews: reviewsQuery.data?.userReviews ?? {},
+    writtenReviews,
+    loading: reviewsQuery.isPending,
+    pendingBySlug,
     upsertReview,
     deleteReview,
     refreshReviews,

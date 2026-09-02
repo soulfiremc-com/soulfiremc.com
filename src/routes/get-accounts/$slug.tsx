@@ -1,6 +1,6 @@
 import { SiDiscord, SiTrustpilot } from "@icons-pack/react-simple-icons";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/react-start";
 import {
   ArrowLeft,
   Calendar,
@@ -14,7 +14,9 @@ import {
   X,
 } from "lucide-react";
 import { Suspense, useState } from "react";
+import type { BreadcrumbList, Product, WebPage, WithContext } from "schema-dts";
 import { ItemReviewsSection } from "@/components/item-reviews-section";
+import { JsonLd } from "@/components/json-ld";
 import { PaymentMethods } from "@/components/payment-methods";
 import { ReviewSummaryBadge } from "@/components/review-summary-badge";
 import { SiteShell } from "@/components/site-shell";
@@ -37,30 +39,31 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   BADGE_CONFIG,
   type Badge,
   CATEGORY_CONFIG,
-  type Category,
   getDiscordInviteUrl,
   getShopBySlug,
   PROVIDER_THEMES,
   PROVIDERS,
+  type Provider,
+  type Shop,
 } from "@/lib/accounts-data";
+import { getListingOffer, getShopAggregateOffer } from "@/lib/accounts-offers";
 import {
-  getListingOffer,
-  getLiveShopData,
-  getShopAggregateOffer,
-} from "@/lib/accounts-offers";
-import { type DiscordInviteResponse, fetchDiscordInvite } from "@/lib/discord";
+  accountDiscordInviteQueryOptions,
+  accountLiveShopDataQueryOptions,
+} from "@/lib/accounts-queries";
+import type { DiscordInviteResponse } from "@/lib/discord";
 import { getAccountPageImage } from "@/lib/og";
 import {
   emptyReviewSummary,
   getAggregateRatingJsonLd,
-  getPaginatedWrittenReviews,
   getReviewJsonLd,
-  getReviewSummaries,
-} from "@/lib/reviews";
+} from "@/lib/review-core";
+import { reviewsQueryOptions } from "@/lib/reviews-query";
 import { validateReviewsSearch } from "@/lib/reviews-search-params";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 import { cn } from "@/lib/utils";
@@ -175,7 +178,22 @@ function formatNumber(num: number): string {
   return num.toString();
 }
 
-function DiscordMemberBadge({ info }: { info: DiscordInviteResponse | null }) {
+function DiscordMemberBadge({
+  info,
+  pending,
+}: {
+  info: DiscordInviteResponse | null | undefined;
+  pending: boolean;
+}) {
+  if (pending) {
+    return (
+      <Skeleton
+        aria-label="Loading Discord member count"
+        className="h-5 w-16"
+      />
+    );
+  }
+
   if (!info?.approximate_member_count) {
     return (
       <UiBadge
@@ -255,131 +273,135 @@ function LinkDiscountNotice({ message }: { message: string }) {
   );
 }
 
-const accountDetailLoader = createServerFn({ method: "GET" })
-  .validator((value: { reviewsPage: number; slug: string }) => value)
-  .handler(async ({ data }) => {
-    const shop = getShopBySlug(data.slug);
-    if (!shop) {
-      throw notFound();
-    }
+type AccountDetailPageData = {
+  breadcrumbJsonLd: WithContext<BreadcrumbList>;
+  pageJsonLd: WithContext<WebPage>;
+  productJsonLd: WithContext<Product>;
+  providers: Provider[];
+  reviewsPage: number;
+  shop: Shop;
+};
 
-    const providers = PROVIDERS.filter(
-      (provider) => provider.slug === shop.slug,
-    );
-    const reviewSummaries = await getReviewSummaries("account", [
-      shop.slug,
-    ]).catch(
-      () =>
-        ({}) as Record<
-          string,
-          { averageRating: number | null; reviewCount: number }
-        >,
-    );
-    const reviewSummary = reviewSummaries[shop.slug] ?? emptyReviewSummary();
-    const writtenReviews = await getPaginatedWrittenReviews(
-      "account",
-      shop.slug,
-      reviewSummary.reviewCount,
-      { page: data.reviewsPage },
-    ).catch(() => ({
-      entries: [],
-      page: 1,
-      pageSize: 8,
-      totalCount: 0,
-      totalPages: 0,
-    }));
-    const liveShopData = await getLiveShopData(shop).catch(() => ({}));
-    const discordInviteUrl = getDiscordInviteUrl(shop);
-    const discordInvite = discordInviteUrl
-      ? await fetchDiscordInvite(discordInviteUrl).catch(() => null)
-      : null;
+function getAccountDetailPageData({
+  reviewsPage,
+  slug,
+}: {
+  reviewsPage: number;
+  slug: string;
+}): AccountDetailPageData {
+  const shop = getShopBySlug(slug);
+  if (!shop) {
+    throw notFound();
+  }
 
-    const productJsonLd = {
-      "@context": "https://schema.org",
-      "@type": "Product",
-      "@id": `https://soulfiremc.com/get-accounts/${shop.slug}#product`,
+  const providers = PROVIDERS.filter((provider) => provider.slug === shop.slug);
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "@id": `https://soulfiremc.com/get-accounts/${shop.slug}#product`,
+    name: shop.name,
+    description: providers.map((provider) => provider.summary).join(" "),
+    image: shop.logo
+      ? `https://soulfiremc.com${shop.logo}`
+      : "https://soulfiremc.com/logo.png",
+    brand: {
+      "@type": "Brand",
       name: shop.name,
-      description: providers.map((provider) => provider.summary).join(" "),
-      image: shop.logo
-        ? `https://soulfiremc.com${shop.logo}`
-        : "https://soulfiremc.com/logo.png",
-      brand: {
-        "@type": "Brand",
+    },
+    url: `https://soulfiremc.com/get-accounts/${shop.slug}`,
+    category: "Minecraft Accounts",
+    ...(shop.startDate && { dateCreated: shop.startDate }),
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": `https://soulfiremc.com/get-accounts/${shop.slug}#breadcrumb`,
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://soulfiremc.com",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Get Accounts",
+        item: "https://soulfiremc.com/get-accounts",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
         name: shop.name,
+        item: `https://soulfiremc.com/get-accounts/${shop.slug}`,
       },
-      url: `https://soulfiremc.com/get-accounts/${shop.slug}`,
-      category: "Minecraft Accounts",
-      ...(shop.startDate && { dateCreated: shop.startDate }),
-      ...(getAggregateRatingJsonLd(reviewSummary) && {
-        aggregateRating: getAggregateRatingJsonLd(reviewSummary),
-      }),
-      ...(getReviewJsonLd(writtenReviews.entries) && {
-        review: getReviewJsonLd(writtenReviews.entries),
-      }),
-      ...(getShopAggregateOffer(shop, liveShopData) && {
-        aggregateOffer: getShopAggregateOffer(shop, liveShopData),
-      }),
-    };
+    ],
+  };
 
-    const breadcrumbJsonLd = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
+  const pageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `https://soulfiremc.com/get-accounts/${shop.slug}#webpage`,
+    name: `${shop.name} - Minecraft Alt Shop`,
+    description: providers.map((provider) => provider.summary).join(" "),
+    url: `https://soulfiremc.com/get-accounts/${shop.slug}`,
+    inLanguage: "en-US",
+    breadcrumb: {
       "@id": `https://soulfiremc.com/get-accounts/${shop.slug}#breadcrumb`,
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "Home",
-          item: "https://soulfiremc.com",
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "Get Accounts",
-          item: "https://soulfiremc.com/get-accounts",
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: shop.name,
-          item: `https://soulfiremc.com/get-accounts/${shop.slug}`,
-        },
-      ],
-    };
+    },
+    mainEntity: {
+      "@id": `https://soulfiremc.com/get-accounts/${shop.slug}#product`,
+    },
+    isPartOf: {
+      "@type": "WebSite",
+      name: "SoulFire",
+      url: "https://soulfiremc.com",
+    },
+  };
 
-    const pageJsonLd = {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "@id": `https://soulfiremc.com/get-accounts/${shop.slug}#webpage`,
-      name: `${shop.name} - Minecraft Alt Shop`,
-      description: providers.map((provider) => provider.summary).join(" "),
-      url: `https://soulfiremc.com/get-accounts/${shop.slug}`,
-      inLanguage: "en-US",
-      breadcrumb: {
-        "@id": `https://soulfiremc.com/get-accounts/${shop.slug}#breadcrumb`,
-      },
-      mainEntity: {
-        "@id": `https://soulfiremc.com/get-accounts/${shop.slug}#product`,
-      },
-      isPartOf: {
-        "@type": "WebSite",
-        name: "SoulFire",
-        url: "https://soulfiremc.com",
-      },
-    };
+  return {
+    breadcrumbJsonLd: JSON.parse(JSON.stringify(breadcrumbJsonLd)),
+    pageJsonLd: JSON.parse(JSON.stringify(pageJsonLd)),
+    productJsonLd: JSON.parse(JSON.stringify(productJsonLd)),
+    providers,
+    reviewsPage,
+    shop,
+  };
+}
 
-    return {
-      breadcrumbJsonLd: JSON.stringify(breadcrumbJsonLd),
-      discordInvite,
-      liveShopData,
-      pageJsonLd: JSON.stringify(pageJsonLd),
-      productJsonLd: JSON.stringify(productJsonLd),
-      providers,
-      reviewSummary,
-      shop,
-      writtenReviews: JSON.parse(JSON.stringify(writtenReviews)),
-    };
-  });
+function AccountProductSeoEnrichment({
+  data,
+}: {
+  data: AccountDetailPageData;
+}) {
+  const { data: reviews } = useSuspenseQuery(
+    reviewsQueryOptions({
+      itemType: "account",
+      slugs: [data.shop.slug],
+      includeWrittenReviews: true,
+      reviewsPage: data.reviewsPage,
+    }),
+  );
+  const { data: liveShopData } = useSuspenseQuery(
+    accountLiveShopDataQueryOptions(data.shop.slug),
+  );
+  const reviewSummary =
+    reviews.summaries[data.shop.slug] ?? emptyReviewSummary();
+  const aggregateRating = getAggregateRatingJsonLd(reviewSummary);
+  const reviewJsonLd = reviews.writtenReviews
+    ? getReviewJsonLd(reviews.writtenReviews.entries)
+    : undefined;
+  const aggregateOffer = getShopAggregateOffer(data.shop, liveShopData);
+  const enrichedProductJsonLd = {
+    ...data.productJsonLd,
+    ...(aggregateRating ? { aggregateRating } : {}),
+    ...(reviewJsonLd ? { review: reviewJsonLd } : {}),
+    ...(aggregateOffer ? { aggregateOffer } : {}),
+  } satisfies WithContext<Product>;
+
+  return <JsonLd data={enrichedProductJsonLd} />;
+}
 
 function ProviderBadge({ badge }: { badge: Badge }) {
   const config = BADGE_CONFIG[badge];
@@ -441,12 +463,29 @@ export const Route = createFileRoute("/get-accounts/$slug")({
   loaderDeps: ({ search }) => ({
     reviewsPage: search.reviewsPage ?? 1,
   }),
-  loader: async ({ deps, params }) =>
-    accountDetailLoader({
-      data: { reviewsPage: deps.reviewsPage, slug: params.slug },
-    }),
+  loader: ({ context, deps, params }) => {
+    const data = getAccountDetailPageData({
+      reviewsPage: deps.reviewsPage,
+      slug: params.slug,
+    });
+    void context.queryClient.prefetchQuery(
+      accountLiveShopDataQueryOptions(data.shop.slug),
+    );
+    void context.queryClient.prefetchQuery(
+      accountDiscordInviteQueryOptions(data.shop.slug),
+    );
+    void context.queryClient.prefetchQuery(
+      reviewsQueryOptions({
+        itemType: "account",
+        slugs: [data.shop.slug],
+        includeWrittenReviews: true,
+        reviewsPage: data.reviewsPage,
+      }),
+    );
+    return data;
+  },
   head: ({ loaderData }) => {
-    const data = loaderData as any;
+    const data = loaderData;
 
     if (!data) {
       return { meta: [] };
@@ -456,7 +495,7 @@ export const Route = createFileRoute("/get-accounts/$slug")({
       meta: getPageMeta({
         title: `${data.shop.name} - Minecraft Alt Shop`,
         description: data.providers
-          .map((provider: any) => provider.summary)
+          .map((provider) => provider.summary)
           .join(" "),
         path: `/get-accounts/${data.shop.slug}`,
         imageUrl: getAccountPageImage(data.shop.slug).url,
@@ -469,28 +508,34 @@ export const Route = createFileRoute("/get-accounts/$slug")({
 });
 
 function AccountDetailPage() {
-  const data = Route.useLoaderData() as any;
+  const data = Route.useLoaderData();
   const theme = data.shop.theme ? PROVIDER_THEMES[data.shop.theme] : undefined;
   const discordInviteUrl = getDiscordInviteUrl(data.shop);
+  const reviewsQuery = useQuery(
+    reviewsQueryOptions({
+      itemType: "account",
+      slugs: [data.shop.slug],
+      includeWrittenReviews: true,
+      reviewsPage: data.reviewsPage,
+    }),
+  );
+  const reviewSummary =
+    reviewsQuery.data?.summaries[data.shop.slug] ?? emptyReviewSummary();
+  const liveShopDataQuery = useQuery(
+    accountLiveShopDataQueryOptions(data.shop.slug),
+  );
+  const discordInviteQuery = useQuery(
+    accountDiscordInviteQueryOptions(data.shop.slug),
+  );
 
   return (
     <SiteShell>
       <main className="mx-auto flex w-full max-w-(--fd-layout-width) flex-col gap-8 px-4 py-12">
-        <script
-          type="application/ld+json"
-          // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
-          dangerouslySetInnerHTML={{ __html: data.pageJsonLd }}
-        />
-        <script
-          type="application/ld+json"
-          // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
-          dangerouslySetInnerHTML={{ __html: data.productJsonLd }}
-        />
-        <script
-          type="application/ld+json"
-          // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
-          dangerouslySetInnerHTML={{ __html: data.breadcrumbJsonLd }}
-        />
+        <JsonLd data={data.pageJsonLd} />
+        <Suspense fallback={<JsonLd data={data.productJsonLd} />}>
+          <AccountProductSeoEnrichment data={data} />
+        </Suspense>
+        <JsonLd data={data.breadcrumbJsonLd} />
 
         <nav className="flex items-center gap-1.5 text-sm text-muted-foreground">
           <Link to="/" className="transition-colors hover:text-foreground">
@@ -530,20 +575,21 @@ function AccountDetailPage() {
                     Since {data.shop.startDate}
                   </span>
                 ) : null}
-                <DiscordMemberBadge info={data.discordInvite} />
+                <DiscordMemberBadge
+                  info={discordInviteQuery.data}
+                  pending={discordInviteQuery.isPending}
+                />
               </div>
               <p className="text-lg text-muted-foreground">
-                {data.providers
-                  .map((provider: any) => provider.summary)
-                  .join(" ")}
+                {data.providers.map((provider) => provider.summary).join(" ")}
               </p>
 
               <div className="flex flex-wrap gap-2">
                 {[
                   ...new Set(
-                    data.providers.flatMap((provider: any) => provider.badges),
+                    data.providers.flatMap((provider) => provider.badges),
                   ),
-                ].map((badge: any) => (
+                ].map((badge) => (
                   <ProviderBadge key={badge} badge={badge} />
                 ))}
               </div>
@@ -615,15 +661,15 @@ function AccountDetailPage() {
                   links={data.shop.socialLinks}
                   className={theme?.secondaryButton}
                 />
-                <ReviewSummaryBadge summary={data.reviewSummary} />
+                <ReviewSummaryBadge summary={reviewSummary} />
               </div>
             </div>
           </div>
         </Card>
 
         <div className="grid gap-4 md:grid-cols-2">
-          {data.providers.map((provider: any) => {
-            const listing = data.shop.listings[provider.category as Category];
+          {data.providers.map((provider) => {
+            const listing = data.shop.listings[provider.category];
             if (!listing) {
               return null;
             }
@@ -632,17 +678,17 @@ function AccountDetailPage() {
               data.shop,
               provider.category,
               provider.priceValue,
-              data.liveShopData,
+              liveShopDataQuery.data,
             );
 
             return (
               <Card key={provider.category} className="gap-4 p-6">
                 <div className="flex flex-col gap-2">
                   <h2 className="text-2xl font-semibold">
-                    {CATEGORY_CONFIG[provider.category as Category].label}
+                    {CATEGORY_CONFIG[provider.category].label}
                   </h2>
                   <p className="text-sm text-muted-foreground">
-                    {CATEGORY_CONFIG[provider.category as Category].description}
+                    {CATEGORY_CONFIG[provider.category].description}
                   </p>
                 </div>
                 <div className="text-3xl font-bold">{provider.price}</div>
@@ -652,7 +698,7 @@ function AccountDetailPage() {
                   </p>
                 ) : null}
                 <div className="flex flex-wrap gap-2">
-                  {listing.badges.map((badge: any) => (
+                  {listing.badges.map((badge) => (
                     <ProviderBadge key={badge} badge={badge} />
                   ))}
                 </div>
@@ -667,9 +713,13 @@ function AccountDetailPage() {
                 ) : null}
                 <p className="text-sm text-muted-foreground">
                   Availability:{" "}
-                  {String(liveOffer.availability).includes("OutOfStock")
-                    ? "Out of stock"
-                    : "In stock"}
+                  {liveShopDataQuery.isPending ? (
+                    <Skeleton className="inline-block h-4 w-20 align-middle" />
+                  ) : String(liveOffer.availability).includes("OutOfStock") ? (
+                    "Out of stock"
+                  ) : (
+                    "In stock"
+                  )}
                 </p>
                 <Button asChild>
                   <a
@@ -677,7 +727,7 @@ function AccountDetailPage() {
                     target="_blank"
                     rel="noopener noreferrer nofollow"
                   >
-                    Buy {CATEGORY_CONFIG[provider.category as Category].label}
+                    Buy {CATEGORY_CONFIG[provider.category].label}
                     <ExternalLink data-icon="inline-end" />
                   </a>
                 </Button>
@@ -686,14 +736,7 @@ function AccountDetailPage() {
           })}
         </div>
 
-        <Suspense>
-          <ItemReviewsSection
-            itemType="account"
-            slug={data.shop.slug}
-            initialSummary={data.reviewSummary}
-            initialWrittenReviews={data.writtenReviews}
-          />
-        </Suspense>
+        <ItemReviewsSection itemType="account" slug={data.shop.slug} />
 
         {data.shop.gallery && data.shop.gallery.length > 0 ? (
           <GallerySection images={data.shop.gallery} />

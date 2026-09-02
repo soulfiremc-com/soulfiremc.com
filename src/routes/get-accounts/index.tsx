@@ -65,9 +65,8 @@ import {
 } from "@/lib/accounts-data";
 import { getListingOffer, getShopAggregateOffer } from "@/lib/accounts-offers";
 import {
-  accountLiveShopDataQueryOptions,
-  accountReviewSummariesQueryOptions,
   accountsDiscordInvitesQueryOptions,
+  allAccountLiveShopDataQueryOptions,
   type LiveShopDataBySlug,
 } from "@/lib/accounts-queries";
 import {
@@ -75,6 +74,7 @@ import {
   type ReviewSummary,
   type UserReviewRecord,
 } from "@/lib/review-core";
+import { reviewsQueryOptions } from "@/lib/reviews-query";
 import { parseAsNativeOrDelimitedArrayOf } from "@/lib/search-param-parsers";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 import { cn } from "@/lib/utils";
@@ -344,12 +344,6 @@ const accountsSearchParams = {
 const validateAccountsSearch = createStandardSchemaV1(accountsSearchParams, {
   partialOutput: true,
 });
-
-type MainContentProps = {
-  initialSummaries: Record<string, ReviewSummary>;
-};
-
-type GetAccountsClientProps = Pick<MainContentProps, "initialSummaries">;
 
 function ProviderBadge({
   badge,
@@ -642,13 +636,11 @@ function sortProviders(
   );
 }
 
-function MainContent(props: MainContentProps) {
+function MainContent() {
   const providers = PROVIDERS;
   const slugs = useMemo(() => [...new Set(providers.map((p) => p.slug))], []);
   const { summaries, userReviews, pendingBySlug, upsertReview, deleteReview } =
-    useReviews("account", slugs, {
-      initialSummaries: props.initialSummaries,
-    });
+    useReviews("account", slugs);
   const [{ category, badges, sort }, setParams] = useQueryStates(
     accountsSearchParams,
     { shallow: false },
@@ -872,13 +864,7 @@ function MainContent(props: MainContentProps) {
                     <ProviderCard
                       key={provider.slug}
                       provider={provider}
-                      reviewSummary={
-                        summaries[provider.slug] ??
-                        props.initialSummaries[provider.slug] ?? {
-                          averageRating: null,
-                          reviewCount: 0,
-                        }
-                      }
+                      reviewSummary={summaries[provider.slug]}
                       userReview={userReviews[provider.slug]}
                       reviewPending={pendingBySlug[provider.slug] ?? false}
                       onRate={(slug, rating) =>
@@ -912,13 +898,7 @@ function MainContent(props: MainContentProps) {
                     <ProviderCard
                       key={provider.slug}
                       provider={provider}
-                      reviewSummary={
-                        summaries[provider.slug] ??
-                        props.initialSummaries[provider.slug] ?? {
-                          averageRating: null,
-                          reviewCount: 0,
-                        }
-                      }
+                      reviewSummary={summaries[provider.slug]}
                       userReview={userReviews[provider.slug]}
                       reviewPending={pendingBySlug[provider.slug] ?? false}
                       onRate={(slug, rating) =>
@@ -937,7 +917,7 @@ function MainContent(props: MainContentProps) {
   );
 }
 
-function GetAccountsClient(props: GetAccountsClientProps) {
+function GetAccountsClient() {
   return (
     <main className="mx-auto flex w-full max-w-(--fd-layout-width) flex-col gap-10 px-4 py-12">
       <div className="mx-auto flex max-w-5xl flex-col gap-4 text-center">
@@ -964,7 +944,7 @@ function GetAccountsClient(props: GetAccountsClientProps) {
 
       <ReviewTurnstileProvider>
         <Suspense>
-          <MainContent initialSummaries={props.initialSummaries} />
+          <MainContent />
         </Suspense>
       </ReviewTurnstileProvider>
 
@@ -1033,6 +1013,11 @@ const accountProvidersBySlug = [
   ...new Map(PROVIDERS.map((provider) => [provider.slug, provider])).values(),
 ];
 
+const accountReviewsQueryOptions = reviewsQueryOptions({
+  itemType: "account",
+  slugs: accountProvidersBySlug.map((provider) => provider.slug),
+});
+
 const accountsFaqJsonLd = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -1088,8 +1073,8 @@ const accountsPageJsonLd = JSON.stringify({
 });
 
 function createAccountsItemListJsonLd(
-  reviewSummaries: Record<string, ReviewSummary>,
-  liveShopDataBySlug: LiveShopDataBySlug,
+  reviewSummaries?: Record<string, ReviewSummary>,
+  liveShopDataBySlug?: LiveShopDataBySlug,
 ) {
   return JSON.stringify({
     "@context": "https://schema.org",
@@ -1100,13 +1085,12 @@ function createAccountsItemListJsonLd(
       "Trusted Minecraft alt shops for SoulFire bot testing. Compare MFA full-access accounts, NFA temporary accounts, and token or cookie account options.",
     numberOfItems: accountProvidersBySlug.length,
     itemListElement: accountProvidersBySlug.map((provider, index) => {
-      const aggregateRating = getAggregateRatingJsonLd(
-        reviewSummaries[provider.slug] ?? {
-          averageRating: null,
-          reviewCount: 0,
-        },
-      );
+      const reviewSummary = reviewSummaries?.[provider.slug];
+      const aggregateRating = reviewSummary
+        ? getAggregateRatingJsonLd(reviewSummary)
+        : undefined;
       const shop = getShopBySlug(provider.slug);
+      const liveShopData = liveShopDataBySlug?.[provider.slug];
 
       return {
         "@type": "ListItem",
@@ -1121,19 +1105,18 @@ function createAccountsItemListJsonLd(
             provider.category === "mfa-accounts"
               ? "MFA full-access Minecraft accounts"
               : "NFA temporary Minecraft accounts",
-          ...(shop && {
-            aggregateOffer: getShopAggregateOffer(
-              shop,
-              liveShopDataBySlug[provider.slug],
-            ),
-            offers: getListingOffer(
-              shop,
-              provider.category,
-              provider.priceValue,
-              liveShopDataBySlug[provider.slug],
-            ),
-          }),
-          ...(aggregateRating && { aggregateRating }),
+          ...(shop && liveShopData
+            ? {
+                aggregateOffer: getShopAggregateOffer(shop, liveShopData),
+                offers: getListingOffer(
+                  shop,
+                  provider.category,
+                  provider.priceValue,
+                  liveShopData,
+                ),
+              }
+            : {}),
+          ...(aggregateRating ? { aggregateRating } : {}),
         },
       };
     }),
@@ -1141,11 +1124,9 @@ function createAccountsItemListJsonLd(
 }
 
 function AccountsItemListStructuredData() {
-  const { data: reviewSummaries } = useSuspenseQuery(
-    accountReviewSummariesQueryOptions,
-  );
-  const { data: liveShopDataBySlug } = useSuspenseQuery(
-    accountLiveShopDataQueryOptions,
+  const { data: reviews } = useSuspenseQuery(accountReviewsQueryOptions);
+  const { data: liveShopData } = useSuspenseQuery(
+    allAccountLiveShopDataQueryOptions,
   );
 
   return (
@@ -1153,10 +1134,7 @@ function AccountsItemListStructuredData() {
       type="application/ld+json"
       // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
       dangerouslySetInnerHTML={{
-        __html: createAccountsItemListJsonLd(
-          reviewSummaries,
-          liveShopDataBySlug,
-        ),
+        __html: createAccountsItemListJsonLd(reviews.summaries, liveShopData),
       }}
     />
   );
@@ -1175,27 +1153,15 @@ export const Route = createFileRoute("/get-accounts/")({
     }),
     links: getCanonicalLinks("/get-accounts"),
   }),
-  loader: async ({ context }) => {
-    const liveShopDataPromise = context.queryClient.query(
-      accountLiveShopDataQueryOptions,
-    );
-    const discordInvitesPromise = context.queryClient.query(
-      accountsDiscordInvitesQueryOptions,
-    );
-
-    void liveShopDataPromise.catch(() => undefined);
-    void discordInvitesPromise.catch(() => undefined);
-
-    await context.queryClient.query(accountReviewSummariesQueryOptions);
+  loader: ({ context }) => {
+    void context.queryClient.prefetchQuery(allAccountLiveShopDataQueryOptions);
+    void context.queryClient.prefetchQuery(accountsDiscordInvitesQueryOptions);
+    void context.queryClient.prefetchQuery(accountReviewsQueryOptions);
   },
   component: GetAccountsPage,
 });
 
 function GetAccountsPage() {
-  const { data: reviewSummaries } = useSuspenseQuery(
-    accountReviewSummariesQueryOptions,
-  );
-
   return (
     <SiteShell>
       <script
@@ -1203,7 +1169,17 @@ function GetAccountsPage() {
         // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
         dangerouslySetInnerHTML={{ __html: accountsPageJsonLd }}
       />
-      <Suspense fallback={null}>
+      <Suspense
+        fallback={
+          <script
+            type="application/ld+json"
+            // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
+            dangerouslySetInnerHTML={{
+              __html: createAccountsItemListJsonLd(),
+            }}
+          />
+        }
+      >
         <AccountsItemListStructuredData />
       </Suspense>
       <script
@@ -1216,7 +1192,7 @@ function GetAccountsPage() {
         // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
         dangerouslySetInnerHTML={{ __html: accountsBreadcrumbJsonLd }}
       />
-      <GetAccountsClient initialSummaries={reviewSummaries} />
+      <GetAccountsClient />
     </SiteShell>
   );
 }

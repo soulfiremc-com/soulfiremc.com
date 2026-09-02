@@ -1,13 +1,8 @@
-import { ensureSession } from "@better-auth-ui/core";
-import { ensureSessionServer } from "@better-auth-ui/core/server";
 import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
-import { createIsomorphicFn } from "@tanstack/react-start";
-import { getRequestHeaders } from "@tanstack/react-start/server";
 import { Settings } from "@/components/auth/settings/settings";
 import { SiteShell } from "@/components/site-shell";
-import { auth } from "@/lib/auth";
-import { authClient } from "@/lib/auth-client";
 import { AUTH_UI_VIEW_PATHS } from "@/lib/auth-ui-config";
+import { ensureRouteSession } from "@/lib/route-session";
 
 const validAccountPathSegments = new Set(
   Object.values(AUTH_UI_VIEW_PATHS.settings),
@@ -19,14 +14,7 @@ export const Route = createFileRoute("/account/$path")({
       throw notFound();
     }
 
-    const getSession = createIsomorphicFn()
-      .server(() =>
-        ensureSessionServer(queryClient, auth, {
-          headers: getRequestHeaders(),
-        }),
-      )
-      .client(() => ensureSession(queryClient, authClient));
-    const session = await getSession();
+    const session = await ensureRouteSession({ queryClient });
 
     if (!session) {
       throw redirect({
