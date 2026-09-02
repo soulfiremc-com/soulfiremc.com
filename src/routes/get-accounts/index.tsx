@@ -1,5 +1,5 @@
 import { SiDiscord, SiTrustpilot } from "@icons-pack/react-simple-icons";
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   BookOpen,
@@ -68,10 +68,8 @@ import {
   accountLiveShopDataQueryOptions,
   accountReviewSummariesQueryOptions,
   accountsDiscordInvitesQueryOptions,
-  type DiscordInvites,
   type LiveShopDataBySlug,
 } from "@/lib/accounts-queries";
-import type { DiscordInviteResponse } from "@/lib/discord";
 import {
   getAggregateRatingJsonLd,
   type ReviewSummary,
@@ -234,21 +232,11 @@ function formatNumber(num: number): string {
   return num.toString();
 }
 
-function DiscordMemberBadge({
-  info,
-  pending,
-}: {
-  info: DiscordInviteResponse | null;
-  pending: boolean;
-}) {
-  if (pending) {
-    return (
-      <Skeleton
-        aria-label="Loading Discord member count"
-        className="h-5 w-16"
-      />
-    );
-  }
+function DiscordMemberBadge({ providerSlug }: { providerSlug: string }) {
+  const { data: discordInvites } = useSuspenseQuery(
+    accountsDiscordInvitesQueryOptions,
+  );
+  const info = discordInvites[providerSlug] ?? null;
 
   if (!info?.approximate_member_count) {
     return (
@@ -358,8 +346,6 @@ const validateAccountsSearch = createStandardSchemaV1(accountsSearchParams, {
 });
 
 type MainContentProps = {
-  discordInvites: DiscordInvites;
-  discordInvitesPending: boolean;
   initialSummaries: Record<string, ReviewSummary>;
 };
 
@@ -425,8 +411,6 @@ function ProviderLogo({ provider }: { provider: Provider }) {
 
 function ProviderCard({
   provider,
-  discordInvites,
-  discordInvitesPending,
   reviewSummary,
   userReview,
   reviewPending,
@@ -434,8 +418,6 @@ function ProviderCard({
   onClearRating,
 }: {
   provider: Provider;
-  discordInvites: DiscordInvites;
-  discordInvitesPending: boolean;
   reviewSummary: ReviewSummary;
   userReview?: UserReviewRecord;
   reviewPending: boolean;
@@ -447,7 +429,6 @@ function ProviderCard({
     slug: string,
   ) => Promise<{ error: "unauthorized" | "verification" | null }>;
 }) {
-  const discordInvite = discordInvites[provider.slug] ?? null;
   const discordInviteUrl = getDiscordInviteUrl(provider);
   const theme = provider.theme ? PROVIDER_THEMES[provider.theme] : undefined;
 
@@ -501,10 +482,16 @@ function ProviderCard({
                 <PriceInfoBadge details={provider.priceDetails} />
               )}
             </UiBadge>
-            <DiscordMemberBadge
-              info={discordInvite}
-              pending={discordInvitesPending}
-            />
+            <Suspense
+              fallback={
+                <Skeleton
+                  aria-label="Loading Discord member count"
+                  className="h-5 w-16"
+                />
+              }
+            >
+              <DiscordMemberBadge providerSlug={provider.slug} />
+            </Suspense>
             <div className="flex flex-wrap gap-2">
               {provider.badges.map((badge) => (
                 <ProviderBadge
@@ -885,8 +872,6 @@ function MainContent(props: MainContentProps) {
                     <ProviderCard
                       key={provider.slug}
                       provider={provider}
-                      discordInvites={props.discordInvites}
-                      discordInvitesPending={props.discordInvitesPending}
                       reviewSummary={
                         summaries[provider.slug] ??
                         props.initialSummaries[provider.slug] ?? {
@@ -927,8 +912,6 @@ function MainContent(props: MainContentProps) {
                     <ProviderCard
                       key={provider.slug}
                       provider={provider}
-                      discordInvites={props.discordInvites}
-                      discordInvitesPending={props.discordInvitesPending}
                       reviewSummary={
                         summaries[provider.slug] ??
                         props.initialSummaries[provider.slug] ?? {
@@ -955,9 +938,6 @@ function MainContent(props: MainContentProps) {
 }
 
 function GetAccountsClient(props: GetAccountsClientProps) {
-  const { data: discordInvites = {}, isPending: discordInvitesPending } =
-    useQuery(accountsDiscordInvitesQueryOptions);
-
   return (
     <main className="mx-auto flex w-full max-w-(--fd-layout-width) flex-col gap-10 px-4 py-12">
       <div className="mx-auto flex max-w-5xl flex-col gap-4 text-center">
@@ -984,11 +964,7 @@ function GetAccountsClient(props: GetAccountsClientProps) {
 
       <ReviewTurnstileProvider>
         <Suspense>
-          <MainContent
-            discordInvites={discordInvites}
-            discordInvitesPending={discordInvitesPending}
-            initialSummaries={props.initialSummaries}
-          />
+          <MainContent initialSummaries={props.initialSummaries} />
         </Suspense>
       </ReviewTurnstileProvider>
 
