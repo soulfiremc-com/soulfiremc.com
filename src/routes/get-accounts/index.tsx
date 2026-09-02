@@ -1,11 +1,6 @@
 import { SiDiscord, SiTrustpilot } from "@icons-pack/react-simple-icons";
-import {
-  queryOptions,
-  useQuery,
-  useSuspenseQuery,
-} from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/react-start";
 import {
   BookOpen,
   Calendar,
@@ -68,14 +63,20 @@ import {
   SORT_CONFIG,
   type SortOption,
 } from "@/lib/accounts-data";
+import { getListingOffer, getShopAggregateOffer } from "@/lib/accounts-offers";
 import {
-  getListingOffer,
-  getLiveShopData,
-  getShopAggregateOffer,
-} from "@/lib/accounts-offers";
-import { type DiscordInviteResponse, fetchDiscordInvite } from "@/lib/discord";
-import type { ReviewSummary, UserReviewRecord } from "@/lib/review-core";
-import { getAggregateRatingJsonLd, getReviewSummaries } from "@/lib/reviews";
+  accountLiveShopDataQueryOptions,
+  accountReviewSummariesQueryOptions,
+  accountsDiscordInvitesQueryOptions,
+  type DiscordInvites,
+  type LiveShopDataBySlug,
+} from "@/lib/accounts-queries";
+import type { DiscordInviteResponse } from "@/lib/discord";
+import {
+  getAggregateRatingJsonLd,
+  type ReviewSummary,
+  type UserReviewRecord,
+} from "@/lib/review-core";
 import { parseAsNativeOrDelimitedArrayOf } from "@/lib/search-param-parsers";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 import { cn } from "@/lib/utils";
@@ -355,8 +356,6 @@ const accountsSearchParams = {
 const validateAccountsSearch = createStandardSchemaV1(accountsSearchParams, {
   partialOutput: true,
 });
-
-type DiscordInvites = Record<string, DiscordInviteResponse | null>;
 
 type MainContentProps = {
   discordInvites: DiscordInvites;
@@ -1057,74 +1056,6 @@ function GetAccountsClient(props: GetAccountsClientProps) {
 const accountProvidersBySlug = [
   ...new Map(PROVIDERS.map((provider) => [provider.slug, provider])).values(),
 ];
-const accountProviderSlugs = accountProvidersBySlug.map(
-  (provider) => provider.slug,
-);
-
-type LiveShopDataBySlug = Record<
-  string,
-  Awaited<ReturnType<typeof getLiveShopData>>
->;
-
-const getAccountReviewSummaries = createServerFn({ method: "GET" }).handler(
-  () =>
-    getReviewSummaries("account", accountProviderSlugs).catch(
-      () => ({}) as Record<string, ReviewSummary>,
-    ),
-);
-
-const getAccountLiveShopData = createServerFn({ method: "GET" }).handler(
-  async () => {
-    const entries = await Promise.all(
-      accountProvidersBySlug.map(async (provider) => {
-        const shop = getShopBySlug(provider.slug);
-        if (!shop) return [provider.slug, {}] as const;
-
-        return [
-          provider.slug,
-          await getLiveShopData(shop).catch(() => ({})),
-        ] as const;
-      }),
-    );
-
-    return Object.fromEntries(entries) as LiveShopDataBySlug;
-  },
-);
-
-const getAccountDiscordInvites = createServerFn({ method: "GET" }).handler(
-  async () =>
-    Object.fromEntries(
-      await Promise.all(
-        accountProvidersBySlug.map(async (provider) => {
-          const discordInviteUrl = getDiscordInviteUrl(provider);
-          return [
-            provider.slug,
-            discordInviteUrl
-              ? await fetchDiscordInvite(discordInviteUrl).catch(() => null)
-              : null,
-          ] as const;
-        }),
-      ),
-    ) as DiscordInvites,
-);
-
-const accountReviewSummariesQueryOptions = queryOptions({
-  queryKey: ["accounts", "review-summaries"],
-  queryFn: () => getAccountReviewSummaries(),
-  staleTime: 60_000,
-});
-
-const accountLiveShopDataQueryOptions = queryOptions({
-  queryKey: ["accounts", "live-shop-data"],
-  queryFn: () => getAccountLiveShopData(),
-  staleTime: 60_000,
-});
-
-const accountsDiscordInvitesQueryOptions = queryOptions({
-  queryKey: ["accounts", "discord-invites"],
-  queryFn: () => getAccountDiscordInvites(),
-  staleTime: 10 * 60_000,
-});
 
 const accountsFaqJsonLd = JSON.stringify({
   "@context": "https://schema.org",
