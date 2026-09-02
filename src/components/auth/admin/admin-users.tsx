@@ -1,12 +1,15 @@
 "use client";
 
 import {
-  type AdditionalFieldValue,
-  parseAdditionalFieldValues,
+  fieldsWithModelValues,
+  getAdditionalFieldDefaultValues,
+  getAdditionalFieldSubmitValues,
+  getClampedTablePageIndex,
 } from "@better-auth-ui/core";
 import {
   type AdminAuthClient,
   type AdminListUsersParams,
+  type AdminUser,
   banAdminUserOptions,
   createAdminUserOptions,
   impersonateAdminUserOptions,
@@ -27,6 +30,13 @@ import {
   useAdminUsers,
 } from "@better-auth-ui/react/plugins/admin";
 import { keepPreviousData, useMutation } from "@tanstack/react-query";
+import {
+  type ColumnFiltersState,
+  functionalUpdate,
+  type PaginationState,
+  type SortingState,
+  type Updater,
+} from "@tanstack/react-table";
 import type { BetterFetchError } from "better-auth/react";
 import {
   BanIcon,
@@ -46,10 +56,8 @@ import {
   useDeferredValue,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from "react";
-import { AdditionalField } from "@/components/auth/additional-field";
 import { UserAvatar } from "@/components/auth/user/user-avatar";
 import {
   AlertDialog,
@@ -114,11 +122,13 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { adminPlugin } from "@/lib/auth/admin-plugin";
+import { getAuthAdditionalFieldValidators, useAuthForm } from "../auth-form";
+
+import { createAdminColumnHelper, useAdminTable } from "./admin-table";
 
 type SearchField = "email" | "name";
 type SearchOperator = "contains" | "ends_with" | "starts_with";
 type StatusFilter = "all" | "active" | "banned";
-type SortDirection = "asc" | "desc";
 type DangerousAction = "ban" | "delete" | "impersonate" | "revokeAll";
 
 export type AdminUsersProps = {
@@ -162,6 +172,23 @@ const getAdminErrorMessage = (error: Error | null) => {
   return authError?.error?.message ?? authError?.message;
 };
 
+const adminColumnHelper = createAdminColumnHelper<AdminUser>();
+const adminColumns = adminColumnHelper.columns([
+  adminColumnHelper.accessor("name", { id: "name" }),
+  adminColumnHelper.accessor("role", {
+    id: "role",
+    enableSorting: false,
+  }),
+  adminColumnHelper.accessor("banned", {
+    id: "status",
+    enableSorting: false,
+  }),
+  adminColumnHelper.accessor((user) => new Date(user.createdAt).getTime(), {
+    id: "createdAt",
+  }),
+]);
+const EMPTY_USERS: AdminUser[] = [];
+
 /** Server-paginated user management with optional controlled inspector state. */
 export function AdminUsers({
   className,
@@ -172,16 +199,28 @@ export function AdminUsers({
   const config = useAuthPlugin(adminPlugin);
   const { localization } = config;
   const [localSelectedUserId, setLocalSelectedUserId] = useState<string>();
-  const [page, setPage] = useState(0);
-  const [search, setSearch] = useState("");
+  const [globalFilter, setGlobalFilterState] = useState("");
+  const [columnFilters, setColumnFiltersState] = useState<ColumnFiltersState>(
+    [],
+  );
+  const [pagination, setPaginationState] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: config.pageSize,
+  });
+  const [sorting, setSortingState] = useState<SortingState>([
+    { id: "createdAt", desc: true },
+  ]);
   const [searchField, setSearchField] = useState<SearchField>("email");
   const [searchOperator, setSearchOperator] =
     useState<SearchOperator>("contains");
-  const [status, setStatus] = useState<StatusFilter>("all");
-  const [sortBy, setSortBy] = useState("createdAt");
-  const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
   const [createOpen, setCreateOpen] = useState(false);
-  const deferredSearch = useDeferredValue(search.trim());
+  const deferredSearch = useDeferredValue(globalFilter.trim());
+  const status = String(
+    columnFilters.find((filter) => filter.id === "status")?.value ?? "all",
+  ) as StatusFilter;
+  const primarySort = sorting[0];
+  const sortBy = primarySort?.id === "name" ? "name" : "createdAt";
+  const sortDirection = primarySort?.desc ? "desc" : "asc";
   const isSelectionControlled = onSelectedUserIdChange !== undefined;
   const selectedUserId = isSelectionControlled
     ? controlledSelectedUserId
@@ -194,8 +233,8 @@ export function AdminUsers({
 
   const params = useMemo<AdminListUsersParams>(
     () => ({
-      limit: config.pageSize,
-      offset: page * config.pageSize,
+      limit: pagination.pageSize,
+      offset: pagination.pageIndex * pagination.pageSize,
       searchField,
       searchOperator,
       searchValue: deferredSearch || undefined,
@@ -210,9 +249,9 @@ export function AdminUsers({
           }),
     }),
     [
-      config.pageSize,
       deferredSearch,
-      page,
+      pagination.pageIndex,
+      pagination.pageSize,
       searchField,
       searchOperator,
       sortBy,
@@ -229,19 +268,49 @@ export function AdminUsers({
   const canCreate = useAdminPermission(auth.authClient, { user: ["create"] });
   const canGet = useAdminPermission(auth.authClient, { user: ["get"] });
 
-  const changeSort = (field: string) => {
-    setPage(0);
-    if (sortBy === field) {
-      setSortDirection((value) => (value === "asc" ? "desc" : "asc"));
-    } else {
-      setSortBy(field);
-      setSortDirection("asc");
-    }
-  };
-
   const total = users.data?.total ?? 0;
-  const from = total ? page * config.pageSize + 1 : 0;
-  const to = Math.min(total, (page + 1) * config.pageSize);
+
+  useEffect(() => {
+    if (!users.isSuccess) return;
+    const pageIndex = getClampedTablePageIndex(
+      pagination.pageIndex,
+      pagination.pageSize,
+      total,
+    );
+    if (pageIndex !== pagination.pageIndex) {
+      setPaginationState((current) => ({ ...current, pageIndex }));
+    }
+  }, [pagination.pageIndex, pagination.pageSize, total, users.isSuccess]);
+  const setPagination = (updater: Updater<PaginationState>) =>
+    setPaginationState((current) => functionalUpdate(updater, current));
+  const setColumnFilters = (updater: Updater<ColumnFiltersState>) => {
+    setColumnFiltersState((current) => functionalUpdate(updater, current));
+    setPaginationState((current) => ({ ...current, pageIndex: 0 }));
+  };
+  const setGlobalFilter = (updater: Updater<string>) => {
+    setGlobalFilterState((current) => functionalUpdate(updater, current));
+    setPaginationState((current) => ({ ...current, pageIndex: 0 }));
+  };
+  const setSorting = (updater: Updater<SortingState>) => {
+    setSortingState((current) => functionalUpdate(updater, current));
+    setPaginationState((current) => ({ ...current, pageIndex: 0 }));
+  };
+  const table = useAdminTable({
+    columns: adminColumns,
+    data: users.data?.users ?? EMPTY_USERS,
+    getRowId: (user) => user.id,
+    manualFiltering: true,
+    manualPagination: true,
+    manualSorting: true,
+    rowCount: total,
+    state: { columnFilters, globalFilter, pagination, sorting },
+    onColumnFiltersChange: setColumnFilters,
+    onGlobalFilterChange: setGlobalFilter,
+    onPaginationChange: setPagination,
+    onSortingChange: setSorting,
+  });
+  const from = total ? pagination.pageIndex * pagination.pageSize + 1 : 0;
+  const to = Math.min(total, (pagination.pageIndex + 1) * pagination.pageSize);
 
   return (
     <section className={className}>
@@ -270,7 +339,7 @@ export function AdminUsers({
             value={searchField}
             onValueChange={(value) => {
               setSearchField(value as SearchField);
-              setPage(0);
+              table.setPageIndex(0);
             }}
           >
             <SelectTrigger
@@ -288,7 +357,7 @@ export function AdminUsers({
             value={searchOperator}
             onValueChange={(value) => {
               setSearchOperator(value as SearchOperator);
-              setPage(0);
+              table.setPageIndex(0);
             }}
           >
             <SelectTrigger aria-label={localization.searchOperator}>
@@ -315,22 +384,22 @@ export function AdminUsers({
                   : localization.searchByName
               }
               onChange={(event) => {
-                setSearch(event.target.value);
-                setPage(0);
+                table.setGlobalFilter(event.target.value);
               }}
               placeholder={
                 searchField === "email"
                   ? localization.searchByEmail
                   : localization.searchByName
               }
-              value={search}
+              value={globalFilter}
             />
           </InputGroup>
           <Select
             value={status}
             onValueChange={(value) => {
-              setStatus(value as StatusFilter);
-              setPage(0);
+              table
+                .getColumn("status")
+                ?.setFilterValue(value === "all" ? undefined : value);
             }}
           >
             <SelectTrigger
@@ -375,28 +444,26 @@ export function AdminUsers({
                 <TableRow>
                   <TableHead>
                     <SortButton
-                      active={sortBy === "name"}
-                      direction={sortDirection}
-                      onClick={() => changeSort("name")}
+                      onClick={table
+                        .getColumn("name")
+                        ?.getToggleSortingHandler()}
+                      sorted={table.getColumn("name")?.getIsSorted() ?? false}
                     >
                       {localization.name}
                     </SortButton>
                   </TableHead>
                   <TableHead className="hidden md:table-cell">
-                    <SortButton
-                      active={sortBy === "role"}
-                      direction={sortDirection}
-                      onClick={() => changeSort("role")}
-                    >
-                      {localization.role}
-                    </SortButton>
+                    {localization.role}
                   </TableHead>
                   <TableHead>{localization.status}</TableHead>
                   <TableHead className="hidden lg:table-cell">
                     <SortButton
-                      active={sortBy === "createdAt"}
-                      direction={sortDirection}
-                      onClick={() => changeSort("createdAt")}
+                      onClick={table
+                        .getColumn("createdAt")
+                        ?.getToggleSortingHandler()}
+                      sorted={
+                        table.getColumn("createdAt")?.getIsSorted() ?? false
+                      }
                     >
                       {localization.created}
                     </SortButton>
@@ -406,63 +473,66 @@ export function AdminUsers({
               <TableBody>
                 {users.isPending ? (
                   <UserRowsSkeleton />
-                ) : users.data?.users.length ? (
-                  users.data.users.map((user) => (
-                    <TableRow
-                      key={user.id}
-                      aria-selected={selectedUserId === user.id}
-                      className={
-                        canGet.data?.success ? "cursor-pointer" : undefined
-                      }
-                      onClick={
-                        canGet.data?.success
-                          ? () => setSelectedUserId(user.id)
-                          : undefined
-                      }
-                    >
-                      <TableCell>
-                        <div className="flex items-center gap-3">
-                          <UserAvatar className="size-8" user={user} />
-                          <div className="min-w-0">
-                            {canGet.data?.success ? (
-                              <Button
-                                className="h-auto min-w-0 justify-start p-0 font-medium"
-                                onClick={(event) => {
-                                  event.stopPropagation();
-                                  setSelectedUserId(user.id);
-                                }}
-                                variant="link"
-                              >
+                ) : table.getRowModel().rows.length ? (
+                  table.getRowModel().rows.map((row) => {
+                    const user = row.original;
+                    return (
+                      <TableRow
+                        key={row.id}
+                        aria-selected={selectedUserId === user.id}
+                        className={
+                          canGet.data?.success ? "cursor-pointer" : undefined
+                        }
+                        onClick={
+                          canGet.data?.success
+                            ? () => setSelectedUserId(user.id)
+                            : undefined
+                        }
+                      >
+                        <TableCell>
+                          <div className="flex items-center gap-3">
+                            <UserAvatar className="size-8" user={user} />
+                            <div className="min-w-0">
+                              {canGet.data?.success ? (
+                                <Button
+                                  className="h-auto min-w-0 justify-start p-0 font-medium"
+                                  onClick={(event) => {
+                                    event.stopPropagation();
+                                    setSelectedUserId(user.id);
+                                  }}
+                                  variant="link"
+                                >
+                                  <span className="truncate">{user.name}</span>
+                                </Button>
+                              ) : (
                                 <span className="truncate">{user.name}</span>
-                              </Button>
-                            ) : (
-                              <span className="truncate">{user.name}</span>
-                            )}
-                            <div className="truncate text-xs text-muted-foreground">
-                              {user.email}
+                              )}
+                              <div className="truncate text-xs text-muted-foreground">
+                                {user.email}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell">
-                        <Badge variant="outline">
-                          {user.role ?? config.defaultRole}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <Badge
-                          variant={user.banned ? "destructive" : "secondary"}
-                        >
-                          {user.banned
-                            ? localization.banned
-                            : localization.active}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="hidden text-muted-foreground lg:table-cell">
-                        {formatDate(user.createdAt)}
-                      </TableCell>
-                    </TableRow>
-                  ))
+                        </TableCell>
+                        <TableCell className="hidden md:table-cell">
+                          <Badge variant="outline">
+                            {user.role ?? config.defaultRole}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <Badge
+                            variant={user.banned ? "destructive" : "secondary"}
+                          >
+                            {user.banned
+                              ? localization.banned
+                              : localization.active}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="hidden text-muted-foreground lg:table-cell">
+                          {formatDate(user.createdAt)}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
                 ) : (
                   <TableRow>
                     <TableCell colSpan={4} className="h-40 text-center">
@@ -490,8 +560,8 @@ export function AdminUsers({
           <div className="flex gap-1">
             <Button
               aria-label={localization.previousPage}
-              disabled={page === 0 || users.isFetching}
-              onClick={() => setPage((value) => Math.max(0, value - 1))}
+              disabled={!table.getCanPreviousPage() || users.isFetching}
+              onClick={() => table.previousPage()}
               size="icon-sm"
               variant="outline"
             >
@@ -499,8 +569,8 @@ export function AdminUsers({
             </Button>
             <Button
               aria-label={localization.nextPage}
-              disabled={to >= total || users.isFetching}
-              onClick={() => setPage((value) => value + 1)}
+              disabled={!table.getCanNextPage() || users.isFetching}
+              onClick={() => table.nextPage()}
               size="icon-sm"
               variant="outline"
             >
@@ -522,15 +592,13 @@ export function AdminUsers({
 }
 
 function SortButton({
-  active,
   children,
-  direction,
   onClick,
+  sorted,
 }: {
-  active: boolean;
   children: React.ReactNode;
-  direction: SortDirection;
-  onClick: () => void;
+  onClick?: (event: unknown) => void;
+  sorted: false | "asc" | "desc";
 }) {
   return (
     <button
@@ -539,7 +607,7 @@ function SortButton({
       type="button"
     >
       {children}
-      {active ? (direction === "asc" ? "↑" : "↓") : null}
+      {sorted ? (sorted === "asc" ? "↑" : "↓") : null}
     </button>
   );
 }
@@ -622,53 +690,57 @@ function CreateUserDialog({
   const auth = useAuth<AdminAuthClient>();
   const config = useAuthPlugin(adminPlugin);
   const { data: session } = useSession(auth.authClient);
-  const [password, setPassword] = useState("");
-  const [emailVerified, setEmailVerified] = useState(false);
-  const [formError, setFormError] = useState<string>();
-  const [roles, setRoles] = useState([config.defaultRole]);
-
-  useEffect(() => {
-    if (!config.allowMultipleRoles) setRoles((current) => current.slice(0, 1));
-  }, [config.allowMultipleRoles]);
   const createUser = useMutation(
     createAdminUserOptions(auth.authClient, session?.user.id),
   );
   const canSetRole = useAdminPermission(auth.authClient, {
     user: ["set-role"],
   });
+  const additionalFields = auth.additionalFields ?? [];
+  const form = useAuthForm({
+    defaultValues: {
+      additionalFields: getAdditionalFieldDefaultValues(additionalFields),
+      email: "",
+      emailVerified: false,
+      name: "",
+      password: "",
+      roles: [config.defaultRole],
+    },
+    onSubmit: async ({ value }) => {
+      try {
+        await createUser.mutateAsync(
+          {
+            data: {
+              ...getAdditionalFieldSubmitValues(
+                additionalFields,
+                value.additionalFields,
+              ),
+              emailVerified: value.emailVerified,
+            },
+            email: value.email,
+            name: value.name,
+            password: value.password,
+            ...(canSetRole.data?.success
+              ? { role: asAdminRoles(value.roles) }
+              : {}),
+          },
+          { onSuccess: close },
+        );
+      } catch {
+        // The mutation reports the error through its configured handler.
+      }
+    },
+  });
+
+  useEffect(() => {
+    if (!config.allowMultipleRoles)
+      form.setFieldValue("roles", (current) => current.slice(0, 1));
+  }, [config.allowMultipleRoles, form.setFieldValue]);
 
   const close = () => {
-    setPassword("");
-    setEmailVerified(false);
-    setFormError(undefined);
-    setRoles([config.defaultRole]);
+    form.reset();
     createUser.reset();
     onOpenChange(false);
-  };
-  const submit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    let additionalFieldValues: Record<string, AdditionalFieldValue | null>;
-    try {
-      additionalFieldValues = await parseAdditionalFieldValues(
-        auth.additionalFields ?? [],
-        data,
-      );
-    } catch (error) {
-      setFormError(error instanceof Error ? error.message : String(error));
-      return;
-    }
-    setFormError(undefined);
-    createUser.mutate(
-      {
-        data: { ...additionalFieldValues, emailVerified },
-        email: String(data.get("email")),
-        name: String(data.get("name")),
-        password,
-        ...(canSetRole.data?.success ? { role: asAdminRoles(roles) } : {}),
-      },
-      { onSuccess: close },
-    );
   };
 
   return (
@@ -677,131 +749,177 @@ function CreateUserDialog({
       onOpenChange={(value) => (value ? onOpenChange(true) : close())}
     >
       <DialogContent>
-        <form className="flex flex-col gap-4" onSubmit={submit}>
-          <DialogHeader>
-            <DialogTitle>{config.localization.createUser}</DialogTitle>
-            <DialogDescription>
-              {config.localization.usersDescription}
-            </DialogDescription>
-          </DialogHeader>
-          <FieldGroup>
-            <Field>
-              <FieldLabel htmlFor="admin-create-name">
-                {config.localization.name}
-              </FieldLabel>
-              <InputGroup>
-                <InputGroupInput id="admin-create-name" name="name" required />
-              </InputGroup>
-            </Field>
-            <Field>
-              <FieldLabel htmlFor="admin-create-email">
-                {config.localization.email}
-              </FieldLabel>
-              <InputGroup>
-                <InputGroupInput
-                  autoComplete="off"
-                  id="admin-create-email"
-                  name="email"
-                  required
-                  type="email"
-                />
-              </InputGroup>
-            </Field>
-            <Field>
-              <FieldLabel htmlFor="admin-create-password">
-                {config.localization.password}
-              </FieldLabel>
-              <InputGroup>
-                <InputGroupInput
-                  autoComplete="new-password"
-                  id="admin-create-password"
-                  onChange={(event) => setPassword(event.target.value)}
-                  required
-                  type="password"
-                  value={password}
-                />
-              </InputGroup>
-            </Field>
-            {canSetRole.isPending ? (
-              <Skeleton className="h-16 w-full" />
-            ) : canSetRole.data?.success ? (
-              <FieldSet>
-                <FieldLegend variant="label">
-                  {config.localization.role}
-                </FieldLegend>
-                {config.allowMultipleRoles ? (
-                  <FieldGroup data-slot="checkbox-group">
-                    {config.roles.map((role) => (
-                      <Field key={role} orientation="horizontal">
-                        <Checkbox
-                          checked={roles.includes(role)}
-                          id={`admin-create-role-${role}`}
-                          onCheckedChange={(checked) => {
-                            const next = checked
-                              ? [...roles, role]
-                              : roles.filter((item) => item !== role);
-                            if (next.length) setRoles(next);
-                          }}
-                        />
-                        <FieldLabel htmlFor={`admin-create-role-${role}`}>
-                          {role}
-                        </FieldLabel>
-                      </Field>
-                    ))}
-                  </FieldGroup>
-                ) : (
-                  <RadioGroup
-                    onValueChange={(role) => setRoles([role])}
-                    value={roles[0] ?? ""}
-                  >
-                    {config.roles.map((role) => (
-                      <Field key={role} orientation="horizontal">
-                        <RadioGroupItem
-                          id={`admin-create-role-${role}`}
-                          value={role}
-                        />
-                        <FieldLabel htmlFor={`admin-create-role-${role}`}>
-                          {role}
-                        </FieldLabel>
-                      </Field>
-                    ))}
-                  </RadioGroup>
+        <form.AppForm>
+          <form.AuthFormRoot className="flex flex-col gap-4">
+            <DialogHeader>
+              <DialogTitle>{config.localization.createUser}</DialogTitle>
+              <DialogDescription>
+                {config.localization.usersDescription}
+              </DialogDescription>
+            </DialogHeader>
+            <FieldGroup>
+              <form.Field name="name">
+                {(field) => (
+                  <Field>
+                    <FieldLabel htmlFor="admin-create-name">
+                      {config.localization.name}
+                    </FieldLabel>
+                    <InputGroup>
+                      <InputGroupInput
+                        id="admin-create-name"
+                        name={field.name}
+                        onChange={(event) =>
+                          field.handleChange(event.target.value)
+                        }
+                        required
+                        value={field.state.value}
+                      />
+                    </InputGroup>
+                  </Field>
                 )}
-              </FieldSet>
-            ) : null}
-            <Field orientation="horizontal">
-              <Switch
-                checked={emailVerified}
-                id="admin-create-email-verified"
-                onCheckedChange={setEmailVerified}
-              />
-              <FieldContent>
-                <FieldLabel htmlFor="admin-create-email-verified">
-                  {config.localization.emailVerified}
-                </FieldLabel>
-              </FieldContent>
-            </Field>
-            {auth.additionalFields?.map((field) => (
-              <AdditionalField
-                field={field}
-                isPending={createUser.isPending}
-                key={field.name}
-                name={field.name}
-              />
-            ))}
-          </FieldGroup>
-          <FieldError>
-            {formError ?? getAdminErrorMessage(createUser.error)}
-          </FieldError>
-          <DialogFooter>
-            <Button onClick={close} type="button" variant="outline">
-              {config.localization.cancel}
-            </Button>
-            <Button disabled={createUser.isPending} type="submit">
-              {config.localization.createUser}
-            </Button>
-          </DialogFooter>
-        </form>
+              </form.Field>
+              <form.Field name="email">
+                {(field) => (
+                  <Field>
+                    <FieldLabel htmlFor="admin-create-email">
+                      {config.localization.email}
+                    </FieldLabel>
+                    <InputGroup>
+                      <InputGroupInput
+                        autoComplete="off"
+                        id="admin-create-email"
+                        name={field.name}
+                        onChange={(event) =>
+                          field.handleChange(event.target.value)
+                        }
+                        required
+                        type="email"
+                        value={field.state.value}
+                      />
+                    </InputGroup>
+                  </Field>
+                )}
+              </form.Field>
+              <form.Field name="password">
+                {(field) => (
+                  <Field>
+                    <FieldLabel htmlFor="admin-create-password">
+                      {config.localization.password}
+                    </FieldLabel>
+                    <InputGroup>
+                      <InputGroupInput
+                        autoComplete="new-password"
+                        id="admin-create-password"
+                        name={field.name}
+                        onChange={(event) =>
+                          field.handleChange(event.target.value)
+                        }
+                        required
+                        type="password"
+                        value={field.state.value}
+                      />
+                    </InputGroup>
+                  </Field>
+                )}
+              </form.Field>
+              {canSetRole.isPending ? (
+                <Skeleton className="h-16 w-full" />
+              ) : canSetRole.data?.success ? (
+                <FieldSet>
+                  <FieldLegend variant="label">
+                    {config.localization.role}
+                  </FieldLegend>
+                  <form.Field name="roles">
+                    {(field) =>
+                      config.allowMultipleRoles ? (
+                        <FieldGroup data-slot="checkbox-group">
+                          {config.roles.map((role) => (
+                            <Field key={role} orientation="horizontal">
+                              <Checkbox
+                                checked={field.state.value.includes(role)}
+                                id={`admin-create-role-${role}`}
+                                onCheckedChange={(checked) => {
+                                  const next = checked
+                                    ? [...field.state.value, role]
+                                    : field.state.value.filter(
+                                        (item) => item !== role,
+                                      );
+                                  if (next.length) field.handleChange(next);
+                                }}
+                              />
+                              <FieldLabel htmlFor={`admin-create-role-${role}`}>
+                                {role}
+                              </FieldLabel>
+                            </Field>
+                          ))}
+                        </FieldGroup>
+                      ) : (
+                        <RadioGroup
+                          onValueChange={(role) => field.handleChange([role])}
+                          value={field.state.value[0] ?? ""}
+                        >
+                          {config.roles.map((role) => (
+                            <Field key={role} orientation="horizontal">
+                              <RadioGroupItem
+                                id={`admin-create-role-${role}`}
+                                value={role}
+                              />
+                              <FieldLabel htmlFor={`admin-create-role-${role}`}>
+                                {role}
+                              </FieldLabel>
+                            </Field>
+                          ))}
+                        </RadioGroup>
+                      )
+                    }
+                  </form.Field>
+                </FieldSet>
+              ) : null}
+              <form.Field name="emailVerified">
+                {(field) => (
+                  <Field orientation="horizontal">
+                    <Switch
+                      checked={field.state.value}
+                      id="admin-create-email-verified"
+                      onCheckedChange={field.handleChange}
+                    />
+                    <FieldContent>
+                      <FieldLabel htmlFor="admin-create-email-verified">
+                        {config.localization.emailVerified}
+                      </FieldLabel>
+                    </FieldContent>
+                  </Field>
+                )}
+              </form.Field>
+              {additionalFields.map((configuredField) => (
+                <form.AppField
+                  key={configuredField.name}
+                  name={`additionalFields.${configuredField.name}`}
+                  validators={getAuthAdditionalFieldValidators(
+                    configuredField,
+                    auth.localization.auth.fieldRequired,
+                  )}
+                >
+                  {(field) => (
+                    <field.AuthFormAdditionalField
+                      field={configuredField}
+                      isPending={createUser.isPending}
+                    />
+                  )}
+                </form.AppField>
+              ))}
+            </FieldGroup>
+            <FieldError>{getAdminErrorMessage(createUser.error)}</FieldError>
+            <DialogFooter>
+              <Button onClick={close} type="button" variant="outline">
+                {config.localization.cancel}
+              </Button>
+              <form.AuthFormSubmitButton disabled={createUser.isPending}>
+                {config.localization.createUser}
+              </form.AuthFormSubmitButton>
+            </DialogFooter>
+          </form.AuthFormRoot>
+        </form.AppForm>
       </DialogContent>
     </Dialog>
   );
@@ -897,48 +1015,16 @@ function UserInspector({
     },
     { enabled: Boolean(userId) },
   );
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [emailVerified, setEmailVerified] = useState(false);
-  const [roles, setRoles] = useState([config.defaultRole]);
   const [banReason, setBanReason] = useState("");
   const [banDuration, setBanDuration] = useState("");
   const banDurationSeconds = getBanDurationSeconds(banDuration);
-  const [profileError, setProfileError] = useState<string>();
   const [passwordOpen, setPasswordOpen] = useState(false);
   const [dangerousAction, setDangerousAction] = useState<DangerousAction>();
-  const profileUserId = useRef(user?.id);
   const isSelf = user?.id === actor?.user.id;
 
   const updateUser = useMutation(
     updateAdminUserOptions(auth.authClient, actor?.user.id),
   );
-
-  useEffect(() => {
-    setName(user?.name ?? "");
-    setEmail(user?.email ?? "");
-    setEmailVerified(user?.emailVerified ?? false);
-    setRoles(
-      parseAdminRoles(
-        user?.role,
-        config.defaultRole,
-        config.allowMultipleRoles,
-      ),
-    );
-  }, [
-    config.allowMultipleRoles,
-    config.defaultRole,
-    user?.email,
-    user?.emailVerified,
-    user?.name,
-    user?.role,
-  ]);
-
-  useEffect(() => {
-    if (profileUserId.current === user?.id) return;
-    profileUserId.current = user?.id;
-    setProfileError(undefined);
-  }, [user?.id]);
 
   useEffect(() => {
     if (user?.id) updateUser.reset();
@@ -967,6 +1053,86 @@ function UserInspector({
   const revokeSessions = useMutation(
     revokeAdminUserSessionsOptions(auth.authClient, actor?.user.id, userId),
   );
+  const configuredUserFields = useMemo(
+    () =>
+      fieldsWithModelValues(
+        auth.additionalFields ?? [],
+        user ? (user as unknown as Record<string, unknown>) : {},
+      ),
+    [auth.additionalFields, user],
+  );
+  const profileForm = useAuthForm({
+    defaultValues: {
+      additionalFields: getAdditionalFieldDefaultValues(configuredUserFields),
+      email: "",
+      emailVerified: false,
+      name: "",
+      roles: [config.defaultRole],
+    },
+    onSubmit: async ({ value }) => {
+      if (!user) return;
+
+      const mutations: Promise<unknown>[] = [];
+      if (canUpdate.data?.success) {
+        mutations.push(
+          updateUser.mutateAsync({
+            userId: user.id,
+            data: {
+              ...getAdditionalFieldSubmitValues(
+                configuredUserFields,
+                value.additionalFields,
+              ),
+              name: value.name.trim(),
+              ...(canSetEmail.data?.success
+                ? {
+                    email: value.email.trim(),
+                    emailVerified: value.emailVerified,
+                  }
+                : {}),
+            },
+          }),
+        );
+      }
+      if (canSetRole.data?.success && !isSelf) {
+        mutations.push(
+          setRoleMutation.mutateAsync({
+            userId: user.id,
+            role: asAdminRoles(value.roles),
+          }),
+        );
+      }
+
+      try {
+        await Promise.all(mutations);
+        onOpenChange(false);
+      } catch {
+        // Mutation errors are rendered next to the form.
+      }
+    },
+  });
+
+  useEffect(() => {
+    profileForm.reset({
+      additionalFields: getAdditionalFieldDefaultValues(configuredUserFields),
+      email: user?.email ?? "",
+      emailVerified: user?.emailVerified ?? false,
+      name: user?.name ?? "",
+      roles: parseAdminRoles(
+        user?.role,
+        config.defaultRole,
+        config.allowMultipleRoles,
+      ),
+    });
+  }, [
+    config.allowMultipleRoles,
+    config.defaultRole,
+    configuredUserFields,
+    profileForm.reset,
+    user?.email,
+    user?.emailVerified,
+    user?.name,
+    user?.role,
+  ]);
 
   const confirm = () => {
     if (!user) return;
@@ -1040,54 +1206,6 @@ function UserInspector({
         : dangerousAction === "revokeAll"
           ? config.localization.revokeAllSessions
           : config.localization.impersonateUser;
-
-  const saveUser = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!user) return;
-
-    const mutations: Promise<unknown>[] = [];
-    if (canUpdate.data?.success) {
-      const formData = new FormData(event.currentTarget);
-      let additionalFieldValues: Record<string, AdditionalFieldValue | null>;
-      try {
-        additionalFieldValues = await parseAdditionalFieldValues(
-          auth.additionalFields ?? [],
-          formData,
-        );
-      } catch (error) {
-        setProfileError(error instanceof Error ? error.message : String(error));
-        return;
-      }
-      setProfileError(undefined);
-      mutations.push(
-        updateUser.mutateAsync({
-          userId: user.id,
-          data: {
-            ...additionalFieldValues,
-            name: name.trim(),
-            ...(canSetEmail.data?.success
-              ? { email: email.trim(), emailVerified }
-              : {}),
-          },
-        }),
-      );
-    }
-    if (canSetRole.data?.success && !isSelf) {
-      mutations.push(
-        setRoleMutation.mutateAsync({
-          userId: user.id,
-          role: asAdminRoles(roles),
-        }),
-      );
-    }
-
-    try {
-      await Promise.all(mutations);
-      onOpenChange(false);
-    } catch {
-      // Mutation errors are rendered next to the form.
-    }
-  };
 
   return (
     <>
@@ -1182,298 +1300,346 @@ function UserInspector({
                 ))}
               </TabsList>
               <TabsContent className="min-h-0 overflow-hidden" value="overview">
-                <form
-                  className="grid h-full grid-rows-[minmax(0,1fr)_auto]"
-                  onSubmit={saveUser}
-                >
-                  <div className="overflow-y-auto">
-                    <section className="flex flex-col gap-5 p-6">
-                      <h3 className="font-medium">
-                        {config.localization.profileAndAccess}
-                      </h3>
-                      <FieldGroup className="grid gap-5 md:grid-cols-2">
-                        <Field>
-                          <FieldLabel htmlFor="admin-user-name">
-                            {config.localization.name}
-                          </FieldLabel>
-                          <InputGroup>
-                            <InputGroupInput
-                              disabled={!canUpdate.data?.success}
-                              id="admin-user-name"
-                              value={name}
-                              onChange={(event) => setName(event.target.value)}
-                            />
-                          </InputGroup>
-                        </Field>
-                        <Field>
-                          <FieldLabel htmlFor="admin-user-email">
-                            {config.localization.email}
-                          </FieldLabel>
-                          <InputGroup>
-                            <InputGroupInput
-                              disabled={
-                                !canUpdate.data?.success ||
-                                !canSetEmail.data?.success
-                              }
-                              id="admin-user-email"
-                              onChange={(event) => setEmail(event.target.value)}
-                              required
-                              type="email"
-                              value={email}
-                            />
-                          </InputGroup>
-                        </Field>
-                        <Field orientation="horizontal">
-                          <Switch
-                            checked={emailVerified}
-                            disabled={
-                              !canUpdate.data?.success ||
-                              !canSetEmail.data?.success
-                            }
-                            id="admin-user-email-verified"
-                            onCheckedChange={setEmailVerified}
-                          />
-                          <FieldContent>
-                            <FieldLabel htmlFor="admin-user-email-verified">
-                              {config.localization.emailVerified}
-                            </FieldLabel>
-                          </FieldContent>
-                        </Field>
-                        <FieldSet>
-                          <FieldLegend variant="label">
-                            {config.localization.role}
-                          </FieldLegend>
-                          {config.allowMultipleRoles ? (
-                            <FieldGroup
-                              className="flex-row flex-wrap gap-4"
-                              data-slot="checkbox-group"
-                            >
-                              {config.roles.map((item) => (
-                                <Field key={item} orientation="horizontal">
-                                  <Checkbox
-                                    checked={roles.includes(item)}
+                <profileForm.AppForm>
+                  <profileForm.AuthFormRoot className="grid h-full grid-rows-[minmax(0,1fr)_auto]">
+                    <div className="overflow-y-auto">
+                      <section className="flex flex-col gap-5 p-6">
+                        <h3 className="font-medium">
+                          {config.localization.profileAndAccess}
+                        </h3>
+                        <FieldGroup className="grid gap-5 md:grid-cols-2">
+                          <profileForm.Field name="name">
+                            {(field) => (
+                              <Field>
+                                <FieldLabel htmlFor="admin-user-name">
+                                  {config.localization.name}
+                                </FieldLabel>
+                                <InputGroup>
+                                  <InputGroupInput
+                                    disabled={!canUpdate.data?.success}
+                                    id="admin-user-name"
+                                    name={field.name}
+                                    value={field.state.value}
+                                    onChange={(event) =>
+                                      field.handleChange(event.target.value)
+                                    }
+                                  />
+                                </InputGroup>
+                              </Field>
+                            )}
+                          </profileForm.Field>
+                          <profileForm.Field name="email">
+                            {(field) => (
+                              <Field>
+                                <FieldLabel htmlFor="admin-user-email">
+                                  {config.localization.email}
+                                </FieldLabel>
+                                <InputGroup>
+                                  <InputGroupInput
+                                    disabled={
+                                      !canUpdate.data?.success ||
+                                      !canSetEmail.data?.success
+                                    }
+                                    id="admin-user-email"
+                                    name={field.name}
+                                    onChange={(event) =>
+                                      field.handleChange(event.target.value)
+                                    }
+                                    required
+                                    type="email"
+                                    value={field.state.value}
+                                  />
+                                </InputGroup>
+                              </Field>
+                            )}
+                          </profileForm.Field>
+                          <profileForm.Field name="emailVerified">
+                            {(field) => (
+                              <Field orientation="horizontal">
+                                <Switch
+                                  checked={field.state.value}
+                                  disabled={
+                                    !canUpdate.data?.success ||
+                                    !canSetEmail.data?.success
+                                  }
+                                  id="admin-user-email-verified"
+                                  onCheckedChange={field.handleChange}
+                                />
+                                <FieldContent>
+                                  <FieldLabel htmlFor="admin-user-email-verified">
+                                    {config.localization.emailVerified}
+                                  </FieldLabel>
+                                </FieldContent>
+                              </Field>
+                            )}
+                          </profileForm.Field>
+                          <FieldSet>
+                            <FieldLegend variant="label">
+                              {config.localization.role}
+                            </FieldLegend>
+                            <profileForm.Field name="roles">
+                              {(field) =>
+                                config.allowMultipleRoles ? (
+                                  <FieldGroup
+                                    className="flex-row flex-wrap gap-4"
+                                    data-slot="checkbox-group"
+                                  >
+                                    {config.roles.map((item) => (
+                                      <Field
+                                        key={item}
+                                        orientation="horizontal"
+                                      >
+                                        <Checkbox
+                                          checked={field.state.value.includes(
+                                            item,
+                                          )}
+                                          disabled={
+                                            isSelf || !canSetRole.data?.success
+                                          }
+                                          id={`admin-user-role-${item}`}
+                                          onCheckedChange={(checked) => {
+                                            const next = checked
+                                              ? [...field.state.value, item]
+                                              : field.state.value.filter(
+                                                  (role) => role !== item,
+                                                );
+                                            if (next.length)
+                                              field.handleChange(next);
+                                          }}
+                                        />
+                                        <FieldLabel
+                                          htmlFor={`admin-user-role-${item}`}
+                                        >
+                                          {item}
+                                        </FieldLabel>
+                                      </Field>
+                                    ))}
+                                  </FieldGroup>
+                                ) : (
+                                  <RadioGroup
+                                    className="flex-row flex-wrap gap-4"
                                     disabled={
                                       isSelf || !canSetRole.data?.success
                                     }
-                                    id={`admin-user-role-${item}`}
-                                    onCheckedChange={(checked) => {
-                                      const next = checked
-                                        ? [...roles, item]
-                                        : roles.filter((role) => role !== item);
-                                      if (next.length) setRoles(next);
-                                    }}
-                                  />
-                                  <FieldLabel
-                                    htmlFor={`admin-user-role-${item}`}
+                                    onValueChange={(role) =>
+                                      field.handleChange([role])
+                                    }
+                                    value={field.state.value[0] ?? ""}
                                   >
-                                    {item}
-                                  </FieldLabel>
-                                </Field>
-                              ))}
-                            </FieldGroup>
-                          ) : (
-                            <RadioGroup
-                              className="flex-row flex-wrap gap-4"
-                              disabled={isSelf || !canSetRole.data?.success}
-                              onValueChange={(role) => setRoles([role])}
-                              value={roles[0] ?? ""}
-                            >
-                              {config.roles.map((item) => (
-                                <Field key={item} orientation="horizontal">
-                                  <RadioGroupItem
-                                    id={`admin-user-role-${item}`}
-                                    value={item}
-                                  />
-                                  <FieldLabel
-                                    htmlFor={`admin-user-role-${item}`}
-                                  >
-                                    {item}
-                                  </FieldLabel>
-                                </Field>
-                              ))}
-                            </RadioGroup>
-                          )}
-                        </FieldSet>
-                        {auth.additionalFields?.map((field) => {
-                          const value = (
-                            user as unknown as Record<string, unknown>
-                          )[field.name];
-                          return (
-                            <AdditionalField
-                              field={{
-                                ...field,
-                                defaultValue:
-                                  value as AdditionalFieldValue | null,
-                              }}
-                              isPending={
-                                updateUser.isPending || !canUpdate.data?.success
+                                    {config.roles.map((item) => (
+                                      <Field
+                                        key={item}
+                                        orientation="horizontal"
+                                      >
+                                        <RadioGroupItem
+                                          id={`admin-user-role-${item}`}
+                                          value={item}
+                                        />
+                                        <FieldLabel
+                                          htmlFor={`admin-user-role-${item}`}
+                                        >
+                                          {item}
+                                        </FieldLabel>
+                                      </Field>
+                                    ))}
+                                  </RadioGroup>
+                                )
                               }
-                              key={`${user.id}-${field.name}-${String(value ?? "")}`}
-                              name={field.name}
-                            />
-                          );
-                        })}
-                      </FieldGroup>
-                      <FieldError>
-                        {profileError ??
-                          getAdminErrorMessage(updateUser.error) ??
-                          getAdminErrorMessage(setRoleMutation.error)}
-                      </FieldError>
-                    </section>
-                    <Separator />
-                    <section className="flex flex-col gap-4 p-6">
-                      <h3 className="font-medium">
-                        {config.localization.accountInformation}
-                      </h3>
-                      <dl className="grid gap-x-8 gap-y-4 text-sm sm:grid-cols-2">
-                        <div className="flex flex-col gap-1">
-                          <dt className="text-muted-foreground">
-                            {config.localization.userId}
-                          </dt>
-                          <dd className="flex min-w-0 items-center gap-1">
-                            <code className="truncate text-xs">{user.id}</code>
-                            <Button
-                              aria-label={config.localization.copyUserId}
-                              onClick={() =>
-                                navigator.clipboard.writeText(user.id)
-                              }
-                              size="icon-xs"
-                              type="button"
-                              variant="ghost"
+                            </profileForm.Field>
+                          </FieldSet>
+                          {configuredUserFields.map((configuredField) => (
+                            <profileForm.AppField
+                              key={configuredField.name}
+                              name={`additionalFields.${configuredField.name}`}
+                              validators={getAuthAdditionalFieldValidators(
+                                configuredField,
+                                auth.localization.auth.fieldRequired,
+                              )}
                             >
-                              <CopyIcon />
-                            </Button>
-                          </dd>
-                        </div>
-                        <div className="flex flex-col gap-1">
-                          <dt className="text-muted-foreground">
-                            {config.localization.created}
-                          </dt>
-                          <dd>{formatDate(user.createdAt)}</dd>
-                        </div>
-                        <div className="flex flex-col gap-1">
-                          <dt className="text-muted-foreground">
-                            {config.localization.status}
-                          </dt>
-                          <dd>
-                            <Badge
-                              variant={
-                                user.banned ? "destructive" : "secondary"
-                              }
-                            >
-                              {user.banned
-                                ? config.localization.banned
-                                : config.localization.active}
-                            </Badge>
-                          </dd>
-                        </div>
-                        {user.banned && user.banReason ? (
-                          <div className="flex flex-col gap-1">
-                            <dt className="text-muted-foreground">
-                              {config.localization.banReason}
-                            </dt>
-                            <dd>{user.banReason}</dd>
-                          </div>
-                        ) : null}
-                        {user.banned && user.banExpires ? (
-                          <div className="flex flex-col gap-1">
-                            <dt className="text-muted-foreground">
-                              {config.localization.banExpires}
-                            </dt>
-                            <dd>{formatDate(user.banExpires)}</dd>
-                          </div>
-                        ) : null}
-                      </dl>
-                    </section>
-                    <Separator />
-                    <section className="flex flex-col gap-4 p-6">
-                      <h3 className="font-medium">
-                        {config.localization.security}
-                      </h3>
-                      <div>
-                        <Button
-                          disabled={
-                            canSetPassword.isPending ||
-                            !canSetPassword.data?.success
-                          }
-                          onClick={() => setPasswordOpen(true)}
-                          type="button"
-                          variant="outline"
-                        >
-                          <KeyRoundIcon />
-                          {config.localization.setPassword}
-                        </Button>
-                      </div>
-                    </section>
-                    <Separator />
-                    <section className="flex flex-col gap-4 p-6">
-                      <h3 className="font-medium">
-                        {config.localization.dangerZone}
-                      </h3>
-                      <div className="flex flex-wrap gap-2">
-                        <Button
-                          disabled={
-                            canBan.isPending || !canBan.data?.success || isSelf
-                          }
-                          onClick={() =>
-                            user.banned
-                              ? unban.mutate({ userId: user.id })
-                              : setDangerousAction("ban")
-                          }
-                          type="button"
-                          variant="outline"
-                        >
-                          <BanIcon />
-                          {user.banned
-                            ? config.localization.unbanUser
-                            : config.localization.banUser}
-                        </Button>
-                        <Button
-                          disabled={
-                            canDelete.isPending ||
-                            !canDelete.data?.success ||
-                            isSelf
-                          }
-                          onClick={() => setDangerousAction("delete")}
-                          type="button"
-                          variant="destructive"
-                        >
-                          <Trash2Icon />
-                          {config.localization.deleteUser}
-                        </Button>
-                      </div>
-                      {unban.error ? (
+                              {(field) => (
+                                <field.AuthFormAdditionalField
+                                  field={configuredField}
+                                  isPending={
+                                    updateUser.isPending ||
+                                    !canUpdate.data?.success
+                                  }
+                                />
+                              )}
+                            </profileForm.AppField>
+                          ))}
+                        </FieldGroup>
                         <FieldError>
-                          {getAdminErrorMessage(unban.error)}
+                          {getAdminErrorMessage(updateUser.error) ??
+                            getAdminErrorMessage(setRoleMutation.error)}
                         </FieldError>
-                      ) : null}
-                    </section>
-                  </div>
-                  <div className="flex flex-col-reverse gap-2 border-t bg-muted/50 px-6 py-4 sm:flex-row sm:justify-end">
-                    <Button
-                      onClick={() => onOpenChange(false)}
-                      type="button"
-                      variant="outline"
-                    >
-                      {config.localization.cancel}
-                    </Button>
-                    <Button
-                      disabled={
-                        !name.trim() ||
-                        !email.trim() ||
-                        updateUser.isPending ||
-                        setRoleMutation.isPending ||
-                        canUpdate.isPending ||
-                        canSetRole.isPending ||
-                        (!canUpdate.data?.success &&
-                          (!canSetRole.data?.success || isSelf))
-                      }
-                      type="submit"
-                    >
-                      {config.localization.saveChanges}
-                    </Button>
-                  </div>
-                </form>
+                      </section>
+                      <Separator />
+                      <section className="flex flex-col gap-4 p-6">
+                        <h3 className="font-medium">
+                          {config.localization.accountInformation}
+                        </h3>
+                        <dl className="grid gap-x-8 gap-y-4 text-sm sm:grid-cols-2">
+                          <div className="flex flex-col gap-1">
+                            <dt className="text-muted-foreground">
+                              {config.localization.userId}
+                            </dt>
+                            <dd className="flex min-w-0 items-center gap-1">
+                              <code className="truncate text-xs">
+                                {user.id}
+                              </code>
+                              <Button
+                                aria-label={config.localization.copyUserId}
+                                onClick={() =>
+                                  navigator.clipboard.writeText(user.id)
+                                }
+                                size="icon-xs"
+                                type="button"
+                                variant="ghost"
+                              >
+                                <CopyIcon />
+                              </Button>
+                            </dd>
+                          </div>
+                          <div className="flex flex-col gap-1">
+                            <dt className="text-muted-foreground">
+                              {config.localization.created}
+                            </dt>
+                            <dd>{formatDate(user.createdAt)}</dd>
+                          </div>
+                          <div className="flex flex-col gap-1">
+                            <dt className="text-muted-foreground">
+                              {config.localization.status}
+                            </dt>
+                            <dd>
+                              <Badge
+                                variant={
+                                  user.banned ? "destructive" : "secondary"
+                                }
+                              >
+                                {user.banned
+                                  ? config.localization.banned
+                                  : config.localization.active}
+                              </Badge>
+                            </dd>
+                          </div>
+                          {user.banned && user.banReason ? (
+                            <div className="flex flex-col gap-1">
+                              <dt className="text-muted-foreground">
+                                {config.localization.banReason}
+                              </dt>
+                              <dd>{user.banReason}</dd>
+                            </div>
+                          ) : null}
+                          {user.banned && user.banExpires ? (
+                            <div className="flex flex-col gap-1">
+                              <dt className="text-muted-foreground">
+                                {config.localization.banExpires}
+                              </dt>
+                              <dd>{formatDate(user.banExpires)}</dd>
+                            </div>
+                          ) : null}
+                        </dl>
+                      </section>
+                      <Separator />
+                      <section className="flex flex-col gap-4 p-6">
+                        <h3 className="font-medium">
+                          {config.localization.security}
+                        </h3>
+                        <div>
+                          <Button
+                            disabled={
+                              canSetPassword.isPending ||
+                              !canSetPassword.data?.success
+                            }
+                            onClick={() => setPasswordOpen(true)}
+                            type="button"
+                            variant="outline"
+                          >
+                            <KeyRoundIcon />
+                            {config.localization.setPassword}
+                          </Button>
+                        </div>
+                      </section>
+                      <Separator />
+                      <section className="flex flex-col gap-4 p-6">
+                        <h3 className="font-medium">
+                          {config.localization.dangerZone}
+                        </h3>
+                        <div className="flex flex-wrap gap-2">
+                          <Button
+                            disabled={
+                              canBan.isPending ||
+                              !canBan.data?.success ||
+                              isSelf
+                            }
+                            onClick={() =>
+                              user.banned
+                                ? unban.mutate({ userId: user.id })
+                                : setDangerousAction("ban")
+                            }
+                            type="button"
+                            variant="outline"
+                          >
+                            <BanIcon />
+                            {user.banned
+                              ? config.localization.unbanUser
+                              : config.localization.banUser}
+                          </Button>
+                          <Button
+                            disabled={
+                              canDelete.isPending ||
+                              !canDelete.data?.success ||
+                              isSelf
+                            }
+                            onClick={() => setDangerousAction("delete")}
+                            type="button"
+                            variant="destructive"
+                          >
+                            <Trash2Icon />
+                            {config.localization.deleteUser}
+                          </Button>
+                        </div>
+                        {unban.error ? (
+                          <FieldError>
+                            {getAdminErrorMessage(unban.error)}
+                          </FieldError>
+                        ) : null}
+                      </section>
+                    </div>
+                    <div className="flex flex-col-reverse gap-2 border-t bg-muted/50 px-6 py-4 sm:flex-row sm:justify-end">
+                      <Button
+                        onClick={() => onOpenChange(false)}
+                        type="button"
+                        variant="outline"
+                      >
+                        {config.localization.cancel}
+                      </Button>
+                      <profileForm.Subscribe
+                        selector={(state) => [
+                          state.values.name,
+                          state.values.email,
+                        ]}
+                      >
+                        {([name, email]) => (
+                          <profileForm.AuthFormSubmitButton
+                            disabled={
+                              !name.trim() ||
+                              !email.trim() ||
+                              updateUser.isPending ||
+                              setRoleMutation.isPending ||
+                              canUpdate.isPending ||
+                              canSetRole.isPending ||
+                              (!canUpdate.data?.success &&
+                                (!canSetRole.data?.success || isSelf))
+                            }
+                          >
+                            {config.localization.saveChanges}
+                          </profileForm.AuthFormSubmitButton>
+                        )}
+                      </profileForm.Subscribe>
+                    </div>
+                  </profileForm.AuthFormRoot>
+                </profileForm.AppForm>
               </TabsContent>
               <TabsContent
                 className="min-h-0 overflow-y-auto p-6"

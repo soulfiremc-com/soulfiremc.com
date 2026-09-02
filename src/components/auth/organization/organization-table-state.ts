@@ -1,6 +1,14 @@
 "use client";
 
 import {
+  parseTableColumnVisibility,
+  parseTableUrlState,
+  serializeTableColumnVisibility,
+  serializeTableUrlState,
+  type TableUrlState,
+} from "@better-auth-ui/core";
+import { useCreateAtom, useSelector } from "@tanstack/react-store";
+import {
   type ColumnFiltersState,
   type ColumnVisibilityState,
   functionalUpdate,
@@ -9,7 +17,7 @@ import {
   type SortingState,
   type Updater,
 } from "@tanstack/react-table";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { ORGANIZATION_TABLE_PAGE_SIZE } from "./organization-table";
 
 const TABLE_STATE_STORAGE_PREFIX = "better-auth-ui:organization-table";
@@ -21,74 +29,38 @@ type OrganizationTableUrlState = {
   sorting: SortingState;
 };
 
-function parsePositiveInteger(value: string | null, fallback: number) {
-  const parsed = Number(value);
-  return Number.isSafeInteger(parsed) && parsed > 0 ? parsed : fallback;
-}
-
-function parseSorting(value: string | null): SortingState {
-  if (!value) return [];
-
-  return value.split(",").flatMap((entry) => {
-    const [id, direction] = entry.split(".");
-    return id && (direction === "asc" || direction === "desc")
-      ? [{ id, desc: direction === "desc" }]
-      : [];
-  });
-}
-
 function readUrlState(
   stateKey: string,
   defaultPageSize: number,
-): OrganizationTableUrlState {
+  allowedColumnIds?: readonly string[],
+): TableUrlState {
   const params =
     typeof window === "undefined"
       ? new URLSearchParams()
       : new URLSearchParams(window.location.search);
-  const filterPrefix = `${stateKey}.filter.`;
-  const columnFilters: ColumnFiltersState = [];
-
-  for (const [key, value] of params) {
-    if (key.startsWith(filterPrefix) && value) {
-      columnFilters.push({ id: key.slice(filterPrefix.length), value });
-    }
-  }
-
-  return {
-    columnFilters,
-    globalFilter: params.get(`${stateKey}.search`) ?? "",
-    pagination: {
-      pageIndex: parsePositiveInteger(params.get(`${stateKey}.page`), 1) - 1,
-      pageSize: parsePositiveInteger(
-        params.get(`${stateKey}.pageSize`),
-        defaultPageSize,
-      ),
-    },
-    sorting: parseSorting(params.get(`${stateKey}.sort`)),
-  };
+  return parseTableUrlState(
+    params,
+    stateKey,
+    defaultPageSize,
+    ORGANIZATION_TABLE_PAGE_SIZE_OPTIONS,
+    allowedColumnIds,
+  );
 }
 
-function readColumnVisibility(stateKey: string): ColumnVisibilityState {
+function readColumnVisibility(
+  stateKey: string,
+  allowedColumnIds?: readonly string[],
+): ColumnVisibilityState {
   if (typeof window === "undefined") return {};
 
   try {
     const value = window.localStorage.getItem(
       `${TABLE_STATE_STORAGE_PREFIX}:${stateKey}:columns`,
     );
-    return value ? (JSON.parse(value) as ColumnVisibilityState) : {};
+    return parseTableColumnVisibility(value, allowedColumnIds);
   } catch {
     return {};
   }
-}
-
-function setOrDelete(
-  params: URLSearchParams,
-  key: string,
-  value: string,
-  defaultValue = "",
-) {
-  if (value === defaultValue) params.delete(key);
-  else params.set(key, value);
 }
 
 function writeUrlState(
@@ -99,37 +71,12 @@ function writeUrlState(
   if (typeof window === "undefined") return;
 
   const url = new URL(window.location.href);
-  const filterPrefix = `${stateKey}.filter.`;
-
-  for (const key of Array.from(url.searchParams.keys())) {
-    if (key.startsWith(filterPrefix)) url.searchParams.delete(key);
-  }
-
-  for (const filter of state.columnFilters) {
-    const value = String(filter.value ?? "");
-    if (value) url.searchParams.set(`${filterPrefix}${filter.id}`, value);
-  }
-
-  setOrDelete(url.searchParams, `${stateKey}.search`, state.globalFilter);
-  setOrDelete(
+  url.search = serializeTableUrlState(
     url.searchParams,
-    `${stateKey}.page`,
-    String(state.pagination.pageIndex + 1),
-    "1",
-  );
-  setOrDelete(
-    url.searchParams,
-    `${stateKey}.pageSize`,
-    String(state.pagination.pageSize),
-    String(defaultPageSize),
-  );
-  setOrDelete(
-    url.searchParams,
-    `${stateKey}.sort`,
-    state.sorting
-      .map(({ desc, id }) => `${id}.${desc ? "desc" : "asc"}`)
-      .join(","),
-  );
+    stateKey,
+    defaultPageSize,
+    state,
+  ).toString();
 
   window.history.replaceState(window.history.state, "", url);
 }
@@ -137,44 +84,100 @@ function writeUrlState(
 export function useOrganizationTableState(
   stateKey: string,
   defaultPageSize = ORGANIZATION_TABLE_PAGE_SIZE,
+  allowedColumnIds?: readonly string[],
 ) {
-  const [columnFilters, setColumnFiltersState] = useState<ColumnFiltersState>(
-    [],
-  );
-  const [columnVisibility, setColumnVisibility] =
-    useState<ColumnVisibilityState>({});
-  const [globalFilter, setGlobalFilterState] = useState("");
-  const [pagination, setPaginationState] = useState<PaginationState>({
+  const columnFiltersAtom = useCreateAtom<ColumnFiltersState>([]);
+  const columnVisibilityAtom = useCreateAtom<ColumnVisibilityState>({});
+  const globalFilterAtom = useCreateAtom("");
+  const paginationAtom = useCreateAtom<PaginationState>({
     pageIndex: 0,
     pageSize: defaultPageSize,
   });
-  const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
-  const [sorting, setSortingState] = useState<SortingState>([]);
+  const rowSelectionAtom = useCreateAtom<RowSelectionState>({});
+  const sortingAtom = useCreateAtom<SortingState>([]);
+  const columnFilters = useSelector(columnFiltersAtom);
+  const columnVisibility = useSelector(columnVisibilityAtom);
+  const globalFilter = useSelector(globalFilterAtom);
+  const pagination = useSelector(paginationAtom);
+  const rowSelection = useSelector(rowSelectionAtom);
+  const sorting = useSelector(sortingAtom);
   const [urlReady, setUrlReady] = useState(false);
   const [visibilityReady, setVisibilityReady] = useState(false);
+  const atoms = useMemo(
+    () => ({
+      columnFilters: columnFiltersAtom,
+      globalFilter: globalFilterAtom,
+      pagination: paginationAtom,
+      rowSelection: rowSelectionAtom,
+      sorting: sortingAtom,
+    }),
+    [
+      columnFiltersAtom,
+      globalFilterAtom,
+      paginationAtom,
+      rowSelectionAtom,
+      sortingAtom,
+    ],
+  );
 
-  const setPagination = (updater: Updater<PaginationState>) => {
-    setPaginationState((current) => functionalUpdate(updater, current));
-    setRowSelection({});
-  };
+  const setPagination = useCallback(
+    (updater: Updater<PaginationState>) => {
+      paginationAtom.set((current) => functionalUpdate(updater, current));
+    },
+    [paginationAtom],
+  );
 
-  const setColumnFilters = (updater: Updater<ColumnFiltersState>) => {
-    setColumnFiltersState((current) => functionalUpdate(updater, current));
-    setPaginationState((current) => ({ ...current, pageIndex: 0 }));
-    setRowSelection({});
-  };
+  const setColumnVisibility = useCallback(
+    (updater: Updater<ColumnVisibilityState>) => {
+      columnVisibilityAtom.set((current) => functionalUpdate(updater, current));
+    },
+    [columnVisibilityAtom],
+  );
 
-  const setGlobalFilter = (updater: Updater<string>) => {
-    setGlobalFilterState((current) => functionalUpdate(updater, current));
-    setPaginationState((current) => ({ ...current, pageIndex: 0 }));
-    setRowSelection({});
-  };
+  const setColumnFilters = useCallback(
+    (updater: Updater<ColumnFiltersState>) => {
+      columnFiltersAtom.set((current) => functionalUpdate(updater, current));
+    },
+    [columnFiltersAtom],
+  );
 
-  const setSorting = (updater: Updater<SortingState>) => {
-    setSortingState((current) => functionalUpdate(updater, current));
-    setPaginationState((current) => ({ ...current, pageIndex: 0 }));
-    setRowSelection({});
-  };
+  const setGlobalFilter = useCallback(
+    (updater: Updater<string>) => {
+      globalFilterAtom.set((current) => functionalUpdate(updater, current));
+    },
+    [globalFilterAtom],
+  );
+
+  const setSorting = useCallback(
+    (updater: Updater<SortingState>) => {
+      sortingAtom.set((current) => functionalUpdate(updater, current));
+    },
+    [sortingAtom],
+  );
+
+  useEffect(() => {
+    const resetPage = () => {
+      const current = paginationAtom.get();
+      if (current.pageIndex === 0) rowSelectionAtom.set({});
+      else paginationAtom.set({ ...current, pageIndex: 0 });
+    };
+    const subscriptions = [
+      columnFiltersAtom.subscribe(resetPage),
+      globalFilterAtom.subscribe(resetPage),
+      sortingAtom.subscribe(resetPage),
+      paginationAtom.subscribe(() => rowSelectionAtom.set({})),
+    ];
+
+    return () => {
+      for (const subscription of subscriptions) subscription.unsubscribe();
+    };
+  }, [
+    columnFiltersAtom,
+    globalFilterAtom,
+    paginationAtom,
+    rowSelectionAtom,
+    sortingAtom,
+  ]);
 
   useEffect(() => {
     if (!urlReady) return;
@@ -201,7 +204,7 @@ export function useOrganizationTableState(
     try {
       window.localStorage.setItem(
         `${TABLE_STATE_STORAGE_PREFIX}:${stateKey}:columns`,
-        JSON.stringify(columnVisibility),
+        serializeTableColumnVisibility(columnVisibility),
       );
     } catch {
       // Browsers can disable storage while still allowing the table to work.
@@ -209,36 +212,46 @@ export function useOrganizationTableState(
   }, [columnVisibility, stateKey, visibilityReady]);
 
   useEffect(() => {
-    setColumnVisibility(readColumnVisibility(stateKey));
+    columnVisibilityAtom.set(readColumnVisibility(stateKey, allowedColumnIds));
     setVisibilityReady(true);
 
     const restoreUrlState = () => {
-      const next = readUrlState(stateKey, defaultPageSize);
-      setColumnFiltersState(next.columnFilters);
-      setGlobalFilterState(next.globalFilter);
-      setPaginationState(next.pagination);
-      setSortingState(next.sorting);
-      setRowSelection({});
+      const next = readUrlState(stateKey, defaultPageSize, allowedColumnIds);
+      columnFiltersAtom.set(next.columnFilters);
+      globalFilterAtom.set(next.globalFilter);
+      sortingAtom.set(next.sorting);
+      paginationAtom.set(next.pagination);
       setUrlReady(true);
     };
 
     restoreUrlState();
     window.addEventListener("popstate", restoreUrlState);
     return () => window.removeEventListener("popstate", restoreUrlState);
-  }, [defaultPageSize, stateKey]);
+  }, [
+    allowedColumnIds,
+    columnFiltersAtom,
+    columnVisibilityAtom,
+    defaultPageSize,
+    globalFilterAtom,
+    paginationAtom,
+    sortingAtom,
+    stateKey,
+  ]);
 
   return {
+    atoms,
     columnFilters,
     columnVisibility,
     globalFilter,
     pagination,
+    ready: urlReady && visibilityReady,
     rowSelection,
     sorting,
     setColumnFilters,
     setColumnVisibility,
     setGlobalFilter,
     setPagination,
-    setRowSelection,
+    setRowSelection: rowSelectionAtom.set,
     setSorting,
   };
 }

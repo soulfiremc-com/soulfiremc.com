@@ -78,6 +78,7 @@ const invitationColumns = invitationColumnHelper.columns([
       row.getValue(columnId) === String(value),
   }),
 ]);
+const INVITATION_COLUMN_IDS = ["email", "createdAt", "role", "status"] as const;
 const EMPTY_INVITATIONS: Invitation[] = [];
 
 /** Props for the `OrganizationInvitations` component. */
@@ -109,17 +110,12 @@ export function OrganizationInvitations({
   const tableState = useOrganizationTableState(
     "organizationInvitations",
     ORGANIZATION_TABLE_PAGE_SIZE,
+    INVITATION_COLUMN_IDS,
   );
-  const {
-    columnFilters,
-    columnVisibility,
-    globalFilter,
-    pagination,
-    rowSelection,
-    sorting,
-  } = tableState;
+  const { columnVisibility, globalFilter, pagination } = tableState;
 
   const table = useOrganizationTable({
+    atoms: tableState.atoms,
     columns: invitationColumns,
     data: invitations ?? EMPTY_INVITATIONS,
     enableRowSelection: (row) =>
@@ -127,19 +123,9 @@ export function OrganizationInvitations({
     globalFilterFn: "includesString",
     getRowId: (invitation) => invitation.id,
     state: {
-      columnFilters,
       columnVisibility,
-      globalFilter,
-      pagination,
-      rowSelection,
-      sorting,
     },
-    onColumnFiltersChange: tableState.setColumnFilters,
     onColumnVisibilityChange: tableState.setColumnVisibility,
-    onGlobalFilterChange: tableState.setGlobalFilter,
-    onPaginationChange: tableState.setPagination,
-    onRowSelectionChange: tableState.setRowSelection,
-    onSortingChange: tableState.setSorting,
   });
 
   const cancelInvitations = useCancelInvitation(authClient);
