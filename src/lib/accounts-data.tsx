@@ -313,6 +313,70 @@ export const SHOPS: Shop[] = [
     },
   },
   {
+    slug: "fernan",
+    name: "Fernan's Club",
+    logo: "/accounts/fernan.webp",
+    url: "https://fernan.club",
+    websiteUrl: "https://fernan.club",
+    discordUrl: "https://alts.fernan.club",
+    paymentMethods: [
+      "Litecoin",
+      "Card",
+      "Crypto",
+      "Paysafecard",
+      "Apple Pay",
+      "Google Pay",
+      "PayPal",
+      "WeChat Pay",
+      "Alipay",
+    ],
+    listings: {
+      "nfa-accounts": {
+        summary:
+          "Cookie NFAs for Hypixel, DonutSMP, and GommeHD, with live stock, server-specific tiers, and API access for automated purchases.",
+        badges: ["affiliate", "instant-delivery"],
+        price: "5¢+",
+        priceValue: 0.05,
+        couponCode: "SOULFIRE",
+        couponDiscount: "10% off",
+        priceDetails:
+          "Current cookie prices start at 5¢ for generic Hypixel-banned accounts, 10¢ for DonutSMP or GommeHD unbanned, and 15¢ for Hypixel level 1-9. Higher-level, ranked, Bedwars, Skyblock, and DonutSMP balance tiers are also available. Eligible unused cookie products have a 24-hour refund window.",
+      },
+      "mfa-accounts": {
+        summary:
+          "Full-access Minecraft credentials and game codes, including Hypixel fresh, unbanned, banned, and ranked account tiers.",
+        badges: ["affiliate", "instant-delivery"],
+        price: "$4.00+",
+        priceValue: 4,
+        couponCode: "SOULFIRE",
+        couponDiscount: "10% off",
+        priceDetails:
+          "MFA credentials currently start at $4 for Hypixel-banned accounts, $5.50 for Hypixel-unbanned, and $6.50 for fresh Hypixel status. Game codes cost $7.50, low-rank accounts cost $8.50, and high-rank accounts cost $15. MFA products include lifetime coverage for Microsoft compliance locks, subject to the shop's warranty terms.",
+      },
+    },
+  },
+  {
+    slug: "atomic-nfas",
+    name: "Atomic NFAs",
+    logo: "/accounts/atomic-nfas.webp",
+    url: "https://atomic-nfas.mysellauth.com",
+    websiteUrl: "https://atomic-nfas.mysellauth.com",
+    discordUrl: "https://discord.gg/hdXPTfZJcX",
+    listings: {
+      "nfa-accounts": {
+        summary:
+          "Credit packs and timed generator access for inexpensive NFAs, delivered through a SellAuth storefront with live stock.",
+        badges: ["instant-delivery", "bulk-discount"],
+        price: "0.8-1¢/credit",
+        priceValue: 0.008,
+        couponCode: "SOULFIRE",
+        couponDiscount: "10% off",
+        priceDetails:
+          "Credit packs currently cost $1 for 100, $2 for 200, $4 for 500, or $8 for 1,000. Generator access costs $3 for one week, $4 for one month, $10 for three months, or $20 for one year.",
+      },
+    },
+  },
+  {
     slug: "luma-mfa",
     name: "Luma MFA",
     logo: "/accounts/luma.png",
