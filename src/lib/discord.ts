@@ -7,6 +7,7 @@ const DISCORD_CACHE_KEY_BASE =
 const DISCORD_INVITE_CACHE_TTL_SECONDS = 10 * 60;
 const DISCORD_INVITE_RESOLUTION_CACHE_TTL_SECONDS = 24 * 60 * 60;
 const DISCORD_NEGATIVE_CACHE_TTL_SECONDS = 60;
+const DISCORD_REQUEST_TIMEOUT_MS = 5_000;
 
 const pendingInviteResolutions = new Map<string, Promise<string | null>>();
 const pendingInviteLookups = new Map<
@@ -227,6 +228,7 @@ async function followInviteRedirects(
   maxRedirects: number,
 ): Promise<string | null> {
   let currentUrl = initialUrl;
+  const signal = AbortSignal.timeout(DISCORD_REQUEST_TIMEOUT_MS);
 
   for (let step = 0; step < maxRedirects; step++) {
     const resolvedCode = extractInviteCode(currentUrl);
@@ -236,6 +238,7 @@ async function followInviteRedirects(
 
     const response: Response | null = await fetch(currentUrl, {
       redirect: "manual",
+      signal,
     }).catch(() => null);
 
     if (!response || !isRedirectStatus(response.status)) {
@@ -311,7 +314,10 @@ export async function fetchDiscordInvite(
 
       const response = await fetch(
         `${DISCORD_API_BASE}/invites/${inviteCode}?with_counts=true`,
-        { headers },
+        {
+          headers,
+          signal: AbortSignal.timeout(DISCORD_REQUEST_TIMEOUT_MS),
+        },
       ).catch(() => null);
 
       if (!response?.ok) {

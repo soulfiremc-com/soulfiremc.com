@@ -1,4 +1,9 @@
 import { SiDiscord, SiTrustpilot } from "@icons-pack/react-simple-icons";
+import {
+  queryOptions,
+  useQuery,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import {
@@ -44,6 +49,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useReviews } from "@/hooks/use-reviews";
 import {
@@ -227,7 +233,22 @@ function formatNumber(num: number): string {
   return num.toString();
 }
 
-function DiscordMemberBadge({ info }: { info: DiscordInviteResponse | null }) {
+function DiscordMemberBadge({
+  info,
+  pending,
+}: {
+  info: DiscordInviteResponse | null;
+  pending: boolean;
+}) {
+  if (pending) {
+    return (
+      <Skeleton
+        aria-label="Loading Discord member count"
+        className="h-5 w-16"
+      />
+    );
+  }
+
   if (!info?.approximate_member_count) {
     return (
       <UiBadge
@@ -337,10 +358,13 @@ const validateAccountsSearch = createStandardSchemaV1(accountsSearchParams, {
 
 type DiscordInvites = Record<string, DiscordInviteResponse | null>;
 
-type Props = {
+type MainContentProps = {
   discordInvites: DiscordInvites;
+  discordInvitesPending: boolean;
   initialSummaries: Record<string, ReviewSummary>;
 };
+
+type GetAccountsClientProps = Pick<MainContentProps, "initialSummaries">;
 
 function ProviderBadge({
   badge,
@@ -403,6 +427,7 @@ function ProviderLogo({ provider }: { provider: Provider }) {
 function ProviderCard({
   provider,
   discordInvites,
+  discordInvitesPending,
   reviewSummary,
   userReview,
   reviewPending,
@@ -411,6 +436,7 @@ function ProviderCard({
 }: {
   provider: Provider;
   discordInvites: DiscordInvites;
+  discordInvitesPending: boolean;
   reviewSummary: ReviewSummary;
   userReview?: UserReviewRecord;
   reviewPending: boolean;
@@ -476,7 +502,10 @@ function ProviderCard({
                 <PriceInfoBadge details={provider.priceDetails} />
               )}
             </UiBadge>
-            <DiscordMemberBadge info={discordInvite} />
+            <DiscordMemberBadge
+              info={discordInvite}
+              pending={discordInvitesPending}
+            />
             <div className="flex flex-wrap gap-2">
               {provider.badges.map((badge) => (
                 <ProviderBadge
@@ -627,7 +656,7 @@ function sortProviders(
   );
 }
 
-function MainContent(props: Props) {
+function MainContent(props: MainContentProps) {
   const providers = PROVIDERS;
   const slugs = useMemo(() => [...new Set(providers.map((p) => p.slug))], []);
   const { summaries, userReviews, pendingBySlug, upsertReview, deleteReview } =
@@ -858,6 +887,7 @@ function MainContent(props: Props) {
                       key={provider.slug}
                       provider={provider}
                       discordInvites={props.discordInvites}
+                      discordInvitesPending={props.discordInvitesPending}
                       reviewSummary={
                         summaries[provider.slug] ??
                         props.initialSummaries[provider.slug] ?? {
@@ -899,6 +929,7 @@ function MainContent(props: Props) {
                       key={provider.slug}
                       provider={provider}
                       discordInvites={props.discordInvites}
+                      discordInvitesPending={props.discordInvitesPending}
                       reviewSummary={
                         summaries[provider.slug] ??
                         props.initialSummaries[provider.slug] ?? {
@@ -924,7 +955,10 @@ function MainContent(props: Props) {
   );
 }
 
-function GetAccountsClient(props: Props) {
+function GetAccountsClient(props: GetAccountsClientProps) {
+  const { data: discordInvites = {}, isPending: discordInvitesPending } =
+    useQuery(accountsDiscordInvitesQueryOptions);
+
   return (
     <main className="mx-auto flex w-full max-w-(--fd-layout-width) flex-col gap-10 px-4 py-12">
       <div className="mx-auto flex max-w-5xl flex-col gap-4 text-center">
@@ -952,7 +986,8 @@ function GetAccountsClient(props: Props) {
       <ReviewTurnstileProvider>
         <Suspense>
           <MainContent
-            discordInvites={props.discordInvites}
+            discordInvites={discordInvites}
+            discordInvitesPending={discordInvitesPending}
             initialSummaries={props.initialSummaries}
           />
         </Suspense>
@@ -1019,37 +1054,48 @@ function GetAccountsClient(props: Props) {
   );
 }
 
-const accountsPageLoader = createServerFn({ method: "GET" }).handler(
+const accountProvidersBySlug = [
+  ...new Map(PROVIDERS.map((provider) => [provider.slug, provider])).values(),
+];
+const accountProviderSlugs = accountProvidersBySlug.map(
+  (provider) => provider.slug,
+);
+
+type LiveShopDataBySlug = Record<
+  string,
+  Awaited<ReturnType<typeof getLiveShopData>>
+>;
+
+const getAccountReviewSummaries = createServerFn({ method: "GET" }).handler(
+  () =>
+    getReviewSummaries("account", accountProviderSlugs).catch(
+      () => ({}) as Record<string, ReviewSummary>,
+    ),
+);
+
+const getAccountLiveShopData = createServerFn({ method: "GET" }).handler(
   async () => {
-    const providersBySlug = [
-      ...new Map(
-        PROVIDERS.map((provider) => [provider.slug, provider]),
-      ).values(),
-    ];
-    const reviewSummaries = await getReviewSummaries("account", [
-      ...new Set(PROVIDERS.map((provider) => provider.slug)),
-    ]).catch(
-      () =>
-        ({}) as Record<
-          string,
-          { averageRating: number | null; reviewCount: number }
-        >,
-    );
-    const liveShopDataEntries = await Promise.all(
-      providersBySlug.map(async (provider) => {
+    const entries = await Promise.all(
+      accountProvidersBySlug.map(async (provider) => {
         const shop = getShopBySlug(provider.slug);
         if (!shop) return [provider.slug, {}] as const;
+
         return [
           provider.slug,
           await getLiveShopData(shop).catch(() => ({})),
         ] as const;
       }),
     );
-    const liveShopDataBySlug = Object.fromEntries(liveShopDataEntries);
 
-    const discordInvites = Object.fromEntries(
+    return Object.fromEntries(entries) as LiveShopDataBySlug;
+  },
+);
+
+const getAccountDiscordInvites = createServerFn({ method: "GET" }).handler(
+  async () =>
+    Object.fromEntries(
       await Promise.all(
-        providersBySlug.map(async (provider) => {
+        accountProvidersBySlug.map(async (provider) => {
           const discordInviteUrl = getDiscordInviteUrl(provider);
           return [
             provider.slug,
@@ -1059,120 +1105,155 @@ const accountsPageLoader = createServerFn({ method: "GET" }).handler(
           ] as const;
         }),
       ),
-    );
-
-    const faqJsonLd = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: accountFaqItems.map((item) => ({
-        "@type": "Question" as const,
-        name: item.question,
-        acceptedAnswer: {
-          "@type": "Answer" as const,
-          text: item.answerHtml,
-        },
-      })),
-    };
-
-    const breadcrumbJsonLd = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "@id": "https://soulfiremc.com/get-accounts#breadcrumb",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "Home",
-          item: "https://soulfiremc.com",
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "Get Accounts",
-          item: "https://soulfiremc.com/get-accounts",
-        },
-      ],
-    };
-
-    const pageJsonLd = {
-      "@context": "https://schema.org",
-      "@type": "CollectionPage",
-      name: "Minecraft Alts, MFA & NFA Accounts",
-      description:
-        "Compare Minecraft alt shops and account providers for SoulFire. Browse MFA full-access accounts, NFA temporary accounts, and token or cookie alts with current pricing and delivery details.",
-      url: "https://soulfiremc.com/get-accounts",
-      inLanguage: "en-US",
-      isPartOf: {
-        "@type": "WebSite",
-        name: "SoulFire",
-        url: "https://soulfiremc.com",
-      },
-      breadcrumb: {
-        "@id": "https://soulfiremc.com/get-accounts#breadcrumb",
-      },
-      mainEntity: {
-        "@id": "https://soulfiremc.com/get-accounts#provider-list",
-      },
-    };
-
-    const itemListJsonLd = {
-      "@context": "https://schema.org",
-      "@type": "ItemList",
-      "@id": "https://soulfiremc.com/get-accounts#provider-list",
-      name: "Minecraft Alt Shops and Account Providers",
-      description:
-        "Trusted Minecraft alt shops for SoulFire bot testing. Compare MFA full-access accounts, NFA temporary accounts, and token or cookie account options.",
-      numberOfItems: providersBySlug.length,
-      itemListElement: providersBySlug.map((provider, index) => {
-        const aggregateRating = getAggregateRatingJsonLd(
-          reviewSummaries[provider.slug] ?? {
-            averageRating: null,
-            reviewCount: 0,
-          },
-        );
-        const shop = getShopBySlug(provider.slug);
-
-        return {
-          "@type": "ListItem",
-          position: index + 1,
-          url: `https://soulfiremc.com/get-accounts/${provider.slug}`,
-          item: {
-            "@type": "Product",
-            name: provider.name,
-            description: provider.summary,
-            url: `https://soulfiremc.com/get-accounts/${provider.slug}`,
-            category:
-              provider.category === "mfa-accounts"
-                ? "MFA full-access Minecraft accounts"
-                : "NFA temporary Minecraft accounts",
-            ...(shop && {
-              aggregateOffer: getShopAggregateOffer(
-                shop,
-                liveShopDataBySlug[provider.slug],
-              ),
-              offers: getListingOffer(
-                shop,
-                provider.category,
-                provider.priceValue,
-                liveShopDataBySlug[provider.slug],
-              ),
-            }),
-            ...(aggregateRating && { aggregateRating }),
-          },
-        };
-      }),
-    };
-
-    return {
-      breadcrumbJsonLd: JSON.stringify(breadcrumbJsonLd),
-      discordInvites,
-      faqJsonLd: JSON.stringify(faqJsonLd),
-      itemListJsonLd: JSON.stringify(itemListJsonLd),
-      pageJsonLd: JSON.stringify(pageJsonLd),
-      reviewSummaries,
-    };
-  },
+    ) as DiscordInvites,
 );
+
+const accountReviewSummariesQueryOptions = queryOptions({
+  queryKey: ["accounts", "review-summaries"],
+  queryFn: () => getAccountReviewSummaries(),
+  staleTime: 60_000,
+});
+
+const accountLiveShopDataQueryOptions = queryOptions({
+  queryKey: ["accounts", "live-shop-data"],
+  queryFn: () => getAccountLiveShopData(),
+  staleTime: 60_000,
+});
+
+const accountsDiscordInvitesQueryOptions = queryOptions({
+  queryKey: ["accounts", "discord-invites"],
+  queryFn: () => getAccountDiscordInvites(),
+  staleTime: 10 * 60_000,
+});
+
+const accountsFaqJsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: accountFaqItems.map((item) => ({
+    "@type": "Question" as const,
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer" as const,
+      text: item.answerHtml,
+    },
+  })),
+});
+
+const accountsBreadcrumbJsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "@id": "https://soulfiremc.com/get-accounts#breadcrumb",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: "https://soulfiremc.com",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Get Accounts",
+      item: "https://soulfiremc.com/get-accounts",
+    },
+  ],
+});
+
+const accountsPageJsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "Minecraft Alts, MFA & NFA Accounts",
+  description:
+    "Compare Minecraft alt shops and account providers for SoulFire. Browse MFA full-access accounts, NFA temporary accounts, and token or cookie alts with current pricing and delivery details.",
+  url: "https://soulfiremc.com/get-accounts",
+  inLanguage: "en-US",
+  isPartOf: {
+    "@type": "WebSite",
+    name: "SoulFire",
+    url: "https://soulfiremc.com",
+  },
+  breadcrumb: {
+    "@id": "https://soulfiremc.com/get-accounts#breadcrumb",
+  },
+  mainEntity: {
+    "@id": "https://soulfiremc.com/get-accounts#provider-list",
+  },
+});
+
+function createAccountsItemListJsonLd(
+  reviewSummaries: Record<string, ReviewSummary>,
+  liveShopDataBySlug: LiveShopDataBySlug,
+) {
+  return JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": "https://soulfiremc.com/get-accounts#provider-list",
+    name: "Minecraft Alt Shops and Account Providers",
+    description:
+      "Trusted Minecraft alt shops for SoulFire bot testing. Compare MFA full-access accounts, NFA temporary accounts, and token or cookie account options.",
+    numberOfItems: accountProvidersBySlug.length,
+    itemListElement: accountProvidersBySlug.map((provider, index) => {
+      const aggregateRating = getAggregateRatingJsonLd(
+        reviewSummaries[provider.slug] ?? {
+          averageRating: null,
+          reviewCount: 0,
+        },
+      );
+      const shop = getShopBySlug(provider.slug);
+
+      return {
+        "@type": "ListItem",
+        position: index + 1,
+        url: `https://soulfiremc.com/get-accounts/${provider.slug}`,
+        item: {
+          "@type": "Product",
+          name: provider.name,
+          description: provider.summary,
+          url: `https://soulfiremc.com/get-accounts/${provider.slug}`,
+          category:
+            provider.category === "mfa-accounts"
+              ? "MFA full-access Minecraft accounts"
+              : "NFA temporary Minecraft accounts",
+          ...(shop && {
+            aggregateOffer: getShopAggregateOffer(
+              shop,
+              liveShopDataBySlug[provider.slug],
+            ),
+            offers: getListingOffer(
+              shop,
+              provider.category,
+              provider.priceValue,
+              liveShopDataBySlug[provider.slug],
+            ),
+          }),
+          ...(aggregateRating && { aggregateRating }),
+        },
+      };
+    }),
+  });
+}
+
+function AccountsItemListStructuredData() {
+  const { data: reviewSummaries } = useSuspenseQuery(
+    accountReviewSummariesQueryOptions,
+  );
+  const { data: liveShopDataBySlug } = useSuspenseQuery(
+    accountLiveShopDataQueryOptions,
+  );
+
+  return (
+    <script
+      type="application/ld+json"
+      // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
+      dangerouslySetInnerHTML={{
+        __html: createAccountsItemListJsonLd(
+          reviewSummaries,
+          liveShopDataBySlug,
+        ),
+      }}
+    />
+  );
+}
 
 export const Route = createFileRoute("/get-accounts/")({
   validateSearch: validateAccountsSearch,
@@ -1187,39 +1268,48 @@ export const Route = createFileRoute("/get-accounts/")({
     }),
     links: getCanonicalLinks("/get-accounts"),
   }),
-  loader: async () => accountsPageLoader(),
+  loader: async ({ context }) => {
+    const liveShopDataPromise = context.queryClient.query(
+      accountLiveShopDataQueryOptions,
+    );
+    const discordInvitesPromise = context.queryClient.query(
+      accountsDiscordInvitesQueryOptions,
+    );
+
+    void liveShopDataPromise.catch(() => undefined);
+    void discordInvitesPromise.catch(() => undefined);
+
+    await context.queryClient.query(accountReviewSummariesQueryOptions);
+  },
   component: GetAccountsPage,
 });
 
 function GetAccountsPage() {
-  const data = Route.useLoaderData();
+  const { data: reviewSummaries } = useSuspenseQuery(
+    accountReviewSummariesQueryOptions,
+  );
 
   return (
     <SiteShell>
       <script
         type="application/ld+json"
         // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
-        dangerouslySetInnerHTML={{ __html: data.pageJsonLd }}
+        dangerouslySetInnerHTML={{ __html: accountsPageJsonLd }}
+      />
+      <Suspense fallback={null}>
+        <AccountsItemListStructuredData />
+      </Suspense>
+      <script
+        type="application/ld+json"
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
+        dangerouslySetInnerHTML={{ __html: accountsFaqJsonLd }}
       />
       <script
         type="application/ld+json"
         // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
-        dangerouslySetInnerHTML={{ __html: data.itemListJsonLd }}
+        dangerouslySetInnerHTML={{ __html: accountsBreadcrumbJsonLd }}
       />
-      <script
-        type="application/ld+json"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
-        dangerouslySetInnerHTML={{ __html: data.faqJsonLd }}
-      />
-      <script
-        type="application/ld+json"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
-        dangerouslySetInnerHTML={{ __html: data.breadcrumbJsonLd }}
-      />
-      <GetAccountsClient
-        discordInvites={data.discordInvites}
-        initialSummaries={data.reviewSummaries}
-      />
+      <GetAccountsClient initialSummaries={reviewSummaries} />
     </SiteShell>
   );
 }

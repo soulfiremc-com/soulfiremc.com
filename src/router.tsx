@@ -1,19 +1,20 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient } from "@tanstack/react-query";
 import { createRouter, deepEqual } from "@tanstack/react-router";
+import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
 import { routeTree } from "./routeTree.gen";
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: (failureCount) => failureCount < 3,
-      structuralSharing: (previous, next) =>
-        deepEqual(previous, next) ? previous : next,
-    },
-  },
-});
-
 export function getRouter() {
-  return createRouter({
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: (failureCount) => failureCount < 3,
+        structuralSharing: (previous, next) =>
+          deepEqual(previous, next) ? previous : next,
+      },
+    },
+  });
+
+  const router = createRouter({
     routeTree,
     defaultPreload: "intent",
     defaultPreloadStaleTime: 0,
@@ -23,8 +24,12 @@ export function getRouter() {
     context: {
       queryClient,
     },
-    Wrap: ({ children }) => (
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    ),
   });
+
+  setupRouterSsrQueryIntegration({
+    queryClient,
+    router,
+  });
+
+  return router;
 }

@@ -46,8 +46,10 @@ test.afterEach(() => {
 test("fetchDiscordInvite reuses a cached successful lookup", async () => {
   const cache = installCache();
   let fetchCount = 0;
-  globalThis.fetch = async () => {
+  const requestSignals: AbortSignal[] = [];
+  globalThis.fetch = async (_input, init) => {
     fetchCount++;
+    if (init?.signal) requestSignals.push(init.signal);
     return Response.json({
       code: "cache-test-success",
       approximate_member_count: 1_234,
@@ -59,6 +61,7 @@ test("fetchDiscordInvite reuses a cached successful lookup", async () => {
 
   assert.deepEqual(second, first);
   assert.equal(fetchCount, 1);
+  assert.equal(requestSignals.length, 1);
   assert.equal(cache.entries.size, 1);
   assert.equal(
     [...cache.entries.values()][0]?.headers.get("Cache-Control"),
