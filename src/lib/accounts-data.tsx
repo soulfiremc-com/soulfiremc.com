@@ -330,6 +330,7 @@ export const SHOPS: Shop[] = [
       "WeChat Pay",
       "Alipay",
     ],
+    startDate: "Jul 2025",
     listings: {
       "nfa-accounts": {
         summary:
@@ -489,7 +490,7 @@ export const SHOPS: Shop[] = [
       "Binance Gift Card (PayPal/Paysafecard/Skrill)",
     ],
     socialLinks: [{ platform: "telegram", url: "https://t.me/shop4d4ps" }],
-    startDate: "2019",
+    startDate: "Jan 2019",
     listings: {
       "mfa-accounts": {
         summary:
