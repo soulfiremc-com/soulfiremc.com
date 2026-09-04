@@ -43,6 +43,7 @@ import { usernamePlugin } from "@/lib/auth/username-plugin";
 import { cn } from "@/lib/utils";
 import { isAuthFormFieldInvalid, useAuthForm } from "../auth-form";
 import { LastUsedBadge } from "../last-login-method/last-used-badge";
+import { ReauthenticationNotice } from "../reauthentication";
 
 export type SignInUsernameProps = {
   className?: string;
@@ -81,7 +82,7 @@ export function SignInUsername({
 
   const { localization: usernameLocalization } = useAuthPlugin(usernamePlugin);
 
-  const { mutate: signInEmail, isPending: isSignInEmailPending } =
+  const { mutateAsync: signInEmail, isPending: isSignInEmailPending } =
     useSignInEmail(authClient, {
       onError: (error, { email }) => {
         form.setFieldValue("password", "");
@@ -101,7 +102,7 @@ export function SignInUsername({
       },
     });
 
-  const { mutate: signInUsername, isPending: isSignInUsernamePending } =
+  const { mutateAsync: signInUsername, isPending: isSignInUsernamePending } =
     useSignInUsername(authClient, {
       onError: (error) => {
         form.setFieldValue("password", "");
@@ -140,9 +141,9 @@ export function SignInUsername({
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const form = useAuthForm({
     defaultValues: { identifier: "", password: "", rememberMe: false },
-    onSubmit: ({ value }) => {
+    onSubmit: async ({ value }) => {
       if (isEmail(value.identifier)) {
-        signInEmail({
+        await signInEmail({
           email: value.identifier,
           password: value.password,
           ...(emailAndPassword?.rememberMe
@@ -151,7 +152,7 @@ export function SignInUsername({
           fetchOptions,
         });
       } else {
-        signInUsername({
+        await signInUsername({
           username: value.identifier,
           password: value.password,
           ...(emailAndPassword?.rememberMe
@@ -169,6 +170,7 @@ export function SignInUsername({
   return (
     <Card className={cn("w-full max-w-sm", className)}>
       <AuthPrompts view="signIn" />
+      <ReauthenticationNotice />
       <CardHeader>
         <CardTitle className="text-xl font-semibold">
           {localization.auth.signIn}
@@ -352,6 +354,8 @@ export function SignInUsername({
                   {Captcha && (
                     <div className="flex justify-center">{Captcha}</div>
                   )}
+
+                  <form.AuthFormServerError />
 
                   <div className="flex flex-col gap-3">
                     <form.AuthFormSubmitButton

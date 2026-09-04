@@ -52,7 +52,7 @@ export function RegenerateBackupCodesDialog({
   const [codes, setCodes] = useState<string[]>([]);
 
   const {
-    mutate: generateBackupCodes,
+    mutateAsync: generateBackupCodes,
     isPending: isGenerating,
     reset: resetGeneration,
   } = useGenerateBackupCodes(authClient as TwoFactorAuthClient, {
@@ -66,12 +66,14 @@ export function RegenerateBackupCodesDialog({
 
   const form = useAuthForm({
     defaultValues: { password: "" },
-    onSubmit: ({ value }) => {
+    onSubmit: async ({ value }) => {
       if (codes.length) {
         handleOpenChange(false);
         return;
       }
-      generateBackupCodes(requiresPassword ? { password: value.password } : {});
+      await generateBackupCodes(
+        requiresPassword ? { password: value.password } : {},
+      );
     },
   });
 
