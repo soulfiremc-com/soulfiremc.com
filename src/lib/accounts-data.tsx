@@ -495,12 +495,7 @@ export const SHOPS: Shop[] = [
       "mfa-accounts": {
         summary:
           "Full-access Minecraft account store operating since 2019 with Hypixel and DonutSMP unbanned accounts, Hypixel ranked accounts, rare cape accounts, and 4-letter usernames. Public feedback shows 600+ customer reviews, and orders advertise instant automated delivery plus lifetime warranty.",
-        badges: [
-          "affiliate",
-          "high-quality",
-          "instant-delivery",
-          "lifetime-warranty",
-        ],
+        badges: ["high-quality", "instant-delivery", "lifetime-warranty"],
         price: "$7.50+",
         priceValue: 7.5,
         couponCode: "SOULFIRE",
@@ -637,7 +632,7 @@ export const SHOPS: Shop[] = [
       "nfa-accounts": {
         summary:
           "Cookie NFAs with multiple Hypixel tiers, random rank options, and no-VPN-detection variants on higher levels.",
-        badges: ["affiliate", "high-quality", "instant-delivery"],
+        badges: ["high-quality", "instant-delivery"],
         price: "25¢+",
         priceValue: 0.25,
         linkDiscountMessage:
@@ -648,7 +643,7 @@ export const SHOPS: Shop[] = [
       "mfa-accounts": {
         summary:
           "Full-access accounts with instant delivery, 7+ day age, and OTP secret included. Ranked variants are available above the base tier.",
-        badges: ["affiliate", "high-quality", "instant-delivery"],
+        badges: ["high-quality", "instant-delivery"],
         price: "$5.99+",
         priceValue: 5.99,
         linkDiscountMessage:
