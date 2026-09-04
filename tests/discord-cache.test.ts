@@ -24,6 +24,7 @@ class MemoryCache {
 
 const originalCaches = Object.getOwnPropertyDescriptor(globalThis, "caches");
 const originalFetch = globalThis.fetch;
+const originalDiscordBotToken = process.env.DISCORD_BOT_TOKEN;
 
 function installCache(): MemoryCache {
   const cache = new MemoryCache();
@@ -36,11 +37,30 @@ function installCache(): MemoryCache {
 
 test.afterEach(() => {
   globalThis.fetch = originalFetch;
+  if (originalDiscordBotToken === undefined) {
+    delete process.env.DISCORD_BOT_TOKEN;
+  } else {
+    process.env.DISCORD_BOT_TOKEN = originalDiscordBotToken;
+  }
   if (originalCaches) {
     Object.defineProperty(globalThis, "caches", originalCaches);
   } else {
     Reflect.deleteProperty(globalThis, "caches");
   }
+});
+
+test("fetchDiscordInvite authenticates with the configured bot token", async () => {
+  installCache();
+  process.env.DISCORD_BOT_TOKEN = "test-token";
+  let authorization: string | null = null;
+  globalThis.fetch = async (_input, init) => {
+    authorization = new Headers(init?.headers).get("Authorization");
+    return Response.json({ code: "cache-test-authenticated" });
+  };
+
+  await fetchDiscordInvite("cache-test-authenticated");
+
+  assert.equal(authorization, "Bot test-token");
 });
 
 test("fetchDiscordInvite reuses a cached successful lookup", async () => {

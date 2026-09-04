@@ -6,6 +6,9 @@
     "html_handling": "drop-trailing-slash"
   },
   "keep_vars": true,
+  "secrets": {
+    "required": ["DISCORD_BOT_TOKEN"]
+  },
   "compatibility_date": "2026-04-13",
   "compatibility_flags": ["nodejs_compat"],
   "hyperdrive": [
