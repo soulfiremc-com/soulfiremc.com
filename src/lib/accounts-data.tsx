@@ -541,7 +541,7 @@ export const SHOPS: Shop[] = [
     theme: "alts-fast",
     url: "https://alts.fast/?referral=SOULFIRE",
     websiteUrl: "https://alts.fast",
-    discordUrl: "https://discord.gg/altshop",
+    discordUrl: "https://alts.fast/discord",
     paymentMethods: [
       "Card",
       "Apple Pay",
