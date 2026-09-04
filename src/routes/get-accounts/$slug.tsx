@@ -18,6 +18,7 @@ import type { BreadcrumbList, Product, WebPage, WithContext } from "schema-dts";
 import { ItemReviewsSection } from "@/components/item-reviews-section";
 import { JsonLd } from "@/components/json-ld";
 import { PaymentMethods } from "@/components/payment-methods";
+import { ProviderThemeDecoration } from "@/components/provider-theme-decoration";
 import { ReviewSummaryBadge } from "@/components/review-summary-badge";
 import { SiteShell } from "@/components/site-shell";
 import {
@@ -553,9 +554,13 @@ function AccountDetailPage() {
         </nav>
 
         <Card
-          className={cn("gap-5 p-6", theme && ["ring-2", theme.ring, theme.bg])}
+          className={cn(
+            "relative gap-5 overflow-hidden p-6",
+            theme && ["ring-2", theme.ring, theme.bg, theme.cardShadow],
+          )}
         >
-          <div className="flex flex-col gap-6 sm:flex-row">
+          <ProviderThemeDecoration theme={data.shop.theme} />
+          <div className="relative flex flex-col gap-6 sm:flex-row">
             <div
               className={cn(
                 "relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-muted",

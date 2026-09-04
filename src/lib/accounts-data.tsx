@@ -27,16 +27,17 @@ export type FilterableBadge =
 
 export type Badge = FilterableBadge | "official-integration" | "affiliate";
 
+export type ProviderThemeName = "rave" | "fernan" | "alts-fast";
+
 export type ProviderTheme = {
   ring: string;
   bg: string;
+  cardShadow: string;
   badge: string;
   logo: string;
-  panel: string;
   price: string;
   primaryButton: string;
   secondaryButton: string;
-  accentText: string;
 };
 
 export type Category = "nfa-accounts" | "mfa-accounts";
@@ -59,7 +60,7 @@ export type Shop = {
   name: string;
   logo?: string;
   logoUnoptimized?: boolean;
-  theme?: string;
+  theme?: ProviderThemeName;
   url: string;
   websiteUrl?: string;
   discordUrl?: string;
@@ -76,7 +77,7 @@ export type Provider = {
   name: string;
   logo?: string;
   logoUnoptimized?: boolean;
-  theme?: string;
+  theme?: ProviderThemeName;
   summary: string;
   url: string;
   websiteUrl?: string;
@@ -106,21 +107,48 @@ export function getDiscordInviteUrl(
     : null;
 }
 
-export const PROVIDER_THEMES: Record<string, ProviderTheme> = {
+export const PROVIDER_THEMES: Record<ProviderThemeName, ProviderTheme> = {
   rave: {
     ring: "ring-rose-500/35 dark:ring-rose-400/25",
     bg: "border-rose-500/20 bg-gradient-to-br from-rose-500/10 via-background to-orange-500/10 dark:from-rose-500/15 dark:via-card dark:to-orange-500/10",
+    cardShadow: "shadow-[0_20px_60px_-40px_rgba(244,63,94,0.55)]",
     badge:
       "border border-rose-500/20 bg-rose-500/12 text-rose-700 dark:text-rose-300",
     logo: "ring-2 ring-rose-500/25 bg-white/85 shadow-[0_14px_40px_-24px_rgba(244,63,94,0.9)] dark:bg-white/8",
-    panel: "border-rose-500/15 bg-white/70 backdrop-blur-sm dark:bg-white/5",
     price:
       "border border-rose-500/20 bg-white/85 text-rose-700 shadow-sm shadow-rose-500/10 dark:bg-white/10 dark:text-rose-200",
     primaryButton:
       "bg-rose-600 text-white shadow-sm shadow-rose-500/30 hover:bg-rose-500 dark:bg-rose-500 dark:hover:bg-rose-400",
     secondaryButton:
       "border border-rose-500/15 bg-white/75 text-rose-700 hover:bg-rose-500/10 dark:bg-white/8 dark:text-rose-200 dark:hover:bg-white/12",
-    accentText: "text-rose-700 dark:text-rose-200",
+  },
+  fernan: {
+    ring: "ring-amber-400/45 dark:ring-amber-300/30",
+    bg: "border-amber-400/30 bg-amber-50/65 dark:border-amber-300/20 dark:bg-amber-950/20",
+    cardShadow: "shadow-[0_12px_30px_-22px_rgba(217,119,6,0.65)]",
+    badge:
+      "border border-red-500/25 bg-red-500/10 text-red-700 dark:text-red-300",
+    logo: "ring-2 ring-amber-400/40 bg-amber-100 shadow-sm dark:bg-amber-100/90",
+    price:
+      "border border-amber-500/30 bg-amber-100/80 text-amber-900 dark:bg-amber-300/15 dark:text-amber-200",
+    primaryButton:
+      "bg-red-600 text-white hover:bg-red-500 dark:bg-red-500 dark:hover:bg-red-400",
+    secondaryButton:
+      "border border-amber-500/25 bg-amber-100/70 text-amber-950 hover:bg-amber-200/70 dark:bg-amber-300/10 dark:text-amber-100 dark:hover:bg-amber-300/15",
+  },
+  "alts-fast": {
+    ring: "ring-cyan-500/35 dark:ring-cyan-300/25",
+    bg: "border-cyan-500/25 bg-cyan-50/55 dark:border-cyan-300/20 dark:bg-cyan-950/20",
+    cardShadow: "shadow-[0_12px_30px_-22px_rgba(8,145,178,0.65)]",
+    badge:
+      "border border-fuchsia-500/25 bg-fuchsia-500/10 text-fuchsia-700 dark:text-fuchsia-300",
+    logo: "ring-2 ring-cyan-500/40 bg-cyan-950 shadow-sm",
+    price:
+      "border border-amber-500/30 bg-amber-100/80 text-amber-900 dark:bg-amber-300/15 dark:text-amber-200",
+    primaryButton:
+      "bg-cyan-700 text-white hover:bg-cyan-600 dark:bg-cyan-400 dark:text-cyan-950 dark:hover:bg-cyan-300",
+    secondaryButton:
+      "border border-cyan-500/25 bg-cyan-100/70 text-cyan-950 hover:bg-cyan-200/70 dark:bg-cyan-300/10 dark:text-cyan-100 dark:hover:bg-cyan-300/15",
   },
 };
 
@@ -316,6 +344,7 @@ export const SHOPS: Shop[] = [
     slug: "fernan",
     name: "Fernan's Club",
     logo: "/accounts/fernan.webp",
+    theme: "fernan",
     url: "https://fernan.club",
     websiteUrl: "https://fernan.club",
     discordUrl: "https://alts.fernan.club",
@@ -509,6 +538,7 @@ export const SHOPS: Shop[] = [
     slug: "alts-fast",
     name: "Alts.fast",
     logo: "/accounts/altsfast.png",
+    theme: "alts-fast",
     url: "https://alts.fast/?referral=SOULFIRE",
     websiteUrl: "https://alts.fast",
     discordUrl: "https://discord.gg/altshop",

@@ -20,6 +20,7 @@ import {
 } from "nuqs";
 import { Suspense, useMemo, useState } from "react";
 import { PaymentMethods } from "@/components/payment-methods";
+import { ProviderThemeDecoration } from "@/components/provider-theme-decoration";
 import { ReviewInlineActions } from "@/components/review-inline-actions";
 import { ReviewTurnstileProvider } from "@/components/review-turnstile-provider";
 import { SiteShell } from "@/components/site-shell";
@@ -374,18 +375,6 @@ function ProviderBadge({
   );
 }
 
-function ProviderThemeDecoration() {
-  return (
-    <div
-      aria-hidden
-      className="pointer-events-none absolute inset-0 overflow-hidden"
-    >
-      <div className="absolute -right-10 -top-10 h-28 w-28 rounded-full bg-rose-500/18 blur-3xl dark:bg-rose-400/18" />
-      <div className="absolute -bottom-8 left-0 h-24 w-24 rounded-full bg-orange-400/18 blur-2xl dark:bg-orange-300/12" />
-    </div>
-  );
-}
-
 function ProviderLogo({ provider }: { provider: Provider }) {
   if (provider.logo) {
     return (
@@ -430,14 +419,10 @@ function ProviderCard({
     <Card
       className={cn(
         "relative overflow-hidden transition-all duration-300 hover:shadow-lg",
-        theme && [
-          "ring-2 shadow-[0_20px_60px_-40px_rgba(244,63,94,0.55)]",
-          theme.ring,
-          theme.bg,
-        ],
+        theme && ["ring-2", theme.ring, theme.bg, theme.cardShadow],
       )}
     >
-      {theme && <ProviderThemeDecoration />}
+      <ProviderThemeDecoration theme={provider.theme} />
       <div className="relative flex flex-col gap-4 p-6 sm:flex-row">
         <div
           className={cn(
