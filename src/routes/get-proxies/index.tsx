@@ -18,6 +18,7 @@ import {
 } from "nuqs";
 import { Suspense, useMemo, useState } from "react";
 import { PaymentMethods } from "@/components/payment-methods";
+import { ProviderThemeDecoration } from "@/components/provider-theme-decoration";
 import { ReviewInlineActions } from "@/components/review-inline-actions";
 import { ReviewTurnstileProvider } from "@/components/review-turnstile-provider";
 import { SiteShell } from "@/components/site-shell";
@@ -49,9 +50,9 @@ import {
   type Badge,
   FILTER_BADGES,
   type FilterableBadge,
+  PROVIDER_THEMES,
   PROVIDERS,
   type Provider,
-  SPONSOR_THEMES,
 } from "@/lib/proxies-data";
 import {
   getAggregateRatingJsonLd,
@@ -287,19 +288,23 @@ function ProviderCard({
     slug: string,
   ) => Promise<{ error: "unauthorized" | "verification" | null }>;
 }) {
-  const theme = provider.sponsorTheme
-    ? SPONSOR_THEMES[provider.sponsorTheme]
-    : undefined;
+  const theme = provider.theme ? PROVIDER_THEMES[provider.theme] : undefined;
 
   return (
     <Card
       className={cn(
-        "transition-all duration-300 hover:shadow-lg",
-        theme && ["ring-2", theme.ring, theme.bg],
+        "relative overflow-hidden transition-all duration-300 hover:shadow-lg",
+        theme && ["ring-2", theme.ring, theme.bg, theme.cardShadow],
       )}
     >
-      <div className="flex flex-col sm:flex-row gap-4 p-6">
-        <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-muted">
+      <ProviderThemeDecoration theme={provider.theme} />
+      <div className="relative flex flex-col gap-4 p-6 sm:flex-row">
+        <div
+          className={cn(
+            "relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-muted",
+            theme?.logo,
+          )}
+        >
           <ProviderLogo provider={provider} />
         </div>
         <div className="flex flex-1 flex-col gap-3">
@@ -351,7 +356,7 @@ function ProviderCard({
           )}
           <PaymentMethods methods={provider.paymentMethods} />
           <div className="flex flex-wrap gap-2">
-            <Button asChild>
+            <Button asChild className={theme?.primaryButton}>
               <a
                 href={provider.url}
                 target="_blank"
@@ -361,7 +366,10 @@ function ProviderCard({
                 <ExternalLink data-icon="inline-end" />
               </a>
             </Button>
-            <SocialLinkButtons links={provider.socialLinks} />
+            <SocialLinkButtons
+              links={provider.socialLinks}
+              className={theme?.secondaryButton}
+            />
           </div>
           <ReviewInlineActions
             summary={reviewSummary}

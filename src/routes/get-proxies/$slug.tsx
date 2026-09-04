@@ -21,6 +21,7 @@ import type {
 import { ItemReviewsSection } from "@/components/item-reviews-section";
 import { JsonLd } from "@/components/json-ld";
 import { PaymentMethods } from "@/components/payment-methods";
+import { ProviderThemeDecoration } from "@/components/provider-theme-decoration";
 import { ReviewSummaryBadge } from "@/components/review-summary-badge";
 import { SiteShell } from "@/components/site-shell";
 import { SocialLinkButtons } from "@/components/social-link-buttons";
@@ -44,8 +45,8 @@ import {
   BADGE_CONFIG,
   type Badge,
   getProviderBySlug,
+  PROVIDER_THEMES,
   type Provider,
-  SPONSOR_THEMES,
 } from "@/lib/proxies-data";
 import {
   emptyReviewSummary,
@@ -291,9 +292,7 @@ function ProxyProviderPageContent({
   provider,
   reviewsPage,
 }: ProxyDetailPageData) {
-  const theme = provider.sponsorTheme
-    ? SPONSOR_THEMES[provider.sponsorTheme]
-    : undefined;
+  const theme = provider.theme ? PROVIDER_THEMES[provider.theme] : undefined;
   const reviewsQuery = useQuery(
     reviewsQueryOptions({
       itemType: "proxy",
@@ -333,13 +332,17 @@ function ProxyProviderPageContent({
       </nav>
 
       <Card
-        className={cn("gap-5 p-6", theme && ["ring-2", theme.ring, theme.bg])}
+        className={cn(
+          "relative gap-5 overflow-hidden p-6",
+          theme && ["ring-2", theme.ring, theme.bg, theme.cardShadow],
+        )}
       >
-        <div className="flex flex-col gap-6 sm:flex-row">
+        <ProviderThemeDecoration theme={provider.theme} />
+        <div className="relative flex flex-col gap-6 sm:flex-row">
           <div
             className={cn(
               "relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-muted",
-              theme && ["ring-2", theme.ring],
+              theme?.logo,
             )}
           >
             <ProviderLogo provider={provider} />
@@ -376,7 +379,7 @@ function ProxyProviderPageContent({
             ) : null}
             <PaymentMethods methods={provider.paymentMethods} />
             <div className="flex flex-wrap gap-2">
-              <Button asChild size="lg">
+              <Button asChild size="lg" className={theme?.primaryButton}>
                 <a
                   href={provider.url}
                   target="_blank"
@@ -390,7 +393,10 @@ function ProxyProviderPageContent({
             </div>
             {provider.socialLinks?.length ? (
               <div className="flex flex-wrap gap-2">
-                <SocialLinkButtons links={provider.socialLinks} />
+                <SocialLinkButtons
+                  links={provider.socialLinks}
+                  className={theme?.secondaryButton}
+                />
               </div>
             ) : null}
           </div>

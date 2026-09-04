@@ -25,10 +25,16 @@ export type FilterableBadge =
 
 export type Badge = FilterableBadge | "sponsor" | "bedrock-udp";
 
-export type SponsorTheme = {
+export type ProviderThemeName = "legionproxy" | "proxy-seller";
+
+export type ProviderTheme = {
   ring: string;
   bg: string;
+  cardShadow: string;
   badge: string;
+  logo: string;
+  primaryButton: string;
+  secondaryButton: string;
 };
 
 export type Provider = {
@@ -39,7 +45,7 @@ export type Provider = {
   url: string;
   badges: Badge[];
   sponsor?: boolean;
-  sponsorTheme?: string;
+  theme?: ProviderThemeName;
   couponCode?: string;
   couponDiscount?: string;
   startDate?: string;
@@ -48,21 +54,30 @@ export type Provider = {
   socialLinks?: SocialLink[];
 };
 
-export const SPONSOR_THEMES: Record<string, SponsorTheme> = {
-  green: {
-    ring: "ring-green-500/50",
-    bg: "bg-gradient-to-r from-green-500/5 to-emerald-500/5",
-    badge: "bg-green-500/10 text-green-600 dark:text-green-400",
+export const PROVIDER_THEMES: Record<ProviderThemeName, ProviderTheme> = {
+  legionproxy: {
+    ring: "ring-lime-500/35 dark:ring-lime-400/25",
+    bg: "border-lime-500/20 bg-lime-50/60 dark:border-lime-300/20 dark:bg-lime-950/15",
+    cardShadow: "shadow-[0_12px_30px_-22px_rgba(101,163,13,0.6)]",
+    badge:
+      "border border-lime-500/25 bg-lime-500/10 text-lime-700 dark:text-lime-300",
+    logo: "ring-2 ring-lime-500/35 bg-zinc-950 shadow-sm",
+    primaryButton:
+      "bg-lime-600 text-zinc-950 hover:bg-lime-500 dark:bg-lime-400 dark:hover:bg-lime-300",
+    secondaryButton:
+      "border border-lime-500/25 bg-lime-100/70 text-lime-950 hover:bg-lime-200/70 dark:bg-lime-300/10 dark:text-lime-100 dark:hover:bg-lime-300/15",
   },
-  pink: {
-    ring: "ring-pink-500/50",
-    bg: "bg-gradient-to-r from-pink-500/5 to-purple-500/5",
-    badge: "bg-pink-500/10 text-pink-600 dark:text-pink-400",
-  },
-  amber: {
-    ring: "ring-amber-500/50",
-    bg: "bg-gradient-to-r from-amber-500/5 to-orange-500/5",
-    badge: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+  "proxy-seller": {
+    ring: "ring-emerald-500/35 dark:ring-emerald-400/25",
+    bg: "border-emerald-500/20 bg-emerald-50/60 dark:border-emerald-300/20 dark:bg-emerald-950/15",
+    cardShadow: "shadow-[0_12px_30px_-22px_rgba(5,150,105,0.6)]",
+    badge:
+      "border border-emerald-500/25 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300",
+    logo: "ring-2 ring-emerald-500/35 bg-white shadow-sm",
+    primaryButton:
+      "bg-emerald-700 text-white hover:bg-emerald-600 dark:bg-emerald-400 dark:text-emerald-950 dark:hover:bg-emerald-300",
+    secondaryButton:
+      "border border-emerald-500/25 bg-emerald-100/70 text-emerald-950 hover:bg-emerald-200/70 dark:bg-emerald-300/10 dark:text-emerald-100 dark:hover:bg-emerald-300/15",
   },
 };
 
@@ -189,7 +204,7 @@ export const PROVIDERS: Provider[] = [
       "isp",
     ],
     sponsor: true,
-    sponsorTheme: "green",
+    theme: "legionproxy",
     paymentMethods: ["Card", "Crypto"],
     socialLinks: [
       { platform: "discord", url: "https://discord.gg/legionproxy" },
@@ -212,7 +227,7 @@ export const PROVIDERS: Provider[] = [
       "residential",
     ],
     sponsor: true,
-    sponsorTheme: "amber",
+    theme: "proxy-seller",
     couponCode: "SOULFIREMC",
     couponDiscount:
       "15% off IPv4/IPv6/ISP - 39% off Residential - 10% off Mobile proxies",

@@ -1,9 +1,14 @@
-import type { ProviderThemeName } from "@/lib/accounts-data";
+export type ProviderThemeDecorationName =
+  | "rave"
+  | "fernan"
+  | "alts-fast"
+  | "legionproxy"
+  | "proxy-seller";
 
 export function ProviderThemeDecoration({
   theme,
 }: {
-  theme?: ProviderThemeName;
+  theme?: ProviderThemeDecorationName;
 }) {
   if (!theme) {
     return null;
@@ -31,6 +36,20 @@ export function ProviderThemeDecoration({
           <div className="absolute bottom-0 right-1 size-2 bg-current" />
           <div className="absolute bottom-3 right-0 size-1.5 bg-current" />
           <div className="absolute bottom-6 right-2 size-1 bg-current" />
+        </div>
+      ) : null}
+      {theme === "legionproxy" ? (
+        <div className="absolute right-2 top-2 size-8">
+          <div className="absolute left-1 top-1 h-2 w-6 bg-lime-500/55 dark:bg-lime-300/45" />
+          <div className="absolute left-1 top-1 h-6 w-2 bg-lime-500/55 dark:bg-lime-300/45" />
+          <div className="absolute bottom-1 right-1 h-2 w-4 bg-zinc-600/35 dark:bg-zinc-300/30" />
+          <div className="absolute bottom-1 right-1 h-4 w-2 bg-zinc-600/35 dark:bg-zinc-300/30" />
+        </div>
+      ) : null}
+      {theme === "proxy-seller" ? (
+        <div className="absolute right-2 top-2 size-8 text-emerald-500/55 dark:text-emerald-300/45">
+          <div className="absolute right-1 top-1 size-4 border-r-[3px] border-t-[3px] border-current" />
+          <div className="absolute bottom-1 left-1 size-4 border-b-[3px] border-l-[3px] border-current" />
         </div>
       ) : null}
     </div>
