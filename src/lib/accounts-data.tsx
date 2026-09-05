@@ -392,6 +392,7 @@ export const SHOPS: Shop[] = [
     url: "https://atomic-nfas.mysellauth.com",
     websiteUrl: "https://atomic-nfas.mysellauth.com",
     discordUrl: "https://discord.gg/hdXPTfZJcX",
+    startDate: "Jan 2026",
     listings: {
       "nfa-accounts": {
         summary:
