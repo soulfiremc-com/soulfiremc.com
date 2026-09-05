@@ -4,8 +4,6 @@ import {
   ArrowDownWideNarrow,
   BookOpen,
   Calendar,
-  Check,
-  Copy,
   ExternalLink,
   Filter,
   ImageIcon,
@@ -17,6 +15,7 @@ import {
   useQueryStates,
 } from "nuqs";
 import { Suspense, useMemo, useState } from "react";
+import { CouponCode } from "@/components/coupon-code";
 import { PaymentMethods } from "@/components/payment-methods";
 import { ProviderThemeDecoration } from "@/components/provider-theme-decoration";
 import { ReviewInlineActions } from "@/components/review-inline-actions";
@@ -55,6 +54,7 @@ import {
   type Provider,
 } from "@/lib/proxies-data";
 import {
+  compareReviewSummaries,
   getAggregateRatingJsonLd,
   type ReviewSummary,
   type UserReviewRecord,
@@ -144,49 +144,6 @@ const proxiesFaqItems: {
     ),
   },
 ];
-
-function CouponCode({ code, discount }: { code: string; discount?: string }) {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = async () => {
-    await navigator.clipboard.writeText(code);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  return (
-    <div className="flex items-center gap-2 rounded-lg bg-pink-500/10 p-3">
-      <div className="flex-1">
-        <p className="text-xs text-muted-foreground">
-          {discount ? `Use code for ${discount}` : "Coupon code"}
-        </p>
-        <p className="font-mono font-semibold text-pink-600 dark:text-pink-400">
-          {code}
-        </p>
-      </div>
-      <Button
-        type="button"
-        variant="ghost"
-        size="icon"
-        onClick={handleCopy}
-        className="text-muted-foreground hover:bg-pink-500/10"
-        aria-label="Copy coupon code"
-      >
-        {copied ? <Check className="text-green-500" /> : <Copy />}
-      </Button>
-    </div>
-  );
-}
-
-function _LinkDiscountNotice({ message }: { message: string }) {
-  return (
-    <div className="rounded-lg bg-pink-500/10 p-3">
-      <p className="text-sm font-medium text-pink-600 dark:text-pink-400">
-        {message}
-      </p>
-    </div>
-  );
-}
 
 const BADGES = [
   "residential",
@@ -386,9 +343,8 @@ function ProviderCard({
 
 function MainContent() {
   const providers = PROVIDERS;
-  const slugs = useMemo(() => providers.map((p) => p.slug), []);
   const { summaries, userReviews, pendingBySlug, upsertReview, deleteReview } =
-    useReviews("proxy", slugs);
+    useReviews("proxy", proxyReviewSlugs);
   const [{ badges, sort }, setParams] = useQueryStates(proxiesSearchParams, {
     shallow: false,
   });
@@ -410,34 +366,10 @@ function MainContent() {
           );
 
     const sorted = [...filtered].sort((a, b) => {
-      const summaryA = summaries[a.slug] ?? {
-        averageRating: null,
-        reviewCount: 0,
-      };
-      const summaryB = summaries[b.slug] ?? {
-        averageRating: null,
-        reviewCount: 0,
-      };
-
-      if (sort === "best-rated") {
-        if (summaryB.averageRating !== summaryA.averageRating) {
-          return (summaryB.averageRating ?? 0) - (summaryA.averageRating ?? 0);
-        }
-
-        if (summaryB.reviewCount !== summaryA.reviewCount) {
-          return summaryB.reviewCount - summaryA.reviewCount;
-        }
-      } else {
-        if (summaryB.reviewCount !== summaryA.reviewCount) {
-          return summaryB.reviewCount - summaryA.reviewCount;
-        }
-
-        if (summaryB.averageRating !== summaryA.averageRating) {
-          return (summaryB.averageRating ?? 0) - (summaryA.averageRating ?? 0);
-        }
-      }
-
-      return a.name.localeCompare(b.name);
+      return (
+        compareReviewSummaries(summaries[a.slug], summaries[b.slug], sort) ||
+        a.name.localeCompare(b.name)
+      );
     });
 
     return [...sponsors, ...sorted];
@@ -582,9 +514,7 @@ function MainContent() {
                 reviewSummary={summaries[provider.slug]}
                 userReview={userReviews[provider.slug]}
                 reviewPending={pendingBySlug[provider.slug] ?? false}
-                onRate={(slug, rating) =>
-                  upsertReview(slug, { rating, anonymous: true })
-                }
+                onRate={(slug, rating) => upsertReview(slug, { rating })}
                 onClearRating={deleteReview}
               />
             ))}

@@ -15,14 +15,6 @@ export async function getLLMText(page: {
     return getOpenApiPageText(page);
   }
 
-  if (!("getText" in page.data)) {
-    const title = page.data.title ?? page.slugs.at(-1) ?? "Docs";
-    return `# ${title}
-URL: ${page.url}
-
-${page.data.description ?? ""}`;
-  }
-
   const getText = page.data.getText;
   if (!getText) {
     const title = page.data.title ?? page.slugs.at(-1) ?? "Docs";
@@ -38,7 +30,7 @@ ${page.data.description ?? ""}`;
   return `# ${title}
 URL: ${page.url}
 
-${page.data.description}
+${page.data.description ?? ""}
 
 ${processed}`;
 }

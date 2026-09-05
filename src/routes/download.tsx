@@ -192,30 +192,7 @@ function detectBrowserCPU(): CpuOption["id"] | null {
     return "x64";
   }
 
-  // For macOS, we can use navigator.userAgentData if available (Chromium browsers)
-  // to detect Apple Silicon vs Intel
-  const userAgentData = (navigator as NavigatorWithUAData).userAgentData;
-  if (userAgentData?.getHighEntropyValues) {
-    // This is async, so we can't use it directly here
-    // But we can check platform hints synchronously if available
-    if (userAgentData.platform === "macOS") {
-      // On macOS, if we can't detect ARM, assume Apple Silicon for newer browsers
-      // since most new Macs are ARM-based
-      // However, this is a heuristic and may not be accurate
-    }
-  }
-
-  // Default: return null to use OS-based preference
   return null;
-}
-
-interface NavigatorWithUAData extends Navigator {
-  userAgentData?: {
-    platform?: string;
-    getHighEntropyValues?: (
-      hints: string[],
-    ) => Promise<{ architecture?: string }>;
-  };
 }
 
 function DownloadSelectionComponent({
@@ -565,11 +542,11 @@ function DownloadSelectionSkeleton() {
           x86_64 means Intel and AMD CPUs. AArch64 refers to ARM processors like
           Apple Silicon or Snapdragon laptops.
         </p>
-        <p className="mt-2 text-xs text-muted-foreground">
+        <div className="mt-2 text-xs text-muted-foreground">
           Currently set to{" "}
           <Skeleton className="inline-block h-3 w-16 align-middle" /> •{" "}
           <Skeleton className="inline-block h-3 w-24 align-middle" />
-        </p>
+        </div>
       </div>
     </>
   );

@@ -1,16 +1,9 @@
 import { queryOptions } from "@tanstack/react-query";
 import { createServerFn } from "@tanstack/react-start";
-import {
-  getDiscordInviteUrl,
-  getShopBySlug,
-  PROVIDERS,
-} from "@/lib/accounts-data";
+import { getDiscordInviteUrl, getShopBySlug, SHOPS } from "@/lib/accounts-data";
 import { getLiveShopData } from "@/lib/accounts-offers";
 import { type DiscordInviteResponse, fetchDiscordInvite } from "@/lib/discord";
 
-const accountProvidersBySlug = [
-  ...new Map(PROVIDERS.map((provider) => [provider.slug, provider])).values(),
-];
 export type DiscordInvites = Record<string, DiscordInviteResponse | null>;
 
 export type LiveShopDataBySlug = Record<
@@ -21,15 +14,9 @@ export type LiveShopDataBySlug = Record<
 const getAllAccountLiveShopData = createServerFn({ method: "GET" }).handler(
   async () => {
     const entries = await Promise.all(
-      accountProvidersBySlug.map(async (provider) => {
-        const shop = getShopBySlug(provider.slug);
-        if (!shop) return [provider.slug, {}] as const;
-
-        return [
-          provider.slug,
-          await getLiveShopData(shop).catch(() => ({})),
-        ] as const;
-      }),
+      SHOPS.map(
+        async (shop) => [shop.slug, await getLiveShopData(shop)] as const,
+      ),
     );
 
     return Object.fromEntries(entries) as LiveShopDataBySlug;
@@ -40,7 +27,7 @@ const getAccountLiveShopData = createServerFn({ method: "GET" })
   .validator((slug: string) => slug)
   .handler(async ({ data: slug }) => {
     const shop = getShopBySlug(slug);
-    return shop ? getLiveShopData(shop).catch(() => ({})) : {};
+    return shop ? getLiveShopData(shop) : {};
   });
 
 const getAccountDiscordInvite = createServerFn({ method: "GET" })
@@ -57,7 +44,7 @@ const getAccountDiscordInvites = createServerFn({ method: "GET" }).handler(
   async () =>
     Object.fromEntries(
       await Promise.all(
-        accountProvidersBySlug.map(async (provider) => {
+        SHOPS.map(async (provider) => {
           const discordInviteUrl = getDiscordInviteUrl(provider);
           return [
             provider.slug,

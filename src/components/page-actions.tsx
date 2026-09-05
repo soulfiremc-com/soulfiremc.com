@@ -1,5 +1,4 @@
 "use client";
-import { cva } from "class-variance-authority";
 import { buttonVariants } from "fumadocs-ui/components/ui/button";
 import {
   Popover,
@@ -15,7 +14,6 @@ import {
   MessageCircleIcon,
 } from "lucide-react";
 import { useMemo, useState } from "react";
-import { cn } from "@/lib/utils";
 
 const cache = new Map<string, string>();
 
@@ -53,13 +51,11 @@ export function LLMCopyButton({
   return (
     <button
       disabled={isLoading}
-      className={cn(
-        buttonVariants({
-          color: "secondary",
-          size: "sm",
-          className: "gap-2 [&_svg]:size-3.5 [&_svg]:text-fd-muted-foreground",
-        }),
-      )}
+      className={buttonVariants({
+        color: "secondary",
+        size: "sm",
+        className: "gap-2 [&_svg]:size-3.5 [&_svg]:text-fd-muted-foreground",
+      })}
       onClick={onClick}
       type="button"
     >
@@ -69,9 +65,8 @@ export function LLMCopyButton({
   );
 }
 
-const optionVariants = cva(
-  "text-sm p-2 rounded-lg inline-flex items-center gap-2 hover:text-fd-accent-foreground hover:bg-fd-accent [&_svg]:size-4",
-);
+const optionClassName =
+  "text-sm p-2 rounded-lg inline-flex items-center gap-2 hover:text-fd-accent-foreground hover:bg-fd-accent [&_svg]:size-4";
 
 export function ViewOptions({
   markdownUrl,
@@ -217,13 +212,11 @@ export function ViewOptions({
   return (
     <Popover>
       <PopoverTrigger
-        className={cn(
-          buttonVariants({
-            color: "secondary",
-            size: "sm",
-            className: "gap-2",
-          }),
-        )}
+        className={buttonVariants({
+          color: "secondary",
+          size: "sm",
+          className: "gap-2",
+        })}
       >
         Open Page In
         <ChevronDown className="size-3.5 text-fd-muted-foreground" />
@@ -235,7 +228,7 @@ export function ViewOptions({
             href={item.href}
             rel="noreferrer noopener"
             target="_blank"
-            className={cn(optionVariants())}
+            className={optionClassName}
           >
             {item.icon}
             {item.title}

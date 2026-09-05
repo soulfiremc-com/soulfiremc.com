@@ -426,38 +426,6 @@ export const SHOPS: Shop[] = [
       },
     },
   },
-  // {
-  //   slug: "mori",
-  //   name: "mori's alternative world",
-  //   logo: "/accounts/mori.png",
-  //   url: "https://discord.gg/logs",
-  //   startDate: "Dec 2025",
-  //   gallery: [
-  //     {
-  //       src: "/accounts/gallery/mori-account-listing.png",
-  //       alt: "Account listing with Hypixel, DonutSMP and CubeCraft status checks",
-  //     },
-  //     {
-  //       src: "/accounts/gallery/mori-statistics.png",
-  //       alt: "Statistics showing 489+ alternatives, 174 Hypixel unbanned and 281 premium users",
-  //     },
-  //     {
-  //       src: "/accounts/gallery/mori-growth.png",
-  //       alt: "Discord growth chart showing steady member joins since launch",
-  //     },
-  //   ],
-  //   listings: {
-  //     "nfa-accounts": {
-  //       summary:
-  //         "Free accounts with Hypixel, DonutSMP and CubeCraft status checks. Premium tier also free. Nothing is sold, runs on occasional Linkvertise links. Up to 75 accounts per day with hourly restocks.",
-  //       badges: ["free", "instant-delivery"],
-  //       price: "Free",
-  //       priceValue: 0,
-  //       priceDetails:
-  //         "Grab accounts from #alternatives for free. Optional premium channel (also free via a short Linkvertise link) gives 24h access to Hypixel ranked accounts and DonutSMP accounts with extra money/playtime.",
-  //     },
-  //   },
-  // },
   {
     slug: "nicealts",
     name: "Nicealts",
@@ -728,21 +696,6 @@ export const SHOPS: Shop[] = [
       },
     },
   },
-  // {
-  //   slug: "brano",
-  //   name: "Brano",
-  //   logo: "/accounts/brano.png",
-  //   url: "https://discord.gg/EsbhHkm9e4",
-  //   listings: {
-  //     "mfa-accounts": {
-  //       summary:
-  //         "OG usernames, Minecon capes, and rare collectible accounts. Premium pricing for exclusive items.",
-  //       badges: ["high-quality", "lifetime-warranty"],
-  //       price: "$50.00+",
-  //       priceValue: 50.0,
-  //     },
-  //   },
-  // },
 ];
 
 export function getShopBySlug(slug: string): Shop | undefined {

@@ -32,13 +32,15 @@ export const Route = createFileRoute("/api/search")({
   server: {
     handlers: {
       GET: async ({ request }) => {
-        const [{ getOpenApiStructuredData }, { getSource }] = await Promise.all(
-          [import("@/lib/docs/openapi"), import("@/lib/source")],
-        );
+        const [{ getOpenApiStructuredData, isOpenApiPage }, { getSource }] =
+          await Promise.all([
+            import("@/lib/docs/openapi"),
+            import("@/lib/source"),
+          ]);
 
-        return createFromSource(await getSource(), {
+        const source = await getSource();
+        return createFromSource(source, {
           buildIndex: async (page) => {
-            const source = await getSource();
             const breadcrumbs = ["Docs"];
             for (let index = 0; index < page.slugs.length - 1; index++) {
               const parentPage = source.getPage(page.slugs.slice(0, index + 1));
@@ -48,14 +50,13 @@ export const Route = createFileRoute("/api/search")({
             }
 
             const pageData: unknown = page.data;
-            const structuredData =
-              page.data.type === "openapi"
-                ? await getOpenApiStructuredData(page as any)
-                : hasStructuredData(pageData)
-                  ? pageData.structuredData
-                  : hasStructuredDataLoader(pageData)
-                    ? (await pageData.load()).structuredData
-                    : undefined;
+            const structuredData = isOpenApiPage(page)
+              ? getOpenApiStructuredData(page)
+              : hasStructuredData(pageData)
+                ? pageData.structuredData
+                : hasStructuredDataLoader(pageData)
+                  ? (await pageData.load()).structuredData
+                  : undefined;
 
             if (!structuredData) {
               throw new Error(

@@ -104,7 +104,6 @@ export function useReviews(
       slug: string,
       nextReview: {
         rating: number;
-        anonymous?: boolean;
         body?: string | null;
       },
     ): Promise<{ error: MutationError }> => {
@@ -136,7 +135,6 @@ export function useReviews(
             itemType,
             itemSlug: slug,
             rating: nextReview.rating,
-            anonymous: nextReview.anonymous ?? true,
             body: nextReview.body ?? null,
             turnstileToken,
           },

@@ -27,10 +27,7 @@ async function createDocsSource() {
 let cachedSource: undefined | ReturnType<typeof createDocsSource>;
 
 export function getSource() {
-  if (!cachedSource) {
-    cachedSource ??= createDocsSource();
-  }
-
+  cachedSource ??= createDocsSource();
   return cachedSource;
 }
 

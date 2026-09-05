@@ -1,22 +1,5 @@
 const OG_FILE_NAME = "image.webp";
 
-export type SiteOgPage =
-  | "home"
-  | "download"
-  | "blog"
-  | "get-proxies"
-  | "get-accounts"
-  | "resources";
-
-export const SITE_OG_PAGES: SiteOgPage[] = [
-  "home",
-  "download",
-  "blog",
-  "get-proxies",
-  "get-accounts",
-  "resources",
-];
-
 function createOgImage(basePath: string, segments: string[]) {
   const fullSegments = [...segments, OG_FILE_NAME];
 
@@ -36,10 +19,6 @@ export function getDocsPageImage(page: { slugs: string[] }) {
 
 export function getBlogPageImage(page: { slugs: string[] }) {
   return createOgImage("/og/blog", page.slugs);
-}
-
-export function getSitePageImage(page: SiteOgPage) {
-  return createOgImage("/og/site", [page]);
 }
 
 export function getProxyPageImage(slug: string) {

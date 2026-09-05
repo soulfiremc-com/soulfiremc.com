@@ -134,13 +134,10 @@ function ItemReviewsSectionContent({
     reviewPageData.totalCount === 0
       ? 0
       : visibleRangeStart + visibleReviews.length - 1;
-  const reviewCountLabel = useMemo(() => {
-    if (summary.reviewCount === 0) {
-      return "No ratings yet";
-    }
-
-    return `${summary.reviewCount} rating${summary.reviewCount === 1 ? "" : "s"} collected`;
-  }, [summary.reviewCount]);
+  const reviewCountLabel =
+    summary.reviewCount === 0
+      ? "No ratings yet"
+      : `${summary.reviewCount} rating${summary.reviewCount === 1 ? "" : "s"} collected`;
 
   const saveReview = async () => {
     const normalizedBody = body.trim();
@@ -170,10 +167,6 @@ function ItemReviewsSectionContent({
     if (!result.error) {
       toast("Review removed");
     }
-  };
-
-  const goToReviewPage = (page: number) => {
-    void setReviewPage(page);
   };
 
   return (
@@ -257,8 +250,8 @@ function ItemReviewsSectionContent({
           <CardHeader className="px-0">
             <CardTitle>Your review</CardTitle>
             <CardDescription>
-              Leave a star rating, optionally add context, and decide whether
-              your profile is shown publicly.
+              Leave a star rating and optionally add context. Your profile is
+              shown with your review.
             </CardDescription>
           </CardHeader>
 
@@ -346,7 +339,7 @@ function ItemReviewsSectionContent({
                       onClick={(event) => {
                         event.preventDefault();
                         if (hasPreviousPage && !loading) {
-                          goToReviewPage(reviewPageData.page - 1);
+                          void setReviewPage(reviewPageData.page - 1);
                         }
                       }}
                     />
@@ -367,7 +360,7 @@ function ItemReviewsSectionContent({
                       onClick={(event) => {
                         event.preventDefault();
                         if (hasNextPage && !loading) {
-                          goToReviewPage(reviewPageData.page + 1);
+                          void setReviewPage(reviewPageData.page + 1);
                         }
                       }}
                     />

@@ -70,7 +70,7 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
   errorComponent: ({ error }) => (
     <Providers>
       <main className="flex min-h-dvh items-center justify-center p-6">
-        <div className="max-w-lg space-y-3 text-center">
+        <div className="flex max-w-lg flex-col gap-3 text-center">
           <h1 className="text-3xl font-semibold">Something went wrong</h1>
           <p className="text-muted-foreground">{error.message}</p>
         </div>
@@ -80,7 +80,7 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
   notFoundComponent: () => (
     <Providers>
       <main className="flex min-h-dvh items-center justify-center p-6">
-        <div className="max-w-lg space-y-3 text-center">
+        <div className="flex max-w-lg flex-col gap-3 text-center">
           <h1 className="text-3xl font-semibold">Page not found</h1>
           <p className="text-muted-foreground">
             The page you requested does not exist.

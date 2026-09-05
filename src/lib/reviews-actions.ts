@@ -41,7 +41,6 @@ const submitReviewInputSchema = z.object({
   itemType: itemTypeSchema,
   itemSlug: z.string().min(1),
   rating: z.number().int().min(1).max(5),
-  anonymous: z.boolean().default(true),
   body: z.string().nullable().default(null),
   turnstileToken: z.string().nullable().default(null),
 });

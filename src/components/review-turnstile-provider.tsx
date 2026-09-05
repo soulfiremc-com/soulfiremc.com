@@ -16,7 +16,6 @@ import {
 } from "react-turnstile";
 
 type ReviewTurnstileContextValue = {
-  enabled: boolean;
   executeTurnstile: () => Promise<string>;
 };
 
@@ -27,7 +26,6 @@ type PendingChallenge = {
 };
 
 const DEFAULT_CONTEXT: ReviewTurnstileContextValue = {
-  enabled: false,
   executeTurnstile: async () => {
     throw new Error("Cloudflare Turnstile is unavailable.");
   },
@@ -146,13 +144,6 @@ export function ReviewTurnstileProvider({ children }: { children: ReactNode }) {
     [],
   );
 
-  const handleVerify = useCallback<NonNullable<TurnstileProps["onVerify"]>>(
-    (token, boundTurnstile) => {
-      resolvePending(token, boundTurnstile);
-    },
-    [resolvePending],
-  );
-
   const handleError = useCallback<NonNullable<TurnstileProps["onError"]>>(
     (error, boundTurnstile) => {
       rejectPending(
@@ -201,7 +192,6 @@ export function ReviewTurnstileProvider({ children }: { children: ReactNode }) {
 
   const contextValue = useMemo<ReviewTurnstileContextValue>(
     () => ({
-      enabled: Boolean(siteKey),
       executeTurnstile,
     }),
     [executeTurnstile],
@@ -219,7 +209,7 @@ export function ReviewTurnstileProvider({ children }: { children: ReactNode }) {
           execution="execute"
           responseField={false}
           onLoad={handleLoad}
-          onVerify={handleVerify}
+          onVerify={resolvePending}
           onError={handleError}
           onExpire={handleExpire}
           onTimeout={handleTimeout}

@@ -80,3 +80,15 @@ export function getReviewJsonLd(
     },
   }));
 }
+
+export function compareReviewSummaries(
+  a: ReviewSummary | undefined,
+  b: ReviewSummary | undefined,
+  sort: "default" | "best-rated",
+) {
+  const ratingDifference = (b?.averageRating ?? 0) - (a?.averageRating ?? 0);
+  const countDifference = (b?.reviewCount ?? 0) - (a?.reviewCount ?? 0);
+  return sort === "best-rated"
+    ? ratingDifference || countDifference
+    : countDifference || ratingDifference;
+}

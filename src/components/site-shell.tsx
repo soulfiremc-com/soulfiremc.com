@@ -1,9 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
-import { type ReactNode, Suspense } from "react";
+import type { ReactNode } from "react";
+import { UserButton } from "@/components/auth/user/user-button";
 import { getBaseLayoutOptions } from "@/lib/layout-options";
-import { CopyrightYear } from "./copyright-year";
-import { UserNav } from "./user-nav";
 
 export function SiteShell({ children }: { children: ReactNode }) {
   const baseOptions = getBaseLayoutOptions();
@@ -58,20 +57,14 @@ export function SiteShell({ children }: { children: ReactNode }) {
         {
           type: "custom",
           secondary: true,
-          children: <UserNav />,
+          children: <UserButton size="icon" />,
         },
       ]}
     >
       {children}
       <footer className="border-t py-6 text-sm text-fd-muted-foreground">
         <div className="mx-auto flex w-full max-w-(--fd-layout-width) flex-col items-center gap-2 px-4 sm:flex-row sm:justify-between">
-          <p>
-            &copy;{" "}
-            <Suspense>
-              <CopyrightYear />
-            </Suspense>{" "}
-            SoulFire
-          </p>
+          <p>&copy; {new Date().getFullYear()} SoulFire</p>
           <nav className="flex gap-4">
             <Link
               to="/privacy-policy"

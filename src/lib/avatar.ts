@@ -9,12 +9,10 @@ const ALLOWED_AVATAR_HOSTNAMES = new Set([
   "gravatar.com",
 ]);
 
-function normalizeEmail(email: string) {
-  return email.trim().toLowerCase();
-}
-
 export function getGravatarUrl(email: string, size = 160) {
-  const hash = createHash("md5").update(normalizeEmail(email)).digest("hex");
+  const hash = createHash("md5")
+    .update(email.trim().toLowerCase())
+    .digest("hex");
   const params = new URLSearchParams({
     d: "retro",
     s: String(size),

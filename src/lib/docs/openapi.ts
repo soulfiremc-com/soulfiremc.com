@@ -71,8 +71,8 @@ export function isOpenApiPage(page: {
   return page.data.type === "openapi";
 }
 
-export async function getOpenApiPageText(page: OpenApiPageLike) {
-  const sections = await getOpenApiSections(page);
+export function getOpenApiPageText(page: OpenApiPageLike) {
+  const sections = getOpenApiSections(page);
   const lines = [`# ${page.data.title}`, `URL: ${page.url}`];
 
   if (page.data.description) {
@@ -86,8 +86,8 @@ export async function getOpenApiPageText(page: OpenApiPageLike) {
   return lines.join("\n");
 }
 
-export async function getOpenApiStructuredData(page: OpenApiPageLike) {
-  const sections = await getOpenApiSections(page);
+export function getOpenApiStructuredData(page: OpenApiPageLike) {
+  const sections = getOpenApiSections(page);
 
   return {
     contents: sections.map((section) => ({
@@ -101,50 +101,28 @@ export async function getOpenApiStructuredData(page: OpenApiPageLike) {
   };
 }
 
-async function getOpenApiSections(
-  page: OpenApiPageLike,
-): Promise<OpenApiSection[]> {
+function getOpenApiSections(page: OpenApiPageLike): OpenApiSection[] {
   const props = page.data.getOpenAPIPageProps();
   const document = props.payload.bundled as OpenApiContentDocument;
   const sections: OpenApiSection[] = [];
 
   for (const item of props.operations ?? []) {
-    const pathItem = document.paths?.[item.path] as
-      | Record<string, unknown>
-      | undefined;
+    const pathItem = document.paths?.[item.path];
     const operation = pathItem?.[item.method] as OpenApiOperation | undefined;
 
     sections.push({
-      content: formatSectionContent({
-        description: operation?.description,
-        heading: `${item.method.toUpperCase()} ${item.path}`,
-        parameters: operation?.parameters,
-        requestBody: operation?.requestBody,
-        responses: operation?.responses,
-        summary: operation?.summary,
-        tags: operation?.tags,
-      }),
+      content: formatSectionContent(operation ?? {}),
       heading: `${item.method.toUpperCase()} ${item.path}`,
       id: toHeadingId(item.method, item.path),
     });
   }
 
   for (const item of props.webhooks ?? []) {
-    const pathItem = document.webhooks?.[item.name] as
-      | Record<string, unknown>
-      | undefined;
+    const pathItem = document.webhooks?.[item.name];
     const operation = pathItem?.[item.method] as OpenApiOperation | undefined;
 
     sections.push({
-      content: formatSectionContent({
-        description: operation?.description,
-        heading: `Webhook ${item.method.toUpperCase()} /${item.name}`,
-        parameters: operation?.parameters,
-        requestBody: operation?.requestBody,
-        responses: operation?.responses,
-        summary: operation?.summary,
-        tags: operation?.tags,
-      }),
+      content: formatSectionContent(operation ?? {}),
       heading: `Webhook ${item.method.toUpperCase()} /${item.name}`,
       id: toHeadingId(item.method, item.name),
     });
@@ -171,21 +149,12 @@ function cleanText(value: string) {
 
 function formatSectionContent({
   description,
-  heading: _heading,
   parameters,
   requestBody,
   responses,
   summary,
   tags,
-}: {
-  description?: string;
-  heading: string;
-  parameters?: OpenApiOperation["parameters"];
-  requestBody?: OpenApiOperation["requestBody"];
-  responses?: OpenApiOperation["responses"];
-  summary?: string;
-  tags?: string[];
-}) {
+}: OpenApiOperation) {
   const lines: string[] = [];
 
   if (summary) {
@@ -211,7 +180,7 @@ function formatSectionContent({
             ? `, ${cleanText(parameter.description)}`
             : "";
 
-          return `${location}${name} (${required}${descriptionText ? descriptionText : ""})`;
+          return `${location}${name} (${required}${descriptionText})`;
         })
         .join("; ")}`,
     );

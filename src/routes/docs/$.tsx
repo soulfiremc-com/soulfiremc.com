@@ -27,6 +27,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { isOpenApiPage } from "@/lib/docs/openapi";
 import { docsRedirects } from "@/lib/docs/redirects";
 import { getBaseLayoutOptions } from "@/lib/layout-options";
 import { getDocsPageImage } from "@/lib/og";
@@ -80,17 +81,13 @@ const serverLoader = createServerFn({
     const title = page.data.title ?? page.slugs.at(-1) ?? "Docs";
     const imageUrl = getDocsPageImage(page).url;
 
-    if (page.data.type === "openapi") {
+    if (isOpenApiPage(page)) {
       return {
         type: "openapi",
         description: page.data.description,
         imageUrl,
         pageTree,
-        props: (
-          page.data as unknown as {
-            getOpenAPIPageProps: () => OpenAPIPageProps_Spec;
-          }
-        ).getOpenAPIPageProps(),
+        props: page.data.getOpenAPIPageProps(),
         title,
         url: page.url,
       };
@@ -193,7 +190,7 @@ export const Route = createFileRoute("/docs/$")({
       await clientLoader.preload(data.path);
     }
 
-    return data as DocsLoaderData;
+    return data;
   },
   head: ({ loaderData }) => {
     const title = loaderData
@@ -256,27 +253,21 @@ function DocsPageRoute() {
     <DocsLayout tree={page.pageTree} {...getBaseLayoutOptions()}>
       <Suspense>
         {page.type === "openapi" ? (
-          (() => {
-            const openApiPage = page as unknown as OpenApiPageLoaderData;
-
-            return (
-              <DocsPage full>
-                <div className="mb-6 flex flex-col gap-2 border-b pb-6">
-                  <DocsTitle>{openApiPage.title}</DocsTitle>
-                  <DocsDescription>{openApiPage.description}</DocsDescription>
-                </div>
-                <DocsBody>
-                  <APIPage {...openApiPage.props} />
-                </DocsBody>
-                <Feedback />
-                <EnderDashSponsor
-                  placement="docs-footer"
-                  className="mt-8"
-                  variant="footer"
-                />
-              </DocsPage>
-            );
-          })()
+          <DocsPage full>
+            <div className="mb-6 flex flex-col gap-2 border-b pb-6">
+              <DocsTitle>{page.title}</DocsTitle>
+              <DocsDescription>{page.description}</DocsDescription>
+            </div>
+            <DocsBody>
+              <APIPage {...page.props} />
+            </DocsBody>
+            <Feedback />
+            <EnderDashSponsor
+              placement="docs-footer"
+              className="mt-8"
+              variant="footer"
+            />
+          </DocsPage>
         ) : (
           <DocsMarkdownContent
             markdownUrl={page.markdownUrl}

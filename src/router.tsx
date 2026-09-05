@@ -7,7 +7,7 @@ export function getRouter() {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        retry: (failureCount) => failureCount < 3,
+        retry: 3,
         structuralSharing: (previous, next) =>
           deepEqual(previous, next) ? previous : next,
       },

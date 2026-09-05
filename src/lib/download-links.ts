@@ -5,26 +5,9 @@ export type DownloadLinkMap = Record<
   Record<ClientDownloadArch, string>
 >;
 
-export type ClientReleaseManifestPlatform = {
-  signature?: string;
-  url: string;
-};
-
-export type ClientReleaseManifestPlatformKey =
-  | "windows-x86_64"
-  | "windows-aarch64"
-  | "darwin-x86_64"
-  | "darwin-aarch64"
-  | "linux-x86_64"
-  | "linux-aarch64";
-
 export type ClientReleaseManifest = {
   version: string;
-  notes?: string;
   pub_date?: string;
-  platforms: Partial<
-    Record<ClientReleaseManifestPlatformKey, ClientReleaseManifestPlatform>
-  >;
 };
 
 export type ServerDownload = {
@@ -46,9 +29,9 @@ function buildClientInstallerUrl(
   version: string | undefined,
   os: Exclude<ClientDownloadOs, "linux">,
   arch: ClientDownloadArch,
-): string | undefined {
+): string {
   if (!version) {
-    return undefined;
+    return CLIENT_RELEASES_URL;
   }
 
   const extension = os === "windows" ? "exe" : "dmg";
@@ -62,19 +45,12 @@ export function createClientDownloads(
 
   return {
     windows: {
-      x64:
-        buildClientInstallerUrl(version, "windows", "x64") ??
-        CLIENT_RELEASES_URL,
-      arm64:
-        buildClientInstallerUrl(version, "windows", "arm64") ??
-        CLIENT_RELEASES_URL,
+      x64: buildClientInstallerUrl(version, "windows", "x64"),
+      arm64: buildClientInstallerUrl(version, "windows", "arm64"),
     },
     macos: {
-      x64:
-        buildClientInstallerUrl(version, "macos", "x64") ?? CLIENT_RELEASES_URL,
-      arm64:
-        buildClientInstallerUrl(version, "macos", "arm64") ??
-        CLIENT_RELEASES_URL,
+      x64: buildClientInstallerUrl(version, "macos", "x64"),
+      arm64: buildClientInstallerUrl(version, "macos", "arm64"),
     },
     linux: {
       x64: FLATHUB_URL,
@@ -96,9 +72,4 @@ export function createServerDownloads(version: string): ServerDownload[] {
       url: `${GH_SERVER_BASE}/${version}/SoulFireDedicated-${version}.jar`,
     },
   ];
-}
-
-export function normalizeServerVersion(raw: string): string | undefined {
-  const version = raw.trim();
-  return version ? version : undefined;
 }

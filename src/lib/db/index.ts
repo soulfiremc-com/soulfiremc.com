@@ -72,14 +72,7 @@ function createLazyClient(connectionString: string): Client {
   return client;
 }
 
-export function runWithHyperdriveDatabase<T>(
-  hyperdrive: Hyperdrive,
-  callback: () => T | Promise<T>,
-): Promise<T> | T {
-  return runWithHyperdriveClient(hyperdrive, callback);
-}
-
-async function runWithHyperdriveClient<T>(
+export async function runWithHyperdriveDatabase<T>(
   hyperdrive: Hyperdrive,
   callback: () => T | Promise<T>,
 ): Promise<T> {

@@ -1,5 +1,4 @@
 import type { ClientReleaseManifest } from "@/lib/download-links";
-import { normalizeServerVersion } from "@/lib/download-links";
 
 const CLIENT_LATEST_JSON_URL =
   "https://github.com/soulfiremc-com/SoulFireClient/releases/latest/download/latest.json";
@@ -23,5 +22,5 @@ export async function getClientReleaseManifest(): Promise<ClientReleaseManifest>
 
 export async function getServerVersion(): Promise<string | undefined> {
   const response = await fetchOk(SERVER_VERSION_URL);
-  return normalizeServerVersion(await response.text());
+  return (await response.text()).trim() || undefined;
 }

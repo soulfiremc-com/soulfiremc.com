@@ -54,6 +54,7 @@ import {
   type Resource,
 } from "@/lib/resources-data";
 import {
+  compareReviewSummaries,
   getAggregateRatingJsonLd,
   type ReviewSummary,
   type UserReviewRecord,
@@ -345,9 +346,8 @@ function ResourceCard({
 
 function MainContent() {
   const resources = RESOURCES;
-  const slugs = useMemo(() => resources.map((r) => r.slug), []);
   const { summaries, userReviews, pendingBySlug, upsertReview, deleteReview } =
-    useReviews("resource", slugs);
+    useReviews("resource", resourceReviewSlugs);
   const [{ category, tags, sort }, setParams] = useQueryStates(
     resourcesSearchParams,
     {
@@ -376,34 +376,10 @@ function MainContent() {
     });
 
     return [...filtered].sort((a, b) => {
-      const summaryA = summaries[a.slug] ?? {
-        averageRating: null,
-        reviewCount: 0,
-      };
-      const summaryB = summaries[b.slug] ?? {
-        averageRating: null,
-        reviewCount: 0,
-      };
-
-      if (sort === "best-rated") {
-        if (summaryB.averageRating !== summaryA.averageRating) {
-          return (summaryB.averageRating ?? 0) - (summaryA.averageRating ?? 0);
-        }
-
-        if (summaryB.reviewCount !== summaryA.reviewCount) {
-          return summaryB.reviewCount - summaryA.reviewCount;
-        }
-      } else {
-        if (summaryB.reviewCount !== summaryA.reviewCount) {
-          return summaryB.reviewCount - summaryA.reviewCount;
-        }
-
-        if (summaryB.averageRating !== summaryA.averageRating) {
-          return (summaryB.averageRating ?? 0) - (summaryA.averageRating ?? 0);
-        }
-      }
-
-      return a.name.localeCompare(b.name);
+      return (
+        compareReviewSummaries(summaries[a.slug], summaries[b.slug], sort) ||
+        a.name.localeCompare(b.name)
+      );
     });
   }, [category, sort, tags, summaries]);
 
@@ -591,9 +567,7 @@ function MainContent() {
                 reviewSummary={summaries[resource.slug]}
                 userReview={userReviews[resource.slug]}
                 reviewPending={pendingBySlug[resource.slug] ?? false}
-                onRate={(slug, rating) =>
-                  upsertReview(slug, { rating, anonymous: true })
-                }
+                onRate={(slug, rating) => upsertReview(slug, { rating })}
                 onClearRating={deleteReview}
               />
             ))}

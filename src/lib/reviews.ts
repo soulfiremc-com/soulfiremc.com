@@ -13,20 +13,6 @@ import {
   type UserReviewRecord,
 } from "@/lib/review-core";
 
-export type {
-  ItemType,
-  PaginatedPublicReviewRecords,
-  PublicReviewRecord,
-  ReviewCommentStatus,
-  ReviewSummary,
-  UserReviewRecord,
-} from "@/lib/review-core";
-export {
-  emptyReviewSummary,
-  getAggregateRatingJsonLd,
-  getReviewJsonLd,
-} from "@/lib/review-core";
-
 export async function getReviewSummaries(
   itemType: ItemType,
   slugs: string[],
@@ -155,7 +141,6 @@ export async function getWrittenReviews(
       body: review.body,
       commentStatus: review.commentStatus,
       createdAt: review.createdAt,
-      userName: user.name,
       username: user.username,
       displayUsername: user.displayUsername,
       userEmail: user.email,
@@ -244,7 +229,6 @@ export async function getPendingReviewComments(): Promise<
       rating: review.rating,
       body: review.body,
       createdAt: review.createdAt,
-      userName: user.name,
       username: user.username,
       displayUsername: user.displayUsername,
       userEmail: user.email,
