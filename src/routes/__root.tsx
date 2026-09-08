@@ -72,7 +72,11 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
       <main className="flex min-h-dvh items-center justify-center p-6">
         <div className="flex max-w-lg flex-col gap-3 text-center">
           <h1 className="text-3xl font-semibold">Something went wrong</h1>
-          <p className="text-muted-foreground">{error.message}</p>
+          <p className="text-muted-foreground">
+            {error instanceof Error
+              ? error.message
+              : "An unexpected error occurred."}
+          </p>
         </div>
       </main>
     </Providers>
