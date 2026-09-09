@@ -10,9 +10,10 @@ const securityHeaders = [
 
 export default {
   fetch: async (request: Request, env: CloudflareEnv) => {
-    const response = await runWithHyperdriveDatabase(env.HYPERDRIVE, () =>
+    const originalResponse = await runWithHyperdriveDatabase(env.HYPERDRIVE, () =>
       handler.fetch(request),
     );
+    const response = new Response(originalResponse.body, originalResponse);
 
     for (const [key, value] of securityHeaders) {
       if (!response.headers.has(key)) {
