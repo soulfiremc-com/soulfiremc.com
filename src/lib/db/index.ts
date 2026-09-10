@@ -6,7 +6,7 @@ import * as schema from "./schema";
 export const dbSchema = { ...generatedAuthSchema, ...schema };
 
 const databaseStorage = new AsyncLocalStorage<{
-  primary: D1Database;
+  primary: D1DatabaseSession;
   reviews: D1DatabaseSession;
 }>();
 
@@ -16,7 +16,7 @@ export function runWithD1Database<T>(
   callback: () => T,
 ): T {
   return databaseStorage.run(
-    { primary: binding, reviews: reviewSession },
+    { primary: binding.withSession("first-primary"), reviews: reviewSession },
     callback,
   );
 }

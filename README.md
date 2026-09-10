@@ -47,7 +47,8 @@ Apply migrations before deploying code that requires them.
 The `DB` binding points to `soulfire-website`. Read replication is enabled in that database's Cloudflare configuration.
 For a replacement database, enable **Settings > Enable Read Replication** in the Cloudflare dashboard.
 
-Authentication, user-specific reviews, and permission checks use the primary database through `db`.
+Authentication, user-specific reviews, and permission checks use a separate `first-primary` session through `db` for each request.
+Its first query reaches the primary; subsequent reads can use replicas with sequential consistency. All writes still reach the primary.
 Public review queries use `reviewDb`, which resolves to a D1 session for each request.
 
 Read requests start from the bookmark cookie, or use `first-unconstrained` when no bookmark exists.
