@@ -23,6 +23,7 @@ import {
   WalletCards,
 } from "lucide-react";
 import type { ElementType } from "react";
+import { Image } from "@/components/image";
 
 type PaymentLogoConfig =
   | {
@@ -109,11 +110,13 @@ function PaymentMethodLogo({ method }: { method: string }) {
 
   if (logo.asset) {
     return (
-      <img
+      <Image
         alt=""
         aria-hidden="true"
         className="h-3.5 max-w-10 shrink-0 object-contain"
         src={logo.asset}
+        height={14}
+        unstyled
       />
     );
   }

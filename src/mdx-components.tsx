@@ -8,8 +8,47 @@ import * as TabsComponents from "fumadocs-ui/components/tabs";
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import type { MDXComponents } from "mdx/types";
 import type { ComponentProps, FC } from "react";
+import { Image } from "@/components/image";
 import { DonutCalculator } from "@/components/mdx/donut-calculator";
 import { Mermaid } from "@/components/mdx/mermaid";
+
+function MdxImage({
+  src,
+  width,
+  height,
+  zoomInProps,
+  rmiz,
+  ...props
+}: ComponentProps<typeof ImageZoom>) {
+  const source =
+    typeof src === "object" && "default" in src ? src.default : src;
+  const url = typeof source === "object" ? source.src : source;
+  if (!url) return null;
+
+  return (
+    <ImageZoom src={url} zoomInProps={zoomInProps} rmiz={rmiz} {...props}>
+      <Image
+        {...props}
+        src={url}
+        width={
+          width
+            ? Number(width)
+            : typeof source === "object"
+              ? source.width
+              : undefined
+        }
+        height={
+          height
+            ? Number(height)
+            : typeof source === "object"
+              ? source.height
+              : undefined
+        }
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 900px"
+      />
+    </ImageZoom>
+  );
+}
 
 export function getMDXComponents(components?: MDXComponents): MDXComponents {
   return {
@@ -21,7 +60,8 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     ...TabsComponents,
     ...FilesComponents,
     blockquote: Callout as unknown as FC<ComponentProps<"blockquote">>,
-    img: ImageZoom as unknown as FC<ComponentProps<"img">>,
+    img: MdxImage,
+    Image,
     // HTML `ref` attribute conflicts with `forwardRef`
     pre: ({ ref: _ref, ...props }) => (
       <CodeBlock {...props}>

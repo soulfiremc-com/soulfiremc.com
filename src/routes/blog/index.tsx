@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
+import { Image } from "@/components/image";
 import { SiteShell } from "@/components/site-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getAllBlogPostSummaries } from "@/lib/blog";
@@ -77,9 +78,11 @@ function BlogIndexPage() {
             >
               {post.cover ? (
                 <div className="aspect-video w-full overflow-hidden bg-muted">
-                  <img
+                  <Image
                     src={post.cover}
                     alt={post.title}
+                    fill
+                    objectFit="cover"
                     className="size-full object-cover transition-transform group-hover:scale-105"
                   />
                 </div>

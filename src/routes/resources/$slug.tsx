@@ -17,6 +17,7 @@ import type {
   WithContext,
 } from "schema-dts";
 import { GallerySection } from "@/components/gallery-section";
+import { Image } from "@/components/image";
 import { ItemReviewsSection } from "@/components/item-reviews-section";
 import { JsonLd } from "@/components/json-ld";
 import { ReviewSummaryBadge } from "@/components/review-summary-badge";
@@ -57,9 +58,10 @@ type ResourceDetailPageData = {
 function ResourceLogo({ resource }: { resource: Resource }) {
   if (resource.logo) {
     return (
-      <img
+      <Image
         src={resource.logo}
         alt={`${resource.name} logo`}
+        fill
         className="size-full object-contain p-3"
       />
     );

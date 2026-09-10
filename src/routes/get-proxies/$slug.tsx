@@ -11,6 +11,7 @@ import type {
 } from "schema-dts";
 import { CouponCode } from "@/components/coupon-code";
 import { GallerySection } from "@/components/gallery-section";
+import { Image } from "@/components/image";
 import { ItemReviewsSection } from "@/components/item-reviews-section";
 import { JsonLd } from "@/components/json-ld";
 import { PaymentMethods } from "@/components/payment-methods";
@@ -55,9 +56,10 @@ type ProxyDetailPageData = {
 function ProviderLogo({ provider }: { provider: Provider }) {
   if (provider.logo) {
     return (
-      <img
+      <Image
         src={provider.logo}
         alt={`${provider.name} logo`}
+        fill
         className="size-full object-contain p-3"
       />
     );

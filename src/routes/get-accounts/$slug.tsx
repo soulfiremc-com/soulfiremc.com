@@ -13,6 +13,7 @@ import { Suspense } from "react";
 import type { BreadcrumbList, Product, WebPage, WithContext } from "schema-dts";
 import { CouponCode } from "@/components/coupon-code";
 import { GallerySection } from "@/components/gallery-section";
+import { Image } from "@/components/image";
 import { ItemReviewsSection } from "@/components/item-reviews-section";
 import { JsonLd } from "@/components/json-ld";
 import { PaymentMethods } from "@/components/payment-methods";
@@ -282,9 +283,10 @@ function ProviderBadge({ badge }: { badge: Badge }) {
 function ShopLogo({ src, name }: { src?: string; name: string }) {
   if (src) {
     return (
-      <img
+      <Image
         src={src}
         alt={`${name} logo`}
+        fill
         className="size-full object-contain p-3"
       />
     );

@@ -20,6 +20,7 @@ import {
   useQueryStates,
 } from "nuqs";
 import { Suspense, useEffect, useState } from "react";
+import { Image } from "@/components/image";
 import { SiteShell } from "@/components/site-shell";
 import { CustomTimeAgo } from "@/components/time-ago";
 import { Button } from "@/components/ui/button";
@@ -307,9 +308,11 @@ function DownloadConfigurator(props: {
               >
                 <div className="flex items-center gap-3">
                   <div className="rounded-lg bg-primary/10 p-2 text-primary">
-                    <img
+                    <Image
                       src={option.iconSrc}
                       alt={option.iconAlt}
+                      width={28}
+                      height={28}
                       className="size-7"
                     />
                   </div>

@@ -16,6 +16,7 @@ import {
 } from "nuqs";
 import { Suspense, useMemo, useState } from "react";
 import { CouponCode } from "@/components/coupon-code";
+import { Image } from "@/components/image";
 import { PaymentMethods } from "@/components/payment-methods";
 import { ProviderThemeDecoration } from "@/components/provider-theme-decoration";
 import { ReviewInlineActions } from "@/components/review-inline-actions";
@@ -211,9 +212,10 @@ function ProviderBadge({
 function ProviderLogo({ provider }: { provider: Provider }) {
   if (provider.logo) {
     return (
-      <img
+      <Image
         src={provider.logo}
         alt={`${provider.name} logo`}
+        fill
         className="size-full object-contain p-2"
       />
     );

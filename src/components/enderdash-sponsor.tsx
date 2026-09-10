@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
+import { Image } from "@/components/image";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -56,7 +57,7 @@ function SponsorLogo({
         className="flex size-32 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-black p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] sm:size-36"
       >
         <span className="flex size-full items-center justify-center rounded-xl bg-zinc-950 p-4">
-          <img
+          <Image
             src="/sponsors/enderdash-logo.png"
             alt="EnderDash logo"
             width={96}
@@ -73,7 +74,7 @@ function SponsorLogo({
       href={href}
       className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-black p-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
     >
-      <img
+      <Image
         src="/sponsors/enderdash-logo.png"
         alt="EnderDash logo"
         width={48}

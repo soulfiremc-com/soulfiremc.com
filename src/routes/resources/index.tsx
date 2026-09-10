@@ -18,6 +18,7 @@ import {
   useQueryStates,
 } from "nuqs";
 import { Suspense, useMemo, useState } from "react";
+import { Image } from "@/components/image";
 import { ReviewInlineActions } from "@/components/review-inline-actions";
 import { ReviewTurnstileProvider } from "@/components/review-turnstile-provider";
 import { SiteShell } from "@/components/site-shell";
@@ -223,9 +224,10 @@ function ResourceBadge({ badge }: { badge: Badge }) {
 function ResourceLogo({ resource }: { resource: Resource }) {
   if (resource.logo) {
     return (
-      <img
+      <Image
         src={resource.logo}
         alt={`${resource.name} logo`}
+        fill
         className="size-full object-contain p-2"
       />
     );

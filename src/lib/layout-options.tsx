@@ -1,5 +1,6 @@
 import { SiDiscord, SiGithub, SiKofi } from "@icons-pack/react-simple-icons";
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
+import { Image } from "@/components/image";
 import { getRequiredEnv } from "@/lib/env";
 
 export function getBaseLayoutOptions(): BaseLayoutProps {
@@ -7,7 +8,13 @@ export function getBaseLayoutOptions(): BaseLayoutProps {
     nav: {
       title: (
         <>
-          <img src="/logo.png" width={32} height={32} alt="SoulFire Logo" />
+          <Image
+            priority
+            src="/logo.png"
+            width={32}
+            height={32}
+            alt="SoulFire Logo"
+          />
           <span className="font-medium">SoulFire</span>
         </>
       ),
