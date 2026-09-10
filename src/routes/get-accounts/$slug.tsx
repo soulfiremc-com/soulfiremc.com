@@ -287,6 +287,8 @@ function ShopLogo({ src, name }: { src?: string; name: string }) {
         src={src}
         alt={`${name} logo`}
         fill
+        sizes="56px"
+        breakpoints={[56, 112, 168]}
         className="size-full object-contain p-3"
       />
     );

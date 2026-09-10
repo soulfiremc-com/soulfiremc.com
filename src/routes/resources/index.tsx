@@ -228,6 +228,8 @@ function ResourceLogo({ resource }: { resource: Resource }) {
         src={resource.logo}
         alt={`${resource.name} logo`}
         fill
+        sizes="48px"
+        breakpoints={[48, 96, 144]}
         className="size-full object-contain p-2"
       />
     );

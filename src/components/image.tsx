@@ -7,6 +7,7 @@ import { cn } from "cn";
 import type { Ref } from "react";
 import { getProviderForUrl } from "unpic";
 import imageMetadata from "@/lib/image-metadata.json" with { type: "json" };
+import { siteUrl } from "@/lib/site";
 
 type ImageMetadata = { width: number; height: number; background?: string };
 const metadata: Record<string, ImageMetadata> = imageMetadata;
@@ -69,17 +70,40 @@ export function Image({
       className,
     ),
   };
-  const provider = cdn ?? getProviderForUrl(src) ?? fallback;
+  const useCloudflare =
+    !import.meta.env.DEV &&
+    src.startsWith("/") &&
+    !src.startsWith("//") &&
+    !/\.svg(?:[?#]|$)/i.test(src);
+  const provider =
+    cdn ??
+    (getProviderForUrl(src) ||
+      fallback ||
+      (useCloudflare ? "cloudflare" : undefined));
 
   return provider ? (
     <UnpicImage
       {...imageProps}
       cdn={provider}
-      operations={operations}
-      options={options}
+      operations={{
+        ...operations,
+        cloudflare: {
+          fit: objectFit === "cover" ? "cover" : "scale-down",
+          format: "auto",
+          onerror: "redirect",
+          ...operations?.cloudflare,
+        },
+      }}
+      options={{
+        ...options,
+        cloudflare: {
+          domain: new URL(siteUrl).host,
+          ...options?.cloudflare,
+        },
+      }}
     />
   ) : (
-    // Local and unsupported sources have no resize service or responsive variants.
+    // Keep SVGs, development assets, and unsupported remote sources unchanged.
     <BaseImage {...imageProps} transformer={originalSource} breakpoints={[]} />
   );
 }

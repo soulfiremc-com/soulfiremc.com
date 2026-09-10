@@ -39,6 +39,7 @@ export function GallerySection({
               src={img.src}
               alt={img.alt}
               fill
+              sizes="(min-width: 640px) 33vw, 50vw"
               objectFit="cover"
               className="size-full object-cover"
             />

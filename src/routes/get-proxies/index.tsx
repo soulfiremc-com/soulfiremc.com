@@ -216,6 +216,8 @@ function ProviderLogo({ provider }: { provider: Provider }) {
         src={provider.logo}
         alt={`${provider.name} logo`}
         fill
+        sizes="48px"
+        breakpoints={[48, 96, 144]}
         className="size-full object-contain p-2"
       />
     );
