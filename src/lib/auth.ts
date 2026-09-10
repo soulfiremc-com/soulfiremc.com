@@ -141,7 +141,8 @@ export const auth = betterAuth({
   baseURL: "https://soulfiremc.com",
   secret: process.env.BETTER_AUTH_SECRET ?? "",
   database: drizzleAdapter(db, {
-    provider: "pg",
+    provider: "sqlite",
+    transaction: false,
     schema: {
       ...schema,
       ...generatedAuthSchema,

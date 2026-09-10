@@ -3,44 +3,37 @@ import {
   check,
   index,
   integer,
-  pgEnum,
-  pgTable,
-  // biome-ignore lint/suspicious/noDeprecatedImports: Drizzle marks the legacy overload on this symbol as deprecated, but the object form used below is the current API.
+  // biome-ignore lint/suspicious/noDeprecatedImports: The object overload used below is the current Drizzle API.
   primaryKey,
+  sqliteTable,
   text,
-  timestamp,
   uniqueIndex,
-  uuid,
-} from "drizzle-orm/pg-core";
+} from "drizzle-orm/sqlite-core";
 import { user } from "./auth-schema";
 
-export const reviewCommentStatus = pgEnum("review_comment_status", [
-  "approved",
-  "pending",
-  "rejected",
-]);
+const reviewCommentStatuses = ["approved", "pending", "rejected"] as const;
 
-export const reviewItemType = pgEnum("review_item_type", [
-  "account",
-  "proxy",
-  "resource",
-]);
+const reviewItemTypes = ["account", "proxy", "resource"] as const;
 
-export const review = pgTable(
+export const review = sqliteTable(
   "review",
   {
-    id: uuid("id").default(sql`pg_catalog.gen_random_uuid()`).primaryKey(),
-    userId: uuid("user_id")
+    id: text("id")
+      .$defaultFn(() => crypto.randomUUID())
+      .primaryKey(),
+    userId: text("user_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
-    itemType: reviewItemType("item_type").notNull(),
+    itemType: text("item_type", { enum: reviewItemTypes }).notNull(),
     itemSlug: text("item_slug").notNull(),
     rating: integer("rating").notNull().default(5),
     body: text("body"),
-    commentStatus: reviewCommentStatus("comment_status"),
-    createdAt: timestamp("created_at").notNull().defaultNow(),
-    updatedAt: timestamp("updated_at")
-      .defaultNow()
+    commentStatus: text("comment_status", { enum: reviewCommentStatuses }),
+    createdAt: integer("created_at", { mode: "timestamp_ms" })
+      .notNull()
+      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`),
+    updatedAt: integer("updated_at", { mode: "timestamp_ms" })
+      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
       .$onUpdate(() => /* @__PURE__ */ new Date())
       .notNull(),
   },
@@ -58,42 +51,60 @@ export const review = pgTable(
     ),
     index("review_comment_status_idx").on(table.commentStatus),
     check(
+      "review_item_type_check",
+      sql`${table.itemType} IN ('account', 'proxy', 'resource')`,
+    ),
+    check(
+      "review_comment_status_check",
+      sql`${table.commentStatus} IN ('approved', 'pending', 'rejected')`,
+    ),
+    check(
       "review_rating_range",
-      sql`${table.rating} >= 1 AND ${table.rating} <= 5`,
+      sql`typeof(${table.rating}) = 'integer' AND ${table.rating} >= 1 AND ${table.rating} <= 5`,
     ),
   ],
 );
 
-export const reviewItemOwner = pgTable(
+export const reviewItemOwner = sqliteTable(
   "review_item_owner",
   {
-    itemType: reviewItemType("item_type").notNull(),
+    itemType: text("item_type", { enum: reviewItemTypes }).notNull(),
     itemSlug: text("item_slug").notNull(),
-    userId: uuid("user_id")
+    userId: text("user_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
-    createdAt: timestamp("created_at").notNull().defaultNow(),
+    createdAt: integer("created_at", { mode: "timestamp_ms" })
+      .notNull()
+      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`),
   },
   (table) => [
     primaryKey({ columns: [table.itemType, table.itemSlug, table.userId] }),
     index("review_item_owner_user_idx").on(table.userId),
+    check(
+      "review_item_owner_type_check",
+      sql`${table.itemType} IN ('account', 'proxy', 'resource')`,
+    ),
   ],
 );
 
-export const reviewReply = pgTable(
+export const reviewReply = sqliteTable(
   "review_reply",
   {
-    id: uuid("id").default(sql`pg_catalog.gen_random_uuid()`).primaryKey(),
-    reviewId: uuid("review_id")
+    id: text("id")
+      .$defaultFn(() => crypto.randomUUID())
+      .primaryKey(),
+    reviewId: text("review_id")
       .notNull()
       .references(() => review.id, { onDelete: "cascade" }),
-    userId: uuid("user_id")
+    userId: text("user_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
     body: text("body").notNull(),
-    createdAt: timestamp("created_at").notNull().defaultNow(),
-    updatedAt: timestamp("updated_at")
-      .defaultNow()
+    createdAt: integer("created_at", { mode: "timestamp_ms" })
+      .notNull()
+      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`),
+    updatedAt: integer("updated_at", { mode: "timestamp_ms" })
+      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
       .$onUpdate(() => /* @__PURE__ */ new Date())
       .notNull(),
   },

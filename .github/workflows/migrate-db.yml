@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  test:
+  migrate:
     name: 'Run Database Migrations'
 
     runs-on: ubuntu-24.04
@@ -25,7 +25,12 @@ jobs:
       - name: Install dependencies
         run: bun ci
 
+      - name: Check migrations and database behavior
+        run: |
+          bunx drizzle-kit check
+          bun run test
+
       - name: Run migrations
-        run: bunx drizzle-kit migrate
+        run: bun run db:migrate:remote
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

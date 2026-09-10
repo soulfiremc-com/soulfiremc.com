@@ -1,6 +1,6 @@
 import { and, desc, eq, inArray, isNull, or, sql } from "drizzle-orm";
 import { getAvatarUrl } from "@/lib/avatar";
-import { db } from "@/lib/db";
+import { db, reviewDb } from "@/lib/db";
 import { user } from "@/lib/db/auth-schema";
 import { review } from "@/lib/db/schema";
 import {
@@ -13,21 +13,41 @@ import {
   type UserReviewRecord,
 } from "@/lib/review-core";
 
+// Leave room for filters within D1's 100 bound parameters per statement.
+const REVIEW_SLUG_BATCH_SIZE = 90;
+
 export async function getReviewSummaries(
   itemType: ItemType,
   slugs: string[],
 ): Promise<Record<string, ReviewSummary>> {
   if (slugs.length === 0) return {};
 
-  const rows = await db
-    .select({
-      itemSlug: review.itemSlug,
-      reviewCount: sql<number>`count(*)::int`,
-      averageRating: sql<number>`round(avg(${review.rating})::numeric, 2)::float8`,
-    })
-    .from(review)
-    .where(and(eq(review.itemType, itemType), inArray(review.itemSlug, slugs)))
-    .groupBy(review.itemSlug);
+  const rows = [];
+  for (
+    let offset = 0;
+    offset < slugs.length;
+    offset += REVIEW_SLUG_BATCH_SIZE
+  ) {
+    rows.push(
+      ...(await reviewDb
+        .select({
+          itemSlug: review.itemSlug,
+          reviewCount: sql<number>`count(*)`,
+          averageRating: sql<number>`round(avg(${review.rating}), 2)`,
+        })
+        .from(review)
+        .where(
+          and(
+            eq(review.itemType, itemType),
+            inArray(
+              review.itemSlug,
+              slugs.slice(offset, offset + REVIEW_SLUG_BATCH_SIZE),
+            ),
+          ),
+        )
+        .groupBy(review.itemSlug)),
+    );
+  }
 
   const summaryMap: Record<string, ReviewSummary> = {};
   for (const slug of slugs) {
@@ -51,21 +71,33 @@ export async function getUserReviews(
 ): Promise<Record<string, UserReviewRecord>> {
   if (slugs.length === 0) return {};
 
-  const rows = await db
-    .select({
-      itemSlug: review.itemSlug,
-      rating: review.rating,
-      body: review.body,
-      commentStatus: review.commentStatus,
-    })
-    .from(review)
-    .where(
-      and(
-        eq(review.userId, userId),
-        eq(review.itemType, itemType),
-        inArray(review.itemSlug, slugs),
-      ),
+  const rows = [];
+  for (
+    let offset = 0;
+    offset < slugs.length;
+    offset += REVIEW_SLUG_BATCH_SIZE
+  ) {
+    rows.push(
+      ...(await db
+        .select({
+          itemSlug: review.itemSlug,
+          rating: review.rating,
+          body: review.body,
+          commentStatus: review.commentStatus,
+        })
+        .from(review)
+        .where(
+          and(
+            eq(review.userId, userId),
+            eq(review.itemType, itemType),
+            inArray(
+              review.itemSlug,
+              slugs.slice(offset, offset + REVIEW_SLUG_BATCH_SIZE),
+            ),
+          ),
+        )),
     );
+  }
 
   return Object.fromEntries(
     rows.map((row) => [
@@ -133,7 +165,7 @@ export async function getWrittenReviews(
   const pageSize = Math.max(1, options?.pageSize ?? 8);
   const offset = (page - 1) * pageSize;
 
-  const rows = await db
+  const rows = await reviewDb
     .select({
       id: review.id,
       itemSlug: review.itemSlug,
@@ -240,7 +272,7 @@ export async function getPendingReviewComments(): Promise<
       and(
         or(eq(review.commentStatus, "pending"), isNull(review.commentStatus)),
         sql`${review.body} IS NOT NULL`,
-        sql`btrim(${review.body}) <> ''`,
+        sql`trim(${review.body}) <> ''`,
       ),
     )
     .orderBy(desc(review.createdAt));
@@ -271,5 +303,8 @@ export async function updateReviewCommentStatus(
   reviewId: string,
   commentStatus: Extract<ReviewCommentStatus, "approved" | "rejected">,
 ) {
-  await db.update(review).set({ commentStatus }).where(eq(review.id, reviewId));
+  await reviewDb
+    .update(review)
+    .set({ commentStatus })
+    .where(eq(review.id, reviewId));
 }

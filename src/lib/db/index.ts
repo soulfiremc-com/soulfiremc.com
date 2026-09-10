@@ -1,97 +1,42 @@
 import { AsyncLocalStorage } from "node:async_hooks";
-import type { NodePgDatabase } from "drizzle-orm/node-postgres";
-import { drizzle } from "drizzle-orm/node-postgres";
-import { Client } from "pg";
+import { drizzle } from "drizzle-orm/d1";
 import * as generatedAuthSchema from "./auth-schema";
 import * as schema from "./schema";
 
-const LOCAL_DATABASE_URL =
-  "postgres://postgres:password@localhost:5432/soulfire";
+export const dbSchema = { ...generatedAuthSchema, ...schema };
 
-const dbSchema = {
-  ...generatedAuthSchema,
-  ...schema,
-};
+const databaseStorage = new AsyncLocalStorage<{
+  primary: D1Database;
+  reviews: D1DatabaseSession;
+}>();
 
-type Db = NodePgDatabase<typeof dbSchema>;
-
-type DbContext = {
-  db?: Db;
-  connectionString: string;
-};
-
-const dbContextStorage = new AsyncLocalStorage<DbContext>();
-const dbCache = new Map<string, Db>();
-
-function createDb({ connectionString }: DbContext): Db {
-  return drizzle({
-    connection: connectionString,
-    schema: dbSchema,
-  });
-}
-
-function getDbContext(): DbContext {
-  return (
-    dbContextStorage.getStore() ?? {
-      connectionString: process.env.DATABASE_URL ?? LOCAL_DATABASE_URL,
-    }
-  );
-}
-
-function getDb(): Db {
-  const dbContext = getDbContext();
-  if (dbContext.db) {
-    return dbContext.db;
-  }
-
-  const cacheKey = dbContext.connectionString;
-  const cachedDb = dbCache.get(cacheKey);
-
-  if (cachedDb) {
-    return cachedDb;
-  }
-
-  const nextDb = createDb(dbContext);
-  dbCache.set(cacheKey, nextDb);
-  return nextDb;
-}
-
-function createLazyClient(connectionString: string): Client {
-  const client = new Client({ connectionString });
-  const query = client.query.bind(client);
-  let connectPromise: Promise<Client> | undefined;
-
-  function connect() {
-    connectPromise ??= client.connect();
-    return connectPromise;
-  }
-
-  client.query = ((...args: Parameters<Client["query"]>) =>
-    connect().then(() => query(...args))) as Client["query"];
-
-  return client;
-}
-
-export async function runWithHyperdriveDatabase<T>(
-  hyperdrive: Hyperdrive,
-  callback: () => T | Promise<T>,
-): Promise<T> {
-  const client = createLazyClient(hyperdrive.connectionString);
-
-  return dbContextStorage.run(
-    {
-      connectionString: hyperdrive.connectionString,
-      db: drizzle(client, { schema: dbSchema }),
-    },
+export function runWithD1Database<T>(
+  binding: D1Database,
+  reviewSession: D1DatabaseSession,
+  callback: () => T,
+): T {
+  return databaseStorage.run(
+    { primary: binding, reviews: reviewSession },
     callback,
   );
 }
 
-export const db = new Proxy(
-  {},
-  {
-    get(_target, property, receiver) {
-      return Reflect.get(getDb() as object, property, receiver);
+function createDatabase(target: "primary" | "reviews") {
+  // Resolve the binding when a query runs, while keeping Drizzle's schema
+  // available at module initialization for Better Auth and its CLI.
+  const client = new Proxy({} as D1Database, {
+    get(_target, property) {
+      const context = databaseStorage.getStore();
+      if (!context) {
+        throw new Error("Database access requires a Worker request context.");
+      }
+      const binding = context[target];
+      const value = Reflect.get(binding, property);
+      return typeof value === "function" ? value.bind(binding) : value;
     },
-  },
-) as Db;
+  });
+  return drizzle(client, { schema: dbSchema });
+}
+
+export const db = createDatabase("primary");
+export const reviewDb = createDatabase("reviews");

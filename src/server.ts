@@ -1,5 +1,6 @@
 import handler from "@tanstack/react-start/server-entry";
-import { runWithHyperdriveDatabase } from "@/lib/db";
+import { runWithD1Database } from "@/lib/db";
+import { createReviewSession, setReviewBookmark } from "@/lib/db/replication";
 
 const securityHeaders = [
   ["X-DNS-Prefetch-Control", "on"],
@@ -10,10 +11,14 @@ const securityHeaders = [
 
 export default {
   fetch: async (request: Request, env: CloudflareEnv) => {
-    const originalResponse = await runWithHyperdriveDatabase(env.HYPERDRIVE, () =>
-      handler.fetch(request),
+    const reviewSession = createReviewSession(env.DB, request);
+    const originalResponse = await runWithD1Database(
+      env.DB,
+      reviewSession,
+      () => handler.fetch(request),
     );
     const response = new Response(originalResponse.body, originalResponse);
+    setReviewBookmark(request, response, reviewSession);
 
     for (const [key, value] of securityHeaders) {
       if (!response.headers.has(key)) {

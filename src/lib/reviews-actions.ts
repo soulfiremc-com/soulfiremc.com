@@ -3,7 +3,7 @@ import { getRequest, getRequestHost } from "@tanstack/react-start/server";
 import { and, eq } from "drizzle-orm";
 import * as z from "zod";
 import { auth } from "@/lib/auth";
-import { db } from "@/lib/db";
+import { db, reviewDb } from "@/lib/db";
 import { review } from "@/lib/db/schema";
 import type {
   PaginatedPublicReviewRecords,
@@ -238,7 +238,7 @@ export const submitReviewServerFn = createServerFn({ method: "POST" })
         };
       }
 
-      await db.insert(review).values({
+      await reviewDb.insert(review).values({
         body: normalizedBody,
         commentStatus,
         itemSlug: data.itemSlug,
@@ -247,7 +247,7 @@ export const submitReviewServerFn = createServerFn({ method: "POST" })
         userId: session.user.id,
       });
     } else {
-      await db
+      await reviewDb
         .update(review)
         .set({ rating: data.rating, body: normalizedBody, commentStatus })
         .where(eq(review.id, existing[0].id));
@@ -293,7 +293,7 @@ export const deleteReviewServerFn = createServerFn({ method: "POST" })
       return { ok: false, error: "unauthorized" };
     }
 
-    await db
+    await reviewDb
       .delete(review)
       .where(
         and(
