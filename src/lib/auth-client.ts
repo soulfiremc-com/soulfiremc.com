@@ -7,6 +7,7 @@ import {
   emailOTPClient,
   inferAdditionalFields,
   lastLoginMethodClient,
+  oauthPopupClient,
   twoFactorClient,
   usernameClient,
 } from "better-auth/client/plugins";
@@ -19,6 +20,7 @@ function asClientPlugin(plugin: unknown): BetterAuthClientPlugin {
 
 const clientOptions = {
   plugins: [
+    oauthPopupClient(),
     inferAdditionalFields<typeof auth>(),
     twoFactorClient(),
     usernameClient(),

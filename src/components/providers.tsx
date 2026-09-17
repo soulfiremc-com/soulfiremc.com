@@ -54,6 +54,7 @@ function AuthUIProviders({ children }: { children: React.ReactNode }) {
       basePaths={AUTH_UI_BASE_PATHS}
       viewPaths={AUTH_UI_VIEW_PATHS}
       socialProviders={["google", "discord", "github"]}
+      socialSignInMode="popup"
       emailAndPassword={{
         forgotPassword: true,
         name: false,

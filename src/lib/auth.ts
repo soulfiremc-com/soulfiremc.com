@@ -6,11 +6,13 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { betterAuth } from "better-auth/minimal";
 import {
   admin,
+  bearer,
   captcha,
   emailOTP,
   haveIBeenPwned,
   jwt,
   lastLoginMethod,
+  oauthPopup,
   openAPI,
   twoFactor,
   username,
@@ -252,6 +254,8 @@ export const auth = betterAuth({
     },
   },
   plugins: [
+    bearer(),
+    oauthPopup(),
     emailHarmony(),
     twoFactor({
       issuer: "SoulFire",
