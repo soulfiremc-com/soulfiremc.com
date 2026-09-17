@@ -60,6 +60,7 @@ export function ProviderButton({
   const { mutate: signInPopup, isPending: signInPopupPending } =
     useSignInOAuthPopup(authClient as OAuthPopupAuthClient, {
       onError: resetFetchOptions,
+      onSuccess: () => navigate({ to: redirectTo }),
     });
 
   const providerId = getProviderId(provider);
@@ -75,14 +76,11 @@ export function ProviderButton({
 
   const handleSignIn = () => {
     if (socialSignInMode === "popup") {
-      signInPopup(
-        {
-          provider: providerId,
-          callbackURL,
-          requestSignUp: view === "signUp",
-        },
-        { onSuccess: () => navigate({ to: redirectTo }) },
-      );
+      signInPopup({
+        provider: providerId,
+        callbackURL,
+        requestSignUp: view === "signUp",
+      });
       return;
     }
 
