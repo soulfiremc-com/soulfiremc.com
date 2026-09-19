@@ -1,7 +1,12 @@
 "use client";
 
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useCallback, useMemo, useState } from "react";
+import {
+  useMutation,
+  useMutationState,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
+import { useCallback, useMemo } from "react";
 import { useReviewTurnstile } from "@/components/review-turnstile-provider";
 import { useSession } from "@/lib/auth-hooks";
 import {
@@ -10,6 +15,13 @@ import {
   type PaginatedPublicReviewRecords,
   type ReviewSummary,
 } from "@/lib/review-core";
+import {
+  type ReviewMutationResult,
+  type ReviewMutationVariables,
+  reviewMutationKey,
+  reviewMutationOptions,
+  selectReviewMutationSlug,
+} from "@/lib/review-mutations";
 import {
   deleteReviewServerFn,
   submitReviewServerFn,
@@ -20,8 +32,6 @@ type UseReviewsOptions = {
   includeWrittenReviews?: boolean;
   writtenReviewsPage?: number;
 };
-
-type MutationError = "unauthorized" | "verification" | null;
 
 function withEmptySummaries(
   slugs: string[],
@@ -64,8 +74,24 @@ export function useReviews(
     ...queryOptions,
     enabled: normalizedSlugs.length > 0,
   });
-  const [pendingBySlug, setPendingBySlug] = useState<Record<string, boolean>>(
-    {},
+  const mutationKey = reviewMutationKey(itemType, session?.user.id);
+  const { mutateAsync } = useMutation(
+    reviewMutationOptions({
+      itemType,
+      viewerId: session?.user.id,
+      queryClient,
+      executeTurnstile,
+      submitReview: submitReviewServerFn,
+      deleteReview: deleteReviewServerFn,
+    }),
+  );
+  const pendingSlugs = useMutationState({
+    filters: { mutationKey, exact: true, status: "pending" },
+    select: selectReviewMutationSlug,
+  });
+  const pendingBySlug = useMemo<Record<string, boolean>>(
+    () => Object.fromEntries(pendingSlugs.map((slug) => [slug, true])),
+    [pendingSlugs],
   );
 
   const summaries = useMemo(
@@ -95,114 +121,41 @@ export function useReviews(
     });
   }, [itemType, queryClient]);
 
-  const setPending = useCallback((slug: string, value: boolean) => {
-    setPendingBySlug((current) => ({ ...current, [slug]: value }));
-  }, []);
+  const mutateReview = async (
+    variables: ReviewMutationVariables,
+  ): Promise<ReviewMutationResult> => {
+    if (!session?.user && !sessionPending) {
+      return { error: "unauthorized" };
+    }
 
-  const upsertReview = useCallback(
-    async (
-      slug: string,
-      nextReview: {
-        rating: number;
-        body?: string | null;
-      },
-    ): Promise<{ error: MutationError }> => {
-      if (!session?.user && !sessionPending) {
-        return { error: "unauthorized" };
-      }
+    if (
+      reviewsQuery.isPending ||
+      queryClient.isMutating({
+        mutationKey,
+        exact: true,
+        predicate: (mutation) =>
+          selectReviewMutationSlug(mutation) === variables.slug,
+      }) > 0
+    ) {
+      return { error: null };
+    }
 
-      if (reviewsQuery.isPending || pendingBySlug[slug]) {
-        return { error: null };
-      }
+    return mutateAsync(variables);
+  };
 
-      const needsTurnstile = !reviewsQuery.data?.userReviews[slug];
-      let turnstileToken: string | null = null;
+  const upsertReview = (
+    slug: string,
+    nextReview: { rating: number; body?: string | null },
+  ) =>
+    mutateReview({
+      action: "upsert",
+      slug,
+      ...nextReview,
+      needsTurnstile: !reviewsQuery.data?.userReviews[slug],
+    });
 
-      setPending(slug, true);
-
-      if (needsTurnstile) {
-        try {
-          turnstileToken = await executeTurnstile();
-        } catch {
-          setPending(slug, false);
-          return { error: "verification" };
-        }
-      }
-
-      try {
-        const result = await submitReviewServerFn({
-          data: {
-            itemType,
-            itemSlug: slug,
-            rating: nextReview.rating,
-            body: nextReview.body ?? null,
-            turnstileToken,
-          },
-        });
-
-        if (!result.ok) {
-          return { error: result.error };
-        }
-
-        await refreshReviews();
-        return { error: null };
-      } finally {
-        setPending(slug, false);
-      }
-    },
-    [
-      executeTurnstile,
-      itemType,
-      pendingBySlug,
-      refreshReviews,
-      reviewsQuery.data?.userReviews,
-      reviewsQuery.isPending,
-      session?.user,
-      sessionPending,
-      setPending,
-    ],
-  );
-
-  const deleteReview = useCallback(
-    async (slug: string): Promise<{ error: MutationError }> => {
-      if (!session?.user && !sessionPending) {
-        return { error: "unauthorized" };
-      }
-
-      if (reviewsQuery.isPending || pendingBySlug[slug]) {
-        return { error: null };
-      }
-
-      setPending(slug, true);
-
-      try {
-        const result = await deleteReviewServerFn({
-          data: {
-            itemType,
-            itemSlug: slug,
-          },
-        });
-
-        if (!result.ok) {
-          return { error: result.error };
-        }
-
-        await refreshReviews();
-        return { error: null };
-      } finally {
-        setPending(slug, false);
-      }
-    },
-    [
-      itemType,
-      pendingBySlug,
-      refreshReviews,
-      reviewsQuery.isPending,
-      session?.user,
-      sessionPending,
-      setPending,
-    ],
-  );
+  const deleteReview = (slug: string) =>
+    mutateReview({ action: "delete", slug });
 
   return {
     summaries,
