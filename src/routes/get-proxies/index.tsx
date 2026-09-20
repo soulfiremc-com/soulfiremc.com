@@ -18,7 +18,6 @@ import { Suspense, useMemo, useState } from "react";
 import { CouponCode } from "@/components/coupon-code";
 import { Image } from "@/components/image";
 import { PaymentMethods } from "@/components/payment-methods";
-import { ProviderThemeDecoration } from "@/components/provider-theme-decoration";
 import { ReviewInlineActions } from "@/components/review-inline-actions";
 import { ReviewTurnstileProvider } from "@/components/review-turnstile-provider";
 import { SiteShell } from "@/components/site-shell";
@@ -50,7 +49,6 @@ import {
   type Badge,
   FILTER_BADGES,
   type FilterableBadge,
-  PROVIDER_THEMES,
   PROVIDERS,
   type Provider,
 } from "@/lib/proxies-data";
@@ -180,23 +178,14 @@ const SORT_CONFIG = {
   },
 } as const;
 
-function ProviderBadge({
-  badge,
-  classNameOverride,
-}: {
-  badge: Badge;
-  classNameOverride?: string;
-}) {
+function ProviderBadge({ badge }: { badge: Badge }) {
   const config = BADGE_CONFIG[badge];
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
         <UiBadge
           variant="outline"
-          className={cn(
-            "cursor-help border-transparent",
-            classNameOverride ?? config.className,
-          )}
+          className={cn("cursor-help border-transparent", config.className)}
         >
           {config.icon}
           {config.label}
@@ -249,23 +238,10 @@ function ProviderCard({
     slug: string,
   ) => Promise<{ error: "unauthorized" | "verification" | null }>;
 }) {
-  const theme = provider.theme ? PROVIDER_THEMES[provider.theme] : undefined;
-
   return (
-    <Card
-      className={cn(
-        "relative overflow-hidden transition-all duration-300 hover:shadow-lg",
-        theme && ["ring-2", theme.ring, theme.bg, theme.cardShadow],
-      )}
-    >
-      <ProviderThemeDecoration theme={provider.theme} />
+    <Card className="relative overflow-hidden transition-all duration-300 hover:shadow-lg">
       <div className="relative flex flex-col gap-4 p-6 sm:flex-row">
-        <div
-          className={cn(
-            "relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-muted",
-            theme?.logo,
-          )}
-        >
+        <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-muted">
           <ProviderLogo provider={provider} />
         </div>
         <div className="flex flex-1 flex-col gap-3">
@@ -287,13 +263,7 @@ function ProviderCard({
             )}
             <div className="flex flex-wrap gap-2">
               {provider.badges.map((badge) => (
-                <ProviderBadge
-                  key={badge}
-                  badge={badge}
-                  classNameOverride={
-                    badge === "sponsor" ? theme?.badge : undefined
-                  }
-                />
+                <ProviderBadge key={badge} badge={badge} />
               ))}
             </div>
           </div>
@@ -317,7 +287,7 @@ function ProviderCard({
           )}
           <PaymentMethods methods={provider.paymentMethods} />
           <div className="flex flex-wrap gap-2">
-            <Button asChild className={theme?.primaryButton}>
+            <Button asChild>
               <a
                 href={provider.url}
                 target="_blank"
@@ -327,10 +297,7 @@ function ProviderCard({
                 <ExternalLink data-icon="inline-end" />
               </a>
             </Button>
-            <SocialLinkButtons
-              links={provider.socialLinks}
-              className={theme?.secondaryButton}
-            />
+            <SocialLinkButtons links={provider.socialLinks} />
           </div>
           <ReviewInlineActions
             summary={reviewSummary}
@@ -358,25 +325,19 @@ function MainContent() {
   };
 
   const filteredProviders = useMemo(() => {
-    // Sponsors always first (in their original order)
-    const sponsors = providers.filter((p) => p.sponsor);
-    const nonSponsors = providers.filter((p) => !p.sponsor);
-
     const filtered =
       badges.length === 0
-        ? nonSponsors
-        : nonSponsors.filter((provider) =>
+        ? providers
+        : providers.filter((provider) =>
             badges.every((filter) => provider.badges.includes(filter)),
           );
 
-    const sorted = [...filtered].sort((a, b) => {
+    return [...filtered].sort((a, b) => {
       return (
         compareReviewSummaries(summaries[a.slug], summaries[b.slug], sort) ||
         a.name.localeCompare(b.name)
       );
     });
-
-    return [...sponsors, ...sorted];
   }, [badges, sort, summaries]);
 
   const [filtersOpen, setFiltersOpen] = useState(false);

@@ -703,20 +703,18 @@ export function ProxyOgImage({
   name,
   summary,
   badges,
-  sponsor,
   logoSrc,
 }: {
   name: string;
   summary: string;
   badges: string[];
-  sponsor?: boolean;
   logoSrc?: string;
 }) {
   const normalizedBadges = badges.map((badge) => labelize(badge));
 
   return (
     <Layout
-      section={sponsor ? "Sponsored Proxy" : "Proxy Profile"}
+      section="Proxy Profile"
       path="proxies/profile"
       accent={theme.cyan}
       title={name}
@@ -734,7 +732,7 @@ export function ProxyOgImage({
           rows={[
             {
               label: "Status",
-              value: sponsor ? "SoulFire sponsor" : "Listed provider",
+              value: "Listed provider",
             },
             {
               label: "Network",

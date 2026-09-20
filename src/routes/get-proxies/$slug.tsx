@@ -15,7 +15,6 @@ import { Image } from "@/components/image";
 import { ItemReviewsSection } from "@/components/item-reviews-section";
 import { JsonLd } from "@/components/json-ld";
 import { PaymentMethods } from "@/components/payment-methods";
-import { ProviderThemeDecoration } from "@/components/provider-theme-decoration";
 import { ReviewSummaryBadge } from "@/components/review-summary-badge";
 import { SiteShell } from "@/components/site-shell";
 import { SocialLinkButtons } from "@/components/social-link-buttons";
@@ -32,7 +31,6 @@ import {
   BADGE_CONFIG,
   type Badge,
   getProviderBySlug,
-  PROVIDER_THEMES,
   type Provider,
 } from "@/lib/proxies-data";
 import {
@@ -73,23 +71,14 @@ function ProviderLogo({ provider }: { provider: Provider }) {
   );
 }
 
-function ProviderBadge({
-  badge,
-  classNameOverride,
-}: {
-  badge: Badge;
-  classNameOverride?: string;
-}) {
+function ProviderBadge({ badge }: { badge: Badge }) {
   const config = BADGE_CONFIG[badge];
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
         <UiBadge
           variant="outline"
-          className={cn(
-            "cursor-help border-transparent",
-            classNameOverride ?? config.className,
-          )}
+          className={cn("cursor-help border-transparent", config.className)}
         >
           {config.icon}
           {config.label}
@@ -136,7 +125,6 @@ function ProxyProviderPageContent({
   provider,
   reviewsPage,
 }: ProxyDetailPageData) {
-  const theme = provider.theme ? PROVIDER_THEMES[provider.theme] : undefined;
   const reviewsQuery = useQuery(
     reviewsQueryOptions({
       itemType: "proxy",
@@ -175,20 +163,9 @@ function ProxyProviderPageContent({
         <span className="truncate text-foreground">{provider.name}</span>
       </nav>
 
-      <Card
-        className={cn(
-          "relative gap-5 overflow-hidden p-6",
-          theme && ["ring-2", theme.ring, theme.bg, theme.cardShadow],
-        )}
-      >
-        <ProviderThemeDecoration theme={provider.theme} />
+      <Card className="relative gap-5 overflow-hidden p-6">
         <div className="relative flex flex-col gap-6 sm:flex-row">
-          <div
-            className={cn(
-              "relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-muted",
-              theme?.logo,
-            )}
-          >
+          <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-muted">
             <ProviderLogo provider={provider} />
           </div>
           <div className="flex flex-1 flex-col gap-4">
@@ -204,13 +181,7 @@ function ProxyProviderPageContent({
               ) : null}
               <div className="flex flex-wrap gap-2">
                 {provider.badges.map((badge) => (
-                  <ProviderBadge
-                    key={badge}
-                    badge={badge}
-                    classNameOverride={
-                      badge === "sponsor" ? theme?.badge : undefined
-                    }
-                  />
+                  <ProviderBadge key={badge} badge={badge} />
                 ))}
               </div>
             </div>
@@ -223,7 +194,7 @@ function ProxyProviderPageContent({
             ) : null}
             <PaymentMethods methods={provider.paymentMethods} />
             <div className="flex flex-wrap gap-2">
-              <Button asChild size="lg" className={theme?.primaryButton}>
+              <Button asChild size="lg">
                 <a
                   href={provider.url}
                   target="_blank"
@@ -237,10 +208,7 @@ function ProxyProviderPageContent({
             </div>
             {provider.socialLinks?.length ? (
               <div className="flex flex-wrap gap-2">
-                <SocialLinkButtons
-                  links={provider.socialLinks}
-                  className={theme?.secondaryButton}
-                />
+                <SocialLinkButtons links={provider.socialLinks} />
               </div>
             ) : null}
           </div>

@@ -2,7 +2,6 @@ import {
   Building2,
   Gift,
   Globe,
-  Heart,
   Home,
   Infinity as InfinityIcon,
   Network,
@@ -23,19 +22,7 @@ export type FilterableBadge =
   | "enterprise"
   | "high-quality";
 
-export type Badge = FilterableBadge | "sponsor" | "bedrock-udp";
-
-export type ProviderThemeName = "legionproxy" | "proxy-seller";
-
-export type ProviderTheme = {
-  ring: string;
-  bg: string;
-  cardShadow: string;
-  badge: string;
-  logo: string;
-  primaryButton: string;
-  secondaryButton: string;
-};
+export type Badge = FilterableBadge | "bedrock-udp";
 
 export type Provider = {
   slug: string;
@@ -44,41 +31,12 @@ export type Provider = {
   summary: string;
   url: string;
   badges: Badge[];
-  sponsor?: boolean;
-  theme?: ProviderThemeName;
   couponCode?: string;
   couponDiscount?: string;
   startDate?: string;
   gallery?: { src: string; alt: string }[];
   paymentMethods?: string[];
   socialLinks?: SocialLink[];
-};
-
-export const PROVIDER_THEMES: Record<ProviderThemeName, ProviderTheme> = {
-  legionproxy: {
-    ring: "ring-lime-500/35 dark:ring-lime-400/25",
-    bg: "border-lime-500/20 bg-lime-50/60 dark:border-lime-300/20 dark:bg-lime-950/15",
-    cardShadow: "shadow-[0_12px_30px_-22px_rgba(101,163,13,0.6)]",
-    badge:
-      "border border-lime-500/25 bg-lime-500/10 text-lime-700 dark:text-lime-300",
-    logo: "ring-2 ring-lime-500/35 bg-zinc-950 shadow-sm",
-    primaryButton:
-      "bg-lime-600 text-zinc-950 hover:bg-lime-500 dark:bg-lime-400 dark:hover:bg-lime-300",
-    secondaryButton:
-      "border border-lime-500/25 bg-lime-100/70 text-lime-950 hover:bg-lime-200/70 dark:bg-lime-300/10 dark:text-lime-100 dark:hover:bg-lime-300/15",
-  },
-  "proxy-seller": {
-    ring: "ring-emerald-500/35 dark:ring-emerald-400/25",
-    bg: "border-emerald-500/20 bg-emerald-50/60 dark:border-emerald-300/20 dark:bg-emerald-950/15",
-    cardShadow: "shadow-[0_12px_30px_-22px_rgba(5,150,105,0.6)]",
-    badge:
-      "border border-emerald-500/25 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300",
-    logo: "ring-2 ring-emerald-500/35 bg-white shadow-sm",
-    primaryButton:
-      "bg-emerald-700 text-white hover:bg-emerald-600 dark:bg-emerald-400 dark:text-emerald-950 dark:hover:bg-emerald-300",
-    secondaryButton:
-      "border border-emerald-500/25 bg-emerald-100/70 text-emerald-950 hover:bg-emerald-200/70 dark:bg-emerald-300/10 dark:text-emerald-100 dark:hover:bg-emerald-300/15",
-  },
 };
 
 export const BADGE_CONFIG: Record<
@@ -124,13 +82,6 @@ export const BADGE_CONFIG: Record<
     description:
       "No data caps or bandwidth limits. Perfect for extensive bot testing without worrying about usage.",
     icon: <InfinityIcon className="h-3 w-3" />,
-  },
-  sponsor: {
-    label: "Sponsor",
-    className: "bg-pink-500/10 text-pink-600 dark:text-pink-400",
-    description:
-      "This provider sponsors SoulFire monthly, helping fund the development of the project.",
-    icon: <Heart className="h-3 w-3 fill-current" />,
   },
   "bedrock-udp": {
     label: "Bedrock / UDP",
@@ -186,7 +137,6 @@ export const FILTER_BADGES: FilterableBadge[] = [
 ];
 
 export const PROVIDERS: Provider[] = [
-  // Sponsor always first
   {
     slug: "legionproxy",
     name: "LegionProxy",
@@ -195,7 +145,6 @@ export const PROVIDERS: Provider[] = [
       "74M+ IPs across 195+ countries with residential, static ISP, datacenter, and IPv6 proxies. Proxy from $0.6/GB. GB credits never expire, unlimited daily plans available, and crypto payments are supported.",
     url: "https://legionproxy.io/?utm_source=github&utm_campaign=soulfire",
     badges: [
-      "sponsor",
       "bedrock-udp",
       "budget-friendly",
       "unlimited-bandwidth",
@@ -203,8 +152,6 @@ export const PROVIDERS: Provider[] = [
       "datacenter",
       "isp",
     ],
-    sponsor: true,
-    theme: "legionproxy",
     paymentMethods: ["Card", "Crypto"],
     socialLinks: [
       { platform: "discord", url: "https://discord.gg/legionproxy" },
@@ -218,16 +165,7 @@ export const PROVIDERS: Provider[] = [
     summary:
       "Dedicated datacenter proxies in 40+ countries. Unlimited bandwidth with 72-hour refund policy. From $0.9/IP.",
     url: "https://proxy-seller.com/?utm_source=soulfiremc&utm_medium=referral&utm_campaign=partner_promo&utm_term=soulfiremc&partner=GRJY71PA3XWPPP",
-    badges: [
-      "sponsor",
-      "budget-friendly",
-      "datacenter",
-      "isp",
-      "mobile",
-      "residential",
-    ],
-    sponsor: true,
-    theme: "proxy-seller",
+    badges: ["budget-friendly", "datacenter", "isp", "mobile", "residential"],
     couponCode: "SOULFIREMC",
     couponDiscount:
       "15% off IPv4/IPv6/ISP - 39% off Residential - 10% off Mobile proxies",

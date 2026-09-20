@@ -21,7 +21,6 @@ export const Route = createFileRoute("/og/proxies/{$}/image.webp")({
             name={provider.name}
             summary={provider.summary}
             badges={provider.badges}
-            sponsor={provider.sponsor}
             logoSrc={getEmbeddedLogo(provider.logo)}
           />,
         );
