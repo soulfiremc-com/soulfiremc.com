@@ -134,7 +134,6 @@ function ProxyProviderPageContent({
   const setReviewPage = (reviewsPage: number) => {
     void navigate({
       search: (previous) => ({ ...previous, reviewsPage }),
-      replace: true,
       resetScroll: false,
     });
   };
@@ -355,7 +354,7 @@ export const Route = createFileRoute("/get-proxies/$slug")({
     middlewares: [stripSearchParams({ reviewsPage: 1 })],
   },
   loaderDeps: ({ search }) => ({
-    reviewsPage: search.reviewsPage ?? 1,
+    reviewsPage: search.reviewsPage,
   }),
   loader: ({ context, deps, params }) => {
     const data = getProxyDetailPageData({

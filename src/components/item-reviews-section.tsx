@@ -93,7 +93,6 @@ function ItemReviewsSectionContent({
   reviewPage: number;
   slug: string;
 }) {
-  const activeReviewPage = Math.max(1, reviewPage);
   const reviewSlugs = useMemo(() => [slug], [slug]);
   const {
     summaries,
@@ -105,7 +104,7 @@ function ItemReviewsSectionContent({
     deleteReview,
   } = useReviews(itemType, reviewSlugs, {
     includeWrittenReviews: true,
-    writtenReviewsPage: activeReviewPage,
+    writtenReviewsPage: reviewPage,
   });
 
   const summary = summaries[slug];

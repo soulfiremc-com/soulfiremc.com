@@ -59,7 +59,6 @@ import {
   type UserReviewRecord,
 } from "@/lib/review-core";
 import { reviewsQueryOptions } from "@/lib/reviews-query";
-import { searchStringArraySchema } from "@/lib/search-param-parsers";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
@@ -159,7 +158,7 @@ const BADGES = [
 const SORT_OPTIONS = ["default", "best-rated"] as const;
 
 const proxiesSearchSchema = z.object({
-  badges: searchStringArraySchema(BADGES),
+  badges: z.array(z.enum(BADGES)).catch([]).default([]),
   sort: z.enum(SORT_OPTIONS).catch("default").default("default"),
 });
 
@@ -314,15 +313,13 @@ function MainContent() {
     useReviews("proxy", proxyReviewSlugs);
   const { badges, sort } = Route.useSearch();
   const navigate = Route.useNavigate();
-  const setParams = (updates: Partial<z.infer<typeof proxiesSearchSchema>>) =>
+
+  const clearFilters = () => {
     void navigate({
-      search: (previous) => ({ ...previous, ...updates }),
+      search: (previous) => ({ ...previous, badges: [], sort: "default" }),
       replace: true,
       resetScroll: false,
     });
-
-  const clearFilters = () => {
-    setParams({ badges: [], sort: "default" });
   };
 
   const filteredProviders = useMemo(() => {
@@ -367,7 +364,14 @@ function MainContent() {
           value={sort}
           onValueChange={(value) => {
             if (value) {
-              setParams({ sort: value as (typeof SORT_OPTIONS)[number] });
+              void navigate({
+                search: (previous) => ({
+                  ...previous,
+                  sort: value as (typeof SORT_OPTIONS)[number],
+                }),
+                replace: true,
+                resetScroll: false,
+              });
             }
           }}
           spacing={2}
@@ -399,7 +403,14 @@ function MainContent() {
         type="multiple"
         value={badges}
         onValueChange={(value) =>
-          setParams({ badges: value as FilterableBadge[] })
+          void navigate({
+            search: (previous) => ({
+              ...previous,
+              badges: value as FilterableBadge[],
+            }),
+            replace: true,
+            resetScroll: false,
+          })
         }
         spacing={2}
         className="flex-wrap"

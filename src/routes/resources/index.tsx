@@ -61,7 +61,6 @@ import {
   type UserReviewRecord,
 } from "@/lib/review-core";
 import { reviewsQueryOptions } from "@/lib/reviews-query";
-import { searchStringArraySchema } from "@/lib/search-param-parsers";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
@@ -182,7 +181,7 @@ const CATEGORY_VALUES = ["plugin", "script"] as const;
 
 const resourcesSearchSchema = z.object({
   category: z.enum(CATEGORY_VALUES).optional().catch(undefined),
-  tags: searchStringArraySchema(TAGS),
+  tags: z.array(z.enum(TAGS)).catch([]).default([]),
   sort: z.enum(SORT_OPTIONS).catch("default").default("default"),
 });
 
@@ -350,20 +349,23 @@ function MainContent() {
     useReviews("resource", resourceReviewSlugs);
   const { category, tags, sort } = Route.useSearch();
   const navigate = Route.useNavigate();
-  const setParams = (updates: Partial<z.infer<typeof resourcesSearchSchema>>) =>
+
+  const clearFilters = () => {
     void navigate({
-      search: (previous) => ({ ...previous, ...updates }),
+      search: (previous) => ({
+        ...previous,
+        category: undefined,
+        tags: [],
+        sort: "default",
+      }),
       replace: true,
       resetScroll: false,
     });
-
-  const clearFilters = () => {
-    setParams({ category: undefined, tags: [], sort: "default" });
   };
 
   const activeFilterCount =
     tags.length +
-    (category !== null && category !== undefined ? 1 : 0) +
+    (category !== undefined ? 1 : 0) +
     (sort !== "default" ? 1 : 0);
 
   const filteredResources = useMemo(() => {
@@ -412,7 +414,14 @@ function MainContent() {
           type="single"
           value={category ?? ""}
           onValueChange={(value) =>
-            setParams({ category: value ? (value as Category) : undefined })
+            void navigate({
+              search: (previous) => ({
+                ...previous,
+                category: value ? (value as Category) : undefined,
+              }),
+              replace: true,
+              resetScroll: false,
+            })
           }
           spacing={2}
           className="flex-wrap"
@@ -449,7 +458,14 @@ function MainContent() {
           type="multiple"
           value={tags}
           onValueChange={(value) =>
-            setParams({ tags: value as FilterableTag[] })
+            void navigate({
+              search: (previous) => ({
+                ...previous,
+                tags: value as FilterableTag[],
+              }),
+              replace: true,
+              resetScroll: false,
+            })
           }
           spacing={2}
           className="flex-wrap"
@@ -487,7 +503,14 @@ function MainContent() {
           value={sort}
           onValueChange={(value) => {
             if (value) {
-              setParams({ sort: value as (typeof SORT_OPTIONS)[number] });
+              void navigate({
+                search: (previous) => ({
+                  ...previous,
+                  sort: value as (typeof SORT_OPTIONS)[number],
+                }),
+                replace: true,
+                resetScroll: false,
+              });
             }
           }}
           spacing={2}

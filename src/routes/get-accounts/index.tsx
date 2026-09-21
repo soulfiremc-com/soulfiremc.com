@@ -77,7 +77,6 @@ import {
   type UserReviewRecord,
 } from "@/lib/review-core";
 import { reviewsQueryOptions } from "@/lib/reviews-query";
-import { searchStringArraySchema } from "@/lib/search-param-parsers";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
@@ -306,7 +305,7 @@ const SORT_OPTIONS = [
 
 const accountsSearchSchema = z.object({
   category: z.enum(CATEGORIES).optional().catch(undefined),
-  badges: searchStringArraySchema(BADGES),
+  badges: z.array(z.enum(BADGES)).catch([]).default([]),
   sort: z.enum(SORT_OPTIONS).catch("default").default("default"),
 });
 
@@ -571,15 +570,18 @@ function MainContent() {
     useReviews("account", slugs);
   const { category, badges, sort } = Route.useSearch();
   const navigate = Route.useNavigate();
-  const setParams = (updates: Partial<z.infer<typeof accountsSearchSchema>>) =>
+
+  const clearFilters = () => {
     void navigate({
-      search: (previous) => ({ ...previous, ...updates }),
+      search: (previous) => ({
+        ...previous,
+        category: undefined,
+        badges: [],
+        sort: "default",
+      }),
       replace: true,
       resetScroll: false,
     });
-
-  const clearFilters = () => {
-    setParams({ category: undefined, badges: [], sort: "default" });
   };
 
   const filteredProviders = useMemo(() => {
@@ -604,7 +606,7 @@ function MainContent() {
   );
 
   const hasActiveFilters =
-    badges.length > 0 || category !== null || sort !== "default";
+    badges.length > 0 || category !== undefined || sort !== "default";
 
   const [filtersOpen, setFiltersOpen] = useState(false);
 
@@ -633,7 +635,14 @@ function MainContent() {
           type="single"
           value={category ?? ""}
           onValueChange={(value) =>
-            setParams({ category: value ? (value as Category) : undefined })
+            void navigate({
+              search: (previous) => ({
+                ...previous,
+                category: value ? (value as Category) : undefined,
+              }),
+              replace: true,
+              resetScroll: false,
+            })
           }
           spacing={2}
           className="flex-wrap"
@@ -667,7 +676,14 @@ function MainContent() {
           type="multiple"
           value={badges}
           onValueChange={(value) =>
-            setParams({ badges: value as FilterableBadge[] })
+            void navigate({
+              search: (previous) => ({
+                ...previous,
+                badges: value as FilterableBadge[],
+              }),
+              replace: true,
+              resetScroll: false,
+            })
           }
           spacing={2}
           className="flex-wrap"
@@ -705,7 +721,14 @@ function MainContent() {
           value={sort}
           onValueChange={(value) => {
             if (value) {
-              setParams({ sort: value as SortOption });
+              void navigate({
+                search: (previous) => ({
+                  ...previous,
+                  sort: value as SortOption,
+                }),
+                replace: true,
+                resetScroll: false,
+              });
             }
           }}
           spacing={2}

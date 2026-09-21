@@ -18,7 +18,7 @@ import {
   Server,
   Terminal,
 } from "lucide-react";
-import { Suspense, useCallback, useEffect, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { z } from "zod";
 import { Image } from "@/components/image";
 import { SiteShell } from "@/components/site-shell";
@@ -197,97 +197,61 @@ function DownloadSelectionComponent({
   clientDownloads: DownloadLinkMap;
 }) {
   const selection = Route.useSearch();
-  const search = useRouterState({
-    select: (state) => state.location.searchStr,
-  });
-  const searchParams = new URLSearchParams(search);
-
-  // Check if the user explicitly set search params
-  const hasExplicitParams = searchParams.has("os") || searchParams.has("cpu");
-
   return (
     <>
-      <DownloadConfigurator
-        links={clientDownloads}
-        initialSelection={selection}
-        hasExplicitParams={hasExplicitParams}
-      />
+      <DownloadConfigurator links={clientDownloads} />
       <DownloadTip selection={selection} />
     </>
   );
 }
 
-function DownloadConfigurator(props: {
-  links: DownloadLinkMap;
-  initialSelection: DownloadSelection;
-  hasExplicitParams: boolean;
-}) {
-  const { os, cpu } = Route.useSearch();
+function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
+  const selection = Route.useSearch();
   const navigate = Route.useNavigate();
-  const setSelection = useCallback(
-    (
-      update:
-        | Partial<DownloadSelection>
-        | ((previous: DownloadSelection) => Partial<DownloadSelection>),
-    ) => {
-      void navigate({
-        search: (previous) => {
-          const current = { os: previous.os, cpu: previous.cpu };
-          const next = typeof update === "function" ? update(current) : update;
-          return { ...previous, ...next };
-        },
-        replace: true,
-        resetScroll: false,
-      });
-    },
-    [navigate],
-  );
-  const [isHydrated, setIsHydrated] = useState(false);
-  const [hasAppliedOsDetection, setHasAppliedOsDetection] = useState(false);
+  const hasExplicitParams = useRouterState({
+    select: ({ location }) =>
+      location.search.os !== undefined || location.search.cpu !== undefined,
+  });
+  const hasDetectedPlatform = useRef(false);
   const [showThankYou, setShowThankYou] = useState(false);
 
-  // Apply OS and CPU detection on initial hydration if no explicit params were provided
   useEffect(() => {
-    if (!hasAppliedOsDetection && !props.hasExplicitParams) {
-      const detectedOs = detectBrowserOS();
-      const detectedCpu = detectBrowserCPU();
+    if (hasDetectedPlatform.current) return;
+    hasDetectedPlatform.current = true;
+    if (hasExplicitParams) return;
 
-      if (detectedOs) {
-        setSelection({
-          os: detectedOs,
-          // Use detected CPU if available, otherwise fall back to OS preference
-          cpu: detectedCpu ?? PREFERRED_CPU_BY_OS[detectedOs],
-        });
-      } else if (detectedCpu) {
-        // If we only detected CPU but not OS, just update CPU
-        setSelection((prev) => ({
-          ...prev,
-          cpu: detectedCpu,
-        }));
-      }
-      setHasAppliedOsDetection(true);
-    }
-    setIsHydrated(true);
-  }, [hasAppliedOsDetection, props.hasExplicitParams, setSelection]);
+    const os = detectBrowserOS();
+    const cpu = detectBrowserCPU();
+    if (!os && !cpu) return;
 
-  const selection = isHydrated ? { os, cpu } : props.initialSelection;
+    void navigate({
+      search: (previous) => ({
+        ...previous,
+        os: os ?? previous.os,
+        cpu: cpu ?? (os ? PREFERRED_CPU_BY_OS[os] : previous.cpu),
+      }),
+      replace: true,
+      resetScroll: false,
+    });
+  }, [hasExplicitParams, navigate]);
 
-  const downloadHref = props.links[selection.os]?.[selection.cpu];
+  const downloadHref = links[selection.os]?.[selection.cpu];
   const isDirectGithubDownload = downloadHref?.includes("github.com") ?? false;
 
-  const handleOsChange = (value: typeof selection.os) => {
-    setSelection((prev) => ({
-      ...prev,
-      os: value,
-      cpu: PREFERRED_CPU_BY_OS[value],
-    }));
+  const handleOsChange = (os: DownloadSelection["os"]) => {
+    void navigate({
+      search: (previous) => ({ ...previous, os, cpu: PREFERRED_CPU_BY_OS[os] }),
+      replace: true,
+      resetScroll: false,
+    });
   };
 
-  const handleCpuChange = (value: typeof selection.cpu) => {
-    setSelection((prev) => ({
-      ...prev,
-      cpu: value,
-    }));
+  const handleCpuChange = (cpu: DownloadSelection["cpu"]) => {
+    void navigate({
+      search: (previous) => ({ ...previous, cpu }),
+      replace: true,
+      resetScroll: false,
+    });
   };
 
   return (
