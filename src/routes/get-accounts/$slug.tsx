@@ -1,6 +1,11 @@
 import { SiDiscord, SiTrustpilot } from "@icons-pack/react-simple-icons";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  notFound,
+  stripSearchParams,
+} from "@tanstack/react-router";
 import {
   ArrowLeft,
   Calendar,
@@ -57,7 +62,7 @@ import {
   getReviewJsonLd,
 } from "@/lib/review-core";
 import { reviewsQueryOptions } from "@/lib/reviews-query";
-import { validateReviewsSearch } from "@/lib/reviews-search-params";
+import { reviewsSearchSchema } from "@/lib/reviews-search-params";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
@@ -319,7 +324,10 @@ function SocialLinks({
 }
 
 export const Route = createFileRoute("/get-accounts/$slug")({
-  validateSearch: validateReviewsSearch,
+  validateSearch: reviewsSearchSchema,
+  search: {
+    middlewares: [stripSearchParams({ reviewsPage: 1 })],
+  },
   loaderDeps: ({ search }) => ({
     reviewsPage: search.reviewsPage ?? 1,
   }),
@@ -369,6 +377,14 @@ export const Route = createFileRoute("/get-accounts/$slug")({
 
 function AccountDetailPage() {
   const data = Route.useLoaderData();
+  const navigate = Route.useNavigate();
+  const setReviewPage = (reviewsPage: number) => {
+    void navigate({
+      search: (previous) => ({ ...previous, reviewsPage }),
+      replace: true,
+      resetScroll: false,
+    });
+  };
   const theme = data.shop.theme ? PROVIDER_THEMES[data.shop.theme] : undefined;
   const discordInviteUrl = getDiscordInviteUrl(data.shop);
   const reviewsQuery = useQuery(
@@ -600,7 +616,12 @@ function AccountDetailPage() {
           })}
         </div>
 
-        <ItemReviewsSection itemType="account" slug={data.shop.slug} />
+        <ItemReviewsSection
+          itemType="account"
+          onReviewPageChange={setReviewPage}
+          reviewPage={data.reviewsPage}
+          slug={data.shop.slug}
+        />
 
         {data.shop.gallery && data.shop.gallery.length > 0 ? (
           <GallerySection images={data.shop.gallery} />

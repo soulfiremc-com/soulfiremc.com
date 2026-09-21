@@ -1,5 +1,10 @@
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  notFound,
+  stripSearchParams,
+} from "@tanstack/react-router";
 import {
   ArrowLeft,
   Calendar,
@@ -43,7 +48,7 @@ import {
   getReviewJsonLd,
 } from "@/lib/review-core";
 import { reviewsQueryOptions } from "@/lib/reviews-query";
-import { validateReviewsSearch } from "@/lib/reviews-search-params";
+import { reviewsSearchSchema } from "@/lib/reviews-search-params";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
@@ -132,6 +137,14 @@ function ResourceDetailPageContent({
   reviewsPage,
   softwareJsonLd,
 }: ResourceDetailPageData) {
+  const navigate = Route.useNavigate();
+  const setReviewPage = (reviewsPage: number) => {
+    void navigate({
+      search: (previous) => ({ ...previous, reviewsPage }),
+      replace: true,
+      resetScroll: false,
+    });
+  };
   const reviewsQuery = useQuery(
     reviewsQueryOptions({
       itemType: "resource",
@@ -232,7 +245,12 @@ function ResourceDetailPageContent({
         </div>
       </Card>
 
-      <ItemReviewsSection itemType="resource" slug={resource.slug} />
+      <ItemReviewsSection
+        itemType="resource"
+        onReviewPageChange={setReviewPage}
+        reviewPage={reviewsPage}
+        slug={resource.slug}
+      />
 
       {resource.gallery && resource.gallery.length > 0 ? (
         <GallerySection images={resource.gallery} />
@@ -339,7 +357,10 @@ function getResourceDetailPageData({
 }
 
 export const Route = createFileRoute("/resources/$slug")({
-  validateSearch: validateReviewsSearch,
+  validateSearch: reviewsSearchSchema,
+  search: {
+    middlewares: [stripSearchParams({ reviewsPage: 1 })],
+  },
   loaderDeps: ({ search }) => ({
     reviewsPage: search.reviewsPage ?? 1,
   }),

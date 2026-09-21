@@ -1,5 +1,9 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  stripSearchParams,
+} from "@tanstack/react-router";
 import {
   ArrowDownWideNarrow,
   BookOpen,
@@ -9,12 +13,8 @@ import {
   ImageIcon,
   Star,
 } from "lucide-react";
-import {
-  createStandardSchemaV1,
-  parseAsStringLiteral,
-  useQueryStates,
-} from "nuqs";
 import { Suspense, useMemo, useState } from "react";
+import { z } from "zod";
 import { CouponCode } from "@/components/coupon-code";
 import { Image } from "@/components/image";
 import { PaymentMethods } from "@/components/payment-methods";
@@ -59,7 +59,7 @@ import {
   type UserReviewRecord,
 } from "@/lib/review-core";
 import { reviewsQueryOptions } from "@/lib/reviews-query";
-import { parseAsNativeOrDelimitedArrayOf } from "@/lib/search-param-parsers";
+import { searchStringArraySchema } from "@/lib/search-param-parsers";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
@@ -158,13 +158,9 @@ const BADGES = [
 
 const SORT_OPTIONS = ["default", "best-rated"] as const;
 
-const proxiesSearchParams = {
-  badges: parseAsNativeOrDelimitedArrayOf(parseAsStringLiteral([...BADGES])),
-  sort: parseAsStringLiteral([...SORT_OPTIONS]).withDefault("default"),
-};
-
-const validateProxiesSearch = createStandardSchemaV1(proxiesSearchParams, {
-  partialOutput: true,
+const proxiesSearchSchema = z.object({
+  badges: searchStringArraySchema(BADGES),
+  sort: z.enum(SORT_OPTIONS).catch("default").default("default"),
 });
 
 const SORT_CONFIG = {
@@ -316,9 +312,14 @@ function MainContent() {
   const providers = PROVIDERS;
   const { summaries, userReviews, pendingBySlug, upsertReview, deleteReview } =
     useReviews("proxy", proxyReviewSlugs);
-  const [{ badges, sort }, setParams] = useQueryStates(proxiesSearchParams, {
-    shallow: false,
-  });
+  const { badges, sort } = Route.useSearch();
+  const navigate = Route.useNavigate();
+  const setParams = (updates: Partial<z.infer<typeof proxiesSearchSchema>>) =>
+    void navigate({
+      search: (previous) => ({ ...previous, ...updates }),
+      replace: true,
+      resetScroll: false,
+    });
 
   const clearFilters = () => {
     setParams({ badges: [], sort: "default" });
@@ -685,7 +686,10 @@ const proxiesPageData = (() => {
 })();
 
 export const Route = createFileRoute("/get-proxies/")({
-  validateSearch: validateProxiesSearch,
+  validateSearch: proxiesSearchSchema,
+  search: {
+    middlewares: [stripSearchParams({ badges: [], sort: "default" })],
+  },
   head: () => ({
     meta: getPageMeta({
       title: "Get Proxies - SoulFire",

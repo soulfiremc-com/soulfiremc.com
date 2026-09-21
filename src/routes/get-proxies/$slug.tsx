@@ -1,5 +1,10 @@
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  notFound,
+  stripSearchParams,
+} from "@tanstack/react-router";
 import { ArrowLeft, Calendar, ChevronRight, ExternalLink } from "lucide-react";
 import { Suspense } from "react";
 import type {
@@ -39,7 +44,7 @@ import {
   getReviewJsonLd,
 } from "@/lib/review-core";
 import { reviewsQueryOptions } from "@/lib/reviews-query";
-import { validateReviewsSearch } from "@/lib/reviews-search-params";
+import { reviewsSearchSchema } from "@/lib/reviews-search-params";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
@@ -125,6 +130,14 @@ function ProxyProviderPageContent({
   provider,
   reviewsPage,
 }: ProxyDetailPageData) {
+  const navigate = Route.useNavigate();
+  const setReviewPage = (reviewsPage: number) => {
+    void navigate({
+      search: (previous) => ({ ...previous, reviewsPage }),
+      replace: true,
+      resetScroll: false,
+    });
+  };
   const reviewsQuery = useQuery(
     reviewsQueryOptions({
       itemType: "proxy",
@@ -215,7 +228,12 @@ function ProxyProviderPageContent({
         </div>
       </Card>
 
-      <ItemReviewsSection itemType="proxy" slug={provider.slug} />
+      <ItemReviewsSection
+        itemType="proxy"
+        onReviewPageChange={setReviewPage}
+        reviewPage={reviewsPage}
+        slug={provider.slug}
+      />
 
       {provider.gallery && provider.gallery.length > 0 ? (
         <GallerySection images={provider.gallery} />
@@ -332,7 +350,10 @@ function getProxyDetailPageData({
 }
 
 export const Route = createFileRoute("/get-proxies/$slug")({
-  validateSearch: validateReviewsSearch,
+  validateSearch: reviewsSearchSchema,
+  search: {
+    middlewares: [stripSearchParams({ reviewsPage: 1 })],
+  },
   loaderDeps: ({ search }) => ({
     reviewsPage: search.reviewsPage ?? 1,
   }),

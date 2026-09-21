@@ -1,16 +1,5 @@
-import { createStandardSchemaV1, parseAsInteger } from "nuqs";
+import { z } from "zod";
 
-export const reviewsPageParser = parseAsInteger
-  .withDefault(1)
-  .withOptions({ clearOnDefault: true, shallow: false });
-
-export const reviewsSearchParams = {
-  reviewsPage: reviewsPageParser,
-};
-
-export const validateReviewsSearch = createStandardSchemaV1(
-  reviewsSearchParams,
-  {
-    partialOutput: true,
-  },
-);
+export const reviewsSearchSchema = z.object({
+  reviewsPage: z.coerce.number().int().min(1).catch(1).default(1),
+});

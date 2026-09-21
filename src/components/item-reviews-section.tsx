@@ -1,7 +1,6 @@
 "use client";
 
 import { MessageSquareText } from "lucide-react";
-import { useQueryState } from "nuqs";
 import { useEffect, useId, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { ReviewTurnstileProvider } from "@/components/review-turnstile-provider";
@@ -36,7 +35,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import { useReviews } from "@/hooks/use-reviews";
 import type { ItemType } from "@/lib/review-core";
-import { reviewsPageParser } from "@/lib/reviews-search-params";
 import { cn, generateN } from "@/lib/utils";
 import { ReviewStarInput, ReviewStars } from "./review-stars";
 
@@ -63,29 +61,38 @@ function handleMutationError(
 
 export function ItemReviewsSection({
   itemType,
+  onReviewPageChange,
+  reviewPage,
   slug,
 }: {
   itemType: ItemType;
+  onReviewPageChange: (page: number) => void;
+  reviewPage: number;
   slug: string;
 }) {
   return (
     <ReviewTurnstileProvider>
-      <ItemReviewsSectionContent itemType={itemType} slug={slug} />
+      <ItemReviewsSectionContent
+        itemType={itemType}
+        onReviewPageChange={onReviewPageChange}
+        reviewPage={reviewPage}
+        slug={slug}
+      />
     </ReviewTurnstileProvider>
   );
 }
 
 function ItemReviewsSectionContent({
   itemType,
+  onReviewPageChange,
+  reviewPage,
   slug,
 }: {
   itemType: ItemType;
+  onReviewPageChange: (page: number) => void;
+  reviewPage: number;
   slug: string;
 }) {
-  const [reviewPage, setReviewPage] = useQueryState(
-    "reviewsPage",
-    reviewsPageParser,
-  );
   const activeReviewPage = Math.max(1, reviewPage);
   const reviewSlugs = useMemo(() => [slug], [slug]);
   const {
@@ -116,12 +123,6 @@ function ItemReviewsSectionContent({
     setRating(currentReview?.rating ?? 5);
     setBody(currentReview?.body ?? "");
   }, [currentReview]);
-
-  useEffect(() => {
-    if (reviewPage < 1) {
-      void setReviewPage(1);
-    }
-  }, [reviewPage, setReviewPage]);
 
   const hasWrittenReviews = visibleReviews.length > 0;
   const hasPreviousPage = reviewPageData.page > 1;
@@ -339,7 +340,7 @@ function ItemReviewsSectionContent({
                       onClick={(event) => {
                         event.preventDefault();
                         if (hasPreviousPage && !loading) {
-                          void setReviewPage(reviewPageData.page - 1);
+                          onReviewPageChange(reviewPageData.page - 1);
                         }
                       }}
                     />
@@ -360,7 +361,7 @@ function ItemReviewsSectionContent({
                       onClick={(event) => {
                         event.preventDefault();
                         if (hasNextPage && !loading) {
-                          void setReviewPage(reviewPageData.page + 1);
+                          onReviewPageChange(reviewPageData.page + 1);
                         }
                       }}
                     />

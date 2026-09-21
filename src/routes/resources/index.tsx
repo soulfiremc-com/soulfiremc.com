@@ -1,5 +1,9 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  stripSearchParams,
+} from "@tanstack/react-router";
 import {
   ArrowDownWideNarrow,
   BookOpen,
@@ -12,12 +16,8 @@ import {
   Star,
   User,
 } from "lucide-react";
-import {
-  createStandardSchemaV1,
-  parseAsStringLiteral,
-  useQueryStates,
-} from "nuqs";
 import { Suspense, useMemo, useState } from "react";
+import { z } from "zod";
 import { Image } from "@/components/image";
 import { ReviewInlineActions } from "@/components/review-inline-actions";
 import { ReviewTurnstileProvider } from "@/components/review-turnstile-provider";
@@ -61,7 +61,7 @@ import {
   type UserReviewRecord,
 } from "@/lib/review-core";
 import { reviewsQueryOptions } from "@/lib/reviews-query";
-import { parseAsNativeOrDelimitedArrayOf } from "@/lib/search-param-parsers";
+import { searchStringArraySchema } from "@/lib/search-param-parsers";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
@@ -180,14 +180,10 @@ const TAGS = [
 const SORT_OPTIONS = ["default", "best-rated"] as const;
 const CATEGORY_VALUES = ["plugin", "script"] as const;
 
-const resourcesSearchParams = {
-  category: parseAsStringLiteral([...CATEGORY_VALUES]),
-  tags: parseAsNativeOrDelimitedArrayOf(parseAsStringLiteral([...TAGS])),
-  sort: parseAsStringLiteral([...SORT_OPTIONS]).withDefault("default"),
-};
-
-const validateResourcesSearch = createStandardSchemaV1(resourcesSearchParams, {
-  partialOutput: true,
+const resourcesSearchSchema = z.object({
+  category: z.enum(CATEGORY_VALUES).optional().catch(undefined),
+  tags: searchStringArraySchema(TAGS),
+  sort: z.enum(SORT_OPTIONS).catch("default").default("default"),
 });
 
 const SORT_CONFIG = {
@@ -352,15 +348,17 @@ function MainContent() {
   const resources = RESOURCES;
   const { summaries, userReviews, pendingBySlug, upsertReview, deleteReview } =
     useReviews("resource", resourceReviewSlugs);
-  const [{ category, tags, sort }, setParams] = useQueryStates(
-    resourcesSearchParams,
-    {
-      shallow: false,
-    },
-  );
+  const { category, tags, sort } = Route.useSearch();
+  const navigate = Route.useNavigate();
+  const setParams = (updates: Partial<z.infer<typeof resourcesSearchSchema>>) =>
+    void navigate({
+      search: (previous) => ({ ...previous, ...updates }),
+      replace: true,
+      resetScroll: false,
+    });
 
   const clearFilters = () => {
-    setParams({ category: null, tags: [], sort: "default" });
+    setParams({ category: undefined, tags: [], sort: "default" });
   };
 
   const activeFilterCount =
@@ -414,7 +412,7 @@ function MainContent() {
           type="single"
           value={category ?? ""}
           onValueChange={(value) =>
-            setParams({ category: value ? (value as Category) : null })
+            setParams({ category: value ? (value as Category) : undefined })
           }
           spacing={2}
           className="flex-wrap"
@@ -772,7 +770,10 @@ const resourcesPageData = (() => {
 })();
 
 export const Route = createFileRoute("/resources/")({
-  validateSearch: validateResourcesSearch,
+  validateSearch: resourcesSearchSchema,
+  search: {
+    middlewares: [stripSearchParams({ tags: [], sort: "default" })],
+  },
   head: () => ({
     meta: getPageMeta({
       title: "Resources - SoulFire",

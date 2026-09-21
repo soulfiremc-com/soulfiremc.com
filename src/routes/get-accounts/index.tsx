@@ -1,6 +1,10 @@
 import { SiDiscord, SiTrustpilot } from "@icons-pack/react-simple-icons";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  stripSearchParams,
+} from "@tanstack/react-router";
 import {
   BookOpen,
   Calendar,
@@ -11,12 +15,8 @@ import {
   Info,
   Users,
 } from "lucide-react";
-import {
-  createStandardSchemaV1,
-  parseAsStringLiteral,
-  useQueryStates,
-} from "nuqs";
 import { Suspense, useMemo, useState } from "react";
+import { z } from "zod";
 import { CouponCode } from "@/components/coupon-code";
 import { Image } from "@/components/image";
 import { PaymentMethods } from "@/components/payment-methods";
@@ -77,7 +77,7 @@ import {
   type UserReviewRecord,
 } from "@/lib/review-core";
 import { reviewsQueryOptions } from "@/lib/reviews-query";
-import { parseAsNativeOrDelimitedArrayOf } from "@/lib/search-param-parsers";
+import { searchStringArraySchema } from "@/lib/search-param-parsers";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
@@ -304,14 +304,10 @@ const SORT_OPTIONS = [
   "price-desc",
 ] as const;
 
-const accountsSearchParams = {
-  category: parseAsStringLiteral([...CATEGORIES]),
-  badges: parseAsNativeOrDelimitedArrayOf(parseAsStringLiteral([...BADGES])),
-  sort: parseAsStringLiteral([...SORT_OPTIONS]).withDefault("default"),
-};
-
-const validateAccountsSearch = createStandardSchemaV1(accountsSearchParams, {
-  partialOutput: true,
+const accountsSearchSchema = z.object({
+  category: z.enum(CATEGORIES).optional().catch(undefined),
+  badges: searchStringArraySchema(BADGES),
+  sort: z.enum(SORT_OPTIONS).catch("default").default("default"),
 });
 
 function ProviderBadge({
@@ -573,13 +569,17 @@ function MainContent() {
   const slugs = useMemo(() => [...new Set(providers.map((p) => p.slug))], []);
   const { summaries, userReviews, pendingBySlug, upsertReview, deleteReview } =
     useReviews("account", slugs);
-  const [{ category, badges, sort }, setParams] = useQueryStates(
-    accountsSearchParams,
-    { shallow: false },
-  );
+  const { category, badges, sort } = Route.useSearch();
+  const navigate = Route.useNavigate();
+  const setParams = (updates: Partial<z.infer<typeof accountsSearchSchema>>) =>
+    void navigate({
+      search: (previous) => ({ ...previous, ...updates }),
+      replace: true,
+      resetScroll: false,
+    });
 
   const clearFilters = () => {
-    setParams({ category: null, badges: [], sort: "default" });
+    setParams({ category: undefined, badges: [], sort: "default" });
   };
 
   const filteredProviders = useMemo(() => {
@@ -633,7 +633,7 @@ function MainContent() {
           type="single"
           value={category ?? ""}
           onValueChange={(value) =>
-            setParams({ category: value ? (value as Category) : null })
+            setParams({ category: value ? (value as Category) : undefined })
           }
           spacing={2}
           className="flex-wrap"
@@ -1069,7 +1069,10 @@ function AccountsItemListStructuredData() {
 }
 
 export const Route = createFileRoute("/get-accounts/")({
-  validateSearch: validateAccountsSearch,
+  validateSearch: accountsSearchSchema,
+  search: {
+    middlewares: [stripSearchParams({ badges: [], sort: "default" })],
+  },
   head: () => ({
     meta: getPageMeta({
       title: "Minecraft Alts, MFA & NFA Accounts - SoulFire",

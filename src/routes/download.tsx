@@ -1,6 +1,11 @@
 import { SiGithub } from "@icons-pack/react-simple-icons";
 import { queryOptions, useQuery } from "@tanstack/react-query";
-import { createFileRoute, Link, useRouterState } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  stripSearchParams,
+  useRouterState,
+} from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import {
   BookOpen,
@@ -13,13 +18,8 @@ import {
   Server,
   Terminal,
 } from "lucide-react";
-import {
-  createLoader,
-  createStandardSchemaV1,
-  parseAsStringLiteral,
-  useQueryStates,
-} from "nuqs";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
+import { z } from "zod";
 import { Image } from "@/components/image";
 import { SiteShell } from "@/components/site-shell";
 import { CustomTimeAgo } from "@/components/time-ago";
@@ -114,17 +114,12 @@ const OS_IDS = OS_OPTIONS.map((option) => option.id);
 
 const CPU_IDS = CPU_OPTIONS.map((option) => option.id);
 
-const downloadSearchParams = {
-  os: parseAsStringLiteral(OS_IDS).withDefault(DEFAULT_OS.id),
-  cpu: parseAsStringLiteral(CPU_IDS).withDefault(DEFAULT_CPU.id),
-};
-
-const loadDownloadSearchParams = createLoader(downloadSearchParams);
-const validateDownloadSearch = createStandardSchemaV1(downloadSearchParams, {
-  partialOutput: true,
+const downloadSearchSchema = z.object({
+  os: z.enum(OS_IDS).catch(DEFAULT_OS.id).default(DEFAULT_OS.id),
+  cpu: z.enum(CPU_IDS).catch(DEFAULT_CPU.id).default(DEFAULT_CPU.id),
 });
 
-type DownloadSelection = Awaited<ReturnType<typeof loadDownloadSearchParams>>;
+type DownloadSelection = z.infer<typeof downloadSearchSchema>;
 
 function detectBrowserOS(): OsOption["id"] | null {
   if (typeof window === "undefined") return null;
@@ -201,11 +196,11 @@ function DownloadSelectionComponent({
 }: {
   clientDownloads: DownloadLinkMap;
 }) {
+  const selection = Route.useSearch();
   const search = useRouterState({
     select: (state) => state.location.searchStr,
   });
   const searchParams = new URLSearchParams(search);
-  const selection = loadDownloadSearchParams(searchParams);
 
   // Check if the user explicitly set search params
   const hasExplicitParams = searchParams.has("os") || searchParams.has("cpu");
@@ -227,10 +222,26 @@ function DownloadConfigurator(props: {
   initialSelection: DownloadSelection;
   hasExplicitParams: boolean;
 }) {
-  const [{ os, cpu }, setSelection] = useQueryStates(downloadSearchParams, {
-    history: "replace",
-    shallow: false,
-  });
+  const { os, cpu } = Route.useSearch();
+  const navigate = Route.useNavigate();
+  const setSelection = useCallback(
+    (
+      update:
+        | Partial<DownloadSelection>
+        | ((previous: DownloadSelection) => Partial<DownloadSelection>),
+    ) => {
+      void navigate({
+        search: (previous) => {
+          const current = { os: previous.os, cpu: previous.cpu };
+          const next = typeof update === "function" ? update(current) : update;
+          return { ...previous, ...next };
+        },
+        replace: true,
+        resetScroll: false,
+      });
+    },
+    [navigate],
+  );
   const [isHydrated, setIsHydrated] = useState(false);
   const [hasAppliedOsDetection, setHasAppliedOsDetection] = useState(false);
   const [showThankYou, setShowThankYou] = useState(false);
@@ -770,7 +781,12 @@ const fallbackDownloadData = {
 };
 
 export const Route = createFileRoute("/download")({
-  validateSearch: validateDownloadSearch,
+  validateSearch: downloadSearchSchema,
+  search: {
+    middlewares: [
+      stripSearchParams({ os: DEFAULT_OS.id, cpu: DEFAULT_CPU.id }),
+    ],
+  },
   head: () => ({
     meta: getPageMeta({
       title: "Download SoulFire - SoulFire",
