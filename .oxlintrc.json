@@ -1,8 +1,14 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
   "jsPlugins": ["@shadcn/lint"],
+  "options": { "reportUnusedDisableDirectives": "error" },
   "rules": {
-    "shadcn/no-unknown-classes": ["error", { "allow": ["not-prose"] }],
+    "shadcn/no-unknown-classes": [
+      "error",
+      {
+        "allow": ["not-prose"]
+      }
+    ],
     "shadcn/no-raw-colors": [
       "error",
       {
@@ -45,8 +51,200 @@
           "bg-[#222232]"
         ]
       }
-    ]
+    ],
+    "shadcn/no-restyle": [
+      "error",
+      {
+        "allow": ["layout"],
+        "contracts": [
+          {
+            "pattern": "^AccordionContent$",
+            "allow": ["layout", "text-muted-foreground"]
+          },
+          {
+            "pattern": "^AnimatedShinyText$",
+            "allow": ["layout", "font-semibold", "text-sm"]
+          },
+          {
+            "pattern": "^Badge$",
+            "allow": [
+              "layout",
+              "bg-background/80",
+              "bg-discord/10",
+              "bg-primary/10",
+              "border-dashed",
+              "border-transparent",
+              "gap-2",
+              "px-3",
+              "py-1.5",
+              "shadow-sm",
+              "text-discord",
+              "text-discord/50",
+              "text-muted-foreground",
+              "text-primary",
+              "text-sm"
+            ]
+          },
+          {
+            "pattern": "^Button$",
+            "allow": [
+              "layout",
+              "backdrop-blur-sm",
+              "bg-background/80",
+              "bg-black/65",
+              "bg-white",
+              "border",
+              "border-2",
+              "border-white/10",
+              "font-semibold",
+              "gap-2",
+              "hover:bg-black/80",
+              "hover:bg-offer/10",
+              "hover:bg-zinc-200",
+              "hover:text-foreground",
+              "hover:text-white",
+              "px-2",
+              "px-8",
+              "rounded-full",
+              "shadow-none",
+              "sm:text-sm",
+              "text-lg",
+              "text-muted-foreground",
+              "text-white",
+              "text-xs",
+              "text-zinc-950"
+            ]
+          },
+          {
+            "pattern": "^Card$",
+            "allow": [
+              "layout",
+              "border-primary",
+              "duration-300",
+              "gap-4",
+              "gap-5",
+              "hover:shadow-lg",
+              "p-5",
+              "p-6",
+              "px-6",
+              "py-5",
+              "ring-2",
+              "shadow-lg",
+              "transition-all"
+            ]
+          },
+          {
+            "pattern": "^CardContent$",
+            "allow": ["layout", "spacing"]
+          },
+          {
+            "pattern": "^CardDescription$",
+            "allow": ["layout", "typography"]
+          },
+          {
+            "pattern": "^CardFooter$",
+            "allow": ["layout", "spacing"]
+          },
+          {
+            "pattern": "^CardHeader$",
+            "allow": ["layout", "spacing"]
+          },
+          {
+            "pattern": "^CardTitle$",
+            "allow": ["layout", "spacing", "typography", "motion", "color"]
+          },
+          {
+            "pattern": "^CredenzaTitle$",
+            "allow": ["layout", "gap-2"]
+          },
+          {
+            "pattern": "^DialogContent$",
+            "allow": [
+              "layout",
+              "bg-black/90",
+              "border-white/10",
+              "gap-0",
+              "p-2",
+              "shadow-2xl",
+              "sm:p-4"
+            ]
+          },
+          {
+            "pattern": "^Empty$",
+            "allow": ["layout", "border"]
+          },
+          {
+            "pattern": "^HoverCardContent$",
+            "allow": ["layout", "typography"]
+          },
+          {
+            "pattern": "^Input$",
+            "allow": ["layout", "bg-fd-background"]
+          },
+          {
+            "pattern": "^NativeSelect$",
+            "allow": ["layout", "bg-fd-background"]
+          },
+          {
+            "pattern": "^PaginationNext$",
+            "allow": ["layout", "opacity-50"]
+          },
+          {
+            "pattern": "^PaginationPrevious$",
+            "allow": ["layout", "opacity-50"]
+          },
+          {
+            "pattern": "^RetroGrid$",
+            "allow": ["layout", "opacity-30"]
+          },
+          {
+            "pattern": "^Skeleton$",
+            "allow": ["layout", "rounded-full", "rounded-lg", "rounded-xl"]
+          },
+          {
+            "pattern": "^Textarea$",
+            "allow": [
+              "layout",
+              "bg-fd-secondary",
+              "placeholder:text-fd-muted-foreground",
+              "text-fd-secondary-foreground"
+            ]
+          },
+          {
+            "pattern": "^ToggleGroupItem$",
+            "allow": [
+              "layout",
+              "bg-muted",
+              "bg-primary",
+              "data-[state=on]:[&_svg]:fill-current",
+              "hover:bg-muted/80",
+              "px-3",
+              "py-1.5",
+              "ring-2",
+              "ring-current",
+              "ring-offset-2",
+              "ring-offset-background",
+              "ring-primary",
+              "rounded-full",
+              "text-muted-foreground",
+              "text-primary-foreground",
+              "text-xs"
+            ]
+          }
+        ]
+      }
+    ],
+    "shadcn/require-static-classes": "error",
+    "shadcn/no-inline-styles": "error"
   },
+  "overrides": [
+    {
+      "files": ["src/components/og/**"],
+      "rules": {
+        "shadcn/no-inline-styles": "off"
+      }
+    }
+  ],
   "ignorePatterns": [
     "src/components/ui/**",
     "src/components/auth/**",

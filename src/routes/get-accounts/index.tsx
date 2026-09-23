@@ -322,7 +322,9 @@ function ProviderBadge({
           variant="outline"
           className={cn(
             "cursor-help border-transparent",
+            /* oxlint-disable shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
             classNameOverride ?? config.className,
+            /* oxlint-enable shadcn/require-static-classes */
           )}
         >
           {config.icon}
@@ -383,7 +385,9 @@ function ProviderCard({
     <Card
       className={cn(
         "relative overflow-hidden transition-all duration-300 hover:shadow-lg",
+        /* oxlint-disable shadcn/require-static-classes -- Provider themes are a finite class map. */
         theme && ["ring-2", theme.ring, theme.bg, theme.cardShadow],
+        /* oxlint-enable shadcn/require-static-classes */
       )}
     >
       <ProviderThemeDecoration theme={provider.theme} />
@@ -417,7 +421,7 @@ function ProviderCard({
               variant="outline"
               className={cn(
                 "border-transparent bg-primary/10 text-sm text-primary",
-                theme?.price,
+                theme?.price /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */,
               )}
             >
               {provider.price}
@@ -469,7 +473,12 @@ function ProviderCard({
           ) : null}
           <PaymentMethods methods={provider.paymentMethods} />
           <div className="flex flex-wrap gap-2">
-            <Button asChild className={theme?.primaryButton}>
+            <Button
+              asChild
+              className={
+                theme?.primaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
+              }
+            >
               <a href={provider.url} target="_blank" rel="noopener nofollow">
                 Get Accounts
                 <ExternalLink data-icon="inline-end" />
@@ -479,7 +488,9 @@ function ProviderCard({
               <Button
                 asChild
                 variant="secondary"
-                className={theme?.secondaryButton}
+                className={
+                  theme?.secondaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
+                }
               >
                 <a
                   href={provider.websiteUrl}
@@ -495,7 +506,9 @@ function ProviderCard({
               <Button
                 asChild
                 variant="secondary"
-                className={theme?.secondaryButton}
+                className={
+                  theme?.secondaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
+                }
               >
                 <a
                   href={discordInviteUrl}
@@ -511,7 +524,9 @@ function ProviderCard({
               <Button
                 asChild
                 variant="secondary"
-                className={theme?.secondaryButton}
+                className={
+                  theme?.secondaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
+                }
               >
                 <a
                   href={provider.trustpilotUrl}
@@ -525,7 +540,9 @@ function ProviderCard({
             )}
             <SocialLinkButtons
               links={provider.socialLinks}
-              className={theme?.secondaryButton}
+              className={
+                theme?.secondaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
+              }
             />
           </div>
           <ReviewInlineActions
@@ -698,7 +715,7 @@ function MainContent() {
                   "rounded-full px-3 py-1.5 text-xs",
                   isActive
                     ? cn(
-                        config.className,
+                        config.className /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */,
                         "ring-2 ring-offset-2 ring-offset-background ring-current",
                       )
                     : "bg-muted text-muted-foreground hover:bg-muted/80",

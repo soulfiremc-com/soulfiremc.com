@@ -203,7 +203,10 @@ function ResourceBadge({ badge }: { badge: Badge }) {
       <HoverCardTrigger asChild>
         <UiBadge
           variant="outline"
-          className={cn("cursor-help border-transparent", config.className)}
+          className={cn(
+            "cursor-help border-transparent",
+            config.className /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */,
+          )}
         >
           {config.icon}
           {config.label}
@@ -438,7 +441,7 @@ function MainContent() {
                   "rounded-full px-3 py-1.5 text-xs",
                   isActive
                     ? cn(
-                        config.className,
+                        config.className /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */,
                         "ring-2 ring-offset-2 ring-offset-background ring-current",
                       )
                     : "bg-muted text-muted-foreground hover:bg-muted/80",
@@ -482,7 +485,7 @@ function MainContent() {
                   "rounded-full px-3 py-1.5 text-xs",
                   isActive
                     ? cn(
-                        config.className,
+                        config.className /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */,
                         "ring-2 ring-offset-2 ring-offset-background ring-current",
                       )
                     : "bg-muted text-muted-foreground hover:bg-muted/80",

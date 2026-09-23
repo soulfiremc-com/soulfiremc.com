@@ -627,11 +627,7 @@ function ScriptingAnimation() {
         {/* Node graph canvas - always dark like real editor */}
         <svg
           viewBox="0 0 790 250"
-          className="w-full h-auto"
-          style={{
-            minHeight: "180px",
-            background: "var(--color-script-canvas)",
-          }}
+          className="min-h-45 w-full h-auto bg-script-canvas"
         >
           <title>SoulFire script execution graph</title>
           <defs>
@@ -681,9 +677,7 @@ function ScriptingAnimation() {
                 }
                 strokeWidth={active ? 2.5 : 1.5}
                 opacity={active ? 1 : 0.5}
-                style={{
-                  transition: "stroke 0.25s, stroke-width 0.25s, opacity 0.25s",
-                }}
+                className="transition-all duration-250"
               />
             );
           })}
@@ -718,7 +712,7 @@ function ScriptingAnimation() {
                   fill="var(--color-script-node)"
                   stroke={active ? node.color : "#3a3a4a"}
                   strokeWidth={active ? 1.5 : 0.5}
-                  style={{ transition: "stroke 0.25s" }}
+                  className="transition-colors duration-250"
                 />
 
                 {/* Header accent bar */}
@@ -780,7 +774,7 @@ function ScriptingAnimation() {
                               height={6}
                               rx="1"
                               fill={active ? "#e0e0e0" : "#777"}
-                              style={{ transition: "fill 0.25s" }}
+                              className="transition-colors duration-250"
                             />
                           ) : (
                             <circle
@@ -788,7 +782,7 @@ function ScriptingAnimation() {
                               cy={cy}
                               r="3.5"
                               fill={active ? "#fbbf24" : "#d97706"}
-                              style={{ transition: "fill 0.25s" }}
+                              className="transition-colors duration-250"
                             />
                           )}
                           <text
@@ -822,7 +816,7 @@ function ScriptingAnimation() {
                               height={6}
                               rx="1"
                               fill={active ? "#e0e0e0" : "#777"}
-                              style={{ transition: "fill 0.25s" }}
+                              className="transition-colors duration-250"
                             />
                           ) : (
                             <circle
@@ -830,7 +824,7 @@ function ScriptingAnimation() {
                               cy={cy}
                               r="3.5"
                               fill={active ? "#fbbf24" : "#d97706"}
-                              style={{ transition: "fill 0.25s" }}
+                              className="transition-colors duration-250"
                             />
                           )}
                         </>

@@ -270,7 +270,10 @@ function ProviderBadge({ badge }: { badge: Badge }) {
       <HoverCardTrigger asChild>
         <UiBadge
           variant="outline"
-          className={cn("cursor-help border-transparent", config.className)}
+          className={cn(
+            "cursor-help border-transparent",
+            config.className /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */,
+          )}
         >
           {config.icon}
           {config.label}
@@ -428,7 +431,9 @@ function AccountDetailPage() {
         <Card
           className={cn(
             "relative gap-5 overflow-hidden p-6",
+            /* oxlint-disable shadcn/require-static-classes -- Provider themes are a finite class map. */
             theme && ["ring-2", theme.ring, theme.bg, theme.cardShadow],
+            /* oxlint-enable shadcn/require-static-classes */
           )}
         >
           <ProviderThemeDecoration theme={data.shop.theme} />
@@ -473,7 +478,13 @@ function AccountDetailPage() {
               <PaymentMethods methods={data.shop.paymentMethods} />
 
               <div className="flex flex-wrap gap-2">
-                <Button asChild size="lg" className={theme?.primaryButton}>
+                <Button
+                  asChild
+                  size="lg"
+                  className={
+                    theme?.primaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
+                  }
+                >
                   <a
                     href={data.shop.url}
                     target="_blank"
@@ -488,7 +499,9 @@ function AccountDetailPage() {
                     asChild
                     variant="secondary"
                     size="lg"
-                    className={theme?.secondaryButton}
+                    className={
+                      theme?.secondaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
+                    }
                   >
                     <a
                       href={data.shop.websiteUrl}
@@ -505,7 +518,9 @@ function AccountDetailPage() {
                     asChild
                     variant="secondary"
                     size="lg"
-                    className={theme?.secondaryButton}
+                    className={
+                      theme?.secondaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
+                    }
                   >
                     <a
                       href={discordInviteUrl}
@@ -522,7 +537,9 @@ function AccountDetailPage() {
                     asChild
                     variant="secondary"
                     size="lg"
-                    className={theme?.secondaryButton}
+                    className={
+                      theme?.secondaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
+                    }
                   >
                     <a
                       href={data.shop.trustpilotUrl}
@@ -536,7 +553,9 @@ function AccountDetailPage() {
                 ) : null}
                 <SocialLinks
                   links={data.shop.socialLinks}
-                  className={theme?.secondaryButton}
+                  className={
+                    theme?.secondaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
+                  }
                 />
                 <ReviewSummaryBadge summary={reviewSummary} />
               </div>

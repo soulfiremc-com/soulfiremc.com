@@ -1,6 +1,7 @@
 "use client";
 
 import { Star } from "lucide-react";
+import type { CSSProperties } from "react";
 import { cn, generateN } from "@/lib/utils";
 
 type Size = "sm" | "md" | "lg";
@@ -38,8 +39,8 @@ export function ReviewStars({
         ))}
       </div>
       <div
-        className="absolute inset-0 overflow-hidden text-rating"
-        style={{ width }}
+        className="absolute inset-0 w-(--rating-width) overflow-hidden text-rating"
+        style={{ "--rating-width": width } as CSSProperties}
       >
         <div className="flex items-center gap-0.5">
           {generateN(5).map((i) => (
