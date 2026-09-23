@@ -14,24 +14,22 @@ export function CouponCode({
   );
 
   return (
-    <div className="flex items-center gap-2 rounded-lg bg-pink-500/10 p-3">
+    <div className="flex items-center gap-2 rounded-lg bg-offer/10 p-3">
       <div className="flex-1">
         <p className="text-xs text-muted-foreground">
           {discount ? `Use code for ${discount}` : "Coupon code"}
         </p>
-        <p className="font-mono font-semibold text-pink-600 dark:text-pink-400">
-          {code}
-        </p>
+        <p className="font-mono font-semibold text-offer">{code}</p>
       </div>
       <Button
         type="button"
         variant="ghost"
         size="icon"
         onClick={handleCopy}
-        className="text-muted-foreground hover:bg-pink-500/10"
+        className="text-muted-foreground hover:bg-offer/10"
         aria-label="Copy coupon code"
       >
-        {copied ? <Check className="text-green-500" /> : <Copy />}
+        {copied ? <Check className="text-success" /> : <Copy />}
       </Button>
     </div>
   );

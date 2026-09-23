@@ -50,7 +50,7 @@ export const BADGE_CONFIG: Record<
 > = {
   "free-tier": {
     label: "Free Tier",
-    className: "bg-green-500/10 text-green-600 dark:text-green-400",
+    className: "bg-success/10 text-success",
     description:
       "This provider offers a free tier, allowing you to test their service before committing to a paid plan.",
     icon: <Gift className="h-3 w-3" />,

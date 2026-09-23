@@ -129,13 +129,13 @@ export function DonutCalculator() {
         </div>
         <div className="rounded-md border bg-fd-background p-3">
           <div className="text-xs text-fd-muted-foreground">Daily USD</div>
-          <div className="text-lg font-bold text-green-600 dark:text-green-400">
+          <div className="text-lg font-bold text-success">
             ${dailyUsd.toFixed(2)}
           </div>
         </div>
         <div className="rounded-md border bg-fd-background p-3">
           <div className="text-xs text-fd-muted-foreground">Monthly USD</div>
-          <div className="text-lg font-bold text-green-600 dark:text-green-400">
+          <div className="text-lg font-bold text-success">
             ${monthlyUsd.toFixed(2)}
           </div>
         </div>

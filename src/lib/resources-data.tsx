@@ -80,7 +80,7 @@ export const BADGE_CONFIG: Record<
   },
   farming: {
     label: "Farming",
-    className: "bg-green-500/10 text-green-600 dark:text-green-400",
+    className: "bg-success/10 text-success",
     description:
       "Automates farming tasks like crop harvesting, animal breeding, and resource gathering.",
     icon: <Pickaxe className="h-3 w-3" />,
@@ -136,7 +136,7 @@ export const BADGE_CONFIG: Record<
   },
   "open-source": {
     label: "Open Source",
-    className: "bg-pink-500/10 text-pink-600 dark:text-pink-400",
+    className: "bg-offer/10 text-offer",
     description:
       "The source code is publicly available, allowing community contributions and auditing.",
     icon: <Heart className="h-3 w-3" />,

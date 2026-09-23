@@ -32,13 +32,13 @@ export function ReviewStars({
       className={cn("relative inline-flex items-center", className)}
       title={`${value.toFixed(1)} out of 5 stars`}
     >
-      <div className="flex items-center gap-0.5 text-amber-200/70">
+      <div className="flex items-center gap-0.5 text-rating-muted/70">
         {generateN(5).map((i) => (
           <Star key={i} className={sizeClass(size)} />
         ))}
       </div>
       <div
-        className="absolute inset-0 overflow-hidden text-amber-500"
+        className="absolute inset-0 overflow-hidden text-rating"
         style={{ width }}
       >
         <div className="flex items-center gap-0.5">
@@ -77,8 +77,8 @@ export function ReviewStarInput({
             onClick={() => onChange(starValue)}
             disabled={disabled}
             className={cn(
-              "rounded-sm text-amber-500 transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-50",
-              !active && "text-amber-200/70",
+              "rounded-sm text-rating transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-50",
+              !active && "text-rating-muted/70",
             )}
             aria-label={`Set rating to ${starValue} star${starValue === 1 ? "" : "s"}`}
             aria-pressed={value === starValue}

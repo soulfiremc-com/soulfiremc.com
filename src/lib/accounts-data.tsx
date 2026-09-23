@@ -184,14 +184,14 @@ export const BADGE_CONFIG: Record<
   },
   "lifetime-warranty": {
     label: "Lifetime Warranty",
-    className: "bg-green-500/10 text-green-600 dark:text-green-400",
+    className: "bg-success/10 text-success",
     description:
       "Accounts come with lifetime warranty - get a replacement if your account stops working.",
     icon: <Shield className="h-3 w-3" />,
   },
   "12h-warranty": {
     label: "Fair Warranty",
-    className: "bg-yellow-500/10 text-yellow-600 dark:text-yellow-400",
+    className: "bg-yellow-500/10 text-warning dark:text-yellow-400",
     description:
       "Accounts come with a 12 hour warranty - get a replacement if your account stops working within 12 hours of purchase.",
     icon: <Shield className="h-3 w-3" />,

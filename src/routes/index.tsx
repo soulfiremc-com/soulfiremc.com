@@ -290,9 +290,9 @@ function TerminalAnimation() {
           <span className="font-medium">SoulFire CLI</span>
           <div className="grow" />
           <div className="flex gap-1.5">
-            <div className="size-3 rounded-full bg-red-500/80" />
-            <div className="size-3 rounded-full bg-yellow-500/80" />
-            <div className="size-3 rounded-full bg-green-500/80" />
+            <div className="size-3 rounded-full bg-destructive/80" />
+            <div className="size-3 rounded-full bg-warning/80" />
+            <div className="size-3 rounded-full bg-success/80" />
           </div>
         </div>
         <div className="h-[320px] p-4 font-mono text-xs sm:text-sm">
@@ -613,14 +613,14 @@ function ScriptingAnimation() {
             auto_reply.sf
           </span>
           <div className="grow" />
-          <div className="flex items-center gap-1 px-2 py-0.5 rounded-md bg-green-500/10 text-green-500 text-xs font-medium">
-            <div className="size-1.5 rounded-full bg-green-500 animate-pulse" />
+          <div className="flex items-center gap-1 px-2 py-0.5 rounded-md bg-success/10 text-success text-xs font-medium">
+            <div className="size-1.5 rounded-full bg-success animate-pulse" />
             Running
           </div>
           <div className="flex gap-1.5 ml-2">
-            <div className="size-3 rounded-full bg-red-500/80" />
-            <div className="size-3 rounded-full bg-yellow-500/80" />
-            <div className="size-3 rounded-full bg-green-500/80" />
+            <div className="size-3 rounded-full bg-destructive/80" />
+            <div className="size-3 rounded-full bg-warning/80" />
+            <div className="size-3 rounded-full bg-success/80" />
           </div>
         </div>
 
@@ -628,7 +628,10 @@ function ScriptingAnimation() {
         <svg
           viewBox="0 0 790 250"
           className="w-full h-auto"
-          style={{ minHeight: "180px", background: "#1e1e2e" }}
+          style={{
+            minHeight: "180px",
+            background: "var(--color-script-canvas)",
+          }}
         >
           <title>SoulFire script execution graph</title>
           <defs>
@@ -647,7 +650,13 @@ function ScriptingAnimation() {
               height="20"
               patternUnits="userSpaceOnUse"
             >
-              <circle cx="10" cy="10" r="0.6" fill="#fff" opacity="0.06" />
+              <circle
+                cx="10"
+                cy="10"
+                r="0.6"
+                fill="var(--color-white)"
+                opacity="0.06"
+              />
             </pattern>
           </defs>
 
@@ -706,7 +715,7 @@ function ScriptingAnimation() {
                   width={node.w}
                   height={h}
                   rx="6"
-                  fill="#2a2a3a"
+                  fill="var(--color-script-node)"
                   stroke={active ? node.color : "#3a3a4a"}
                   strokeWidth={active ? 1.5 : 0.5}
                   style={{ transition: "stroke 0.25s" }}
@@ -727,7 +736,7 @@ function ScriptingAnimation() {
                 <path
                   d={`M${node.x + 11},${node.y + ED_H / 2 - 3} L${node.x + 15},${node.y + ED_H / 2} L${node.x + 11},${node.y + ED_H / 2 + 3}`}
                   fill="none"
-                  stroke="#777"
+                  stroke="var(--color-script-muted)"
                   strokeWidth="1.2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -739,7 +748,7 @@ function ScriptingAnimation() {
                   y={node.y + ED_H / 2 + 4}
                   fontSize="11.5"
                   fontWeight="600"
-                  fill="#e0e0e0"
+                  fill="var(--color-script-label)"
                 >
                   {node.label}
                 </text>
@@ -750,7 +759,7 @@ function ScriptingAnimation() {
                   y1={node.y + ED_H}
                   x2={node.x + node.w - 1}
                   y2={node.y + ED_H}
-                  stroke="#3a3a4a"
+                  stroke="var(--color-script-line)"
                   strokeWidth="0.5"
                 />
 
@@ -786,7 +795,7 @@ function ScriptingAnimation() {
                             x={node.x + 9}
                             y={cy + 3.5}
                             fontSize="9"
-                            fill="#999"
+                            fill="var(--color-script-secondary)"
                           >
                             {row.left.name}
                           </text>
@@ -800,7 +809,7 @@ function ScriptingAnimation() {
                             x={node.x + node.w - 9}
                             y={cy + 3.5}
                             fontSize="9"
-                            fill="#999"
+                            fill="var(--color-script-secondary)"
                             textAnchor="end"
                           >
                             {row.right.name}
@@ -844,8 +853,8 @@ function ScriptingAnimation() {
                                 width={fw}
                                 height={14}
                                 rx="2"
-                                fill="#1e1e2e"
-                                stroke="#3a3a4a"
+                                fill="var(--color-script-canvas)"
+                                stroke="var(--color-script-line)"
                                 strokeWidth="0.5"
                               />
                               <text
@@ -853,7 +862,7 @@ function ScriptingAnimation() {
                                 y={cy + 3}
                                 fontSize="8.5"
                                 fontFamily="monospace"
-                                fill="#e0c070"
+                                fill="var(--color-script-value)"
                               >
                                 {row.inputValue}
                               </text>
@@ -871,7 +880,7 @@ function ScriptingAnimation() {
         {/* Execution log panel */}
         <div className="px-4 py-2 font-mono text-xs h-[104px] overflow-hidden bg-[#222232] border-t border-white/[0.06]">
           <div className="flex items-center gap-1.5 mb-1.5">
-            <span className="font-semibold text-[10px] uppercase tracking-wider text-white/40">
+            <span className="font-semibold text-3xs uppercase tracking-wider text-white/40">
               Execution Log
             </span>
           </div>
@@ -1357,7 +1366,6 @@ function Page() {
       </section>
 
       {/* Features */}
-      {/** biome-ignore lint/correctness/useUniqueElementIds: Need this for static links */}
       <section className="py-16" id="features">
         <div className="mb-12 flex flex-col gap-4">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
@@ -1415,7 +1423,7 @@ function Page() {
                 <div className="font-semibold text-sm sm:text-base">
                   70+ Nodes
                 </div>
-                <div className="text-[11px] sm:text-xs text-muted-foreground">
+                <div className="text-2xs sm:text-xs text-muted-foreground">
                   12 categories
                 </div>
               </div>
@@ -1426,7 +1434,7 @@ function Page() {
                 <div className="font-semibold text-sm sm:text-base">
                   No Code
                 </div>
-                <div className="text-[11px] sm:text-xs text-muted-foreground">
+                <div className="text-2xs sm:text-xs text-muted-foreground">
                   Drag & drop
                 </div>
               </div>
@@ -1437,7 +1445,7 @@ function Page() {
                 <div className="font-semibold text-sm sm:text-base">
                   Live Debug
                 </div>
-                <div className="text-[11px] sm:text-xs text-muted-foreground">
+                <div className="text-2xs sm:text-xs text-muted-foreground">
                   Real-time logs
                 </div>
               </div>
@@ -1448,7 +1456,7 @@ function Page() {
                 <div className="font-semibold text-sm sm:text-base">
                   AI Built-in
                 </div>
-                <div className="text-[11px] sm:text-xs text-muted-foreground">
+                <div className="text-2xs sm:text-xs text-muted-foreground">
                   LLM integration
                 </div>
               </div>
@@ -1497,7 +1505,6 @@ function Page() {
       </section>
 
       {/* Final CTA */}
-      {/** biome-ignore lint/correctness/useUniqueElementIds: Need this for static links */}
       <section className="py-16" id="final-cta">
         <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border bg-background px-8 py-16 md:py-24">
           <RetroGrid lineWidth={2} fade={false} className="opacity-30" />

@@ -468,7 +468,6 @@ function LogoHero({
         }}
       />
       {logoSrc ? (
-        // biome-ignore lint/performance/noImgElement: Takumi ImageResponse needs a plain img tag for embedded OG assets.
         <img
           src={logoSrc}
           alt={`${value} logo`}

@@ -3,11 +3,11 @@
   "main": "src/server.ts",
   "name": "soulfire-website",
   "assets": {
-    "html_handling": "drop-trailing-slash"
+    "html_handling": "drop-trailing-slash",
   },
   "keep_vars": true,
   "secrets": {
-    "required": ["DISCORD_BOT_TOKEN"]
+    "required": ["DISCORD_BOT_TOKEN"],
   },
   "compatibility_date": "2026-04-13",
   "compatibility_flags": ["nodejs_compat"],
@@ -16,8 +16,8 @@
       "binding": "DB",
       "database_name": "soulfire-website",
       "migrations_dir": "drizzle-d1",
-      "database_id": "68aff6f2-3d21-48bd-b24e-7286f6e0b5a4"
-    }
+      "database_id": "68aff6f2-3d21-48bd-b24e-7286f6e0b5a4",
+    },
   ],
   "upload_source_maps": true,
   "observability": {
@@ -25,12 +25,12 @@
     "logs": {
       "enabled": true,
       "head_sampling_rate": 1,
-      "invocation_logs": true
+      "invocation_logs": true,
     },
     "traces": {
       "enabled": true,
-      "head_sampling_rate": 0.05
-    }
+      "head_sampling_rate": 0.05,
+    },
   },
-  "account_id": "4dd0e72d7bf89402be905fb40cdb230a"
+  "account_id": "4dd0e72d7bf89402be905fb40cdb230a",
 }

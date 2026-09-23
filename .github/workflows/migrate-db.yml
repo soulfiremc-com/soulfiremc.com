@@ -1,4 +1,4 @@
-name: 'Database Migration'
+name: "Database Migration"
 
 on:
   workflow_dispatch:
@@ -8,11 +8,11 @@ on:
 
 jobs:
   migrate:
-    name: 'Run Database Migrations'
+    name: "Run Database Migrations"
 
     runs-on: ubuntu-24.04
     steps:
-      - name: 'Checkout repository'
+      - name: "Checkout repository"
         uses: actions/checkout@v7
         with:
           persist-credentials: false

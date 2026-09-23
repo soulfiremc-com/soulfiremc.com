@@ -212,7 +212,7 @@ function ItemReviewsSectionContent({
                 </div>
                 <div className="grid grid-cols-2 gap-3 sm:min-w-64">
                   <div className="rounded-xl border border-border/70 bg-muted/20 px-4 py-3">
-                    <div className="text-xs uppercase tracking-[0.14em] text-muted-foreground">
+                    <div className="text-xs uppercase tracking-review text-muted-foreground">
                       Average
                     </div>
                     <div className="mt-1 text-2xl font-semibold tabular-nums">
@@ -220,7 +220,7 @@ function ItemReviewsSectionContent({
                     </div>
                   </div>
                   <div className="rounded-xl border border-border/70 bg-muted/20 px-4 py-3">
-                    <div className="text-xs uppercase tracking-[0.14em] text-muted-foreground">
+                    <div className="text-xs uppercase tracking-review text-muted-foreground">
                       Total Ratings
                     </div>
                     <div className="mt-1 text-2xl font-semibold tabular-nums">

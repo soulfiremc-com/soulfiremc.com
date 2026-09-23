@@ -4,6 +4,7 @@
 @import "fumadocs-ui/css/preset.css";
 @import "fumadocs-openapi/css/preset.css";
 @import "shadcn/tailwind.css";
+@plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -26,6 +27,10 @@
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
+  --success: var(--color-green-600);
+  --warning: var(--color-yellow-600);
+  --offer: var(--color-pink-600);
+  --discord: #5865f2;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -61,6 +66,9 @@
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
+  --success: var(--color-green-400);
+  --warning: var(--color-yellow-500);
+  --offer: var(--color-pink-400);
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
@@ -95,6 +103,23 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-offer: var(--offer);
+  --color-discord: var(--discord);
+  --color-rating: var(--color-amber-500);
+  --color-rating-muted: var(--color-amber-200);
+  --color-script-canvas: #1e1e2e;
+  --color-script-node: #2a2a3a;
+  --color-script-line: #3a3a4a;
+  --color-script-muted: #777;
+  --color-script-label: #e0e0e0;
+  --color-script-secondary: #999;
+  --color-script-value: #e0c070;
+  --text-2xs: 0.6875rem;
+  --text-3xs: 0.625rem;
+  --text-4xs: 0.5rem;
+  --tracking-review: 0.14em;
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);

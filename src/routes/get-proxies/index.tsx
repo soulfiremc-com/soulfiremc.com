@@ -625,7 +625,6 @@ function ProxiesItemListStructuredData() {
   return (
     <script
       type="application/ld+json"
-      // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
       dangerouslySetInnerHTML={{
         __html: createProxiesItemListJsonLd(data.summaries),
       }}
@@ -723,14 +722,12 @@ function GetProxiesPage() {
     <SiteShell>
       <script
         type="application/ld+json"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
         dangerouslySetInnerHTML={{ __html: proxiesPageData.pageJsonLd }}
       />
       <Suspense
         fallback={
           <script
             type="application/ld+json"
-            // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
             dangerouslySetInnerHTML={{
               __html: proxiesPageData.itemListJsonLd,
             }}
@@ -741,12 +738,10 @@ function GetProxiesPage() {
       </Suspense>
       <script
         type="application/ld+json"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
         dangerouslySetInnerHTML={{ __html: proxiesPageData.faqJsonLd }}
       />
       <script
         type="application/ld+json"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
         dangerouslySetInnerHTML={{ __html: proxiesPageData.breadcrumbJsonLd }}
       />
       <GetProxiesClient />

@@ -282,13 +282,11 @@ function getProxyDetailPageData({
     ...(provider.startDate && { dateCreated: provider.startDate }),
     ...(provider.gallery &&
       provider.gallery.length > 0 && {
-        image: provider.gallery.map(
-          (img): ImageObject => ({
-            "@type": "ImageObject",
-            url: `https://soulfiremc.com${img.src}`,
-            name: img.alt,
-          }),
-        ),
+        image: provider.gallery.map((img): ImageObject => ({
+          "@type": "ImageObject",
+          url: `https://soulfiremc.com${img.src}`,
+          name: img.alt,
+        })),
       }),
   };
 

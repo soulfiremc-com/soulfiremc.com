@@ -108,7 +108,6 @@ export function BlogOgImage({
 
       <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
         {logoSrc ? (
-          // biome-ignore lint/performance/noImgElement: Takumi ImageResponse needs a plain img tag for embedded OG assets.
           <img
             src={logoSrc}
             alt="SoulFire logo"
@@ -250,7 +249,6 @@ export function DocsOgImage({
             }}
           >
             {logoSrc ? (
-              // biome-ignore lint/performance/noImgElement: Takumi ImageResponse needs a plain img tag for embedded OG assets.
               <img
                 src={logoSrc}
                 alt="SoulFire logo"

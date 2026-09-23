@@ -3,7 +3,6 @@ import {
   check,
   index,
   integer,
-  // biome-ignore lint/suspicious/noDeprecatedImports: The object overload used below is the current Drizzle API.
   primaryKey,
   sqliteTable,
   text,

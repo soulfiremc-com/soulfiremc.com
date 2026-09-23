@@ -118,7 +118,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <ClientOnly fallback={null}>
           <script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
           <script
-            // biome-ignore lint/security/noDangerouslySetInnerHtml: Third-party widget bootstrap
             dangerouslySetInnerHTML={{
               __html: `
                 if (window.kofiWidgetOverlay) {

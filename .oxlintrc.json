@@ -1,0 +1,57 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "jsPlugins": ["@shadcn/lint"],
+  "rules": {
+    "shadcn/no-unknown-classes": ["error", { "allow": ["not-prose"] }],
+    "shadcn/no-raw-colors": [
+      "error",
+      {
+        "allow": [
+          "*-fd-*",
+          "bg-zinc-950",
+          "bg-zinc-200",
+          "border-zinc-800",
+          "text-zinc-950",
+          "text-zinc-50",
+          "text-zinc-400",
+          "text-zinc-300",
+          "bg-rose-500/18",
+          "bg-rose-400/18",
+          "bg-orange-400/18",
+          "bg-orange-300/12",
+          "bg-amber-400/70",
+          "bg-amber-300/60",
+          "bg-red-500/60",
+          "bg-red-400/55",
+          "text-cyan-500/55",
+          "text-cyan-300/45",
+          "text-emerald-400",
+          "text-cyan-400",
+          "text-blue-400",
+          "text-orange-500",
+          "text-blue-500",
+          "text-purple-500",
+          "text-cyan-500"
+        ]
+      }
+    ],
+    "shadcn/no-arbitrary-values": [
+      "error",
+      {
+        "allow": [
+          "layout",
+          "shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]",
+          "bg-[#1a1a2e]",
+          "bg-[#222232]"
+        ]
+      }
+    ]
+  },
+  "ignorePatterns": [
+    "src/components/ui/**",
+    "src/components/auth/**",
+    "src/lib/auth/**",
+    "src/components/data-table/**",
+    "src/routeTree.gen.ts"
+  ]
+}

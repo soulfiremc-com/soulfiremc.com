@@ -243,7 +243,7 @@ function DiscordMemberBadge({ providerSlug }: { providerSlug: string }) {
     return (
       <UiBadge
         variant="outline"
-        className="border-transparent bg-[#5865F2]/10 text-[#5865F2]/50"
+        className="border-transparent bg-discord/10 text-discord/50"
       >
         <Users />
         unknown
@@ -256,7 +256,7 @@ function DiscordMemberBadge({ providerSlug }: { providerSlug: string }) {
       <HoverCardTrigger asChild>
         <UiBadge
           variant="outline"
-          className="cursor-help border-transparent bg-[#5865F2]/10 text-[#5865F2]"
+          className="cursor-help border-transparent bg-discord/10 text-discord"
         >
           <Users />
           {formatNumber(info.approximate_member_count)}
@@ -266,7 +266,7 @@ function DiscordMemberBadge({ providerSlug }: { providerSlug: string }) {
         {info.guild?.name && <p className="font-medium">{info.guild.name}</p>}
         <p>{info.approximate_member_count?.toLocaleString()} members</p>
         {info.approximate_presence_count && (
-          <p className="text-green-500">
+          <p className="text-success">
             {info.approximate_presence_count.toLocaleString()} online
           </p>
         )}
@@ -277,10 +277,8 @@ function DiscordMemberBadge({ providerSlug }: { providerSlug: string }) {
 
 function LinkDiscountNotice({ message }: { message: string }) {
   return (
-    <div className="rounded-lg bg-pink-500/10 p-3">
-      <p className="text-sm font-medium text-pink-600 dark:text-pink-400">
-        {message}
-      </p>
+    <div className="rounded-lg bg-offer/10 p-3">
+      <p className="text-sm font-medium text-offer">{message}</p>
     </div>
   );
 }
@@ -587,9 +585,9 @@ function MainContent() {
   const filteredProviders = useMemo(() => {
     return providers.filter((provider) => {
       const matchesCategory = category ? provider.category === category : true;
-      const matchesBadges =
-        badges.length === 0 ||
-        badges.every((filter) => provider.badges.includes(filter));
+      const matchesBadges = badges.every((filter) =>
+        provider.badges.includes(filter),
+      );
       return matchesCategory && matchesBadges;
     });
   }, [badges, category]);
@@ -841,7 +839,7 @@ function MainContent() {
                     Temporary Minecraft alts that may stop working over time.
                     Prices shown are per account.
                   </p>
-                  <p className="text-sm text-yellow-600 dark:text-yellow-500">
+                  <p className="text-sm text-warning">
                     <strong>Note:</strong> SoulFire supports refresh token,
                     cookie, and access token auth for many NFA account formats.
                   </p>
@@ -1083,7 +1081,6 @@ function AccountsItemListStructuredData() {
   return (
     <script
       type="application/ld+json"
-      // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
       dangerouslySetInnerHTML={{
         __html: createAccountsItemListJsonLd(reviews.summaries, liveShopData),
       }}
@@ -1120,14 +1117,12 @@ function GetAccountsPage() {
     <SiteShell>
       <script
         type="application/ld+json"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
         dangerouslySetInnerHTML={{ __html: accountsPageJsonLd }}
       />
       <Suspense
         fallback={
           <script
             type="application/ld+json"
-            // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
             dangerouslySetInnerHTML={{
               __html: createAccountsItemListJsonLd(),
             }}
@@ -1138,12 +1133,10 @@ function GetAccountsPage() {
       </Suspense>
       <script
         type="application/ld+json"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
         dangerouslySetInnerHTML={{ __html: accountsFaqJsonLd }}
       />
       <script
         type="application/ld+json"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
         dangerouslySetInnerHTML={{ __html: accountsBreadcrumbJsonLd }}
       />
       <GetAccountsClient />

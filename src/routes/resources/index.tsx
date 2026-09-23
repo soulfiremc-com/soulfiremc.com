@@ -721,7 +721,6 @@ function ResourcesItemListStructuredData() {
   return (
     <script
       type="application/ld+json"
-      // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
       dangerouslySetInnerHTML={{
         __html: createResourcesItemListJsonLd(data.summaries),
       }}
@@ -819,14 +818,12 @@ function ResourcesPage() {
     <SiteShell>
       <script
         type="application/ld+json"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
         dangerouslySetInnerHTML={{ __html: resourcesPageData.pageJsonLd }}
       />
       <Suspense
         fallback={
           <script
             type="application/ld+json"
-            // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
             dangerouslySetInnerHTML={{
               __html: resourcesPageData.itemListJsonLd,
             }}
@@ -837,12 +834,10 @@ function ResourcesPage() {
       </Suspense>
       <script
         type="application/ld+json"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
         dangerouslySetInnerHTML={{ __html: resourcesPageData.faqJsonLd }}
       />
       <script
         type="application/ld+json"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD payload
         dangerouslySetInnerHTML={{ __html: resourcesPageData.breadcrumbJsonLd }}
       />
       <ResourcesClient />

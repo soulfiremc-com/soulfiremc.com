@@ -378,7 +378,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
         <CredenzaContent>
           <CredenzaHeader>
             <CredenzaTitle className="flex items-center gap-2">
-              <Heart className="h-5 w-5 text-red-500" />
+              <Heart className="h-5 w-5 text-destructive" />
               Thank you for downloading!
             </CredenzaTitle>
             <CredenzaDescription>

@@ -14,10 +14,6 @@ execFileSync(
   ],
   { stdio: "inherit" },
 );
-execFileSync(
-  "bunx",
-  ["biome", "check", "--write", "./src/lib/db/auth-schema.ts"],
-  {
-    stdio: "inherit",
-  },
-);
+execFileSync("bunx", ["oxfmt", "--write", "./src/lib/db/auth-schema.ts"], {
+  stdio: "inherit",
+});
