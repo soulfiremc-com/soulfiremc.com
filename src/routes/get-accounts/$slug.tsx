@@ -263,7 +263,13 @@ function AccountProductSeoEnrichment({
   return <JsonLd data={enrichedProductJsonLd} />;
 }
 
-function ProviderBadge({ badge }: { badge: Badge }) {
+function ProviderBadge({
+  badge,
+  classNameOverride,
+}: {
+  badge: Badge;
+  classNameOverride?: string;
+}) {
   const config = BADGE_CONFIG[badge];
   return (
     <HoverCard>
@@ -272,7 +278,9 @@ function ProviderBadge({ badge }: { badge: Badge }) {
           variant="outline"
           className={cn(
             "cursor-help border-transparent",
-            config.className /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */,
+            /* oxlint-disable shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
+            classNameOverride ?? config.className,
+            /* oxlint-enable shadcn/require-static-classes */
           )}
         >
           {config.icon}
@@ -386,6 +394,8 @@ function AccountDetailPage() {
     });
   };
   const theme = data.shop.theme ? PROVIDER_THEMES[data.shop.theme] : undefined;
+  const affiliateBadgeClassName =
+    data.shop.theme === "localts" ? theme?.badge : undefined;
   const discordInviteUrl = getDiscordInviteUrl(data.shop);
   const reviewsQuery = useQuery(
     reviewsQueryOptions({
@@ -472,7 +482,15 @@ function AccountDetailPage() {
                     data.providers.flatMap((provider) => provider.badges),
                   ),
                 ].map((badge) => (
-                  <ProviderBadge key={badge} badge={badge} />
+                  <ProviderBadge
+                    key={badge}
+                    badge={badge}
+                    classNameOverride={
+                      badge === "affiliate"
+                        ? affiliateBadgeClassName
+                        : undefined
+                    }
+                  />
                 ))}
               </div>
               <PaymentMethods methods={data.shop.paymentMethods} />
@@ -595,7 +613,15 @@ function AccountDetailPage() {
                 ) : null}
                 <div className="flex flex-wrap gap-2">
                   {listing.badges.map((badge) => (
-                    <ProviderBadge key={badge} badge={badge} />
+                    <ProviderBadge
+                      key={badge}
+                      badge={badge}
+                      classNameOverride={
+                        badge === "affiliate"
+                          ? affiliateBadgeClassName
+                          : undefined
+                      }
+                    />
                   ))}
                 </div>
                 {provider.couponCode ? (

@@ -1,4 +1,4 @@
-export type ProviderThemeDecorationName = "rave" | "fernan" | "alts-fast";
+export type ProviderThemeDecorationName = "localts" | "fernan" | "alts-fast";
 
 export function ProviderThemeDecoration({
   theme,
@@ -14,11 +14,11 @@ export function ProviderThemeDecoration({
       aria-hidden
       className="pointer-events-none absolute inset-0 overflow-hidden"
     >
-      {theme === "rave" ? (
-        <>
-          <div className="absolute -right-10 -top-10 size-28 rounded-full bg-rose-500/18 blur-3xl dark:bg-rose-400/18" />
-          <div className="absolute -bottom-8 left-0 size-24 rounded-full bg-orange-400/18 blur-2xl dark:bg-orange-300/12" />
-        </>
+      {theme === "localts" ? (
+        <div className="absolute -right-4 top-3 flex -rotate-[24deg] flex-col gap-2">
+          <div className="h-3 w-32 bg-localts-blue/10 dark:bg-localts-sky/10" />
+          <div className="ml-6 h-2 w-32 bg-localts-sky/20 dark:bg-localts-blue/15" />
+        </div>
       ) : null}
       {theme === "fernan" ? (
         <div className="absolute right-2 top-2 flex size-8 flex-col items-end gap-1.5 pt-1">

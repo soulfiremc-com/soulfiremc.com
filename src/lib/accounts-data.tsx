@@ -32,7 +32,7 @@ export type Badge =
   | "partner"
   | "affiliate";
 
-export type ProviderThemeName = "rave" | "fernan" | "alts-fast";
+export type ProviderThemeName = "localts" | "fernan" | "alts-fast";
 
 export type ProviderTheme = {
   ring: string;
@@ -115,19 +115,19 @@ export function getDiscordInviteUrl(
 }
 
 export const PROVIDER_THEMES: Record<ProviderThemeName, ProviderTheme> = {
-  rave: {
-    ring: "ring-rose-500/35 dark:ring-rose-400/25",
-    bg: "border-rose-500/20 bg-gradient-to-br from-rose-500/10 via-background to-orange-500/10 dark:from-rose-500/15 dark:via-card dark:to-orange-500/10",
-    cardShadow: "shadow-[0_20px_60px_-40px_rgba(244,63,94,0.55)]",
+  localts: {
+    ring: "ring-localts-blue/25 dark:ring-localts-sky/20",
+    bg: "border-localts-blue/25 bg-localts-sky/10 dark:border-localts-sky/20 dark:bg-localts-navy/35",
+    cardShadow: "shadow-sm shadow-localts-navy/10 dark:shadow-none",
     badge:
-      "border border-rose-500/20 bg-rose-500/12 text-rose-700 dark:text-rose-300",
-    logo: "ring-2 ring-rose-500/25 bg-white/85 shadow-[0_14px_40px_-24px_rgba(244,63,94,0.9)] dark:bg-white/8",
+      "border border-localts-blue/25 bg-localts-blue/10 text-localts-navy dark:border-localts-sky/25 dark:bg-localts-sky/10 dark:text-localts-sky",
+    logo: "ring-2 ring-localts-blue/30 bg-white dark:ring-localts-sky/30",
     price:
-      "border border-rose-500/20 bg-white/85 text-rose-700 shadow-sm shadow-rose-500/10 dark:bg-white/10 dark:text-rose-200",
+      "border border-localts-blue/25 bg-white text-localts-navy dark:border-localts-sky/25 dark:bg-localts-blue/20 dark:text-localts-sky",
     primaryButton:
-      "bg-rose-600 text-white shadow-sm shadow-rose-500/30 hover:bg-rose-500 dark:bg-rose-500 dark:hover:bg-rose-400",
+      "bg-localts-navy text-white hover:bg-localts-blue dark:bg-localts-sky dark:text-localts-navy dark:hover:bg-localts-sky/85",
     secondaryButton:
-      "border border-rose-500/15 bg-white/75 text-rose-700 hover:bg-rose-500/10 dark:bg-white/8 dark:text-rose-200 dark:hover:bg-white/12",
+      "border border-localts-blue/25 bg-white/80 text-localts-navy hover:bg-localts-sky/20 dark:border-localts-sky/20 dark:bg-localts-navy/60 dark:text-localts-sky dark:hover:bg-localts-blue/25",
   },
   fernan: {
     ring: "ring-amber-400/45 dark:ring-amber-300/30",
@@ -295,7 +295,6 @@ export const SHOPS: Shop[] = [
     name: "Ravealts",
     logo: "/accounts/ravealts.gif",
     logoUnoptimized: true,
-    theme: "rave",
     url: "https://dash.ravealts.com",
     websiteUrl: "https://ravealts.com",
     discordUrl: "https://discord.ravealts.com",
@@ -630,9 +629,11 @@ export const SHOPS: Shop[] = [
     name: "Localts",
     alwaysOnTop: true,
     logo: "/accounts/localts.png",
+    theme: "localts",
     url: "https://localts.store/?campaign=soulfire",
     websiteUrl: "https://localts.info",
     discordUrl: "https://invite.localts.store",
+    trustpilotUrl: "https://www.trustpilot.com/review/localts.store",
     paymentMethods: [
       "Crypto",
       "Card",
