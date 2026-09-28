@@ -187,12 +187,12 @@ const accountFaqItems: {
   {
     question: "Are these providers affiliated with SoulFire?",
     answerHtml:
-      "This is still a community-curated list and SoulFire does not own or operate these providers. Some listings may have official integrations or affiliate codes and links, and those are labeled clearly on the page.",
+      "This is still a community-curated list and SoulFire does not own or operate these providers. Partner, official integration, and affiliate relationships are labeled on the page.",
     answerElement: (
       <>
         This is still a community-curated list and SoulFire does not own or
-        operate these providers. Some listings may have official integrations or
-        affiliate codes and links, and those are labeled clearly on the page.
+        operate these providers. Partner, official integration, and affiliate
+        relationships are labeled on the page.
       </>
     ),
   },
@@ -563,19 +563,27 @@ function sortProviders(
   sort: SortOption,
   summaries: Record<string, ReviewSummary>,
 ): Provider[] {
+  const topProviders = providers.filter((provider) => provider.alwaysOnTop);
+  const otherProviders = providers.filter((provider) => !provider.alwaysOnTop);
+
   if (sort === "default" || sort === "best-rated") {
-    return [...providers].sort((a, b) => {
-      return (
-        compareReviewSummaries(summaries[a.slug], summaries[b.slug], sort) ||
-        a.name.localeCompare(b.name)
-      );
-    });
+    return [
+      ...topProviders,
+      ...otherProviders.sort(
+        (a, b) =>
+          compareReviewSummaries(summaries[a.slug], summaries[b.slug], sort) ||
+          a.name.localeCompare(b.name),
+      ),
+    ];
   }
-  return [...providers].sort((a, b) =>
-    sort === "price-asc"
-      ? a.priceValue - b.priceValue
-      : b.priceValue - a.priceValue,
-  );
+  return [
+    ...topProviders,
+    ...otherProviders.sort((a, b) =>
+      sort === "price-asc"
+        ? a.priceValue - b.priceValue
+        : b.priceValue - a.priceValue,
+    ),
+  ];
 }
 
 function MainContent() {
@@ -602,9 +610,9 @@ function MainContent() {
   const filteredProviders = useMemo(() => {
     return providers.filter((provider) => {
       const matchesCategory = category ? provider.category === category : true;
-      const matchesBadges = badges.every((filter) =>
-        provider.badges.includes(filter),
-      );
+      const matchesBadges =
+        provider.alwaysOnTop ||
+        badges.every((filter) => provider.badges.includes(filter));
       return matchesCategory && matchesBadges;
     });
   }, [badges, category]);
@@ -949,10 +957,9 @@ function GetAccountsClient() {
         </p>
         <p className="text-sm text-muted-foreground">
           <strong>Disclaimer:</strong> SoulFire does not own or operate these
-          providers. Some listings may include affiliate codes or links marked
-          with an Affiliate badge, and using them helps support SoulFire at no
-          extra cost to you. Always do your own research before making
-          purchases.
+          providers. Partner listings support SoulFire, and affiliate codes or
+          links marked with an Affiliate badge help support SoulFire at no extra
+          cost to you. Always do your own research before making purchases.
         </p>
         <p className="text-sm text-muted-foreground">
           Inaccurate information or broken links? Submit a pull request on{" "}

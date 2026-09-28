@@ -3,6 +3,7 @@ import {
   ArrowUpNarrowWide,
   Gift,
   Handshake,
+  Heart,
   Package,
   Plug,
   Shield,
@@ -25,7 +26,11 @@ export type FilterableBadge =
   | "12h-warranty"
   | "bulk-discount";
 
-export type Badge = FilterableBadge | "official-integration" | "affiliate";
+export type Badge =
+  | FilterableBadge
+  | "official-integration"
+  | "partner"
+  | "affiliate";
 
 export type ProviderThemeName = "rave" | "fernan" | "alts-fast";
 
@@ -69,6 +74,7 @@ export type Shop = {
   paymentMethods?: string[];
   startDate?: string;
   gallery?: { src: string; alt: string }[];
+  alwaysOnTop?: boolean;
   listings: Partial<Record<Category, Listing>>;
 };
 
@@ -87,6 +93,7 @@ export type Provider = {
   paymentMethods?: string[];
   startDate?: string;
   gallery?: { src: string; alt: string }[];
+  alwaysOnTop?: boolean;
   badges: Badge[];
   category: Category;
   price: string;
@@ -209,6 +216,13 @@ export const BADGE_CONFIG: Record<
     description:
       "This provider is officially integrated into the SoulFire client. You can purchase and import accounts directly from within the app.",
     icon: <Plug className="h-3 w-3" />,
+  },
+  partner: {
+    label: "Partner",
+    className: "bg-amber-500/10 text-amber-700 dark:text-amber-400",
+    description:
+      "This provider partners with SoulFire and supports the project.",
+    icon: <Heart className="h-3 w-3 fill-current" />,
   },
   affiliate: {
     label: "Affiliate",
@@ -614,6 +628,7 @@ export const SHOPS: Shop[] = [
   {
     slug: "localts",
     name: "Localts",
+    alwaysOnTop: true,
     logo: "/accounts/localts.png",
     url: "https://localts.store/?campaign=soulfire",
     websiteUrl: "https://localts.info",
@@ -631,7 +646,7 @@ export const SHOPS: Shop[] = [
       "nfa-accounts": {
         summary:
           "Cookie NFAs with multiple Hypixel tiers, random rank options, and no-VPN-detection variants on higher levels.",
-        badges: ["high-quality", "instant-delivery"],
+        badges: ["partner", "affiliate", "high-quality", "instant-delivery"],
         price: "25¢+",
         priceValue: 0.25,
         linkDiscountMessage:
@@ -642,7 +657,7 @@ export const SHOPS: Shop[] = [
       "mfa-accounts": {
         summary:
           "Full-access accounts with instant delivery, 7+ day age, and OTP secret included. Ranked variants are available above the base tier.",
-        badges: ["high-quality", "instant-delivery"],
+        badges: ["partner", "affiliate", "high-quality", "instant-delivery"],
         price: "$5.99+",
         priceValue: 5.99,
         linkDiscountMessage:
@@ -723,6 +738,7 @@ export const PROVIDERS: Provider[] = (
         paymentMethods: shop.paymentMethods,
         startDate: shop.startDate,
         gallery: shop.gallery,
+        alwaysOnTop: shop.alwaysOnTop,
         category,
         ...listing,
       },
