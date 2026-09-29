@@ -18,7 +18,95 @@ Use the synchronous `SoulFire` client for scripts, notebooks, and command-line t
 python -m pip install soulfire
 ```
 
-## Connect and send chat
+## Run a managed local server
+
+`install()` downloads and starts a local SoulFire server. You do not need to provide an API token for this setup.
+The client stops the server when the context closes.
+The examples create or reuse an instance and an offline bot. Run an offline-mode
+Minecraft server at `127.0.0.1:25565` before starting the bot.
+
+<Tabs items={['Async', 'Sync']}>
+  <Tab value="Async">
+    ```python
+    from soulfire import AsyncSoulFire
+    from soulfire.common_pb2 import OFFLINE
+
+
+    async with await AsyncSoulFire.install() as soulfire:
+        name = "Hello World"
+        existing = next(
+            (item for item in await soulfire.instances()
+             if item.friendly_name == name),
+            None,
+        )
+        instance = (
+            soulfire.instance(existing.id)
+            if existing else await soulfire.create_instance(name)
+        )
+
+        username = "SoulFireBot"
+        bot_id = next(
+            (item.profile_id for item in await instance.bots()
+             if item.account_name == username),
+            None,
+        )
+        if bot_id is None:
+            async for result in instance.login_credentials(OFFLINE, [username]):
+                if result.WhichOneof("data") == "one_success":
+                    account = result.one_success.account
+                    await instance.add_accounts([account])
+                    bot_id = account.profile_id
+        if bot_id is None:
+            raise RuntimeError("Could not create an offline bot")
+
+        bot = instance.bot(bot_id)
+        await bot.start()
+        await bot.wait_for_online()
+        await bot.chat.send("Hello from SoulFire")
+    ```
+  </Tab>
+  <Tab value="Sync">
+    ```python
+    from soulfire import SoulFire
+    from soulfire.common_pb2 import OFFLINE
+
+
+    with SoulFire.install() as soulfire:
+        name = "Hello World"
+        existing = next(
+            (item for item in soulfire.instances()
+             if item.friendly_name == name),
+            None,
+        )
+        instance = (
+            soulfire.instance(existing.id)
+            if existing else soulfire.create_instance(name)
+        )
+
+        username = "SoulFireBot"
+        bot_id = next(
+            (item.profile_id for item in instance.bots()
+             if item.account_name == username),
+            None,
+        )
+        if bot_id is None:
+            for result in instance.login_credentials(OFFLINE, [username]):
+                if result.WhichOneof("data") == "one_success":
+                    account = result.one_success.account
+                    instance.add_accounts([account])
+                    bot_id = account.profile_id
+        if bot_id is None:
+            raise RuntimeError("Could not create an offline bot")
+
+        bot = instance.bot(bot_id)
+        bot.start()
+        bot.wait_for_online()
+        bot.chat.send("Hello from SoulFire")
+    ```
+  </Tab>
+</Tabs>
+
+## Connect to an existing server and send chat
 
 <Tabs items={['Async', 'Sync']}>
   <Tab value="Async">

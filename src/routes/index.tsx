@@ -33,6 +33,7 @@ import type {
 } from "schema-dts";
 import { EnderDashSponsor } from "@/components/enderdash-sponsor";
 import { JsonLd } from "@/components/json-ld";
+import { SdkCode } from "@/components/SdkCode";
 import { SiteShell } from "@/components/site-shell";
 import {
   Accordion,
@@ -1376,23 +1377,71 @@ function Page() {
         </BentoGrid>
       </section>
 
-      {/* FAQ */}
-      <section className="py-16">
-        <div className="w-full max-w-3xl mx-auto">
-          <div className="mb-12 flex flex-col gap-4">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
-              Frequently Asked Questions
-            </h2>
-            <p className="max-w-[700px] text-muted-foreground md:text-lg">
-              Common questions about SoulFire
-            </p>
-          </div>
-          <HomeFaq
-            items={faqItems.map((item) => ({
-              question: item.question,
-              answer: item.answerElement,
-            }))}
-          />
+      {/* SDK Showcase */}
+      <section className="py-16" id="sdks">
+        <div className="mb-12 flex flex-col gap-4">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
+            Build with the SoulFire SDKs
+          </h2>
+          <p className="max-w-[700px] text-muted-foreground md:text-lg">
+            Install SoulFire locally, create or reuse an instance and bot, then
+            send Hello World. No API token or preconfigured IDs needed. The
+            examples use an offline-mode Minecraft server at 127.0.0.1:25565.
+          </p>
+        </div>
+        <div className="grid gap-4 lg:grid-cols-2">
+          <article className="flex min-w-0 flex-col overflow-hidden rounded-xl border bg-card">
+            <div className="flex flex-col gap-2 p-5 sm:p-6">
+              <h3 className="text-xl font-semibold">TypeScript SDK</h3>
+              <p className="text-sm text-muted-foreground">
+                Run a managed local server with Node.js 22+. Use Effect or
+                Promises to control it.
+              </p>
+              <code className="text-xs text-muted-foreground">
+                bun add @soulfiremc/sdk effect @effect/platform
+              </code>
+            </div>
+            <div className="flex-1 border-y bg-muted/40">
+              <div className="border-b px-5 py-2 font-mono text-xs text-muted-foreground sm:px-6">
+                bot.ts
+              </div>
+              <SdkCode language="typescript" />
+            </div>
+            <Link
+              to="/docs/$"
+              params={{ _splat: "sdk/typescript" }}
+              className="inline-flex items-center gap-2 self-start m-5 text-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:m-6"
+            >
+              Explore the TypeScript SDK
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
+          </article>
+          <article className="flex min-w-0 flex-col overflow-hidden rounded-xl border bg-card">
+            <div className="flex flex-col gap-2 p-5 sm:p-6">
+              <h3 className="text-xl font-semibold">Python SDK</h3>
+              <p className="text-sm text-muted-foreground">
+                Run a managed local server with Python 3.14+. Use async or sync
+                code to control it.
+              </p>
+              <code className="text-xs text-muted-foreground">
+                python -m pip install soulfire
+              </code>
+            </div>
+            <div className="flex-1 border-y bg-muted/40">
+              <div className="border-b px-5 py-2 font-mono text-xs text-muted-foreground sm:px-6">
+                bot.py
+              </div>
+              <SdkCode language="python" />
+            </div>
+            <Link
+              to="/docs/$"
+              params={{ _splat: "sdk/python" }}
+              className="inline-flex items-center gap-2 self-start m-5 text-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:m-6"
+            >
+              Explore the Python SDK
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
+          </article>
         </div>
       </section>
 
@@ -1489,6 +1538,26 @@ function Page() {
               </Link>
             </Button>
           </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-16">
+        <div className="w-full max-w-3xl mx-auto">
+          <div className="mb-12 flex flex-col gap-4">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
+              Frequently Asked Questions
+            </h2>
+            <p className="max-w-[700px] text-muted-foreground md:text-lg">
+              Common questions about SoulFire
+            </p>
+          </div>
+          <HomeFaq
+            items={faqItems.map((item) => ({
+              question: item.question,
+              answer: item.answerElement,
+            }))}
+          />
         </div>
       </section>
 

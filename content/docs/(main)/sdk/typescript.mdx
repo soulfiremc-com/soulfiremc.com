@@ -36,40 +36,53 @@ Use one compatible Effect runtime in the application.
 
 Local JVM download and process management use explicit Node.js entry points and
 require Node.js 22 or newer.
+The Promise example creates or reuses an instance and an offline bot. Run an
+offline-mode Minecraft server at `127.0.0.1:25565` before starting the bot.
+`install()` starts SoulFire locally, so no API token or preconfigured IDs are
+needed.
 
-<Tabs items={['Effect', 'Promise facade']}>
-  <Tab value="Effect">
-    ```ts
-    import { Effect } from "effect";
-    import { SoulFire } from "@soulfiremc/sdk/node";
+```ts
+import { AccountTypeCredentials } from "@soulfiremc/sdk";
+import { SoulFire } from "@soulfiremc/sdk/node/promise";
 
-    await Effect.runPromise(
-      Effect.scoped(
-        Effect.gen(function* () {
-          const soulfire = yield* SoulFire.install();
-          yield* soulfire
-            .instance(instanceId)
-            .bot(botId)
-            .chat
-            .send("Local server ready");
-        }),
-      ),
-    );
-    ```
-  </Tab>
-  <Tab value="Promise facade">
-    ```ts
-    import { SoulFire } from "@soulfiremc/sdk/node/promise";
+await using soulfire = await SoulFire.install();
+const name = "Hello World";
+const existing = (await soulfire.instances()).find(
+  (item) => item.friendlyName === name,
+);
+const instance = existing
+  ? soulfire.instance(existing.id)
+  : await soulfire.createInstance(name);
 
-    await using soulfire = await SoulFire.install();
-    await soulfire
-      .instance(instanceId)
-      .bot(botId)
-      .chat
-      .send("Local server ready");
-    ```
-  </Tab>
-</Tabs>
+const username = "SoulFireBot";
+let botId = (await instance.bots()).find(
+  (item) => item.accountName === username,
+)?.profileId;
+if (!botId) {
+  for await (const result of instance.loginCredentials({
+    service: AccountTypeCredentials.OFFLINE,
+    payload: [username],
+  })) {
+    if (
+      result.data.case === "oneSuccess" &&
+      result.data.value.account
+    ) {
+      await instance.addAccounts([result.data.value.account]);
+      botId = result.data.value.account.profileId;
+    }
+  }
+}
+if (!botId) throw new Error("Could not create an offline bot");
+
+const bot = instance.bot(botId);
+await bot.start();
+await bot.waitForOnline();
+await bot.chat.send("Hello from SoulFire");
+```
+
+To manage a local server with Effect, import `SoulFire` from
+`@soulfiremc/sdk/node` and run `SoulFire.install()` inside an `Effect.scoped`
+program.
 
 The universal `@soulfiremc/sdk` and `@soulfiremc/sdk/promise` exports never
 load Node.js process, filesystem, or archive modules.
