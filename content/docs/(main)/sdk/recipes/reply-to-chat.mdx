@@ -1,0 +1,66 @@
+---
+title: Reply to chat
+description: Watch chat messages and respond from a bot.
+icon: MessageSquare
+---
+
+import { Tab, Tabs } from '../../../../../src/components/mdx/sdk-tabs';
+
+This program starts a bot, watches for `ping`, and sends `pong`. It keeps running until you stop it. SoulFire reconnects the bot if its Minecraft connection drops.
+
+<Tabs items={['TypeScript', 'Python']} groupId="recipe-language">
+  <Tab value="TypeScript">
+    ```ts title="reply-to-chat.ts" lineNumbers
+    import { SoulFire } from "@soulfiremc/sdk/promise";
+
+    function env(name: string): string {
+      const value = process.env[name];
+      if (!value) throw new Error(`Set ${name} before running this recipe`);
+      return value;
+    }
+
+    await using soulfire = await SoulFire.connect({
+      baseUrl: env("SOULFIRE_URL"),
+      token: env("SOULFIRE_TOKEN"),
+    });
+
+    const bot = soulfire
+      .instance(env("SOULFIRE_INSTANCE_ID"))
+      .bot(env("SOULFIRE_BOT_ID"));
+    await bot.start();
+
+    for await (const match of bot.chat.watch("ping")) {
+      console.log("Matched chat:", match.event);
+      await bot.chat.send("pong");
+    }
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python title="reply_to_chat.py" lineNumbers
+    import asyncio
+    import os
+
+    from soulfire import AsyncSoulFire
+
+
+    async def main() -> None:
+        async with AsyncSoulFire.connect(
+            os.environ["SOULFIRE_URL"],
+            token=os.environ["SOULFIRE_TOKEN"],
+        ) as soulfire:
+            bot = soulfire.instance(os.environ["SOULFIRE_INSTANCE_ID"]).bot(
+                os.environ["SOULFIRE_BOT_ID"]
+            )
+            await bot.start()
+
+            async for match in bot.chat.watch("ping"):
+                print("Matched chat:", match.event)
+                await bot.chat.send("pong")
+
+
+    asyncio.run(main())
+    ```
+  </Tab>
+</Tabs>
+
+The matcher accepts a string, regular expression, or function. If the bot should respond only to a particular chat source, pass `sources` to `watch`. See [chat events](/docs/sdk/events) for the event shape.

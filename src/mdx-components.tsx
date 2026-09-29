@@ -5,6 +5,8 @@ import * as FilesComponents from "fumadocs-ui/components/files";
 import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import * as TabsComponents from "fumadocs-ui/components/tabs";
+import { TypeTable } from "fumadocs-ui/components/type-table";
+import { Popup, PopupContent, PopupTrigger } from "fumadocs-twoslash/ui";
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import type { MDXComponents } from "mdx/types";
 import type { ComponentProps, FC } from "react";
@@ -58,6 +60,10 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     Step,
     Steps,
     ...TabsComponents,
+    TypeTable,
+    Popup,
+    PopupContent,
+    PopupTrigger,
     ...FilesComponents,
     blockquote: Callout as unknown as FC<ComponentProps<"blockquote">>,
     img: MdxImage,

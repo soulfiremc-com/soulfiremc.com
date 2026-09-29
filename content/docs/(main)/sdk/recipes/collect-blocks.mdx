@@ -1,0 +1,79 @@
+---
+title: Collect blocks
+description: Start a durable block collection task and read its result.
+icon: Pickaxe
+---
+
+import { Tab, Tabs } from '../../../../../src/components/mdx/sdk-tabs';
+
+This program collects up to 16 oak logs near the bot. The task runs on the SoulFire server. Save `task.id` if another process needs to find it later.
+
+<Tabs items={['TypeScript', 'Python']} groupId="recipe-language">
+  <Tab value="TypeScript">
+    ```ts title="collect-blocks.ts" lineNumbers
+    import { SoulFire } from "@soulfiremc/sdk/promise";
+
+    function env(name: string): string {
+      const value = process.env[name];
+      if (!value) throw new Error(`Set ${name} before running this recipe`);
+      return value;
+    }
+
+    await using soulfire = await SoulFire.connect({
+      baseUrl: env("SOULFIRE_URL"),
+      token: env("SOULFIRE_TOKEN"),
+    });
+
+    const bot = soulfire
+      .instance(env("SOULFIRE_INSTANCE_ID"))
+      .bot(env("SOULFIRE_BOT_ID"));
+    await bot.start();
+
+    const task = await bot.tasks.collectBlocks(["minecraft:oak_log"], {
+      count: 16,
+      searchRadius: 32,
+      idempotencyKey: crypto.randomUUID(),
+    });
+
+    console.log("Task ID:", task.id);
+    const result = await task.result();
+    console.log(result);
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python title="collect_blocks.py" lineNumbers
+    import asyncio
+    import os
+    from uuid import uuid4
+
+    from soulfire import AsyncSoulFire
+
+
+    async def main() -> None:
+        async with AsyncSoulFire.connect(
+            os.environ["SOULFIRE_URL"],
+            token=os.environ["SOULFIRE_TOKEN"],
+        ) as soulfire:
+            bot = soulfire.instance(os.environ["SOULFIRE_INSTANCE_ID"]).bot(
+                os.environ["SOULFIRE_BOT_ID"]
+            )
+            await bot.start()
+
+            task = await bot.tasks.collect_blocks(
+                ["minecraft:oak_log"],
+                count=16,
+                search_radius=32,
+                idempotency_key=str(uuid4()),
+            )
+
+            print("Task ID:", task.id)
+            result = await task.result()
+            print(result)
+
+
+    asyncio.run(main())
+    ```
+  </Tab>
+</Tabs>
+
+The bot needs loaded chunks and suitable tools. If the task cannot reach every block, inspect its result and [task progress](/docs/sdk/tasks). The idempotency key prevents a duplicate task when the start request is retried.

@@ -5,7 +5,7 @@ icon: Code
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Tab, Tabs } from '../../../../../src/components/mdx/sdk-tabs';
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 
 The root `@soulfiremc/sdk` export uses Effect.
@@ -14,15 +14,31 @@ It represents connections as scoped resources, streams as `Stream`, errors as ta
 Use `@soulfiremc/sdk/promise` with Promises and async iterables.
 Both entry points provide the same SoulFire features.
 
+Hover over an identifier in the example below to inspect its TypeScript type. The connection options below are checked against the installed SDK during docs generation.
+
+```ts twoslash title="connection-options.ts"
+import type { SoulFireOptions } from "@soulfiremc/sdk";
+
+const options: SoulFireOptions = {
+  baseUrl: "https://soulfire.example.com",
+  token: "your-api-token",
+};
+
+options;
+// ^?
+```
+
+See the [generated option tables](/docs/sdk/api/types) for every field.
+
 ## Install
 
-<Tabs items={['Effect', 'Promise facade']}>
+<Tabs items={['Effect', 'Promise']}>
   <Tab value="Effect">
     ```bash
     bun add @soulfiremc/sdk effect @effect/platform
     ```
   </Tab>
-  <Tab value="Promise facade">
+  <Tab value="Promise">
     ```bash
     bun add @soulfiremc/sdk effect @effect/platform
     ```
@@ -41,7 +57,7 @@ offline-mode Minecraft server at `127.0.0.1:25565` before starting the bot.
 `install()` starts SoulFire locally, so no API token or preconfigured IDs are
 needed.
 
-```ts
+```ts title="local-promise.ts" lineNumbers
 import { AccountTypeCredentials } from "@soulfiremc/sdk";
 import { SoulFire } from "@soulfiremc/sdk/node/promise";
 
@@ -89,9 +105,9 @@ load Node.js process, filesystem, or archive modules.
 
 ## Connect and send chat
 
-<Tabs items={['Effect', 'Promise facade']}>
+<Tabs items={['Effect', 'Promise']}>
   <Tab value="Effect">
-    ```ts
+    ```ts title="connect-effect.ts" lineNumbers
     import { Effect } from "effect";
     import { SoulFire } from "@soulfiremc/sdk";
 
@@ -111,8 +127,8 @@ load Node.js process, filesystem, or archive modules.
     await Effect.runPromise(program);
     ```
   </Tab>
-  <Tab value="Promise facade">
-    ```ts
+  <Tab value="Promise">
+    ```ts title="connect-promise.ts" lineNumbers
     import { SoulFire } from "@soulfiremc/sdk/promise";
 
     await using soulfire = await SoulFire.connect({
@@ -163,7 +179,7 @@ For custom integrations, `@soulfiremc/sdk/platform` exports
 
 ## Stream bot events
 
-<Tabs items={['Effect', 'Promise facade']}>
+<Tabs items={['Effect', 'Promise']}>
   <Tab value="Effect">
     ```ts
     yield* bot.events().pipe(
@@ -173,7 +189,7 @@ For custom integrations, `@soulfiremc/sdk/platform` exports
     );
     ```
   </Tab>
-  <Tab value="Promise facade">
+  <Tab value="Promise">
     ```ts
     const controller = new AbortController();
 

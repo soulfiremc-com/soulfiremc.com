@@ -1,0 +1,33 @@
+---
+title: TypeScript options
+description: Options generated from the released TypeScript SDK types.
+icon: Braces
+---
+
+These tables come from the TypeScript declarations in `@soulfiremc/sdk` 2.10.0. They update when the pinned package and docs are updated together.
+
+## Connection options
+
+Pass `SoulFireOptions` to `SoulFire.connect` in either TypeScript entry point.
+
+<auto-type-table path="./sdk-types.ts" name="SoulFireOptions" />
+
+## Session options
+
+Pass `BotSessionOptions` to `bot.observe` to choose which state to track.
+
+<auto-type-table path="./sdk-types.ts" name="BotSessionOptions" />
+
+## Task options
+
+Task start options control scheduling and reconnect behavior. Specific tasks add their own fields.
+
+<auto-type-table path="./sdk-types.ts" name="TaskStartOptions" />
+
+### Collect blocks
+
+<auto-type-table path="./sdk-types.ts" name="CollectBlocksTaskOptions" />
+
+### Follow an entity
+
+<auto-type-table path="./sdk-types.ts" name="FollowEntityTaskOptions" />

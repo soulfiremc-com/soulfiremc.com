@@ -5,7 +5,7 @@ icon: Code
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Tab, Tabs } from '../../../../../src/components/mdx/sdk-tabs';
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 
 The Python SDK requires CPython 3.14 or newer.
@@ -110,7 +110,7 @@ Minecraft server at `127.0.0.1:25565` before starting the bot.
 
 <Tabs items={['Async', 'Sync']}>
   <Tab value="Async">
-    ```python
+    ```python title="connect-async.py" lineNumbers
     import os
 
     from soulfire import AsyncSoulFire
@@ -126,7 +126,7 @@ Minecraft server at `127.0.0.1:25565` before starting the bot.
     ```
   </Tab>
   <Tab value="Sync">
-    ```python
+    ```python title="connect-sync.py" lineNumbers
     import os
 
     from soulfire import SoulFire

@@ -27,41 +27,25 @@ SoulFire manages connections, reconnects, permissions, tasks, and plugins.
     Use `AsyncSoulFire` for asynchronous programs.
     Use `SoulFire` for synchronous scripts.
   </Card>
-  <Card title="Durable tasks" href="/docs/sdk/tasks">
-    Run pathfinding, combat, following, eating, and respawning beside the
-    Minecraft game loop.
-  </Card>
-  <Card title="Live events and state" href="/docs/sdk/events">
-    Watch Minecraft events or keep a local copy of the current world state.
-  </Card>
-  <Card title="Player actions" href="/docs/sdk/actions">
-    Mount and drive vehicles, edit signs and books, answer resource packs,
-    toggle flight, and manage creative slots.
-  </Card>
-  <Card title="Coordinated automation" href="/docs/sdk/automation">
-    Give a group of bots one goal and share progress between them.
-  </Card>
-  <Card title="Bot fleets" href="/docs/sdk/fleets">
-    Select bots, divide work between them, and monitor their tasks.
-  </Card>
-  <Card title="Cameras and world maps" href="/docs/sdk/camera">
-    Capture camera images, stream bot views, and collect data for maps.
-  </Card>
-  <Card title="Server administration" href="/docs/sdk/administration">
-    Manage settings, users, logs, metrics, scripts, commands, downloads,
-    plugin metrics, and audit history.
-  </Card>
-  <Card title="Combine behaviors" href="/docs/sdk/behaviors">
-    Run tasks in order or in parallel.
-    Add retries, timeouts, fallback tasks, and cleanup.
-  </Card>
-  <Card title="Plugin APIs" href="/docs/sdk/plugins">
-    Call plugin APIs, read plugin event streams, or connect to an unknown plugin.
-  </Card>
-  <Card title="Raw protocol access" href="/docs/sdk/protocol">
-    View packet types, watch network traffic, and send native packets.
-  </Card>
 </Cards>
+
+## Build something useful
+
+Start with a complete program. Each recipe has TypeScript and Python code you can run after setting your server URL, token, instance ID, and bot ID.
+
+- [Reply to chat](/docs/sdk/recipes/reply-to-chat) with a bot.
+- [Collect blocks](/docs/sdk/recipes/collect-blocks) with a durable task.
+- [Follow an entity](/docs/sdk/recipes/follow-entity) using a connection safe reference.
+- [Transfer items](/docs/sdk/recipes/transfer-items) through a container.
+
+[See all recipes](/docs/sdk/recipes).
+
+## Find the right guide
+
+- **Observe:** [events and state](/docs/sdk/events), [world queries](/docs/sdk/world), [registries](/docs/sdk/registry), [camera and maps](/docs/sdk/camera).
+- **Act:** [player actions](/docs/sdk/actions), [pathfinding](/docs/sdk/pathfinding), [inventory](/docs/sdk/inventory), [durable tasks](/docs/sdk/tasks).
+- **Scale:** [automation](/docs/sdk/automation), [fleets](/docs/sdk/fleets), [behaviors](/docs/sdk/behaviors), [server administration](/docs/sdk/administration).
+- **Extend:** [plugins](/docs/sdk/plugins), [raw protocol](/docs/sdk/protocol), [migration from Mineflayer](/docs/sdk/mineflayer-migration).
 
 ## How the SDK is organized
 
@@ -111,18 +95,6 @@ The SDK compares API versions, features, and required plugin versions.
 Plugins can add RPC services and durable task types.
 An application can use a plugin package or discover the plugin API while it runs.
 
-## Next steps
+## API reference
 
-- [Start with TypeScript](/docs/sdk/typescript)
-- [Start with Python](/docs/sdk/python)
-- [Run and supervise durable tasks](/docs/sdk/tasks)
-- [Observe live events and synchronized state](/docs/sdk/events)
-- [Control vehicles and player actions](/docs/sdk/actions)
-- [Coordinate persistent automation](/docs/sdk/automation)
-- [Select and orchestrate fleets](/docs/sdk/fleets)
-- [Capture cameras and world maps](/docs/sdk/camera)
-- [Administer a SoulFire server](/docs/sdk/administration)
-- [Compose application workflows](/docs/sdk/behaviors)
-- [Call plugin-defined APIs](/docs/sdk/plugins)
-- [Use raw protocol access](/docs/sdk/protocol)
-- [Read the generated API reference](/docs/openapi)
+The [SDK API reference](/docs/sdk/api) lists the main TypeScript and Python methods with links to the released source. [TypeScript option tables](/docs/sdk/api/types) are generated from the published SDK declarations. The [server RPC reference](/docs/openapi) covers lower level endpoints.

@@ -1,0 +1,77 @@
+---
+title: Transfer items
+description: Deposit blocks and withdraw food from a container.
+icon: PackageOpen
+---
+
+import { Tab, Tabs } from '../../../../../src/components/mdx/sdk-tabs';
+
+Set the chest coordinates in the program. The bot must be near a loaded, accessible container. The scoped handle closes the menu when the program leaves the block, including when a transfer fails.
+
+<Tabs items={['TypeScript', 'Python']} groupId="recipe-language">
+  <Tab value="TypeScript">
+    ```ts title="transfer-items.ts" lineNumbers
+    import { SoulFire } from "@soulfiremc/sdk/promise";
+
+    function env(name: string): string {
+      const value = process.env[name];
+      if (!value) throw new Error(`Set ${name} before running this recipe`);
+      return value;
+    }
+
+    await using soulfire = await SoulFire.connect({
+      baseUrl: env("SOULFIRE_URL"),
+      token: env("SOULFIRE_TOKEN"),
+    });
+
+    const bot = soulfire
+      .instance(env("SOULFIRE_INSTANCE_ID"))
+      .bot(env("SOULFIRE_BOT_ID"));
+    await bot.start();
+
+    const chestPosition = {
+      dimension: "minecraft:overworld",
+      x: 10,
+      y: 64,
+      z: 10,
+    };
+
+    await using chest = await bot.inventory.open(chestPosition);
+    await chest.deposit({ itemIds: ["minecraft:cobblestone"] }, 64);
+    await chest.withdraw({ tags: ["minecraft:foods"] }, 16);
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python title="transfer_items.py" lineNumbers
+    import asyncio
+    import os
+
+    from soulfire import AsyncSoulFire, BlockPosition, ItemSelector
+
+
+    async def main() -> None:
+        async with AsyncSoulFire.connect(
+            os.environ["SOULFIRE_URL"],
+            token=os.environ["SOULFIRE_TOKEN"],
+        ) as soulfire:
+            bot = soulfire.instance(os.environ["SOULFIRE_INSTANCE_ID"]).bot(
+                os.environ["SOULFIRE_BOT_ID"]
+            )
+            await bot.start()
+
+            chest_position = BlockPosition(
+                dimension="minecraft:overworld", x=10, y=64, z=10
+            )
+            async with await bot.inventory.open(chest_position) as chest:
+                await chest.deposit(
+                    ItemSelector(item_ids=["minecraft:cobblestone"]), 64
+                )
+                await chest.withdraw(ItemSelector(tags=["minecraft:foods"]), 16)
+
+
+    asyncio.run(main())
+    ```
+  </Tab>
+</Tabs>
+
+Each transfer checks the source count and destination space before clicking slots. See [inventory and containers](/docs/sdk/inventory) for snapshots, revision handling, and item selection.

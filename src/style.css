@@ -3,6 +3,7 @@
 @import "fumadocs-ui/css/dusk.css";
 @import "fumadocs-ui/css/preset.css";
 @import "fumadocs-openapi/css/preset.css";
+@import "fumadocs-twoslash/twoslash.css";
 @import "shadcn/tailwind.css";
 @plugin "@tailwindcss/typography";
 
@@ -247,6 +248,10 @@
 @layer base {
   html,
   body {
-    @apply min-h-dvh w-dvw font-sans;
+    @apply min-h-dvh w-full font-sans;
   }
+}
+
+.prose a[data-card] {
+  text-decoration: none;
 }
