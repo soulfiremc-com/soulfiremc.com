@@ -8,7 +8,10 @@ import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from '../../../../../src/components/mdx/sdk-tabs';
 
 `bot.camera` provides images for SDK applications, SoulFireClient, dashboards, and viewers.
-It uses the server renderer, so it does not need a graphical Minecraft client.
+It uses Minecraft's headless Vulkan renderer without a display server or native window.
+SoulFire bundles a Vulkan loader and Mesa lavapipe for CPU rendering.
+Compatible GPU drivers provide hardware acceleration. On macOS, MoltenVK uses Metal.
+OpenGL is disabled.
 
 ## Capture one frame
 
@@ -16,8 +19,8 @@ By default, the camera follows the bot's eyes.
 Set a position or rotation field to use a free camera.
 Fields without a value continue to follow the bot.
 
-<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
-  <Tab value="Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     import { decodeCameraImage } from "@soulfiremc/sdk";
 
@@ -39,28 +42,11 @@ Fields without a value continue to follow the bot.
     const png = decodeCameraImage(capture);
     ```
   </Tab>
-  <Tab value="Promise">
-    ```ts
-    import {
-      SoulFire,
-      decodeCameraImage,
-    } from "@soulfiremc/sdk/promise";
-
-    const capture = await bot.camera.capture({
-      width: 1280,
-      height: 720,
-      includeHud: false,
-      includeHands: false,
-    });
-
-    const png = decodeCameraImage(capture);
-    ```
-  </Tab>
-  <Tab value="Async Python">
+  <Tab value="Python">
     ```python
     from soulfire import CameraRenderOptions
 
-    png = await bot.camera.capture_bytes(
+    png = yield from bot.camera.capture_bytes(
         CameraRenderOptions(
             width=1280,
             height=720,
@@ -78,23 +64,11 @@ Fields without a value continue to follow the bot.
     )
     ```
   </Tab>
-  <Tab value="Sync Python">
-    ```python
-    png = bot.camera.capture_bytes(
-        CameraRenderOptions(
-            width=1280,
-            height=720,
-            include_hud=False,
-        )
-    )
-    ```
-  </Tab>
 </Tabs>
 
 The response includes the effective width, height, FOV, render distance,
 camera transform, HUD state, and hand state. When debug traces are enabled it
-also includes renderer timings, cache activity, submitted geometry, visible
-entities, text samples, notable events, and detailed failures.
+also includes renderer diagnostics. The available diagnostic fields depend on the renderer.
 
 ## Stream frames
 
@@ -103,8 +77,8 @@ only when the transport can accept another message. It skips scheduled frames
 instead of building an unbounded queue, and the next delivered frame reports
 the skipped count in `droppedBefore` or `dropped_before`.
 
-<Tabs items={['Effect', 'Promise', 'Async Python']}>
-  <Tab value="Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     yield* bot.camera.frames({
       width: 854,
@@ -122,41 +96,50 @@ the skipped count in `droppedBefore` or `dropped_before`.
     );
     ```
   </Tab>
-  <Tab value="Promise">
-    ```ts
-    for await (const frame of bot.camera.frames({
-      width: 854,
-      height: 480,
-      intervalMs: 250,
-    })) {
-      await storeFrame(
-        frame.sequence,
-        frame.droppedBefore,
-        decodeCameraImage(frame.render!),
-      );
-    }
-    ```
-  </Tab>
-  <Tab value="Async Python">
+  <Tab value="Python">
     ```python
-    async for frame in bot.camera.frames(
-        CameraRenderOptions(width=854, height=480),
-        interval_ms=250,
-    ):
-        await store_frame(
+    from effect_py import fn
+
+    @fn("consume stream")
+    def consume(frame):
+        yield from store_frame(
             frame.sequence,
             frame.dropped_before,
             decode_camera_image(frame.render),
         )
+
+    yield from bot.camera.frames(
+        CameraRenderOptions(width=854, height=480),
+        interval_ms=250,
+    ).run_for_each(consume)
     ```
   </Tab>
 </Tabs>
 
 <Callout type="info">
   The stream interval is clamped to 100 through 60,000 milliseconds. That
-  limits software rendering to 10 frames per second. A disconnected bot or
+  limits this PNG stream to 10 frames per second. A disconnected bot or
   unavailable world ends the stream with a typed RPC failure.
 </Callout>
+
+## Open an interactive POV
+
+SoulFireClient's POV uses `PovService.Watch` for live video and `PovService.Input` for native keyboard and mouse input.
+This is a separate protocol from the SDK's PNG capture and frame stream.
+It requires both `READ_BOT_INFO` and `CONTROL_BOT_ACTIONS` and acquires exclusive control of the bot.
+
+The video stream negotiates a supported codec and carries encoded access units.
+Frames include sequence, timestamp, keyframe status, codec, viewport size, cursor shape, and target bitrate and frame rate.
+The input channel supports persistent keys, mouse movement, clicks, scroll, text, and Escape.
+Stream feedback lets the server adapt bitrate and frame rate.
+
+Send input heartbeats every second.
+A stalled client loses control after five seconds.
+Use increasing input sequence numbers and request a keyframe after decoder recovery or dropped dependent frames.
+The stream supplies a session-scoped input token for the `/pov/input` WebSocket. Keep this token out of URLs.
+
+Generated clients expose this contract for custom viewers.
+See the [POV protocol definitions](https://github.com/soulfiremc-com/SoulFire/blob/main/proto/src/main/proto/soulfire/pov.proto).
 
 ## Sample a top-down world map
 
@@ -165,8 +148,8 @@ explicit center. Each grid column records whether its chunk is loaded. Loaded
 surface samples can include height, block ID, biome ID, sky light, and block
 light. Entity overlays are optional.
 
-<Tabs items={['Effect', 'Async Python']}>
-  <Tab value="Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     const map = yield* bot.camera.worldMap({
       centerX: 120,
@@ -181,9 +164,9 @@ light. Entity overlays are optional.
     }
     ```
   </Tab>
-  <Tab value="Async Python">
+  <Tab value="Python">
     ```python
-    world_map = await bot.camera.world_map(
+    world_map = yield from bot.camera.world_map(
         WorldMapOptions(
             center_x=120,
             center_z=-32,

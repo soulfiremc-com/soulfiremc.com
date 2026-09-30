@@ -5,7 +5,6 @@ icon: Workflow
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
-import { Tab, Tabs } from '../../../../../src/components/mdx/sdk-tabs';
 import { Steps } from 'fumadocs-ui/components/steps';
 
 `@soulfiremc/beat-game` is a separate first-party package.
@@ -30,67 +29,43 @@ bun add @soulfiremc/sdk @soulfiremc/beat-game effect
 
 ### Connect and start the runner
 
-<Tabs items={['Effect', 'Promise']}>
-  <Tab value="Effect">
-    ```ts
-    import { SoulFire } from "@soulfiremc/sdk/node";
-    import { beatGame } from "@soulfiremc/beat-game";
-    import { Effect, Stream } from "effect";
+```ts
+import { SoulFire } from "@soulfiremc/sdk/node";
+import { beatGame } from "@soulfiremc/beat-game";
+import { Effect, Stream } from "effect";
 
-    const program = Effect.scoped(
-      Effect.gen(function* () {
-        const soulfire = yield* SoulFire.connect({
-          baseUrl: "https://soulfire.example.com",
-          token: process.env.SOULFIRE_TOKEN,
-        });
-        const bot = soulfire.instance(instanceId).bot(botId);
-        const run = yield* beatGame(bot);
-
-        yield* Effect.forkScoped(
-          run.events.pipe(
-            Stream.runForEach((event) =>
-              Effect.logInfo(event.type, {
-                phase: event.phase,
-                sequence: event.sequence,
-              })
-            ),
-          ),
-        );
-
-        return yield* run.awaitCompletion;
-      }),
-    );
-
-    const result = await Effect.runPromise(program);
-    ```
-  </Tab>
-  <Tab value="Promise">
-    ```ts
-    import { SoulFire } from "@soulfiremc/sdk/node/promise";
-    import { beatGame } from "@soulfiremc/beat-game/promise";
-
-    await using soulfire = await SoulFire.connect({
+const program = Effect.scoped(
+  Effect.gen(function* () {
+    const soulfire = yield* SoulFire.connect({
       baseUrl: "https://soulfire.example.com",
       token: process.env.SOULFIRE_TOKEN,
     });
-
     const bot = soulfire.instance(instanceId).bot(botId);
-    const run = await beatGame(bot);
+    const run = yield* beatGame(bot);
 
-    for await (const event of run.events) {
-      console.log(event.sequence, event.phase, event.type);
-    }
+    yield* Effect.forkScoped(
+      run.events.pipe(
+        Stream.runForEach((event) =>
+          Effect.logInfo(event.type, {
+            phase: event.phase,
+            sequence: event.sequence,
+          })
+        ),
+      ),
+    );
 
-    const result = await run.awaitCompletion();
-    ```
-  </Tab>
-</Tabs>
+    return yield* run.awaitCompletion;
+  }),
+);
+
+const result = await Effect.runPromise(program);
+```
 
 ### Keep the worker alive
 
-`awaitCompletion` ends when the dragon is confirmed absent and the final
-checkpoint reaches `COMPLETE`. Keep the surrounding Effect scope or Promise
-process alive for the whole run. Closing it interrupts tasks, releases
+`awaitCompletion` ends after confirmed dragon defeat and the configured completion objective.
+The default objective returns the bot to the Overworld through the End exit.
+Keep the Effect scope alive for the whole run. Closing it interrupts tasks, releases
 control, and ends subscriptions.
 
 </Steps>
@@ -154,22 +129,13 @@ running workers in separate processes.
 
 ## Pause, resume, stop, and inspect
 
-Effect run handles expose effects:
+Run handles expose Effect values:
 
 ```ts
 yield* run.pause;
 const current = yield* run.snapshot;
 yield* run.resume;
 yield* run.stop;
-```
-
-Promise handles expose methods:
-
-```ts
-await run.pause();
-const current = await run.snapshot();
-await run.resume();
-await run.stop();
 ```
 
 Stopping interrupts an active observation, task, or action. A stopped run

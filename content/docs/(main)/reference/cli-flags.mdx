@@ -11,124 +11,139 @@ They control bot behavior and the connection between the CLI and server.
 
 ## List of flags
 
-| Flag                                        | Default                                                | Description                                                                                                                                                                   |
-|---------------------------------------------|--------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `-s`, `--start`                             | `false`                                                | Starts every configured bot automatically                                                                                                                                     |
-| `--account-file`                            | `null`                                                 | File to load accounts from                                                                                                                                                    |
-| `--account-type`                            | `null`                                                 | Type of accounts in the account file                                                                                                                                          |
-| `--proxy-file`                              | `null`                                                 | File to load proxies from                                                                                                                                                     |
-| `--proxy-type`                              | `null`                                                 | Type of proxies in the proxy file                                                                                                                                             |
-| `-h`, `--help`                              | `false`                                                | Show this help message and exit.                                                                                                                                              |
-| `-V`, `--version`                           | `false`                                                | Print version information and exit.                                                                                                                                           |
-| `--bot-address`                             | `127.0.0.1:25565`                                      | Address to connect to                                                                                                                                                         |
-| `--bot-join-delay-min`                      | `1000`                                                 | Minimum delay between joins in milliseconds                                                                                                                                   |
-| `--bot-join-delay-max`                      | `3000`                                                 | Maximum delay between joins in milliseconds                                                                                                                                   |
-| `--bot-protocol-version`                    | `RELEASE\|772`                                         | Minecraft protocol version to use                                                                                                                                             |
-| `--bot-read-timeout`                        | `30`                                                   | Read timeout in seconds                                                                                                                                                       |
-| `--bot-write-timeout`                       | `0`                                                    | Write timeout in seconds                                                                                                                                                      |
-| `--bot-connect-timeout`                     | `30`                                                   | Connect timeout in seconds                                                                                                                                                    |
-| `--bot-resolve-srv`                         | `true`                                                 | Try to resolve SRV records from the address                                                                                                                                   |
-| `--bot-concurrent-connects`                 | `1`                                                    | Max amount of bots attempting to connect at once                                                                                                                              |
-| `--bot-restore-on-reboot`                   | `true`                                                 | Reconnects requested bots after the SoulFire server restarts. Each bot can override this setting.                                                                            |
-| `--account-name-format`                     | `Bot_%d`                                               | The format of the bot names. %d will be replaced with the bot number.                                                                                                         |
-| `--account-shuffle-accounts`                | `false`                                                | Randomizes account order before bots connect                                                                                                                                  |
-| `--account-use-proxies-for-account-auth`    | `false`                                                | Uses imported proxies for Microsoft account authentication. Otherwise, the SoulFire server connects directly.                                                               |
-| `--account-account-import-concurrency`      | `3`                                                    | Maximum number of credential-based account imports at one time                                                                                                                |
-| `--proxy-bots-per-proxy`                    | `-1`                                                   | Maximum number of bots that can use one proxy                                                                                                                                |
-| `--proxy-shuffle-proxies`                   | `false`                                                | Randomizes proxy order before bots connect                                                                                                                                    |
-| `--proxy-proxy-check-address`               | `mc.hypixel.net`                                       | Minecraft server address used to test a proxy                                                                                                                                |
-| `--proxy-proxy-check-concurrency`           | `10`                                                   | Maximum number of proxy tests that run at the same time                                                                                                                      |
-| `--proxy-proxy-check-timeout`               | `30`                                                   | How long to wait for a proxy check response before considering it failed (seconds)                                                                                            |
-| `--ai-api-base-url`                         | `https://api.openai.com/v1`                            | API server base URL, can also be changed to other providers                                                                                                                   |
-| `--ai-api-key`                              | ``                                                     | API key. Leave it empty for a provider that does not require a key                                                                                                           |
-| `--ai-api-request-timeout`                  | `60`                                                   | API request timeout (seconds)                                                                                                                                                 |
-| `--ai-api-max-retries`                      | `5`                                                    | API request max retries                                                                                                                                                       |
-| `--ai-captcha-solver-enabled`               | `false`                                                | Enable the AI Captcha Solver                                                                                                                                                  |
-| `--ai-captcha-solver-prompt`                | `Extract the text from the CAPTCHA image. Only res...` | Instruction that the bot sends to the AI model                                                                                                                               |
-| `--ai-captcha-solver-model`                 | `llava`                                                | AI model that reads text from a CAPTCHA image                                                                                                                                 |
-| `--ai-captcha-solver-response-command`      | `%s`                                                   | Command that sends the response. Omit `/` to send a normal message.                                                                                                           |
-| `--ai-captcha-solver-image-source`          | `MAP_IN_HAND`                                          | Source of the CAPTCHA image                                                                                                                                                    |
-| `--ai-captcha-solver-captcha-trigger`       | `CHAT_MESSAGE`                                         | Event that starts the captcha solver                                                                                                                                          |
-| `--ai-captcha-solver-text-trigger`          | `/captcha`                                             | Text that starts the captcha solver                                                                                                                                           |
-| `--ai-chat-bot-enabled`                     | `false`                                                | Enable the AI Chat Bot                                                                                                                                                        |
-| `--ai-chat-bot-prompt`                      | `You are a Minecraft chat bot, you chat with playe...` | Instruction that tells the AI model how to respond                                                                                                                           |
-| `--ai-chat-bot-model`                       | `nemotron-mini`                                        | AI model used for chat                                                                                                                                                         |
-| `--ai-chat-bot-keyword`                     | `!ai`                                                  | Only respond to messages containing this keyword                                                                                                                              |
-| `--ai-chat-bot-filter-keyword`              | `true`                                                 | Filter out the keyword from messages sent by the AI                                                                                                                           |
-| `--ai-chat-bot-history-length`              | `10`                                                   | Max number of messages to keep in the conversation history                                                                                                                    |
-| `--anti-afk-enabled`                        | `false`                                                | Enable the Anti AFK feature                                                                                                                                                   |
-| `--anti-afk-distance-min`                   | `10`                                                   | Minimum distance to walk                                                                                                                                                      |
-| `--anti-afk-distance-max`                   | `30`                                                   | Maximum distance to walk                                                                                                                                                      |
-| `--anti-afk-delay-min`                      | `15`                                                   | Minimum delay between moves                                                                                                                                                   |
-| `--anti-afk-delay-max`                      | `30`                                                   | Maximum delay between moves                                                                                                                                                   |
-| `--auto-armor-enabled`                      | `true`                                                 | Put on best armor automatically                                                                                                                                               |
-| `--auto-armor-delay-min`                    | `1`                                                    | Minimum delay between putting on armor                                                                                                                                        |
-| `--auto-armor-delay-max`                    | `2`                                                    | Maximum delay between putting on armor                                                                                                                                        |
-| `--auto-chat-message-enabled`               | `false`                                                | Attempt to send chat messages automatically in random intervals                                                                                                               |
-| `--auto-chat-message-delay-min`             | `2`                                                    | Minimum delay between chat messages                                                                                                                                           |
-| `--auto-chat-message-delay-max`             | `5`                                                    | Maximum delay between chat messages                                                                                                                                           |
-| `--auto-chat-message-messages`              | `[Hello, Hi, Hey, How are you?]`                       | List of chat messages to send                                                                                                                                                 |
-| `--auto-eat-enabled`                        | `true`                                                 | Eat available food automatically when hungry                                                                                                                                  |
-| `--auto-eat-delay-min`                      | `1`                                                    | Minimum delay between eating                                                                                                                                                  |
-| `--auto-eat-delay-max`                      | `2`                                                    | Maximum delay between eating                                                                                                                                                  |
-| `--auto-jump-enabled`                       | `false`                                                | Attempt to jump automatically in random intervals                                                                                                                             |
-| `--auto-jump-delay-min`                     | `2`                                                    | Minimum delay between jumps                                                                                                                                                   |
-| `--auto-jump-delay-max`                     | `5`                                                    | Maximum delay between jumps                                                                                                                                                   |
-| `--auto-reconnect-enabled`                  | `true`                                                 | Reconnect a bot when it times out/is kicked                                                                                                                                   |
-| `--auto-reconnect-delay-min`                | `1`                                                    | Minimum delay between reconnects                                                                                                                                              |
-| `--auto-reconnect-delay-max`                | `5`                                                    | Maximum delay between reconnects                                                                                                                                              |
-| `--auto-register-enabled`                   | `false`                                                | Make bots run the /register and /login command after joining                                                                                                                  |
-| `--auto-register-register-command`          | `/register %password% %password%`                      | Command to be executed to register                                                                                                                                            |
-| `--auto-register-login-command`             | `/login %password%`                                    | Command to be executed to log in                                                                                                                                              |
-| `--auto-register-captcha-command`           | `/captcha %captcha%`                                   | Command to be executed to confirm a captcha                                                                                                                                   |
-| `--auto-register-password-format`           | `SoulFire`                                             | The password for registering                                                                                                                                                  |
-| `--auto-respawn-enabled`                    | `true`                                                 | Respawn automatically after death                                                                                                                                             |
-| `--auto-totem-enabled`                      | `true`                                                 | Always put available totems in the offhand slot                                                                                                                               |
-| `--auto-totem-delay-min`                    | `1`                                                    | Minimum delay between using totems                                                                                                                                            |
-| `--auto-totem-delay-max`                    | `2`                                                    | Maximum delay between using totems                                                                                                                                            |
-| `--chat-logger-enabled`                     | `true`                                                 | Log all received chat messages to the terminal                                                                                                                                |
-| `--chat-logger-log-death-messages`          | `true`                                                 | Log all death messages to the terminal                                                                                                                                        |
-| `--chat-logger-deduplicate-amount`          | `1`                                                    | Number of duplicate messages to log within five seconds                                                                                                                       |
-| `--client-brand-enabled`                    | `true`                                                 | Send client brand to the server                                                                                                                                               |
-| `--client-brand-client-brand`               | `vanilla`                                              | The client brand to send to the server                                                                                                                                        |
-| `--client-settings-enabled`                 | `true`                                                 | Send client settings to the server when joining                                                                                                                               |
-| `--client-settings-client-locale`           | `en_us`                                                | The locale the client uses for translations                                                                                                                                   |
-| `--client-settings-render-distance`         | `2`                                                    | How far the client renders chunks. (Use this to load more or less chunks from the server)                                                                                     |
-| `--client-settings-chat-visibility`         | `FULL`                                                 | What type of chat messages the client will receive                                                                                                                            |
-| `--client-settings-use-chat-colors`         | `true`                                                 | Uses colors in chat                                                                                                                                                           |
-| `--client-settings-cape-enabled`            | `true`                                                 | Whether to display the bots cape if it has one                                                                                                                                |
-| `--client-settings-jacket-enabled`          | `true`                                                 | Whether to render the jacket overlay skin layer                                                                                                                               |
-| `--client-settings-left-sleeve-enabled`     | `true`                                                 | Whether to render the left overlay skin layer                                                                                                                                 |
-| `--client-settings-right-sleeve-enabled`    | `true`                                                 | Whether to render the right overlay skin layer                                                                                                                                |
-| `--client-settings-left-pants-leg-enabled`  | `true`                                                 | Whether to render the left pants leg overlay skin layer                                                                                                                       |
-| `--client-settings-right-pants-leg-enabled` | `true`                                                 | Whether to render the right pants leg overlay skin layer                                                                                                                      |
-| `--client-settings-hat-enabled`             | `true`                                                 | Whether to render the hat overlay skin layer                                                                                                                                  |
-| `--client-settings-hand-preference`         | `RIGHT`                                                | What hand the client prefers to use for items                                                                                                                                 |
-| `--client-settings-text-filtering-enabled`  | `false`                                                | Whether to filter chat messages from the server                                                                                                                               |
-| `--client-settings-allows-listing`          | `true`                                                 | Whether the client wants their username to be shown in the server list                                                                                                        |
-| `--client-settings-particle-status`         | `MINIMAL`                                              | How many particles the client will render                                                                                                                                     |
-| `--fake-virtual-host-enabled`               | `false`                                                | Sends a different virtual host during login                                                                                                                                   |
-| `--fake-virtual-host-hostname`              | `localhost`                                            | The hostname to fake                                                                                                                                                          |
-| `--fake-virtual-host-port`                  | `25565`                                                | The port to fake                                                                                                                                                              |
-| `--kill-aura-enable`                        | `false`                                                | Enable KillAura                                                                                                                                                               |
-| `--kill-aura-whitelisted-users`             | `[Dinnerbone]`                                         | These users will be ignored by the kill aura                                                                                                                                  |
-| `--kill-aura-hit-range`                     | `3.0`                                                  | Range for the kill aura where the bot will start hitting the entity                                                                                                           |
-| `--kill-aura-swing-range`                   | `3.5`                                                  | Range for the kill aura where the bot will start swinging arm, set to 0 to disable                                                                                            |
-| `--kill-aura-look-range`                    | `4.8`                                                  | Range for the kill aura where the bot will start looking at the entity, set to 0 to disable                                                                                   |
-| `--kill-aura-check-walls`                   | `true`                                                 | Ignores entities behind walls                                                                                                                                                 |
-| `--kill-aura-ignore-cooldown`               | `false`                                                | Ignore the 1.9+ attack cooldown to act like a 1.8 kill aura                                                                                                                   |
-| `--kill-aura-attack-delay-ticks-min`        | `8`                                                    | Minimum tick delay between attacks on pre-1.9 versions                                                                                                                        |
-| `--kill-aura-attack-delay-ticks-max`        | `12`                                                   | Maximum tick delay between attacks on pre-1.9 versions                                                                                                                        |
-| `--server-list-bypass-enabled`              | `false`                                                | Pings the server list before connecting                                                                                                                                       |
-| `--server-list-bypass-delay-min`            | `1`                                                    | Minimum delay between joining the server                                                                                                                                      |
-| `--server-list-bypass-delay-max`            | `3`                                                    | Maximum delay between joining the server                                                                                                                                      |
-| `--forwarding-bypass-enabled`               | `false`                                                | Enable the forwarding bypass                                                                                                                                                  |
-| `--forwarding-bypass-forwarding-mode`       | `LEGACY`                                               | Forwarding mode to use                                                                                                                                                        |
-| `--forwarding-bypass-secret`                | `forwarding secret`                                    | Secret key used for forwarding. (Not needed for legacy mode)                                                                                                                  |
-| `--forwarding-bypass-player-address`        | `127.0.0.1`                                            | Player IP sent to the server. Used only by some forwarding modes.                                                                                                             |
+| Flag | Default | Description |
+| --- | --- | --- |
+| `-s`, `--start` | `false` | Whether to start the session automatically |
+| `--account-file` | `null` | File to load accounts from |
+| `--account-type` | `null` | Type of accounts in the account file |
+| `--proxy-file` | `null` | File to load proxies from |
+| `--proxy-type` | `null` | Type of proxies in the proxy file |
+| `-h`, `--help` | `false` | Show this help message and exit. |
+| `-V`, `--version` | `false` | Print version information and exit. |
+| `--bot-address` | `127.0.0.1:25565` | Address to connect to |
+| `--bot-join-delay-min` | `1000` | Minimum delay between joins in milliseconds |
+| `--bot-join-delay-max` | `3000` | Maximum delay between joins in milliseconds |
+| `--bot-protocol-version` | `RELEASE\|777` | Minecraft protocol version to use |
+| `--bot-read-timeout` | `30` | Read timeout in seconds |
+| `--bot-write-timeout` | `0` | Write timeout in seconds |
+| `--bot-connect-timeout` | `30` | Connect timeout in seconds |
+| `--bot-resolve-srv` | `true` | Try to resolve SRV records from the address |
+| `--bot-concurrent-connects` | `1` | Max amount of bots attempting to connect at once |
+| `--bot-restore-on-reboot` | `true` | Reconnect this bot when SoulFire starts if it was previously desired to be running. |
+| `--bot-ignore-packet-handling-errors` | `true` | Sometimes a bot fails to process a packet. When that happens it disconnects due to "packet errors". When this option is turned on, SoulFire will ignore errors during the packet handling process and keep bots connected. This might cause bots to have inconsistent world state though, so it could be detected by the server. |
+| `--bot-use-io-uring` | `false` | Whether to use IO_URING for bot connections. This can improve performance and reduce CPU usage on Linux systems that support it. Requires a compatible kernel version and Java version. IO_URING won't be used if this option is disabled, your protocol version is bedrock edition or your PC does not support IO_URING. |
+| `--account-shuffle-accounts` | `false` | This setting randomizes account order before bots connect. |
+| `--account-use-proxies-for-account-auth` | `false` | SoulFire uses imported proxies for account authentication. Otherwise, the SoulFire server connects directly. |
+| `--account-account-import-concurrency` | `3` | SoulFire imports no more than this number of accounts at the same time when authentication requires credentials. |
+| `--proxy-bots-per-proxy` | `-1` | Amount of bots that can be on a single proxy |
+| `--proxy-shuffle-proxies` | `false` | This setting randomizes proxy order before bots connect. |
+| `--proxy-sticky-proxies` | `false` | Reuse the last successfully assigned proxy when each bot reconnects |
+| `--proxy-proxy-check-address` | `mc.hypixel.net` | What Minecraft server address to use to check if a proxy is working |
+| `--proxy-proxy-check-concurrency` | `10` | Amount of proxies to check at the same time |
+| `--proxy-proxy-check-timeout` | `30` | How long to wait for a proxy check response before considering it failed (seconds) |
+| `--ai-api-base-url` | `https://api.openai.com/v1` | API server base URL, can also be changed to other providers |
+| `--ai-api-key` | `` | API key or none if using a custom provider |
+| `--ai-api-request-timeout` | `60` | API request timeout (seconds) |
+| `--ai-api-max-retries` | `5` | API request max retries |
+| `--pathfinding-allow-breaking-undiggable` | `false` | Allow the bot to attempt breaking blocks that are normally undiggable (like bedrock) |
+| `--pathfinding-avoid-diagonal-squeeze` | `false` | Prevent the bot from squeezing through diagonal gaps between blocks |
+| `--pathfinding-avoid-harmful-entities` | `true` | Add a penalty to paths that go near harmful entities like hostile mobs |
+| `--pathfinding-max-enemy-penalty` | `50` | Maximum cost penalty applied when pathfinding near hostile entities |
+| `--pathfinding-break-block-penalty` | `2` | Cost penalty for breaking a block during pathfinding (higher values discourage breaking) |
+| `--pathfinding-place-block-penalty` | `20` | Cost penalty for placing a block during pathfinding (higher values discourage placing) |
+| `--pathfinding-expire-timeout` | `180` | Maximum time in seconds before pathfinding gives up |
+| `--ai-chat-bot-enabled` | `false` | Enable the AI Chat Bot |
+| `--ai-chat-bot-prompt` | `You are a Minecraft chat bot, you chat with playe...` | What the bot is instructed to say |
+| `--ai-chat-bot-model` | `nemotron-mini` | SoulFire uses this AI model for inference. |
+| `--ai-chat-bot-keyword` | `!ai` | Only respond to messages containing this keyword |
+| `--ai-chat-bot-filter-keyword` | `true` | Filter out the keyword from messages sent by the AI |
+| `--ai-chat-bot-history-length` | `10` | Max number of messages to keep in the conversation history |
+| `--anti-afk-enabled` | `false` | Enable the Anti AFK feature |
+| `--anti-afk-distance-min` | `10` | Minimum distance to walk |
+| `--anti-afk-distance-max` | `30` | Maximum distance to walk |
+| `--anti-afk-delay-min` | `15` | Minimum delay between moves |
+| `--anti-afk-delay-max` | `30` | Maximum delay between moves |
+| `--auto-armor-enabled` | `false` | Put on best armor automatically |
+| `--auto-armor-delay-min` | `1` | Minimum delay between putting on armor |
+| `--auto-armor-delay-max` | `2` | Maximum delay between putting on armor |
+| `--auto-chat-message-enabled` | `false` | Attempt to send chat messages automatically in random intervals |
+| `--auto-chat-message-delay-min` | `2` | Minimum delay between chat messages |
+| `--auto-chat-message-delay-max` | `5` | Maximum delay between chat messages |
+| `--auto-chat-message-messages` | `[Hello, Hi, Hey, How are you?]` | List of chat messages to send |
+| `--auto-eat-enabled` | `false` | Eat available food automatically when hungry |
+| `--auto-eat-delay-min` | `1` | Minimum delay between eating |
+| `--auto-eat-delay-max` | `2` | Maximum delay between eating |
+| `--auto-jump-enabled` | `false` | Attempt to jump automatically in random intervals |
+| `--auto-jump-delay-min` | `2` | Minimum delay between jumps |
+| `--auto-jump-delay-max` | `5` | Maximum delay between jumps |
+| `--auto-reconnect-enabled` | `true` | Reconnect a bot when it times out/is kicked |
+| `--auto-reconnect-delay-min` | `1` | Minimum delay between reconnects |
+| `--auto-reconnect-delay-max` | `5` | Maximum delay between reconnects |
+| `--auto-register-enabled` | `false` | Make bots run the /register and /login command after joining |
+| `--auto-register-register-command` | `/register %password% %password%` | Command to be executed to register |
+| `--auto-register-login-command` | `/login %password%` | Command to be executed to log in |
+| `--auto-register-password-format` | `SoulFire` | The password for registering |
+| `--auto-register-delay-min` | `0` | Minimum delay before sending |
+| `--auto-register-delay-max` | `1000` | Maximum delay before sending |
+| `--auto-respawn-enabled` | `true` | Respawn automatically after death |
+| `--auto-totem-enabled` | `false` | Always put available totems in the offhand slot |
+| `--auto-totem-delay-min` | `1` | Minimum delay between using totems |
+| `--auto-totem-delay-max` | `2` | Maximum delay between using totems |
+| `--captcha-solver-enabled` | `false` | Enable the Captcha Solver |
+| `--captcha-solver-prompt` | `Extract the text from the CAPTCHA image. Only res...` | What the bots instruction is |
+| `--captcha-solver-model` | `llava` | SoulFire uses this AI model to detect text in the CAPTCHA image. |
+| `--captcha-solver-response-command` | `%s` | SoulFire runs this command with the response. Without /, SoulFire sends a chat message. |
+| `--captcha-solver-image-source` | `MAP_IN_HAND` | SoulFire gets CAPTCHA images from this source. |
+| `--captcha-solver-captcha-trigger` | `CHAT_MESSAGE` | What triggers the captcha solver |
+| `--captcha-solver-text-trigger` | `/captcha` | Text that must be contained in the message to trigger image-based captcha solving |
+| `--captcha-solver-captcha-regex` | `/captcha (\w+)` | Regex pattern with a capturing group to extract the captcha text from the message |
+| `--captcha-solver-pov-render-width` | `854` | Width of the POV render image in pixels |
+| `--captcha-solver-pov-render-height` | `480` | Height of the POV render image in pixels |
+| `--chat-logger-enabled` | `true` | Log all received chat messages to the terminal |
+| `--chat-logger-log-death-messages` | `true` | Log all death messages to the terminal |
+| `--chat-logger-deduplicate-amount` | `1` | SoulFire logs the same message no more than this number of times within five seconds. |
+| `--client-brand-enabled` | `true` | Send client brand to the server |
+| `--client-brand-client-brand` | `vanilla` | The client brand to send to the server |
+| `--client-settings-enabled` | `true` | Send client settings to the server when joining |
+| `--client-settings-client-locale` | `en_us` | The locale the client uses for translations |
+| `--client-settings-render-distance` | `2` | How far the client renders chunks. (Use this to load more or less chunks from the server) |
+| `--client-settings-chat-visibility` | `FULL` | What type of chat messages the client will receive |
+| `--client-settings-use-chat-colors` | `true` | Whether the client will use chat colors |
+| `--client-settings-cape-enabled` | `true` | Whether to display the bots cape if it has one |
+| `--client-settings-jacket-enabled` | `true` | Whether to render the jacket overlay skin layer |
+| `--client-settings-left-sleeve-enabled` | `true` | Whether to render the left overlay skin layer |
+| `--client-settings-right-sleeve-enabled` | `true` | Whether to render the right overlay skin layer |
+| `--client-settings-left-pants-leg-enabled` | `true` | Whether to render the left pants leg overlay skin layer |
+| `--client-settings-right-pants-leg-enabled` | `true` | Whether to render the right pants leg overlay skin layer |
+| `--client-settings-hat-enabled` | `true` | Whether to render the hat overlay skin layer |
+| `--client-settings-hand-preference` | `RIGHT` | What hand the client prefers to use for items |
+| `--client-settings-text-filtering-enabled` | `false` | Whether to filter chat messages from the server |
+| `--client-settings-allows-listing` | `true` | Whether the client wants their username to be shown in the server list |
+| `--client-settings-particle-status` | `MINIMAL` | How many particles the client will render |
+| `--disconnect-logger-enabled` | `true` | Log all bot disconnects to the terminal |
+| `--disconnect-logger-deduplicate-amount` | `1` | SoulFire logs the same disconnect message no more than this number of times within five seconds. |
+| `--fake-virtual-host-enabled` | `false` | Whether to fake the virtual host or not |
+| `--fake-virtual-host-hostname` | `localhost` | The hostname to fake |
+| `--fake-virtual-host-port` | `25565` | The port to fake |
+| `--kill-aura-enable` | `false` | Enable KillAura |
+| `--kill-aura-whitelisted-users` | `[Dinnerbone]` | These users will be ignored by the kill aura |
+| `--kill-aura-hit-range` | `3.0` | Maximum attack distance, limited by vanilla reach and crosshair targeting |
+| `--kill-aura-swing-range` | `3.5` | Range for the kill aura where the bot will start swinging arm, set to 0 to disable |
+| `--kill-aura-look-range` | `4.8` | Range for the kill aura where the bot will start looking at the entity, set to 0 to disable |
+| `--kill-aura-check-walls` | `true` | Only select targets with a visible point; attacks always respect walls |
+| `--kill-aura-ignore-cooldown` | `false` | Ignore the 1.9+ attack cooldown to act like a 1.8 kill aura |
+| `--kill-aura-attack-delay-ticks-min` | `8` | Minimum tick delay between attacks on pre-1.9 versions |
+| `--kill-aura-attack-delay-ticks-max` | `12` | Maximum tick delay between attacks on pre-1.9 versions |
+| `--server-list-bypass-enabled` | `false` | Whether to ping the server list before connecting. |
+| `--server-list-bypass-delay-min` | `1` | Minimum delay between joining the server |
+| `--server-list-bypass-delay-max` | `3` | Maximum delay between joining the server |
+| `--forwarding-bypass-enabled` | `false` | Enable the forwarding bypass |
+| `--forwarding-bypass-forwarding-mode` | `LEGACY` | What type of forwarding to use |
+| `--forwarding-bypass-secret` | `forwarding secret` | Secret key used for forwarding. (Not needed for legacy mode) |
+| `--forwarding-bypass-player-address` | `127.0.0.1` | SoulFire uses this value as the player IP. Only some forwarding modes use this setting. |
 
 ## How to generate this list
 
 ```bash
-java -jar SoulFireClient.jar --generate-flags
+java -jar SoulFireCLI.jar --generate-flags
 ```

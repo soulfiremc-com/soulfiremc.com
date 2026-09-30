@@ -30,14 +30,14 @@ const result = yield* hunt.result();
 ```
 
 ```python
-hunt = await bot.tasks.attack_nearest(
+hunt = yield from bot.tasks.attack_nearest(
     EntitySelector(entity_types=["minecraft:zombie"]),
     radius=48,
     maximum_targets=3,
     weapon=ItemSelector(tags=["minecraft:swords"]),
 )
 
-result = await hunt.result()
+result = yield from hunt.result()
 ```
 
 The selector must constrain a type, category, identity, tag, name,
@@ -69,7 +69,7 @@ const result = yield* archer.result();
 ```
 
 ```python
-archer = await bot.tasks.ranged_attack(
+archer = yield from bot.tasks.ranged_attack(
     target,
     minimum_range=10,
     maximum_range=32,
@@ -81,7 +81,7 @@ archer = await bot.tasks.ranged_attack(
     strafe=True,
 )
 
-result = await archer.result()
+result = yield from archer.result()
 ```
 
 The task supports bows and crossbows and selects ammunition with the vanilla
@@ -131,7 +131,7 @@ const result = yield* defense.result();
 ```
 
 ```python
-defense = await bot.tasks.guard(
+defense = yield from bot.tasks.guard(
     BlockPosition(x=120, y=64, z=-32),
     EntitySelector(categories=[ENTITY_CATEGORY_HOSTILE]),
     guard_radius=16,
@@ -139,7 +139,7 @@ defense = await bot.tasks.guard(
     weapon=ItemSelector(tags=["minecraft:swords"]),
 )
 
-result = await defense.result()
+result = yield from defense.result()
 ```
 
 The bounded calls complete after the area stays clear for `clearSeconds` or

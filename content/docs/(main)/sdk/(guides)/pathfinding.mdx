@@ -73,7 +73,7 @@ const plan = yield* bot.pathfinder.plan(goal, {
 ```
 
 ```python
-plan = await bot.pathfinder.plan(
+plan = yield from bot.pathfinder.plan(
     goal,
     options=PathfindOptions(
         allow_mining=False,
@@ -85,21 +85,91 @@ plan = await bot.pathfinder.plan(
 )
 ```
 
-The plan reports whether the route is complete, partial, unreachable, expired,
-or cancelled. It includes ordered movement steps, blocks to break, blocks to
+The plan distinguishes complete, partial, unreachable, expired, cancelled, quality-bound, and pending-world-data results. It includes ordered movement steps, blocks to break, blocks to
 place, the maximum execution budget, and an explanation for partial plans.
 
 Use preview for user confirmation, cost estimates, build material checks, and
 debug visualizations. The world can change after planning, so execution still
 replans when required.
 
+## Choose search quality and limits
+
+The planner uses Anytime Repairing A* (ARA*).
+It searches a captured world revision and repairs candidate routes toward the requested quality bound.
+
+| Mode | Initial epsilon | Default quality bound |
+| --- | ---: | ---: |
+| `PRECISION` | 1.0 | 1.0 |
+| `NORMAL` | 2.5 | 1.2 |
+| `URGENT` | 3.0 | 1.5 |
+| `ESCAPE` | 4.0 | 2.0 |
+
+An unset mode uses `NORMAL`.
+`PRECISION` performs exact A* search.
+The quality bound applies to `routeCost.optimizationCost`, not to each individual cost component.
+
+```ts
+import { PathfindSearchMode } from "@soulfiremc/sdk";
+
+const plan = yield* bot.pathfinder.plan(goal, {
+  path: {
+    searchMode: PathfindSearchMode.NORMAL,
+    maximumQualityBound: 1.2,
+    maximumExpandedStates: 50_000,
+    maximumFallDistance: 3,
+    maximumParkourGap: 0,
+    smoothCamera: true,
+    protectedBlocks: [chestPosition],
+  },
+});
+```
+
+```python
+from soulfire.bot_live_pb2 import PATHFIND_SEARCH_MODE_NORMAL, PathfindOptions
+
+plan = yield from bot.pathfinder.plan(
+    goal,
+    options=PathfindOptions(
+        search_mode=PATHFIND_SEARCH_MODE_NORMAL,
+        maximum_quality_bound=1.2,
+        maximum_expanded_states=50_000,
+        maximum_fall_distance=3,
+        maximum_parkour_gap=0,
+        smooth_camera=True,
+        protected_blocks=[chest_position],
+    ),
+)
+```
+
+`maximumQualityBound` must be between 1.0 and the selected mode's initial epsilon.
+The planner does not execute a complete route that misses the requested bound.
+A zero expansion budget uses the server default.
+Ordinary falls and parkour gaps cannot exceed three blocks.
+A zero parkour gap disables parkour.
+Protected blocks cannot be broken and must belong to the bot's current dimension.
+Camera smoothing stays within the movement controller's safe tolerances.
+
+## Inspect search diagnostics
+
+Plans include route damage, world changes, placed blocks, broken blocks, duration cost, and optimization cost.
+They also report the quality bound, expanded states, generated transitions, search duration, and repair iterations.
+
+`WORLD_DATA_PENDING` means that required client chunks were absent from the captured world.
+Inspect `unavailableChunks` and wait for world data before another search.
+`QUALITY_BOUND_NOT_MET` means that no complete route met the requested quality bound within the search limits.
+A zero `qualityBound` means that the result contains no certified complete route.
+
+`frontierReason` distinguishes a level boundary, search deadline, and expansion budget.
+Use `worldRevision` to identify the captured navigation state.
+These diagnostics distinguish missing world data and exhausted search budgets from an unreachable goal.
+
 ## Execute a durable path
 
 `goTo` or `go_to` returns a task handle immediately. `run` streams the task
 until it reaches a terminal state.
 
-<Tabs items={['TypeScript Effect', 'TypeScript Promise', 'Python async']}>
-  <Tab value="TypeScript Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     const task = yield* bot.pathfinder.goTo(goal, {
       path: {
@@ -113,18 +183,9 @@ until it reaches a terminal state.
     const result = yield* task.result();
     ```
   </Tab>
-  <Tab value="TypeScript Promise">
-    ```ts
-    const task = await bot.pathfinder.goTo(goal, {
-      path: { allowMining: true, allowPlacing: true },
-    });
-
-    const result = await task.result();
-    ```
-  </Tab>
-  <Tab value="Python async">
+  <Tab value="Python">
     ```python
-    task = await bot.pathfinder.go_to(
+    task = yield from bot.pathfinder.go_to(
         goal,
         options=PathfindOptions(
             allow_mining=True,
@@ -134,7 +195,7 @@ until it reaches a terminal state.
         idempotency_key=str(uuid.uuid4()),
     )
 
-    result = await task.result()
+    result = yield from task.result()
     ```
   </Tab>
 </Tabs>

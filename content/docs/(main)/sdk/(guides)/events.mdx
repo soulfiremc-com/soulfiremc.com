@@ -18,8 +18,8 @@ Use a session for retained state such as entities, blocks, weather, and scoreboa
 Each `BotEvent` item identifies its bot with `botProfileId` or `bot_profile_id`.
 Use this stream for fleet telemetry, shared chat, dashboards, and coordinators.
 
-<Tabs items={['TypeScript Effect', 'TypeScript Promise', 'Python async', 'Python sync']}>
-  <Tab value="TypeScript Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     yield* instance.events({
       botEvents: {
@@ -38,28 +38,15 @@ Use this stream for fleet telemetry, shared chat, dashboards, and coordinators.
     );
     ```
   </Tab>
-  <Tab value="TypeScript Promise">
-    ```ts
-    for await (const item of instance.events({
-      botEvents: {
-        includeChat: true,
-        includeLifecycle: true,
-      },
-    })) {
-      console.log(item.botProfileId, item.event);
-    }
-    ```
-  </Tab>
-  <Tab value="Python async">
+  <Tab value="Python">
     ```python
-    async for item in instance.events(bot_ids=selected_bot_ids):
-        print(item.bot_profile_id, item.WhichOneof("event"))
-    ```
-  </Tab>
-  <Tab value="Python sync">
-    ```python
-    for item in instance.events(bot_ids=selected_bot_ids):
-        print(item.bot_profile_id, item.WhichOneof("event"))
+    from effect_py import fn, sync
+
+    @fn("consume stream")
+    def consume(item):
+        yield from sync(lambda: print(item.bot_profile_id, item.WhichOneof("event")))
+
+    yield from instance.events(bot_ids=selected_bot_ids).run_for_each(consume)
     ```
   </Tab>
 </Tabs>
@@ -72,8 +59,8 @@ limit the stream to a stable profile UUID allowlist.
 
 ## Open a synchronized session
 
-<Tabs items={['TypeScript Effect', 'TypeScript Promise', 'Python']}>
-  <Tab value="TypeScript Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     const session = yield* bot.observe();
 
@@ -86,29 +73,20 @@ limit the stream to a stable profile UUID allowlist.
     );
     ```
   </Tab>
-  <Tab value="TypeScript Promise">
-    ```ts
-    await using session = await bot.observe();
-
-    const hostile = session.state.entitySnapshots.get(networkId);
-    const raining = session.state.environment.raining;
-
-    for await (const event of session.events()) {
-      if (event.event.case === "damage") {
-        console.log(event.event.value);
-      }
-    }
-    ```
-  </Tab>
   <Tab value="Python">
     ```python
-    async with await bot.observe() as session:
-        hostile = session.state.entity_snapshots.get(network_id)
-        raining = session.state.environment.raining
+    session = yield from bot.observe()
+    hostile = session.state.entity_snapshots.get(network_id)
+    raining = session.state.environment.raining
 
-        async for event in session.events():
-            if event.WhichOneof("event") == "damage":
-                print(event.damage)
+    from effect_py import fn, sync
+
+    @fn("consume stream")
+    def consume(event):
+        if event.WhichOneof("event") == "damage":
+            yield from sync(lambda: print(event.damage))
+
+    yield from session.events().run_for_each(consume)
     ```
   </Tab>
 </Tabs>
@@ -128,8 +106,8 @@ returns the semantic chat event plus regular-expression captures. Limit a
 matcher to player chat, whispers, system messages, or action-bar messages when
 the same text can appear in several channels.
 
-<Tabs items={['TypeScript Effect', 'TypeScript Promise', 'Python async']}>
-  <Tab value="TypeScript Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     const match = yield* bot.chat.waitFor(
       /code (?<code>\d{4})/u,
@@ -144,18 +122,9 @@ the same text can appear in several channels.
     });
     ```
   </Tab>
-  <Tab value="TypeScript Promise">
-    ```ts
-    const match = await bot.chat.waitFor(/code (?<code>\d{4})/u, {
-      sources: [ChatSource.SYSTEM],
-      timeoutMs: 10_000,
-    });
-    console.log(match.groups.code);
-    ```
-  </Tab>
-  <Tab value="Python async">
+  <Tab value="Python">
     ```python
-    match = await bot.chat.wait_for(
+    match = yield from bot.chat.wait_for(
         re.compile(r"code (?P<code>\d{4})"),
         sources=[CHAT_SOURCE_SYSTEM],
         timeout_ms=10_000,
@@ -166,9 +135,8 @@ the same text can appear in several channels.
 </Tabs>
 
 Use `bot.chat.watch(...)` for every matching message.
-The Effect entry point returns a `Stream`.
-The Promise entry point returns an async iterable.
-Python returns an async or synchronous iterator.
+TypeScript returns an Effect `Stream`.
+Python returns a stream with effect-based consumers such as `run_for_each`.
 
 ## State indexes
 
@@ -195,7 +163,7 @@ target beyond the current callback.
 ## Choose event categories
 
 ```ts
-await using session = await bot.observe({
+const session = yield* bot.observe({
   filter: {
     includeEntityEvents: true,
     entityRadius: 64,
@@ -251,12 +219,17 @@ const loaded = yield* bot.waitForChunks({
 ```python
 from soulfire import BotEventFilter
 
-async for event in bot.events(
-    BotEventFilter(include_titles=True, include_chunks=True)
-):
-    print(event.WhichOneof("event"))
+from effect_py import fn, sync
 
-loaded = await bot.wait_for_chunks(
+@fn("consume stream")
+def consume(event):
+    yield from sync(lambda: print(event.WhichOneof("event")))
+
+
+yield from bot.events(
+    BotEventFilter(include_titles=True, include_chunks=True)
+).run_for_each(consume)
+loaded = yield from bot.wait_for_chunks(
     2,
     wait_timeout_ms=30_000,
 )

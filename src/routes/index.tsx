@@ -1395,7 +1395,7 @@ function Page() {
               <h3 className="text-xl font-semibold">TypeScript SDK</h3>
               <p className="text-sm text-muted-foreground">
                 Run a managed local server with Node.js 22+. Use Effect or
-                Promises to control it.
+                Effect workflows to control it.
               </p>
               <code className="text-xs text-muted-foreground">
                 bun add @soulfiremc/sdk effect @effect/platform

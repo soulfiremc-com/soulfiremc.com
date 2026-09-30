@@ -25,8 +25,8 @@ Raw packet code depends on the Minecraft version and can break a bot connection.
   `configuration`.
 - The limits describe the maximum encoded packet size and send rate.
 
-<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
-  <Tab value="Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     const info = yield* bot.protocol.info();
 
@@ -37,32 +37,15 @@ Raw packet code depends on the Minecraft version and can break a bot connection.
     });
     ```
   </Tab>
-  <Tab value="Promise">
-    ```ts
-    const info = await bot.protocol.info();
-
-    console.log({
-      native: info.minecraftVersionName,
-      remote: info.remoteVersionName,
-      state: info.protocolState,
-    });
-    ```
-  </Tab>
-  <Tab value="Async Python">
+  <Tab value="Python">
     ```python
-    info = await bot.protocol.info()
+    info = yield from bot.protocol.info()
 
     print(
         info.minecraft_version_name,
         info.remote_version_name,
         info.protocol_state,
     )
-    ```
-  </Tab>
-  <Tab value="Sync Python">
-    ```python
-    info = bot.protocol.info()
-    print(info.minecraft_version_name, info.remote_version_name)
     ```
   </Tab>
 </Tabs>
@@ -90,7 +73,7 @@ state:
     ```python
     from soulfire import PACKET_DIRECTION_SERVERBOUND
 
-    packets = await bot.protocol.schemas(PACKET_DIRECTION_SERVERBOUND)
+    packets = yield from bot.protocol.schemas(PACKET_DIRECTION_SERVERBOUND)
 
     for packet in packets:
         print(packet.network_id, packet.name)
@@ -127,19 +110,23 @@ yield* bot.protocol.packets({
 );
 ```
 
-The Promise facade returns an `AsyncIterable`, and the Python clients return
-an async iterator or iterator:
+Python packet streams use effect-based consumers:
 
 ```python
 from soulfire import PACKET_DIRECTION_CLIENTBOUND
 
-async for packet in bot.protocol.packets(
+from effect_py import fn, sync
+
+@fn("consume stream")
+def consume(packet):
+    yield from sync(lambda: print(packet.name, len(packet.encoded_packet), packet.dropped_before))
+
+yield from bot.protocol.packets(
     directions=[PACKET_DIRECTION_CLIENTBOUND],
     names=["minecraft:game_event"],
     include_encoded_packet=True,
     maximum_encoded_bytes=4096,
-):
-    print(packet.name, len(packet.encoded_packet), packet.dropped_before)
+).run_for_each(consume)
 ```
 
 The stream respects transport backpressure. If the consumer cannot keep up,
@@ -164,7 +151,7 @@ yield* Effect.logInfo("Packet sent", result);
 ```
 
 ```python
-result = await bot.protocol.send(
+result = yield from bot.protocol.send(
     encoded_packet,
     expected_name="minecraft:custom_payload",
 )

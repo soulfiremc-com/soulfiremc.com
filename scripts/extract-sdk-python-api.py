@@ -9,10 +9,10 @@ from pathlib import Path
 
 def extract(source_dir: Path) -> dict[str, list[dict[str, str | int]]]:
     files = {
-        "client.py": ["AsyncSoulFire", "SoulFire", "AsyncSoulFireInstance", "SoulFireInstance"],
-        "bot.py": ["AsyncSoulFireBot", "SoulFireBot"],
-        "tasks.py": ["AsyncSoulFireTasks", "SoulFireTasks", "AsyncSoulFireTask", "SoulFireTask"],
-        "semantic.py": ["AsyncSoulFireChat", "SoulFireChat"],
+        "client.py": ["SoulFire", "SoulFireInstance"],
+        "bot.py": ["SoulFireBot"],
+        "tasks.py": ["SoulFireTasks", "SoulFireTask"],
+        "semantic.py": ["SoulFireChat"],
     }
     result = {}
     for filename, class_names in files.items():
@@ -36,6 +36,12 @@ def extract(source_dir: Path) -> dict[str, list[dict[str, str | int]]]:
                     "\n".join(lines[member.lineno - 1 : body_line - 1])
                 ).rstrip()
                 signature = signature.removesuffix(":")
+                # @fn exposes an Effect while the implementation uses EffectGen.
+                effect_decorator = "".join(
+                    f"@{ast.get_source_segment(source, item)}\n"
+                    for item in member.decorator_list
+                    if isinstance(item, ast.Call) and isinstance(item.func, ast.Name) and item.func.id == "fn"
+                )
                 decorators = (
                     "@classmethod\n"
                     if any(isinstance(item, ast.Name) and item.id == "classmethod" for item in member.decorator_list)
@@ -44,7 +50,7 @@ def extract(source_dir: Path) -> dict[str, list[dict[str, str | int]]]:
                 methods.append(
                     {
                         "name": member.name,
-                        "signature": f"{decorators}{signature}",
+                        "signature": f"{decorators}{effect_decorator}{signature}",
                         "line": member.lineno,
                         "file": filename,
                     }

@@ -58,7 +58,7 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
   <Step>
     ### Get a compatible Fabric mod `.jar`
 
-    Use a SoulFire-specific plugin or a Fabric mod that is compatible with SoulFire's non-rendering environment.
+    Use a SoulFire-specific plugin or a Fabric mod that is compatible with SoulFire's headless environment.
   </Step>
 
   <Step>
@@ -80,7 +80,7 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
 
 ## Compatibility notes
 
-- Mods that require rendering, audio, or other client-only features usually do not work.
+- Rendering mods must support Minecraft's headless Vulkan backend. Mods that require a native window, OpenGL, or audio can be incompatible.
 - Mods that change networking, automation, inventory behavior, or other game logic are more likely to work.
 - A plugin can use Mixins and deep integration points, so only install plugins you trust.
 

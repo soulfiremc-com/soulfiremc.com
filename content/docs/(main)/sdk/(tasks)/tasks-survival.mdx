@@ -11,7 +11,8 @@ Survival tasks wait for game conditions and report a final result.
 
 ## Find a bed and sleep
 
-The durable sleep task can use a specific bed or discover the nearest loaded
+The durable sleep task navigates within interaction reach before it attempts sleep.
+It can use a specific bed or discover the nearest loaded
 bed, navigate into range, interact, and wait for server confirmation:
 
 ```ts
@@ -28,7 +29,7 @@ const result = yield* rest.result();
 ```
 
 ```python
-rest = await bot.tasks.sleep(
+rest = yield from bot.tasks.sleep(
     search_radius=24,
     wait_until_possible=True,
     options=PathfindOptions(
@@ -37,7 +38,7 @@ rest = await bot.tasks.sleep(
     ),
 )
 
-result = await rest.result()
+result = yield from rest.result()
 ```
 
 The bounded form fails when the server rejects sleep. Set
@@ -47,7 +48,7 @@ waiting behavior by default and cancel the remote task when the stream owner
 disconnects.
 
 Use the atomic TypeScript `bot.sleep({ bed })` or Python
-`await bot.sleep(bed)` action when the application already has an exact
+`yield from bot.sleep(bed)` action when the application already has an exact
 reachable bed and does not need discovery or navigation. Use `bot.wake()` to
 leave the bed.
 
@@ -68,13 +69,13 @@ const result = yield* fishing.result();
 ```
 
 ```python
-fishing = await bot.tasks.fish(
+fishing = yield from bot.tasks.fish(
     maximum_catches=3,
     rod=ItemSelector(item_ids=["minecraft:fishing_rod"]),
     restore_selected_slot=True,
 )
 
-result = await fishing.result()
+result = yield from fishing.result()
 ```
 
 The bounded form defaults to one confirmed bite and reel. `runFish` and
@@ -87,8 +88,8 @@ cleanup and restores the previous hotbar selection when requested.
 The farm task scans a bounded area, walks to the nearest mature crop, uses the
 correct harvest interaction, and replants destructive crops:
 
-<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
-  <Tab value="Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     const harvest = yield* bot.tasks.farm({
       cropIds: ["minecraft:wheat", "minecraft:carrots"],
@@ -101,22 +102,9 @@ correct harvest interaction, and replants destructive crops:
     const result = yield* harvest.result();
     ```
   </Tab>
-  <Tab value="Promise">
-    ```ts
-    const harvest = await bot.tasks.farm({
-      cropIds: ["minecraft:wheat", "minecraft:carrots"],
-      center: farmCenter,
-      radius: 16,
-      maximumHarvests: 24,
-      replant: true,
-    });
-
-    const result = await harvest.result();
-    ```
-  </Tab>
-  <Tab value="Async Python">
+  <Tab value="Python">
     ```python
-    harvest = await bot.tasks.farm(
+    harvest = yield from bot.tasks.farm(
         ["minecraft:wheat", "minecraft:carrots"],
         center=farm_center,
         radius=16,
@@ -124,20 +112,7 @@ correct harvest interaction, and replants destructive crops:
         replant=True,
     )
 
-    result = await harvest.result()
-    ```
-  </Tab>
-  <Tab value="Sync Python">
-    ```python
-    harvest = bot.tasks.farm(
-        ["minecraft:wheat", "minecraft:carrots"],
-        center=farm_center,
-        radius=16,
-        maximum_harvests=24,
-        replant=True,
-    )
-
-    result = harvest.result()
+    result = yield from harvest.result()
     ```
   </Tab>
 </Tabs>
@@ -162,10 +137,11 @@ harvest counts.
 ## Breed compatible animals
 
 The breeding task selects two compatible adults in a bounded area.
+Without explicit selectors, it discovers eligible adult animals automatically.
 It finds suitable food, walks to each animal, and feeds them:
 
-<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
-  <Tab value="Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     const breeding = yield* bot.tasks.breed({
       animals: { entityTypes: ["minecraft:cow"] },
@@ -178,22 +154,9 @@ It finds suitable food, walks to each animal, and feeds them:
     const result = yield* breeding.result();
     ```
   </Tab>
-  <Tab value="Promise">
-    ```ts
-    const breeding = await bot.tasks.breed({
-      animals: { entityTypes: ["minecraft:cow"] },
-      food: { itemIds: ["minecraft:wheat"] },
-      center: penCenter,
-      radius: 20,
-      maximumPairs: 2,
-    });
-
-    const result = await breeding.result();
-    ```
-  </Tab>
-  <Tab value="Async Python">
+  <Tab value="Python">
     ```python
-    breeding = await bot.tasks.breed(
+    breeding = yield from bot.tasks.breed(
         EntitySelector(entity_types=["minecraft:cow"]),
         food=ItemSelector(item_ids=["minecraft:wheat"]),
         center=pen_center,
@@ -201,20 +164,7 @@ It finds suitable food, walks to each animal, and feeds them:
         maximum_pairs=2,
     )
 
-    result = await breeding.result()
-    ```
-  </Tab>
-  <Tab value="Sync Python">
-    ```python
-    breeding = bot.tasks.breed(
-        EntitySelector(entity_types=["minecraft:cow"]),
-        food=ItemSelector(item_ids=["minecraft:wheat"]),
-        center=pen_center,
-        radius=20,
-        maximum_pairs=2,
-    )
-
-    result = breeding.result()
+    result = yield from breeding.result()
     ```
   </Tab>
 </Tabs>

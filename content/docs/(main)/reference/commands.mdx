@@ -10,59 +10,66 @@ Commands show information or control bots through the SoulFire server.
 
 ## List of commands
 
-| Command                                                               | Description                                                                                                                         |
-|-----------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
-| `help{:bash}`                                                         | Shows all available commands                                                                                                       |
-| `generate-token api{:bash}`                                           | Creates an API token for the current user                                                                                           |
-| `generate-token webdav{:bash}`                                        | Creates a WebDAV token for the current user                                                                                         |
-| `set-email <email>{:bash}`                                            | Set the email of the current user                                                                                                   |
-| `whoami{:bash}`                                                       | Shows the current user                                                                                                              |
-| `plugins{:bash}`                                                      | Show all installed plugins                                                                                                          |
-| `stop{:bash}`                                                         | Stops the SoulFire server                                                                                                           |
-| `spark{:bash}`                                                        | Shows help for spark                                                                                                                |
-| `spark <command>{:bash}`                                              | Runs a spark subcommand                                                                                                             |
-| `move <entity>{:bash}`                                                | Makes selected bots move to an entity                                                                                               |
-| `move radius <radius>{:bash}`                                         | Moves selected bots to a random X/Z position inside the radius                                                                     |
-| `move <y>{:bash}`                                                     | Moves selected bots to the Y coordinate                                                                                            |
-| `move <x> <z>{:bash}`                                                 | Moves selected bots to the X/Z coordinates                                                                                         |
-| `move <x> <y> <z>{:bash}`                                             | Moves selected bots to the X/Y/Z coordinates                                                                                       |
-| `collect <block> <amount> <searchRadius>{:bash}`                      | Makes selected bots collect a block by name or tag                                                                                  |
-| `follow <entity> <maxRadius>{:bash}`                                  | Makes selected bots follow an entity                                                                                                |
-| `excavate rectangle <fromX> <fromY> <fromZ> <toX> <toY> <toZ>{:bash}` | Makes selected bots dig a rectangle between two positions                                                                          |
-| `excavate sphere <x> <y> <z> <radius>{:bash}`                         | Makes selected bots dig a sphere with the given radius                                                                              |
-| `lookat <x> <y> <z>{:bash}`                                           | Makes selected bots look at the block at the X/Y/Z coordinates                                                                     |
-| `control forward{:bash}`                                              | Toggle walking forward for selected bots                                                                                            |
-| `control backward{:bash}`                                             | Toggle walking backward for selected bots                                                                                           |
-| `control left{:bash}`                                                 | Toggle walking left for selected bots                                                                                               |
-| `control right{:bash}`                                                | Toggle walking right for selected bots                                                                                              |
-| `control jump{:bash}`                                                 | Toggle jumping for selected bots                                                                                                    |
-| `control sneak{:bash}`                                                | Toggle sneaking for selected bots                                                                                                   |
-| `control reset{:bash}`                                                | Stops manual movement for selected bots                                                                                            |
-| `mimic <entity>{:bash}`                                               | Makes selected bots copy the movement of an entity                                                                                 |
-| `useitem <hand>{:bash}`                                               | Makes selected bots use an item in the specified hand                                                                               |
-| `useitemon <blockX> <blockY> <blockZ> <face> <hand>{:bash}`           | Makes selected bots use an item on the block at the xyz coordinates with the specified face and hand                                |
-| `inventory close{:bash}`                                              | Closes the current inventory and opens the player inventory                                                                        |
-| `inventory current{:bash}`                                            | Shows the current inventory                                                                                                        |
-| `inventory left-click <slot>{:bash}`                                  | Left-clicks the specified slot in the current inventory for selected bots                                                           |
-| `inventory right-click <slot>{:bash}`                                 | Right-clicks the specified slot in the current inventory for selected bots                                                          |
-| `inventory left-click-outside{:bash}`                                 | Left-clicks outside current inventory for selected bots                                                                             |
-| `inventory right-click-outside{:bash}`                                | Right-clicks outside current inventory for selected bots                                                                            |
-| `inventory middle-click <slot>{:bash}`                                | Middle-clicks the specified slot in the current inventory for selected bots                                                         |
-| `inventory drop-one <slot>{:bash}`                                    | Drops one item from the specified slot in the current inventory for selected bots                                                   |
-| `inventory drop-all <slot>{:bash}`                                    | Drops all items from the specified slot in the current inventory for selected bots                                                  |
-| `interact <entity> <hand>{:bash}`                                     | Makes selected bots interact with an entity using a specific hand                                                                   |
-| `bots start{:bash}`                                                   | Starts every configured bot in the selected instances                                                                              |
-| `bots stop{:bash}`                                                    | Stops every configured bot in the selected instances                                                                               |
-| `online{:bash}`                                                       | Shows connected bots in the selected instances                                                                                      |
-| `say <message>{:bash}`                                                | Makes selected bots send a message in chat or execute a command                                                                     |
-| `respawn{:bash}`                                                      | Respawns selected bots                                                                                                             |
-| `health{:bash}`                                                       | Shows the health of selected bots                                                                                                  |
-| `export-map{:bash}`                                                   | Exports images of all held or framed map items                                                                                     |
-| `export-map <map_id>{:bash}`                                          | Exports an image of the map with the given ID                                                                                      |
-| `stop-task{:bash}`                                                    | Stops the current task for selected bots                                                                                           |
-| `bot <bot_names> ...{:bash}`                                          | Runs a command for specific bots. Separate their names with commas                                                                 |
-| `instance <instance_names> ...{:bash}`                                | Runs a command for specific instances. Separate their names with commas                                                            |
-| `repeat <amount> ...{:bash}`                                          | Repeats a command the given number of times                                                                                        |
+| Command | Description |
+| --- | --- |
+| `help{:bash}` | Prints a list of all available commands |
+| `generate-token api{:bash}` | Generate an API JWT for the current user |
+| `generate-token webdav{:bash}` | Generate a WebDAV JWT for the current user |
+| `set-email <email>{:bash}` | Set the email of the current user |
+| `whoami{:bash}` | Show your current user |
+| `plugins{:bash}` | Show all installed plugins |
+| `stop{:bash}` | Shut down the SoulFire server. |
+| `spark{:bash}` | Show Spark help |
+| `spark <command>{:bash}` | Runs a spark subcommand |
+| `move <entity>{:bash}` | Move selected bots to an entity |
+| `move radius <radius>{:bash}` | Move selected bots to a random XZ position within the radius |
+| `move <y>{:bash}` | Move selected bots to the Y coordinate |
+| `move <x> <z>{:bash}` | Move selected bots to the XZ coordinates |
+| `move <x> <y> <z>{:bash}` | Move selected bots to the XYZ coordinates |
+| `collect <block> <amount> <searchRadius>{:bash}` | Make selected bots collect a block by name or tag |
+| `follow <entity> <maxRadius>{:bash}` | Make selected bots follow an entity |
+| `excavate rectangle <fromX> <fromY> <fromZ> <toX> <toY> <toZ>{:bash}` | Make selected bots dig a rectangular area between two coordinates |
+| `excavate sphere <x> <y> <z> <radius>{:bash}` | Make selected bots dig a sphere with the specified radius |
+| `lookat <x> <y> <z>{:bash}` | Make selected bots look at the block at the XYZ coordinates |
+| `control forward{:bash}` | Toggle walking forward for selected bots |
+| `control backward{:bash}` | Toggle walking backward for selected bots |
+| `control left{:bash}` | Toggle walking left for selected bots |
+| `control right{:bash}` | Toggle walking right for selected bots |
+| `control jump{:bash}` | Toggle jumping for selected bots |
+| `control sneak{:bash}` | Toggle sneaking for selected bots |
+| `control reset{:bash}` | Resets the movement of selected bots |
+| `mimic <entity>{:bash}` | Make selected bots mimic the movement of other entities |
+| `useitem <hand>{:bash}` | Make selected bots use an item in the specified hand |
+| `useitemon <blockX> <blockY> <blockZ> <face> <hand>{:bash}` | Make selected bots use an item on a block with the specified face and hand |
+| `inventory close{:bash}` | Close the current inventory of selected bots. Then open the player inventory. |
+| `inventory current{:bash}` | Show the current inventory of selected bots |
+| `inventory left-click <slot>{:bash}` | Left-clicks the specified slot in the current inventory for selected bots |
+| `inventory right-click <slot>{:bash}` | Right-clicks the specified slot in the current inventory for selected bots |
+| `inventory left-click-outside{:bash}` | Left-clicks outside current inventory for selected bots |
+| `inventory right-click-outside{:bash}` | Right-clicks outside current inventory for selected bots |
+| `inventory middle-click <slot>{:bash}` | Middle-clicks the specified slot in the current inventory for selected bots |
+| `inventory drop-one <slot>{:bash}` | Drops one item from the specified slot in the current inventory for selected bots |
+| `inventory drop-all <slot>{:bash}` | Drops all items from the specified slot in the current inventory for selected bots |
+| `interact <entity> <hand>{:bash}` | Make selected bots interact with an entity using the specified hand |
+| `click left{:bash}` | Simulates a left mouse button click for selected bots (attack/break) |
+| `click right{:bash}` | Simulates a right mouse button click for selected bots (use/interact) |
+| `bots start{:bash}` | Set every configured bot in the selected instances to running |
+| `bots stop{:bash}` | Set every configured bot in the selected instances to stopped |
+| `online{:bash}` | Show connected bots in the selected instances |
+| `say <message>{:bash}` | Make selected bots send a chat message or run a command |
+| `respawn{:bash}` | Respawn selected bots |
+| `health{:bash}` | Print the health of selected bots. |
+| `export-map{:bash}` | Export all loaded maps as images. |
+| `export-map <map_id>{:bash}` | Export a map as an image by its map ID. |
+| `export-basic-render{:bash}` | Export a basic camera image of the world that the bot sees. |
+| `export-basic-render <width> <height>{:bash}` | Export an image at a custom resolution. |
+| `export-render-debug-dump{:bash}` | Export a POV image, camera settings, Vulkan device, and capture timing. |
+| `export-render-debug-dump <width> <height>{:bash}` | Export a debug dump at a custom resolution. |
+| `export-render-debug-dump <width> <height> <max_distance>{:bash}` | Export a debug dump at a custom resolution and maximum render distance. |
+| `stop-task{:bash}` | Stop the current task of selected bots |
+| `bot <bot_names> ...{:bash}` | Run a command for specific bots. Separate bot names with commas. |
+| `instance <instance_names> ...{:bash}` | Run a command for specific instances. Separate instance names with commas. |
+| `repeat <amount> ...{:bash}` | Repeat the command the specified number of times |
 
 ## Example
 

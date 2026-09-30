@@ -21,8 +21,8 @@ Use a durable task for progress updates, cancellation, or shared bot control.
 
 ## Start a task and keep its handle
 
-<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
-  <Tab value="Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     const task = yield* bot.tasks.autoEat(
       ["minecraft:bread"],
@@ -32,34 +32,14 @@ Use a durable task for progress updates, cancellation, or shared bot control.
     const result = yield* task.result();
     ```
   </Tab>
-  <Tab value="Promise">
-    ```ts
-    const task = await bot.tasks.autoEat(
-      ["minecraft:bread"],
-      { maximumMeals: 1 },
-    );
-
-    const result = await task.result();
-    ```
-  </Tab>
-  <Tab value="Async Python">
+  <Tab value="Python">
     ```python
-    task = await bot.tasks.auto_eat(
+    task = yield from bot.tasks.auto_eat(
         ["minecraft:bread"],
         maximum_meals=1,
     )
 
-    result = await task.result()
-    ```
-  </Tab>
-  <Tab value="Sync Python">
-    ```python
-    task = bot.tasks.auto_eat(
-        ["minecraft:bread"],
-        maximum_meals=1,
-    )
-
-    result = task.result()
+    result = yield from task.result()
     ```
   </Tab>
 </Tabs>
@@ -80,12 +60,16 @@ yield* bot.tasks.runAutoRespawn({
 ```
 
 ```python
-async for event in bot.tasks.run_auto_respawn(maximum_respawns=1):
-    print(event.task.status, event.task.progress)
+from effect_py import fn, sync
+
+@fn("consume stream")
+def consume(event):
+    yield from sync(lambda: print(event.task.status, event.task.progress))
+
+yield from bot.tasks.run_auto_respawn(maximum_respawns=1).run_for_each(consume)
 ```
 
-Interrupting the Effect stream, aborting the Promise iterator, or cancelling
-the Python iterator cancels the server task. Use a detached task handle when
+Interrupting the stream cancels its call-owned server task. Use a detached task handle when
 the work must survive the SDK process.
 
 ## Observe progress
@@ -95,7 +79,7 @@ const task = yield* bot.tasks.attackEntity(target);
 
 yield* task.events().pipe(
   Stream.runForEach((event) =>
-    Effect.logInfo(event.task?.progress.message ?? "Working")
+    Effect.logInfo(event.task?.progress?.message ?? "Working")
   ),
 );
 ```
@@ -105,20 +89,15 @@ fraction. Terminal snapshots include a typed result or structured failure.
 
 ## Cancel explicitly
 
-<Tabs items={['Effect', 'Promise', 'Async Python']}>
-  <Tab value="Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     yield* task.cancel("Target changed");
     ```
   </Tab>
-  <Tab value="Promise">
-    ```ts
-    await task.cancel("Target changed");
-    ```
-  </Tab>
-  <Tab value="Async Python">
+  <Tab value="Python">
     ```python
-    await task.cancel("Target changed")
+    yield from task.cancel("Target changed")
     ```
   </Tab>
 </Tabs>

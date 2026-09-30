@@ -59,9 +59,31 @@ Better Auth's existing five-minute session cookie cache remains a separate cache
 
 See [D1 read replication](https://developers.cloudflare.com/d1/best-practices/read-replication/) for the consistency model.
 
+## SDK documentation
+
+SDK references and recipes use the SoulFire source revision pinned in
+`scripts/sdk-source.ts`. The scripts cache that checkout in the system's
+temporary directory and build its TypeScript SDK.
+
+Regenerate the API reference and validate the complete recipe examples with:
+
+```bash
+bun run generate-sdk-reference
+bun run check-sdk-recipes
+```
+
+These commands require Bun, Git, and Python 3.14. Set `SOULFIRE_SDK_SOURCE` to
+reuse a local checkout at the pinned revision. Update the revision when
+refreshing the docs for SDK changes.
+
+The homepage examples live in `src/lib/sdk-code-examples.ts`. After editing
+these examples, run `bun run generate-sdk-code` to refresh their highlighted HTML.
+
 ## Validation
 
 ```bash
+bun run check
+bun run validate-links
 bun run typecheck
 bun run test
 bun run build

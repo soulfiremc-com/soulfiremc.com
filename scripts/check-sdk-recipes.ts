@@ -1,6 +1,7 @@
 import { execFileSync } from "node:child_process";
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { buildSdk, sdkSource } from "./sdk-source";
 
 const recipes = [
   "reply-to-chat",
@@ -8,7 +9,9 @@ const recipes = [
   "follow-entity",
   "transfer-items",
 ];
-const directory = mkdtempSync(resolve("node_modules/.cache/sdk-recipes-"));
+const source = sdkSource();
+buildSdk(source);
+const directory = mkdtempSync(join(source, "sdk/typescript/.docs-recipes-"));
 const typescriptFiles: string[] = [];
 const pythonFiles: string[] = [];
 

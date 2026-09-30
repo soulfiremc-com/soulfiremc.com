@@ -1,49 +1,26 @@
 ---
 title: TypeScript SDK
-description: Connect to SoulFire from TypeScript with Effect or Promises.
+description: Build scoped TypeScript workflows with Effect, typed errors, and streams.
 icon: Code
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
-import { Tab, Tabs } from '../../../../../src/components/mdx/sdk-tabs';
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 
-The root `@soulfiremc/sdk` export uses Effect.
-It represents connections as scoped resources, streams as `Stream`, errors as tagged values, and shared clients as `Layer`.
+The TypeScript SDK uses Effect for operations, streams, typed errors, and scoped resources.
+SDK calls describe work. They send requests when the Effect runtime executes the workflow.
 
-Use `@soulfiremc/sdk/promise` with Promises and async iterables.
-Both entry points provide the same SoulFire features.
+Use `yield*` inside `Effect.gen` to compose SDK operations.
+Keep connections and their consumers inside `Effect.scoped`.
+At an async application boundary, run the complete workflow with `Effect.runPromise`.
 
-Hover over an identifier in the example below to inspect its TypeScript type. The connection options below are checked against the installed SDK during docs generation.
-
-```ts twoslash title="connection-options.ts"
-import type { SoulFireOptions } from "@soulfiremc/sdk";
-
-const options: SoulFireOptions = {
-  baseUrl: "https://soulfire.example.com",
-  token: "your-api-token",
-};
-
-options;
-// ^?
-```
-
-See the [generated option tables](/docs/sdk/api/types) for every field.
+See the [connection options](/docs/sdk/api/types) for supported fields.
 
 ## Install
 
-<Tabs items={['Effect', 'Promise']}>
-  <Tab value="Effect">
-    ```bash
-    bun add @soulfiremc/sdk effect @effect/platform
-    ```
-  </Tab>
-  <Tab value="Promise">
-    ```bash
-    bun add @soulfiremc/sdk effect @effect/platform
-    ```
-  </Tab>
-</Tabs>
+```bash
+bun add @soulfiremc/sdk effect @effect/platform
+```
 
 Effect and `@effect/platform` are peer dependencies.
 Use one compatible Effect runtime in the application.
@@ -52,96 +29,80 @@ Use one compatible Effect runtime in the application.
 
 Local JVM download and process management use explicit Node.js entry points and
 require Node.js 22 or newer.
-The Promise example creates or reuses an instance and an offline bot. Run an
-offline-mode Minecraft server at `127.0.0.1:25565` before starting the bot.
-`install()` starts SoulFire locally, so no API token or preconfigured IDs are
-needed.
+The example creates or reuses an instance and an offline bot.
+Run an offline-mode Minecraft server at `127.0.0.1:25565` before the program.
+`install()` starts SoulFire locally and supplies its API token.
 
-```ts title="local-promise.ts" lineNumbers
+```ts title="local-effect.ts" lineNumbers
+import { Effect, Stream } from "effect";
 import { AccountTypeCredentials } from "@soulfiremc/sdk";
-import { SoulFire } from "@soulfiremc/sdk/node/promise";
+import { SoulFire } from "@soulfiremc/sdk/node";
 
-await using soulfire = await SoulFire.install();
-const name = "Hello World";
-const existing = (await soulfire.instances()).find(
-  (item) => item.friendlyName === name,
-);
-const instance = existing
-  ? soulfire.instance(existing.id)
-  : await soulfire.createInstance(name);
+const program = Effect.scoped(
+  Effect.gen(function* () {
+    const soulfire = yield* SoulFire.install();
+    const name = "Hello World";
+    const existing = (yield* soulfire.instances()).find(
+      (item) => item.friendlyName === name,
+    );
+    const instance = existing
+      ? soulfire.instance(existing.id)
+      : yield* soulfire.createInstance(name);
 
-const username = "SoulFireBot";
-let botId = (await instance.bots()).find(
-  (item) => item.accountName === username,
-)?.profileId;
-if (!botId) {
-  for await (const result of instance.loginCredentials({
-    service: AccountTypeCredentials.OFFLINE,
-    payload: [username],
-  })) {
-    if (
-      result.data.case === "oneSuccess" &&
-      result.data.value.account
-    ) {
-      await instance.addAccounts([result.data.value.account]);
-      botId = result.data.value.account.profileId;
+    const username = "SoulFireBot";
+    let botId = (yield* instance.bots()).find(
+      (item) => item.accountName === username,
+    )?.profileId;
+    if (!botId) {
+      const results = yield* instance.loginCredentials({
+        service: AccountTypeCredentials.OFFLINE,
+        payload: [username],
+      }).pipe(Stream.runCollect);
+      for (const result of results) {
+        if (result.data.case === "oneSuccess" && result.data.value.account) {
+          const account = result.data.value.account;
+          yield* instance.addAccounts([account]);
+          botId = account.profileId;
+        }
+      }
     }
-  }
-}
-if (!botId) throw new Error("Could not create an offline bot");
+    if (!botId) throw new Error("Could not create an offline bot");
 
-const bot = instance.bot(botId);
-await bot.start();
-await bot.waitForOnline();
-await bot.chat.send("Hello from SoulFire");
+    const bot = instance.bot(botId);
+    yield* bot.start();
+    yield* bot.waitForOnline();
+    yield* bot.chat.send("Hello from SoulFire");
+  }),
+);
+
+await Effect.runPromise(program);
 ```
 
-To manage a local server with Effect, import `SoulFire` from
-`@soulfiremc/sdk/node` and run `SoulFire.install()` inside an `Effect.scoped`
-program.
-
-The universal `@soulfiremc/sdk` and `@soulfiremc/sdk/promise` exports never
-load Node.js process, filesystem, or archive modules.
+Use `@soulfiremc/sdk/bun` for managed installation on Bun.
+The universal entry point keeps process and filesystem modules out of browser and worker bundles.
 
 ## Connect and send chat
 
-<Tabs items={['Effect', 'Promise']}>
-  <Tab value="Effect">
-    ```ts title="connect-effect.ts" lineNumbers
-    import { Effect } from "effect";
-    import { SoulFire } from "@soulfiremc/sdk";
+```ts title="connect-effect.ts" lineNumbers
+import { Effect } from "effect";
+import { SoulFire } from "@soulfiremc/sdk";
 
-    const program = Effect.scoped(
-      Effect.gen(function* () {
-        const soulfire = yield* SoulFire.connect({
-          baseUrl: "https://soulfire.example.com",
-          token: process.env.SOULFIRE_TOKEN,
-        });
-
-        const bot = soulfire.instance("instance-uuid").bot("bot-uuid");
-        yield* bot.start();
-        yield* bot.chat.send("Hello from SoulFire");
-      }),
-    );
-
-    await Effect.runPromise(program);
-    ```
-  </Tab>
-  <Tab value="Promise">
-    ```ts title="connect-promise.ts" lineNumbers
-    import { SoulFire } from "@soulfiremc/sdk/promise";
-
-    await using soulfire = await SoulFire.connect({
+const program = Effect.scoped(
+  Effect.gen(function* () {
+    const soulfire = yield* SoulFire.connect({
       baseUrl: "https://soulfire.example.com",
       token: process.env.SOULFIRE_TOKEN,
     });
 
     const bot = soulfire.instance("instance-uuid").bot("bot-uuid");
-    await bot.start();
-    await bot.chat.send("Hello from SoulFire");
-    ```
-  </Tab>
-</Tabs>
+    yield* bot.start();
+    yield* bot.waitForOnline();
+    yield* bot.chat.send("Hello from SoulFire");
+  }),
+);
+
+await Effect.runPromise(program);
+```
 
 The connection handshake checks server compatibility and required
 capabilities before the client becomes available.
@@ -162,7 +123,8 @@ const client = yield* SoulFire.connectWithHttpClient({
 Use the runtime entry point when SoulFire provides the HTTP layer:
 
 - `@soulfiremc/sdk/node` uses
-  `@effect/platform-node/NodeHttpClient.layerUndici`.
+  `@effect/platform-node/NodeHttpClient.layerUndiciWithoutDispatcher`
+  with `dispatcherLayerGlobal`.
 - `@soulfiremc/sdk/browser` uses
   `@effect/platform/FetchHttpClient`.
 - `@soulfiremc/sdk/bun` uses the same portable fetch layer over Bun's native
@@ -179,28 +141,13 @@ For custom integrations, `@soulfiremc/sdk/platform` exports
 
 ## Stream bot events
 
-<Tabs items={['Effect', 'Promise']}>
-  <Tab value="Effect">
-    ```ts
-    yield* bot.events().pipe(
-      Stream.runForEach((event) =>
-        Effect.logInfo("Bot event", { kind: event.event.case })
-      ),
-    );
-    ```
-  </Tab>
-  <Tab value="Promise">
-    ```ts
-    const controller = new AbortController();
-
-    for await (const event of bot.events(undefined, {
-      signal: controller.signal,
-    })) {
-      console.log(event.event.case);
-    }
-    ```
-  </Tab>
-</Tabs>
+```ts
+yield* bot.events().pipe(
+  Stream.runForEach((event) =>
+    Effect.logInfo("Bot event", { kind: event.event.case })
+  ),
+);
+```
 
 The stream stays associated with the configured bot across Minecraft
 reconnects. Use `bot.observe()` when the application wants synchronized state
@@ -247,20 +194,26 @@ yield* Effect.forEach(
 );
 ```
 
-The Promise facade works with ordinary `Promise.all` when that is a better fit
-for the application.
+## Integrate with an async application
 
-Promise streams are async iterables by default. Convert one to a Web stream
-when a browser, worker, Deno, or Node.js pipeline expects it:
+Convert the complete workflow at the host boundary:
 
 ```ts
-import { toReadableStream } from "@soulfiremc/sdk/promise";
-
-const events = toReadableStream(bot.events());
+await Effect.runPromise(program, { signal: controller.signal });
 ```
 
-The adapter respects Web Stream backpressure and closes the underlying
-ConnectRPC iterator when the stream is cancelled.
+The signal interrupts the workflow and waits for scoped cleanup.
+Use `Effect.runPromiseExit` to inspect typed failures and defects separately.
+
+Effect provides adapters for host stream APIs:
+
+```ts
+const readable = Stream.toReadableStream(bot.events());
+const events = Stream.toAsyncIterable(bot.events());
+```
+
+Consume these adapters while the connection's scope remains open.
+Closing the scope ends the underlying RPC subscriptions.
 
 ## Execute production tasks
 

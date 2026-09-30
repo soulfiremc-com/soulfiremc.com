@@ -16,8 +16,8 @@ Use [durable tasks](/docs/sdk/tasks) for work that continues across ticks or rec
 The mount action interacts with an entity and waits for the server to confirm the riding state.
 The dismount action holds sneak until the server confirms that the bot left the vehicle.
 
-<Tabs items={['TypeScript Effect', 'TypeScript Promise', 'Async Python', 'Sync Python']}>
-  <Tab value="TypeScript Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     const mounted = yield* bot.mount({
       entityId: horseNetworkId,
@@ -33,32 +33,12 @@ The dismount action holds sneak until the server confirms that the bot left the 
     yield* bot.dismount();
     ```
   </Tab>
-  <Tab value="TypeScript Promise">
-    ```ts
-    const mounted = await bot.mount({
-      entityId: horseNetworkId,
-      hand: Hand.MAIN,
-    });
-
-    await bot.setVehicleControl({ forward: true, yaw: 90 });
-    await bot.setVehicleControl({ forward: false });
-    await bot.dismount();
-    ```
-  </Tab>
-  <Tab value="Async Python">
+  <Tab value="Python">
     ```python
-    mounted = await bot.mount(horse_network_id)
-    await bot.set_vehicle_control(forward=True, yaw=90)
-    await bot.set_vehicle_control(forward=False)
-    await bot.dismount()
-    ```
-  </Tab>
-  <Tab value="Sync Python">
-    ```python
-    mounted = bot.mount(horse_network_id)
-    bot.set_vehicle_control(forward=True, yaw=90)
-    bot.set_vehicle_control(forward=False)
-    bot.dismount()
+    mounted = yield from bot.mount(horse_network_id)
+    yield from bot.set_vehicle_control(forward=True, yaw=90)
+    yield from bot.set_vehicle_control(forward=False)
+    yield from bot.dismount()
     ```
   </Tab>
 </Tabs>
@@ -73,8 +53,8 @@ Sign updates take exactly four plain-text lines. SoulFire verifies the
 dimension, loaded chunk, block type, and interaction distance before sending
 the update.
 
-<Tabs items={['TypeScript Effect', 'Python']}>
-  <Tab value="TypeScript Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     yield* bot.updateSign({
       position: signPosition,
@@ -91,13 +71,13 @@ the update.
   </Tab>
   <Tab value="Python">
     ```python
-    await bot.update_sign(
+    yield from bot.update_sign(
         sign_position,
         ["Depot", "Iron", "Input", ""],
         front_text=True,
     )
 
-    await bot.write_book(
+    yield from bot.write_book(
         0,
         ["Shift report", "All systems nominal."],
         title="Night shift",
@@ -117,8 +97,8 @@ Resource-pack offers appear in `session.state.resourcePacks` in TypeScript and
 hash, required flag, and optional prompt. Send the corresponding protocol
 status as your downloader moves through its lifecycle.
 
-<Tabs items={['TypeScript Effect', 'Python']}>
-  <Tab value="TypeScript Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     yield* bot.respondResourcePack({
       packId: offer.packId,
@@ -135,14 +115,14 @@ status as your downloader moves through its lifecycle.
   </Tab>
   <Tab value="Python">
     ```python
-    await bot.respond_resource_pack(
+    yield from bot.respond_resource_pack(
         offer.pack_id,
         ResourcePackResponse.RESOURCE_PACK_RESPONSE_ACCEPTED,
     )
 
     # Download and validate the pack in your application.
 
-    await bot.respond_resource_pack(
+    yield from bot.respond_resource_pack(
         offer.pack_id,
         ResourcePackResponse.RESOURCE_PACK_RESPONSE_SUCCESSFULLY_LOADED,
     )
@@ -179,10 +159,10 @@ yield* bot.setCreativeSlot({ slot: 36 });
 ```
 
 ```python
-await bot.set_flying(True)
-await bot.start_elytra_flight()
-await bot.set_creative_slot(36, "minecraft:stone", count=64)
-await bot.set_creative_slot(36)
+yield from bot.set_flying(True)
+yield from bot.start_elytra_flight()
+yield from bot.set_creative_slot(36, "minecraft:stone", count=64)
+yield from bot.set_creative_slot(36)
 ```
 
 Creative slot edits intentionally use item IDs and counts. For exact custom
@@ -197,7 +177,7 @@ another SDK client, script, or automation task.
 ```ts
 yield* Effect.scoped(
   Effect.gen(function* () {
-    const lease = yield* bot.acquireControlScoped({ ttlSeconds: 30 });
+    const lease = yield* bot.acquireControlScoped(30);
     yield* bot.updateSign({
       position: signPosition,
       frontText: true,
@@ -210,3 +190,16 @@ yield* Effect.scoped(
 All action methods automatically attach the active lease token. The server
 also claims granular control resources, so unrelated operations can remain
 independent.
+
+## Respawn or leave the End credits
+
+`bot.respawn()` also dismisses the End credits to finish respawning.
+The bot must be online and either dead or viewing the End credits.
+The action completes after the request is sent.
+
+## Inspect the active proxy connection
+
+`bot.info()` includes optional `connection.proxy` metadata for the current connection attempt or session.
+It reports the proxy type and endpoint address without credentials, including during login before player state is available.
+A direct connection has no proxy field. An offline bot has no active connection metadata.
+Use this value to inspect the actual connection rather than infer it from configured proxy assignments.

@@ -37,7 +37,8 @@ Available hooks cover:
 - portal return
 - eye throwing and stronghold search
 - End portal activation
-- the dragon fight.
+- the dragon fight
+- exit from the End.
 
 ## Compose exported behaviors
 
@@ -100,6 +101,8 @@ compatibility.
 ## Tune the default strategy
 
 ```ts
+import { BeatGamePathSearchMode, PortalStrategy } from "@soulfiremc/beat-game";
+
 const run = yield* beatGame(bot, {
   strategy: {
     portalStrategy: PortalStrategy.CAST,
@@ -111,6 +114,10 @@ const run = yield* beatGame(bot, {
       allowMining: true,
       allowPlacing: true,
       maxFallDistance: 2,
+      maxParkourGap: 0,
+      searchMode: BeatGamePathSearchMode.NORMAL,
+      maximumExpandedStates: 50_000,
+      protectedBlocks: [portalFramePosition],
     },
   },
 });

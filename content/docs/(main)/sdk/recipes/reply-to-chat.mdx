@@ -11,7 +11,8 @@ This program starts a bot, watches for `ping`, and sends `pong`. It keeps runnin
 <Tabs items={['TypeScript', 'Python']} groupId="recipe-language">
   <Tab value="TypeScript">
     ```ts title="reply-to-chat.ts" lineNumbers
-    import { SoulFire } from "@soulfiremc/sdk/promise";
+    import { Effect, Stream } from "effect";
+    import { SoulFire } from "@soulfiremc/sdk";
 
     function env(name: string): string {
       const value = process.env[name];
@@ -19,20 +20,29 @@ This program starts a bot, watches for `ping`, and sends `pong`. It keeps runnin
       return value;
     }
 
-    await using soulfire = await SoulFire.connect({
-      baseUrl: env("SOULFIRE_URL"),
-      token: env("SOULFIRE_TOKEN"),
-    });
+    const program = Effect.scoped(
+      Effect.gen(function* () {
+        const soulfire = yield* SoulFire.connect({
+          baseUrl: env("SOULFIRE_URL"),
+          token: env("SOULFIRE_TOKEN"),
+        });
 
-    const bot = soulfire
-      .instance(env("SOULFIRE_INSTANCE_ID"))
-      .bot(env("SOULFIRE_BOT_ID"));
-    await bot.start();
+        const bot = soulfire
+          .instance(env("SOULFIRE_INSTANCE_ID"))
+          .bot(env("SOULFIRE_BOT_ID"));
+        yield* bot.start();
 
-    for await (const match of bot.chat.watch("ping")) {
-      console.log("Matched chat:", match.event);
-      await bot.chat.send("pong");
-    }
+        yield* bot.chat.watch("ping").pipe(
+          Stream.runForEach((match) =>
+            Effect.logInfo("Matched chat", match.event).pipe(
+              Effect.andThen(bot.chat.send("pong")),
+            ),
+          ),
+        );
+      }),
+    );
+
+    await Effect.runPromise(program);
     ```
   </Tab>
   <Tab value="Python">
@@ -40,25 +50,30 @@ This program starts a bot, watches for `ping`, and sends `pong`. It keeps runnin
     import asyncio
     import os
 
-    from soulfire import AsyncSoulFire
+    from effect_py import fn, sync, EffectGen, Scope, gen, run_async, scoped
+    from soulfire import SoulFireOperationError, SoulFire
 
 
-    async def main() -> None:
-        async with AsyncSoulFire.connect(
+    @gen
+    def program() -> EffectGen[None, SoulFireOperationError, Scope]:
+        soulfire = yield from SoulFire.connect(
             os.environ["SOULFIRE_URL"],
             token=os.environ["SOULFIRE_TOKEN"],
-        ) as soulfire:
-            bot = soulfire.instance(os.environ["SOULFIRE_INSTANCE_ID"]).bot(
-                os.environ["SOULFIRE_BOT_ID"]
-            )
-            await bot.start()
+        )
+        bot = soulfire.instance(os.environ["SOULFIRE_INSTANCE_ID"]).bot(
+            os.environ["SOULFIRE_BOT_ID"]
+        )
+        yield from bot.start()
 
-            async for match in bot.chat.watch("ping"):
-                print("Matched chat:", match.event)
-                await bot.chat.send("pong")
+        @fn("reply to ping")
+        def reply(match) -> EffectGen[None, SoulFireOperationError]:
+            yield from sync(lambda: print("Matched chat:", match.event))
+            yield from bot.chat.send("pong")
+
+        yield from bot.chat.watch("ping").run_for_each(reply)
 
 
-    asyncio.run(main())
+    asyncio.run(run_async(scoped(program).or_die()))
     ```
   </Tab>
 </Tabs>

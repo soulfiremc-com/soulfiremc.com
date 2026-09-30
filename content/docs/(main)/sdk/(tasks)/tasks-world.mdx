@@ -15,8 +15,8 @@ Use `excavate` to clear every diggable block between two inclusive corners.
 SoulFire selects the nearest block and plans each route near the game loop.
 The pathfinder selects tools and keeps mining inside the requested cuboid.
 
-<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
-  <Tab value="Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     const task = yield* bot.tasks.excavate(
       { x: 10, y: 60, z: 10, dimension: "minecraft:overworld" },
@@ -30,23 +30,9 @@ The pathfinder selects tools and keeps mining inside the requested cuboid.
     const result = yield* task.result();
     ```
   </Tab>
-  <Tab value="Promise">
-    ```ts
-    const task = await bot.tasks.excavate(
-      { x: 10, y: 60, z: 10, dimension: "minecraft:overworld" },
-      { x: 17, y: 64, z: 17, dimension: "minecraft:overworld" },
-      {
-        maximumBlocks: 128,
-        path: { allowPlacing: true },
-      },
-    );
-
-    const result = await task.result();
-    ```
-  </Tab>
-  <Tab value="Async Python">
+  <Tab value="Python">
     ```python
-    task = await bot.tasks.excavate(
+    task = yield from bot.tasks.excavate(
         BlockPosition(
             x=10,
             y=60,
@@ -63,29 +49,7 @@ The pathfinder selects tools and keeps mining inside the requested cuboid.
         options=PathfindOptions(allow_placing=True),
     )
 
-    result = await task.result()
-    ```
-  </Tab>
-  <Tab value="Sync Python">
-    ```python
-    task = bot.tasks.excavate(
-        BlockPosition(
-            x=10,
-            y=60,
-            z=10,
-            dimension="minecraft:overworld",
-        ),
-        BlockPosition(
-            x=17,
-            y=64,
-            z=17,
-            dimension="minecraft:overworld",
-        ),
-        maximum_blocks=128,
-        options=PathfindOptions(allow_placing=True),
-    )
-
-    result = task.result()
+    result = yield from task.result()
     ```
   </Tab>
 </Tabs>
@@ -103,8 +67,8 @@ If you stop or pause the task, SoulFire releases all bot controls that the task 
 SoulFire rotates or mirrors the blueprint on the server.
 It places blocks from the bottom up and selects the required materials.
 
-<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
-  <Tab value="Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     const task = yield* bot.tasks.build(
       origin,
@@ -133,25 +97,9 @@ It places blocks from the bottom up and selects the required materials.
     const result = yield* task.result();
     ```
   </Tab>
-  <Tab value="Promise">
-    ```ts
-    const task = await bot.tasks.build(
-      origin,
-      schematic.blocks,
-      {
-        rotation: BuildRotation.CLOCKWISE_90,
-        substitutions: schematic.substitutions,
-        path: { allowPlacing: true },
-        breakIncorrectBlocks: true,
-      },
-    );
-
-    const result = await task.result();
-    ```
-  </Tab>
-  <Tab value="Async Python">
+  <Tab value="Python">
     ```python
-    task = await bot.tasks.build(
+    task = yield from bot.tasks.build(
         origin,
         [
             SchematicBlock(
@@ -172,21 +120,7 @@ It places blocks from the bottom up and selects the required materials.
         break_incorrect_blocks=True,
     )
 
-    result = await task.result()
-    ```
-  </Tab>
-  <Tab value="Sync Python">
-    ```python
-    task = bot.tasks.build(
-        origin,
-        schematic.blocks,
-        rotation=BUILD_ROTATION_CLOCKWISE_90,
-        substitutions=schematic.substitutions,
-        options=PathfindOptions(allow_placing=True),
-        break_incorrect_blocks=True,
-    )
-
-    result = task.result()
+    result = yield from task.result()
     ```
   </Tab>
 </Tabs>
@@ -210,8 +144,8 @@ The exploration task divides a circular area into pathfinding waypoints and
 claims each waypoint before moving. Bots in the same instance that use the
 same `purpose` avoid frontier cells already claimed by another bot:
 
-<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
-  <Tab value="Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     const scouting = yield* bot.tasks.explore({
       origin: basePosition,
@@ -225,23 +159,9 @@ same `purpose` avoid frontier cells already claimed by another bot:
     const result = yield* scouting.result();
     ```
   </Tab>
-  <Tab value="Promise">
-    ```ts
-    const scouting = await bot.tasks.explore({
-      origin: basePosition,
-      radius: 512,
-      waypointSpacing: 64,
-      maximumWaypoints: 8,
-      returnToOrigin: true,
-      purpose: "village-scouting",
-    });
-
-    const result = await scouting.result();
-    ```
-  </Tab>
-  <Tab value="Async Python">
+  <Tab value="Python">
     ```python
-    scouting = await bot.tasks.explore(
+    scouting = yield from bot.tasks.explore(
         origin=base_position,
         radius=512,
         waypoint_spacing=64,
@@ -250,21 +170,7 @@ same `purpose` avoid frontier cells already claimed by another bot:
         purpose="village-scouting",
     )
 
-    result = await scouting.result()
-    ```
-  </Tab>
-  <Tab value="Sync Python">
-    ```python
-    scouting = bot.tasks.explore(
-        origin=base_position,
-        radius=512,
-        waypoint_spacing=64,
-        maximum_waypoints=8,
-        return_to_origin=True,
-        purpose="village-scouting",
-    )
-
-    result = scouting.result()
+    result = yield from scouting.result()
     ```
   </Tab>
 </Tabs>

@@ -32,8 +32,8 @@ reference.
 | Intentionally unsupported | 3 | SoulFire does not inject arbitrary JavaScript into its server process |
 
 The [machine-readable parity matrix](https://github.com/soulfiremc-com/SoulFire/blob/main/docs/mineflayer-parity.json)
-pins the source heading count and digest. CI fails when Mineflayer adds or
-changes a heading until the audit is reviewed again.
+records the source heading count and digest for that audit.
+It is a dated comparison, not an automatic CI compatibility gate.
 
 ## Start with the object model
 
@@ -57,38 +57,33 @@ Mineflayer listeners run inside the Minecraft client process. SoulFire streams
 ordered event envelopes over the SDK and can resume after a transient
 transport failure.
 
-<Tabs items={['TypeScript Effect', 'TypeScript Promise', 'Python async']}>
-  <Tab value="TypeScript Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     const session = yield* bot.observe();
 
     yield* session.events().pipe(
-      Stream.filter((event) => event.event.case === "chat"),
       Stream.runForEach((event) =>
-        Effect.logInfo("chat received", {
-          message: event.event.value.plainText,
-        })
+        event.event.case === "chat"
+          ? Effect.logInfo("chat received", {
+              message: event.event.value.plainText,
+            })
+          : Effect.void
       ),
     );
     ```
   </Tab>
-  <Tab value="TypeScript Promise">
-    ```ts
-    await using session = await bot.observe();
-
-    for await (const event of session.events()) {
-      if (event.event.case === "chat") {
-        console.log(event.event.value.plainText);
-      }
-    }
-    ```
-  </Tab>
-  <Tab value="Python async">
+  <Tab value="Python">
     ```python
-    async with await bot.observe() as session:
-        async for event in session.events():
-            if event.WhichOneof("event") == "chat":
-                print(event.chat.plain_text)
+    session = yield from bot.observe()
+    from effect_py import fn, sync
+
+    @fn("consume stream")
+    def consume(event):
+        if event.WhichOneof("event") == "chat":
+            yield from sync(lambda: print(event.chat.plain_text))
+
+    yield from session.events().run_for_each(consume)
     ```
   </Tab>
 </Tabs>
@@ -123,10 +118,10 @@ ambiguous local state change.
 Operations that span ticks belong near the game loop:
 
 ```ts
-const task = yield* bot.tasks.collectBlocks({
-  selector: { blockIds: ["minecraft:oak_log"] },
-  count: 16,
-});
+const task = yield* bot.tasks.collectBlocks(
+  ["minecraft:oak_log"],
+  { count: 16 },
+);
 
 const result = yield* task.result();
 ```

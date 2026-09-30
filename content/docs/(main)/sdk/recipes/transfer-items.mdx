@@ -6,12 +6,13 @@ icon: PackageOpen
 
 import { Tab, Tabs } from '../../../../../src/components/mdx/sdk-tabs';
 
-Set the chest coordinates in the program. The bot must be near a loaded, accessible container. The scoped handle closes the menu when the program leaves the block, including when a transfer fails.
+Set the chest coordinates in the program. The bot must be near a loaded, accessible container. The scoped handle closes the menu when the program leaves the scope, including when a transfer fails.
 
 <Tabs items={['TypeScript', 'Python']} groupId="recipe-language">
   <Tab value="TypeScript">
     ```ts title="transfer-items.ts" lineNumbers
-    import { SoulFire } from "@soulfiremc/sdk/promise";
+    import { Effect, Stream } from "effect";
+    import { SoulFire } from "@soulfiremc/sdk";
 
     function env(name: string): string {
       const value = process.env[name];
@@ -19,26 +20,33 @@ Set the chest coordinates in the program. The bot must be near a loaded, accessi
       return value;
     }
 
-    await using soulfire = await SoulFire.connect({
-      baseUrl: env("SOULFIRE_URL"),
-      token: env("SOULFIRE_TOKEN"),
-    });
+    const program = Effect.scoped(
+      Effect.gen(function* () {
+        const soulfire = yield* SoulFire.connect({
+          baseUrl: env("SOULFIRE_URL"),
+          token: env("SOULFIRE_TOKEN"),
+        });
 
-    const bot = soulfire
-      .instance(env("SOULFIRE_INSTANCE_ID"))
-      .bot(env("SOULFIRE_BOT_ID"));
-    await bot.start();
+        const bot = soulfire
+          .instance(env("SOULFIRE_INSTANCE_ID"))
+          .bot(env("SOULFIRE_BOT_ID"));
+        yield* bot.start();
+        yield* bot.waitForOnline();
 
-    const chestPosition = {
-      dimension: "minecraft:overworld",
-      x: 10,
-      y: 64,
-      z: 10,
-    };
+        const chestPosition = {
+          dimension: "minecraft:overworld",
+          x: 10,
+          y: 64,
+          z: 10,
+        };
 
-    await using chest = await bot.inventory.open(chestPosition);
-    await chest.deposit({ itemIds: ["minecraft:cobblestone"] }, 64);
-    await chest.withdraw({ tags: ["minecraft:foods"] }, 16);
+        const chest = yield* bot.inventory.openScoped(chestPosition);
+        yield* chest.deposit({ itemIds: ["minecraft:cobblestone"] }, 64);
+        yield* chest.withdraw({ tags: ["minecraft:foods"] }, 16);
+      }),
+    );
+
+    await Effect.runPromise(program);
     ```
   </Tab>
   <Tab value="Python">
@@ -46,30 +54,34 @@ Set the chest coordinates in the program. The bot must be near a loaded, accessi
     import asyncio
     import os
 
-    from soulfire import AsyncSoulFire, BlockPosition, ItemSelector
+    from effect_py import EffectGen, Scope, gen, run_async, scoped
+    from soulfire import SoulFireOperationError, SoulFire, BlockPosition
+    from soulfire.inventory_pb2 import ItemSelector
 
 
-    async def main() -> None:
-        async with AsyncSoulFire.connect(
+    @gen
+    def program() -> EffectGen[None, SoulFireOperationError, Scope]:
+        soulfire = yield from SoulFire.connect(
             os.environ["SOULFIRE_URL"],
             token=os.environ["SOULFIRE_TOKEN"],
-        ) as soulfire:
-            bot = soulfire.instance(os.environ["SOULFIRE_INSTANCE_ID"]).bot(
-                os.environ["SOULFIRE_BOT_ID"]
-            )
-            await bot.start()
+        )
+        bot = soulfire.instance(os.environ["SOULFIRE_INSTANCE_ID"]).bot(
+            os.environ["SOULFIRE_BOT_ID"]
+        )
+        yield from bot.start()
+        yield from bot.wait_for_online()
 
-            chest_position = BlockPosition(
-                dimension="minecraft:overworld", x=10, y=64, z=10
-            )
-            async with await bot.inventory.open(chest_position) as chest:
-                await chest.deposit(
-                    ItemSelector(item_ids=["minecraft:cobblestone"]), 64
-                )
-                await chest.withdraw(ItemSelector(tags=["minecraft:foods"]), 16)
+        chest_position = BlockPosition(
+            dimension="minecraft:overworld", x=10, y=64, z=10
+        )
+        chest = yield from bot.inventory.open(chest_position)
+        yield from chest.deposit(
+            ItemSelector(item_ids=["minecraft:cobblestone"]), 64
+        )
+        yield from chest.withdraw(ItemSelector(tags=["minecraft:foods"]), 16)
 
 
-    asyncio.run(main())
+    asyncio.run(run_async(scoped(program).or_die()))
     ```
   </Tab>
 </Tabs>

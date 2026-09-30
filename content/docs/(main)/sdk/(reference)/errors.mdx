@@ -49,37 +49,39 @@ Effect interruption cancels the underlying request or stream. Acquire clients,
 sessions, leases, and local server processes in a scope so interruption also
 runs their finalizers.
 
-## Promise and Python errors
+## Python error channels
 
-The Promise facade rejects with the typed error value from the Effect channel.
-It does not leak an Effect `FiberFailure`.
-
-```ts
-try {
-  await bot.chat.send("hello");
-} catch (error) {
-  if (error instanceof SoulFireRpcError && error.retryable) {
-    console.warn(error.code, error.requestId, error.cause);
-  } else {
-    throw error;
-  }
-}
-```
-
-Python RPC failures raise `SoulFireRpcError` with matching diagnostic fields:
+Python effects preserve typed failures separately from unexpected exceptions.
+Use effect-py recovery operators instead of `try` around `yield from`:
 
 ```python
-try:
-    await bot.chat.send("hello")
-except SoulFireRpcError as error:
-    if not error.retryable:
-        raise
-    print(error.code, error.request_id, error.cause)
+from effect_py import fail, succeed
+from effect_py.errors import catch_tag
+from soulfire import SoulFireRpcError
+
+operation = bot.chat.send("hello").pipe(
+    catch_tag(SoulFireRpcError)(
+        lambda error: succeed(None) if error.retryable else fail(error)
+    )
+)
 ```
 
-Pass `AbortSignal` and ConnectRPC call options in TypeScript. Pass
-`timeout_ms` in Python. Python async chat waits use the standard
-`asyncio.timeout` cancellation model.
+This example accepts a retryable delivery failure without sending a duplicate message.
+Use a bounded retry policy for operations that can safely repeat.
+Unexpected exceptions remain defects and bypass typed recovery.
+
+Use `run_async_exit` to inspect a complete workflow's result.
+Use `or_die()` only at the application boundary after recovery ends.
+Register cleanup in the scope. Do not yield cleanup effects from a generator's `finally` block.
+
+## Cancellation and deadlines
+
+In TypeScript, pass an `AbortSignal` to `Effect.runPromise` at the host boundary.
+Interruption propagates to scoped fibers, requests, and streams.
+
+In Python, cancel the async task that runs the complete effect workflow.
+The runtime waits for scoped finalizers before cancellation completes.
+Python effect durations use seconds. RPC `timeout_ms` options retain milliseconds.
 
 ## Retry safely
 

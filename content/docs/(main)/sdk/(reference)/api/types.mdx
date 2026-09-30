@@ -1,33 +1,80 @@
 ---
 title: TypeScript options
-description: Options generated from the released TypeScript SDK types.
+description: Connection, session, and task options from the SDK source.
 icon: Braces
 ---
 
-These tables come from the TypeScript declarations in `@soulfiremc/sdk` 2.10.0. They update when the pinned package and docs are updated together.
+Generated from the [SoulFire SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Each signature links to the same source revision.
 
-## Connection options
+These tables include inherited fields. Path options use the generated `PathfindOptionsSchema` contract. See [pathfinding](/docs/sdk/pathfinding) for search modes and safety limits.
 
-Pass `SoulFireOptions` to `SoulFire.connect` in either TypeScript entry point.
+## SoulFireOptions
 
-<auto-type-table path="./sdk-types.ts" name="SoulFireOptions" />
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `baseUrl` | `string` | Yes |  |
+| `token` | `string \| TokenProvider` | No |  |
+| `defaultTimeoutMs` | `number` | No |  |
+| `fetch` | `GrpcWebTransportOptions["fetch"]` | No |  |
+| `interceptors` | `Interceptor[]` | No |  |
+| `requiredCapabilities` | `readonly string[]` | No |  |
+| `requiredPlugins` | `readonly RequiredPluginRequirement[]` | No |  |
+| `transport` | `Transport` | No |  |
 
-## Session options
+## BotSessionOptions
 
-Pass `BotSessionOptions` to `bot.observe` to choose which state to track.
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `filter` | `MessageInitShape<typeof BotEventFilterSchema>` | No | Defaults to every category except sounds, particles and chunks. |
+| `heartbeatIntervalSeconds` | `number` | No | Defaults to 15, from 5 to 60. |
 
-<auto-type-table path="./sdk-types.ts" name="BotSessionOptions" />
+## TaskStartOptions
 
-## Task options
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `call` | `CallOptions` | No |  |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No |  |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No |  |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No |  |
+| `priority` | `BotTaskPriority` | No |  |
+| `parentTaskId` | `string \| undefined` | No |  |
+| `causationId` | `string \| undefined` | No |  |
+| `idempotencyKey` | `string \| undefined` | No |  |
 
-Task start options control scheduling and reconnect behavior. Specific tasks add their own fields.
+## CollectBlocksTaskOptions
 
-<auto-type-table path="./sdk-types.ts" name="TaskStartOptions" />
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `tags` | `readonly string[]` | No | Block tags to match, besides `blockIds`. |
+| `count` | `number` | No | Defaults to 1. |
+| `searchRadius` | `number` | No | Defaults to 32, at most 64. |
+| `avoidSubmergedTargets` | `boolean` | No | Skips blocks with fluid above them, up to the bot's height. |
+| `requireLineOfSight` | `boolean` | No | Only picks blocks the bot can see, checked again after each block. |
+| `targetYRange` | `Readonly<{ minimum?: number; maximum?: number; }>` | No | Only blocks between these heights; a missing bound is open. |
+| `path` | `MessageInitShape<typeof PathfindOptionsSchema>` | No |  |
+| `call` | `CallOptions` | No |  |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No |  |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No |  |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No |  |
+| `priority` | `BotTaskPriority` | No |  |
+| `parentTaskId` | `string \| undefined` | No |  |
+| `causationId` | `string \| undefined` | No |  |
+| `idempotencyKey` | `string \| undefined` | No |  |
 
-### Collect blocks
+## FollowEntityTaskOptions
 
-<auto-type-table path="./sdk-types.ts" name="CollectBlocksTaskOptions" />
-
-### Follow an entity
-
-<auto-type-table path="./sdk-types.ts" name="FollowEntityTaskOptions" />
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `path` | `MessageInitShape<typeof PathfindOptionsSchema>` | No |  |
+| `targetUnavailableTimeoutSeconds` | `number` | No | How long the entity may stay out of sight before the task ends. Defaults to 10, at most 3600. |
+| `call` | `CallOptions` | No |  |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No |  |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No |  |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No |  |
+| `priority` | `BotTaskPriority` | No |  |
+| `parentTaskId` | `string \| undefined` | No |  |
+| `causationId` | `string \| undefined` | No |  |
+| `idempotencyKey` | `string \| undefined` | No |  |

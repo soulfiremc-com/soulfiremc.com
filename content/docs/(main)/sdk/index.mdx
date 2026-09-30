@@ -12,20 +12,19 @@ Your application controls one bot or a fleet.
 SoulFire manages connections, reconnects, permissions, tasks, and plugins.
 
 <Callout type="info">
-  The TypeScript SDK supports both Effect and Promises.
+  The TypeScript SDK uses Effect.
   The Python SDK requires CPython 3.14.
-  It supports asynchronous and synchronous code.
+  The Python SDK uses effect-py.
 </Callout>
 
 ## Choose a language
 
 <Cards>
   <Card title="TypeScript" href="/docs/sdk/typescript">
-    Use the Effect API or the Promise API.
+    Compose operations with Effect and scoped streams.
   </Card>
   <Card title="Python" href="/docs/sdk/python">
-    Use `AsyncSoulFire` for asynchronous programs.
-    Use `SoulFire` for synchronous scripts.
+    Compose `SoulFire` operations with effect-py and `yield from`.
   </Card>
 </Cards>
 
@@ -72,6 +71,17 @@ Each Minecraft account is a separate bot.
 SoulFire saves the requested bot state.
 It can reconnect the bot after the SDK program stops.
 
+## Run the examples
+
+Guide snippets assume an open connection inside a scoped workflow.
+In TypeScript, compose operations with `yield*` inside `Effect.gen` and run the complete workflow with `Effect.runPromise`.
+In Python, compose operations with `yield from` inside `@gen` or `@fn` and run the workflow with `run_async`.
+
+The scope owns connections, sessions, subscriptions, and acquired resources.
+Keep their consumers inside the same scope.
+Stream callbacks return effects so cancellation and typed errors stay within the workflow.
+The [recipes](/docs/sdk/recipes) include complete runtime setup.
+
 ## Actions, streams, and tasks
 
 Use an action for one short operation, such as sending chat or clicking a slot.
@@ -97,4 +107,4 @@ An application can use a plugin package or discover the plugin API while it runs
 
 ## API reference
 
-The [SDK API reference](/docs/sdk/api) lists the main TypeScript and Python methods with links to the released source. [TypeScript option tables](/docs/sdk/api/types) are generated from the published SDK declarations. The [server RPC reference](/docs/openapi) covers lower level endpoints.
+The [SDK API reference](/docs/sdk/api) lists the main TypeScript and Python methods with links to the current source. [TypeScript option tables](/docs/sdk/api/types) use the same source revision. The [server RPC reference](/docs/openapi) covers lower level endpoints.

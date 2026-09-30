@@ -12,8 +12,8 @@ Use it instead of hard-coded numeric IDs, copied data files, or version assumpti
 
 ## Identify the active registry
 
-<Tabs items={['TypeScript Effect', 'TypeScript Promise', 'Python async']}>
-  <Tab value="TypeScript Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     const registry = yield* bot.registry.identity();
 
@@ -24,18 +24,9 @@ Use it instead of hard-coded numeric IDs, copied data files, or version assumpti
     });
     ```
   </Tab>
-  <Tab value="TypeScript Promise">
-    ```ts
-    const registry = await bot.registry.identity();
-    console.log(
-      registry.identity?.minecraftVersion,
-      registry.identity?.registryHash,
-    );
-    ```
-  </Tab>
-  <Tab value="Python async">
+  <Tab value="Python">
     ```python
-    registry = await bot.registry.identity()
+    registry = yield from bot.registry.identity()
     print(
         registry.identity.minecraft_version,
         registry.identity.registry_hash,
@@ -63,13 +54,13 @@ const diamondPickaxe = yield* bot.registry.entry({
 ```
 
 ```python
-axes = await bot.registry.entries(
+axes = yield from bot.registry.entries(
     REGISTRY_KIND_ITEM,
     tags=["minecraft:axes"],
     page_size=100,
 )
 
-diamond_pickaxe = await bot.registry.entry(
+diamond_pickaxe = yield from bot.registry.entry(
     REGISTRY_KIND_ITEM,
     "minecraft:diamond_pickaxe",
 )

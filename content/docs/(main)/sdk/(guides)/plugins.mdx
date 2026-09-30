@@ -89,13 +89,13 @@ bunx soulfire-sdk generate \
   --output packages/soulfire-plugin-example
 ```
 
-The TypeScript output supports Effect and Promises.
-The Python output requires CPython 3.14 and supports asynchronous and synchronous code.
+The TypeScript output returns Effect operations and streams.
+The Python output requires CPython 3.14 and returns effect-py operations and scoped streams.
 Both packages contain the validated API description, version data, generated protobuf types, and typed event methods.
 They also contain a module for `plugins.require(...)`.
 
 Registered plugin tasks describe their request, result, progress data, and permissions.
-The generator creates typed task methods for each supported API style.
+The generator creates typed task methods for each language.
 
 The generator requires Node.js 22 or newer.
 It uses fixed versions of Buf and the remote generators.
@@ -105,8 +105,8 @@ You do not need to install `protoc` plugins.
 
 The companion module compares the installed plugin version and services before it creates a client.
 
-<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
-  <Tab value="Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     const plugin = yield* soulfire.plugins.require(examplePlugin);
     const reply = yield* plugin.echo(instanceId, "hello");
@@ -114,29 +114,18 @@ The companion module compares the installed plugin version and services before i
     yield* plugin.watchTicks(instanceId, 10).pipe(Stream.runDrain);
     ```
   </Tab>
-  <Tab value="Promise">
-    ```ts
-    const plugin = await soulfire.plugins.require(examplePlugin);
-    const reply = await plugin.echo(instanceId, "hello");
-
-    for await (const tick of plugin.watchTicks(instanceId, 10)) {
-      console.log(tick.sequence);
-    }
-    ```
-  </Tab>
-  <Tab value="Async Python">
-    ```python
-    plugin = soulfire.plugins.require(async_example_plugin)
-    reply = await plugin.echo(instance_id, "hello")
-
-    async for tick in plugin.watch_ticks(instance_id, 10):
-        print(tick.sequence)
-    ```
-  </Tab>
-  <Tab value="Sync Python">
+  <Tab value="Python">
     ```python
     plugin = soulfire.plugins.require(example_plugin)
-    reply = plugin.echo(instance_id, "hello")
+    reply = yield from plugin.echo(instance_id, "hello")
+
+    from effect_py import fn, sync
+
+    @fn("consume stream")
+    def consume(tick):
+        yield from sync(lambda: print(tick.sequence))
+
+    yield from plugin.watch_ticks(instance_id, 10).run_for_each(consume)
     ```
   </Tab>
 </Tabs>
@@ -146,8 +135,8 @@ The companion module compares the installed plugin version and services before i
 The SDK verifies the downloaded descriptor set against the SHA-256 hash from
 the catalog.
 
-<Tabs items={['Effect', 'Promise', 'Async Python']}>
-  <Tab value="Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     const plugin = yield* soulfire.plugins.reflective("example");
     const response = yield* plugin.call(
@@ -159,20 +148,10 @@ the catalog.
     yield* Effect.logInfo(response.json);
     ```
   </Tab>
-  <Tab value="Promise">
-    ```ts
-    const plugin = await soulfire.plugins.reflective("example");
-    const response = await plugin.call(
-      "soulfire.plugin.example.v1.ExamplePluginService",
-      "Echo",
-      { instanceId, message: "hello" },
-    );
-    ```
-  </Tab>
-  <Tab value="Async Python">
+  <Tab value="Python">
     ```python
-    plugin = await soulfire.plugins.reflective("example")
-    response = await plugin.call(
+    plugin = yield from soulfire.plugins.reflective("example")
+    response = yield from plugin.call(
         "soulfire.plugin.example.v1.ExamplePluginService",
         "Echo",
         {"instanceId": instance_id, "message": "hello"},
@@ -224,8 +203,8 @@ context.tasks().register(
 
 Generated companion packages expose the provider as a typed method:
 
-<Tabs items={['Effect', 'Promise', 'Async Python', 'Reflective']}>
-  <Tab value="Effect">
+<Tabs items={['TypeScript', 'Python', 'Reflective']}>
+  <Tab value="TypeScript">
     ```ts
     const extension = yield* soulfire.plugins.require(skyBlockPlugin);
     const bot = soulfire.instance(instanceId).bot(botId);
@@ -236,24 +215,14 @@ Generated companion packages expose the provider as a typed method:
     const result = yield* task.result();
     ```
   </Tab>
-  <Tab value="Promise">
-    ```ts
-    const extension = await soulfire.plugins.require(skyBlockPlugin);
-    const task = await extension.buildIsland(
-      soulfire.instance(instanceId).bot(botId).tasks,
-      { template: "cobblestone-generator" },
-    );
-    const result = await task.result();
-    ```
-  </Tab>
-  <Tab value="Async Python">
+  <Tab value="Python">
     ```python
-    extension = soulfire.plugins.require(async_skyblock_plugin)
-    task = await extension.build_island(
+    extension = soulfire.plugins.require(skyblock_plugin)
+    task = yield from extension.build_island(
         bot.tasks,
         BuildIslandTask(template="cobblestone-generator"),
     )
-    result = await task.result()
+    result = yield from task.result()
     ```
   </Tab>
   <Tab value="Reflective">
@@ -299,8 +268,8 @@ Plugins can publish a protobuf message at global, instance, bot, or task scope.
 The catalog filters events on the server and preserves the protobuf type in a
 normalized envelope.
 
-<Tabs items={['Effect', 'Promise', 'Async Python', 'Reflective']}>
-  <Tab value="Effect">
+<Tabs items={['TypeScript', 'Python', 'Reflective']}>
+  <Tab value="TypeScript">
     ```ts
     const events = soulfire.plugins.typedEvents(
       "example",
@@ -317,29 +286,20 @@ normalized envelope.
     );
     ```
   </Tab>
-  <Tab value="Promise">
-    ```ts
-    for await (
-      const { event, value } of soulfire.plugins.typedEvents(
-        "example",
-        TickSchema,
-        { instanceId },
-      )
-    ) {
-      if (value !== undefined) console.log(value.sequence);
-      if (event.droppedBefore > 0n) console.warn("Consumer fell behind");
-    }
-    ```
-  </Tab>
-  <Tab value="Async Python">
+  <Tab value="Python">
     ```python
-    async for event in soulfire.plugins.typed_events(
+    from effect_py import fn, sync
+
+    @fn("consume stream")
+    def consume(event):
+        if event.value is not None:
+            yield from sync(lambda: print(event.value.sequence))
+
+    yield from soulfire.plugins.typed_events(
         "example",
         Tick,
         instance_id=instance_id,
-    ):
-        if event.value is not None:
-            print(event.value.sequence)
+    ).run_for_each(consume)
     ```
   </Tab>
   <Tab value="Reflective">

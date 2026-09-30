@@ -1,17 +1,16 @@
 import { execFileSync } from "node:child_process";
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import {
+  buildSdk,
+  sdkSource,
+  sdkRepository as repository,
+  sdkRevision,
+} from "./sdk-source";
+import { readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import ts from "typescript";
 
-const version = "2.10.0";
-const releaseCommit = "54729483015e8c9b1b8f18f589f58de0d2219dba";
-const repository = "https://github.com/soulfiremc-com/SoulFire";
 const outputDir = resolve("content/docs/(main)/sdk/(reference)/api");
-const temporaryDir = process.env.SOULFIRE_SDK_SOURCE
-  ? undefined
-  : mkdtempSync(join(tmpdir(), "soulfire-sdk-reference-"));
-const sourceDir = process.env.SOULFIRE_SDK_SOURCE ?? temporaryDir!;
+const sourceDir = sdkSource();
 
 type Method = { name: string; signature: string; file: string; line: number };
 
@@ -22,13 +21,8 @@ const typescriptGroups = [
       "Use the root client to connect, select an instance, and close the connection.",
     classes: [
       {
-        name: "SoulFireApi",
-        file: "effect-client.ts",
-        methods: ["connect", "layer"],
-      },
-      {
-        name: "SoulFire",
-        file: "promise-client.ts",
+        name: "SoulFireClient",
+        file: "client.ts",
         methods: [
           "connect",
           "unauthenticated",
@@ -99,28 +93,25 @@ const pythonGroups = [
   {
     title: "Connect and select bots",
     description:
-      "Choose the async client for services or the sync client for scripts.",
+      "Compose operations with effect-py and keep connections inside a scope.",
     classes: [
       {
-        name: "AsyncSoulFire",
-        methods: ["connect", "instance", "instances", "close"],
-      },
-      {
         name: "SoulFire",
-        methods: ["connect", "instance", "instances", "close"],
+        methods: ["connect", "install", "instance", "instances", "close"],
       },
       {
-        name: "AsyncSoulFireInstance",
+        name: "SoulFireInstance",
         methods: ["bot", "bots", "events", "start", "stop"],
       },
     ],
   },
   {
     title: "Control a bot",
-    description: "The sync bot exposes corresponding methods without `await`.",
+    description:
+      "Operations return effects. Streams expose effect-based consumers.",
     classes: [
       {
-        name: "AsyncSoulFireBot",
+        name: "SoulFireBot",
         methods: [
           "start",
           "stop",
@@ -131,7 +122,7 @@ const pythonGroups = [
         ],
       },
       {
-        name: "AsyncSoulFireChat",
+        name: "SoulFireChat",
         methods: ["send", "command", "watch", "wait_for"],
       },
     ],
@@ -142,7 +133,7 @@ const pythonGroups = [
       "Task handles survive SDK disconnects. Read their state or resume them by ID.",
     classes: [
       {
-        name: "AsyncSoulFireTasks",
+        name: "SoulFireTasks",
         methods: [
           "go_to",
           "follow_entity",
@@ -154,7 +145,7 @@ const pythonGroups = [
         ],
       },
       {
-        name: "AsyncSoulFireTask",
+        name: "SoulFireTask",
         methods: ["refresh", "events", "wait", "cancel", "result"],
       },
     ],
@@ -166,7 +157,7 @@ function sourceLink(language: "typescript" | "python", method: Method) {
     language === "typescript"
       ? `sdk/typescript/src/${method.file}`
       : `sdk/python/src/soulfire/${method.file}`;
-  return `${repository}/blob/${version}/${path}#L${method.line}`;
+  return `${repository}/blob/${sdkRevision}/${path}#L${method.line}`;
 }
 
 function extractTypescript(className: string, filename: string): Method[] {
@@ -248,59 +239,71 @@ function section(
     .join("\n\n");
 }
 
-try {
-  const installedVersion = JSON.parse(
-    readFileSync(resolve("node_modules/@soulfiremc/sdk/package.json"), "utf8"),
-  ).version as string;
-  if (installedVersion !== version) {
-    throw new Error(
-      `Expected @soulfiremc/sdk ${version}, found ${installedVersion}`,
-    );
-  }
-  if (temporaryDir) {
-    execFileSync(
-      "git",
-      [
-        "clone",
-        "--quiet",
-        "--depth",
-        "1",
-        "--branch",
-        version,
-        repository,
-        sourceDir,
-      ],
-      { stdio: "inherit" },
-    );
-  }
-  const sourceCommit = execFileSync(
-    "git",
-    ["-C", sourceDir, "rev-parse", "HEAD"],
-    {
-      encoding: "utf8",
-    },
-  ).trim();
-  if (sourceCommit !== releaseCommit) {
-    throw new Error(
-      `Expected SDK commit ${releaseCommit}, found ${sourceCommit}`,
-    );
-  }
-  const python = JSON.parse(
-    execFileSync(
-      "python3.14",
-      ["scripts/extract-sdk-python-api.py", sourceDir],
-      { encoding: "utf8" },
-    ),
-  ) as Record<string, Method[]>;
-  const intro = `Generated from the [SoulFire SDK ${version} release](${repository}/tree/${version}). Each signature links to its release source.\n\n`;
-  writeFileSync(
-    join(outputDir, "typescript.mdx"),
-    `---\ntitle: TypeScript API\ndescription: Core TypeScript SDK methods and signatures from release ${version}.\nicon: Code\n---\n\n${intro}The root \`SoulFire\` export follows the \`SoulFireApi\` interface. The Promise entry point exports a \`SoulFire\` class. See [TypeScript setup](/docs/sdk/typescript) for complete connection examples.\n\n${section("typescript", typescriptGroups, (name, file) => extractTypescript(name, file!))}\n`,
-  );
-  writeFileSync(
-    join(outputDir, "python.mdx"),
-    `---\ntitle: Python API\ndescription: Core Python SDK methods and signatures from release ${version}.\nicon: Code\n---\n\n${intro}The async classes are shown below. The synchronous classes expose matching methods without \`await\`. See [Python setup](/docs/sdk/python) for complete connection examples.\n\n${section("python", pythonGroups, (name) => python[name] ?? [])}\n`,
-  );
-} finally {
-  if (temporaryDir) rmSync(temporaryDir, { recursive: true, force: true });
-}
+buildSdk(sourceDir);
+const python = JSON.parse(
+  execFileSync("python3.14", ["scripts/extract-sdk-python-api.py", sourceDir], {
+    encoding: "utf8",
+  }),
+) as Record<string, Method[]>;
+const intro = `Generated from the [SoulFire SDK source](${repository}/tree/${sdkRevision}). Each signature links to the same source revision.\n\n`;
+writeFileSync(
+  join(outputDir, "typescript.mdx"),
+  `---\ntitle: TypeScript API\ndescription: Core TypeScript SDK operations and stream signatures.\nicon: Code\n---\n\n${intro}The \`SoulFire\` factory connects a scoped \`SoulFireClient\`. Network operations return Effect values or streams. See [TypeScript setup](/docs/sdk/typescript) for connection and layer examples.\n\n${section("typescript", typescriptGroups, (name, file) => extractTypescript(name, file!))}\n`,
+);
+writeFileSync(
+  join(outputDir, "python.mdx"),
+  `---\ntitle: Python API\ndescription: Core Python SDK operations and stream signatures.\nicon: Code\n---\n\n${intro}Methods decorated with \`@fn\` return effects. Their source signatures use \`EffectGen\` for the generator body. Compose operations with \`yield from\` inside a scoped workflow. See [Python setup](/docs/sdk/python) for runtime and stream examples.\n\n${section("python", pythonGroups, (name) => python[name] ?? [])}\n`,
+);
+
+const entry = join(sourceDir, "sdk/typescript/dist/index.d.ts");
+const program = ts.createProgram([entry], {
+  target: ts.ScriptTarget.ESNext,
+  module: ts.ModuleKind.NodeNext,
+  moduleResolution: ts.ModuleResolutionKind.NodeNext,
+  strict: true,
+  skipLibCheck: true,
+});
+const checker = program.getTypeChecker();
+const moduleSymbol = checker.getSymbolAtLocation(program.getSourceFile(entry)!);
+if (!moduleSymbol) throw new Error("Missing SDK module");
+const exports = checker.getExportsOfModule(moduleSymbol);
+const optionTypes = [
+  "SoulFireOptions",
+  "BotSessionOptions",
+  "TaskStartOptions",
+  "CollectBlocksTaskOptions",
+  "FollowEntityTaskOptions",
+];
+const tables = optionTypes.map((name) => {
+  const symbol = exports.find((item) => item.name === name);
+  if (!symbol) throw new Error(`Missing SDK option type: ${name}`);
+  const resolved = checker.getAliasedSymbol(symbol);
+  const type = checker.getDeclaredTypeOfSymbol(resolved);
+  const rows = checker.getPropertiesOfType(type).map((property) => {
+    const declaration = property.valueDeclaration ?? property.declarations?.[0];
+    if (!declaration)
+      throw new Error(`Missing declaration: ${name}.${property.name}`);
+    const propertyType = (
+      ts.isPropertySignature(declaration) && declaration.type
+        ? declaration.type.getText()
+        : checker.typeToString(
+            checker.getTypeOfSymbolAtLocation(property, declaration),
+            undefined,
+            ts.TypeFormatFlags.NoTruncation,
+          )
+    )
+      .replace(/\s+/gu, " ")
+      .replace(/\|/gu, "\\|");
+    const description = ts
+      .displayPartsToString(property.getDocumentationComment(checker))
+      .replace(/\s+/gu, " ")
+      .replace(/\|/gu, "\\|");
+    const optional = (property.flags & ts.SymbolFlags.Optional) !== 0;
+    return `| \`${property.name}\` | \`${propertyType}\` | ${optional ? "No" : "Yes"} | ${description} |`;
+  });
+  return `## ${name}\n\n| Field | Type | Required | Description |\n| --- | --- | --- | --- |\n${rows.join("\n")}`;
+});
+writeFileSync(
+  join(outputDir, "types.mdx"),
+  `---\ntitle: TypeScript options\ndescription: Connection, session, and task options from the SDK source.\nicon: Braces\n---\n\n${intro}These tables include inherited fields. Path options use the generated \`PathfindOptionsSchema\` contract. See [pathfinding](/docs/sdk/pathfinding) for search modes and safety limits.\n\n${tables.join("\n\n")}\n`,
+);

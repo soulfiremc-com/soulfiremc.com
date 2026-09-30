@@ -1,62 +1,38 @@
 ---
 title: TypeScript API
-description: Core TypeScript SDK methods and signatures from release 2.10.0.
+description: Core TypeScript SDK operations and stream signatures.
 icon: Code
 ---
 
-Generated from the [SoulFire SDK 2.10.0 release](https://github.com/soulfiremc-com/SoulFire/tree/2.10.0). Each signature links to its release source.
+Generated from the [SoulFire SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Each signature links to the same source revision.
 
-The root `SoulFire` export follows the `SoulFireApi` interface. The Promise entry point exports a `SoulFire` class. See [TypeScript setup](/docs/sdk/typescript) for complete connection examples.
+The `SoulFire` factory connects a scoped `SoulFireClient`. Network operations return Effect values or streams. See [TypeScript setup](/docs/sdk/typescript) for connection and layer examples.
 
 ## Connect and select bots
 
 Use the root client to connect, select an instance, and close the connection.
 
-### SoulFireApi
+### SoulFireClient
 
 #### connect [!toc]
 
 ```ts
-connect(
+public static connect(
   options: SoulFireOptions,
-): Effect.Effect<
-  SoulFireClient,
-  SoulFireConnectionError,
-  Scope.Scope
->
+): Effect.Effect<SoulFireClient, SoulFireConnectionError, Scope.Scope>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/effect-client.ts#L538)
-
-#### layer [!toc]
-
-```ts
-layer(
-  options: SoulFireOptions,
-): Layer.Layer<SoulFireService, SoulFireConnectionError>
-```
-
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/effect-client.ts#L552)
-
-### SoulFire
-
-#### connect [!toc]
-
-```ts
-public static connect(options: SoulFireOptions): Promise<SoulFire>
-```
-
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/promise-client.ts#L267)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L291)
 
 #### unauthenticated [!toc]
 
 ```ts
-public static async unauthenticated(
+public static unauthenticated(
   options: SoulFireOptions,
-): Promise<SoulFire>
+): Effect.Effect<SoulFireClient, SoulFireConnectionError, Scope.Scope>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/promise-client.ts#L271)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L305)
 
 #### instance [!toc]
 
@@ -64,25 +40,25 @@ public static async unauthenticated(
 public instance(instanceId: string): SoulFireInstance
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/promise-client.ts#L360)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L399)
 
 #### instances [!toc]
 
 ```ts
 public instances(
   options?: CallOptions,
-): Promise<InstanceListResponse_Instance[]>
+): Effect.Effect<InstanceListResponse_Instance[], SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/promise-client.ts#L367)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L419)
 
 #### close [!toc]
 
 ```ts
-public async close(): Promise<void>
+public close(): Effect.Effect<void>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/promise-client.ts#L408)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L477)
 
 ### SoulFireInstance
 
@@ -92,49 +68,52 @@ public async close(): Promise<void>
 public bot(botId: string): SoulFireBot
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/client.ts#L540)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L588)
 
 #### bots [!toc]
 
 ```ts
-public async bots(options?: CallOptions): Promise<BotListEntry[]>
+public bots(
+  options?: CallOptions,
+): Effect.Effect<BotListEntry[], SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/client.ts#L672)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L787)
 
 #### events [!toc]
 
 ```ts
 public events(
-  filter: MessageInitShape<typeof InstanceEventFilterSchema> =
-    DEFAULT_INSTANCE_EVENT_FILTER,
+  filter: MessageInitShape<
+    typeof InstanceEventFilterSchema
+  > = DEFAULT_INSTANCE_EVENT_FILTER,
   options?: CallOptions,
-): AsyncIterable<InstanceEvent>
+): Stream.Stream<InstanceEvent, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/client.ts#L694)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L824)
 
 #### start [!toc]
 
 ```ts
-public async start(
+public start(
   selection?: BotSelection,
   options?: CallOptions,
-): Promise<BotStatus[]>
+): Effect.Effect<BotStatus[], SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/client.ts#L711)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L858)
 
 #### stop [!toc]
 
 ```ts
-public async stop(
+public stop(
   selection?: BotSelection,
   options?: CallOptions,
-): Promise<BotStatus[]>
+): Effect.Effect<BotStatus[], SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/client.ts#L734)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L889)
 
 ## Control a bot
 
@@ -145,103 +124,111 @@ Bot methods handle one action. Use the linked guides for stream and task lifecyc
 #### start [!toc]
 
 ```ts
-public async start(options?: CallOptions): Promise<BotStatus>
+public start(
+  options?: CallOptions,
+): Effect.Effect<BotStatus, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/client.ts#L929)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1117)
 
 #### stop [!toc]
 
 ```ts
-public async stop(options?: CallOptions): Promise<BotStatus>
+public stop(
+  options?: CallOptions,
+): Effect.Effect<BotStatus, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/client.ts#L941)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1141)
 
 #### status [!toc]
 
 ```ts
-public async status(options?: CallOptions): Promise<BotStatus>
+public status(
+  options?: CallOptions,
+): Effect.Effect<BotStatus, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/client.ts#L961)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1182)
 
 #### events [!toc]
 
 ```ts
 public events(
-  filter: MessageInitShape<typeof BotEventFilterSchema> =
-    DEFAULT_EVENT_FILTER,
+  filter: MessageInitShape<
+    typeof BotEventFilterSchema
+  > = DEFAULT_EVENT_FILTER,
   options?: CallOptions,
-): AsyncIterable<BotEvent>
+): Stream.Stream<BotEvent, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/client.ts#L1011)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1282)
 
 #### observe [!toc]
 
 ```ts
-public observe(options?: BotSessionOptions): Promise<BotSession>
+public observe(
+  options?: BotSessionOptions,
+): Effect.Effect<BotSession, SoulFireOperationError, Scope.Scope>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/client.ts#L1026)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1307)
 
 #### waitForOnline [!toc]
 
 ```ts
-public async waitForOnline(options?: {
+public waitForOnline(options?: {
   call?: CallOptions;
-  signal?: AbortSignal;
-}): Promise<BotStatus>
+}): Effect.Effect<BotStatus, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/client.ts#L984)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1236)
 
 ### SoulFireChat
 
 #### send [!toc]
 
 ```ts
-public async send(
+public send(
   message: string,
   options: ChatMutationOptions = {},
-): Promise<BotActionResult>
+): Effect.Effect<BotActionResult, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/chat.ts#L63)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/chat.ts#L70)
 
 #### command [!toc]
 
 ```ts
-public async command(
+public command(
   command: string,
   options: ChatMutationOptions = {},
-): Promise<BotActionResult>
+): Effect.Effect<BotActionResult, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/chat.ts#L80)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/chat.ts#L97)
 
 #### watch [!toc]
 
 ```ts
-public async *watch(
+public watch(
   matcher: ChatMatcher,
   options: WatchChatOptions = {},
-): AsyncIterable<ChatMatch>
+): Stream.Stream<ChatMatch, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/chat.ts#L130)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/chat.ts#L176)
 
 #### waitFor [!toc]
 
 ```ts
-public async waitFor(
+public waitFor(
   matcher: ChatMatcher,
   options: WaitForChatOptions = {},
-): Promise<ChatMatch>
+): Effect.Effect<ChatMatch, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/chat.ts#L161)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/chat.ts#L205)
 
 ## Run durable tasks
 
@@ -255,10 +242,13 @@ Task handles survive SDK disconnects. Read their state or resume them by ID.
 public goTo(
   goal: PathfindGoal,
   options: GoToTaskOptions = {},
-): Promise<SoulFireTask<typeof GoToTaskResultSchema>>
+): Effect.Effect<
+  SoulFireTask<typeof GoToTaskResultSchema>,
+  SoulFireOperationError
+>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/tasks.ts#L632)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1061)
 
 #### followEntity [!toc]
 
@@ -267,10 +257,13 @@ public followEntity(
   target: FollowEntityTarget,
   distance = 3,
   options: FollowEntityTaskOptions = {},
-): Promise<SoulFireTask<typeof FollowEntityTaskResultSchema>>
+): Effect.Effect<
+  SoulFireTask<typeof FollowEntityTaskResultSchema>,
+  SoulFireOperationError
+>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/tasks.ts#L663)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1098)
 
 #### collectBlocks [!toc]
 
@@ -278,10 +271,13 @@ public followEntity(
 public collectBlocks(
   blockIds: readonly string[],
   options: CollectBlocksTaskOptions = {},
-): Promise<SoulFireTask<typeof CollectBlocksTaskResultSchema>>
+): Effect.Effect<
+  SoulFireTask<typeof CollectBlocksTaskResultSchema>,
+  SoulFireOperationError
+>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/tasks.ts#L1610)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2312)
 
 #### stash [!toc]
 
@@ -290,30 +286,35 @@ public stash(
   container: MessageInitShape<typeof BlockPositionSchema>,
   operations: readonly ContainerTransferSpec[],
   options: ContainerTransferTaskOptions = {},
-): Promise<SoulFireTask<typeof ContainerTransferTaskResultSchema>>
+): Effect.Effect<
+  SoulFireTask<typeof ContainerTransferTaskResultSchema>,
+  SoulFireOperationError
+>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/tasks.ts#L1336)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1943)
 
 #### get [!toc]
 
 ```ts
-public async get<Result extends DescMessage | undefined = undefined>(
+public get<Result extends DescMessage | undefined = undefined>(
   taskId: string,
   resultSchema?: Result,
   options?: CallOptions,
-): Promise<SoulFireTask<Result>>
+): Effect.Effect<SoulFireTask<Result>, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/tasks.ts#L1923)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2698)
 
 #### list [!toc]
 
 ```ts
-public async list(options: TaskListOptions = {}): Promise<BotTask[]>
+public list(
+  options: TaskListOptions = {},
+): Effect.Effect<BotTask[], SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/tasks.ts#L1942)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2727)
 
 #### watch [!toc]
 
@@ -323,20 +324,22 @@ public watch(options?: {
   includeSnapshot?: boolean;
   statuses?: readonly BotTaskStatus[];
   call?: CallOptions;
-}): AsyncIterable<BotTaskEvent>
+}): Stream.Stream<BotTaskEvent, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/tasks.ts#L1962)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2757)
 
 ### SoulFireTask
 
 #### refresh [!toc]
 
 ```ts
-public async refresh(options?: CallOptions): Promise<BotTask>
+public refresh(
+  options?: CallOptions,
+): Effect.Effect<BotTask, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/tasks.ts#L459)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L823)
 
 #### events [!toc]
 
@@ -344,40 +347,41 @@ public async refresh(options?: CallOptions): Promise<BotTask>
 public events(options?: {
   afterRevision?: bigint;
   call?: CallOptions;
-}): AsyncIterable<BotTaskEvent>
+}): Stream.Stream<BotTaskEvent, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/tasks.ts#L467)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L842)
 
 #### wait [!toc]
 
 ```ts
-public async wait(options?: {
+public wait(options?: {
   call?: CallOptions;
-}): Promise<BotTask>
+}): Effect.Effect<BotTask, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/tasks.ts#L481)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L865)
 
 #### cancel [!toc]
 
 ```ts
-public async cancel(
+public cancel(
   reason = "",
   options?: CallOptions,
-): Promise<BotTask>
+): Effect.Effect<BotTask, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/tasks.ts#L505)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L882)
 
 #### result [!toc]
 
 ```ts
-public async result(options?: {
+public result(options?: {
   call?: CallOptions;
-}): Promise<
-  Result extends DescMessage ? MessageShape<Result> : BotTask
+}): Effect.Effect<
+  Result extends DescMessage ? MessageShape<Result> : BotTask,
+  SoulFireOperationError
 >
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/typescript/src/tasks.ts#L516)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L904)

@@ -9,7 +9,6 @@ icon: BookOpen
 | Module | Contents |
 | --- | --- |
 | `@soulfiremc/beat-game` | Effect runner, behaviors, planner, driver, models, errors, in-memory store, and coordinator |
-| `@soulfiremc/beat-game/promise` | Promise lifecycle and async iterable facade |
 | `@soulfiremc/beat-game/node` | Crash-safe `JsonFileBeatGameCheckpointStore` |
 
 The universal module does not import the Node file system.
@@ -39,7 +38,8 @@ Runs move through:
 5. `LOCATE_STRONGHOLD`
 6. `ACTIVATE_END_PORTAL`
 7. `FIGHT_ENDER_DRAGON`
-8. `COMPLETE`
+8. `EXIT_END`
+9. `COMPLETE`
 
 Every transition uses a fresh observation.
 
@@ -67,10 +67,23 @@ interface BeatGameCheckpointStore {
 ```
 
 Checkpoints include schema version, run and team identity, bot and instance
-identity, role, revision, connection epoch, planner state, world memory, and
-timestamps. The planner state retains `currentActionId` while work is
+identity, role, revision, connection epoch, planner state, world memory, active skill, and timestamps.
+The checkpoint schema version is `3`. The planner state retains `currentActionId` while work is
 uncertain. `lastStableAction` records the evidence and player and inventory
 revisions that made the latest action safe to checkpoint.
+
+## Durable skills and world memory
+
+`activeSkill` retains the current substep, targets, protected blocks and items, required resources, retries, and completion evidence.
+World memory includes portal workspaces, discovered places, and skill history.
+The worker can resume portal construction, resource acquisition, stronghold search, combat, and death recovery from this state.
+
+`BeatGameDurableSkillStatus` provides `ACTIVE`, `SUSPENDED`, `COMPLETED`, and `ABANDONED`.
+Exported helpers include `startOrResumeDurableSkill`, `startDurableSkillIfIdle`, `advanceDurableSkill`, `suspendDurableSkill`, and `completeDurableSkill`.
+`latestResumablePortalWorkspace` selects retained portal work.
+
+`BeatGamePathPolicy` includes search mode, quality bound, expansion budget, parkour gap, camera smoothing, and protected blocks.
+The default path policy uses `NORMAL`, a 50,000-state budget, and no parkour gaps.
 
 ## Coordinator
 
@@ -88,7 +101,7 @@ The ordered stream includes:
 - checkpoint save and restore
 - phase and objective changes
 - requirement discovery, updates, claims, and satisfaction
-- action start, retry, success, and failure
+- action start, retry, progress, success, and failure
 - disconnect and recovery
 - death and item recovery
 - team claim changes

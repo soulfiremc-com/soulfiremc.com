@@ -13,8 +13,8 @@ Use it for lookups, searches, raycasts, entity inspection, and combat planning.
 
 ## Read blocks and entities
 
-<Tabs items={['TypeScript Effect', 'TypeScript Promise', 'Python async', 'Python sync']}>
-  <Tab value="TypeScript Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     const block = yield* bot.world.block({
       position: {
@@ -32,37 +32,14 @@ Use it for lookups, searches, raycasts, entity inspection, and combat planning.
     });
     ```
   </Tab>
-  <Tab value="TypeScript Promise">
-    ```ts
-    const block = await bot.world.block({
-      position,
-      includeBlockEntity: true,
-      includeShapes: true,
-    });
-
-    const entity = await bot.world.entity({
-      entity: targetReference,
-    });
-    ```
-  </Tab>
-  <Tab value="Python async">
+  <Tab value="Python">
     ```python
-    block = await bot.world.block(
+    block = yield from bot.world.block(
         position,
         include_block_entity=True,
         include_shapes=True,
     )
-    entity = await bot.world.entity(target_reference)
-    ```
-  </Tab>
-  <Tab value="Python sync">
-    ```python
-    block = bot.world.block(
-        position,
-        include_block_entity=True,
-        include_shapes=True,
-    )
-    entity = bot.world.entity(target_reference)
+    entity = yield from bot.world.entity(target_reference)
     ```
   </Tab>
 </Tabs>
@@ -89,7 +66,7 @@ const hit = yield* bot.world.raycast({
 ```
 
 ```python
-hit = await bot.world.raycast(
+hit = yield from bot.world.raycast(
     eye_position,
     Vec3(x=0, y=0, z=1),
     64,
@@ -110,13 +87,23 @@ const entity = yield* bot.world.entityAtCursor(3.5);
 ```
 
 ```python
-block = await bot.world.block_at_cursor(256)
-entity = await bot.world.entity_at_cursor(3.5)
+block = yield from bot.world.block_at_cursor(256)
+entity = yield from bot.world.entity_at_cursor(3.5)
 ```
 
 The server reads eye height and rotation in the same game-loop turn as the
 raycast. This stays accurate while the player crouches, swims, sleeps, or
 changes pose.
+
+## Interpret entity age and aggression
+
+`ageTicks` in TypeScript and `age_ticks` in Python expose the client-observable age category for ageable mobs.
+A value of `-1` means a baby. A value of `1` means an adult.
+The field does not expose the actual age or breeding cooldown.
+
+`aggressive` reports a visible attack posture or synchronized anger state.
+It does not identify the mob's attack target.
+Use fresh observations before combat or breeding decisions.
 
 ## Check visibility and mining time
 
@@ -138,8 +125,8 @@ if (visibility.visible && mining.diggable) {
 ```
 
 ```python
-visibility = await bot.world.can_see_block(ore_position)
-mining = await bot.world.estimate_dig_time(ore_position)
+visibility = yield from bot.world.can_see_block(ore_position)
+mining = yield from bot.world.estimate_dig_time(ore_position)
 ```
 
 Visibility raycasts from the player's current eyes to the block center. Dig
@@ -171,7 +158,7 @@ if (estimate.estimatedHealthDamage < player.health) {
 ```
 
 ```python
-estimate = await bot.world.estimate_explosion_damage(
+estimate = yield from bot.world.estimate_explosion_damage(
     hostile.reference,
     crystal_position,
     6,

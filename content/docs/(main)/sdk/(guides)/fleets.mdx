@@ -25,6 +25,8 @@ A selector can combine:
 <Tabs items={['TypeScript', 'Python']}>
   <Tab value="TypeScript">
     ```ts
+    import type { FleetSelector } from "@soulfiremc/sdk";
+
     const builders = {
       online: true,
       runtimeStates: [BotRuntimeState.RUNNING],
@@ -74,7 +76,7 @@ A selector can combine:
         limit=8,
     )
 
-    selected = await instance.fleet.select(builders)
+    selected = yield from instance.fleet.select(builders)
     ```
   </Tab>
 </Tabs>
@@ -93,25 +95,15 @@ cannot run the requested operation.
 
 Lifecycle methods resolve a selector and submit the resulting IDs as one batch:
 
-<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
-  <Tab value="Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     const statuses = yield* instance.fleet.start(builders);
     ```
   </Tab>
-  <Tab value="Promise">
-    ```ts
-    const statuses = await instance.fleet.restart(builders);
-    ```
-  </Tab>
-  <Tab value="Async Python">
+  <Tab value="Python">
     ```python
-    statuses = await instance.fleet.start(builders)
-    ```
-  </Tab>
-  <Tab value="Sync Python">
-    ```python
-    statuses = instance.fleet.stop(builders)
+    statuses = yield from instance.fleet.start(builders)
     ```
   </Tab>
 </Tabs>
@@ -134,7 +126,7 @@ const assignments = yield* instance.fleet.distribute(
 ```
 
 ```python
-assignments = await instance.fleet.distribute(
+assignments = yield from instance.fleet.distribute(
     schematic_sections,
     builders,
     strategy="contiguous",
@@ -152,8 +144,8 @@ partition indices stable.
 type. The input can be one shared value or a factory that receives the bot,
 its stable index, and the total selected count.
 
-<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
-  <Tab value="Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     import {
       BuildTaskResultSchema,
@@ -176,20 +168,9 @@ its stable index, and the total selected count.
     );
     ```
   </Tab>
-  <Tab value="Promise">
-    ```ts
-    const group = await instance.fleet.startTasks(
-      builders,
-      BuildTaskSchema,
-      (bot, index, total) => buildInputFor(bot, index, total),
-      BuildTaskResultSchema,
-      { concurrency: 4 },
-    );
-    ```
-  </Tab>
-  <Tab value="Async Python">
+  <Tab value="Python">
     ```python
-    group = await instance.fleet.start_tasks(
+    group = yield from instance.fleet.start_tasks(
         builders,
         lambda bot, index, total: build_task_for(
             assignments[index].items,
@@ -201,16 +182,6 @@ its stable index, and the total selected count.
             concurrency=4,
             idempotency_key=deployment_id,
         ),
-    )
-    ```
-  </Tab>
-  <Tab value="Sync Python">
-    ```python
-    group = instance.fleet.start_tasks(
-        builders,
-        shared_task_input,
-        BuildTaskResult,
-        options=FleetTaskStartOptions(concurrency=4),
     )
     ```
   </Tab>
@@ -239,10 +210,15 @@ const report = yield* group.results();
 ```
 
 ```python
-async for update in group.events():
-    print(update.bot.id, update.event.task.summary)
+from effect_py import fn, sync
 
-report = await group.results()
+@fn("consume stream")
+def consume(update):
+    yield from sync(lambda: print(update.bot.id, update.event.task.summary))
+
+
+yield from group.events().run_for_each(consume)
+report = yield from group.results()
 ```
 
 `report.fulfilled` and `report.rejected` preserve selection order and bot
@@ -259,7 +235,7 @@ const cancellation = yield* group.cancel(
 ```
 
 ```python
-cancellation = await group.cancel(
+cancellation = yield from group.cancel(
     "deployment superseded",
     concurrency=4,
 )

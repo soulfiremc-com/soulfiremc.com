@@ -3,7 +3,7 @@
   "jsonSchemaDialect" : "https://spec.openapis.org/oas/3.1/dialect/base",
   "info" : {
     "title" : "SoulFire HTTP API",
-    "version" : "2.9.2-SNAPSHOT",
+    "version" : "2.11.0",
     "description" : "Generated from SoulFire's Armeria gRPC metadata.\n\nThis document only covers HTTP-accessible unary operations:\n- unframed JSON POST routes generated from gRPC services\n- additional HTTP/JSON transcoding routes exposed by Armeria\n\nIt does not describe streaming RPCs, gRPC-Web framing, reflection, or other non-HTTP transports.\n\nAuthorization:\n- Bearer: `Authorization: Bearer <api-jwt>`\n- Basic: `Authorization: Basic <base64(username:api-jwt)>`\n\n`LoginService` is public. Every other operation requires an API token audience accepted by SoulFire.\n"
   },
   "servers" : [ {
@@ -75,6 +75,9 @@
   }, {
     "name" : "PluginStatsService",
     "description" : "Service for retrieving plugin runtime statistics.\nStats are collected server-side from plugins via the plugin metrics API.\nAll operations require appropriate permissions."
+  }, {
+    "name" : "PovService",
+    "description" : "An exclusive, authenticated interactive view. Input heartbeats are required\nevery second; a stalled client loses control after five seconds."
   }, {
     "name" : "RecipeService"
   }, {
@@ -1578,7 +1581,7 @@
     "/v1/instances/{instance_id}/bots/{bot_id}/actions:respawn" : {
       "post" : {
         "summary" : "Respawn bot",
-        "description" : "Respawns a dead bot.",
+        "description" : "Respawns a dead bot or dismisses the End credits to finish respawning.",
         "operationId" : "respawn",
         "x-soulfire-transport" : "http-json-transcoding",
         "x-soulfire-grpc-service" : "soulfire.v1.BotLiveService",
@@ -1587,7 +1590,7 @@
         "tags" : [ "BotLiveService" ],
         "x-soulfire-permissions" : [ "CONTROL_BOT_ACTIONS" ],
         "x-soulfire-scope" : "instance.bot",
-        "x-soulfire-preconditions" : [ "Bot must be online and dead." ],
+        "x-soulfire-preconditions" : [ "Bot must be online and either dead or viewing the End credits." ],
         "x-soulfire-execution" : "Completes after the respawn request is sent.",
         "parameters" : [ {
           "name" : "instance_id",
@@ -4435,7 +4438,7 @@
     "/v1/instances/{instance_id}/bots/{bot_id}/pov:render" : {
       "get" : {
         "summary" : "Render bot POV",
-        "description" : "Renders the bot's point-of-view as a PNG image using software rendering.\nThe bot must be online with a valid player and level.\nUses the bot's current render distance setting.",
+        "description" : "Renders the bot's point-of-view as a PNG image using headless Vulkan.\nThe bot must be online with a valid player and level.\nUses the bot's current render distance setting.",
         "operationId" : "renderBotPov",
         "x-soulfire-transport" : "http-json-transcoding",
         "x-soulfire-grpc-service" : "soulfire.v1.BotService",
@@ -11175,6 +11178,81 @@
         }
       }
     },
+    "/soulfire.v1.PovService/Input" : {
+      "post" : {
+        "operationId" : "input",
+        "x-soulfire-transport" : "unframed-grpc-json",
+        "x-soulfire-grpc-service" : "soulfire.v1.PovService",
+        "x-soulfire-grpc-method" : "Input",
+        "x-soulfire-unary-only" : true,
+        "tags" : [ "PovService" ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/soulfire.v1.PovInputRequest"
+              },
+              "example" : {
+                "sessionId" : "",
+                "sequence" : "0",
+                "captured" : false,
+                "width" : 0,
+                "height" : 0,
+                "events" : [ ],
+                "escape" : false,
+                "requestKeyFrame" : false,
+                "inputToken" : "",
+                "readClipboard" : false,
+                "maxFps" : 0
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful response.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/soulfire.v1.PovInputResponse"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Missing or invalid API authorization header.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SoulFireGrpcError"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "The authenticated user does not have the required permission.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SoulFireGrpcError"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Unexpected server-side failure while handling the RPC.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SoulFireGrpcError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/recipes:canCraft" : {
       "post" : {
         "summary" : "Check recipe materials",
@@ -15234,6 +15312,14 @@
             "allOf" : [ {
               "$ref" : "#/components/schemas/soulfire.v1.BotStatus"
             } ]
+          },
+          "connection" : {
+            "anyOf" : [ {
+              "$ref" : "#/components/schemas/soulfire.v1.BotConnectionInfo"
+            }, {
+              "type" : "null"
+            } ],
+            "description" : "Actual connection metadata, including during login before player data is available.\nAbsent when there is no active connection, or when returned by an older server."
           }
         },
         "required" : [ "status" ]
@@ -17616,6 +17702,116 @@
               "type" : "null"
             } ],
             "description" : "Extra planner cost for placing a block. Unset uses server settings."
+          },
+          "avoidFluids" : {
+            "type" : "boolean",
+            "x-protobuf-type" : "bool",
+            "description" : "If true, candidate movements whose feet or head would enter fluid are\nexcluded from the route."
+          },
+          "additionalPlaceItemIds" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "x-protobuf-type" : "string"
+            },
+            "description" : "Additional block item ids that pathfinding may place after exhausting its\nbuilt-in disposable building blocks. This is request-scoped and should be\nused sparingly for recovery paths that would otherwise leave a bot\nstranded."
+          },
+          "sprint" : {
+            "anyOf" : [ {
+              "type" : "boolean",
+              "x-protobuf-type" : "bool"
+            }, {
+              "type" : "null"
+            } ],
+            "description" : "Whether ordinary forward path traversal should sprint. Unset preserves the\nserver default of sprinting. Set false for hunger-efficient travel."
+          },
+          "minimumY" : {
+            "anyOf" : [ {
+              "type" : "integer",
+              "format" : "int32",
+              "x-protobuf-type" : "int32"
+            }, {
+              "type" : "null"
+            } ],
+            "description" : "Optional inclusive elevation bounds for the bot's feet along the route.\nThese keep a route on the surface or within a mining layer without\nconstraining blocks that actions may reach from the route."
+          },
+          "maximumY" : {
+            "anyOf" : [ {
+              "type" : "integer",
+              "format" : "int32",
+              "x-protobuf-type" : "int32"
+            }, {
+              "type" : "null"
+            } ]
+          },
+          "searchMode" : {
+            "description" : "Search quality and latency policy. Unset uses NORMAL.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/soulfire.v1.PathfindSearchMode"
+            } ]
+          },
+          "maximumQualityBound" : {
+            "anyOf" : [ {
+              "x-protobuf-type" : "double",
+              "anyOf" : [ {
+                "type" : "number",
+                "format" : "double"
+              }, {
+                "type" : "string",
+                "enum" : [ "NaN", "Infinity", "-Infinity" ]
+              } ]
+            }, {
+              "type" : "null"
+            } ],
+            "description" : "Largest accepted certified multiplicative quality bound. Values must be\nfrom 1.0 through the selected mode's initial epsilon. Unset uses the mode\ndefault. ARA* does not execute an incumbent that misses this bound."
+          },
+          "smoothCamera" : {
+            "anyOf" : [ {
+              "type" : "boolean",
+              "x-protobuf-type" : "bool"
+            }, {
+              "type" : "null"
+            } ],
+            "description" : "Smooth camera movement only inside movement-specific safe tolerances.\nBlock interactions and precision movement remain deterministic."
+          },
+          "maximumExpandedStates" : {
+            "type" : "integer",
+            "format" : "int64",
+            "x-protobuf-type" : "uint32",
+            "minimum" : 0,
+            "maximum" : 4294967295,
+            "description" : "Hard state-expansion budget for the complete ARA* repair session. 0 uses\nthe server default. Reaching this limit is reported separately from an\nunreachable goal."
+          },
+          "maximumFallDistance" : {
+            "anyOf" : [ {
+              "type" : "integer",
+              "format" : "int64",
+              "x-protobuf-type" : "uint32",
+              "minimum" : 0,
+              "maximum" : 4294967295
+            }, {
+              "type" : "null"
+            } ],
+            "description" : "Largest ordinary fall onto solid ground. Values above 3 are rejected\nbecause longer falls require a dedicated safe-landing primitive."
+          },
+          "maximumParkourGap" : {
+            "anyOf" : [ {
+              "type" : "integer",
+              "format" : "int64",
+              "x-protobuf-type" : "uint32",
+              "minimum" : 0,
+              "maximum" : 4294967295
+            }, {
+              "type" : "null"
+            } ],
+            "description" : "Largest unsupported horizontal gap that parkour may cross. Set to 0 to\ndisable parkour. Values above 3 are rejected by the current controller."
+          },
+          "protectedBlocks" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/soulfire.v1.BlockPosition"
+            },
+            "description" : "Blocks the route may move around but must never break. Positions in a\ndifferent dimension are rejected instead of being silently reinterpreted\nin the bot's current dimension."
           }
         },
         "required" : [ ]
@@ -17644,6 +17840,85 @@
         "type" : "string",
         "description" : "The scope in which a plugin permission is evaluated.",
         "enum" : [ "PLUGIN_PERMISSION_SCOPE_UNSPECIFIED", "PLUGIN_PERMISSION_SCOPE_GLOBAL", "PLUGIN_PERMISSION_SCOPE_INSTANCE", "PLUGIN_PERMISSION_SCOPE_BOT", "PLUGIN_PERMISSION_SCOPE_TASK" ]
+      },
+      "soulfire.v1.PovInputRequest" : {
+        "type" : "object",
+        "additionalProperties" : false,
+        "properties" : {
+          "sessionId" : {
+            "type" : "string",
+            "x-protobuf-type" : "string"
+          },
+          "sequence" : {
+            "type" : "string",
+            "x-protobuf-type" : "uint64",
+            "pattern" : "^(0|[1-9][0-9]*)$"
+          },
+          "captured" : {
+            "type" : "boolean",
+            "x-protobuf-type" : "bool"
+          },
+          "width" : {
+            "type" : "integer",
+            "format" : "int32",
+            "x-protobuf-type" : "int32"
+          },
+          "height" : {
+            "type" : "integer",
+            "format" : "int32",
+            "x-protobuf-type" : "int32"
+          },
+          "events" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/soulfire.v1.PovInputEvent"
+            }
+          },
+          "escape" : {
+            "type" : "boolean",
+            "x-protobuf-type" : "bool",
+            "description" : "Forward Escape to the game, including opening the pause menu."
+          },
+          "requestKeyFrame" : {
+            "type" : "boolean",
+            "x-protobuf-type" : "bool",
+            "description" : "Recover after dropping dependent frames or resetting the decoder."
+          },
+          "feedback" : {
+            "$ref" : "#/components/schemas/soulfire.v1.PovStreamFeedback"
+          },
+          "inputToken" : {
+            "type" : "string",
+            "x-protobuf-type" : "string"
+          },
+          "clipboard" : {
+            "anyOf" : [ {
+              "type" : "string",
+              "x-protobuf-type" : "string"
+            }, {
+              "type" : "null"
+            } ],
+            "description" : "Clipboard is set before processing the accompanying paste key event."
+          },
+          "readClipboard" : {
+            "type" : "boolean",
+            "x-protobuf-type" : "bool"
+          },
+          "maxFps" : {
+            "type" : "integer",
+            "format" : "int64",
+            "x-protobuf-type" : "uint32",
+            "minimum" : 0,
+            "maximum" : 4294967295
+          }
+        },
+        "required" : [ ]
+      },
+      "soulfire.v1.PovInputResponse" : {
+        "type" : "object",
+        "additionalProperties" : false,
+        "properties" : { },
+        "required" : [ ]
       },
       "soulfire.v1.PreviousLogResponse" : {
         "type" : "object",
@@ -19153,6 +19428,22 @@
         },
         "required" : [ "profileId", "desiredState", "runtimeState", "updatedAt" ]
       },
+      "soulfire.v1.BotConnectionInfo" : {
+        "type" : "object",
+        "additionalProperties" : false,
+        "description" : "Metadata for the bot's current connection attempt or session.",
+        "properties" : {
+          "proxy" : {
+            "anyOf" : [ {
+              "$ref" : "#/components/schemas/soulfire.v1.BotProxyInfo"
+            }, {
+              "type" : "null"
+            } ],
+            "description" : "Absent for a direct connection without a proxy."
+          }
+        },
+        "required" : [ ]
+      },
       "soulfire.v1.ContainerLayout" : {
         "type" : "object",
         "additionalProperties" : false,
@@ -20295,6 +20586,12 @@
             "type" : "integer",
             "format" : "int32",
             "x-protobuf-type" : "int32"
+          },
+          "pathBuildingBlockCount" : {
+            "type" : "integer",
+            "format" : "int32",
+            "x-protobuf-type" : "int32",
+            "description" : "Number of disposable full-block items available to the pathfinder for\nbridging, pillaring, and other route construction."
           }
         },
         "required" : [ ]
@@ -21463,7 +21760,8 @@
               "x-protobuf-type" : "int32"
             }, {
               "type" : "null"
-            } ]
+            } ],
+            "description" : "For ageable mobs, as the client sees it: -1 for a baby, 1 for an adult.\nThe real age and the breeding cooldown are only known to the server."
           },
           "tamed" : {
             "anyOf" : [ {
@@ -21472,6 +21770,15 @@
             }, {
               "type" : "null"
             } ]
+          },
+          "aggressive" : {
+            "anyOf" : [ {
+              "type" : "boolean",
+              "x-protobuf-type" : "bool"
+            }, {
+              "type" : "null"
+            } ],
+            "description" : "Client-observable aggression state. This is true while a mob exposes an\nactive attack posture or a synchronized neutral-mob anger state. It does\nnot identify which entity the mob is attacking."
           }
         },
         "required" : [ ]
@@ -22317,6 +22624,10 @@
         },
         "required" : [ "goals" ]
       },
+      "soulfire.v1.PathfindSearchMode" : {
+        "type" : "string",
+        "enum" : [ "PATHFIND_SEARCH_MODE_UNSPECIFIED", "PATHFIND_SEARCH_MODE_PRECISION", "PATHFIND_SEARCH_MODE_NORMAL", "PATHFIND_SEARCH_MODE_URGENT", "PATHFIND_SEARCH_MODE_ESCAPE" ]
+      },
       "soulfire.v1.PathPlan" : {
         "type" : "object",
         "additionalProperties" : false,
@@ -22357,9 +22668,200 @@
             }, {
               "type" : "null"
             } ]
+          },
+          "searchMode" : {
+            "$ref" : "#/components/schemas/soulfire.v1.PathfindSearchMode"
+          },
+          "qualityBound" : {
+            "x-protobuf-type" : "double",
+            "anyOf" : [ {
+              "type" : "number",
+              "format" : "double"
+            }, {
+              "type" : "string",
+              "enum" : [ "NaN", "Infinity", "-Infinity" ]
+            } ],
+            "description" : "Certified multiplicative bound for `route_cost.optimization_cost`.\nZero means that this result contains no certified complete route."
+          },
+          "routeCost" : {
+            "$ref" : "#/components/schemas/soulfire.v1.PathRouteCost"
+          },
+          "expandedStates" : {
+            "type" : "string",
+            "x-protobuf-type" : "uint64",
+            "pattern" : "^(0|[1-9][0-9]*)$"
+          },
+          "generatedTransitions" : {
+            "type" : "string",
+            "x-protobuf-type" : "uint64",
+            "pattern" : "^(0|[1-9][0-9]*)$"
+          },
+          "searchElapsedMillis" : {
+            "type" : "string",
+            "x-protobuf-type" : "uint64",
+            "pattern" : "^(0|[1-9][0-9]*)$"
+          },
+          "frontierReason" : {
+            "$ref" : "#/components/schemas/soulfire.v1.PathFrontierReason"
+          },
+          "initialEpsilon" : {
+            "x-protobuf-type" : "double",
+            "anyOf" : [ {
+              "type" : "number",
+              "format" : "double"
+            }, {
+              "type" : "string",
+              "enum" : [ "NaN", "Infinity", "-Infinity" ]
+            } ],
+            "description" : "Inflation used by the first ARA* search stage."
+          },
+          "finalEpsilon" : {
+            "x-protobuf-type" : "double",
+            "anyOf" : [ {
+              "type" : "number",
+              "format" : "double"
+            }, {
+              "type" : "string",
+              "enum" : [ "NaN", "Infinity", "-Infinity" ]
+            } ],
+            "description" : "Inflation used by the last completed or interrupted ARA* stage."
+          },
+          "repairIterations" : {
+            "type" : "integer",
+            "format" : "int64",
+            "x-protobuf-type" : "uint32",
+            "minimum" : 0,
+            "maximum" : 4294967295
+          },
+          "repairedInconsistentStates" : {
+            "type" : "integer",
+            "format" : "int64",
+            "x-protobuf-type" : "uint32",
+            "minimum" : 0,
+            "maximum" : 4294967295
+          },
+          "incumbentImprovements" : {
+            "type" : "integer",
+            "format" : "int64",
+            "x-protobuf-type" : "uint32",
+            "minimum" : 0,
+            "maximum" : 4294967295
+          },
+          "requiredQualityBound" : {
+            "x-protobuf-type" : "double",
+            "anyOf" : [ {
+              "type" : "number",
+              "format" : "double"
+            }, {
+              "type" : "string",
+              "enum" : [ "NaN", "Infinity", "-Infinity" ]
+            } ],
+            "description" : "Maximum certified bound requested by the caller."
+          },
+          "worldRevision" : {
+            "type" : "string",
+            "x-protobuf-type" : "uint64",
+            "pattern" : "^(0|[1-9][0-9]*)$",
+            "description" : "Navigation-world revision captured before this search started."
+          },
+          "unavailableChunks" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/soulfire.v1.PathChunk"
+            },
+            "description" : "Chunks read by the search but absent from the captured client world."
           }
         },
         "required" : [ "status", "start" ]
+      },
+      "soulfire.v1.PovInputEvent" : {
+        "type" : "object",
+        "additionalProperties" : false,
+        "properties" : {
+          "kind" : {
+            "$ref" : "#/components/schemas/soulfire.v1.PovInputEvent.Kind"
+          },
+          "code" : {
+            "type" : "integer",
+            "format" : "int32",
+            "x-protobuf-type" : "int32",
+            "description" : "GLFW key/button number, or Unicode code point for CHARACTER."
+          },
+          "action" : {
+            "type" : "integer",
+            "format" : "int32",
+            "x-protobuf-type" : "int32",
+            "description" : "GLFW release (0), press (1), or repeat (2)."
+          },
+          "modifiers" : {
+            "type" : "integer",
+            "format" : "int32",
+            "x-protobuf-type" : "int32"
+          },
+          "x" : {
+            "x-protobuf-type" : "double",
+            "anyOf" : [ {
+              "type" : "number",
+              "format" : "double"
+            }, {
+              "type" : "string",
+              "enum" : [ "NaN", "Infinity", "-Infinity" ]
+            } ],
+            "description" : "Normalized cursor position for screens; relative pixels for mouse look."
+          },
+          "y" : {
+            "x-protobuf-type" : "double",
+            "anyOf" : [ {
+              "type" : "number",
+              "format" : "double"
+            }, {
+              "type" : "string",
+              "enum" : [ "NaN", "Infinity", "-Infinity" ]
+            } ]
+          },
+          "relative" : {
+            "type" : "boolean",
+            "x-protobuf-type" : "bool"
+          }
+        },
+        "required" : [ ]
+      },
+      "soulfire.v1.PovStreamFeedback" : {
+        "type" : "object",
+        "additionalProperties" : false,
+        "description" : "Client-relative delivery delay avoids requiring synchronized clocks.",
+        "properties" : {
+          "receivedSequence" : {
+            "type" : "string",
+            "x-protobuf-type" : "uint64",
+            "pattern" : "^(0|[1-9][0-9]*)$"
+          },
+          "deliveryDelayMs" : {
+            "x-protobuf-type" : "double",
+            "anyOf" : [ {
+              "type" : "number",
+              "format" : "double"
+            }, {
+              "type" : "string",
+              "enum" : [ "NaN", "Infinity", "-Infinity" ]
+            } ]
+          },
+          "decoderQueueSize" : {
+            "type" : "integer",
+            "format" : "int64",
+            "x-protobuf-type" : "uint32",
+            "minimum" : 0,
+            "maximum" : 4294967295
+          },
+          "decoderRecoveries" : {
+            "type" : "integer",
+            "format" : "int64",
+            "x-protobuf-type" : "uint32",
+            "minimum" : 0,
+            "maximum" : 4294967295
+          }
+        },
+        "required" : [ ]
       },
       "soulfire.v1.LogString" : {
         "type" : "object",
@@ -22973,6 +23475,25 @@
         "type" : "string",
         "description" : "Current state of SoulFire's per-bot connection controller.",
         "enum" : [ "BOT_RUNTIME_STATE_UNSPECIFIED", "BOT_RUNTIME_STATE_STOPPED", "BOT_RUNTIME_STATE_QUEUED", "BOT_RUNTIME_STATE_STARTING", "BOT_RUNTIME_STATE_RUNNING", "BOT_RUNTIME_STATE_RETRYING", "BOT_RUNTIME_STATE_STOPPING", "BOT_RUNTIME_STATE_FAILED" ]
+      },
+      "soulfire.v1.BotProxyInfo" : {
+        "type" : "object",
+        "additionalProperties" : false,
+        "description" : "Proxy endpoint used by the bot's current connection. Credentials are never included.",
+        "properties" : {
+          "type" : {
+            "description" : "Transport used to reach the proxy.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/soulfire.v1.ProxyProto.Type"
+            } ]
+          },
+          "address" : {
+            "type" : "string",
+            "x-protobuf-type" : "string",
+            "description" : "Proxy socket address in the same URI format as ProxyProto.address."
+          }
+        },
+        "required" : [ "type", "address" ]
       },
       "soulfire.v1.SlotRegion" : {
         "type" : "object",
@@ -23977,7 +24498,7 @@
       },
       "soulfire.v1.PathPlanStatus" : {
         "type" : "string",
-        "enum" : [ "PATH_PLAN_STATUS_UNSPECIFIED", "PATH_PLAN_STATUS_COMPLETE", "PATH_PLAN_STATUS_PARTIAL", "PATH_PLAN_STATUS_UNREACHABLE", "PATH_PLAN_STATUS_SEARCH_EXPIRED", "PATH_PLAN_STATUS_CANCELLED" ]
+        "enum" : [ "PATH_PLAN_STATUS_UNSPECIFIED", "PATH_PLAN_STATUS_COMPLETE", "PATH_PLAN_STATUS_PARTIAL", "PATH_PLAN_STATUS_UNREACHABLE", "PATH_PLAN_STATUS_SEARCH_EXPIRED", "PATH_PLAN_STATUS_CANCELLED", "PATH_PLAN_STATUS_QUALITY_BOUND_NOT_MET", "PATH_PLAN_STATUS_WORLD_DATA_PENDING" ]
       },
       "soulfire.v1.PathStep" : {
         "type" : "object",
@@ -24009,6 +24530,90 @@
           }
         },
         "required" : [ "index", "kind", "position" ]
+      },
+      "soulfire.v1.PathRouteCost" : {
+        "type" : "object",
+        "additionalProperties" : false,
+        "properties" : {
+          "expectedDamage" : {
+            "x-protobuf-type" : "double",
+            "anyOf" : [ {
+              "type" : "number",
+              "format" : "double"
+            }, {
+              "type" : "string",
+              "enum" : [ "NaN", "Infinity", "-Infinity" ]
+            } ]
+          },
+          "irreversibleChanges" : {
+            "type" : "integer",
+            "format" : "int64",
+            "x-protobuf-type" : "uint32",
+            "minimum" : 0,
+            "maximum" : 4294967295
+          },
+          "placedBlocks" : {
+            "type" : "integer",
+            "format" : "int64",
+            "x-protobuf-type" : "uint32",
+            "minimum" : 0,
+            "maximum" : 4294967295
+          },
+          "brokenBlocks" : {
+            "type" : "integer",
+            "format" : "int64",
+            "x-protobuf-type" : "uint32",
+            "minimum" : 0,
+            "maximum" : 4294967295
+          },
+          "durationCost" : {
+            "x-protobuf-type" : "double",
+            "anyOf" : [ {
+              "type" : "number",
+              "format" : "double"
+            }, {
+              "type" : "string",
+              "enum" : [ "NaN", "Infinity", "-Infinity" ]
+            } ]
+          },
+          "optimizationCost" : {
+            "x-protobuf-type" : "double",
+            "anyOf" : [ {
+              "type" : "number",
+              "format" : "double"
+            }, {
+              "type" : "string",
+              "enum" : [ "NaN", "Infinity", "-Infinity" ]
+            } ],
+            "description" : "Scalar cost for which the ARA* quality bound is certified."
+          }
+        },
+        "required" : [ ]
+      },
+      "soulfire.v1.PathFrontierReason" : {
+        "type" : "string",
+        "enum" : [ "PATH_FRONTIER_REASON_UNSPECIFIED", "PATH_FRONTIER_REASON_NONE", "PATH_FRONTIER_REASON_LEVEL_BOUNDARY", "PATH_FRONTIER_REASON_SEARCH_DEADLINE", "PATH_FRONTIER_REASON_SEARCH_BUDGET" ]
+      },
+      "soulfire.v1.PathChunk" : {
+        "type" : "object",
+        "additionalProperties" : false,
+        "properties" : {
+          "x" : {
+            "type" : "integer",
+            "format" : "int32",
+            "x-protobuf-type" : "int32"
+          },
+          "z" : {
+            "type" : "integer",
+            "format" : "int32",
+            "x-protobuf-type" : "int32"
+          }
+        },
+        "required" : [ "x", "z" ]
+      },
+      "soulfire.v1.PovInputEvent.Kind" : {
+        "type" : "string",
+        "enum" : [ "KEY", "CHARACTER", "BUTTON", "MOVE", "SCROLL" ]
       },
       "soulfire.v1.InventoryItemScoreFactor" : {
         "type" : "object",

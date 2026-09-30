@@ -13,8 +13,8 @@ The handle includes the latest revision and rejects a stale or replaced menu.
 
 ## Open, transfer, and close
 
-<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
-  <Tab value="Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     yield* Effect.scoped(
       Effect.gen(function* () {
@@ -32,44 +32,17 @@ The handle includes the latest revision and rejects a stale or replaced menu.
     );
     ```
   </Tab>
-  <Tab value="Promise">
-    ```ts
-    await using chest = await bot.inventory.open(chestPosition);
-
-    await chest.deposit(
-      { itemIds: ["minecraft:cobblestone"] },
-      64,
-    );
-    await chest.withdraw(
-      { tags: ["minecraft:foods"] },
-      16,
-    );
-    ```
-  </Tab>
-  <Tab value="Async Python">
+  <Tab value="Python">
     ```python
-    async with await bot.inventory.open(chest_position) as chest:
-        await chest.deposit(
-            ItemSelector(item_ids=["minecraft:cobblestone"]),
-            64,
-        )
-        await chest.withdraw(
-            ItemSelector(tags=["minecraft:foods"]),
-            16,
-        )
-    ```
-  </Tab>
-  <Tab value="Sync Python">
-    ```python
-    with bot.inventory.open(chest_position) as chest:
-        chest.deposit(
-            ItemSelector(item_ids=["minecraft:cobblestone"]),
-            64,
-        )
-        chest.withdraw(
-            ItemSelector(tags=["minecraft:foods"]),
-            16,
-        )
+    chest = yield from bot.inventory.open(chest_position)
+    yield from chest.deposit(
+        ItemSelector(item_ids=["minecraft:cobblestone"]),
+        64,
+    )
+    yield from chest.withdraw(
+        ItemSelector(tags=["minecraft:foods"]),
+        16,
+    )
     ```
   </Tab>
 </Tabs>
@@ -89,6 +62,7 @@ Read `container.snapshot` without another RPC. It contains:
 - Every slot and its inventory area
 - Cursor contents
 - Selected hotbar slot
+- `pathBuildingBlockCount` or `path_building_block_count` for disposable full blocks available to route construction
 
 Call `refresh` after another actor changes the menu.
 If a different menu is open, the handle closes and raises `SoulFireContainerClosedError`.
@@ -99,8 +73,8 @@ SoulFire can rank the bot's tools, melee weapons, armor, food, and safe
 scaffold blocks. Every recommendation includes its slot, item snapshot,
 total score, and the factors that produced that score.
 
-<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
-  <Tab value="Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     const tool = yield* bot.inventory.bestTool(blockPosition, {
       preferHotbar: true,
@@ -114,29 +88,14 @@ total score, and the factors that produced that score.
     }
     ```
   </Tab>
-  <Tab value="Promise">
-    ```ts
-    const food = await bot.inventory.bestFood({
-      selector: { tags: ["minecraft:foods"] },
-    });
-    ```
-  </Tab>
-  <Tab value="Async Python">
+  <Tab value="Python">
     ```python
-    tool = await bot.inventory.best_tool(
+    tool = yield from bot.inventory.best_tool(
         block_position,
         prefer_hotbar=True,
         prefer_high_durability=True,
         preferred_enchantment_ids=["minecraft:fortune"],
         excluded_enchantment_ids=["minecraft:vanishing_curse"],
-    )
-    ```
-  </Tab>
-  <Tab value="Sync Python">
-    ```python
-    armor = bot.inventory.best_armor(
-        "chest",
-        prefer_high_durability=True,
     )
     ```
   </Tab>

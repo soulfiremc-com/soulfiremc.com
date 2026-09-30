@@ -78,6 +78,17 @@ Start simple:
 
 After the basic login works, enable proxies, automation, and external integrations one at a time.
 
+## If POV or inventory images fail
+
+SoulFire bundles the Vulkan loader and Mesa lavapipe, so a display server and system Vulkan packages are not required.
+Compatible GPU drivers provide hardware acceleration. Containers require explicit GPU access to use hardware rendering.
+Linux native packages target glibc. Use a glibc-based image rather than Alpine's musl runtime.
+The bundled macOS runtime requires macOS 15 or newer.
+
+If an image fails, inspect the server log for renderer initialization errors.
+If you set `VK_DRIVER_FILES` or `VK_ICD_FILENAMES`, verify that the selected driver manifests are available inside the container.
+An explicit `org.lwjgl.vulkan.libname` override bypasses the bundled runtime.
+
 ## If remote login fails
 
 Generate a fresh API token from the server side:

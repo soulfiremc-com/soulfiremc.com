@@ -16,19 +16,18 @@ import { Callout } from 'fumadocs-ui/components/callout';
 Use the CLI for terminal automation, SSH sessions, or systems without a desktop.
 The GUI supports more features, but the CLI covers the most common tasks.
 
-SoulFire starts in CLI mode when no display is available or when you pass CLI flags to `java`.
-You can also set `java.awt.headless` to `true` to force CLI mode.
-The examples on this page use this setting.
+The CLI distribution runs without a desktop or display.
+Use the separate GUI client when you want the desktop interface.
 
 ## Set up the CLI
 
-The SoulFire client distribution includes the CLI.
-Install Java 25, then download the latest client `.jar` from the [download page](/download).
+Install Java 25, then download the CLI `.jar` from the [SoulFire releases](https://github.com/soulfiremc-com/SoulFire/releases).
+The commands below use `SoulFireCLI.jar`; replace it with your downloaded filename.
 
 The base command is this:
 
 ```bash
-java -Djava.awt.headless=true -Xmx$RAM -XX:+EnableDynamicAgentLoading -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -XX:+UseCompactObjectHeaders -XX:+AlwaysActAsServerClassMachine -XX:+UseNUMA -XX:+UseFastUnorderedTimeStamps -XX:+UseVectorCmov -XX:+UseCriticalJavaThreadPriority -Dsf.flags.v2=true -jar SoulFireClient.jar
+java -Djava.awt.headless=true -Xmx$RAM -XX:+EnableDynamicAgentLoading -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -XX:+UseCompactObjectHeaders -XX:+AlwaysActAsServerClassMachine -XX:+UseNUMA -XX:+UseFastUnorderedTimeStamps -XX:+UseVectorCmov -XX:+UseCriticalJavaThreadPriority -Dsf.flags.v2=true -jar SoulFireCLI.jar
 ```
 
 Replace `$RAM` with the amount of memory for the CLI process.
@@ -48,7 +47,7 @@ For a remote dedicated server, set these JVM properties:
 Put the properties before `-jar`:
 
 ```bash
-java -Dsf.remoteAddress=domain.com -Dsf.remoteToken=abcdefg -Djava.awt.headless=true -Xmx$RAM -XX:+EnableDynamicAgentLoading -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -XX:+UseCompactObjectHeaders -XX:+AlwaysActAsServerClassMachine -XX:+UseNUMA -XX:+UseFastUnorderedTimeStamps -XX:+UseVectorCmov -XX:+UseCriticalJavaThreadPriority -Dsf.flags.v2=true -jar SoulFireClient.jar
+java -Dsf.remoteAddress=domain.com -Dsf.remoteToken=abcdefg -Djava.awt.headless=true -Xmx$RAM -XX:+EnableDynamicAgentLoading -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -XX:+UseCompactObjectHeaders -XX:+AlwaysActAsServerClassMachine -XX:+UseNUMA -XX:+UseFastUnorderedTimeStamps -XX:+UseVectorCmov -XX:+UseCriticalJavaThreadPriority -Dsf.flags.v2=true -jar SoulFireCLI.jar
 ```
 
 ## CLI flags
@@ -59,7 +58,7 @@ See [CLI Flags](/docs/reference/cli-flags) for the full list.
 Here is an example of how to use them:
 
 ```bash
-java -Xmx$RAM -XX:+EnableDynamicAgentLoading -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -XX:+UseCompactObjectHeaders -XX:+AlwaysActAsServerClassMachine -XX:+UseNUMA -XX:+UseFastUnorderedTimeStamps -XX:+UseVectorCmov -XX:+UseCriticalJavaThreadPriority -Dsf.flags.v2=true -jar SoulFireClient.jar --account-file accounts.txt --account-type OFFLINE --bot-address 127.0.0.1:25565 --bot-protocol-version 1.20 --bot-join-delay-min 1000 --bot-join-delay-max 3000 --start
+java -Xmx$RAM -XX:+EnableDynamicAgentLoading -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -XX:+UseCompactObjectHeaders -XX:+AlwaysActAsServerClassMachine -XX:+UseNUMA -XX:+UseFastUnorderedTimeStamps -XX:+UseVectorCmov -XX:+UseCriticalJavaThreadPriority -Dsf.flags.v2=true -jar SoulFireCLI.jar --account-file accounts.txt --account-type OFFLINE --bot-address 127.0.0.1:25565 --bot-protocol-version 26.3 --bot-join-delay-min 1000 --bot-join-delay-max 3000 --start
 ```
 
 Replace `$RAM` with the memory limit for the CLI process.

@@ -1,6 +1,6 @@
 ---
 title: Behavior composition
-description: Combine SoulFire tasks into workflows with Effect, Promises, or asyncio.
+description: Combine SoulFire tasks into scoped TypeScript and Python Effect workflows.
 icon: Workflow
 ---
 
@@ -14,8 +14,8 @@ They choose the next action while durable tasks manage movement, combat, invento
 
 This workflow gathers logs, retries a bounded build, and guarantees cleanup:
 
-<Tabs items={['Effect', 'Promise', 'Async Python']}>
-  <Tab value="Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     import {
       cleanup,
@@ -43,37 +43,9 @@ This workflow gathers logs, retries a bounded build, and guarantees cleanup:
     const results = yield* prepareShelter.run(bot);
     ```
   </Tab>
-  <Tab value="Promise">
-    ```ts
-    import {
-      cleanup,
-      collectBlocks,
-      retry,
-      sequence,
-    } from "@soulfiremc/sdk/promise";
-
-    const prepareShelter = cleanup(
-      sequence(
-        collectBlocks({
-          blockIds: [],
-          tags: ["minecraft:logs"],
-          count: 16,
-        }),
-        retry(buildShelter, {
-          attempts: 3,
-          delayMs: 500,
-          backoff: 2,
-        }),
-      ),
-      releaseTemporaryClaims,
-    );
-
-    const results = await prepareShelter.run(bot, { signal });
-    ```
-  </Tab>
-  <Tab value="Async Python">
+  <Tab value="Python">
     ```python
-    from soulfire import cleanup, retry, sequence
+    from soulfire import CollectBlocks, cleanup, retry, sequence
 
 
     prepare_shelter = cleanup(
@@ -93,7 +65,7 @@ This workflow gathers logs, retries a bounded build, and guarantees cleanup:
         release_temporary_claims,
     )
 
-    results = await prepare_shelter.run(bot)
+    results = yield from prepare_shelter.run(bot)
     ```
   </Tab>
 </Tabs>
@@ -118,21 +90,18 @@ atomic movement calls.
 | `cleanup` | A finalizer must run after success, failure, or cancellation |
 | `scopedLease` / `scoped_lease` | A workflow needs exclusive bot control |
 
-Effect `parallel` uses fibers and accepts Effect concurrency. Promise
-`parallel` accepts a numeric concurrency limit and propagates a linked
-`AbortSignal`. Python `parallel` uses `asyncio.TaskGroup`, so sibling work is
-cancelled when one child fails.
+Both SDKs run parallel behaviors in scoped fibers with bounded concurrency.
+A failure interrupts sibling work and waits for cleanup.
 
 `race` means first successful result. A failed contender does not end the race
-while another contender can still succeed. Losing Effect fibers, Promise
-operations, and Python tasks are interrupted or cancelled.
+while another contender can still succeed. The runtime interrupts losing fibers and waits for their cleanup.
 
 ## Bound retries
 
 Always give retries a finite attempt count. Delay and backoff are optional:
 
-<Tabs items={['Effect', 'Promise', 'Async Python']}>
-  <Tab value="Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     const resilient = retry(operation, {
       attempts: 5,
@@ -142,17 +111,7 @@ Always give retries a finite attempt count. Delay and backoff are optional:
     });
     ```
   </Tab>
-  <Tab value="Promise">
-    ```ts
-    const resilient = retry(operation, {
-      attempts: 5,
-      delayMs: 250,
-      backoff: 2,
-      maximumDelayMs: 4_000,
-    });
-    ```
-  </Tab>
-  <Tab value="Async Python">
+  <Tab value="Python">
     ```python
     resilient = retry(
         operation,
@@ -165,39 +124,32 @@ Always give retries a finite attempt count. Delay and backoff are optional:
   </Tab>
 </Tabs>
 
-Parent cancellation stops a retry before the next attempt. A timeout also
-cancels the running operation. The Promise timeout can return before custom
-behavior responds to cancellation. Native SDK operations receive the linked signal.
+Interruption stops retries and cancels the active operation.
+Retry and fallback handle typed failures. Defects and interruption pass through.
+Use `while` in TypeScript or `while_` in Python to restrict retries.
 
 ## Hold exclusive control
 
 Use a scoped lease when a workflow must exclude other SDK controllers:
 
-<Tabs items={['Effect', 'Promise', 'Async Python']}>
-  <Tab value="Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     const exclusive = scopedLease(prepareShelter, 30);
     const result = yield* exclusive.run(bot);
     ```
   </Tab>
-  <Tab value="Promise">
-    ```ts
-    const exclusive = scopedLease(prepareShelter, 30);
-    const result = await exclusive.run(bot, { signal });
-    ```
-  </Tab>
-  <Tab value="Async Python">
+  <Tab value="Python">
     ```python
     exclusive = scoped_lease(prepare_shelter, ttl_seconds=30)
-    result = await exclusive.run(bot)
+    result = yield from exclusive.run(bot)
     ```
   </Tab>
 </Tabs>
 
-Effect users can also acquire a lease directly with
-`bot.acquireControlScoped()`. Promise users can use `await using` with the
-returned control lease. Python leases implement `async with`. Each form
-releases the lease when its scope exits.
+Use `bot.acquireControlScoped()` in TypeScript or `bot.acquire_control()` in Python for a direct scoped lease.
+The scope releases the lease after success, failure, or interruption.
+Behavior callbacks and finalizers return effects.
 
 <Callout type="info">
   Behavior composition is an orchestration layer. A workflow does not move

@@ -16,8 +16,8 @@ the recipes known to the bot. `craft`, `smelt`, and `brew` create durable
 tasks that own inventory, container, movement, and hand resources while they
 run.
 
-<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
-  <Tab value="Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     const task = yield* bot.recipes.brew(
       { fingerprint: waterPotionFingerprint },
@@ -32,41 +32,15 @@ run.
     const result = yield* task.result();
     ```
   </Tab>
-  <Tab value="Promise">
-    ```ts
-    const task = await bot.recipes.smelt(
-      { itemIds: ["minecraft:raw_iron"] },
-      8,
-      {
-        fuel: { tags: ["minecraft:coals"] },
-        station: furnacePosition,
-      },
-    );
-
-    const result = await task.result();
-    ```
-  </Tab>
-  <Tab value="Async Python">
+  <Tab value="Python">
     ```python
-    task = await bot.recipes.craft(
+    task = yield from bot.recipes.craft(
         "display:42",
         count=3,
         station=crafting_table_position,
     )
 
-    result = await task.result()
-    ```
-  </Tab>
-  <Tab value="Sync Python">
-    ```python
-    task = bot.recipes.smelt(
-        ItemSelector(item_ids=["minecraft:raw_iron"]),
-        count=8,
-        fuel=ItemSelector(tags=["minecraft:coals"]),
-        station=furnace_position,
-    )
-
-    result = task.result()
+    result = yield from task.result()
     ```
   </Tab>
 </Tabs>
@@ -83,12 +57,12 @@ the compatible menu is already open.
 
 ## Trade with a villager
 
-Open the villager menu with `bot.actions.interactEntity` before inspecting or
+Open the villager menu with `bot.interactEntity` before inspecting or
 executing trades. SoulFire reads the live merchant offers, including adjusted
 costs, uses, stock, experience, demand, and price data.
 
-<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
-  <Tab value="Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     const offers = yield* bot.recipes.listVillagerTrades();
     const offer = offers.offers[0]!;
@@ -99,43 +73,17 @@ costs, uses, stock, experience, demand, and price data.
     const result = yield* task.result();
     ```
   </Tab>
-  <Tab value="Promise">
-    ```ts
-    const offers = await bot.recipes.listVillagerTrades();
-    const offer = offers.offers[0]!;
-
-    const task = await bot.recipes.villagerTrade(offer.offerIndex, 3, {
-      expectedResult: { itemIds: [offer.result!.itemId] },
-      closeWhenDone: true,
-    });
-    const result = await task.result();
-    ```
-  </Tab>
-  <Tab value="Async Python">
+  <Tab value="Python">
     ```python
-    offers = await bot.recipes.list_villager_trades()
+    offers = yield from bot.recipes.list_villager_trades()
     offer = offers.offers[0]
 
-    task = await bot.recipes.villager_trade(
+    task = yield from bot.recipes.villager_trade(
         offer.offer_index,
         count=3,
         expected_result=ItemSelector(item_ids=[offer.result.item_id]),
     )
-    result = await task.result()
-    ```
-  </Tab>
-  <Tab value="Sync Python">
-    ```python
-    offers = bot.recipes.list_villager_trades()
-    offer = offers.offers[0]
-
-    task = bot.recipes.villager_trade(
-        offer.offer_index,
-        count=3,
-        expected_result=ItemSelector(item_ids=[offer.result.item_id]),
-        close_when_done=True,
-    )
-    result = task.result()
+    result = yield from task.result()
     ```
   </Tab>
 </Tabs>
@@ -151,8 +99,8 @@ The storage tasks walk to a block container, open it, and apply a semantic
 transfer batch. Applications describe items and counts instead of scripting
 menu slots:
 
-<Tabs items={['Effect', 'Promise', 'Async Python', 'Sync Python']}>
-  <Tab value="Effect">
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
     ```ts
     const supplies = yield* bot.tasks.withdraw(
       storageChest,
@@ -172,29 +120,9 @@ menu slots:
     const result = yield* supplies.result();
     ```
   </Tab>
-  <Tab value="Promise">
-    ```ts
-    const supplies = await bot.tasks.withdraw(
-      storageChest,
-      [
-        {
-          selector: { itemIds: ["minecraft:bread"] },
-          count: 16,
-        },
-        {
-          selector: { tags: ["minecraft:coals"] },
-          count: 8,
-          allowPartial: true,
-        },
-      ],
-    );
-
-    const result = await supplies.result();
-    ```
-  </Tab>
-  <Tab value="Async Python">
+  <Tab value="Python">
     ```python
-    supplies = await bot.tasks.withdraw(
+    supplies = yield from bot.tasks.withdraw(
         storage_chest,
         [
             ContainerTransferSpec(
@@ -209,27 +137,7 @@ menu slots:
         ],
     )
 
-    result = await supplies.result()
-    ```
-  </Tab>
-  <Tab value="Sync Python">
-    ```python
-    supplies = bot.tasks.withdraw(
-        storage_chest,
-        [
-            ContainerTransferSpec(
-                selector=ItemSelector(item_ids=["minecraft:bread"]),
-                count=16,
-            ),
-            ContainerTransferSpec(
-                selector=ItemSelector(tags=["minecraft:coals"]),
-                count=8,
-                allow_partial=True,
-            ),
-        ],
-    )
-
-    result = supplies.result()
+    result = yield from supplies.result()
     ```
   </Tab>
 </Tabs>
@@ -279,7 +187,7 @@ const loadout = yield* bot.tasks.maintainLoadout(
 ```
 
 ```python
-loadout = await bot.tasks.maintain_loadout(
+loadout = yield from bot.tasks.maintain_loadout(
     storage_chest,
     [
         LoadoutRequirementSpec(

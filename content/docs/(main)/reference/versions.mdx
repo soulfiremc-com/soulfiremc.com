@@ -9,12 +9,12 @@ import { Callout } from 'fumadocs-ui/components/callout';
 ## Supported Minecraft versions
 
 <Callout type="info">
-  SoulFire runs on the **latest Minecraft version**.
+  SoulFire runs on **Minecraft 26.3**.
   [ViaFabricPlus](https://github.com/ViaVersion/ViaFabricPlus) adds support for Bedrock, Classic, Alpha, Beta, Release, and April Fools versions.
 </Callout>
 
 SoulFire uses ViaFabricPlus and its Via libraries to support many Minecraft versions.
-SoulFire runs on the latest stable Minecraft release.
+SoulFire uses Minecraft 26.3 as its native client.
 It translates connections to older versions automatically.
 
 ## How does this work?
@@ -22,102 +22,108 @@ It translates connections to older versions automatically.
 The built-in [ViaFabricPlus](https://github.com/ViaVersion/ViaFabricPlus) mod includes
 [ViaVersion](https://github.com/ViaVersion/ViaVersion), [ViaLegacy](https://github.com/RaphiMC/ViaLegacy),
 and [ViaBedrock](https://github.com/RaphiMC/ViaBedrock).
+The bundled StackAnvil addon provides Bedrock support.
 SoulFire translates packets on the bot side, so the Minecraft server does not need ViaVersion.
 This design is similar to [VIAaaS](https://github.com/ViaVersion/VIAaaS) and [ViaProxy](https://github.com/RaphiMC/ViaProxy).
 
 ## List of versions
 
-| Version                               | ID                    | Type       |
-|---------------------------------------|-----------------------|------------|
-| `Bedrock 1.21.100 (Work in progress)` | `SPECIAL\|827`        | `BEDROCK`  |
-| `1.21.7-1.21.8` (native)              | `RELEASE\|772`        | `JAVA`     |
-| `1.21.6`                              | `RELEASE\|771`        | `JAVA`     |
-| `25w14craftmine`                      | `SPECIAL\|1073742068` | `SNAPSHOT` |
-| `1.21.5`                              | `RELEASE\|770`        | `JAVA`     |
-| `1.21.4`                              | `RELEASE\|769`        | `JAVA`     |
-| `1.21.2-1.21.3`                       | `RELEASE\|768`        | `JAVA`     |
-| `1.21-1.21.1`                         | `RELEASE\|767`        | `JAVA`     |
-| `1.20.5-1.20.6`                       | `RELEASE\|766`        | `JAVA`     |
-| `1.20.3-1.20.4`                       | `RELEASE\|765`        | `JAVA`     |
-| `1.20.2`                              | `RELEASE\|764`        | `JAVA`     |
-| `1.20-1.20.1`                         | `RELEASE\|763`        | `JAVA`     |
-| `1.19.4`                              | `RELEASE\|762`        | `JAVA`     |
-| `1.19.3`                              | `RELEASE\|761`        | `JAVA`     |
-| `1.19.1-1.19.2`                       | `RELEASE\|760`        | `JAVA`     |
-| `1.19`                                | `RELEASE\|759`        | `JAVA`     |
-| `1.18.2`                              | `RELEASE\|758`        | `JAVA`     |
-| `1.18-1.18.1`                         | `RELEASE\|757`        | `JAVA`     |
-| `1.17.1`                              | `RELEASE\|756`        | `JAVA`     |
-| `1.17`                                | `RELEASE\|755`        | `JAVA`     |
-| `1.16.4-1.16.5`                       | `RELEASE\|754`        | `JAVA`     |
-| `1.16.3`                              | `RELEASE\|753`        | `JAVA`     |
-| `1.16.2`                              | `RELEASE\|751`        | `JAVA`     |
-| `Combat Test 8c`                      | `SPECIAL\|803`        | `SNAPSHOT` |
-| `1.16.1`                              | `RELEASE\|736`        | `JAVA`     |
-| `1.16`                                | `RELEASE\|735`        | `JAVA`     |
-| `20w14infinite`                       | `SPECIAL\|709`        | `SNAPSHOT` |
-| `1.15.2`                              | `RELEASE\|578`        | `JAVA`     |
-| `1.15.1`                              | `RELEASE\|575`        | `JAVA`     |
-| `1.15`                                | `RELEASE\|573`        | `JAVA`     |
-| `1.14.4`                              | `RELEASE\|498`        | `JAVA`     |
-| `1.14.3`                              | `RELEASE\|490`        | `JAVA`     |
-| `1.14.2`                              | `RELEASE\|485`        | `JAVA`     |
-| `1.14.1`                              | `RELEASE\|480`        | `JAVA`     |
-| `1.14`                                | `RELEASE\|477`        | `JAVA`     |
-| `3D Shareware`                        | `SPECIAL\|1`          | `SNAPSHOT` |
-| `1.13.2`                              | `RELEASE\|404`        | `JAVA`     |
-| `1.13.1`                              | `RELEASE\|401`        | `JAVA`     |
-| `1.13`                                | `RELEASE\|393`        | `JAVA`     |
-| `1.12.2`                              | `RELEASE\|340`        | `JAVA`     |
-| `1.12.1`                              | `RELEASE\|338`        | `JAVA`     |
-| `1.12`                                | `RELEASE\|335`        | `JAVA`     |
-| `1.11.1-1.11.2`                       | `RELEASE\|316`        | `JAVA`     |
-| `1.11`                                | `RELEASE\|315`        | `JAVA`     |
-| `1.10.x`                              | `RELEASE\|210`        | `JAVA`     |
-| `1.9.3-1.9.4`                         | `RELEASE\|110`        | `JAVA`     |
-| `1.9.2`                               | `RELEASE\|109`        | `JAVA`     |
-| `1.9.1`                               | `RELEASE\|108`        | `JAVA`     |
-| `1.9`                                 | `RELEASE\|107`        | `JAVA`     |
-| `1.8.x`                               | `RELEASE\|47`         | `JAVA`     |
-| `1.7.6-1.7.10`                        | `RELEASE\|5`          | `JAVA`     |
-| `1.7.2-1.7.5`                         | `RELEASE\|4`          | `JAVA`     |
-| `1.6.4`                               | `RELEASE_INITIAL\|78` | `LEGACY`   |
-| `1.6.2`                               | `RELEASE_INITIAL\|74` | `LEGACY`   |
-| `1.6.1`                               | `RELEASE_INITIAL\|73` | `LEGACY`   |
-| `1.5.2`                               | `RELEASE_INITIAL\|61` | `LEGACY`   |
-| `1.5-1.5.1`                           | `RELEASE_INITIAL\|60` | `LEGACY`   |
-| `1.4.6-1.4.7`                         | `RELEASE_INITIAL\|51` | `LEGACY`   |
-| `1.4.4-1.4.5`                         | `RELEASE_INITIAL\|49` | `LEGACY`   |
-| `1.4.2`                               | `RELEASE_INITIAL\|47` | `LEGACY`   |
-| `1.3.1-1.3.2`                         | `RELEASE_INITIAL\|39` | `LEGACY`   |
-| `1.2.4-1.2.5`                         | `RELEASE_INITIAL\|29` | `LEGACY`   |
-| `1.2.1-1.2.3`                         | `RELEASE_INITIAL\|28` | `LEGACY`   |
-| `1.1`                                 | `RELEASE_INITIAL\|23` | `LEGACY`   |
-| `1.0.0-1.0.1`                         | `RELEASE_INITIAL\|22` | `LEGACY`   |
-| `b1.8-b1.8.1`                         | `BETA_LATER\|17`      | `LEGACY`   |
-| `b1.7-b1.7.3`                         | `BETA_LATER\|14`      | `LEGACY`   |
-| `b1.6-b1.6.6`                         | `BETA_LATER\|13`      | `LEGACY`   |
-| `b1.5-b1.5.2`                         | `BETA_LATER\|11`      | `LEGACY`   |
-| `b1.4-b1.4.1`                         | `BETA_LATER\|10`      | `LEGACY`   |
-| `b1.3-b1.3.1`                         | `BETA_LATER\|9`       | `LEGACY`   |
-| `b1.2-b1.2.2`                         | `BETA_LATER\|8`       | `LEGACY`   |
-| `b1.1.2`                              | `BETA_INITIAL\|8`     | `LEGACY`   |
-| `b1.0-b1.1.1`                         | `BETA_INITIAL\|7`     | `LEGACY`   |
-| `a1.2.3.5-a1.2.6`                     | `ALPHA_LATER\|6`      | `LEGACY`   |
-| `a1.2.3-a1.2.3.4`                     | `ALPHA_LATER\|5`      | `LEGACY`   |
-| `a1.2.2`                              | `ALPHA_LATER\|4`      | `LEGACY`   |
-| `a1.2.0-a1.2.1.1`                     | `ALPHA_LATER\|3`      | `LEGACY`   |
-| `a1.1.0-a1.1.2.1`                     | `ALPHA_LATER\|2`      | `LEGACY`   |
-| `a1.0.17-a1.0.17.4`                   | `ALPHA_LATER\|1`      | `LEGACY`   |
-| `a1.0.16-a1.0.16.2`                   | `ALPHA_INITIAL\|14`   | `LEGACY`   |
-| `a1.0.15`                             | `ALPHA_INITIAL\|13`   | `LEGACY`   |
-| `c0.30 CPE`                           | `SPECIAL\|7`          | `LEGACY`   |
-| `c0.28-c0.30`                         | `CLASSIC\|7`          | `LEGACY`   |
-| `c0.0.20a-c0.27`                      | `CLASSIC\|6`          | `LEGACY`   |
-| `c0.0.19a-06`                         | `CLASSIC\|5`          | `LEGACY`   |
-| `c0.0.18a-02`                         | `CLASSIC\|4`          | `LEGACY`   |
-| `c0.0.16a-02`                         | `CLASSIC\|3`          | `LEGACY`   |
-| `c0.0.15a-1`                          | `CLASSIC\|0`          | `LEGACY`   |
+| Version | ID | Type |
+| --- | --- | --- |
+| `Bedrock 1.26.51` | `SPECIAL\|2193` | `BEDROCK` |
+| `26.3` (native) | `RELEASE\|777` | `JAVA` |
+| `26.2` | `RELEASE\|776` | `JAVA` |
+| `26.1-26.1.2` | `RELEASE\|775` | `JAVA` |
+| `1.21.11` | `RELEASE\|774` | `JAVA` |
+| `1.21.9-1.21.10` | `RELEASE\|773` | `JAVA` |
+| `1.21.7-1.21.8` | `RELEASE\|772` | `JAVA` |
+| `1.21.6` | `RELEASE\|771` | `JAVA` |
+| `25w14craftmine` | `SPECIAL\|1073742068` | `SNAPSHOT` |
+| `1.21.5` | `RELEASE\|770` | `JAVA` |
+| `1.21.4` | `RELEASE\|769` | `JAVA` |
+| `1.21.2-1.21.3` | `RELEASE\|768` | `JAVA` |
+| `1.21-1.21.1` | `RELEASE\|767` | `JAVA` |
+| `1.20.5-1.20.6` | `RELEASE\|766` | `JAVA` |
+| `1.20.3-1.20.4` | `RELEASE\|765` | `JAVA` |
+| `1.20.2` | `RELEASE\|764` | `JAVA` |
+| `1.20-1.20.1` | `RELEASE\|763` | `JAVA` |
+| `1.19.4` | `RELEASE\|762` | `JAVA` |
+| `1.19.3` | `RELEASE\|761` | `JAVA` |
+| `1.19.1-1.19.2` | `RELEASE\|760` | `JAVA` |
+| `1.19` | `RELEASE\|759` | `JAVA` |
+| `1.18.2` | `RELEASE\|758` | `JAVA` |
+| `1.18-1.18.1` | `RELEASE\|757` | `JAVA` |
+| `1.17.1` | `RELEASE\|756` | `JAVA` |
+| `1.17` | `RELEASE\|755` | `JAVA` |
+| `1.16.4-1.16.5` | `RELEASE\|754` | `JAVA` |
+| `1.16.3` | `RELEASE\|753` | `JAVA` |
+| `1.16.2` | `RELEASE\|751` | `JAVA` |
+| `Combat Test 8c` | `SPECIAL\|803` | `SNAPSHOT` |
+| `1.16.1` | `RELEASE\|736` | `JAVA` |
+| `1.16` | `RELEASE\|735` | `JAVA` |
+| `20w14infinite` | `SPECIAL\|709` | `SNAPSHOT` |
+| `1.15.2` | `RELEASE\|578` | `JAVA` |
+| `1.15.1` | `RELEASE\|575` | `JAVA` |
+| `1.15` | `RELEASE\|573` | `JAVA` |
+| `1.14.4` | `RELEASE\|498` | `JAVA` |
+| `1.14.3` | `RELEASE\|490` | `JAVA` |
+| `1.14.2` | `RELEASE\|485` | `JAVA` |
+| `1.14.1` | `RELEASE\|480` | `JAVA` |
+| `1.14` | `RELEASE\|477` | `JAVA` |
+| `3D Shareware` | `SPECIAL\|1` | `SNAPSHOT` |
+| `1.13.2` | `RELEASE\|404` | `JAVA` |
+| `1.13.1` | `RELEASE\|401` | `JAVA` |
+| `1.13` | `RELEASE\|393` | `JAVA` |
+| `1.12.2` | `RELEASE\|340` | `JAVA` |
+| `1.12.1` | `RELEASE\|338` | `JAVA` |
+| `1.12` | `RELEASE\|335` | `JAVA` |
+| `1.11.1-1.11.2` | `RELEASE\|316` | `JAVA` |
+| `1.11` | `RELEASE\|315` | `JAVA` |
+| `1.10.x` | `RELEASE\|210` | `JAVA` |
+| `1.9.3-1.9.4` | `RELEASE\|110` | `JAVA` |
+| `1.9.2` | `RELEASE\|109` | `JAVA` |
+| `1.9.1` | `RELEASE\|108` | `JAVA` |
+| `1.9` | `RELEASE\|107` | `JAVA` |
+| `1.8.x` | `RELEASE\|47` | `JAVA` |
+| `1.7.6-1.7.10` | `RELEASE\|5` | `JAVA` |
+| `1.7.2-1.7.5` | `RELEASE\|4` | `JAVA` |
+| `1.6.4` | `RELEASE_INITIAL\|78` | `LEGACY` |
+| `1.6.2` | `RELEASE_INITIAL\|74` | `LEGACY` |
+| `1.6.1` | `RELEASE_INITIAL\|73` | `LEGACY` |
+| `1.5.2` | `RELEASE_INITIAL\|61` | `LEGACY` |
+| `1.5-1.5.1` | `RELEASE_INITIAL\|60` | `LEGACY` |
+| `1.4.6-1.4.7` | `RELEASE_INITIAL\|51` | `LEGACY` |
+| `1.4.4-1.4.5` | `RELEASE_INITIAL\|49` | `LEGACY` |
+| `1.4.2` | `RELEASE_INITIAL\|47` | `LEGACY` |
+| `1.3.1-1.3.2` | `RELEASE_INITIAL\|39` | `LEGACY` |
+| `1.2.4-1.2.5` | `RELEASE_INITIAL\|29` | `LEGACY` |
+| `1.2.1-1.2.3` | `RELEASE_INITIAL\|28` | `LEGACY` |
+| `1.1` | `RELEASE_INITIAL\|23` | `LEGACY` |
+| `1.0.0-1.0.1` | `RELEASE_INITIAL\|22` | `LEGACY` |
+| `b1.8-b1.8.1` | `BETA_LATER\|17` | `LEGACY` |
+| `b1.7-b1.7.3` | `BETA_LATER\|14` | `LEGACY` |
+| `b1.6-b1.6.6` | `BETA_LATER\|13` | `LEGACY` |
+| `b1.5-b1.5.2` | `BETA_LATER\|11` | `LEGACY` |
+| `b1.4-b1.4.1` | `BETA_LATER\|10` | `LEGACY` |
+| `b1.3-b1.3.1` | `BETA_LATER\|9` | `LEGACY` |
+| `b1.2-b1.2.2` | `BETA_LATER\|8` | `LEGACY` |
+| `b1.1.2` | `BETA_INITIAL\|8` | `LEGACY` |
+| `b1.0-b1.1.1` | `BETA_INITIAL\|7` | `LEGACY` |
+| `a1.2.3.5-a1.2.6` | `ALPHA_LATER\|6` | `LEGACY` |
+| `a1.2.3-a1.2.3.4` | `ALPHA_LATER\|5` | `LEGACY` |
+| `a1.2.2` | `ALPHA_LATER\|4` | `LEGACY` |
+| `a1.2.0-a1.2.1.1` | `ALPHA_LATER\|3` | `LEGACY` |
+| `a1.1.0-a1.1.2.1` | `ALPHA_LATER\|2` | `LEGACY` |
+| `a1.0.17-a1.0.17.4` | `ALPHA_LATER\|1` | `LEGACY` |
+| `a1.0.16-a1.0.16.2` | `ALPHA_INITIAL\|14` | `LEGACY` |
+| `a1.0.15` | `ALPHA_INITIAL\|13` | `LEGACY` |
+| `c0.30 CPE` | `SPECIAL\|7` | `LEGACY` |
+| `c0.28-c0.30` | `CLASSIC\|7` | `LEGACY` |
+| `c0.0.20a-c0.27` | `CLASSIC\|6` | `LEGACY` |
+| `c0.0.19a-06` | `CLASSIC\|5` | `LEGACY` |
+| `c0.0.18a-02` | `CLASSIC\|4` | `LEGACY` |
+| `c0.0.16a-02` | `CLASSIC\|3` | `LEGACY` |
+| `c0.0.15a-1` | `CLASSIC\|0` | `LEGACY` |
 
 ## How to generate this list
 

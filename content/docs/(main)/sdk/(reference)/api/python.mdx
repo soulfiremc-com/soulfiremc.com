@@ -1,65 +1,16 @@
 ---
 title: Python API
-description: Core Python SDK methods and signatures from release 2.10.0.
+description: Core Python SDK operations and stream signatures.
 icon: Code
 ---
 
-Generated from the [SoulFire SDK 2.10.0 release](https://github.com/soulfiremc-com/SoulFire/tree/2.10.0). Each signature links to its release source.
+Generated from the [SoulFire SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Each signature links to the same source revision.
 
-The async classes are shown below. The synchronous classes expose matching methods without `await`. See [Python setup](/docs/sdk/python) for complete connection examples.
+Methods decorated with `@fn` return effects. Their source signatures use `EffectGen` for the generator body. Compose operations with `yield from` inside a scoped workflow. See [Python setup](/docs/sdk/python) for runtime and stream examples.
 
 ## Connect and select bots
 
-Choose the async client for services or the sync client for scripts.
-
-### AsyncSoulFire
-
-#### connect [!toc]
-
-```python
-@classmethod
-def connect(
-    cls,
-    base_url: str,
-    *,
-    token: TokenProvider | None = None,
-    timeout_ms: int | None = None,
-    interceptors: Iterable[AsyncClientInterceptor] = (),
-    required_capabilities: Iterable[str] = (),
-    required_plugins: Iterable[RequiredPlugin] = (),
-) -> AsyncSoulFireConnection
-```
-
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/client.py#L212)
-
-#### instance [!toc]
-
-```python
-def instance(self, instance_id: str) -> AsyncSoulFireInstance
-```
-
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/client.py#L360)
-
-#### instances [!toc]
-
-```python
-async def instances(
-    self,
-    *,
-    headers: dict[str, str] | None = None,
-    timeout_ms: int | None = None,
-) -> list[InstanceListResponse.Instance]
-```
-
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/client.py#L379)
-
-#### close [!toc]
-
-```python
-async def close(self) -> None
-```
-
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/client.py#L437)
+Compose operations with effect-py and keep connections inside a scope.
 
 ### SoulFire
 
@@ -67,19 +18,41 @@ async def close(self) -> None
 
 ```python
 @classmethod
+@fn("SoulFire.connect")
 def connect(
     cls,
     base_url: str,
     *,
     token: TokenProvider | None = None,
     timeout_ms: int | None = None,
-    interceptors: Iterable[SyncClientInterceptor] = (),
+    interceptors: Iterable[ClientInterceptor] = (),
     required_capabilities: Iterable[str] = (),
     required_plugins: Iterable[RequiredPlugin] = (),
-) -> SoulFire
+) -> EffectGen[SoulFire, SoulFireOperationError, Scope]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/client.py#L989)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L209)
+
+#### install [!toc]
+
+```python
+@classmethod
+@fn("SoulFire.install")
+def install(
+    cls,
+    *,
+    directory: str | os.PathLike[str] | None = None,
+    version: str | None = None,
+    java_args: Iterable[str] = (),
+    port: int | None = None,
+    startup_timeout: float = 120.0,
+    on_log: Callable[[str], None] | None = None,
+    timeout_ms: int | None = None,
+    interceptors: Iterable[ClientInterceptor] = (),
+) -> EffectGen[SoulFire, SoulFireOperationError, Scope]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L260)
 
 #### instance [!toc]
 
@@ -87,51 +60,48 @@ def connect(
 def instance(self, instance_id: str) -> SoulFireInstance
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/client.py#L1137)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L374)
 
 #### instances [!toc]
 
 ```python
+@fn("SoulFire.instances")
 def instances(
-    self,
-    *,
-    headers: dict[str, str] | None = None,
-    timeout_ms: int | None = None,
-) -> list[InstanceListResponse.Instance]
+    self, *, headers: dict[str, str] | None = None, timeout_ms: int | None = None
+) -> EffectGen[list[InstanceListResponse.Instance], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/client.py#L1156)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L394)
 
 #### close [!toc]
 
 ```python
-def close(self) -> None
+@fn("SoulFire.close")
+def close(self) -> EffectGen[None]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/client.py#L1214)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L459)
 
-### AsyncSoulFireInstance
+### SoulFireInstance
 
 #### bot [!toc]
 
 ```python
-def bot(self, bot_id: str) -> AsyncSoulFireBot
+def bot(self, bot_id: str) -> SoulFireBot
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/client.py#L579)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L563)
 
 #### bots [!toc]
 
 ```python
-async def bots(
-    self,
-    *,
-    headers: dict[str, str] | None = None,
-    timeout_ms: int | None = None,
-) -> list[BotListEntry]
+@fn("SoulFireInstance.bots")
+def bots(
+    self, *, headers: dict[str, str] | None = None, timeout_ms: int | None = None
+) -> EffectGen[list[BotListEntry], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/client.py#L762)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L777)
 
 #### events [!toc]
 
@@ -143,177 +113,180 @@ def events(
     bot_ids: Iterable[str] = (),
     headers: dict[str, str] | None = None,
     timeout_ms: int | None = None,
-) -> AsyncIterator[InstanceEvent]
+) -> Stream[InstanceEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/client.py#L787)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L798)
 
 #### start [!toc]
 
 ```python
-async def start(
+@fn("SoulFireInstance.start")
+def start(
     self,
     *,
     bot_ids: Iterable[str] | None = None,
     count: int | None = None,
     headers: dict[str, str] | None = None,
     timeout_ms: int | None = None,
-) -> list[BotStatus]
+) -> EffectGen[list[BotStatus], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/client.py#L812)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L825)
 
 #### stop [!toc]
 
 ```python
-async def stop(
+@fn("SoulFireInstance.stop")
+def stop(
     self,
     *,
     bot_ids: Iterable[str] | None = None,
     count: int | None = None,
     headers: dict[str, str] | None = None,
     timeout_ms: int | None = None,
-) -> list[BotStatus]
+) -> EffectGen[list[BotStatus], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/client.py#L840)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L855)
 
 ## Control a bot
 
-The sync bot exposes corresponding methods without `await`.
+Operations return effects. Streams expose effect-based consumers.
 
-### AsyncSoulFireBot
+### SoulFireBot
 
 #### start [!toc]
 
 ```python
-async def start(self, *, timeout_ms: int | None = None) -> BotStatus
+@fn("SoulFireBot.start")
+def start(
+    self, *, timeout_ms: int | None = None
+) -> EffectGen[BotStatus, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/bot.py#L252)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L237)
 
 #### stop [!toc]
 
 ```python
-async def stop(self, *, timeout_ms: int | None = None) -> BotStatus
+@fn("SoulFireBot.stop")
+def stop(
+    self, *, timeout_ms: int | None = None
+) -> EffectGen[BotStatus, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/bot.py#L263)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L254)
 
 #### status [!toc]
 
 ```python
-async def status(self, *, timeout_ms: int | None = None) -> BotStatus
+@fn("SoulFireBot.status")
+def status(
+    self, *, timeout_ms: int | None = None
+) -> EffectGen[BotStatus, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/bot.py#L281)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L284)
 
 #### events [!toc]
 
 ```python
 def events(
-    self,
-    event_filter: BotEventFilter | None = None,
-    *,
-    timeout_ms: int | None = None,
-) -> AsyncIterator[BotEvent]
+    self, event_filter: BotEventFilter | None = None, *, timeout_ms: int | None = None
+) -> Stream[BotEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/bot.py#L307)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L335)
 
 #### observe [!toc]
 
 ```python
-async def observe(
-    self,
-    options: BotSessionOptions | None = None,
-    *,
-    timeout_ms: int | None = None,
-) -> AsyncBotSession
+@fn("SoulFireBot.observe")
+def observe(
+    self, options: BotSessionOptions | None = None, *, timeout_ms: int | None = None
+) -> EffectGen[BotSession, SoulFireOperationError, Scope]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/bot.py#L322)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L351)
 
 #### wait_for_online [!toc]
 
 ```python
-async def wait_for_online(
-    self,
-    *,
-    timeout_ms: int | None = None,
-) -> BotStatus
+@fn("SoulFireBot.wait_for_online")
+def wait_for_online(
+    self, *, timeout_ms: int | None = None
+) -> EffectGen[BotStatus, SoulFireOperationError]:
+    @gen
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/bot.py#L290)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L304)
 
-### AsyncSoulFireChat
+### SoulFireChat
 
 #### send [!toc]
 
 ```python
-async def send(
-    self,
-    message: str,
-    *,
-    idempotency_key: str | None = None,
-    timeout_ms: int | None = None,
-) -> BotActionResult
+@fn("SoulFireChat.send")
+def send(
+    self, message: str, *, idempotency_key: str | None = None, timeout_ms: int | None = None
+) -> EffectGen[BotActionResult, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/semantic.py#L225)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/semantic.py#L212)
 
 #### command [!toc]
 
 ```python
-async def command(
-    self,
-    command: str,
-    *,
-    idempotency_key: str | None = None,
-    timeout_ms: int | None = None,
-) -> BotActionResult
+@fn("SoulFireChat.command")
+def command(
+    self, command: str, *, idempotency_key: str | None = None, timeout_ms: int | None = None
+) -> EffectGen[BotActionResult, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/semantic.py#L243)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/semantic.py#L230)
 
 #### watch [!toc]
 
 ```python
-async def watch(
+def watch(
     self,
     matcher: ChatMatcher,
     *,
     sources: Iterable[ChatSource] | None = None,
     timeout_ms: int | None = None,
-) -> AsyncIterator[ChatMatch]
+) -> Stream[ChatMatch, SoulFireOperationError]:
+    @gen
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/semantic.py#L297)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/semantic.py#L287)
 
 #### wait_for [!toc]
 
 ```python
-async def wait_for(
+@fn("SoulFireChat.wait_for")
+def wait_for(
     self,
     matcher: ChatMatcher,
     *,
     sources: Iterable[ChatSource] | None = None,
     timeout_ms: int | None = None,
-) -> ChatMatch
+) -> EffectGen[ChatMatch, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/semantic.py#L320)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/semantic.py#L316)
 
 ## Run durable tasks
 
 Task handles survive SDK disconnects. Read their state or resume them by ID.
 
-### AsyncSoulFireTasks
+### SoulFireTasks
 
 #### go_to [!toc]
 
 ```python
-async def go_to(
+@fn("SoulFireTasks.go_to")
+def go_to(
     self,
     goal: PathfindGoal,
     *,
@@ -325,15 +298,16 @@ async def go_to(
     idempotency_key: str | None = None,
     headers: dict[str, str] | None = None,
     timeout_ms: int | None = None,
-) -> AsyncSoulFireTask[GoToTaskResult]
+) -> EffectGen[SoulFireTask[GoToTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/tasks.py#L387)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L403)
 
 #### follow_entity [!toc]
 
 ```python
-async def follow_entity(
+@fn("SoulFireTasks.follow_entity")
+def follow_entity(
     self,
     target: FollowEntityTarget,
     *,
@@ -347,15 +321,16 @@ async def follow_entity(
     idempotency_key: str | None = None,
     headers: dict[str, str] | None = None,
     timeout_ms: int | None = None,
-) -> AsyncSoulFireTask[FollowEntityTaskResult]
+) -> EffectGen[SoulFireTask[FollowEntityTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/tasks.py#L439)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L453)
 
 #### collect_blocks [!toc]
 
 ```python
-async def collect_blocks(
+@fn("SoulFireTasks.collect_blocks")
+def collect_blocks(
     self,
     block_ids: Iterable[str] = (),
     *,
@@ -373,15 +348,16 @@ async def collect_blocks(
     idempotency_key: str | None = None,
     headers: dict[str, str] | None = None,
     timeout_ms: int | None = None,
-) -> AsyncSoulFireTask[CollectBlocksTaskResult]
+) -> EffectGen[SoulFireTask[CollectBlocksTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/tasks.py#L1875)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L2006)
 
 #### stash [!toc]
 
 ```python
-async def stash(
+@fn("SoulFireTasks.stash")
+def stash(
     self,
     container: BlockPosition,
     operations: Iterable[ContainerTransferSpec | ContainerTransferOperation],
@@ -395,30 +371,32 @@ async def stash(
     idempotency_key: str | None = None,
     headers: dict[str, str] | None = None,
     timeout_ms: int | None = None,
-) -> AsyncSoulFireTask[ContainerTransferTaskResult]
+) -> EffectGen[SoulFireTask[ContainerTransferTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/tasks.py#L1416)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1501)
 
 #### get [!toc]
 
 ```python
-async def get[ResultT: Message](
+@fn("SoulFireTasks.get")
+def get[ResultT: Message](
     self,
     task_id: str,
     result_type: type[ResultT],
     *,
     headers: dict[str, str] | None = None,
     timeout_ms: int | None = None,
-) -> AsyncSoulFireTask[ResultT]
+) -> EffectGen[SoulFireTask[ResultT], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/tasks.py#L2269)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L2419)
 
 #### list [!toc]
 
 ```python
-async def list(
+@fn("SoulFireTasks.list")
+def list(
     self,
     *,
     statuses: Iterable[BotTaskStatus] = (),
@@ -426,10 +404,10 @@ async def list(
     page_size: int = 100,
     headers: dict[str, str] | None = None,
     timeout_ms: int | None = None,
-) -> list[BotTask]
+) -> EffectGen[list[BotTask], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/tasks.py#L2290)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L2437)
 
 #### watch [!toc]
 
@@ -442,25 +420,23 @@ def watch(
     include_snapshot: bool = True,
     headers: dict[str, str] | None = None,
     timeout_ms: int | None = None,
-) -> AsyncIterator[BotTaskEvent]
+) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/tasks.py#L2320)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L2470)
 
-### AsyncSoulFireTask
+### SoulFireTask
 
 #### refresh [!toc]
 
 ```python
-async def refresh(
-    self,
-    *,
-    headers: dict[str, str] | None = None,
-    timeout_ms: int | None = None,
-) -> BotTask
+@fn("SoulFireTask.refresh")
+def refresh(
+    self, *, headers: dict[str, str] | None = None, timeout_ms: int | None = None
+) -> EffectGen[BotTask, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/tasks.py#L200)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L198)
 
 #### events [!toc]
 
@@ -471,47 +447,44 @@ def events(
     after_revision: int | None = None,
     headers: dict[str, str] | None = None,
     timeout_ms: int | None = None,
-) -> AsyncIterator[BotTaskEvent]
+) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/tasks.py#L213)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L209)
 
 #### wait [!toc]
 
 ```python
-async def wait(
-    self,
-    *,
-    headers: dict[str, str] | None = None,
-    timeout_ms: int | None = None,
-) -> BotTask
+@fn("SoulFireTask.wait")
+def wait(
+    self, *, headers: dict[str, str] | None = None, timeout_ms: int | None = None
+) -> EffectGen[BotTask, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/tasks.py#L232)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L232)
 
 #### cancel [!toc]
 
 ```python
-async def cancel(
+@fn("SoulFireTask.cancel")
+def cancel(
     self,
     reason: str = "",
     *,
     headers: dict[str, str] | None = None,
     timeout_ms: int | None = None,
-) -> BotTask
+) -> EffectGen[BotTask, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/tasks.py#L247)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L250)
 
 #### result [!toc]
 
 ```python
-async def result(
-    self,
-    *,
-    headers: dict[str, str] | None = None,
-    timeout_ms: int | None = None,
-) -> ResultT
+@fn("SoulFireTask.result")
+def result(
+    self, *, headers: dict[str, str] | None = None, timeout_ms: int | None = None
+) -> EffectGen[ResultT, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/2.10.0/sdk/python/src/soulfire/tasks.py#L261)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L268)

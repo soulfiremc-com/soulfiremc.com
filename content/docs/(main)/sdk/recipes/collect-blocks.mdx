@@ -11,7 +11,8 @@ This program collects up to 16 oak logs near the bot. The task runs on the SoulF
 <Tabs items={['TypeScript', 'Python']} groupId="recipe-language">
   <Tab value="TypeScript">
     ```ts title="collect-blocks.ts" lineNumbers
-    import { SoulFire } from "@soulfiremc/sdk/promise";
+    import { Effect, Stream } from "effect";
+    import { SoulFire } from "@soulfiremc/sdk";
 
     function env(name: string): string {
       const value = process.env[name];
@@ -19,25 +20,32 @@ This program collects up to 16 oak logs near the bot. The task runs on the SoulF
       return value;
     }
 
-    await using soulfire = await SoulFire.connect({
-      baseUrl: env("SOULFIRE_URL"),
-      token: env("SOULFIRE_TOKEN"),
-    });
+    const program = Effect.scoped(
+      Effect.gen(function* () {
+        const soulfire = yield* SoulFire.connect({
+          baseUrl: env("SOULFIRE_URL"),
+          token: env("SOULFIRE_TOKEN"),
+        });
 
-    const bot = soulfire
-      .instance(env("SOULFIRE_INSTANCE_ID"))
-      .bot(env("SOULFIRE_BOT_ID"));
-    await bot.start();
+        const bot = soulfire
+          .instance(env("SOULFIRE_INSTANCE_ID"))
+          .bot(env("SOULFIRE_BOT_ID"));
+        yield* bot.start();
+        yield* bot.waitForOnline();
 
-    const task = await bot.tasks.collectBlocks(["minecraft:oak_log"], {
-      count: 16,
-      searchRadius: 32,
-      idempotencyKey: crypto.randomUUID(),
-    });
+        const task = yield* bot.tasks.collectBlocks(["minecraft:oak_log"], {
+          count: 16,
+          searchRadius: 32,
+          idempotencyKey: crypto.randomUUID(),
+        });
 
-    console.log("Task ID:", task.id);
-    const result = await task.result();
-    console.log(result);
+        console.log("Task ID:", task.id);
+        const result = yield* task.result();
+        console.log(result);
+      }),
+    );
+
+    await Effect.runPromise(program);
     ```
   </Tab>
   <Tab value="Python">
@@ -46,32 +54,35 @@ This program collects up to 16 oak logs near the bot. The task runs on the SoulF
     import os
     from uuid import uuid4
 
-    from soulfire import AsyncSoulFire
+    from effect_py import EffectGen, Scope, gen, run_async, scoped
+    from soulfire import SoulFireOperationError, SoulFire
 
 
-    async def main() -> None:
-        async with AsyncSoulFire.connect(
+    @gen
+    def program() -> EffectGen[None, SoulFireOperationError, Scope]:
+        soulfire = yield from SoulFire.connect(
             os.environ["SOULFIRE_URL"],
             token=os.environ["SOULFIRE_TOKEN"],
-        ) as soulfire:
-            bot = soulfire.instance(os.environ["SOULFIRE_INSTANCE_ID"]).bot(
-                os.environ["SOULFIRE_BOT_ID"]
-            )
-            await bot.start()
+        )
+        bot = soulfire.instance(os.environ["SOULFIRE_INSTANCE_ID"]).bot(
+            os.environ["SOULFIRE_BOT_ID"]
+        )
+        yield from bot.start()
+        yield from bot.wait_for_online()
 
-            task = await bot.tasks.collect_blocks(
-                ["minecraft:oak_log"],
-                count=16,
-                search_radius=32,
-                idempotency_key=str(uuid4()),
-            )
+        task = yield from bot.tasks.collect_blocks(
+            ["minecraft:oak_log"],
+            count=16,
+            search_radius=32,
+            idempotency_key=str(uuid4()),
+        )
 
-            print("Task ID:", task.id)
-            result = await task.result()
-            print(result)
+        print("Task ID:", task.id)
+        result = yield from task.result()
+        print(result)
 
 
-    asyncio.run(main())
+    asyncio.run(run_async(scoped(program).or_die()))
     ```
   </Tab>
 </Tabs>
