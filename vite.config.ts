@@ -7,16 +7,13 @@ import mdx from "fumadocs-mdx/vite";
 import { defineConfig } from "vite";
 import * as MdxConfig from "./source.config.ts";
 import { AUTH_UI_BASE_PATHS } from "./src/lib/auth-ui-config.ts";
-
 const securityHeaders = {
   "X-DNS-Prefetch-Control": "on",
   "X-XSS-Protection": "0",
   "X-Frame-Options": "SAMEORIGIN",
   "X-Content-Type-Options": "nosniff",
 };
-
 type Changefreq = "daily" | "weekly";
-
 const DAILY_PAGES = new Set([
   "/",
   "/blog",
@@ -27,7 +24,6 @@ const DAILY_PAGES = new Set([
   "/pricing",
   "/resources",
 ]);
-
 function getSitemapSettings(path: string): {
   priority: number;
   changefreq: Changefreq;
@@ -46,8 +42,8 @@ function getSitemapSettings(path: string): {
     return { priority: 0.6, changefreq: "weekly" };
   return { priority: 0.5, changefreq: "weekly" };
 }
-
 export default defineConfig(() => ({
+  environments: { ssr: { build: { sourcemap: true } } },
   envPrefix: ["VITE_"],
   resolve: {
     dedupe: [
@@ -103,7 +99,13 @@ export default defineConfig(() => ({
             path === "/admin" ||
             path.startsWith(`${AUTH_UI_BASE_PATHS.settings}/`)
           ),
-        onSuccess: ({ page }: { page: { path: string } }) => ({
+        onSuccess: ({
+          page,
+        }: {
+          page: {
+            path: string;
+          };
+        }) => ({
           sitemap: getSitemapSettings(page.path),
         }),
       },

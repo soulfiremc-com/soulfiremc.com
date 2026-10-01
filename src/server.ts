@@ -10,7 +10,7 @@ const securityHeaders = [
 ] as const;
 
 export default {
-  fetch: async (request: Request, env: CloudflareEnv) => {
+  fetch: async (request: Request, env: Cloudflare.Env) => {
     const reviewSession = createReviewSession(env.DB, request);
     const originalResponse = await runWithD1Database(
       env.DB,
