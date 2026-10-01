@@ -23,6 +23,20 @@ export default defineConfig({
       htmlHandling: "drop-trailing-slash",
     },
     env: {
+      BETTER_AUTH_URL: bindings.text("https://soulfiremc.com"),
+      GOOGLE_CLIENT_ID: bindings.text(
+        "752435735851-bec2rdqc2h4i2jpq90f9cmst0ii24hi7.apps.googleusercontent.com",
+      ),
+      DISCORD_CLIENT_ID: bindings.text("1248603974475583608"),
+      GITHUB_CLIENT_ID: bindings.text("Ov23livPhrJP9E6LIDJA"),
+      BETTER_AUTH_API_KEY: bindings.secret(),
+      BETTER_AUTH_SECRET: bindings.secret(),
+      GOOGLE_CLIENT_SECRET: bindings.secret(),
+      DISCORD_CLIENT_SECRET: bindings.secret(),
+      GITHUB_CLIENT_SECRET: bindings.secret(),
+      RESEND_API_KEY: bindings.secret(),
+      TURNSTILE_SECRET_KEY: bindings.secret(),
+      REVIEW_TURNSTILE_SECRET_KEY: bindings.secret(),
       DISCORD_BOT_TOKEN: bindings.secret(),
       DB: bindings.d1({
         name: "soulfire-website",
