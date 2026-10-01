@@ -1,0 +1,203 @@
+---
+title: World and entity queries
+sidebarTitle: "World and entities"
+description: Read the world around a bot, find what it is looking at, and estimate explosion damage.
+icon: Blocks
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from '../../../../../../../src/components/mdx/sdk-tabs';
+
+`bot.world` provides the world state observed by one connected bot.
+It returns stable snapshots instead of Minecraft packet data.
+Use it for lookups, searches, raycasts, entity inspection, and combat planning.
+
+## Read blocks and entities
+
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
+    ```ts
+    const block = yield* bot.world.block({
+      position: {
+        dimension: "minecraft:overworld",
+        x: 12,
+        y: 64,
+        z: -8,
+      },
+      includeBlockEntity: true,
+      includeShapes: true,
+    });
+
+    const entity = yield* bot.world.entity({
+      entity: targetReference,
+    });
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python
+    block = yield from bot.world.block(
+        position,
+        include_block_entity=True,
+        include_shapes=True,
+    )
+    entity = yield from bot.world.entity(target_reference)
+    ```
+  </Tab>
+</Tabs>
+
+An `EntityReference` contains a network ID and connection epoch. SoulFire
+rejects a reference from an earlier connection instead of accidentally
+targeting a different entity that reused the same numeric ID.
+
+Block snapshots include state properties, light, biome, fluid, hardness,
+collision shapes, tool hints, and block-entity data when requested. Entity
+snapshots include position, velocity, equipment, attributes, effects,
+passengers, ownership, and combat relationships.
+
+## Raycast
+
+```ts
+const hit = yield* bot.world.raycast({
+  origin: eyePosition,
+  direction: { x: 0, y: 0, z: 1 },
+  maximumDistance: 64,
+  includeFluids: false,
+  includeEntities: true,
+});
+```
+
+```python
+hit = yield from bot.world.raycast(
+    eye_position,
+    Vec3(x=0, y=0, z=1),
+    64,
+    include_fluids=False,
+    include_entities=True,
+)
+```
+
+The result identifies the nearest block or entity hit, its exact hit
+position, distance, and block face when applicable.
+
+Omit the origin and direction to raycast from the bot's current eyes and view
+direction. The SDK provides cursor helpers for the common cases:
+
+```ts
+const block = yield* bot.world.blockAtCursor(256);
+const entity = yield* bot.world.entityAtCursor(3.5);
+```
+
+```python
+block = yield from bot.world.block_at_cursor(256)
+entity = yield from bot.world.entity_at_cursor(3.5)
+```
+
+The server reads eye height and rotation in the same game-loop turn as the
+raycast. This stays accurate while the player crouches, swims, sleeps, or
+changes pose.
+
+## Interpret entity age and aggression
+
+`ageTicks` in TypeScript and `age_ticks` in Python expose the client-observable age category for ageable mobs.
+A value of `-1` means a baby. A value of `1` means an adult.
+The field does not expose the actual age or breeding cooldown.
+
+`aggressive` reports a visible attack posture or synchronized anger state.
+It does not identify the mob's attack target.
+Use fresh observations before combat or breeding decisions.
+
+## Check visibility and mining time
+
+```ts
+const visibility = yield* bot.world.canSeeBlock({
+  position: orePosition,
+});
+const mining = yield* bot.world.estimateDigTime({
+  position: orePosition,
+});
+
+if (visibility.visible && mining.diggable) {
+  yield* Effect.logInfo("ore is reachable", {
+    ticks: mining.ticks,
+    durationMs: mining.durationMs,
+    preservesDrops: mining.correctToolForDrops,
+  });
+}
+```
+
+```python
+visibility = yield from bot.world.can_see_block(ore_position)
+mining = yield from bot.world.estimate_dig_time(ore_position)
+```
+
+Visibility raycasts from the player's current eyes to the block center. Dig
+time uses Minecraft's current destroy-progress calculation, including the
+held item, attributes, status effects, water, ground state, and block
+properties. The response separates diggability from whether the held tool
+preserves drops.
+
+## Estimate explosion damage
+
+Explosion estimation samples the target's visible bounding-box volume using
+Minecraft's own block exposure algorithm. SoulFire then reports each
+mitigation stage separately.
+
+```ts
+const estimate = yield* bot.world.estimateExplosionDamage({
+  target: hostile.reference,
+  center: crystalPosition,
+  power: 6,
+});
+
+if (estimate.estimatedHealthDamage < player.health) {
+  yield* Effect.logInfo("survivable", {
+    raw: estimate.rawDamage,
+    afterArmor: estimate.damageAfterArmor,
+    final: estimate.estimatedHealthDamage,
+  });
+}
+```
+
+```python
+estimate = yield from bot.world.estimate_explosion_damage(
+    hostile.reference,
+    crystal_position,
+    6,
+)
+
+if estimate.estimated_health_damage < player.health:
+    print(estimate.raw_damage, estimate.estimated_health_damage)
+```
+
+The response includes:
+
+- Distance, damage radius, and sampled exposure.
+- Raw damage before equipment or effects.
+- Damage after armor and armor toughness.
+- Damage after Resistance.
+- Damage after Protection and Blast Protection.
+- Damage absorbed by absorption hearts.
+- Estimated health damage and observed invulnerability.
+
+<Callout type="warning">
+  This is a prediction from the bot's current client view. A server plugin can
+  change damage rules, equipment, attributes, blocks, or effects before the
+  explosion is processed. Treat the result as a combat-planning estimate, not
+  a server guarantee.
+</Callout>
+
+## Bounded searches
+
+`queryBlocks` and `queryEntities` support semantic selectors, nearest or
+farthest ordering, pagination, loaded-world revision metadata, and
+line-of-sight requirements. Block searches accept sphere or box regions.
+Entity searches accept type, tag, category, health, equipment, effect,
+ownership, player-name, and liveness filters.
+
+SoulFire bounds query radius, volume, and page size so one SDK request cannot
+stall a bot. For continuous observation, subscribe to
+[live events](/docs/sdk/events) and keep the session indexes instead of
+repeating large scans.
+
+For a packet or field that cannot fit the stable semantic model, use the
+permission-gated [raw protocol API](/docs/sdk/protocol).

@@ -1,0 +1,238 @@
+---
+title: Examples
+sidebarTitle: "Examples"
+description: Practical SoulFire scripting examples built with the current node set.
+icon: ListChecks
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Mermaid } from '../../../../../src/components/mdx/mermaid';
+
+These examples use the current SoulFire scripting system.
+Each example explains its graph and nodes.
+
+## 1. Greet on join
+
+**Goal:** Send a message once a bot is fully ready in the world.
+
+**Use this when:** You want startup behavior and do not need early connection hooks.
+
+<Mermaid chart="
+graph LR
+    A[On Join] --> B[Send Chat]
+" />
+
+**Nodes**
+
+- `On Join`
+- `Send Chat`
+
+**How to build it**
+
+1. Add `On Join`.
+2. Add `Send Chat`.
+3. Connect `On Join.exec` to `Send Chat.exec`.
+4. Connect `On Join.bot` to `Send Chat.bot`.
+5. Set the message, for example `hello from SoulFire`.
+
+This example shows the basic trigger-to-action pattern.
+
+## 2. Simple chat command
+
+**Goal:** Reply with `pong` when chat contains `!ping`.
+
+<Mermaid chart="
+graph LR
+    A[On Chat] --> C[Branch]
+    B[String Contains] --> C
+    C -->|true| D[Send Chat]
+" />
+
+**Nodes**
+
+- `On Chat`
+- `String Contains`
+- `Branch`
+- `Send Chat`
+
+**How to build it**
+
+1. Add `On Chat`.
+2. Add `String Contains`.
+3. Connect `On Chat.messagePlainText` to the string input on `String Contains`.
+4. Set the search text on `String Contains` to `!ping`.
+5. Add `Branch` and connect the boolean result from `String Contains` to its condition.
+6. Connect `On Chat.exec` to `Branch.exec`.
+7. Add `Send Chat` on the `true` path.
+8. Connect `On Chat.bot` to `Send Chat.bot`.
+9. Set the message to `pong`.
+
+For more commands, add more conditions or connect the result to a `Switch` node.
+
+## 3. Poll all bots every few seconds
+
+**Goal:** Run the same check for every connected bot on a timer.
+
+`On Interval` does not provide a bot, so this example gets the bot list first.
+
+<Mermaid chart="
+graph LR
+    A[On Interval] --> B[For Each Bot]
+    C[Get Bots] --> B
+    B --> D[Get Health]
+    D --> E[Print]
+" />
+
+**Nodes**
+
+- `On Interval`
+- `Get Bots`
+- `For Each Bot`
+- `Get Health`
+- `Print`
+
+**How to build it**
+
+1. Add `On Interval` and set `intervalMs` to something reasonable like `5000`.
+2. Add `Get Bots`.
+3. Add `For Each Bot`.
+4. Connect `On Interval.exec` to `For Each Bot.exec`.
+5. Connect `Get Bots.bots` to the bot list input on `For Each Bot`.
+6. Inside the loop body, add `Get Health`.
+7. Connect the current bot from `For Each Bot` to `Get Health.bot`.
+8. Add `Print` to log the result if you want quick feedback while testing.
+
+Use this pattern any time you want periodic work across the whole instance.
+
+## 4. Auto-respawn and notify Discord
+
+**Goal:** Recover from death and send a webhook notification.
+
+<Mermaid chart="
+graph LR
+    A[On Death] --> B[Respawn]
+    A --> C[Discord Webhook]
+" />
+
+**Nodes**
+
+- `On Death`
+- `Respawn`
+- `Discord Webhook`
+- Optional: `Format`
+
+**How to build it**
+
+1. Add `On Death`.
+2. Add `Respawn` and connect `On Death.exec` to `Respawn.exec`.
+3. Connect `On Death.bot` to `Respawn.bot`.
+4. Add `Discord Webhook`.
+5. Connect `On Death.exec` to `Discord Webhook.exec`.
+6. If you want a richer message, use `Format` to include values such as `shouldRespawn`.
+
+If the server or game mode already handles respawns the way you want, you can drop the `Respawn` node and keep only the notification branch.
+
+## 5. Flee when hurt
+
+**Goal:** Move away from danger when a bot takes damage.
+
+<Mermaid chart="
+graph LR
+    A[On Damage] --> B[Pathfind Away From]
+    C[Get Position] --> B
+" />
+
+**Nodes**
+
+- `On Damage`
+- `Get Position`
+- `Pathfind Away From`
+- Optional: `Branch`
+
+**How to build it**
+
+1. Add `On Damage`.
+2. Add `Get Position` and connect `On Damage.bot` to it.
+3. Add `Pathfind Away From`.
+4. Connect `On Damage.exec` to `Pathfind Away From.exec`.
+5. Connect `On Damage.bot` to `Pathfind Away From.bot`.
+6. Feed the current position into `Pathfind Away From` as the point to move away from, or use another danger position if you already have one.
+7. Optionally gate the behavior behind a `Branch` that checks `newHealth`.
+
+This is a good first example of mixing a trigger, a data query, and an action.
+
+## 6. Mine a nearby target block
+
+**Goal:** Search for a block, walk to it, and break it.
+
+<Mermaid chart="
+graph LR
+    A[On Join] --> B[Branch]
+    C[Find Block] --> B
+    B -->|true| D[Pathfind To]
+    D --> E[Break Block]
+    E --> F[Wait]
+" />
+
+**Nodes**
+
+- `On Join`
+- `Find Block`
+- `Branch`
+- `Pathfind To`
+- `Break Block`
+- `Wait`
+
+**How to build it**
+
+1. Add `On Join`.
+2. Add `Find Block` and connect the joining bot to it.
+3. Configure the block ID and search range.
+4. Add `Branch` to check whether `Find Block` produced a valid result.
+5. On the success path, use `Pathfind To` with the target coordinates.
+6. Follow it with `Break Block`.
+7. Add `Wait` if you plan to loop or repeat this pattern.
+
+This is safer than putting a mining loop straight on a tick trigger.
+
+## 7. Build a small AI responder
+
+**Goal:** Send a chat message to an LLM and post the answer back in-game.
+
+<Mermaid chart="
+graph LR
+    A[On Chat] --> B[Branch]
+    C[String Contains] --> B
+    B -->|true| D[LLM Chat]
+    D -->|success| E[Send Chat]
+    D -->|error| F[Print]
+" />
+
+**Nodes**
+
+- `On Chat`
+- `String Contains`
+- `Branch`
+- `LLM Chat`
+- `Send Chat`
+- `Print`
+
+**How to build it**
+
+1. Use `String Contains` to select messages for the model.
+2. Connect the plain-text message to `LLM Chat.prompt`.
+3. Set a short system prompt.
+4. Connect `LLM Chat.response` to `Send Chat.message`.
+5. Connect the success path to `Send Chat`.
+6. Connect the error path to `Print` so failures are visible while testing.
+
+<Callout type="info">
+  `LLM Chat` uses the bot's AI settings. It also supports a per-node model override. If no override is set, the current implementation falls back to `gpt-4o-mini`.
+</Callout>
+
+## Debugging advice
+
+- Use `Print` often while building a script.
+- Keep your first version linear. Add loops and branches only after the happy path works.
+- Prefer `On Join` or `On Interval` while prototyping. They are easier to reason about than tick triggers.
+- Add `Wait`, `Debounce`, or `Rate Limit` before any repeated web or AI call.

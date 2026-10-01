@@ -1192,10 +1192,10 @@ const faqItems: {
   {
     question: "Can I automate bots without writing code?",
     answerHtml:
-      'Yes. SoulFire includes a visual scripting system with 70+ drag-and-drop nodes. Build automation workflows by connecting triggers, actions, and logic nodes, no programming required. The built-in script editor supports real-time debugging, AI/LLM integration, and more. See the <a href="https://soulfiremc.com/docs/scripting">scripting docs</a> to get started.',
+      'Yes. SoulFire includes a visual scripting system with drag-and-drop nodes. Build automation workflows by connecting triggers, actions, and logic nodes, no programming required. The built-in script editor supports real-time debugging, AI/LLM integration, and more. See the <a href="https://soulfiremc.com/docs/scripting">scripting docs</a> to get started.',
     answerElement: (
       <>
-        Yes. SoulFire includes a visual scripting system with 70+ drag-and-drop
+        Yes. SoulFire includes a visual scripting system with drag-and-drop
         nodes. Build automation workflows by connecting triggers, actions, and
         logic nodes, no programming required. The built-in script editor
         supports real-time debugging, AI/LLM integration, and more. See the{" "}
@@ -1236,7 +1236,7 @@ function Page() {
     featureList: [
       "High-performance bot framework",
       "Multi-version support (Classic to latest)",
-      "Visual scripting system with 70+ nodes",
+      "Visual scripting with triggers, actions, and data nodes",
       "Plugin system",
       "Open source",
       "Cross-platform support",
@@ -1384,9 +1384,9 @@ function Page() {
             Build with the SoulFire SDKs
           </h2>
           <p className="max-w-[700px] text-muted-foreground md:text-lg">
-            Install SoulFire locally, create or reuse an instance and bot, then
-            send Hello World. No API token or preconfigured IDs needed. The
-            examples use an offline-mode Minecraft server at 127.0.0.1:25565.
+            Connect to your SoulFire backend, find a tutorial bot by name, send
+            chat, and stop it. Follow the language guide for the matching SDK,
+            API token, and Minecraft target setup.
           </p>
         </div>
         <div className="grid gap-4 lg:grid-cols-2">
@@ -1394,11 +1394,10 @@ function Page() {
             <div className="flex flex-col gap-2 p-5 sm:p-6">
               <h3 className="text-xl font-semibold">TypeScript SDK</h3>
               <p className="text-sm text-muted-foreground">
-                Run a managed local server with Node.js 22+. Use Effect or
-                Effect workflows to control it.
+                Run scoped bot operations with TypeScript and Effect.
               </p>
               <code className="text-xs text-muted-foreground">
-                bun add @soulfiremc/sdk effect @effect/platform
+                Source-compatible installation in the TypeScript guide
               </code>
             </div>
             <div className="flex-1 border-y bg-muted/40">
@@ -1424,7 +1423,7 @@ function Page() {
                 code to control it.
               </p>
               <code className="text-xs text-muted-foreground">
-                python -m pip install soulfire
+                Source-compatible installation in the Python guide
               </code>
             </div>
             <div className="flex-1 border-y bg-muted/40">
@@ -1454,8 +1453,8 @@ function Page() {
             </h2>
             <p className="max-w-[700px] text-muted-foreground md:text-lg">
               Build complex bot behaviors by connecting nodes in a visual
-              editor. Drag and drop from 70+ built-in nodes across 12 categories
-              including triggers, actions, flow control, AI, and more.
+              editor. Drag and drop from built-in triggers, actions, and data
+              nodes including triggers, actions, flow control, AI, and more.
             </p>
           </div>
           <ScriptingAnimation />
@@ -1464,7 +1463,7 @@ function Page() {
               <Blocks className="h-7 w-7 sm:h-8 sm:w-8 shrink-0 text-orange-500" />
               <div>
                 <div className="font-semibold text-sm sm:text-base">
-                  70+ Nodes
+                  Visual Nodes
                 </div>
                 <div className="text-2xs sm:text-xs text-muted-foreground">
                   12 categories

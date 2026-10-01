@@ -1,0 +1,81 @@
+---
+title: Reply to chat
+description: Watch chat messages and respond from a bot.
+icon: MessageSquare
+---
+
+import { Tab, Tabs } from '../../../../../../src/components/mdx/sdk-tabs';
+
+This program starts a bot, watches for `ping`, and sends `pong`. It keeps running until you stop it. SoulFire reconnects the bot if its Minecraft connection drops.
+
+<Tabs items={['TypeScript', 'Python']} groupId="recipe-language">
+  <Tab value="TypeScript">
+    ```ts title="reply-to-chat.ts" doc-test lineNumbers
+    import { Effect, Stream } from "effect";
+    import { SoulFire } from "@soulfiremc/sdk";
+
+    function env(name: string): string {
+      const value = process.env[name];
+      if (!value) throw new Error(`Set ${name} before running this recipe`);
+      return value;
+    }
+
+    const program = Effect.scoped(
+      Effect.gen(function* () {
+        const soulfire = yield* SoulFire.connect({
+          baseUrl: env("SOULFIRE_URL"),
+          token: env("SOULFIRE_TOKEN"),
+        });
+
+        const bot = soulfire
+          .instance(env("SOULFIRE_INSTANCE_ID"))
+          .bot(env("SOULFIRE_BOT_ID"));
+        yield* bot.start();
+
+        yield* bot.chat.watch("ping").pipe(
+          Stream.runForEach((match) =>
+            Effect.logInfo("Matched chat", match.event).pipe(
+              Effect.andThen(bot.chat.send("pong")),
+            ),
+          ),
+        );
+      }),
+    );
+
+    await Effect.runPromise(program);
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python title="reply_to_chat.py" doc-test lineNumbers
+    import asyncio
+    import os
+
+    from effect_py import fn, sync, EffectGen, Scope, gen, run_async, scoped
+    from soulfire import ChatMatch, SoulFireOperationError, SoulFire
+
+
+    @gen
+    def program() -> EffectGen[None, SoulFireOperationError, Scope]:
+        soulfire = yield from SoulFire.connect(
+            os.environ["SOULFIRE_URL"],
+            token=os.environ["SOULFIRE_TOKEN"],
+        )
+        bot = soulfire.instance(os.environ["SOULFIRE_INSTANCE_ID"]).bot(
+            os.environ["SOULFIRE_BOT_ID"]
+        )
+        yield from bot.start()
+
+        @fn("reply to ping")
+        def reply(match: ChatMatch) -> EffectGen[None, SoulFireOperationError]:
+            yield from sync(lambda: print("Matched chat:", match.event))
+            yield from bot.chat.send("pong")
+
+        yield from bot.chat.watch("ping").run_for_each(reply)
+
+
+    asyncio.run(run_async(scoped(program).or_die()))
+    ```
+  </Tab>
+</Tabs>
+
+The matcher accepts a string, regular expression, or function. If the bot should respond only to a particular chat source, pass `sources` to `watch`. See [chat events](/docs/sdk/events) for the event shape.

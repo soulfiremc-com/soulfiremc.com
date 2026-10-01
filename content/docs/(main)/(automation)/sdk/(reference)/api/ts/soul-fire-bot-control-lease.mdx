@@ -1,0 +1,40 @@
+---
+title: SoulFireBotControlLease
+description: Public TypeScript members of SoulFireBotControlLease.
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+Compose Effect operations with `yield*` inside a scoped workflow. Properties expose sub-clients and state.
+
+## value
+
+```ts
+get value(): BotControlLease
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L2416)
+
+## renew
+
+`ttlSeconds` defaults to 30, from 5 to 300.
+
+```ts
+renew(
+  ttlSeconds = 30,
+  options?: CallOptions,
+): Effect.Effect<BotControlLease, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L2429)
+
+## release
+
+```ts
+release(
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L2444)

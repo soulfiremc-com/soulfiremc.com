@@ -1,0 +1,150 @@
+---
+title: Run SoulFire with Docker Compose
+sidebarTitle: "Docker Compose"
+description: Start a persistent local container, generate access, and add HTTPS for remote clients.
+icon: Container
+---
+
+Install Docker Engine and Compose using the [official installation guide](https://docs.docker.com/engine/install/).
+The official image contains the Java runtime and exposes the API on container port `38765`.
+Persistent data belongs at `/soulfire/data`.
+
+## Start a local deployment
+
+Create a deployment directory with this `compose.yaml`:
+
+```yaml title="compose.yaml"
+services:
+  app:
+    image: ghcr.io/soulfiremc-com/soulfire:latest
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    ports:
+      - "127.0.0.1:38765:38765"
+    volumes:
+      - ./data:/soulfire/data
+```
+
+This publishes HTTP only on the host's loopback address.
+For a repeatable deployment, replace `latest` with the released tag or digest you choose.
+Record the image version with your test results.
+
+Create the writable data directory on a Linux host:
+
+```bash
+mkdir -p data
+sudo chown 1001:1001 data
+docker compose up -d
+```
+
+The image runs as UID/GID `1001`.
+Check the container and recent output:
+
+```bash
+docker compose ps
+docker compose logs --tail=100 app
+curl -f http://127.0.0.1:38765/health
+```
+
+Wait for startup to complete. A successful health response checks backend availability, not Minecraft connectivity.
+
+## Generate access
+
+Attach to the backend console:
+
+```bash
+docker compose attach app
+```
+
+Run `generate-token api` in that console.
+Detach with **Ctrl+P, Ctrl+Q** to keep the container running.
+Connect a desktop client to `http://127.0.0.1:38765` with that token from the same host.
+
+For a bot target, remember that `127.0.0.1` inside the container refers to the container.
+Use a Minecraft address reachable from the container network.
+Then complete [the first-bot tutorial](/docs/start-here/gui-mode).
+
+## Add a Cloudflare tunnel
+
+Create a tunnel and route using [Cloudflare's remote tunnel guide](https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/).
+Set its service target to `http://app:38765`.
+Save the tunnel token in your deployment's `.env`:
+
+```dotenv title=".env"
+TUNNEL_TOKEN=YOUR_TUNNEL_TOKEN
+```
+
+Add a service to the same Compose project:
+
+```yaml
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN}
+```
+
+Run `docker compose up -d` after saving the change.
+Connect the client through the tunnel's HTTPS hostname.
+Keep the local API port bound to loopback, or remove the published port if only the tunnel needs access.
+
+## Use Traefik with a hostname
+
+Point your hostname to this host and make port `443` reachable for the TLS challenge.
+Set these values in `.env`:
+
+```dotenv title=".env"
+DOMAIN=soulfire.example.com
+EMAIL=admin@example.com
+```
+
+Use this Compose deployment instead of the local-only example:
+
+```yaml title="compose.yaml"
+services:
+  app:
+    image: ghcr.io/soulfiremc-com/soulfire:latest
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./data:/soulfire/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.soulfire.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.soulfire.entrypoints=websecure"
+      - "traefik.http.routers.soulfire.tls.certresolver=soulfire"
+      - "traefik.http.services.soulfire.loadbalancer.server.port=38765"
+  traefik:
+    image: traefik:v3
+    restart: unless-stopped
+    command:
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.soulfire.acme.tlschallenge=true"
+      - "--certificatesresolvers.soulfire.acme.email=${EMAIL}"
+      - "--certificatesresolvers.soulfire.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - letsencrypt:/letsencrypt
+volumes:
+  letsencrypt:
+```
+
+Check the Traefik log for certificate errors before connecting the client.
+Preserve its `letsencrypt` volume across replacements.
+Use [Traefik's ACME reference](https://doc.traefik.io/traefik/reference/install-configuration/tls/certificate-resolvers/acme/) for challenge and renewal details.
+For IP-only HTTPS, use the [automated setup](/docs/server/automated-setup) or current upstream IP certificate instructions.
+
+## Panels and maintenance
+
+For Pterodactyl or Pelican, use the [official SoulFire egg](https://raw.githubusercontent.com/soulfiremc-com/SoulFire/main/soulfire_egg.json).
+Preserve the panel's data mount and use the same access and HTTPS checks.
+
+Read [persistent data](/docs/server/data), [backup and restore](/docs/server/backup-and-restore), and [upgrade and rollback](/docs/server/upgrades) before replacing containers.
+Do not remove a data volume as a routine upgrade step.

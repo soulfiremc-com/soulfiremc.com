@@ -1,168 +1,131 @@
 ---
-title: Bot Control And Direct Access
-description: Control bots directly with ControlState, ControllingTask, BotConnection, and Minecraft classes.
+title: Coordinate native bot control
+sidebarTitle: "Native bot control"
+description: Use ControlTask resources and priority arbitration for direct Minecraft actions.
 icon: Gamepad
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-Use direct access when events and settings cannot express the required bot action.
-Your plugin shares a JVM with SoulFire and the headless Minecraft client.
-It can use runtime objects without remote commands.
+Plugins share the JVM with SoulFire and the headless Minecraft client.
+Use native control when an event, visual script, or SDK operation cannot express the required action.
+These examples describe the [pinned source baseline](/docs/sdk/compatibility).
 
 <Callout type="warning">
-  Direct access is for advanced use cases.
-  Use [Scripting](/docs/scripting) or a public event when possible.
-  Direct internal access can break after a version update.
+  Internal Minecraft and plugin APIs can change between releases.
+  Build against the backend version you deploy. Do not copy the older `ControllingTask` API into this source baseline.
 </Callout>
 
-## Core runtime objects
+## Runtime objects
 
-| Object | What it gives you |
+| Object | Scope |
 | --- | --- |
-| `SoulFireServer` | the whole SoulFire server process |
-| `InstanceManager` | one instance, its settings, bots, and lifecycle |
-| `BotConnection` | one connected bot, its Minecraft client copy, settings, scheduler, metadata, and control state |
-| `ControlState` | WASD, jump, sneak, and sprint inputs that stay active until you reset them |
-| `BotControlAPI` | single-tick or staged controlling tasks |
+| `SoulFireServer` | Backend process and shared services |
+| `InstanceManager` | One instance, settings, and lifecycle |
+| `BotConnection` | One live bot session and its headless Minecraft client |
+| `ControlState` | Movement inputs consumed by the client |
+| `BotControlAPI` | Resource ownership, control task execution, and arbitration |
 
-## Thread-local direct access
+`current()` accesses the current thread's matching runtime context.
+Use `currentOptional()` if your code can run without that context.
+Use the bot's wrapped scheduler for lifecycle-bound work, rather than an unrelated executor.
 
-SoulFire exposes the current runtime object in the matching execution context:
+## Submit one action
 
-- `SoulFireServer.current()` and `currentOptional()`
-- `InstanceManager.current()` and `currentOptional()`
-- `BotConnection.current()` and `currentOptional()`
+This fragment runs inside a bot event handler with a live `connection`:
 
-This is especially useful inside:
+```java title="OpenInventory.java" doc-test context="bot"
+import com.soulfiremc.server.bot.ControlResource;
+import com.soulfiremc.server.bot.ControlTask;
+import java.util.Set;
 
-- event handlers already running in bot or instance context
-- Mixins injected into Minecraft classes
-- helper code that runs under the bot's wrapped scheduler
-
-Use the `Optional` variants when you are not certain the code is running under the right context.
-
-## Continuous movement control
-
-`ControlState` is the low-level source of truth for movement inputs.
-SoulFire's own keyboard input mixin reads these booleans and turns them into the real Minecraft `Input` object for the bot.
-
-Use `ControlState` for movement that stays active until you reset it:
-
-```java
-var state = connection.controlState();
-state.up(true);
-state.sprint(true);
-```
-
-Then later:
-
-```java
-connection.controlState().resetAll();
-```
-
-Use this for movement that stays active until you change it.
-
-## Discrete actions with `ControllingTask`
-
-For one-off actions, use `BotControlAPI` and `ControllingTask`.
-
-The main forms are:
-
-- `ControllingTask.singleTick(...)`
-- `ControllingTask.staged(...)`
-- `ControllingTask.manual(...)`
-
-### Single-tick action
-
-```java
-connection.botControl().registerControllingTask(
-  ControllingTask.singleTick(() -> connection.minecraft().player.sendOpenInventory())
+var task = ControlTask.once(
+  "Open the player inventory",
+  Set.of(ControlResource.INVENTORY),
+  () -> {
+    var player = connection.minecraft().player;
+    if (player != null) {
+      player.sendOpenInventory();
+    }
+  }
 );
+boolean started = connection.botControl().tryStart(task);
 ```
 
-### Staged action
+`tryStart` returns false when an active task owns a conflicting resource.
+Handle that result. Ignoring it can silently skip your action.
+A default task claims all resources unless you supply a smaller set.
 
-This is how SoulFire handles multi-step inventory work in several built-in plugins:
+## Choose an arbitration policy
 
-```java
-connection.botControl().registerControllingTask(
-  ControllingTask.staged(List.of(
-    new ControllingTask.RunnableStage(player::sendOpenInventory),
-    new ControllingTask.WaitDelayStage(() -> 50L),
-    new ControllingTask.RunnableStage(player::closeContainer)
-  ))
-);
+| Method | Behavior |
+| --- | --- |
+| `tryStart(task)` | Starts only when no active task conflicts |
+| `enqueue(task)` | Starts now or queues until its resources are available |
+| `submit(task)` | Starts or suspends conflicts if its priority can preempt them |
+| `replace(task)` | Stops conflicting active and suspended tasks, then starts this task |
+| `cancel(task)` | Cancels that task in active, suspended, or queued state |
+| `stopAll()` | Cancels all tasks in those states |
+
+Resources include movement, rotation, hands, inventory, container, chat, vehicle, camera, and protocol access.
+Tasks with disjoint resource sets can run together.
+Priorities are `LOW`, `NORMAL`, `HIGH`, and `CRITICAL`.
+Only a strictly higher priority can preempt a lower priority through `submit`.
+
+Choose `tryStart` for optional work, or `enqueue` for work that can wait.
+Use `replace` only if replacing the other owner is part of the intended behavior.
+
+## Perform a sequence without blocking the tick
+
+```java title="InventorySequence.java" doc-test context="bot"
+import com.soulfiremc.server.bot.ControlPriority;
+import com.soulfiremc.server.bot.ControlResource;
+import com.soulfiremc.server.bot.ControlTask;
+import java.util.List;
+import java.util.Set;
+
+connection.botControl().enqueue(ControlTask.sequence(
+  "Open and close inventory",
+  ControlPriority.NORMAL,
+  Set.of(ControlResource.INVENTORY, ControlResource.CONTAINER),
+  List.of(
+    ControlTask.action(() -> {
+      var player = connection.minecraft().player;
+      if (player != null) player.sendOpenInventory();
+    }),
+    ControlTask.waitMillis(50),
+    ControlTask.action(() -> {
+      var player = connection.minecraft().player;
+      if (player != null) player.closeContainer();
+    })
+  )
+));
 ```
 
-### Manual markers
+Each step advances through ticks. A delay waits without sleeping the tick thread.
+A delay does not prove that the Minecraft server acknowledged an inventory action.
+For acknowledgement-sensitive work, inspect the relevant event or state before advancing.
 
-Manual tasks are useful when you want a plugin to claim control ownership without immediately doing work every tick.
-`KillAura` uses this pattern with a custom marker object so it can coordinate follow-up logic cleanly.
+## Movement and cleanup
 
-## `registerControllingTask` versus `maybeRegister`
+`connection.controlState().up(true)` sets forward movement until the state changes.
+Call `resetAll()` when the behavior stops if your plugin owns those movement inputs.
+Do not reset another owner's controls from an unrelated callback.
 
-Choose carefully:
+Custom control tasks can implement `onStarted`, `onSuspended`, `onResumed`, and `onStopped`.
+Release or reset owned state in those lifecycle methods.
+Inspect `ControlStopReason` to distinguish completion, cancellation, replacement, and failure.
 
-- `registerControllingTask(...)` replaces any existing controlling task
-- `maybeRegister(...)` only registers if nothing else is currently controlling the bot
+## Markers and direct access
 
-If your plugin is optional background automation, `maybeRegister(...)` is usually safer.
-For an active plugin command, take control with `registerControllingTask(...)`.
+`ControlTask.marker` claims resources for a marker-based workflow.
+`claimMarker` retrieves the marker and finishes its active task.
+A marker remains an owner until claimed or stopped.
 
-## Direct Minecraft access
+Direct access includes `connection.minecraft().player`, `.level`, `.gameMode`, and `.getConnection()`.
+Check lifecycle availability before using them.
+Player and world objects can be absent during login or after disconnection.
 
-From a `BotConnection`, you can reach the actual headless client copy:
-
-- `connection.minecraft().player`
-- `connection.minecraft().level`
-- `connection.minecraft().gameMode`
-- `connection.minecraft().getConnection()`
-
-That lets you do things such as:
-
-- inspect the player's inventory and level state
-- click containers through `gameMode.handleContainerInput(...)`
-- open or close inventories
-- set rotation directly on the `LocalPlayer`
-- read or mutate lower-level Minecraft systems that SoulFire does not wrap yet
-
-Always null-check objects like `player`, `level`, and `gameMode`.
-They are not guaranteed to exist in early lifecycle stages.
-
-## How GUI and CLI actions map to this layer
-
-SoulFire's gRPC `BotService` uses the same building blocks as plugins:
-
-- movement RPCs update `ControlState`
-- rotation, hotbar, inventory, mouse, and dialog actions register `ControllingTask.singleTick(...)`
-- more complex interactions use staged tasks or direct player and gameMode calls
-
-That is useful for plugin authors because the internal gRPC layer shows the intended low-level execution model for user-facing actions.
-
-If you need to trace one of those actions end to end, read:
-
-- [Architecture And Protocols](/docs/development/architecture-and-protocols)
-- [Developer Resources](/docs/development/developer-resources)
-
-## Use the scheduler that already belongs to the bot
-
-If you need async or delayed work, prefer the bot's own wrapped scheduler:
-
-```java
-connection.scheduler().scheduleWithFixedDelay(...);
-```
-
-That keeps your work attached to the bot lifecycle and preserves the runtime context SoulFire expects.
-
-## Good reference plugins
-
-- [AutoArmor](https://github.com/soulfiremc-com/SoulFire/blob/main/mod/src/main/java/com/soulfiremc/server/plugins/AutoArmor.java) for staged inventory manipulation
-- [AutoEat](https://github.com/soulfiremc-com/SoulFire/blob/main/mod/src/main/java/com/soulfiremc/server/plugins/AutoEat.java) for conditional control decisions
-- [AutoTotem](https://github.com/soulfiremc-com/SoulFire/blob/main/mod/src/main/java/com/soulfiremc/server/plugins/AutoTotem.java) for multi-step inventory tasks
-- [KillAura](https://github.com/soulfiremc-com/SoulFire/blob/main/mod/src/main/java/com/soulfiremc/server/plugins/KillAura.java) for control-state ownership and manual markers
-
-## Next steps
-
-- [Mixins And Access Wideners](/docs/development/mixins-and-access-wideners)
-- [Architecture And Protocols](/docs/development/architecture-and-protocols)
+Read the [BotControlAPI implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/bot/BotControlAPI.java)
+and its tests before implementing a custom arbitration policy.
+See [events](/docs/development/event-system) for execution context and [architecture](/docs/development/architecture-and-protocols) for the RPC path.

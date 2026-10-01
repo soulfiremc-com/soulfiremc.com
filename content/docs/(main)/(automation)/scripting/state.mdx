@@ -1,0 +1,42 @@
+---
+title: Choose the lifetime of script state
+sidebarTitle: "State and persistence"
+description: Separate graph constants, event values, variables, caches, and persistent storage.
+icon: Database
+---
+
+## Constants and event values
+
+Use an inline input or constant node for a value that stays fixed in the graph.
+Use a trigger output for the value associated with that event, such as the bot or chat text.
+An event value is not a durable record of every earlier event.
+
+## Bot variables
+
+Variable nodes store and read values associated with a bot.
+Use them for behavior that needs state across multiple events for that bot.
+Choose a stable variable name and a documented value type.
+Initialize the value before the first read, or use a defined fallback.
+
+Check the actual variable nodes and their ports in the [node reference](/docs/scripting/node-reference).
+Do not assume that every storage node has the same lifetime or scope.
+
+## Caches and persistent storage
+
+The state nodes include cache and persistent-storage operations.
+A cache suits temporary reuse. Persistent storage suits values that must survive the lifecycle supported by that node.
+Read the node's implementation link for its scope and storage behavior before relying on restart persistence.
+
+Use unique keys per workflow when state belongs to separate test runs.
+A reused key can carry a previous run's result into a new experiment.
+
+## Verify the required lifetime
+
+1. Write a known value through the chosen node.
+2. Read it in a second event from the same bot.
+3. Reconnect the bot and read it again.
+4. Restart the backend if the workflow requires restart persistence.
+5. Record which steps preserve the value on your installed version.
+
+Reset or remove test state during cleanup.
+A script export preserves the graph and its inputs. It does not export every value stored by runtime nodes.

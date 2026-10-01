@@ -1,0 +1,189 @@
+---
+title: Python runtime and advanced examples
+sidebarTitle: "Python runtime"
+description: Build scoped Python 3.14 workflows with effect-py, typed errors, and streams.
+icon: Code
+---
+
+The Python SDK requires CPython 3.14 or newer.
+It uses `effect-py` for lazy operations, typed failures, services, and scoped resources.
+The `effect-python` distribution provides the `effect_py` module.
+
+An operation returns `Effect[A, E, R]`.
+`A` is the result, `E` is the expected error, and `R` records required services.
+Constructing an effect does not send a request.
+
+## Prerequisites
+
+Complete the [source-compatible SDK installation](/docs/sdk/compatibility) first.
+The snippets here demonstrate runtime integration, not a separate first-run procedure.
+
+
+Use the installation commands from the compatibility guide.
+
+## Connect and send chat
+
+The complete [first program](/docs/sdk/python) includes account discovery, environment settings, and bot-stop cleanup.
+The following example shows how the runtime fits around an operation when IDs are already known.
+
+Use `yield from` inside a generator decorated with `@gen`.
+Execute the complete workflow with `run_async` at the application boundary.
+
+```python title="connect.py" doc-test lineNumbers
+import asyncio
+import os
+
+from effect_py import EffectGen, Scope, gen, run_async, scoped
+from soulfire import SoulFire, SoulFireOperationError
+
+
+@gen
+def program() -> EffectGen[None, SoulFireOperationError, Scope]:
+    client = yield from SoulFire.connect(
+        "https://soulfire.example.com",
+        token=os.environ["SOULFIRE_TOKEN"],
+    )
+    bot = client.instance("instance-uuid").bot("bot-uuid")
+    yield from bot.start()
+    yield from bot.wait_for_online()
+    yield from bot.chat.send("Hello from SoulFire")
+    yield from bot.stop()
+
+
+asyncio.run(run_async(scoped(program).or_die()))
+```
+
+The scope closes the connection, subscriptions, and acquired resources.
+The handshake validates API compatibility, capabilities, and required plugins.
+
+In an existing async application, use `await run_async(scoped(program).or_die())`.
+Use `run_async_exit` to inspect typed failures without converting them into exceptions.
+Use `or_die()` only at a boundary where no recovery remains.
+RPCs and streams require the async runtime.
+
+## Managed installation and source builds
+
+`SoulFire.install(version="MATCHING_RELEASE_TAG")` downloads a dedicated release and supplies an API token.
+Its scope stops the managed backend after completion, failure, or interruption.
+The Python installer in this baseline does not expose the TypeScript installer's `jarPath` option.
+
+Use `install` only when a compatible dedicated release is available.
+For the pinned source baseline, start a matching backend separately and use [the Python connection tutorial](/docs/sdk/python).
+Do not assume that the latest published release matches this SDK source.
+
+## Consume scoped streams
+
+Streams use effect-based consumers instead of Python iterators.
+Each subscription owns a scoped cursor.
+
+```python
+from effect_py import sync
+
+# Inside the same workflow as the connection:
+yield from bot.events().run_for_each(
+    lambda event: sync(lambda: print(event.WhichOneof("event")))
+)
+```
+
+Streams provide `map`, `map_effect`, `filter`, `tap`, `take`, and `merge`.
+Consumers include `run_collect`, `run_fold`, `run_head`, `run_for_each`, and `run_drain`.
+Before collecting a continuous stream, use a bounded `take`.
+Completion, failure, and interruption close the subscription.
+
+## Observe synchronized state
+
+```python
+session = yield from bot.observe()
+print(session.state.player)
+event = yield from session.once("state_delta", timeout=10)
+```
+
+The session combines snapshots and deltas and resumes after transient transport errors.
+Keep the session and its consumers in the connection's scope.
+
+## Acquire scoped resources
+
+```python
+from soulfire.inventory_pb2 import ItemSelector
+
+lease = yield from bot.acquire_control(ttl_seconds=30)
+container = yield from bot.inventory.open(chest_position)
+yield from container.withdraw(ItemSelector(item_ids=["minecraft:bread"]), 16)
+```
+
+Acquisition registers cleanup in the scope.
+The scope releases resources after success, failure, or interruption.
+Keep acquisition and use in one workflow.
+
+## Compose concurrent work
+
+```python
+from soulfire.concurrency import parallel
+
+operation = parallel(
+    (instance.bot(bot_id).chat.send("Ready") for bot_id in bot_ids),
+    concurrency=4,
+)
+yield from operation
+```
+
+The scope owns each worker.
+A failure interrupts sibling work and waits for cleanup.
+An async host can cancel the task that runs the complete workflow.
+Python effect durations use seconds. RPC `timeout_ms` retains milliseconds.
+
+## Provide a shared service
+
+```python
+from effect_py import EffectGen, gen, layer, service
+from soulfire import SoulFireOperationError, SoulFireService, connection_layer
+
+
+@gen
+def announce() -> EffectGen[None, SoulFireOperationError, SoulFireService]:
+    client = yield from service(SoulFireService)
+    yield from client.instance("instance-uuid").bot("bot-uuid").chat.send("Ready")
+
+
+application = announce.pipe(
+    layer.provide(connection_layer("https://soulfire.example.com", token="token"))
+)
+```
+
+The layer owns one negotiated connection and supports replacements for application tests.
+
+## Run durable tasks
+
+```python
+task = yield from bot.tasks.auto_eat(
+    ["minecraft:bread", "minecraft:cooked_beef"],
+    food_level=14,
+    maximum_meals=1,
+)
+result = yield from task.result()
+print(result.meals_eaten)
+```
+
+Detached tasks continue on the server after the SDK disconnects.
+Call-owned `run_*` streams cancel their task when the consumer stops.
+See [durable tasks](/docs/sdk/tasks) for progress, ownership, and reconnect policies.
+
+## Handle typed failures
+
+Use `catch_tag`, `catch_all`, or `exit` for the effect's failure channel.
+A Python `try` block around `yield from` does not catch these failures.
+Unexpected exceptions remain defects.
+See [errors and cancellation](/docs/sdk/errors) for recovery examples.
+
+## Use generated protocol clients
+
+```python
+from soulfire.instance_connect import InstanceServiceClient
+
+instances = client.service(InstanceServiceClient)
+```
+
+Generated ConnectRPC clients expose direct async and synchronous transport calls.
+High-level applications compose effects to retain validation, task semantics, and scoped cleanup.
+
+Continue with [recipes](/docs/sdk/recipes) or [plugin-defined APIs](/docs/sdk/plugins).

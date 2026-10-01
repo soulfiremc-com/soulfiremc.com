@@ -1,0 +1,52 @@
+---
+title: Manage access and HTTPS
+sidebarTitle: "Access and HTTPS"
+description: Connect remote clients with an API token and the correct instance permissions.
+icon: KeyRound
+---
+
+## Generate an API token
+
+Run this command in the SoulFire server console:
+
+```text
+generate-token api
+```
+
+The token uses the permissions of the current SoulFire user.
+For a remote client, enter the backend URL and that token.
+Check the identity with `whoami` in the authenticated terminal.
+
+The API and WebDAV use separate token audiences.
+A token from `generate-token webdav` is not an API token.
+
+## Use HTTPS for remote clients
+
+Terminate HTTPS at a reverse proxy or tunnel in front of SoulFire.
+Use the [automated setup](/docs/server/automated-setup) or the HTTPS examples in [Docker deployment](/docs/server/docker).
+The configured hostname must match the certificate presented to the client.
+
+For a local connection, the default backend port is `38765`.
+Keep a local-only listener or published port bound to loopback when remote access is unnecessary.
+The [Java guide](/docs/server/java) describes `sf.grpc.host` and `sf.grpc.port`.
+
+## Grant instance access
+
+Use the client's user management and instance permission controls for the user who needs access.
+Grant only the instances and actions required for that workflow.
+Server-wide administration and instance access are separate permissions.
+
+Sign in as that user after the change.
+Check that the intended instance appears and its required actions work.
+Also check that unrelated instances remain inaccessible.
+
+For programmatic management, use the [administration guide](/docs/sdk/administration) and the generated [UserService and InstanceService contracts](/docs/openapi).
+
+## Diagnose an authorization problem
+
+- An unauthenticated request points to a missing, expired, invalid, or wrong-audience token.
+- A denied action with a valid login points to the user's permissions.
+- A successful API login does not grant Minecraft permissions to the bot.
+
+Check backend logs and the full error before creating another token.
+Use [account and authentication troubleshooting](/docs/troubleshooting/accounts-and-authentication) to distinguish API access from Minecraft login.

@@ -1,142 +1,33 @@
 ---
-title: How-to Guides
-description: Complete specific SoulFire tasks such as importing data, enabling plugins, and using integrations.
-icon: BookOpen
+title: Use SoulFire
+sidebarTitle: "Overview"
+description: Manage bot sessions and solve common tasks in the desktop app.
+icon: Wrench
 ---
 
-import {
-  AppWindow,
-  Brain,
-  Cloud,
-  Blocks,
-  Bot,
-  Globe,
-  KeyRound,
-  Radar,
-  Server,
-  Sword,
-  User,
-} from "lucide-react";
 import { Cards, Card } from 'fumadocs-ui/components/card';
 
-Choose a guide for the task that you want to complete.
+These guides assume that you can [connect one bot](/docs/start-here/gui-mode).
+Each guide addresses a specific task and includes a result to check.
 
 <Cards>
-  <Card
-    icon={
-      <AppWindow/>
-    }
-    title="GUI Navigation"
-    href="/docs/how-to/gui-navigation"
-  >
-    Find where instances, settings, plugins, and scripts live in the interface.
-  </Card>
-  <Card
-    icon={
-      <User/>
-    }
-    title="Import Accounts"
-    href="/docs/how-to/import-accounts"
-  >
-    Add offline or Microsoft accounts to an instance.
-  </Card>
-  <Card
-    icon={
-      <Cloud/>
-    }
-    title="Import Proxies"
-    href="/docs/how-to/import-proxies"
-  >
-    Add proxy lists and control how bots are distributed across them.
-  </Card>
-  <Card
-    icon={
-      <Blocks/>
-    }
-    title="Install Plugins"
-    href="/docs/how-to/install-plugins"
-  >
-    Enable built-in plugins and install compatible community Fabric mods.
-  </Card>
-  <Card
-    icon={
-      <Radar/>
-    }
-    title="Server List Bypass"
-    href="/docs/how-to/server-list-bypass"
-  >
-    Ping the server list before joining on networks that expect that flow.
-  </Card>
-  <Card
-    icon={
-      <KeyRound/>
-    }
-    title="Auto Register"
-    href="/docs/how-to/auto-register"
-  >
-    Automate AuthMe-style register and login commands after join.
-  </Card>
-  <Card
-    icon={
-      <Globe/>
-    }
-    title="Fake Virtual Host"
-    href="/docs/how-to/fake-virtual-host"
-  >
-    Override the handshake hostname and port seen by the target network.
-  </Card>
-  <Card
-    icon={
-      <Sword/>
-    }
-    title="Kill Aura"
-    href="/docs/how-to/kill-aura"
-  >
-    Configure combat targeting ranges, cooldowns, and safety controls.
-  </Card>
-  <Card
-    icon={
-      <Brain/>
-    }
-    title="AI Support"
-    href="/docs/how-to/ai-support"
-  >
-    Configure AI providers, keys, models, and SoulFire's built-in AI features.
-  </Card>
-  <Card
-    icon={
-      <Bot/>
-    }
-    title="MCP (AI Integration)"
-    href="/docs/how-to/mcp"
-  >
-    Connect AI assistants to SoulFire through the Model Context Protocol.
-  </Card>
-  <Card
-    icon={
-      <Cloud/>
-    }
-    title="WebDAV"
-    href="/docs/how-to/webdav"
-  >
-    Browse and edit SoulFire files over WebDAV.
-  </Card>
-  <Card
-    icon={
-      <Server/>
-    }
-    title="Docker"
-    href="/docs/how-to/docker"
-  >
-    Deploy SoulFire with Docker Compose and optional HTTPS.
-  </Card>
-  <Card
-    icon={
-      <Server/>
-    }
-    title="Dedicated Mode"
-    href="/docs/how-to/dedicated-mode"
-  >
-    Run a long-lived SoulFire server without the automated setup script.
-  </Card>
+  <Card title="Manage instances and bots" href="/docs/how-to/instances">Start, stop, isolate, and clean up a session.</Card>
+  <Card title="Add accounts" href="/docs/how-to/import-accounts">Generate offline accounts or authenticate Microsoft accounts.</Card>
+  <Card title="Use proxies" href="/docs/how-to/import-proxies">Import proxies and diagnose routing.</Card>
+  <Card title="Change settings" href="/docs/how-to/settings">Separate target settings, account authentication, and plugin behavior.</Card>
+  <Card title="Run scoped commands" href="/docs/how-to/commands">Choose an instance and bot before you send an action.</Card>
+  <Card title="Inspect a bot view" href="/docs/how-to/pov">Use the bot view and camera tools to inspect world state.</Card>
+  <Card title="Install plugins" href="/docs/how-to/install-plugins">Configure built-in plugins or load a Fabric mod.</Card>
+  <Card title="Find a page in the app" href="/docs/how-to/gui-navigation">Use the interface map.</Card>
 </Cards>
+
+## Specific server behavior
+
+Use [auto-register](/docs/how-to/auto-register) for an authentication plugin on an offline server.
+Use [forwarding](/docs/how-to/forwarding-bypass), [server-list behavior](/docs/how-to/server-list-bypass), or [virtual host settings](/docs/how-to/fake-virtual-host) to reproduce those connection paths.
+Record these settings with your test results.
+
+## Automation and deployment
+
+[Choose an automation method](/docs/automation) for repeated behavior.
+Use [Run a SoulFire server](/docs/server) for deployment and maintenance.

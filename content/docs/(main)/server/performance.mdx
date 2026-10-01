@@ -1,0 +1,46 @@
+---
+title: Read logs and measure backend performance
+sidebarTitle: "Logs and performance"
+description: Separate backend limits from Minecraft target problems.
+icon: Gauge
+---
+
+## Read the backend log
+
+For Docker Compose, run:
+
+```bash
+docker compose logs --tail=200
+```
+
+Use `docker compose logs -f` for live output.
+For Java, preserve the process console and any configured log files.
+The automated setup provides a log action in its management menu.
+
+Record the timestamp, affected instance, bot name, and full error.
+The first error can explain later reconnect or task errors.
+
+## Identify which server failed
+
+A healthy SoulFire backend can have bots rejected by Minecraft.
+A healthy Minecraft server can receive too little load from an overloaded bot backend.
+Compare logs and resource metrics from both machines before changing settings.
+
+## Measure before tuning
+
+Record CPU, memory, network throughput, connected bots, active scripts, and tasks.
+Add load in stages with [the testing procedure](/docs/testing/load-test).
+Inspect a profiler capture if CPU remains high or a repeated action stalls.
+The backend's `spark` command exposes its profiling tools. Use `spark` for the live help.
+
+## Tune one factor at a time
+
+- Increase join spacing if bursts cause login failures.
+- Reduce unrelated scripts, camera captures, and plugins to isolate their cost.
+- Change the Java heap limit only with evidence of memory pressure.
+- Keep memory available for the operating system and other processes.
+
+Bot capacity depends on world activity, server versions, plugins, hardware, and workload.
+Use measured results for your deployment instead of treating a fixed bots-per-gigabyte table as a guarantee.
+
+For startup failures, use [dedicated server troubleshooting](/docs/troubleshooting/dedicated-server-and-docker).

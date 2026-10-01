@@ -1,24 +1,46 @@
 ---
-title: API Reference
-description: View the generated reference for SoulFire's HTTP API.
+title: HTTP API reference
+description: Unary HTTP/JSON endpoints, authentication, requests, and responses from the server schema.
 icon: Braces
 ---
 
-import { Callout } from 'fumadocs-ui/components/callout';
+This section describes SoulFire's HTTP-accessible unary operations.
+The checked-in [OpenAPI schema](/sf-openapi.json) reports version `2.11.0`.
+Fumadocs generates operation pages from that schema and groups them by service in the sidebar.
 
-Use this section to connect to SoulFire over HTTP.
-SoulFire generates these pages from its OpenAPI schema.
-The sidebar groups the pages by tag.
+## Choose the right contract
 
-<Callout type="info">
-  Use [Development](/docs/development) for Fabric plugins, Mixins, or direct access to SoulFire and Minecraft classes.
-  Use this section for the HTTP API.
-</Callout>
+| Integration | Documentation |
+| --- | --- |
+| One HTTP/JSON request and response | This generated reference |
+| Typed bot actions, events, and durable tasks | [TypeScript and Python SDK](/docs/sdk) |
+| Streaming RPCs, gRPC-Web framing, or reflection | [Protocol guide](/docs/sdk/protocol) and the pinned protobuf source |
+| Fabric events and direct Minecraft access | [Plugin development](/docs/development) |
 
-## What is here
+The schema does not describe streaming RPCs, gRPC-Web framing, reflection, or every non-HTTP transport.
+An absent streaming operation is not evidence that the server lacks it.
 
-- Endpoint pages with parameters, request bodies, responses, and examples
-- The HTTP/JSON API for remote automation and integrations
-- The raw schema at [`/sf-openapi.json`](/sf-openapi.json)
+## Authenticate a request
 
-Use the sidebar to open an API tag or operation.
+Generate a token with `generate-token api` in the SoulFire console.
+Send it in the HTTP header:
+
+```http
+Authorization: Bearer YOUR_API_TOKEN
+```
+
+The schema also describes Basic compatibility with `username:api-jwt` as its encoded credential.
+Use an API-audience token. A WebDAV token has a different audience.
+`LoginService` is public. Other operations require an accepted API token and the relevant permissions.
+
+Use your own backend URL and HTTPS for remote requests.
+The schema's loopback server address is an example, not a hosted public SoulFire API.
+
+## Read an operation
+
+Each page shows its method, path, request body, response, and generated schemas.
+Check the required permission and failure conditions in the service description.
+A successful API request does not necessarily mean a Minecraft action completed.
+
+Compare your backend version with the [documentation baseline](/docs/sdk/compatibility) before copying a contract.
+The page's copy-for-AI text includes request, response, authentication, and referenced schemas.

@@ -1,0 +1,156 @@
+---
+title: Combat tasks
+description: Hunt, aim, and guard with durable bot tasks.
+icon: Swords
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from '../../../../../../src/components/mdx/sdk-tabs';
+
+Combat tasks react near the game loop. Use a task handle to watch progress or cancel an attack.
+
+## Hunt matching entities
+
+Use `attackNearest` or `attack_nearest` for a bounded hunt. The SDK defaults
+to one defeated target and completes immediately when none is observable.
+Use the `run*` form for a persistent guard loop that waits for future
+matches.
+
+```ts
+const hunt = yield* bot.tasks.attackNearest(
+  { entityTypes: ["minecraft:zombie"] },
+  {
+    radius: 48,
+    maximumTargets: 3,
+    weapon: { tags: ["minecraft:swords"] },
+  },
+);
+
+const result = yield* hunt.result();
+```
+
+```python
+hunt = yield from bot.tasks.attack_nearest(
+    EntitySelector(entity_types=["minecraft:zombie"]),
+    radius=48,
+    maximum_targets=3,
+    weapon=ItemSelector(tags=["minecraft:swords"]),
+)
+
+result = yield from hunt.result()
+```
+
+The selector must constrain a type, category, identity, tag, name,
+equipment, effect, or owner. SoulFire rejects an unconstrained selector.
+Combat selects and equips the strongest matching melee weapon.
+It respects attack cooldown and chases through Pathfinder v2.
+When the task stops, it restores the previous hotbar selection.
+
+## Use a bow or crossbow
+
+Use `rangedAttack` or `ranged_attack` to keep a bot at a distance and
+fire at a specific observed entity. The task leads moving targets and
+compensates for arrow gravity. It can strafe while aiming and move back into
+the configured range.
+
+```ts
+const archer = yield* bot.tasks.rangedAttack(target, {
+  minimumRange: 10,
+  maximumRange: 32,
+  maximumShots: 6,
+  weapon: { itemIds: ["minecraft:bow"] },
+  bowDrawTicks: 20,
+  leadTarget: true,
+  compensateGravity: true,
+  strafe: true,
+});
+
+const result = yield* archer.result();
+```
+
+```python
+archer = yield from bot.tasks.ranged_attack(
+    target,
+    minimum_range=10,
+    maximum_range=32,
+    maximum_shots=6,
+    weapon=ItemSelector(item_ids=["minecraft:bow"]),
+    bow_draw_ticks=20,
+    lead_target=True,
+    compensate_gravity=True,
+    strafe=True,
+)
+
+result = yield from archer.result()
+```
+
+The task supports bows and crossbows and selects ammunition with the vanilla
+projectile rules. Its result identifies defeated or lost targets, shot limits,
+missing ammunition, and missing weapons. The target reference is scoped to the current bot connection. A
+reconnect invalidates it instead of risking an attack on a recycled entity
+ID. Cancellation stops charging or aiming, releases movement inputs, and
+restores the previously selected hotbar slot.
+
+Use `flee` when movement away from a threat is the goal:
+
+```ts
+const escape = yield* bot.tasks.flee(
+  { categories: [EntityCategory.HOSTILE] },
+  {
+    triggerRadius: 8,
+    safeDistance: 20,
+    safeSeconds: 3,
+  },
+);
+```
+
+The trigger radius decides when SoulFire starts moving. The larger safe
+distance decides when the dynamic path is complete. `runFlee` and
+`run_flee` keep monitoring after an escape, while the bounded form completes
+after the area stays safe for the requested number of seconds.
+
+## Guard a position or protect an entity
+
+Use `guard` for a fixed block position and `protect` for a live,
+connection-scoped entity. SoulFire searches around the protected subject,
+intercepts matching threats, limits pursuit distance, and returns to the
+subject after combat.
+
+```ts
+const defense = yield* bot.tasks.guard(
+  { x: 120, y: 64, z: -32 },
+  { categories: [EntityCategory.HOSTILE] },
+  {
+    guardRadius: 16,
+    maximumPursuitDistance: 24,
+    weapon: { tags: ["minecraft:swords"] },
+  },
+);
+
+const result = yield* defense.result();
+```
+
+```python
+defense = yield from bot.tasks.guard(
+    BlockPosition(x=120, y=64, z=-32),
+    EntitySelector(categories=[ENTITY_CATEGORY_HOSTILE]),
+    guard_radius=16,
+    maximum_pursuit_distance=24,
+    weapon=ItemSelector(tags=["minecraft:swords"]),
+)
+
+result = yield from defense.result()
+```
+
+The bounded calls complete after the area stays clear for `clearSeconds` or
+`clear_seconds`. Set target or attack limits to end the task on a
+specific combat budget. Use `runGuard`, `run_guard`, `runProtect`, or
+`run_protect` for a persistent defense that keeps waiting for new threats.
+Entity protection follows the subject as it moves and ends safely if the
+subject becomes unavailable.
+
+Threat selectors follow the same safety rule as target acquisition. They must
+constrain at least one type, category, identity, tag, name, equipment item,
+effect, or owner.
+
+[Manage task handles and reconnects](/docs/sdk/tasks).

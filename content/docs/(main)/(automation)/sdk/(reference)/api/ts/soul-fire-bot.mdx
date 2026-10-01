@@ -1,0 +1,787 @@
+---
+title: SoulFireBot
+description: Public TypeScript members of SoulFireBot.
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+Compose Effect operations with `yield*` inside a scoped workflow. Properties expose sub-clients and state.
+
+## tasks
+
+```ts
+get tasks(): SoulFireTasks
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1034)
+
+## pathfinder
+
+```ts
+get pathfinder(): SoulFirePathfinder
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1046)
+
+## chat
+
+```ts
+get chat(): SoulFireChat
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1055)
+
+## inventory
+
+```ts
+get inventory(): SoulFireInventory
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1065)
+
+## recipes
+
+```ts
+get recipes(): SoulFireRecipes
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1074)
+
+## registry
+
+```ts
+get registry(): SoulFireRegistry
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1083)
+
+## world
+
+```ts
+get world(): SoulFireWorld
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1091)
+
+## camera
+
+```ts
+get camera(): SoulFireCamera
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1099)
+
+## protocol
+
+```ts
+get protocol(): SoulFireProtocol
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1103)
+
+## start
+
+Marks the bot to run; it connects in the background (see `waitForOnline`).
+
+```ts
+start(
+  options?: CallOptions,
+): Effect.Effect<BotStatus, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1117)
+
+## stop
+
+Marks the bot as stopped; it disconnects in the background.
+
+```ts
+stop(
+  options?: CallOptions,
+): Effect.Effect<BotStatus, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1141)
+
+## restart
+
+Gives the bot a fresh connection.
+
+```ts
+restart(
+  options?: CallOptions,
+): Effect.Effect<BotStatus, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1165)
+
+## status
+
+```ts
+status(
+  options?: CallOptions,
+): Effect.Effect<BotStatus, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1182)
+
+## info
+
+Status, and while online the live state with the full inventory.
+
+```ts
+info(
+  options?: CallOptions,
+): Effect.Effect<BotInfoResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1202)
+
+## liveState
+
+Throws if the bot is offline.
+
+```ts
+liveState(
+  options?: CallOptions,
+): Effect.Effect<BotLiveState, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1216)
+
+## waitForOnline
+
+Resolves once the bot is online, at once if it already is.
+
+```ts
+waitForOnline(options?: {
+  call?: CallOptions;
+}): Effect.Effect<BotStatus, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1236)
+
+## events
+
+The bot's live events. The first is its status; the stream stays open while
+the bot is stopped and follows it across reconnects. The default filter
+takes state changes, chat, lifecycle, inventory, damage, resource packs and
+titles.
+
+```ts
+events(
+  filter: MessageInitShape<
+    typeof BotEventFilterSchema
+  > = DEFAULT_EVENT_FILTER,
+  options?: CallOptions,
+): Stream.Stream<BotEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1282)
+
+## observe
+
+Opens a `BotSession`: the event stream and the state it adds up to.
+
+```ts
+observe(
+  options?: BotSessionOptions,
+): Effect.Effect<BotSession, SoulFireOperationError, Scope.Scope>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1307)
+
+## sendChat
+
+A chat message, or a command if it starts with `/`.
+
+```ts
+sendChat(
+  message: string,
+  options?: CallOptions,
+): Effect.Effect<BotActionResult, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1328)
+
+## getBlock
+
+The block at `position`, if its chunk is loaded.
+
+```ts
+getBlock(
+  request: ScopedRequest<typeof GetBlockRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<GetBlockResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1353)
+
+## findBlocks
+
+Blocks with one of `blockIds`, nearest first: `maxCount` of them (at most
+256) within `maxDistance` of the bot (at most 128).
+
+```ts
+findBlocks(
+  request: ScopedRequest<typeof FindBlocksRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<FindBlocksResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1373)
+
+## listNearbyEntities
+
+Entities within `radius` of the bot (at most 128), only of `entityTypes` if
+given. Players only with `includePlayers: true`.
+
+```ts
+listNearbyEntities(
+  request: ScopedRequest<typeof ListNearbyEntitiesRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<ListNearbyEntitiesResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1393)
+
+## digBlock
+
+Breaks the block at `position` with what the main hand holds, and resolves
+once it's broken. `cancel: true` stops a dig in progress instead. Needs the
+block within reach; times out after a minute.
+
+```ts
+digBlock(
+  request: ScopedRequest<typeof DigBlockRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<BotActionResult, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1414)
+
+## placeBlock
+
+Places the held block against the `face` of `against`, like a right click
+on it: the new block goes on that side.
+
+```ts
+placeBlock(
+  request: ScopedRequest<typeof PlaceBlockRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<BotActionResult, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1441)
+
+## interactBlock
+
+Right-clicks a block face: doors, buttons, beds, levers. `sneaking` sneaks
+for this click, so the held item's own use doesn't take over.
+
+```ts
+interactBlock(
+  request: ScopedRequest<typeof InteractBlockRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<BotActionResult, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1468)
+
+## useItem
+
+Uses the item in `hand`: eat, drink, throw, draw a bow. `releaseItem` ends
+it.
+
+```ts
+useItem(
+  request: ScopedRequest<typeof UseItemRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<BotActionResult, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1495)
+
+## releaseItem
+
+Lets go of an item in use: fires a drawn bow, stops eating.
+
+```ts
+releaseItem(
+  request: ScopedRequest<typeof ReleaseItemRequestSchema> = {},
+  options?: CallOptions,
+): Effect.Effect<BotActionResult, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1521)
+
+## attackEntity
+
+Hits an entity within reach once, by network id.
+
+```ts
+attackEntity(
+  request: ScopedRequest<typeof AttackEntityRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<BotActionResult, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1547)
+
+## interactEntity
+
+Right-clicks an entity within reach: trading, mounting.
+
+```ts
+interactEntity(
+  request: ScopedRequest<typeof InteractEntityRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<BotActionResult, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1573)
+
+## swingArm
+
+Only the animation.
+
+```ts
+swingArm(
+  request: ScopedRequest<typeof SwingArmRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<BotActionResult, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1599)
+
+## respawn
+
+Respawns a dead bot, or leaves the End credits.
+
+```ts
+respawn(
+  request: ScopedRequest<typeof RespawnRequestSchema> = {},
+  options?: CallOptions,
+): Effect.Effect<BotActionResult, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1625)
+
+## sleep
+
+Uses a bed within reach and resolves once the server confirms the bot is
+sleeping.
+
+```ts
+sleep(
+  request: ScopedRequest<typeof SleepRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<BotActionResult, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1652)
+
+## wake
+
+```ts
+wake(
+  options?: CallOptions,
+): Effect.Effect<BotActionResult, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1675)
+
+## mount
+
+Rides an entity and resolves once the server confirms it.
+
+```ts
+mount(
+  request: ScopedRequest<typeof MountEntityRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<MountEntityResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1699)
+
+## dismount
+
+```ts
+dismount(
+  request: ScopedRequest<typeof DismountRequestSchema> = {},
+  options?: CallOptions,
+): Effect.Effect<BotActionResult, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1722)
+
+## setVehicleControl
+
+Movement input while controlling a vehicle. It stays until changed; unset
+fields keep theirs.
+
+```ts
+setVehicleControl(
+  request: ScopedRequest<typeof SetVehicleControlRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<SetVehicleControlResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1749)
+
+## updateSign
+
+Writes a sign: exactly four `lines` (an empty string clears one), on the
+front if `frontText`.
+
+```ts
+updateSign(
+  request: ScopedRequest<typeof UpdateSignRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<BotActionResult, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1777)
+
+## writeBook
+
+Writes the writable book in hotbar slot `inventorySlot` (0-8). A `title`
+signs it.
+
+```ts
+writeBook(
+  request: ScopedRequest<typeof WriteBookRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<BotActionResult, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1804)
+
+## respondResourcePack
+
+```ts
+respondResourcePack(
+  request: ScopedRequest<typeof RespondResourcePackRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<BotActionResult, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1827)
+
+## setFlying
+
+```ts
+setFlying(
+  request: ScopedRequest<typeof SetFlyingRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<BotActionResult, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1851)
+
+## startElytraFlight
+
+Starts gliding. The bot must be falling with a usable elytra.
+
+```ts
+startElytraFlight(
+  options?: CallOptions,
+): Effect.Effect<BotActionResult, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1877)
+
+## setCreativeSlot
+
+Sets slot 0-45 of the inventory menu; no `item` clears it.
+
+```ts
+setCreativeSlot(
+  request: ScopedRequest<typeof SetCreativeSlotRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<BotActionResult, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1902)
+
+## waitForChunks
+
+Waits until every chunk within `radiusChunks` of the bot's chunk is loaded:
+0 (the default) means its own chunk, and it's at most 16. Times out after
+`timeoutMs`, which defaults to 30 s, at most 5 min.
+
+```ts
+waitForChunks(
+  request: ScopedRequest<typeof WaitForChunksRequestSchema> = {},
+  options?: CallOptions,
+): Effect.Effect<WaitForChunksResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1931)
+
+## goTo
+
+Pathfinds to `goal`, streaming progress until COMPLETED, FAILED or
+CANCELLED. A new `goTo` cancels this one. Times out after
+`options.timeoutSeconds`, which defaults to 5 min, at most 1 h.
+
+```ts
+goTo(
+  request: ScopedRequest<typeof GoToRequestSchema>,
+  options?: CallOptions,
+): Stream.Stream<PathfindProgress, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1952)
+
+## stopPathfinding
+
+Cancels the `goTo` in progress.
+
+```ts
+stopPathfinding(
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1975)
+
+## inventoryState
+
+The open menu, or the player's inventory: layout, slots and the carried
+item.
+
+```ts
+inventoryState(
+  options?: CallOptions,
+): Effect.Effect<BotInventoryStateResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L1996)
+
+## clickInventory
+
+Clicks `slot` of the open menu like a mouse; -999 clicks outside it,
+dropping what the cursor holds. `clickType` defaults to LEFT_CLICK.
+`hotbarSlot` (0-8) is the slot SWAP_HOTBAR swaps with, and defaults to 0.
+
+```ts
+clickInventory(
+  slot: number,
+  clickType: ClickType = ClickType.LEFT_CLICK,
+  hotbarSlot = 0,
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L2012)
+
+## transferInventorySlot
+
+Shift-clicks `slot`: its stack moves to the other part of the menu.
+
+```ts
+transferInventorySlot(
+  slot: number,
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L2041)
+
+## dropInventorySlot
+
+Drops the stack in `slot`, or only one item when `all` is false. `all`
+defaults to true.
+
+```ts
+dropInventorySlot(
+  slot: number,
+  all = true,
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L2052)
+
+## moveInventoryStack
+
+Picks up the stack in `fromSlot` and puts it in `toSlot`; what stays on the
+cursor goes back.
+
+```ts
+moveInventoryStack(
+  fromSlot: number,
+  toSlot: number,
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L2069)
+
+## selectHotbar
+
+Selects hotbar slot `slot`, from 0 to 8.
+
+```ts
+selectHotbar(
+  slot: number,
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L2087)
+
+## setMovement
+
+Presses or releases movement keys. Keys left out keep their state, and a
+pressed key stays pressed until changed or `resetMovement`. Sprinting needs
+`forward` and a food level of 6 or more.
+
+```ts
+setMovement(
+  movement: BotMovement,
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L2110)
+
+## resetMovement
+
+Releases every movement key.
+
+```ts
+resetMovement(
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L2135)
+
+## look
+
+Turns the bot. `yaw` is in degrees: 0 south, 90 west, -90 east, 180 north.
+`pitch` too: -90 up, 0 level, 90 down.
+
+```ts
+look(
+  yaw: number,
+  pitch: number,
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L2156)
+
+## openInventory
+
+```ts
+openInventory(
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L2175)
+
+## closeContainer
+
+```ts
+closeContainer(
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L2192)
+
+## dialog
+
+The server dialog on screen (Minecraft 1.21.6+), if any.
+
+```ts
+dialog(
+  options?: CallOptions,
+): Effect.Effect<BotGetDialogResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L2212)
+
+## renderPov
+
+Same as `camera.capture`.
+
+```ts
+renderPov(
+  request: {
+    width?: number;
+    height?: number;
+    maxDistance?: number;
+    fov?: number;
+    cameraX?: number;
+    cameraY?: number;
+    cameraZ?: number;
+    yRot?: number;
+    xRot?: number;
+    includeHud?: boolean;
+    includeHands?: boolean;
+    includeDebugTrace?: boolean;
+  } = {},
+  options?: CallOptions,
+): Effect.Effect<BotRenderPovResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L2226)
+
+## acquireControl
+
+Takes exclusive control: until the lease ends, only this client can act on
+the bot. Renew it before it runs out. `ttlSeconds` defaults to 30, from 5
+to 300.
+
+```ts
+acquireControl(
+  ttlSeconds = 30,
+  options?: CallOptions,
+): Effect.Effect<SoulFireBotControlLease, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L2283)
+
+## acquireControlScoped
+
+```ts
+acquireControlScoped(
+  ttlSeconds = 30,
+  options?: CallOptions,
+): Effect.Effect<
+  SoulFireBotControlLease,
+  SoulFireOperationError,
+  Scope.Scope
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L2321)
+
+## renewControl
+
+```ts
+renewControl(
+  lease: BotControlLease,
+  ttlSeconds: number,
+  options?: CallOptions,
+): Effect.Effect<BotControlLease, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L2335)
+
+## releaseControl
+
+```ts
+releaseControl(
+  lease: BotControlLease,
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L2365)

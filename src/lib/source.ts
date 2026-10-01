@@ -4,6 +4,7 @@ import { lucideIconsPlugin } from "fumadocs-core/source/lucide-icons";
 import { toFumadocsSource } from "fumadocs-mdx/runtime/server";
 import { openapiPlugin, openapiSource } from "fumadocs-openapi/server";
 import { openapi } from "@/lib/docs/openapi";
+import { docsNavigationPlugin } from "@/lib/docs/navigation";
 
 async function createDocsSource() {
   return loader(
@@ -19,7 +20,7 @@ async function createDocsSource() {
     }),
     {
       baseUrl: "/docs",
-      plugins: [lucideIconsPlugin(), openapiPlugin()],
+      plugins: [docsNavigationPlugin(), lucideIconsPlugin(), openapiPlugin()],
     },
   );
 }

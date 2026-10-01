@@ -1,0 +1,52 @@
+---
+title: Debug and limit a script
+sidebarTitle: "Debugging"
+description: Find the first incorrect event, value, or action instead of changing the whole graph.
+icon: Bug
+---
+
+## The script does not run
+
+1. Check that the script belongs to the intended instance.
+2. Check that it is saved and not paused.
+3. Cause the trigger event after enabling the script.
+4. Check that an execution wire reaches the first action.
+5. Inspect validation diagnostics and execution logs.
+
+An On Join trigger needs a new join. Saving a script while a bot is already online does not recreate that event.
+
+## The wrong bot acts
+
+Inspect the trigger's bot context and every connected bot override.
+A timer does not necessarily carry a bot.
+Reduce the graph to one trigger and one action with a known bot before restoring the full workflow.
+
+## A value is missing or has the wrong type
+
+Inspect the source output and target input in the [node reference](/docs/scripting/node-reference).
+Use a constant value to isolate the target node.
+Enable node previews or add a **Print** node to inspect the actual value.
+The preview is evidence of a value, not proof that a later Minecraft action succeeded.
+
+## The graph runs too often
+
+Check whether a timer, chat message, reconnect, or loop repeats the path.
+Inspect repeated events before adding arbitrary delays.
+Add a rate limit or condition where the behavior needs one.
+Pause the script while diagnosing an unexpected loop.
+
+## Quotas
+
+Use the script's quota controls to limit the work that one graph can consume.
+Choose limits based on the intended event frequency and bounded workload.
+Quota errors identify a limit reached by the graph. Raising the limit does not correct an accidental loop.
+
+## Import and version problems
+
+Import a graph while paused. Review node types and validation diagnostics before enabling it.
+A graph from a newer backend can contain nodes absent from an older backend.
+The downloadable recipes receive structural checks against the pinned node catalog.
+You must still validate and run them on your connected server.
+
+For SDK failures, use [SDK errors](/docs/sdk/errors).
+For backend failures, use [server troubleshooting](/docs/troubleshooting/dedicated-server-and-docker).

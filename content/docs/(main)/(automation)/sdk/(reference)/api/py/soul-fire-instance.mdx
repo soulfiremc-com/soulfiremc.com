@@ -1,0 +1,270 @@
+---
+title: SoulFireInstance
+description: Public Python members of SoulFireInstance.
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+Methods decorated with `@fn` return effects. Their implementation signatures use `EffectGen` for the generator body. Compose them with `yield from` inside a scoped workflow.
+
+## fleet
+
+```python
+@property
+def fleet(self) -> SoulFireFleet
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L560)
+
+## bot
+
+```python
+def bot(self, bot_id: str) -> SoulFireBot
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L563)
+
+## info
+
+```python
+@fn("SoulFireInstance.info")
+def info(
+    self, *, headers: dict[str, str] | None = None, timeout_ms: int | None = None
+) -> EffectGen[InstanceInfo, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L580)
+
+## delete
+
+```python
+@fn("SoulFireInstance.delete")
+def delete(
+    self, *, headers: dict[str, str] | None = None, timeout_ms: int | None = None
+) -> EffectGen[None, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L601)
+
+## update_name
+
+```python
+@fn("SoulFireInstance.update_name")
+def update_name(
+    self,
+    friendly_name: str,
+    *,
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+) -> EffectGen[None, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L612)
+
+## set_config_entry
+
+```python
+@fn("SoulFireInstance.set_config_entry")
+def set_config_entry(
+    self,
+    namespace: str,
+    key: str,
+    value: Any,
+    *,
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+) -> EffectGen[None, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L629)
+
+## add_accounts
+
+```python
+@fn("SoulFireInstance.add_accounts")
+def add_accounts(
+    self,
+    accounts: Iterable[MinecraftAccountProto],
+    *,
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+) -> EffectGen[None, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L650)
+
+## remove_accounts
+
+```python
+@fn("SoulFireInstance.remove_accounts")
+def remove_accounts(
+    self,
+    profile_ids: Iterable[str],
+    *,
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+) -> EffectGen[None, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L667)
+
+## add_proxies
+
+```python
+@fn("SoulFireInstance.add_proxies")
+def add_proxies(
+    self,
+    proxies: Iterable[ProxyProto],
+    *,
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+) -> EffectGen[None, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L686)
+
+## remove_proxies
+
+```python
+@fn("SoulFireInstance.remove_proxies")
+def remove_proxies(
+    self,
+    addresses: Iterable[str],
+    *,
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+) -> EffectGen[None, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L703)
+
+## login_credentials
+
+```python
+def login_credentials(
+    self,
+    service: AccountTypeCredentials,
+    payload: Iterable[str],
+    *,
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+) -> Stream[CredentialsAuthResponse, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L719)
+
+## login_device_code
+
+```python
+def login_device_code(
+    self,
+    service: AccountTypeDeviceCode,
+    *,
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+) -> Stream[DeviceCodeAuthResponse, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L736)
+
+## refresh_account
+
+```python
+@fn("SoulFireInstance.refresh_account")
+def refresh_account(
+    self,
+    account: MinecraftAccountProto,
+    *,
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+) -> EffectGen[RefreshResponse, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L753)
+
+## bots
+
+```python
+@fn("SoulFireInstance.bots")
+def bots(
+    self, *, headers: dict[str, str] | None = None, timeout_ms: int | None = None
+) -> EffectGen[list[BotListEntry], SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L777)
+
+## watch_bot_statuses
+
+```python
+def watch_bot_statuses(
+    self, *, headers: dict[str, str] | None = None, timeout_ms: int | None = None
+) -> Stream[WatchBotStatusesResponse, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L788)
+
+## events
+
+Watch one multiplexed event stream for bots in this instance.
+
+```python
+def events(
+    self,
+    filter: InstanceEventFilter | None = None,
+    *,
+    bot_ids: Iterable[str] = (),
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+) -> Stream[InstanceEvent, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L798)
+
+## start
+
+```python
+@fn("SoulFireInstance.start")
+def start(
+    self,
+    *,
+    bot_ids: Iterable[str] | None = None,
+    count: int | None = None,
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+) -> EffectGen[list[BotStatus], SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L825)
+
+## stop
+
+```python
+@fn("SoulFireInstance.stop")
+def stop(
+    self,
+    *,
+    bot_ids: Iterable[str] | None = None,
+    count: int | None = None,
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+) -> EffectGen[list[BotStatus], SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L855)
+
+## restart
+
+```python
+@fn("SoulFireInstance.restart")
+def restart(
+    self,
+    *,
+    bot_ids: Iterable[str] | None = None,
+    count: int | None = None,
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+) -> EffectGen[list[BotStatus], SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L885)

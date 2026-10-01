@@ -1,0 +1,353 @@
+---
+title: Plugin-defined APIs
+sidebarTitle: "Plugins"
+description: Call APIs that SoulFire server plugins provide.
+icon: Plug
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from '../../../../../../../src/components/mdx/sdk-tabs';
+
+A SoulFire plugin can add RPCs, streams, permissions, events, and durable tasks.
+When the SDK connects, it gets the list of installed plugins and their versions.
+
+Applications have two ways to consume a plugin:
+
+- Install its typed SDK package.
+- Download its API description and call it by name.
+
+## Register a plugin API
+
+Declare plugin APIs in `onLoad`.
+Each plugin gets a `PluginContext` for permissions, RPCs, tasks, events, and SDK information.
+Start runtime work in `onEnable` and stop it in `onDisable`.
+
+```java
+public final class ExamplePlugin extends ExternalPlugin {
+  private PluginEventRegistration<Tick> ticks;
+
+  @Override
+  protected void onLoad(PluginContext context) {
+    var read = context.permissions().register(PluginPermission.instance(
+      "read",
+      "Read example state",
+      "Receives state published by the example plugin.",
+      PluginPermission.Risk.READ
+    ));
+
+    context.sdk().register(PluginSdkMetadata.experimental());
+    ticks = context.events().register(Tick.getDefaultInstance(), read);
+    context.rpc().register(new ExampleService());
+  }
+
+  private void publishTick(UUID instanceId, int sequence) {
+    ticks.publish(
+      PluginEventTarget.instance(instanceId),
+      Tick.newBuilder().setSequence(sequence).build()
+    );
+  }
+}
+```
+
+Protobuf packages must use `soulfire.plugin.<plugin_id_with_underscores>.v<api_major>`.
+Each RPC, task provider, and event type declares its required permissions.
+SoulFire applies these permissions to every request and event.
+
+After SoulFire allows a request, an RPC handler can read `PluginCallContext.current()`.
+This context contains the user, permissions, request targets, task manager, request data, and cancellation state.
+SoulFire records instance plugin calls in the audit log.
+It also records request, error, and response-time metrics for the plugin.
+
+Use `context.settings().registerServerPage(...)` or
+`registerInstancePage(...)` for settings that must appear in every matching
+settings registry. Use `context.commands().register(...)` for a Brigadier root
+command. SoulFire validates these declarations during `onLoad`.
+It installs them before the related lifecycle event runs.
+
+Applications call plugin RPCs, read plugin events, or start plugin tasks through the SDK.
+These APIs work with any application.
+
+## Generate a companion SDK
+
+The `soulfire-sdk` command downloads a registered API description.
+It validates the catalog hash and creates a package that you can publish:
+
+```bash
+SOULFIRE_TOKEN=token bunx soulfire-sdk generate \
+  --server https://soulfire.example.com \
+  --plugin example \
+  --language typescript \
+  --output packages/soulfire-example
+```
+
+Use a descriptor file when generation runs inside the plugin build:
+
+```bash
+bunx soulfire-sdk generate \
+  --descriptor build/plugin-api.binpb \
+  --plugin example \
+  --language python \
+  --output packages/soulfire-plugin-example
+```
+
+The TypeScript output returns Effect operations and streams.
+The Python output requires CPython 3.14 and returns effect-py operations and scoped streams.
+Both packages contain the validated API description, version data, generated protobuf types, and typed event methods.
+They also contain a module for `plugins.require(...)`.
+
+Registered plugin tasks describe their request, result, progress data, and permissions.
+The generator creates typed task methods for each language.
+
+The generator requires Node.js 22 or newer.
+It uses fixed versions of Buf and the remote generators.
+You do not need to install `protoc` plugins.
+
+## Require a typed companion module
+
+The companion module compares the installed plugin version and services before it creates a client.
+
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
+    ```ts
+    const plugin = yield* soulfire.plugins.require(examplePlugin);
+    const reply = yield* plugin.echo(instanceId, "hello");
+
+    yield* plugin.watchTicks(instanceId, 10).pipe(Stream.runDrain);
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python
+    plugin = soulfire.plugins.require(example_plugin)
+    reply = yield from plugin.echo(instance_id, "hello")
+
+    from effect_py import fn, sync
+
+    @fn("consume stream")
+    def consume(tick):
+        yield from sync(lambda: print(tick.sequence))
+
+    yield from plugin.watch_ticks(instance_id, 10).run_for_each(consume)
+    ```
+  </Tab>
+</Tabs>
+
+## Call an unknown plugin reflectively
+
+The SDK verifies the downloaded descriptor set against the SHA-256 hash from
+the catalog.
+
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
+    ```ts
+    const plugin = yield* soulfire.plugins.reflective("example");
+    const response = yield* plugin.call(
+      "soulfire.plugin.example.v1.ExamplePluginService",
+      "Echo",
+      { instanceId, message: "hello" },
+    );
+
+    yield* Effect.logInfo(response.json);
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python
+    plugin = yield from soulfire.plugins.reflective("example")
+    response = yield from plugin.call(
+        "soulfire.plugin.example.v1.ExamplePluginService",
+        "Echo",
+        {"instanceId": instance_id, "message": "hello"},
+    )
+    ```
+  </Tab>
+</Tabs>
+
+Reflective calls validate request JSON against the discovered protobuf input
+type. The response contains the dynamic message, its full type name, and a JSON
+representation.
+
+## Call a plugin from beat-game strategy
+
+The beat-game package accepts Effect strategy hooks. Require a typed companion
+module first, then close over its client:
+
+```ts
+const combat = yield* soulfire.plugins.require(combatPlugin);
+
+const run = yield* beatGame(bot, {
+  hooks: {
+    fightEnderDragon: ({ checkpoint }) =>
+      combat.fightDragon({
+        instanceId: checkpoint.instanceId,
+        botId: checkpoint.botId,
+      }).pipe(
+        Effect.map((result) => result.defeated),
+      ),
+  },
+});
+```
+
+The hook still runs inside the runner's timeout, retry, checkpoint, claim, and
+control lifecycle. Use a plugin-defined durable task instead of a unary RPC
+when the server must keep working after the SDK process disconnects.
+
+## Run plugin-defined tasks
+
+A plugin task provider declares its result type and can declare a typed
+progress detail. SoulFire validates both at runtime before publishing them.
+
+```java
+context.tasks().register(
+  new BuildIslandTaskProvider(),
+  buildIslandPermission
+);
+```
+
+Generated companion packages expose the provider as a typed method:
+
+<Tabs items={['TypeScript', 'Python', 'Reflective']}>
+  <Tab value="TypeScript">
+    ```ts
+    const extension = yield* soulfire.plugins.require(skyBlockPlugin);
+    const bot = soulfire.instance(instanceId).bot(botId);
+    const task = yield* extension.buildIsland(
+      bot.tasks,
+      { template: "cobblestone-generator" },
+    );
+    const result = yield* task.result();
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python
+    extension = soulfire.plugins.require(skyblock_plugin)
+    task = yield from extension.build_island(
+        bot.tasks,
+        BuildIslandTask(template="cobblestone-generator"),
+    )
+    result = yield from task.result()
+    ```
+  </Tab>
+  <Tab value="Reflective">
+    ```ts
+    const extension = yield* soulfire.plugins.reflective("skyblock");
+    const task = yield* extension.startTask(
+      bot.tasks,
+      "type.googleapis.com/soulfire.plugin.skyblock.v1.BuildIslandTask",
+      { template: "cobblestone-generator" },
+    );
+    ```
+  </Tab>
+</Tabs>
+
+Plugin tasks use the same leases, resource arbitration, parent-child
+relationships, idempotency keys, cancellation, reconnect policy, fleet
+streams, and audit behavior as core tasks.
+
+## Publish plugin RPCs as MCP tools
+
+Unary plugin RPCs stay hidden from MCP unless the method opts in:
+
+```proto
+option (soulfire.v1.api_method) = {
+  display_name: "Get island state"
+  description: "Reads the current island level and members."
+  permissions: "plugin.skyblock.read_island"
+  scope: "instance"
+  expose_to_mcp: true
+};
+```
+
+SoulFire creates the MCP input schema from the protobuf request.
+It uses the same authentication, permissions, context, metrics, and audit log
+as plugin gRPC requests. Streaming methods cannot opt in. Methods with
+mutation or destructive permissions must also set
+`mcp_requires_confirmation: true`. Their generated tool requires
+`confirm=true` on each call.
+
+## Watch plugin events
+
+Plugins can publish a protobuf message at global, instance, bot, or task scope.
+The catalog filters events on the server and preserves the protobuf type in a
+normalized envelope.
+
+<Tabs items={['TypeScript', 'Python', 'Reflective']}>
+  <Tab value="TypeScript">
+    ```ts
+    const events = soulfire.plugins.typedEvents(
+      "example",
+      TickSchema,
+      { instanceId },
+    );
+
+    yield* events.pipe(
+      Stream.runForEach(({ event, value }) =>
+        value === undefined
+          ? Effect.logInfo(`Event stream ready at ${event.sequence}`)
+          : Effect.logInfo(`Tick ${value.sequence}`)
+      ),
+    );
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python
+    from effect_py import fn, sync
+
+    @fn("consume stream")
+    def consume(event):
+        if event.value is not None:
+            yield from sync(lambda: print(event.value.sequence))
+
+    yield from soulfire.plugins.typed_events(
+        "example",
+        Tick,
+        instance_id=instance_id,
+    ).run_for_each(consume)
+    ```
+  </Tab>
+  <Tab value="Reflective">
+    ```ts
+    const plugin = yield* soulfire.plugins.reflective("example");
+
+    yield* plugin.events({ instanceId }).pipe(
+      Stream.runForEach(({ message }) =>
+        message === undefined
+          ? Effect.void
+          : Effect.logInfo(message.json)
+      ),
+    );
+    ```
+  </Tab>
+</Tabs>
+
+Every subscription starts with a `READY` envelope. `resumeGap` is true when an
+`afterSequence` value was not resumed because plugin events are live and
+not retained. `droppedBefore` reports events discarded for a slow consumer.
+Reconnect from a fresh domain snapshot when either value signals a gap.
+
+## Watch the plugin catalog
+
+Use the catalog stream when an application needs to react to plugin additions,
+updates, or removals:
+
+```ts
+yield* soulfire.plugins.watch().pipe(
+  Stream.runForEach((event) => Effect.logInfo(event.kind)),
+);
+```
+
+Catalog changes invalidate cached reflective clients when the descriptor hash
+changes.
+
+## Permission behavior
+
+Plugin RPC registration includes permission descriptors. SoulFire applies
+authentication, instance scope, permission checks, metrics, and audit context
+before invoking the plugin method.
+
+<Callout type="warn">
+  A descriptor proves the shape of a plugin API, not that the caller has
+  permission to use it. Handle permission failures as expected application
+  errors.
+</Callout>
+
+Plugin durable tasks use the same resource arbitration, cancellation, progress,
+ownership, and reconnect infrastructure as core tasks.

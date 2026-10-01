@@ -1,5 +1,6 @@
 ---
 title: Gradle And Project Layout
+sidebarTitle: "Project layout"
 description: Set up Fabric Loom, SoulFire dependencies, Maven repositories, and project files for a plugin.
 icon: FolderTree
 ---
@@ -21,8 +22,11 @@ SoulFire publishes plugin dependencies under the `com.soulfiremc` group:
 | Release metadata | `https://repo.codemc.org/repository/maven-public/com/soulfiremc/mod/maven-metadata.xml` |
 | Shared metadata | `https://repo.codemc.org/repository/maven-public/com/soulfiremc/shared/maven-metadata.xml` |
 
-The public metadata currently exposes a newer release than the version pinned in the template repository.
-Read the metadata before you select a version, especially for a recent SoulFire build.
+Use the metadata for the exact backend release you target.
+The template can lag behind the runtime. Compare its complete dependency set with the matching SoulFire source.
+The `shared` coordinate appears in the older template. Do not assume that every newer runtime publishes the same module layout.
+The current source keeps shared Java classes inside its existing modules.
+Use the source build's publishing tasks and dependencies for that baseline.
 
 ## External references for this page
 

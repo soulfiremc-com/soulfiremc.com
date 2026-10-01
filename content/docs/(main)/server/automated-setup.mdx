@@ -1,0 +1,82 @@
+---
+title: Install with the Linux setup script
+sidebarTitle: "Linux setup script"
+description: Deploy a dedicated backend, configure HTTPS, and verify one bot connection.
+icon: Server
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+The official setup script installs Docker, creates a Compose deployment, and offers HTTPS setup.
+Use [manual Docker](/docs/server/docker) if you want to manage those files yourself.
+
+## Before you start
+
+- Prepare a Linux host with SSH access and permission to install services.
+- Keep its public address and chosen HTTPS hostname ready.
+- Allow the network ports required by your chosen proxy or tunnel.
+- Start with one bot and measure the resources needed by your workload.
+
+There is no fixed memory requirement for a particular bot count.
+World activity, scripts, rendering, plugins, and protocol translation all affect resource use.
+Use [staged tests](/docs/testing/load-test) to size your deployment.
+
+## Connect to the host
+
+From your computer, run:
+
+```bash
+ssh root@YOUR_SERVER_ADDRESS
+```
+
+Use the account and SSH credentials supplied by your host.
+The following commands run on that remote host.
+
+## Download and run the script
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/soulfiremc-com/SoulFire/main/scripts/soulfire-dedicated-setup.sh -o /tmp/sf-setup.sh
+sudo bash /tmp/sf-setup.sh
+```
+
+The script offers system updates, Docker installation, HTTPS configuration, and deployment under `/opt/soulfire/`.
+Choose the network option appropriate to your host.
+Record the resulting URL and volume mapping.
+Use HTTPS for clients outside a trusted local connection.
+
+## Generate access and connect
+
+Run `sudo bash /tmp/sf-setup.sh` again to open its management menu.
+Select **Attach to SoulFire console**. Run:
+
+```text
+generate-token api
+```
+
+Copy the API token.
+Open the desktop app and select **Dedicated server (remote)**.
+Enter the configured backend URL and token.
+Expect the instance pages to load for that token's user.
+
+Then complete [Connect your first bot](/docs/start-here/gui-mode) against a Minecraft target reachable from this host.
+A successful GUI connection checks backend access. A successful bot join checks the Minecraft route.
+
+## Manage the deployment
+
+The script's menu offers console attachment, logs, updates, HTTPS reconfiguration, and uninstall.
+Use [upgrade and rollback](/docs/server/upgrades) before its update action.
+Use [backup and restore](/docs/server/backup-and-restore) to preserve data before replacement or removal.
+
+## Video walkthrough
+
+The video demonstrates the setup flow. The written steps above provide the commands and verification procedure.
+
+<div className="aspect-video overflow-hidden rounded-md border">
+  <iframe
+    src="https://www.youtube.com/embed/_Uz5kgupFKs"
+    title="Install a dedicated SoulFire server with the Linux setup script"
+    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowFullScreen
+    className="h-full w-full"
+  />
+</div>

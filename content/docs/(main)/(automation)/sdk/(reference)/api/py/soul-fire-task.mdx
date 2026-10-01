@@ -1,0 +1,98 @@
+---
+title: SoulFireTask
+description: Public Python members of SoulFireTask.
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+Methods decorated with `@fn` return effects. Their implementation signatures use `EffectGen` for the generator body. Compose them with `yield from` inside a scoped workflow.
+
+## id
+
+```python
+@property
+def id(self) -> str
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L186)
+
+## snapshot
+
+```python
+@property
+def snapshot(self) -> BotTask
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L190)
+
+## terminal
+
+```python
+@property
+def terminal(self) -> bool
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L194)
+
+## refresh
+
+```python
+@fn("SoulFireTask.refresh")
+def refresh(
+    self, *, headers: dict[str, str] | None = None, timeout_ms: int | None = None
+) -> EffectGen[BotTask, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L198)
+
+## events
+
+```python
+def events(
+    self,
+    *,
+    after_revision: int | None = None,
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L209)
+
+## wait
+
+```python
+@fn("SoulFireTask.wait")
+def wait(
+    self, *, headers: dict[str, str] | None = None, timeout_ms: int | None = None
+) -> EffectGen[BotTask, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L232)
+
+## cancel
+
+```python
+@fn("SoulFireTask.cancel")
+def cancel(
+    self,
+    reason: str = "",
+    *,
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+) -> EffectGen[BotTask, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L250)
+
+## result
+
+```python
+@fn("SoulFireTask.result")
+def result(
+    self, *, headers: dict[str, str] | None = None, timeout_ms: int | None = None
+) -> EffectGen[ResultT, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L268)

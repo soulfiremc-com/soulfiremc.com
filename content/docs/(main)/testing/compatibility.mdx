@@ -1,0 +1,42 @@
+---
+title: Check versions, authentication, and routes
+sidebarTitle: "Compatibility"
+description: Isolate connection compatibility before measuring a fleet.
+icon: BookOpen
+---
+
+## Protocol version
+
+1. Record the target's Minecraft edition and version.
+2. Select the matching protocol in **Bot Settings**.
+3. Connect one bot without proxies or extra automation.
+4. Inspect its disconnect reason and loaded world state.
+
+Use the [version reference](/docs/reference/versions) for SoulFire's supported protocol families.
+Protocol translation does not guarantee identical mechanics or compatibility with every server plugin.
+
+## Authentication
+
+Offline accounts require a target that accepts offline logins.
+Online-mode Java targets need a valid authenticated Java account.
+Bedrock targets use the corresponding Bedrock login path.
+
+Check allowlists, bans, player limits, duplicate account names, and login plugin requirements.
+Use [account troubleshooting](/docs/troubleshooting/accounts-and-authentication) if Microsoft login or target authentication fails.
+
+## Proxy routing
+
+1. Connect one bot directly to establish a working baseline.
+2. Import one proxy and check it.
+3. Connect the same bot through that route.
+4. Compare target logs and the observed source address.
+
+Minecraft traffic and Microsoft authentication can use different routes.
+The **Use proxies for account auth** setting controls the authentication route separately.
+Use [proxy troubleshooting](/docs/troubleshooting/proxies) for route-specific errors.
+
+## Compare multiple versions
+
+Use a separate instance or saved run record for each protocol version.
+Keep the world, accounts, route, bot count, and behavior constant.
+Record both successful joins and failed actions after the join.

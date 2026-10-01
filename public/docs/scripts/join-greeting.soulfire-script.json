@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "name": "Tutorial greeting",
+  "description": "A small documentation recipe. Review and save before enabling.",
+  "paused": true,
+  "nodes": [
+    {
+      "id": "joined",
+      "type": "trigger.on_join",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "data": {}
+    },
+    {
+      "id": "action",
+      "type": "action.send_chat",
+      "position": {
+        "x": 360,
+        "y": 0
+      },
+      "data": {
+        "message": "Hello from the visual script"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "join-execution",
+      "source": "joined",
+      "target": "action",
+      "sourceHandle": "out",
+      "targetHandle": "in"
+    }
+  ]
+}

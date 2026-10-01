@@ -1,0 +1,54 @@
+---
+title: Increase load in stages
+sidebarTitle: "Load testing"
+description: Measure a baseline and add bots without confusing requested load with connected players.
+icon: BookOpen
+---
+
+## Before you start
+
+Complete [test preparation](/docs/testing/prepare).
+Keep the Minecraft metrics, its console, and SoulFire **Overview** visible.
+Define a stop condition and an observation duration for each stage.
+
+## 1. Record the baseline
+
+Observe the target with no test bots connected.
+Record tick duration, CPU, memory, player count, and background activity.
+Keep normal background jobs consistent between comparison runs.
+
+## 2. Connect one bot
+
+Start one account. Check its login, world state, and intended behavior.
+Record the time until it becomes usable.
+If this stage fails, resolve the problem before adding more accounts.
+
+## 3. Add a small batch
+
+Start additional stopped bots from **Overview**.
+For an initial experiment, use stages such as `1`, `5`, `10`, and `20` total connected bots.
+These numbers illustrate a ramp. They do not describe a safe capacity for every server.
+
+At each stage, wait for your observation duration.
+Record the actual connected count and any login failures.
+The requested running count can include bots that are disconnected or retrying.
+
+## 4. Compare against the stop condition
+
+Stop the run if tick duration, disconnects, or backend saturation exceeds your chosen limit.
+Do not continue increasing load after the workload itself becomes unreliable.
+
+Repeat the same stage if you need to distinguish a temporary spike from sustained behavior.
+Record the repeat separately so the result remains traceable.
+
+## 5. Stop and recover
+
+Pause automation. Stop the bots explicitly.
+Check that the player count returns to baseline and that reconnects stop.
+Observe recovery for the same duration as a load stage.
+Then [record the result](/docs/testing/results).
+
+## Next experiment
+
+Change one variable: bot count, join timing, behavior, proxy route, or server settings.
+A faster join ramp measures a different workload from a steady set of connected players.

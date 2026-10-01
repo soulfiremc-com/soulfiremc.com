@@ -1,99 +1,94 @@
 ---
-title: Run Your First Bots in GUI Mode
-description: Create an instance, configure it, and connect your first SoulFire bots from the GUI.
-icon: Monitor
+title: Connect your first bot
+sidebarTitle: "First bot"
+description: Create one account, connect to a test server, send chat, and stop the bot.
+icon: Bot
 ---
 
-import { Step, Steps } from 'fumadocs-ui/components/steps';
 import { Callout } from 'fumadocs-ui/components/callout';
 
-## When to use GUI Mode
-
-GUI mode lets you run SoulFire, view bots, and change settings without terminal commands.
-
-<Callout type="info">
-  New users can start with `Integrated server (local)`.
-  If you already run a remote SoulFire server, use `Dedicated server (remote)` instead.
-  For the difference, see [Operation Modes](/docs/concepts/operation-modes).
-</Callout>
+This tutorial uses the desktop app and its integrated SoulFire server.
+Allow about ten minutes after installation.
+You will finish with one bot that you can start and stop yourself.
 
 ## Before you start
 
-- Install the desktop app from [Start Here](/docs/start-here).
-- If you want to connect to a remote server, have the server URL and access token ready.
-- If you only want to explore the interface, `Demo server` is useful, but it does not connect real bots.
+- [Install the desktop app](/docs/start-here).
+- Start a Java Minecraft server that you control.
+- For this tutorial, use a local offline-mode test server at `127.0.0.1:25565`.
+- Keep the Minecraft server console or a normal player connected so you can see chat.
 
-## Connect your first bots
+<Callout type="info">
+  An offline account does not authenticate with Microsoft. It cannot join an online-mode server.
+  For that target, [import a Microsoft account](/docs/how-to/import-accounts) and use its name instead of `DocsBot_1`.
+</Callout>
 
-<Steps>
-  <Step>
-    ### Choose how to connect
+## 1. Open the integrated server
 
-    Launch SoulFire and pick one of the three connection options:
+Open SoulFire. Select **Integrated server (local)**.
+Wait until the app shows the server pages and the **Instances** entry.
+The **Demo server** option only shows sample data. It cannot connect real bots.
 
-    - `Integrated server (local)` for a local first run
-    - `Dedicated server (remote)` for an existing SoulFire server
-    - `Demo server` to explore the UI without a live backend
-  </Step>
+## 2. Create a tutorial instance
 
-  <Step>
-    ### Create an instance
+Open **Instances**. Select **Create Instance**.
+Name the instance `Docs tutorial`, then open it.
+An instance stores the accounts, target settings, proxies, plugins, and scripts for this run.
 
-    Open **Instances** and click **Create Instance**.
-    Then give the instance a name.
-    Each instance keeps its own bots, settings, scripts, accounts, proxies, and plugin configuration.
-  </Step>
+## 3. Set the Minecraft target
 
-  <Step>
-    ### Configure the target server
+Open **Bot Settings**. Set the server address to `127.0.0.1:25565`.
+Choose a protocol version compatible with your Minecraft server.
+Keep the join delay and timeout defaults for this first run.
+Do not import proxies or enable extra automation yet.
 
-    Open **Bot Settings**.
-    Set the server address, join delays, protocol version, and timeouts.
-    For most first runs, the defaults are enough except for the target server address.
-  </Step>
+`127.0.0.1` refers to the computer that runs the SoulFire backend.
+For a remote backend, enter a Minecraft address reachable from that remote computer.
 
-  <Step>
-    ### Add accounts or keep offline mode
+## 4. Add exactly one offline account
 
-    If the server allows offline accounts, SoulFire can generate names from the configured format.
-    If you need Microsoft or Bedrock accounts, follow [Import Accounts](/docs/how-to/import-accounts).
-  </Step>
+Open **Account Settings**. Use the offline account generation dialog.
+Set the amount to `1` and the name format to `DocsBot_%d`.
+Generate the account. Check that `DocsBot_1` appears in the account list.
 
-  <Step>
-    ### Add proxies if you need them
+If your client opens the generation dialog after you press **Start** with an empty account list, enter those same values.
+The dialog creates accounts explicitly. A name format is not a server-wide bot setting.
 
-    Open **Proxy Settings** only if you want bots to connect through proxies.
-    If you do, follow [Import Proxies](/docs/how-to/import-proxies).
-  </Step>
+## 5. Connect the bot
 
-  <Step>
-    ### Start and monitor bots
+Return to **Overview**. Start one stopped bot.
+Wait for `DocsBot_1` to show a connected state.
+Check that the Minecraft server lists the same player.
 
-    Return to **Overview**.
-    Enter the number of stopped bots to connect, then click **Start**.
-    To connect every stopped bot, click **Start all**.
-    SoulFire controls each account separately.
-    You can start, restart, or stop one bot from its context menu.
-  </Step>
-</Steps>
+If the bot disconnects, inspect the reason before restarting it.
+Use [connection troubleshooting](/docs/troubleshooting/cannot-connect-or-times-out) for timeouts, version errors, or rejected logins.
 
-## Where common tasks live
+![Demo overview with the online count and lifecycle controls above the bot list](/docs/images/instance-overview.jpg)
 
-- **Instances**: Create, open, and delete instances.
-- **Overview**: Start, restart, stop, and inspect bots in the current instance.
-- **Terminal**: Run SoulFire commands for the current instance.
-- **Account Settings**: Import Microsoft, Bedrock, or offline accounts.
-- **Proxy Settings**: Import and check proxies.
-- **Plugins** and **Plugin Settings**: Enable plugins and change their options.
-- **Scripts**: Create and manage visual automation for the instance.
+This screenshot uses the 2.10.1 demo client to identify the controls. Your tutorial instance will show `DocsBot_1` instead of the demo account.
 
-For a fuller map of the interface, see [GUI Navigation](/docs/how-to/gui-navigation).
+## 6. Send a message
 
-## Next steps
+Open the instance **Terminal**. Run:
 
-- [GUI Navigation](/docs/how-to/gui-navigation) for a page-by-page UI map
-- [Automation](/docs/automation) to choose a scripting or SDK workflow
-- [Commands](/docs/reference/commands) for terminal commands
-- [Install Plugins](/docs/how-to/install-plugins) for built-in and community plugins
-- [Development](/docs/development) if you want to build advanced custom plugins
-- [Dedicated Mode](/docs/how-to/dedicated-mode) if you want a long-running remote server
+```text
+bot DocsBot_1 say Hello from the SoulFire tutorial
+```
+
+The Minecraft server or your normal player must show the message from `DocsBot_1`.
+The terminal runs SoulFire commands. `say` sends a Minecraft chat message through the selected bot.
+
+## 7. Stop and check the result
+
+Return to **Overview**. Stop `DocsBot_1`.
+Check that its connected state clears and that it leaves the Minecraft player list.
+Keep the instance if you want to use the SDK or scripting tutorials next.
+
+Closing a client window is not a reliable stop procedure for a remote backend.
+The requested bot state belongs to the SoulFire server.
+
+## What you have learned
+
+You created an instance, added an account, set a target, started a bot, sent chat, and stopped it.
+Next, [run a small server test](/docs/testing) or [build your first script](/docs/scripting/first-script).
+Use [instance lifecycle](/docs/how-to/instances) to understand reconnects and saved bot state.

@@ -1,83 +1,64 @@
 export const sdkCodeExamples = {
-  typescript: `import { Effect, Stream } from "effect";
-import { AccountTypeCredentials } from "@soulfiremc/sdk";
-import { SoulFire } from "@soulfiremc/sdk/node";
+  typescript: `import { Effect } from "effect";
+import { SoulFire } from "@soulfiremc/sdk";
+
+const baseUrl = process.env.SOULFIRE_URL;
+const token = process.env.SOULFIRE_TOKEN;
+if (!baseUrl || !token) {
+  throw new Error("Set SOULFIRE_URL and SOULFIRE_TOKEN first");
+}
 
 const program = Effect.scoped(
   Effect.gen(function* () {
-    const soulfire = yield* SoulFire.install();
-    const name = "Hello World";
-    const existing = (yield* soulfire.instances()).find(
-      (item) => item.friendlyName === name,
+    const client = yield* SoulFire.connect({ baseUrl, token });
+    const record = (yield* client.instances()).find(
+      (item) => item.friendlyName === "Docs tutorial",
     );
-    const instance = existing
-      ? soulfire.instance(existing.id)
-      : yield* soulfire.createInstance(name);
+    if (!record) throw new Error("Create the Docs tutorial instance first");
+    const instance = client.instance(record.id);
+    const account = (yield* instance.bots()).find(
+      (item) => item.accountName === "DocsBot_1",
+    );
+    if (!account) throw new Error("Add the DocsBot_1 account first");
+    const bot = instance.bot(account.profileId);
 
-    const username = "SoulFireBot";
-    let botId = (yield* instance.bots()).find(
-      (item) => item.accountName === username,
-    )?.profileId;
-    if (!botId) {
-      const results = yield* instance.loginCredentials({
-        service: AccountTypeCredentials.OFFLINE,
-        payload: [username],
-      }).pipe(Stream.runCollect);
-      for (const result of results) {
-        if (result.data.case === "oneSuccess" && result.data.value.account) {
-          const account = result.data.value.account;
-          yield* instance.addAccounts([account]);
-          botId = account.profileId;
-        }
-      }
-    }
-    if (!botId) throw new Error("Could not create an offline bot");
-
-    const bot = instance.bot(botId);
+    yield* Effect.addFinalizer(() => bot.stop().pipe(Effect.orDie));
     yield* bot.start();
     yield* bot.waitForOnline();
-    yield* bot.chat.send("Hello from SoulFire");
+    yield* bot.chat.send("Hello from the TypeScript tutorial");
+    console.log(\`Sent chat from \${account.accountName}; stopping the bot\`);
   }),
 );
 
 await Effect.runPromise(program);`,
   python: `import asyncio
+import os
 
-from effect_py import EffectGen, Scope, gen, run_async, scoped
+from effect_py import EffectGen, Scope, add_finalizer, gen, run_async, scoped
 from soulfire import SoulFire, SoulFireOperationError
-from soulfire.common_pb2 import OFFLINE
 
 
 @gen
 def program() -> EffectGen[None, SoulFireOperationError, Scope]:
-    soulfire = yield from SoulFire.install()
-    name = "Hello World"
-    instances = yield from soulfire.instances()
-    existing = next((item for item in instances if item.friendly_name == name), None)
-    instance = (
-        soulfire.instance(existing.id)
-        if existing else (yield from soulfire.create_instance(name))
+    client = yield from SoulFire.connect(
+        os.environ["SOULFIRE_URL"], token=os.environ["SOULFIRE_TOKEN"]
     )
+    instances = yield from client.instances()
+    record = next((item for item in instances if item.friendly_name == "Docs tutorial"), None)
+    if record is None:
+        raise RuntimeError("Create the Docs tutorial instance first")
+    instance = client.instance(record.id)
+    accounts = yield from instance.bots()
+    account = next((item for item in accounts if item.account_name == "DocsBot_1"), None)
+    if account is None:
+        raise RuntimeError("Add the DocsBot_1 account first")
+    bot = instance.bot(account.profile_id)
 
-    username = "SoulFireBot"
-    bots = yield from instance.bots()
-    bot_id = next(
-        (item.profile_id for item in bots if item.account_name == username), None
-    )
-    if bot_id is None:
-        results = yield from instance.login_credentials(OFFLINE, [username]).run_collect()
-        for result in results:
-            if result.WhichOneof("data") == "one_success":
-                account = result.one_success.account
-                yield from instance.add_accounts([account])
-                bot_id = account.profile_id
-    if bot_id is None:
-        raise RuntimeError("Could not create an offline bot")
-
-    bot = instance.bot(bot_id)
+    yield from add_finalizer(lambda _: bot.stop().or_die())
     yield from bot.start()
     yield from bot.wait_for_online()
-    yield from bot.chat.send("Hello from SoulFire")
+    yield from bot.chat.send("Hello from the Python tutorial")
+    print(f"Sent chat from {account.account_name}; stopping the bot")
 
 
 asyncio.run(run_async(scoped(program).or_die()))`,

@@ -1,115 +1,39 @@
 ---
-title: Start Here
-description: Choose the right SoulFire setup, install it, and complete your first successful run.
+title: Get started
+sidebarTitle: "Overview"
+description: Install the desktop app and connect one bot to a Minecraft test server.
 icon: Rocket
 ---
 
-import { Callout } from 'fumadocs-ui/components/callout';
 import { Cards, Card } from 'fumadocs-ui/components/card';
-import { Download, Monitor, Server, Terminal } from 'lucide-react';
 
-Use this section to set up SoulFire for the first time.
-If you get stuck, ask in our [Discord server](https://soulfiremc.com/discord).
+Start with the desktop app and **Integrated server (local)**.
+The app starts a local SoulFire backend, so you do not need Docker or a separate Java installation.
 
-<Callout type="info">
-  Most users can start with `Integrated server (local)` in the GUI.
-  It is the simplest path and does not require a separate backend.
-</Callout>
-
-## Legal disclaimer
-
-<Callout type="warning" emoji="⚠️">
-  Use SoulFire only on servers that you own or have permission to test.
-  Make sure that your hosting provider permits automated bot testing.
-  You are responsible for unauthorized use of SoulFire.
-</Callout>
-
-## Recommended path
-
-Read these pages in order:
-
-1. [Choose Your Setup](/docs/start-here/choose-your-setup)
-2. Install SoulFire on your platform
-3. [Run Your First Session in GUI Mode](/docs/start-here/gui-mode)
-
-## Install on your machine
+## 1. Install the app
 
 <Cards>
-  <Card
-    icon={<Download />}
-    title="Choose Your Setup"
-    href="/docs/start-here/choose-your-setup"
-  >
-    Choose the local GUI, CLI, or a remote dedicated server.
-  </Card>
-  <Card
-    icon={
-      <Image
-        src="/platform/windows.png"
-        alt="Windows"
-        width={32}
-        height={32}
-      />
-    }
-    title="Windows (.exe)"
-    href="/docs/start-here/windows"
-  >
-    Install the desktop app on Windows.
-  </Card>
-  <Card
-    icon={
-      <Image
-        src="/platform/macos.png"
-        alt="macOS"
-        width={32}
-        height={32}
-      />
-    }
-    title="macOS (.dmg)"
-    href="/docs/start-here/macos"
-  >
-    Install the desktop app on macOS.
-  </Card>
-  <Card
-    icon={
-      <Image
-        src="/platform/linux.png"
-        alt="Linux"
-        width={32}
-        height={32}
-      />
-    }
-    title="Linux (.flatpak)"
-    href="/docs/start-here/linux"
-  >
-    Install the desktop app on Linux with Flatpak.
-  </Card>
+  <Card title="Windows" href="/docs/start-here/windows">Install the Windows desktop app.</Card>
+  <Card title="macOS" href="/docs/start-here/macos">Install the macOS desktop app.</Card>
+  <Card title="Linux" href="/docs/start-here/linux">Install the Linux desktop app with Flatpak.</Card>
 </Cards>
 
-## Advanced paths
+## 2. Connect one bot
 
-Use these only if you already know you need them.
+Follow [Connect your first bot](/docs/start-here/gui-mode).
+Keep a Minecraft test server ready. The tutorial uses an offline-mode Java server at `127.0.0.1:25565`.
+For an online-mode server, use a Microsoft account instead.
 
-<Cards>
-  <Card
-    icon={<Monitor />}
-    title="Run Your First Session"
-    href="/docs/start-here/gui-mode"
-  >
-    Create an instance, configure a target server, and start bots from the GUI.
-  </Card>
-  <Card
-    icon={<Server />}
-    title="Deploy a Dedicated Server"
-    href="/docs/start-here/dedicated-server"
-  >
-    Install SoulFire on a remote Linux server with the Docker setup script.
-  </Card>
-  <Card
-    icon={<Terminal />}
-    title="Use CLI Mode"
-    href="/docs/start-here/cli-mode"
-  >
-    Run SoulFire from a terminal for automation or a system without a desktop.
-  </Card>
-</Cards>
+Success means that the bot joins, sends a visible message, and disconnects after you stop it.
+
+## 3. Choose your next task
+
+- [Test your server](/docs/testing) with a repeatable run.
+- [Build a visual script](/docs/scripting) without writing code.
+- [Use the SDK](/docs/sdk) from TypeScript or Python.
+
+## Other installation paths
+
+Read [Choose your setup](/docs/start-here/choose-your-setup) if you need a remote backend or terminal workflow.
+A backend that stays online belongs in [Run a SoulFire server](/docs/server).
+Use [CLI mode](/docs/start-here/cli-mode) for a terminal-driven session.

@@ -10,7 +10,7 @@ bun run db:migrate
 bun dev
 ```
 
-Wrangler stores the local D1 database in `.wrangler/state`.
+The Cloudflare development server stores the local D1 database in `.wrangler/state`.
 
 ## Database migrations
 
@@ -59,31 +59,31 @@ Better Auth's existing five-minute session cookie cache remains a separate cache
 
 See [D1 read replication](https://developers.cloudflare.com/d1/best-practices/read-replication/) for the consistency model.
 
-## SDK documentation
+## Documentation
 
-SDK references and recipes use the SoulFire source revision pinned in
-`scripts/sdk-source.ts`. The scripts cache that checkout in the system's
-temporary directory and build its TypeScript SDK.
+Documentation lives in `content/docs`, with downloadable recipes and images in
+`public/docs`. Read [CONTRIBUTING.md](CONTRIBUTING.md) for the writing workflow,
+source baseline, and example checks.
 
-Regenerate the API reference and validate the complete recipe examples with:
+Reference generators use the SoulFire revision pinned in `scripts/sdk-source.ts`.
+They cache that checkout in the system's temporary directory. Documentation checks
+require Bun, Git, Python 3.14, and Java 25. Gradle downloads the backend's build
+dependencies on the first run.
 
 ```bash
+bun run generate-node-reference
 bun run generate-sdk-reference
-bun run check-sdk-recipes
+bun run check-docs
 ```
 
-These commands require Bun, Git, and Python 3.14. Set `SOULFIRE_SDK_SOURCE` to
-reuse a local checkout at the pinned revision. Update the revision when
-refreshing the docs for SDK changes.
-
-The homepage examples live in `src/lib/sdk-code-examples.ts`. After editing
-these examples, run `bun run generate-sdk-code` to refresh their highlighted HTML.
+Set `SOULFIRE_SDK_SOURCE` to reuse a local checkout at the pinned revision.
+The generators check its revision before using it.
 
 ## Validation
 
 ```bash
 bun run check
-bun run validate-links
+bun run check-docs
 bun run typecheck
 bun run test
 bun run build

@@ -1,0 +1,232 @@
+---
+title: SoulFireInstance
+description: Public TypeScript members of SoulFireInstance.
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+Compose Effect operations with `yield*` inside a scoped workflow. Properties expose sub-clients and state.
+
+## fleet
+
+```ts
+get fleet(): SoulFireFleet
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L584)
+
+## bot
+
+```ts
+bot(botId: string): SoulFireBot
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L588)
+
+## info
+
+```ts
+info(
+  options?: CallOptions,
+): Effect.Effect<InstanceInfo, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L605)
+
+## delete
+
+Deletes the instance and its data for good. Its bots are stopped first.
+
+```ts
+delete(
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L633)
+
+## updateMetadata
+
+```ts
+updateMetadata(
+  request: InstanceScopedRequest<typeof InstanceUpdateMetaRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L647)
+
+## setConfigEntry
+
+```ts
+setConfigEntry(
+  request: InstanceScopedRequest<
+    typeof InstanceUpdateConfigEntryRequestSchema
+  >,
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L662)
+
+## addAccounts
+
+```ts
+addAccounts(
+  accounts: readonly MinecraftAccountProto[],
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L679)
+
+## removeAccounts
+
+```ts
+removeAccounts(
+  profileIds: readonly string[],
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L694)
+
+## addProxies
+
+```ts
+addProxies(
+  proxies: readonly ProxyProto[],
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L709)
+
+## removeProxies
+
+```ts
+removeProxies(
+  addresses: readonly string[],
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L724)
+
+## loginCredentials
+
+```ts
+loginCredentials(
+  request: InstanceScopedRequest<typeof CredentialsAuthRequestSchema>,
+  options?: CallOptions,
+): Stream.Stream<CredentialsAuthResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L739)
+
+## loginDeviceCode
+
+```ts
+loginDeviceCode(
+  request: InstanceScopedRequest<typeof DeviceCodeAuthRequestSchema>,
+  options?: CallOptions,
+): Stream.Stream<DeviceCodeAuthResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L755)
+
+## refreshAccount
+
+```ts
+refreshAccount(
+  request: InstanceScopedRequest<typeof RefreshRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<RefreshResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L771)
+
+## bots
+
+Every bot of the instance, online or not. Online ones come with their live
+state, without the inventory.
+
+```ts
+bots(
+  options?: CallOptions,
+): Effect.Effect<BotListEntry[], SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L787)
+
+## watchBotStatuses
+
+A snapshot of every bot's desired and runtime state, then each change.
+
+```ts
+watchBotStatuses(
+  options?: CallOptions,
+): Stream.Stream<WatchBotStatusesResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L804)
+
+## events
+
+Watches one multiplexed event stream for the selected bots in this
+instance. The default filter includes every stateful event category while
+leaving high-volume sounds and particles opt-in.
+
+```ts
+events(
+  filter: MessageInitShape<
+    typeof InstanceEventFilterSchema
+  > = DEFAULT_INSTANCE_EVENT_FILTER,
+  options?: CallOptions,
+): Stream.Stream<InstanceEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L824)
+
+## start
+
+Marks bots to run; they connect in the background. `selection` defaults to
+every bot not marked to run.
+
+```ts
+start(
+  selection?: BotSelection,
+  options?: CallOptions,
+): Effect.Effect<BotStatus[], SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L858)
+
+## stop
+
+Marks bots as stopped; they disconnect in the background. `selection`
+defaults to every bot marked to run.
+
+```ts
+stop(
+  selection?: BotSelection,
+  options?: CallOptions,
+): Effect.Effect<BotStatus[], SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L889)
+
+## restart
+
+Gives bots a fresh connection. `selection` defaults to every bot marked to
+run.
+
+```ts
+restart(
+  selection?: BotSelection,
+  options?: CallOptions,
+): Effect.Effect<BotStatus[], SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L920)

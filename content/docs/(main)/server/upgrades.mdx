@@ -1,0 +1,55 @@
+---
+title: Upgrade with a rollback plan
+sidebarTitle: "Upgrades and rollback"
+description: Keep software, plugins, and persistent data together across version changes.
+icon: ArrowUp
+---
+
+## Prepare the upgrade
+
+1. Record the current backend, client, SDK, and plugin versions.
+2. Read the target release notes in the [SoulFire releases](https://github.com/soulfiremc-com/SoulFire/releases).
+3. Pause scripts and stop bots.
+4. Create and verify a [backup](/docs/server/backup-and-restore).
+5. Keep the previous image digest or dedicated JAR and its matching plugins.
+
+A mutable `latest` image tag does not identify the software that ran your earlier test.
+Use an explicit released tag or digest for a deployment you need to reproduce.
+
+## Upgrade Docker
+
+From the directory with your Compose file, change the image to the chosen version.
+Then run:
+
+```bash
+docker compose pull
+docker compose up -d
+```
+
+For the automated setup, its management menu also offers an update action.
+Preserve the same backup and version record before using that action.
+
+## Upgrade Java
+
+Stop the process cleanly.
+Replace the JAR with the selected release and update plugins that require that release.
+Keep the data directory and launch settings unchanged unless the release instructions require a migration.
+
+## Verify before resuming
+
+Check the backend health, authenticated client access, instance data, and plugin loading.
+Connect one bot to a test target.
+Run one representative script or SDK operation.
+Inspect the backend log for migration, compatibility, and plugin errors.
+
+Resume a small batch first. Check the result before restoring the full workload.
+
+## Roll back
+
+Stop the upgraded backend.
+Preserve its current data separately for diagnosis.
+Restore the previous software, plugin set, and pre-upgrade data backup together.
+Then repeat the verification procedure.
+
+Do not assume that an older binary can read a database after a newer release changes it.
+A backup made only after the upgrade cannot replace the pre-upgrade recovery point.

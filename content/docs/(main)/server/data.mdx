@@ -1,0 +1,51 @@
+---
+title: Preserve server data
+sidebarTitle: "Persistent data"
+description: Identify the backend data directory and distinguish persistent state from client exports.
+icon: Database
+---
+
+The SoulFire backend stores persistent data under its base directory.
+For Docker, the official image uses `/soulfire/data`.
+The host mount or named volume at that path must survive container replacement.
+
+## What to preserve
+
+The current backend includes:
+
+- `soulfire.sqlite`: the default SQLite database for instances, users, accounts, and saved state.
+- `secret-key.bin`: the JWT signing key.
+- `config/`: backend and plugin data.
+- `object-storage/`: stored objects, including script code.
+- Export directories and installed plugin files needed by your workflow.
+
+Preserve the complete deployment data and plugin locations rather than selecting only the database.
+An exported visual script does not include accounts, users, signing keys, or every instance setting.
+
+## Find the directory
+
+For Docker, inspect the mount mapped to `/soulfire/data` in your Compose file.
+The automated setup keeps deployment files under `/opt/soulfire/`.
+The exact host data location follows that file's volume mapping.
+
+For a dedicated JAR, the launcher uses its working directory as the base directory.
+It sets the internal `sf.baseDir` property from that location.
+Keep the service's working directory stable across restarts.
+For the integrated server, use its diagnostics to locate the application data directory.
+Do not assume that a remote backend stores files beside your client executable.
+
+## Check persistence
+
+1. Create a test instance and save its settings.
+2. Stop the backend cleanly.
+3. Start the same deployment with the same data mount.
+4. Check that the instance and its settings remain available.
+
+Keep bots stopped during this check so a restored running request does not reconnect unexpectedly.
+Use [backup and restore](/docs/server/backup-and-restore) before replacing or moving the deployment.
+
+## External MySQL databases
+
+The default is SQLite. The backend also supports `-Ddatabase=mysql` with the MySQL connection properties from its source.
+An external database needs its own consistent backup in addition to the filesystem data and signing key.
+The stopped SQLite procedure does not back up an external MySQL server.

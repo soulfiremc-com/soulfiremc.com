@@ -1,0 +1,75 @@
+---
+title: SoulFireService
+description: Public Python members of SoulFireService.
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+Methods decorated with `@fn` return effects. Their implementation signatures use `EffectGen` for the generator body. Compose them with `yield from` inside a scoped workflow.
+
+## admin
+
+```python
+@property
+def admin(self) -> SoulFireAdmin
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L1002)
+
+## plugins
+
+```python
+@property
+def plugins(self) -> PluginCatalog
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L1005)
+
+## server
+
+```python
+@property
+def server(self) -> ServerMetadata
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L1008)
+
+## capabilities
+
+```python
+@property
+def capabilities(self) -> CapabilitySet
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L1011)
+
+## instances
+
+```python
+def instances(
+    self, *, headers: dict[str, str] | None = None, timeout_ms: int | None = None
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L1013)
+
+## create_instance
+
+```python
+def create_instance(
+    self,
+    friendly_name: str,
+    *,
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L1017)
+
+## instance
+
+```python
+def instance(self, instance_id: str) -> SoulFireInstance
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L1025)

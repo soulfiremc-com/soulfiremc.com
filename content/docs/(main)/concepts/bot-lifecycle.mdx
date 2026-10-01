@@ -1,0 +1,50 @@
+---
+title: Bot state and task ownership
+sidebarTitle: "Bot lifecycle"
+description: Understand saved state, live connections, and the lifetime of bot work.
+icon: Activity
+---
+
+## Account, bot, and connection
+
+An account is the identity used to log into Minecraft.
+A bot is the SoulFire representation of that account in an instance.
+A connection is one live Minecraft session for that bot.
+The bot ID can remain stable across reconnects. The session does not.
+
+## Requested state and runtime state
+
+Requested state records what the backend must try to do, such as keep a bot running or stopped.
+Runtime state records what the bot is doing now, such as connecting, connected, or disconnected.
+A running request can coexist with a disconnect and retry delay.
+
+The SoulFire server owns requested state.
+Closing a remote GUI or SDK connection does not automatically request stopped state.
+Use an explicit stop action at the end of a tutorial or test.
+
+## Actions and durable tasks
+
+An action performs one operation and reports a final result.
+A stream observes updates while its consumer remains connected.
+A durable task runs on the backend and can survive the SDK connection that created it.
+
+Closing the SDK scope releases its connection and local subscriptions.
+Cancel a durable task explicitly if it must not continue.
+The [task guide](/docs/sdk/tasks) describes handles, progress, cancellation, and result errors.
+
+## Connection epochs
+
+A reconnect replaces the live Minecraft session.
+References to entities, containers, or loaded world state can become stale after that change.
+SDK workflows must obtain fresh references when the current session changes.
+A stable bot ID does not make every reference valid forever.
+
+## Control ownership
+
+Movement, rotation, hands, inventory, and other resources can have different owners.
+Two actions that need the same resource can conflict even if both use the same bot.
+A control lease expresses ownership for a remote workflow.
+Plugin `ControlTask` objects use resource and priority arbitration inside the backend.
+
+Avoid concurrent writers for the same bot resource.
+Use [SDK behaviors](/docs/sdk/behaviors) for composed workflows or [plugin control](/docs/development/bot-control-and-direct-access) for native arbitration.

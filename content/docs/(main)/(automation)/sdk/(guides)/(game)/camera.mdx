@@ -1,0 +1,199 @@
+---
+title: Cameras and world maps
+sidebarTitle: "Cameras and maps"
+description: Capture bot views, stream images, and collect world data for maps.
+icon: Camera
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from '../../../../../../../src/components/mdx/sdk-tabs';
+
+`bot.camera` provides images for SDK applications, SoulFireClient, dashboards, and viewers.
+It uses Minecraft's headless Vulkan renderer without a display server or native window.
+SoulFire bundles a Vulkan loader and Mesa lavapipe for CPU rendering.
+Compatible GPU drivers provide hardware acceleration. On macOS, MoltenVK uses Metal.
+OpenGL is disabled.
+
+## Capture one frame
+
+By default, the camera follows the bot's eyes.
+Set a position or rotation field to use a free camera.
+Fields without a value continue to follow the bot.
+
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
+    ```ts
+    import { decodeCameraImage } from "@soulfiremc/sdk";
+
+    const capture = yield* bot.camera.capture({
+      width: 1280,
+      height: 720,
+      cameraX: 120.5,
+      cameraY: 80,
+      cameraZ: -32.5,
+      yRot: 180,
+      xRot: -20,
+      fov: 80,
+      maxDistance: 256,
+      includeHud: false,
+      includeHands: false,
+      includeDebugTrace: true,
+    });
+
+    const png = decodeCameraImage(capture);
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python
+    from soulfire import CameraRenderOptions
+
+    png = yield from bot.camera.capture_bytes(
+        CameraRenderOptions(
+            width=1280,
+            height=720,
+            camera_x=120.5,
+            camera_y=80,
+            camera_z=-32.5,
+            yaw=180,
+            pitch=-20,
+            fov=80,
+            max_distance=256,
+            include_hud=False,
+            include_hands=False,
+            include_debug_trace=True,
+        )
+    )
+    ```
+  </Tab>
+</Tabs>
+
+The response includes the effective width, height, FOV, render distance,
+camera transform, HUD state, and hand state. When debug traces are enabled it
+also includes renderer diagnostics. The available diagnostic fields depend on the renderer.
+
+## Stream frames
+
+Use a frame stream when the consumer needs a live viewport. The server renders
+only when the transport can accept another message. It skips scheduled frames
+instead of building an unbounded queue, and the next delivered frame reports
+the skipped count in `droppedBefore` or `dropped_before`.
+
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
+    ```ts
+    yield* bot.camera.frames({
+      width: 854,
+      height: 480,
+      intervalMs: 250,
+      includeHud: false,
+    }).pipe(
+      Stream.runForEach((frame) =>
+        storeFrame(
+          frame.sequence,
+          frame.droppedBefore,
+          decodeCameraImage(frame.render!),
+        )
+      ),
+    );
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python
+    from effect_py import fn
+
+    @fn("consume stream")
+    def consume(frame):
+        yield from store_frame(
+            frame.sequence,
+            frame.dropped_before,
+            decode_camera_image(frame.render),
+        )
+
+    yield from bot.camera.frames(
+        CameraRenderOptions(width=854, height=480),
+        interval_ms=250,
+    ).run_for_each(consume)
+    ```
+  </Tab>
+</Tabs>
+
+<Callout type="info">
+  The stream interval is clamped to 100 through 60,000 milliseconds. That
+  limits this PNG stream to 10 frames per second. A disconnected bot or
+  unavailable world ends the stream with a typed RPC failure.
+</Callout>
+
+## Open an interactive POV
+
+SoulFireClient's POV uses `PovService.Watch` for live video and `PovService.Input` for native keyboard and mouse input.
+This is a separate protocol from the SDK's PNG capture and frame stream.
+It requires both `READ_BOT_INFO` and `CONTROL_BOT_ACTIONS` and acquires exclusive control of the bot.
+
+The video stream negotiates a supported codec and carries encoded access units.
+Frames include sequence, timestamp, keyframe status, codec, viewport size, cursor shape, and target bitrate and frame rate.
+The input channel supports persistent keys, mouse movement, clicks, scroll, text, and Escape.
+Stream feedback lets the server adapt bitrate and frame rate.
+
+Send input heartbeats every second.
+A stalled client loses control after five seconds.
+Use increasing input sequence numbers and request a keyframe after decoder recovery or dropped dependent frames.
+The stream supplies a session-scoped input token for the `/pov/input` WebSocket. Keep this token out of URLs.
+
+Generated clients expose this contract for custom viewers.
+See the [POV protocol definitions](https://github.com/soulfiremc-com/SoulFire/blob/main/proto/src/main/proto/soulfire/pov.proto).
+
+## Sample a top-down world map
+
+World-map snapshots cover loaded client-side terrain around the bot or an
+explicit center. Each grid column records whether its chunk is loaded. Loaded
+surface samples can include height, block ID, biome ID, sky light, and block
+light. Entity overlays are optional.
+
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
+    ```ts
+    const map = yield* bot.camera.worldMap({
+      centerX: 120,
+      centerZ: -32,
+      radius: 128,
+      sampleStep: 2,
+      includeEntities: true,
+    });
+
+    for (const column of map.columns) {
+      terrain.set(column.x, column.z, column);
+    }
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python
+    world_map = yield from bot.camera.world_map(
+        WorldMapOptions(
+            center_x=120,
+            center_z=-32,
+            radius=128,
+            sample_step=2,
+            include_entities=True,
+        )
+    )
+
+    for column in world_map.columns:
+        terrain[column.x, column.z] = column
+    ```
+  </Tab>
+</Tabs>
+
+The radius is clamped to 256 blocks and the sample step to 1 through 16. Use a
+larger step for overview maps and step 1 for local inspection. A snapshot also
+includes the dimension, vertical bounds, game-time revision, and sampling
+timestamp so consumers can reject stale data.
+
+## Required capabilities
+
+Applications can request these capabilities during the SDK handshake:
+
+- `bot.camera.capture.v1`
+- `bot.camera.stream.v1`
+- `bot.camera.world-map.v1`
+
+All camera and map calls require `READ_BOT_INFO` for the containing instance.

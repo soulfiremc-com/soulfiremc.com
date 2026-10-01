@@ -1,0 +1,175 @@
+---
+title: SoulFireWorld
+description: Public TypeScript members of SoulFireWorld.
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+Compose Effect operations with `yield*` inside a scoped workflow. Properties expose sub-clients and state.
+
+## player
+
+```ts
+player(
+  options?: CallOptions,
+): Effect.Effect<PlayerSnapshot, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/world.ts#L49)
+
+## block
+
+```ts
+block(
+  request: BotScoped<typeof GetWorldBlockRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<GetWorldBlockResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/world.ts#L71)
+
+## queryBlocks
+
+Blocks matching `selector` in `region`, in loaded chunks only. `region`
+defaults to a sphere of radius 16 around the bot; a sphere's radius is at
+most 128, and a box of more than 4,194,304 blocks is refused. Sorted
+nearest to the region's center first unless `sort` says otherwise.
+`pageSize` defaults to 100, at most 500; pass `nextPageToken` back as
+`pageToken` for the next page.
+
+```ts
+queryBlocks(
+  request: BotScoped<typeof QueryBlocksRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<QueryBlocksResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/world.ts#L91)
+
+## entity
+
+```ts
+entity(
+  request: BotScoped<typeof GetWorldEntityRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<GetWorldEntityResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/world.ts#L103)
+
+## queryEntities
+
+Entities within `radius` of `origin`, the bot itself excluded. `origin`
+defaults to the bot's position, and `radius` to 32, at most 256. Sorted and
+paged like `queryBlocks`.
+
+```ts
+queryEntities(
+  request: BotScoped<typeof QueryEntitiesRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<QueryEntitiesResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/world.ts#L120)
+
+## raycast
+
+The first thing a ray hits: a block, or an entity (with `includeEntities`)
+if one is closer. `origin` defaults to the bot's eyes, `direction` to where
+it looks, and `maximumDistance` to 6, at most 256.
+
+```ts
+raycast(
+  request: BotScoped<typeof RaycastRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<RaycastResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/world.ts#L137)
+
+## raycastFromPlayer
+
+`raycast` from the bot's eyes, along where it looks.
+
+```ts
+raycastFromPlayer(
+  request: PlayerRaycastRequest = {},
+  options?: CallOptions,
+): Effect.Effect<RaycastResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/world.ts#L152)
+
+## blockAtCursor
+
+The block the bot looks at, or undefined if none is within
+`maximumDistance`. `maximumDistance` defaults to 256, which is also the
+most.
+
+```ts
+blockAtCursor(
+  maximumDistance = 256,
+  options?: CallOptions,
+): Effect.Effect<BlockSnapshot | undefined, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/world.ts#L169)
+
+## entityAtCursor
+
+The entity the bot looks at, or undefined if none is within
+`maximumDistance` or a block is in the way. `maximumDistance` defaults to
+3.5.
+
+```ts
+entityAtCursor(
+  maximumDistance = 3.5,
+  options?: CallOptions,
+): Effect.Effect<EntitySnapshot | undefined, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/world.ts#L187)
+
+## estimateExplosionDamage
+
+Damage `target` would take from an explosion of `power` at `center`, after
+its armor, resistance, enchantments and absorption. The damage radius is
+twice `power`; `power` must be above 0 and at most 128. Target and center
+must be observable in the bot's dimension.
+
+```ts
+estimateExplosionDamage(
+  request: BotScoped<typeof EstimateExplosionDamageRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<EstimateExplosionDamageResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/world.ts#L206)
+
+## canSeeBlock
+
+Whether a ray from the bot's eyes to the center of the block reaches it.
+
+```ts
+canSeeBlock(
+  request: BotScoped<typeof CanSeeBlockRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<CanSeeBlockResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/world.ts#L221)
+
+## estimateDigTime
+
+How long the bot would take to break the block with what it holds now,
+counting its effects, attributes and surroundings.
+
+```ts
+estimateDigTime(
+  request: BotScoped<typeof EstimateDigTimeRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<EstimateDigTimeResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/world.ts#L237)

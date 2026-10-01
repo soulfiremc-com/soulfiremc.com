@@ -1,0 +1,115 @@
+---
+title: PluginCatalog
+description: Public Python members of PluginCatalog.
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+Methods decorated with `@fn` return effects. Their implementation signatures use `EffectGen` for the generator body. Compose them with `yield from` inside a scoped workflow.
+
+## require
+
+```python
+def require[T](self, module: SoulFirePluginModule[T]) -> T
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/plugins.py#L369)
+
+## service
+
+```python
+def service[T](self, client_type: Callable[..., T]) -> T
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/plugins.py#L372)
+
+## refresh
+
+```python
+@fn("PluginCatalog.refresh")
+def refresh(
+    self, *, headers: dict[str, str] | None = None, timeout_ms: int | None = None
+) -> EffectGen[tuple[PluginApiDescriptor, ...], SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/plugins.py#L376)
+
+## descriptor_set
+
+```python
+@fn("PluginCatalog.descriptor_set")
+def descriptor_set(
+    self,
+    plugin_id: str,
+    *,
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+) -> EffectGen[bytes, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/plugins.py#L389)
+
+## reflective
+
+```python
+@fn("PluginCatalog.reflective")
+def reflective(
+    self,
+    plugin_id: str,
+    *,
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+) -> EffectGen[ReflectivePlugin, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/plugins.py#L415)
+
+## watch
+
+```python
+def watch(
+    self, *, headers: dict[str, str] | None = None, timeout_ms: int | None = None
+) -> Stream[PluginApiEvent, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/plugins.py#L442)
+
+## events
+
+```python
+def events(
+    self,
+    *,
+    plugin_ids: tuple[str, ...] = (),
+    type_urls: tuple[str, ...] = (),
+    instance_id: str | None = None,
+    bot_id: str | None = None,
+    task_id: str | None = None,
+    after_sequence: int = 0,
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+) -> Stream[PluginEvent, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/plugins.py#L454)
+
+## typed_events
+
+```python
+def typed_events[T: Message](
+    self,
+    plugin_id: str,
+    message_type: type[T],
+    *,
+    instance_id: str | None = None,
+    bot_id: str | None = None,
+    task_id: str | None = None,
+    after_sequence: int = 0,
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+) -> Stream[TypedPluginEvent[T], SoulFireOperationError]:
+    @gen
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/plugins.py#L482)

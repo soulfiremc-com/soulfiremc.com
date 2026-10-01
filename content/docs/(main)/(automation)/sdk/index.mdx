@@ -1,0 +1,114 @@
+---
+title: SoulFire SDK
+sidebarTitle: "Overview"
+description: Build typed, event-driven Minecraft automation with the official TypeScript and Python SDKs.
+icon: Blocks
+---
+
+import { Cards, Card } from 'fumadocs-ui/components/card';
+import { Callout } from 'fumadocs-ui/components/callout';
+
+Start with [SDK versions and installation](/docs/sdk/compatibility).
+These guides use the pinned 2.11.0 Effect-based source, which differs from the published 2.10.0 APIs at the audit date.
+
+The SoulFire SDK is the official API for Minecraft automation.
+Your application controls one bot or a fleet.
+SoulFire manages connections, reconnects, permissions, tasks, and plugins.
+
+<Callout type="info">
+  The TypeScript SDK uses Effect.
+  The Python SDK requires CPython 3.14.
+  The Python SDK uses effect-py.
+</Callout>
+
+## Choose a language
+
+<Cards>
+  <Card title="TypeScript" href="/docs/sdk/typescript">
+    Compose operations with Effect and scoped streams.
+  </Card>
+  <Card title="Python" href="/docs/sdk/python">
+    Compose `SoulFire` operations with effect-py and `yield from`.
+  </Card>
+</Cards>
+
+## Build something useful
+
+Start with a complete program. Each recipe has TypeScript and Python code you can run after setting your server URL, token, instance ID, and bot ID.
+
+- [Reply to chat](/docs/sdk/recipes/reply-to-chat) with a bot.
+- [Collect blocks](/docs/sdk/recipes/collect-blocks) with a durable task.
+- [Follow an entity](/docs/sdk/recipes/follow-entity) using a connection safe reference.
+- [Transfer items](/docs/sdk/recipes/transfer-items) through a container.
+
+[See all recipes](/docs/sdk/recipes).
+
+## Find the right guide
+
+- **Observe:** [events and state](/docs/sdk/events), [world queries](/docs/sdk/world), [registries](/docs/sdk/registry), [camera and maps](/docs/sdk/camera).
+- **Act:** [player actions](/docs/sdk/actions), [pathfinding](/docs/sdk/pathfinding), [inventory](/docs/sdk/inventory), [durable tasks](/docs/sdk/tasks).
+- **Scale:** [automation](/docs/sdk/automation), [fleets](/docs/sdk/fleets), [behaviors](/docs/sdk/behaviors), [server administration](/docs/sdk/administration).
+- **Extend:** [plugins](/docs/sdk/plugins), [raw protocol](/docs/sdk/protocol), [migration from Mineflayer](/docs/sdk/mineflayer-migration).
+
+## How the SDK is organized
+
+```text
+SoulFire
+├── server metadata and negotiated capabilities
+├── administrative services and scoped telemetry
+├── plugin catalog and reflective RPC
+└── instance(instanceId)
+    ├── fleet lifecycle and status streams
+    ├── selectors, work distribution, and task groups
+    ├── coordinated automation, memory, roles, and claims
+    └── bot(botId)
+        ├── session and synchronized state
+        ├── world, registry, inventory, recipes, and chat
+        ├── camera captures, frame streams, and world maps
+        ├── typed player actions and path planning
+        ├── advanced native protocol access
+        └── durable tasks
+```
+
+An instance separates permissions and settings.
+Each Minecraft account is a separate bot.
+SoulFire saves the requested bot state.
+It can reconnect the bot after the SDK program stops.
+
+## Run the examples
+
+Guide snippets assume an open connection inside a scoped workflow.
+In TypeScript, compose operations with `yield*` inside `Effect.gen` and run the complete workflow with `Effect.runPromise`.
+In Python, compose operations with `yield from` inside `@gen` or `@fn` and run the workflow with `run_async`.
+
+The scope owns connections, sessions, subscriptions, and acquired resources.
+Keep their consumers inside the same scope.
+Stream callbacks return effects so cancellation and typed errors stay within the workflow.
+The [recipes](/docs/sdk/recipes) include complete runtime setup.
+
+## Actions, streams, and tasks
+
+Use an action for one short operation, such as sending chat or clicking a slot.
+The `sleep` action finishes after the server reports that the bot entered a bed.
+The `wake` action leaves the current bed.
+Each result has an action ID and a final state.
+The final state is completed, cancelled, or failed.
+
+Use a stream to receive updates over time.
+For example, a stream can report chat, inventory, world, task, or plugin updates.
+
+Use a durable task for work that takes time.
+The server continues the task if the SDK program disconnects.
+You can read its progress, stop it, or reconnect to it by ID.
+
+## Compatibility and extensions
+
+Each connection starts with a compatibility test.
+The SDK compares API versions, features, and required plugin versions.
+
+Plugins can add RPC services and durable task types.
+An application can use a plugin package or discover the plugin API while it runs.
+
+## API reference
+
+The [SDK API reference](/docs/sdk/api) lists public client classes and their methods with links to the current source. [TypeScript option tables](/docs/sdk/api/types) use the same source revision. The [server RPC reference](/docs/openapi) covers lower level endpoints.

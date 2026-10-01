@@ -1,0 +1,868 @@
+---
+title: SoulFireTasks
+description: Public TypeScript members of SoulFireTasks.
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+Compose Effect operations with `yield*` inside a scoped workflow. Properties expose sub-clients and state.
+
+## start
+
+Starts a task from its input message. `resultSchema` types `result()`.
+
+```ts
+start<
+  Input extends DescMessage,
+  Result extends DescMessage | undefined = undefined,
+>(
+  inputSchema: Input,
+  input: MessageInitShape<Input>,
+  resultSchema?: Result,
+  options: TaskStartOptions = {},
+): Effect.Effect<SoulFireTask<Result>, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L989)
+
+## run
+
+Starts a task and streams its events until it ends. Unless
+`disconnectPolicy` says otherwise, the task is cancelled if the stream is.
+
+```ts
+run<Input extends DescMessage>(
+  inputSchema: Input,
+  input: MessageInitShape<Input>,
+  options: TaskStartOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1028)
+
+## goTo
+
+Moves the bot to `goal` (see `goals`).
+
+```ts
+goTo(
+  goal: PathfindGoal,
+  options: GoToTaskOptions = {},
+): Effect.Effect<
+  SoulFireTask<typeof GoToTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1061)
+
+## runGoTo
+
+```ts
+runGoTo(
+  goal: PathfindGoal,
+  options: GoToTaskOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1079)
+
+## followEntity
+
+Keeps within `distance` of an entity as it moves. `distance` defaults to 3.
+
+```ts
+followEntity(
+  target: FollowEntityTarget,
+  distance = 3,
+  options: FollowEntityTaskOptions = {},
+): Effect.Effect<
+  SoulFireTask<typeof FollowEntityTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1098)
+
+## runFollowEntity
+
+`distance` defaults to 3.
+
+```ts
+runFollowEntity(
+  target: FollowEntityTarget,
+  distance = 3,
+  options: FollowEntityTaskOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1135)
+
+## attackEntity
+
+Chases one entity and attacks it until it's defeated or `maximumAttacks` is
+reached.
+
+```ts
+attackEntity(
+  target: AttackEntityTarget,
+  options: AttackEntityTaskOptions = {},
+): Effect.Effect<
+  SoulFireTask<typeof AttackEntityTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1171)
+
+## runAttackEntity
+
+```ts
+runAttackEntity(
+  target: AttackEntityTarget,
+  options: AttackEntityTaskOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1215)
+
+## attackNearest
+
+Attacks the nearest entity matching `selector` within `radius`, then the
+next, up to `maximumTargets`.
+
+```ts
+attackNearest(
+  selector: MessageInitShape<typeof EntitySelectorSchema>,
+  options: AttackNearestTaskOptions = {},
+): Effect.Effect<
+  SoulFireTask<typeof AttackNearestTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1261)
+
+## runAttackNearest
+
+```ts
+runAttackNearest(
+  selector: MessageInitShape<typeof EntitySelectorSchema>,
+  options: AttackNearestTaskOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1305)
+
+## rangedAttack
+
+Shoots an entity with a bow or crossbow from between `minimumRange` and
+`maximumRange`, leading the target and aiming for the arrow's drop.
+
+```ts
+rangedAttack(
+  target: AttackEntityTarget,
+  options: RangedAttackTaskOptions = {},
+): Effect.Effect<
+  SoulFireTask<typeof RangedAttackTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1351)
+
+## runRangedAttack
+
+```ts
+runRangedAttack(
+  target: AttackEntityTarget,
+  options: RangedAttackTaskOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1369)
+
+## flee
+
+Moves away from the nearest threat until it is `safeDistance` away.
+
+```ts
+flee(
+  threats: MessageInitShape<typeof EntitySelectorSchema>,
+  options: FleeTaskOptions = {},
+): Effect.Effect<
+  SoulFireTask<typeof FleeTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1384)
+
+## runFlee
+
+```ts
+runFlee(
+  threats: MessageInitShape<typeof EntitySelectorSchema>,
+  options: FleeTaskOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1418)
+
+## guard
+
+Defends `position` from `threats`.
+
+```ts
+guard(
+  position: MessageInitShape<typeof BlockPositionSchema>,
+  threats: MessageInitShape<typeof EntitySelectorSchema>,
+  options: GuardTaskOptions = {},
+): Effect.Effect<
+  SoulFireTask<typeof GuardTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1453)
+
+## runGuard
+
+```ts
+runGuard(
+  position: MessageInitShape<typeof BlockPositionSchema>,
+  threats: MessageInitShape<typeof EntitySelectorSchema>,
+  options: GuardTaskOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1469)
+
+## protect
+
+Defends an entity from `threats`.
+
+```ts
+protect(
+  entity: AttackEntityTarget,
+  threats: MessageInitShape<typeof EntitySelectorSchema>,
+  options: GuardTaskOptions = {},
+): Effect.Effect<
+  SoulFireTask<typeof GuardTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1489)
+
+## runProtect
+
+```ts
+runProtect(
+  entity: AttackEntityTarget,
+  threats: MessageInitShape<typeof EntitySelectorSchema>,
+  options: GuardTaskOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1511)
+
+## sleep
+
+Walks to a bed and gets in.
+
+```ts
+sleep(
+  options: SleepTaskOptions = {},
+): Effect.Effect<
+  SoulFireTask<typeof SleepTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1581)
+
+## runSleep
+
+```ts
+runSleep(
+  options: SleepTaskOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1611)
+
+## fish
+
+Casts, waits for a bite, reels in, and repeats.
+
+```ts
+fish(
+  options: FishTaskOptions = {},
+): Effect.Effect<
+  SoulFireTask<typeof FishTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1642)
+
+## runFish
+
+```ts
+runFish(
+  options: FishTaskOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1676)
+
+## farm
+
+Harvests mature crops around `center` and replants the ones that need it.
+
+```ts
+farm(
+  options: FarmTaskOptions = {},
+): Effect.Effect<
+  SoulFireTask<typeof FarmTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1711)
+
+## runFarm
+
+```ts
+runFarm(
+  options: FarmTaskOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1749)
+
+## breed
+
+Feeds pairs of adult animals until the server confirms both are in love
+mode.
+
+```ts
+breed(
+  options: BreedTaskOptions = {},
+): Effect.Effect<
+  SoulFireTask<typeof BreedTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1789)
+
+## runBreed
+
+```ts
+runBreed(
+  options: BreedTaskOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1831)
+
+## explore
+
+Visits unexplored cells around `origin`.
+
+```ts
+explore(
+  options: ExploreTaskOptions = {},
+): Effect.Effect<
+  SoulFireTask<typeof ExploreTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1874)
+
+## runExplore
+
+```ts
+runExplore(
+  options: ExploreTaskOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1908)
+
+## stash
+
+Walks to the container, opens it and puts the items in.
+
+```ts
+stash(
+  container: MessageInitShape<typeof BlockPositionSchema>,
+  operations: readonly ContainerTransferSpec[],
+  options: ContainerTransferTaskOptions = {},
+): Effect.Effect<
+  SoulFireTask<typeof ContainerTransferTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1943)
+
+## runStash
+
+```ts
+runStash(
+  container: MessageInitShape<typeof BlockPositionSchema>,
+  operations: readonly ContainerTransferSpec[],
+  options: ContainerTransferTaskOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1967)
+
+## withdraw
+
+Walks to the container, opens it and takes the items out.
+
+```ts
+withdraw(
+  container: MessageInitShape<typeof BlockPositionSchema>,
+  operations: readonly ContainerTransferSpec[],
+  options: ContainerTransferTaskOptions = {},
+): Effect.Effect<
+  SoulFireTask<typeof ContainerTransferTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L1988)
+
+## runWithdraw
+
+```ts
+runWithdraw(
+  container: MessageInitShape<typeof BlockPositionSchema>,
+  operations: readonly ContainerTransferSpec[],
+  options: ContainerTransferTaskOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2012)
+
+## maintainLoadout
+
+Keeps each requirement's count in range by withdrawing from and depositing
+to `container`.
+
+```ts
+maintainLoadout(
+  container: MessageInitShape<typeof BlockPositionSchema>,
+  requirements: readonly LoadoutRequirementSpec[],
+  options: MaintainLoadoutTaskOptions = {},
+): Effect.Effect<
+  SoulFireTask<typeof MaintainLoadoutTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2034)
+
+## runMaintainLoadout
+
+```ts
+runMaintainLoadout(
+  container: MessageInitShape<typeof BlockPositionSchema>,
+  requirements: readonly LoadoutRequirementSpec[],
+  options: MaintainLoadoutTaskOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2057)
+
+## balanceLoadout
+
+`maintainLoadout` once: a single rebalance, done when satisfied.
+
+```ts
+balanceLoadout(
+  container: MessageInitShape<typeof BlockPositionSchema>,
+  requirements: readonly LoadoutRequirementSpec[],
+  options: Omit<
+    MaintainLoadoutTaskOptions,
+    "completeWhenSatisfied" | "maximumRebalances"
+  > = {},
+): Effect.Effect<
+  SoulFireTask<typeof MaintainLoadoutTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2077)
+
+## autoEat
+
+Eats when the food level drops to `foodLevel`. An empty `foodItemIds` (the
+default) eats any safe food.
+
+```ts
+autoEat(
+  foodItemIds: readonly string[] = [],
+  options: AutoEatTaskOptions = {},
+): Effect.Effect<
+  SoulFireTask<typeof AutoEatTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2099)
+
+## runAutoEat
+
+An empty `foodItemIds` (the default) eats any safe food.
+
+```ts
+runAutoEat(
+  foodItemIds: readonly string[] = [],
+  options: AutoEatTaskOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2134)
+
+## autoRespawn
+
+Respawns after each death.
+
+```ts
+autoRespawn(
+  options: AutoRespawnTaskOptions = {},
+): Effect.Effect<
+  SoulFireTask<typeof AutoRespawnTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2167)
+
+## runAutoRespawn
+
+```ts
+runAutoRespawn(
+  options: AutoRespawnTaskOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2188)
+
+## autoTotem
+
+Keeps a totem of undying in the offhand.
+
+```ts
+autoTotem(
+  options: AutoTotemTaskOptions = {},
+): Effect.Effect<
+  SoulFireTask<typeof AutoTotemTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2210)
+
+## runAutoTotem
+
+```ts
+runAutoTotem(
+  options: AutoTotemTaskOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2238)
+
+## autoArmor
+
+Keeps the best armor the bot has equipped.
+
+```ts
+autoArmor(
+  options: AutoArmorTaskOptions = {},
+): Effect.Effect<
+  SoulFireTask<typeof AutoArmorTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2267)
+
+## runAutoArmor
+
+```ts
+runAutoArmor(
+  options: AutoArmorTaskOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2289)
+
+## collectBlocks
+
+Finds, reaches and mines `count` blocks with one of `blockIds` or `tags`.
+
+```ts
+collectBlocks(
+  blockIds: readonly string[],
+  options: CollectBlocksTaskOptions = {},
+): Effect.Effect<
+  SoulFireTask<typeof CollectBlocksTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2312)
+
+## runCollectBlocks
+
+```ts
+runCollectBlocks(
+  blockIds: readonly string[],
+  options: CollectBlocksTaskOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2348)
+
+## excavate
+
+Clears every diggable block in the cuboid from `from` to `to`, both
+included. At most 32,768 blocks.
+
+```ts
+excavate(
+  from: MessageInitShape<typeof BlockPositionSchema>,
+  to: MessageInitShape<typeof BlockPositionSchema>,
+  options: ExcavateTaskOptions = {},
+): Effect.Effect<
+  SoulFireTask<typeof ExcavateTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2386)
+
+## runExcavate
+
+```ts
+runExcavate(
+  from: MessageInitShape<typeof BlockPositionSchema>,
+  to: MessageInitShape<typeof BlockPositionSchema>,
+  options: ExcavateTaskOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2410)
+
+## build
+
+Places `blocks`, each at `origin` plus its offset. At most 8192 blocks.
+
+```ts
+build(
+  origin: MessageInitShape<typeof BlockPositionSchema>,
+  blocks: readonly SchematicBlock[],
+  options: BuildTaskOptions = {},
+): Effect.Effect<
+  SoulFireTask<typeof BuildTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2435)
+
+## runBuild
+
+```ts
+runBuild(
+  origin: MessageInitShape<typeof BlockPositionSchema>,
+  blocks: readonly SchematicBlock[],
+  options: BuildTaskOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2457)
+
+## craft
+
+`recipeId` comes from `recipes.list`, e.g. "display:42". `count` is recipe
+operations, not output items; it defaults to 1, at most 4096.
+
+```ts
+craft(
+  recipeId: string,
+  count = 1,
+  options: CraftTaskOptions = {},
+): Effect.Effect<
+  SoulFireTask<typeof CraftTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2477)
+
+## runCraft
+
+`recipeId` comes from `recipes.list`, e.g. "display:42". `count` is recipe
+operations, not output items; it defaults to 1, at most 4096.
+
+```ts
+runCraft(
+  recipeId: string,
+  count = 1,
+  options: CraftTaskOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2504)
+
+## smelt
+
+`input` selects items that fit a known cooking recipe. `count` is input
+items to cook; it defaults to 1, at most 4096.
+
+```ts
+smelt(
+  input: MessageInitShape<typeof ItemSelectorSchema>,
+  count = 1,
+  options: SmeltTaskOptions = {},
+): Effect.Effect<
+  SoulFireTask<typeof SmeltTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2529)
+
+## runSmelt
+
+`count` is input items to cook; it defaults to 1, at most 4096.
+
+```ts
+runSmelt(
+  input: MessageInitShape<typeof ItemSelectorSchema>,
+  count = 1,
+  options: SmeltTaskOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2556)
+
+## brew
+
+Brews `count` potion bottles matching `input`, using one `ingredient` per
+bottle. `count` defaults to 1, at most 4096.
+
+```ts
+brew(
+  input: MessageInitShape<typeof ItemSelectorSchema>,
+  ingredient: MessageInitShape<typeof ItemSelectorSchema>,
+  count = 1,
+  options: BrewTaskOptions = {},
+): Effect.Effect<
+  SoulFireTask<typeof BrewTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2582)
+
+## runBrew
+
+`count` is bottles to brew; it defaults to 1, at most 4096.
+
+```ts
+runBrew(
+  input: MessageInitShape<typeof ItemSelectorSchema>,
+  ingredient: MessageInitShape<typeof ItemSelectorSchema>,
+  count = 1,
+  options: BrewTaskOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2612)
+
+## villagerTrade
+
+Trades with the merchant menu the bot has open. `offerIndex` is the
+zero-based index from `recipes.listVillagerTrades`. `count` defaults to 1,
+at most 4096.
+
+```ts
+villagerTrade(
+  offerIndex: number,
+  count = 1,
+  options: VillagerTradeTaskOptions = {},
+): Effect.Effect<
+  SoulFireTask<typeof VillagerTradeTaskResultSchema>,
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2642)
+
+## runVillagerTrade
+
+`count` is trades to make; it defaults to 1, at most 4096.
+
+```ts
+runVillagerTrade(
+  offerIndex: number,
+  count = 1,
+  options: VillagerTradeTaskOptions = {},
+): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2669)
+
+## get
+
+One of this bot's tasks, by id.
+
+```ts
+get<Result extends DescMessage | undefined = undefined>(
+  taskId: string,
+  resultSchema?: Result,
+  options?: CallOptions,
+): Effect.Effect<SoulFireTask<Result>, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2698)
+
+## list
+
+This bot's tasks, all pages. Ended tasks only with `includeTerminal`.
+
+```ts
+list(
+  options: TaskListOptions = {},
+): Effect.Effect<BotTask[], SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2727)
+
+## watch
+
+Events of this bot's tasks, starting with a snapshot of them unless
+`includeSnapshot` is false.
+
+```ts
+watch(options?: {
+  afterSequence?: bigint;
+  includeSnapshot?: boolean;
+  statuses?: readonly BotTaskStatus[];
+  call?: CallOptions;
+}): Stream.Stream<BotTaskEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L2757)

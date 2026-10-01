@@ -1,0 +1,811 @@
+---
+title: TypeScript options
+description: Public option fields and inherited types from the pinned SDK source.
+icon: Braces
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+Tables include inherited fields. If a field has no source comment, its contract link supplies the context. An optional field is not a guarantee of a particular default. Read the implementation or the relevant guide for behavior.
+
+## AttackEntityTaskOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `path` | `MessageInitShape&lt;typeof PathfindOptionsSchema&gt;` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L185) |
+| `attackRange` | `number` | No | Defaults to 3, at most 6. |
+| `sprinting` | `boolean` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L190) |
+| `maximumAttacks` | `number` | No | 0 (the default) attacks until the target is defeated. |
+| `targetUnavailableTimeoutSeconds` | `number` | No | How long the target may stay out of sight before the task ends. Defaults to 10, at most 3600. |
+| `selectBestWeapon` | `boolean` | No | Picks the strongest melee weapon (among `weapon` if set). Defaults to true. |
+| `weapon` | `MessageInitShape&lt;typeof ItemSelectorSchema&gt;` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L204) |
+| `restoreSelectedSlot` | `boolean` | No | Reselects the previous hotbar slot when the task stops. Defaults to true. |
+| `useOffhandShield` | `boolean` | No | Raises a shield held in the offhand while approaching and between attacks. |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L164) |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L268) |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L273) |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L278) |
+| `priority` | `BotTaskPriority` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L283) |
+| `parentTaskId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L293) |
+| `causationId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L298) |
+| `idempotencyKey` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L303) |
+
+## AttackNearestOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `entityTypes` | `readonly string[]` | Yes | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L185) |
+| `radius` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L186) |
+| `attackRange` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L187) |
+| `sprinting` | `boolean` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L188) |
+| `maximumAttacks` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L189) |
+
+## AttackNearestTaskOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `radius` | `number` | No | Search radius around the bot. Defaults to 32, at most 128. |
+| `path` | `MessageInitShape&lt;typeof PathfindOptionsSchema&gt;` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L220) |
+| `attackRange` | `number` | No | Defaults to 3, at most 6. |
+| `sprinting` | `boolean` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L225) |
+| `maximumAttacks` | `number` | No | 0 (the default) means no limit. |
+| `maximumTargets` | `number` | No | Targets to defeat; 0 means no limit. Defaults to 1 for `attackNearest`, 0 for `runAttackNearest`. |
+| `noTargetTimeoutSeconds` | `number` | No | How long to wait while nothing matches; 0 (the default) waits forever. At most 3600. |
+| `completeWhenNoTarget` | `boolean` | No | Ends at once when no target is in sight. Defaults to true for `attackNearest`, false for `runAttackNearest`. |
+| `selectBestWeapon` | `boolean` | No | Defaults to true. |
+| `weapon` | `MessageInitShape&lt;typeof ItemSelectorSchema&gt;` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L249) |
+| `restoreSelectedSlot` | `boolean` | No | Defaults to true. |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L164) |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L268) |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L273) |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L278) |
+| `priority` | `BotTaskPriority` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L283) |
+| `parentTaskId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L293) |
+| `causationId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L298) |
+| `idempotencyKey` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L303) |
+
+## AutoArmorOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `checkIntervalTicks` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L287) |
+| `maximumEquips` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L288) |
+| `completeWhenNoUpgrade` | `boolean` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L289) |
+
+## AutoArmorTaskOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `checkIntervalTicks` | `number` | No | Defaults to 20, at most 1200. |
+| `maximumEquips` | `number` | No | 0 (the default) keeps going until cancelled. |
+| `completeWhenNoUpgrade` | `boolean` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L643) |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L164) |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L268) |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L273) |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L278) |
+| `priority` | `BotTaskPriority` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L283) |
+| `parentTaskId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L293) |
+| `causationId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L298) |
+| `idempotencyKey` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L303) |
+
+## AutoEatOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `foodItemIds` | `readonly string[]` | Yes | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L223) |
+| `foodLevel` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L224) |
+| `checkIntervalTicks` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L225) |
+| `maximumMeals` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L226) |
+| `completeWhenNoFood` | `boolean` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L227) |
+| `restoreSelectedSlot` | `boolean` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L228) |
+
+## AutoEatTaskOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `foodLevel` | `number` | No | Eats when the food level is at or below this. Defaults to 14, at most 20. |
+| `checkIntervalTicks` | `number` | No | Defaults to 20, at most 1200. |
+| `maximumMeals` | `number` | No | 0 (the default) keeps going until cancelled. |
+| `completeWhenNoFood` | `boolean` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L600) |
+| `restoreSelectedSlot` | `boolean` | No | Defaults to true. |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L164) |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L268) |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L273) |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L278) |
+| `priority` | `BotTaskPriority` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L283) |
+| `parentTaskId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L293) |
+| `causationId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L298) |
+| `idempotencyKey` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L303) |
+
+## AutoRespawnOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `respawnDelayTicks` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L247) |
+| `maximumRespawns` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L248) |
+
+## AutoRespawnTaskOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `respawnDelayTicks` | `number` | No | Between death and respawn. At most 12000. |
+| `maximumRespawns` | `number` | No | 0 (the default) keeps going until cancelled. |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L164) |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L268) |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L273) |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L278) |
+| `priority` | `BotTaskPriority` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L283) |
+| `parentTaskId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L293) |
+| `causationId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L298) |
+| `idempotencyKey` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L303) |
+
+## AutoTotemOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `checkIntervalTicks` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L266) |
+| `maximumEquips` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L267) |
+| `completeWhenNoTotem` | `boolean` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L268) |
+| `replaceOccupiedOffhand` | `boolean` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L269) |
+
+## AutoTotemTaskOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `checkIntervalTicks` | `number` | No | Defaults to 20, at most 1200. |
+| `maximumEquips` | `number` | No | 0 (the default) keeps going until cancelled. |
+| `completeWhenNoTotem` | `boolean` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L627) |
+| `replaceOccupiedOffhand` | `boolean` | No | Swaps out another item held in the offhand; otherwise it is left alone. |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L164) |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L268) |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L273) |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L278) |
+| `priority` | `BotTaskPriority` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L283) |
+| `parentTaskId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L293) |
+| `causationId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L298) |
+| `idempotencyKey` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L303) |
+
+## BotSessionOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `filter` | `MessageInitShape&lt;typeof BotEventFilterSchema&gt;` | No | Defaults to every category except sounds, particles and chunks. |
+| `heartbeatIntervalSeconds` | `number` | No | Defaults to 15, from 5 to 60. |
+
+## BreedTaskOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `animals` | `MessageInitShape&lt;typeof EntitySelectorSchema&gt;` | No | Empty (the default) means any animal. |
+| `food` | `MessageInitShape&lt;typeof ItemSelectorSchema&gt;` | No | Defaults to any food both animals accept. |
+| `center` | `MessageInitShape&lt;typeof BlockPositionSchema&gt;` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L476) |
+| `radius` | `number` | No | Defaults to 24, from 1 to 64. |
+| `maximumPairs` | `number` | No | 0 breeds until cancelled. Defaults to 1 for `breed`, 0 for `runBreed`. |
+| `completeWhenNoPair` | `boolean` | No | Defaults to true for `breed`, false for `runBreed`. |
+| `completeWhenNoFood` | `boolean` | No | Defaults to true for `breed`, false for `runBreed`. |
+| `path` | `MessageInitShape&lt;typeof PathfindOptionsSchema&gt;` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L493) |
+| `rescanIntervalTicks` | `number` | No | Between scans while no pair is found. Defaults to 100, at most 72000. |
+| `breedingTimeoutTicks` | `number` | No | Defaults to 100, at most 1200. |
+| `restoreSelectedSlot` | `boolean` | No | Defaults to true. |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L164) |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L268) |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L273) |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L278) |
+| `priority` | `BotTaskPriority` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L283) |
+| `parentTaskId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L293) |
+| `causationId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L298) |
+| `idempotencyKey` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L303) |
+
+## BrewTaskOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `fuel` | `MessageInitShape&lt;typeof ItemSelectorSchema&gt;` | No | Limits the fuel, which defaults to blaze powder. |
+| `station` | `MessageInitShape&lt;typeof BlockPositionSchema&gt;` | No | The brewing stand to use; needed unless one is already open. |
+| `expectedResult` | `MessageInitShape&lt;typeof ItemSelectorSchema&gt;` | No | Refuses to brew if the predicted potion no longer matches. |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L164) |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L268) |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L273) |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L278) |
+| `priority` | `BotTaskPriority` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L283) |
+| `parentTaskId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L293) |
+| `causationId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L298) |
+| `idempotencyKey` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L303) |
+
+## BuildTaskOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `rotation` | `BuildRotation` | No | Defaults to NONE. |
+| `mirror` | `BuildMirror` | No | Defaults to NONE. |
+| `substitutions` | `Readonly&lt;Record&lt;string, readonly string[]&gt;&gt;` | No | Block ids that may be placed instead of a block id of the schematic. |
+| `path` | `MessageInitShape&lt;typeof PathfindOptionsSchema&gt;` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L708) |
+| `breakIncorrectBlocks` | `boolean` | No | Defaults to true. |
+| `restoreSelectedSlot` | `boolean` | No | Defaults to true. |
+| `partitionIndex` | `number` | No | Splits the blocks between bots: this one builds part `partitionIndex` of `partitionCount`. `partitionIndex` defaults to 0 and `partitionCount` to 1. |
+| `partitionCount` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L722) |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L164) |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L268) |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L273) |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L278) |
+| `priority` | `BotTaskPriority` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L283) |
+| `parentTaskId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L293) |
+| `causationId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L298) |
+| `idempotencyKey` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L303) |
+
+## CameraRenderOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `width` | `number` | No | Desired image width in pixels. Default: 854 (if 0 or not provided). Maximum: 1920 (values above this are clamped). Minimum: 1 (values below this are clamped). |
+| `height` | `number` | No | Desired image height in pixels. Default: 480 (if 0 or not provided). Maximum: 1080 (values above this are clamped). Minimum: 1 (values below this are clamped). |
+| `maxDistance` | `number \| undefined` | No | Maximum render distance in blocks. Default: the bot's current render distance setting. Maximum: 2048 (values above this are clamped). |
+| `fov` | `number \| undefined` | No | Vertical field of view in degrees. Default: the renderer default FOV. Valid range: 1.0 to 179.0. |
+| `cameraX` | `number \| undefined` | No | Optional camera X coordinate. Defaults to the bot's current eye position. |
+| `cameraY` | `number \| undefined` | No | Optional camera Y coordinate. Defaults to the bot's current eye position. |
+| `cameraZ` | `number \| undefined` | No | Optional camera Z coordinate. Defaults to the bot's current eye position. |
+| `yRot` | `number \| undefined` | No | Optional yaw in degrees. Defaults to the bot's current yaw. |
+| `xRot` | `number \| undefined` | No | Optional pitch in degrees. Defaults to the bot's current pitch. |
+| `includeHud` | `boolean \| undefined` | No | Whether to render the HUD overlay. Default: true. |
+| `includeHands` | `boolean \| undefined` | No | Whether to render first-person hands and held items. Default: true. |
+| `includeDebugTrace` | `boolean` | No | Whether to include renderer debug counters in the response. Default: false. |
+
+## CameraStreamOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `width` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/bot_pb.ts#L1282) |
+| `height` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/bot_pb.ts#L1287) |
+| `maxDistance` | `number \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/bot_pb.ts#L1292) |
+| `fov` | `number \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/bot_pb.ts#L1297) |
+| `cameraX` | `number \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/bot_pb.ts#L1302) |
+| `cameraY` | `number \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/bot_pb.ts#L1307) |
+| `cameraZ` | `number \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/bot_pb.ts#L1312) |
+| `yRot` | `number \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/bot_pb.ts#L1317) |
+| `xRot` | `number \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/bot_pb.ts#L1322) |
+| `includeHud` | `boolean \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/bot_pb.ts#L1327) |
+| `includeHands` | `boolean \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/bot_pb.ts#L1332) |
+| `includeDebugTrace` | `boolean` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/bot_pb.ts#L1337) |
+| `intervalMs` | `number` | No | Target interval between frames. Defaults to 1000 ms and is clamped to 100-60000 ms. Frames are dropped while the transport is not ready. |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/camera.ts#L25) |
+
+## ChatMutationOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/chat.ts#L25) |
+| `idempotencyKey` | `string` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/chat.ts#L26) |
+
+## CollectBlocksOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `blockIds` | `readonly string[]` | Yes | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L136) |
+| `tags` | `readonly string[]` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L137) |
+| `count` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L138) |
+| `searchRadius` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L139) |
+| `allowPlacing` | `boolean` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L140) |
+| `requireLineOfSight` | `boolean` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L141) |
+| `targetYRange` | `Readonly&lt;\{ minimum?: number; maximum?: number; \}&gt;` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L142) |
+
+## CollectBlocksTaskOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `tags` | `readonly string[]` | No | Block tags to match, besides `blockIds`. |
+| `count` | `number` | No | Defaults to 1. |
+| `searchRadius` | `number` | No | Defaults to 32, at most 64. |
+| `avoidSubmergedTargets` | `boolean` | No | Skips blocks with fluid above them, up to the bot's height. |
+| `requireLineOfSight` | `boolean` | No | Only picks blocks the bot can see, checked again after each block. |
+| `targetYRange` | `Readonly&lt;\{ minimum?: number; maximum?: number; \}&gt;` | No | Only blocks between these heights; a missing bound is open. |
+| `path` | `MessageInitShape&lt;typeof PathfindOptionsSchema&gt;` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L674) |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L164) |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L268) |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L273) |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L278) |
+| `priority` | `BotTaskPriority` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L283) |
+| `parentTaskId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L293) |
+| `causationId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L298) |
+| `idempotencyKey` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L303) |
+
+## ContainerMutationOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/inventory.ts#L34) |
+| `idempotencyKey` | `string` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/inventory.ts#L35) |
+
+## ContainerTransferTaskOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `path` | `MessageInitShape&lt;typeof PathfindOptionsSchema&gt;` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L548) |
+| `closeContainer` | `boolean` | No | Closes the container after a successful transfer. Defaults to true. A failed or cancelled task always closes a container it opened. |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L164) |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L268) |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L273) |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L278) |
+| `priority` | `BotTaskPriority` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L283) |
+| `parentTaskId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L293) |
+| `causationId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L298) |
+| `idempotencyKey` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L303) |
+
+## CraftTaskOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `station` | `MessageInitShape&lt;typeof BlockPositionSchema&gt;` | No | A crafting table, for recipes that need one, unless one is already open. |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L164) |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L268) |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L273) |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L278) |
+| `priority` | `BotTaskPriority` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L283) |
+| `parentTaskId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L293) |
+| `causationId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L298) |
+| `idempotencyKey` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L303) |
+
+## ExcavateTaskOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `path` | `MessageInitShape&lt;typeof PathfindOptionsSchema&gt;` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L678) |
+| `maximumBlocks` | `number` | No | 0 (the default) clears the whole cuboid. |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L164) |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L268) |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L273) |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L278) |
+| `priority` | `BotTaskPriority` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L283) |
+| `parentTaskId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L293) |
+| `causationId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L298) |
+| `idempotencyKey` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L303) |
+
+## ExploreTaskOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `origin` | `MessageInitShape&lt;typeof BlockPositionSchema&gt;` | No | Defaults to where the bot is when the task starts. |
+| `radius` | `number` | No | Horizontal distance from `origin`. Defaults to 256, from 1 to 4096. |
+| `waypointSpacing` | `number` | No | Defaults to 64, from 8 to 512. |
+| `maximumWaypoints` | `number` | No | 0 explores until every cell is visited or the task is cancelled. Defaults to 1 for `explore`, 0 for `runExplore`. |
+| `path` | `MessageInitShape&lt;typeof PathfindOptionsSchema&gt;` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L526) |
+| `returnToOrigin` | `boolean` | No | Goes back to `origin` after `maximumWaypoints`. |
+| `purpose` | `string` | No | Bots with the same purpose share out the cells. Defaults to "sdk-explore". |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L164) |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L268) |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L273) |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L278) |
+| `priority` | `BotTaskPriority` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L283) |
+| `parentTaskId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L293) |
+| `causationId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L298) |
+| `idempotencyKey` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L303) |
+
+## FarmTaskOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `cropIds` | `readonly string[]` | No | Empty (the default) farms every crop SoulFire supports. |
+| `center` | `MessageInitShape&lt;typeof BlockPositionSchema&gt;` | No | Defaults to wherever the bot is at each scan. |
+| `radius` | `number` | No | Defaults to 24, at most 48. |
+| `maximumHarvests` | `number` | No | 0 farms until cancelled. Defaults to 1 for `farm`, 0 for `runFarm`. |
+| `replant` | `boolean` | No | Defaults to true. |
+| `completeWhenNoMatureCrops` | `boolean` | No | Ends instead of waiting for a crop to grow. Defaults to true for `farm`, false for `runFarm`. |
+| `path` | `MessageInitShape&lt;typeof PathfindOptionsSchema&gt;` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L456) |
+| `rescanIntervalTicks` | `number` | No | Between scans while nothing is mature. Defaults to 100, at most 72000. |
+| `restoreSelectedSlot` | `boolean` | No | Defaults to true. |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L164) |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L268) |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L273) |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L278) |
+| `priority` | `BotTaskPriority` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L283) |
+| `parentTaskId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L293) |
+| `causationId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L298) |
+| `idempotencyKey` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L303) |
+
+## FishTaskOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `maximumCatches` | `number` | No | 0 fishes until cancelled. Defaults to 1 for `fish`, 0 for `runFish`. |
+| `maximumFailedCasts` | `number` | No | 0 (the default) means no limit. |
+| `rod` | `MessageInitShape&lt;typeof ItemSelectorSchema&gt;` | No | Limits which fishing rod may be picked. |
+| `castTimeoutTicks` | `number` | No | Defaults to 100, at most 1200. |
+| `biteTimeoutTicks` | `number` | No | Defaults to 12000, at most 72000. |
+| `completeWhenNoRod` | `boolean` | No | Defaults to true for `fish`, false for `runFish`. |
+| `restoreSelectedSlot` | `boolean` | No | Defaults to true. |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L164) |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L268) |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L273) |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L278) |
+| `priority` | `BotTaskPriority` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L283) |
+| `parentTaskId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L293) |
+| `causationId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L298) |
+| `idempotencyKey` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L303) |
+
+## FleeTaskOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `triggerRadius` | `number` | No | Starts fleeing when a threat is this close. Defaults to 8, at most 128. |
+| `safeDistance` | `number` | No | How far from the threat counts as safe. Defaults to 16, at most 128; more than `triggerRadius`. |
+| `path` | `MessageInitShape&lt;typeof PathfindOptionsSchema&gt;` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L311) |
+| `safeSeconds` | `number` | No | Seconds the bot must stay safe for an escape to count. Defaults to 2, at most 300. |
+| `completeWhenSafe` | `boolean` | No | Ends after an escape instead of watching for more. Defaults to true for `flee`, false for `runFlee`. |
+| `maximumEscapes` | `number` | No | 0 (the default) means no limit. |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L164) |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L268) |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L273) |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L278) |
+| `priority` | `BotTaskPriority` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L283) |
+| `parentTaskId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L293) |
+| `causationId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L298) |
+| `idempotencyKey` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L303) |
+
+## FleetDistributionOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `strategy` | `"round-robin" \| "contiguous"` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/fleet.ts#L80) |
+| `maximumItemsPerBot` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/fleet.ts#L81) |
+| `requireAll` | `boolean` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/fleet.ts#L82) |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/fleet.ts#L83) |
+
+## FleetTaskStartOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `concurrency` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/fleet.ts#L136) |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L164) |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L268) |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L273) |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L278) |
+| `priority` | `BotTaskPriority` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L283) |
+| `parentTaskId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L293) |
+| `causationId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L298) |
+| `idempotencyKey` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L303) |
+
+## FollowEntityTaskOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `path` | `MessageInitShape&lt;typeof PathfindOptionsSchema&gt;` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L176) |
+| `targetUnavailableTimeoutSeconds` | `number` | No | How long the entity may stay out of sight before the task ends. Defaults to 10, at most 3600. |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L164) |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L268) |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L273) |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L278) |
+| `priority` | `BotTaskPriority` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L283) |
+| `parentTaskId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L293) |
+| `causationId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L298) |
+| `idempotencyKey` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L303) |
+
+## GoToTaskOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `path` | `MessageInitShape&lt;typeof PathfindOptionsSchema&gt;` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L172) |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L164) |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L268) |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L273) |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L278) |
+| `priority` | `BotTaskPriority` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L283) |
+| `parentTaskId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L293) |
+| `causationId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L298) |
+| `idempotencyKey` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L303) |
+
+## GuardTaskOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `guardRadius` | `number` | No | How far around the guarded position or entity to look for threats. Defaults to 16, at most 128. |
+| `maximumPursuitDistance` | `number` | No | Stops chasing beyond this distance from what it guards. Defaults to 24, at most 128; at least `guardRadius`. |
+| `returnRadius` | `number` | No | How close to what it guards the bot returns. Defaults to 3; less than the pursuit distance. |
+| `path` | `MessageInitShape&lt;typeof PathfindOptionsSchema&gt;` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L344) |
+| `attackRange` | `number` | No | Defaults to 3, at most 6. |
+| `sprinting` | `boolean` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L349) |
+| `maximumAttacks` | `number` | No | 0 (the default) means no limit. |
+| `maximumTargets` | `number` | No | 0 (the default) means no limit. |
+| `completeWhenClear` | `boolean` | No | Ends once no threat is in range for `clearSeconds`. Defaults to true for `guard` and `protect`, false for `runGuard` and `runProtect`. |
+| `clearSeconds` | `number` | No | Defaults to 3, at most 300. |
+| `selectBestWeapon` | `boolean` | No | Defaults to true. |
+| `weapon` | `MessageInitShape&lt;typeof ItemSelectorSchema&gt;` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L371) |
+| `restoreSelectedSlot` | `boolean` | No | Defaults to true. |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L164) |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L268) |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L273) |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L278) |
+| `priority` | `BotTaskPriority` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L283) |
+| `parentTaskId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L293) |
+| `causationId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L298) |
+| `idempotencyKey` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L303) |
+
+## InventoryRankingOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `selector` | `ItemSelector \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/inventory_pb.ts#L394) |
+| `areas` | `InventoryArea[]` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/inventory_pb.ts#L399) |
+| `limit` | `number` | No | Defaults to 10 and may not exceed 100. |
+| `preferHotbar` | `boolean` | No | Adds a small preference for already selectable hotbar items. |
+| `preferredEnchantmentIds` | `string[]` | No | Adds a score bonus for each matching enchantment. |
+| `excludedEnchantmentIds` | `string[]` | No | Removes candidates carrying any listed enchantment. |
+| `preferHighDurability` | `boolean` | No | Prefers a higher remaining durability ratio for damageable items. |
+
+## InventoryRankOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `selector` | `ItemSelector \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/inventory_pb.ts#L394) |
+| `areas` | `InventoryArea[]` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/inventory_pb.ts#L399) |
+| `targetBlock` | `BlockPosition \| undefined` | No | Required when kind is TOOL. |
+| `equipmentSlot` | `string \| undefined` | No | Required when kind is ARMOR, such as "head", "chest", "legs", or "feet". |
+| `limit` | `number` | No | Defaults to 10 and may not exceed 100. |
+| `preferHotbar` | `boolean` | No | Adds a small preference for already selectable hotbar items. |
+| `preferredEnchantmentIds` | `string[]` | No | Adds a score bonus for each matching enchantment. |
+| `excludedEnchantmentIds` | `string[]` | No | Removes candidates carrying any listed enchantment. |
+| `preferHighDurability` | `boolean` | No | Prefers a higher remaining durability ratio for damageable items. |
+
+## MaintainLoadoutTaskOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `path` | `MessageInitShape&lt;typeof PathfindOptionsSchema&gt;` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L571) |
+| `checkIntervalTicks` | `number` | No | Defaults to 100, at most 72000. |
+| `maximumRebalances` | `number` | No | 0 (the default) keeps going until cancelled. |
+| `completeWhenSatisfied` | `boolean` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L580) |
+| `closeContainer` | `boolean` | No | Defaults to true. |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L164) |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L268) |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L273) |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L278) |
+| `priority` | `BotTaskPriority` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L283) |
+| `parentTaskId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L293) |
+| `causationId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L298) |
+| `idempotencyKey` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L303) |
+
+## ParallelOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `concurrency` | `number \| "unbounded"` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L54) |
+
+## PlanPathOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `path` | `MessageInitShape&lt;typeof PathfindOptionsSchema&gt;` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/pathfinding.ts#L34) |
+| `includeDescriptions` | `boolean` | No | Adds a readable description to each step. |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/pathfinding.ts#L39) |
+
+## RangedAttackTaskOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `path` | `MessageInitShape&lt;typeof PathfindOptionsSchema&gt;` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L257) |
+| `minimumRange` | `number` | No | Defaults to 8; less than `maximumRange`. |
+| `maximumRange` | `number` | No | Defaults to 24, at most 64. |
+| `maximumShots` | `number` | No | 0 (the default) fires until the target is defeated. |
+| `targetUnavailableTimeoutSeconds` | `number` | No | How long the target may stay out of sight before the task ends. Defaults to 10, at most 3600. |
+| `weapon` | `MessageInitShape&lt;typeof ItemSelectorSchema&gt;` | No | Limits which bow or crossbow may be picked. |
+| `bowDrawTicks` | `number` | No | Defaults to 20, from 3 to 20. Crossbows use their own charge time. |
+| `leadTarget` | `boolean` | No | Defaults to true. |
+| `compensateGravity` | `boolean` | No | Defaults to true. |
+| `strafe` | `boolean` | No | Defaults to true. |
+| `restoreSelectedSlot` | `boolean` | No | Defaults to true. |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L164) |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L268) |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L273) |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L278) |
+| `priority` | `BotTaskPriority` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L283) |
+| `parentTaskId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L293) |
+| `causationId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L298) |
+| `idempotencyKey` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L303) |
+
+## RepeatOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `times` | `number` | Yes | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L65) |
+
+## RetryOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `attempts` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L72) |
+| `delayMs` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L73) |
+| `backoff` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L74) |
+| `maximumDelayMs` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L75) |
+| `while` | `(error: E) =&gt; boolean` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L76) |
+
+## SendRawPacketOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/protocol.ts#L28) |
+| `expectedName` | `string` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/protocol.ts#L29) |
+
+## SleepTaskOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `bed` | `MessageInitShape&lt;typeof BlockPositionSchema&gt;` | No | Defaults to the nearest loaded bed within `searchRadius`. |
+| `searchRadius` | `number` | No | Defaults to 24, at most 32. |
+| `path` | `MessageInitShape&lt;typeof PathfindOptionsSchema&gt;` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L387) |
+| `waitUntilPossible` | `boolean` | No | Keeps trying while sleeping isn't possible, such as during the day. Defaults to false for `sleep`, true for `runSleep`. |
+| `retryIntervalTicks` | `number` | No | Between refused attempts. Defaults to 20, at most 1200. |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L164) |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L268) |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L273) |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L278) |
+| `priority` | `BotTaskPriority` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L283) |
+| `parentTaskId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L293) |
+| `causationId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L298) |
+| `idempotencyKey` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L303) |
+
+## SmeltTaskOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `fuel` | `MessageInitShape&lt;typeof ItemSelectorSchema&gt;` | No | Limits the fuel, which defaults to any valid fuel. |
+| `station` | `MessageInitShape&lt;typeof BlockPositionSchema&gt;` | No | The furnace to use; needed unless a furnace menu is already open. |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L164) |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L268) |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L273) |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L278) |
+| `priority` | `BotTaskPriority` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L283) |
+| `parentTaskId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L293) |
+| `causationId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L298) |
+| `idempotencyKey` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L303) |
+
+## SoulFireInstallOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `directory` | `string` | No | Directory used for the managed JVM, SoulFire JAR, and server data. Defaults to `.soulfire` below the current working directory. |
+| `version` | `string` | No | SoulFire release tag. Omit this value to install the latest release. |
+| `jarPath` | `string` | No | Existing SoulFire dedicated server JAR to run instead of downloading a published release. This is useful for release-candidate and source-tree smoke tests. |
+| `javaPath` | `string` | No | Existing Java 25 executable to use instead of downloading a managed JRE. |
+| `javaArgs` | `string[]` | No | Java arguments added before the SoulFire JAR. |
+| `port` | `number` | No | Local gRPC-Web port. Omit this value to select an available port. |
+| `startupTimeoutMs` | `number` | No | Maximum time to wait for SoulFire to finish loading. |
+| `onLog` | `(line: string) =&gt; void` | No | Receives lines written by the dedicated server. |
+| `fetch` | `typeof globalThis.fetch` | No | Custom fetch implementation, primarily for runtimes that do not expose fetch globally. |
+| `defaultTimeoutMs` | `number` | No | Default timeout for unary SDK calls after the server starts. |
+| `interceptors` | `Interceptor[]` | No | Additional interceptors applied to the installed server connection. |
+
+## SoulFireOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `baseUrl` | `string` | Yes | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L149) |
+| `token` | `string \| TokenProvider` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L150) |
+| `defaultTimeoutMs` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L151) |
+| `fetch` | `GrpcWebTransportOptions["fetch"]` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L152) |
+| `interceptors` | `Interceptor[]` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L153) |
+| `requiredCapabilities` | `readonly string[]` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L154) |
+| `requiredPlugins` | `readonly RequiredPluginRequirement[]` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L155) |
+| `transport` | `Transport` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L156) |
+
+## TabCompleteOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/chat.ts#L30) |
+| `cursor` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/chat.ts#L31) |
+
+## TaskListOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L779) |
+| `statuses` | `BotTaskStatus[]` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L347) |
+| `pageSize` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L352) |
+| `pageToken` | `string` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L357) |
+| `includeTerminal` | `boolean` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L362) |
+
+## TaskStartOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L164) |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L268) |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L273) |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L278) |
+| `priority` | `BotTaskPriority` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L283) |
+| `parentTaskId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L293) |
+| `causationId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L298) |
+| `idempotencyKey` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L303) |
+
+## UntilOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `maximumIterations` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/behaviors.ts#L95) |
+
+## VillagerTradeTaskOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `closeWhenDone` | `boolean` | No | Closes the trade menu after a successful task. |
+| `expectedResult` | `MessageInitShape&lt;typeof ItemSelectorSchema&gt;` | No | Refuses to trade if the offer's result no longer matches. |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/tasks.ts#L164) |
+| `deadline` | `Date` | No | The task ends as TIMED_OUT at this time. Must be in the future. |
+| `conflictPolicy` | `BotTaskConflictPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L268) |
+| `reconnectPolicy` | `BotTaskReconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L273) |
+| `disconnectPolicy` | `BotTaskDisconnectPolicy` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L278) |
+| `priority` | `BotTaskPriority` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L283) |
+| `parentTaskId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L293) |
+| `causationId` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L298) |
+| `idempotencyKey` | `string \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/task_pb.ts#L303) |
+
+## WaitForChatOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `timeoutMs` | `number` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/chat.ts#L48) |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/chat.ts#L43) |
+| `sources` | `readonly ChatSource[]` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/chat.ts#L44) |
+
+## WatchChatOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/chat.ts#L43) |
+| `sources` | `readonly ChatSource[]` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/chat.ts#L44) |
+
+## WatchPacketsOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `directions` | `PacketDirection[]` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/protocol_pb.ts#L196) |
+| `names` | `string[]` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/protocol_pb.ts#L201) |
+| `includeEncodedPacket` | `boolean` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/protocol_pb.ts#L206) |
+| `maximumEncodedBytes` | `number` | No | Zero selects the server maximum. |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/protocol.ts#L24) |
+
+## WatchPluginEventOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `pluginIds` | `readonly string[]` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/plugins.ts#L42) |
+| `typeUrls` | `readonly string[]` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/plugins.ts#L43) |
+| `instanceId` | `string` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/plugins.ts#L44) |
+| `botId` | `string` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/plugins.ts#L45) |
+| `taskId` | `string` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/plugins.ts#L46) |
+| `afterSequence` | `bigint` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/plugins.ts#L47) |
+| `call` | `CallOptions` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/plugins.ts#L48) |
+
+## WorldMapOptions
+
+| Field | Type | Required | Description or source |
+| --- | --- | --- | --- |
+| `centerX` | `number \| undefined` | No | Center coordinates. Each defaults to the bot's current block position. |
+| `centerZ` | `number \| undefined` | No | [Source contract](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/generated/soulfire/bot_pb.ts#L1418) |
+| `radius` | `number` | No | Radius in blocks. Defaults to 64 and is clamped to 1-256. |
+| `sampleStep` | `number` | No | Distance between sampled columns. Defaults to 1 and is clamped to 1-16. |
+| `includeEntities` | `boolean` | No | Include nearby entity overlays in the returned snapshot. |

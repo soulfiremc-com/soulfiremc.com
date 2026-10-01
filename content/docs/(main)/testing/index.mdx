@@ -1,0 +1,39 @@
+---
+title: Test a Minecraft server
+sidebarTitle: "Overview"
+description: Build a repeatable test with a baseline, gradual load, and recorded results.
+icon: FlaskConical
+---
+
+A useful bot test answers a specific question.
+For example: can your server accept fifty logins without long tick delays?
+Or: does a lobby plugin handle reconnects correctly?
+
+## Your first repeatable test
+
+1. [Prepare the target and run record](/docs/testing/prepare).
+2. [Establish a baseline and increase load](/docs/testing/load-test).
+3. [Add representative behavior](/docs/testing/scenarios).
+4. [Record the result and clean up](/docs/testing/results).
+
+Start with the [first-bot tutorial](/docs/start-here/gui-mode) if you have not connected a bot yet.
+These guides assume permission to test the target.
+
+## Choose what the run measures
+
+| Question | Useful workload |
+| --- | --- |
+| Can players join reliably? | Gradual login ramp with realistic join timing |
+| Does the lobby behave correctly? | Login, chat, commands, movement, and reconnects |
+| Does the world stay responsive? | Movement through loaded and new chunks |
+| Do versions behave consistently? | One protocol version at a time |
+| Does proxy routing work? | One route first, then the planned distribution |
+
+Idle bots do not represent all player activity.
+A login test does not prove chunk generation, plugin logic, inventories, or combat performance.
+
+## Separate the two machines
+
+Measure the Minecraft target and the SoulFire backend independently.
+If the backend saturates its CPU, memory, or network, it cannot deliver the requested workload reliably.
+Keep that distinction in your [results](/docs/testing/results).

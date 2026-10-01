@@ -1,0 +1,77 @@
+---
+title: Run the dedicated JAR
+sidebarTitle: "Dedicated JAR"
+description: Start a local backend with Java 25, create an API token, and verify client access.
+icon: Coffee
+---
+
+The dedicated JAR starts a backend independently of a desktop client.
+It keeps bot sessions running after remote clients disconnect.
+Use [Docker](/docs/server/docker) if you prefer a managed container.
+
+## Prepare Java and the JAR
+
+Install Java 25 and check the executable:
+
+```bash
+java -version
+```
+
+Download the dedicated JAR from [Downloads](/download).
+Place it in an empty deployment directory and open a terminal there.
+Use the exact downloaded filename in the command below.
+The backend uses this working directory for its persistent data.
+
+## Start a local listener
+
+```bash
+java -Xmx2G -XX:+EnableDynamicAgentLoading -Dsf.grpc.host=127.0.0.1 -jar SoulFireDedicated.jar
+```
+
+`SoulFireDedicated.jar` represents the downloaded filename. Released assets can include a version suffix.
+The 2 GB heap illustrates a small trial, not a bot-capacity guarantee.
+The first start can take longer while the launcher prepares its dependencies and data.
+Wait for the backend to finish loading before connecting a client.
+
+The backend can print recommended JVM tuning flags.
+Those flags tune performance. The `sf.flags.v2` property acknowledges that warning; it does not apply the flags itself.
+Use measured [backend performance](/docs/server/performance) to choose a heap and tuning settings.
+
+## Generate an API token
+
+In the server's interactive console, run:
+
+```text
+generate-token api
+```
+
+Open the desktop app with **Dedicated server (remote)**.
+Use `http://127.0.0.1:38765` and the generated token for a client on the same computer.
+Expect the instance pages to load.
+Then [connect one bot](/docs/start-here/gui-mode) to check the complete workflow.
+
+## Configure the listener
+
+| Property | Default for dedicated mode | Purpose |
+| --- | --- | --- |
+| `sf.grpc.host` | `0.0.0.0` | Address to bind |
+| `sf.grpc.port` | `38765` | API port |
+
+Pass system properties before `-jar`:
+
+```bash
+java -Xmx2G -XX:+EnableDynamicAgentLoading -Dsf.grpc.host=127.0.0.1 -Dsf.grpc.port=38766 -jar SoulFireDedicated.jar
+```
+
+For remote clients, configure a suitable listener and [HTTPS access](/docs/server/access).
+A remote client's `127.0.0.1` refers to that client, not this backend.
+
+## Console and shutdown
+
+`-Dterminal.jline=true` or `false` controls the interactive terminal.
+`-Dterminal.ansi=true` or `false` controls terminal colors.
+
+Pause scripts and stop bots before maintenance.
+Run `stop` in the backend console for a clean shutdown.
+Restart from the same directory to preserve its saved data.
+Use [backup and restore](/docs/server/backup-and-restore) before replacing the JAR or moving that directory.

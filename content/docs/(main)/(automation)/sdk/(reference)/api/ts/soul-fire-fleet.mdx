@@ -1,0 +1,90 @@
+---
+title: SoulFireFleet
+description: Public TypeScript members of SoulFireFleet.
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+Compose Effect operations with `yield*` inside a scoped workflow. Properties expose sub-clients and state.
+
+## select
+
+```ts
+select(
+  selector: FleetSelector = {},
+  options?: CallOptions,
+): Effect.Effect<readonly FleetBot[], SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/fleet.ts#L281)
+
+## start
+
+```ts
+start(
+  selector: FleetSelector = {},
+  options?: CallOptions,
+): Effect.Effect<BotStatus[], SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/fleet.ts#L347)
+
+## stop
+
+```ts
+stop(
+  selector: FleetSelector = {},
+  options?: CallOptions,
+): Effect.Effect<BotStatus[], SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/fleet.ts#L357)
+
+## restart
+
+```ts
+restart(
+  selector: FleetSelector = {},
+  options?: CallOptions,
+): Effect.Effect<BotStatus[], SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/fleet.ts#L367)
+
+## startTasks
+
+```ts
+startTasks<
+  Input extends DescMessage,
+  Result extends DescMessage | undefined = undefined,
+>(
+  selector: FleetSelector,
+  inputSchema: Input,
+  input:
+    | MessageInitShape<Input>
+    | ((
+        bot: FleetBot,
+        index: number,
+        total: number,
+      ) =>
+        | MessageInitShape<Input>
+        | Effect.Effect<MessageInitShape<Input>, SoulFireOperationError>),
+  resultSchema?: Result,
+  options: FleetTaskStartOptions = {},
+): Effect.Effect<SoulFireFleetTaskGroup<Result>, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/fleet.ts#L378)
+
+## distribute
+
+```ts
+distribute<Item>(
+  items: readonly Item[],
+  selector: FleetSelector = {},
+  options: FleetDistributionOptions = {},
+): Effect.Effect<readonly FleetAssignment<Item>[], SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/fleet.ts#L448)

@@ -21,6 +21,9 @@ const typeGenerator = createGenerator({
 export const docs = defineDocs({
   dir: "content/docs",
   docs: {
+    schema: frontmatterSchema.extend({
+      sidebarTitle: z.string().min(1).optional(),
+    }),
     postprocess: {
       includeProcessedMarkdown: true,
       extractLinkReferences: true,

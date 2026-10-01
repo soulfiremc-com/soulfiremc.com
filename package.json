@@ -29,7 +29,11 @@
     "generate-images": "tsx scripts/generate-images.ts",
     "db:migrate": "cf d1 migrations apply 68aff6f2-3d21-48bd-b24e-7286f6e0b5a4 --dir drizzle-d1 --local --persist-to .wrangler/state",
     "db:migrate:remote": "cf d1 migrations apply 68aff6f2-3d21-48bd-b24e-7286f6e0b5a4 --dir drizzle-d1",
-    "test": "tsx --test tests/*.test.ts"
+    "test": "tsx --test tests/*.test.ts",
+    "generate-node-reference": "tsx scripts/generate-node-reference.ts",
+    "check-script-recipes": "tsx scripts/check-script-recipes.ts",
+    "check-docs": "bun validate-links && bun generate-node-reference --check && bun generate-sdk-reference --check && bun check-script-recipes && bun check-sdk-recipes && bun check-plugin-examples",
+    "check-plugin-examples": "tsx scripts/check-plugin-examples.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
@@ -53,7 +57,6 @@
     "@radix-ui/react-slot": "^1.3.3",
     "@react-email/render": "^2.1.0",
     "@scalar/api-client-react": "^2.0.44",
-    "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.3",
     "@tanstack/devtools-vite": "^0.8.5",
     "@tanstack/query-core": "^5.102.8",

@@ -1,0 +1,59 @@
+---
+title: Execution, data, and bot context
+sidebarTitle: "Execution and data"
+description: Understand graph wires before combining triggers, values, and actions.
+icon: GitBranch
+---
+
+## Execution wires
+
+An execution wire selects the next node to run.
+A trigger starts the graph, and action or flow nodes continue that path through their execution outputs.
+A data wire alone does not mean that an action runs.
+
+For a branch, connect the action to the appropriate **True** or **False** execution output.
+For a loop, distinguish the body output from the output after the loop finishes.
+Use the [node reference](/docs/scripting/node-reference) for the exact port IDs of your backend baseline.
+
+## Data wires
+
+A data wire supplies an input value from another node's output.
+The engine resolves that value as part of the workflow.
+Values have types such as string, number, boolean, bot, vector, list, or map.
+
+A required input needs a compatible value.
+An optional input can use its declared default.
+The editor's inline value supplies an unconnected input, such as a chat message or interval.
+Do not connect an execution port to a data port.
+
+## Bot context
+
+Bot event triggers carry the bot that caused the event.
+Downstream bot actions use that execution context unless a connected bot input overrides it.
+This makes the [first script](/docs/scripting/first-script) work with only an execution wire.
+
+A trigger without a bot context needs an explicit bot source for bot actions.
+Choose or iterate the intended bots rather than assuming that a timer selects one automatically.
+Check the trigger's outputs and action requirements in the reference.
+
+## Branches and loops
+
+Start with one branch and a known constant condition.
+Check both paths before connecting game state to the condition.
+For a loop, use a small bounded input first.
+Check the expected number of actions and the completion path.
+
+A loop that sends chat, requests HTTP data, or calls an AI model can multiply work quickly.
+Use a delay, rate limit, and the script's quotas where the workload needs them.
+
+## Subscriptions and side effects
+
+Data nodes compute values. Action nodes change the world or backend state.
+Keep those changes on a clear execution path.
+A timer, reconnect, or repeated chat event can run the same action again.
+Design repeated execution deliberately.
+
+## Related guides
+
+Use [state and persistence](/docs/scripting/state) for values shared across events.
+Use [debugging](/docs/scripting/debugging) to inspect an unexpected execution path.

@@ -40,7 +40,7 @@ const clientLoader = browserCollections.blog.createClientLoader<{
   component({ default: MDX }, props) {
     return (
       <div className="flex flex-col gap-10">
-        <article className="prose dark:prose-invert max-w-none">
+        <article className="prose max-w-none">
           <MDX components={getMDXComponents()} />
         </article>
         {props.relatedPosts.length > 0 ? (

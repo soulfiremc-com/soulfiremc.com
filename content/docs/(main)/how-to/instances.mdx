@@ -1,0 +1,50 @@
+---
+title: Manage instances and bot lifecycle
+sidebarTitle: "Instances"
+description: Isolate a run and distinguish requested state from a live Minecraft connection.
+icon: BookOpen
+---
+
+An instance is a saved set of accounts, settings, proxies, scripts, and bot state.
+Use a separate instance for each test target or independent workflow.
+
+## Create a run
+
+1. Open **Instances** and create an instance with a descriptive name.
+2. Open the instance and set its Minecraft target in **Bot Settings**.
+3. Add the accounts that this run needs.
+4. Review enabled plugins and scripts before starting bots.
+
+Check that the target and account count match your intended run.
+An instance name does not select a different SoulFire backend.
+
+## Start only the bots you need
+
+On **Overview**, enter the number of stopped bots to start.
+Use **Start all** only when you want every stopped account to run.
+Use a bot's context menu for its individual lifecycle actions.
+
+A request to run is not proof of a connection.
+The backend can be connecting, waiting to retry, or disconnected while the requested state remains running.
+Check the runtime state and disconnect reason as well as the requested state.
+
+## Stop a run
+
+1. Pause scripts that can start bots or submit work.
+2. Stop the bots from **Overview**.
+3. Check that the Minecraft player list returns to its expected size.
+4. Check that no reconnects occur after the configured retry delay.
+
+For a durable SDK task, [cancel the task explicitly](/docs/sdk/tasks).
+Closing an SDK connection closes local subscriptions. It does not cancel all server-owned work.
+
+## Remove an instance
+
+Stop its bots and export any scripts you want to keep.
+Then delete the instance from the instance management page.
+Deletion removes its saved data. A script export is not a full instance backup.
+For recovery of server data, use [backup and restore](/docs/server/backup-and-restore).
+
+## Related concepts
+
+Read [bot state and task ownership](/docs/concepts/bot-lifecycle) for reconnects, connection epochs, and control resources.

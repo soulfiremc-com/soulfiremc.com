@@ -1,0 +1,64 @@
+---
+title: Prepare a repeatable test
+sidebarTitle: "Preparation"
+description: Define the target, workload, limits, and evidence before adding bots.
+icon: BookOpen
+---
+
+## Define the question
+
+Write one sentence that describes the result you need.
+Choose a measurable limit before the run, such as login success rate or acceptable tick duration.
+Record who will stop the run if it exceeds that limit.
+
+## Prepare the target
+
+1. Use a Minecraft environment that you control.
+2. Preserve its world and settings before a test that can change them.
+3. Record the server software, version, plugins, proxy topology, and authentication mode.
+4. Check player limits, allowlists, permissions, and account requirements.
+5. Connect one normal player and one SoulFire bot.
+
+A rejected login must be resolved before it becomes part of a load test.
+Use [compatibility checks](/docs/testing/compatibility) for versions and authentication.
+
+## Prepare the workload
+
+Create a dedicated SoulFire instance for the run.
+Record its target address, account count, account type, join timing, proxy routes, enabled plugins, and scripts.
+Disable behaviors unrelated to the question.
+
+Use separate names for each account. A duplicate login can disconnect an earlier bot.
+For an online-mode target, import authenticated accounts that can join the server.
+
+## Record a run manifest
+
+Copy this template into your test notes:
+
+```text
+Run name:
+Start time and timezone:
+Question and pass criteria:
+Minecraft software/version:
+Minecraft plugins and proxy topology:
+SoulFire server/client version:
+SDK version or script export, if used:
+Target address from the SoulFire backend:
+Accounts and authentication type:
+Proxy routes:
+Bot count at each stage:
+Join delay and observation duration:
+Bot behavior:
+Stop condition:
+Baseline metrics:
+Result and artifact locations:
+```
+
+## Prepare observations
+
+Record Minecraft tick duration, CPU, memory, player count, and disconnect reasons.
+Record the same resource metrics on the SoulFire backend.
+Use your server's metrics and profiling tools. For Spark, see the [official command guide](https://spark.lucko.me/docs/Command-Usage).
+
+Capture the baseline before the bot run.
+Synchronize clocks so you can correlate logs from both servers.

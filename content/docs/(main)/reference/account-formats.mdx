@@ -1,5 +1,6 @@
 ---
 title: Account Formats
+sidebarTitle: "Account formats"
 description: See supported account types, import formats, and account settings.
 icon: FileUser
 ---
@@ -93,9 +94,14 @@ Username3
 
 | Setting | Default | What it does |
 | --- | --- | --- |
-| **Name format** | `Bot_%d` | Controls how generated offline accounts are named |
 | **Shuffle accounts** | `false` | Randomizes account order before bots join |
 | **Use proxies for account auth** | `false` | Sends Microsoft authentication through your configured proxies |
 | **Account import concurrency** | `3` | Controls how many account imports run at the same time |
 
-If no accounts are selected, SoulFire generates offline accounts from the configured name format.
+## Offline generation in the client
+
+The generation dialog takes an amount, a name format containing `%d`, and a duplicate-handling mode.
+These are client inputs, separate from the server's account settings.
+For example, an amount of `2` with `DocsBot_%d` creates `DocsBot_1` and `DocsBot_2`.
+
+See [add accounts](/docs/how-to/import-accounts) for the workflow.

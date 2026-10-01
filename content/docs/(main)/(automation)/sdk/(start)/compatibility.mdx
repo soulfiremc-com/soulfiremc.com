@@ -1,0 +1,103 @@
+---
+title: SDK versions and installation
+sidebarTitle: "Installation and versions"
+description: Install the exact API baseline used by these examples instead of mixing incompatible releases.
+icon: GitBranch
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+<Callout type="warning">
+  These guides describe the Effect-based SDK in the 2.11.0 source tree.
+  At the documentation audit on October 1, 2026, npm and PyPI still published 2.10.0.
+  The Python 2.10.0 package exposes different async/sync APIs. Do not run these examples against that package.
+</Callout>
+
+## The documentation baseline
+
+Examples and generated reference use the [pinned SoulFire source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2).
+The SDK source reports version `2.11.0`.
+Use a SoulFire backend compatible with that API baseline.
+The connection handshake checks API versions, features, and required plugins before returning a usable client.
+
+The install instructions below use the pinned source directly.
+They remain reproducible even if a package registry changes its latest release.
+For released software, consult the README shipped with that release and its matching API.
+
+## TypeScript source installation
+
+Install Git and Bun. Clone and build the pinned SDK:
+
+```bash
+git clone https://github.com/soulfiremc-com/SoulFire.git SoulFire-sdk-source
+cd SoulFire-sdk-source
+git checkout --detach 213ec6322325e94c8068c079344b66f8158628e2
+bun install --frozen-lockfile
+cd sdk/typescript
+bun run build
+```
+
+Create your application beside the source checkout:
+
+```bash
+cd ../../..
+mkdir soulfire-tutorial
+cd soulfire-tutorial
+bun init -y
+bun add ../SoulFire-sdk-source/sdk/typescript effect @effect/platform
+```
+
+Save the complete [TypeScript tutorial](/docs/sdk/typescript) in `soulfire-tutorial`.
+Keep the source checkout available while using this local package dependency.
+
+## Python source installation
+
+Install Git and CPython 3.14 or newer.
+Create a virtual environment and install the pinned package:
+
+```bash
+mkdir soulfire-python-tutorial
+cd soulfire-python-tutorial
+python3.14 -m venv .venv
+.venv/bin/python -m pip install "soulfire @ git+https://github.com/soulfiremc-com/SoulFire.git@213ec6322325e94c8068c079344b66f8158628e2#subdirectory=sdk/python"
+```
+
+On Windows, use `py -3.14 -m venv .venv` and `.venv\Scripts\python` in place of `.venv/bin/python`.
+The package installs `effect-python`, which provides the `effect_py` module, and its required RPC dependencies.
+
+## Obtain a matching backend
+
+If you already have a backend, try the connection handshake before writing automation.
+A compatibility failure needs a matching backend or an SDK made for that release.
+
+To build this exact backend baseline, check out the same revision and install Java 25.
+Packaging also requires native Vulkan artifacts. Follow the source tree's
+[native runtime build instructions](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/docs/vulkan-runtime.md).
+They include the Linux builder and the platform-specific packaging command.
+
+Use the resulting JAR from `dedicated-launcher/build/libs` with the
+[Java deployment guide](/docs/server/java). Keep it in a separate test deployment
+until you have verified the backend, plugins, and SDK together.
+
+## Check the installed version
+
+TypeScript:
+
+```bash
+bun pm ls
+```
+
+Python:
+
+```bash
+.venv/bin/python -c "from importlib.metadata import version; print(version('soulfire'))"
+```
+
+Expect `2.11.0` from this source baseline.
+The backend must also pass the SDK handshake. A matching package label alone does not prove compatibility.
+
+## Generated and live reference
+
+The [SDK API](/docs/sdk/api) and [node reference](/docs/scripting/node-reference) link to the pinned source.
+The [HTTP schema](/docs/openapi) reports its own version and covers unary JSON operations.
+The connected server's metadata, node palette, and command help describe its actual installed capabilities.

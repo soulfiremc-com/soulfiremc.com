@@ -1,5 +1,6 @@
 ---
 title: Troubleshooting
+sidebarTitle: "Overview"
 description: Diagnose common SoulFire problems by symptom instead of guessing.
 icon: BadgeAlert
 ---
@@ -16,17 +17,23 @@ import { Callout } from 'fumadocs-ui/components/callout';
 Use this section when SoulFire does not work as expected.
 Start with the symptom that is closest to what you see on screen or in the logs.
 
-## Before you change anything
+## Collect a useful report
 
 Collect the basics first:
 
-- the exact SoulFire version
+- the SoulFire backend, client, SDK, Minecraft, and plugin versions
 - whether you are using GUI, CLI, or a dedicated server
 - whether the problem is local or remote
 - the exact error text
 - the smallest setup that still reproduces the issue
 - whether the problem disappears when you remove proxies or automation
 
+Include what you expected, what happened, and the timestamp with its timezone.
+Copy the first relevant error and its surrounding log lines.
+For Docker, attach the service state and recent backend log.
+For scripts, attach the paused graph export. For SDK programs, include a minimal complete file.
+
+Remove API tokens, passwords, cookies, refresh tokens, and private addresses before sharing the report.
 This information helps other people reproduce the problem.
 
 ## Pick the closest symptom
@@ -83,7 +90,7 @@ If you can make the problem disappear by turning off one layer, you have found t
 
 - [Run Your First Session in GUI Mode](/docs/start-here/gui-mode)
 - [CLI Mode](/docs/start-here/cli-mode)
-- [Deploy a Dedicated Server](/docs/start-here/dedicated-server)
+- [Deploy a Dedicated Server](/docs/server/automated-setup)
 - [Import Accounts](/docs/how-to/import-accounts)
 - [Import Proxies](/docs/how-to/import-proxies)
 - [Automation](/docs/automation)

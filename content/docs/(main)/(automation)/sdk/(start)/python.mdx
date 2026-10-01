@@ -1,0 +1,111 @@
+---
+title: Your first Python program
+sidebarTitle: "Python"
+description: Find one bot, connect it, send chat, and stop it with scoped cleanup.
+icon: Code
+---
+
+This program uses CPython 3.14 and the Effect-based SDK.
+It sends one message and registers a stop action for scope cleanup.
+
+## Install the matching SDK
+
+Complete [SDK versions and installation](/docs/sdk/compatibility).
+Use the virtual environment from that guide for every command on this page.
+
+## Prepare the backend
+
+1. Connect to a compatible SoulFire server from the desktop app.
+2. Create an instance named `Docs tutorial`.
+3. Add one account named `DocsBot_1` and set the Minecraft target.
+4. Stop that bot before running this program.
+5. Run `generate-token api` in the backend console or authenticated terminal.
+
+Use the [first-bot tutorial](/docs/start-here/gui-mode) to prepare the instance.
+For a dedicated backend, use [server access](/docs/server/access).
+The program finds the instance and bot by their names, so no UUID placeholders remain.
+
+## Set the connection
+
+In the terminal that will run the program, set:
+
+```bash
+export SOULFIRE_URL="http://127.0.0.1:38765"
+export SOULFIRE_TOKEN="YOUR_API_TOKEN"
+```
+
+Use the backend's HTTPS URL for a remote deployment.
+`SOULFIRE_URL` is the SoulFire API address, not the Minecraft server address.
+Keep the token in your environment rather than the source file.
+On PowerShell, use `$env:SOULFIRE_URL = "..."` and `$env:SOULFIRE_TOKEN = "..."`.
+
+## Save the complete program
+
+Create `first_bot.py`:
+
+```python title="first_bot.py" doc-test lineNumbers
+import asyncio
+import os
+
+from effect_py import EffectGen, Scope, add_finalizer, gen, run_async, scoped
+from soulfire import SoulFire, SoulFireOperationError
+
+
+@gen
+def program() -> EffectGen[None, SoulFireOperationError, Scope]:
+    client = yield from SoulFire.connect(
+        os.environ["SOULFIRE_URL"], token=os.environ["SOULFIRE_TOKEN"]
+    )
+    instances = yield from client.instances()
+    record = next((item for item in instances if item.friendly_name == "Docs tutorial"), None)
+    if record is None:
+        raise RuntimeError("Create the Docs tutorial instance first")
+    instance = client.instance(record.id)
+    accounts = yield from instance.bots()
+    account = next((item for item in accounts if item.account_name == "DocsBot_1"), None)
+    if account is None:
+        raise RuntimeError("Add the DocsBot_1 account first")
+    bot = instance.bot(account.profile_id)
+
+    yield from add_finalizer(lambda _: bot.stop().or_die())
+    yield from bot.start()
+    yield from bot.wait_for_online()
+    yield from bot.chat.send("Hello from the Python tutorial")
+    print(f"Sent chat from {account.account_name}; stopping the bot")
+
+
+asyncio.run(run_async(scoped(program).or_die()))
+```
+
+## Run and check the result
+
+```bash
+.venv/bin/python first_bot.py
+```
+
+On Windows, run `.venv\Scripts\python first_bot.py`.
+Check these results:
+
+- The program prints `Sent chat from DocsBot_1; stopping the bot`.
+- Minecraft chat shows `Hello from the Python tutorial` from that account.
+- The bot leaves the player list when the program finishes.
+
+If the SDK handshake fails, compare backend and SDK API versions.
+If Minecraft login fails, inspect the disconnect reason in **Overview**.
+If cleanup cannot reach the backend, stop the bot from the GUI after restoring access.
+
+## Read the code
+
+`@gen` defines an Effect workflow. `yield from` runs its operations.
+`scoped` owns the connection and the stop finalizer.
+`run_async` runs the workflow through the async runtime.
+`or_die()` converts remaining typed failures into boundary errors.
+
+Use `or_die()` at the application boundary after you decide how to handle expected errors.
+In a larger application, inspect failures or recover inside the workflow instead.
+Read [runtime and advanced examples](/docs/sdk/python-runtime) for streams, managed servers, layers, and service integration.
+
+## Next step
+
+[Discover IDs](/docs/sdk/discover-bots), then run a complete [recipe](/docs/sdk/recipes).
+Read [task ownership](/docs/concepts/bot-lifecycle) before submitting durable work.

@@ -1,0 +1,66 @@
+---
+title: Back up and restore a server
+sidebarTitle: "Backup and restore"
+description: Create a consistent backup and verify it before relying on recovery.
+icon: Archive
+---
+
+This procedure uses a Docker Compose deployment with a host directory mounted at `/soulfire/data`.
+For a named volume or Java deployment, use the same stop-copy-restore sequence with that deployment's paths.
+
+## Before you start
+
+Locate your Compose file, data directory, plugin files, and current image tag or digest.
+Choose a backup destination outside the deployment directory.
+A copy of a running SQLite database alone is not a complete backup.
+
+## Create a stopped backup
+
+1. Pause scripts and cancel work that must not resume later.
+2. Stop all bots and check the Minecraft player list.
+3. Stop the backend cleanly from its deployment directory:
+
+```bash
+docker compose stop
+```
+
+4. Copy the complete data directory to your backup destination.
+5. Copy the Compose file, environment file, installed plugins, and launch configuration.
+6. Record the SoulFire version, image digest, date, and file ownership.
+7. Start the backend with the original deployment:
+
+```bash
+docker compose start
+```
+
+Check authenticated client access and the saved instance list.
+Keep the backup private. It can contain account credentials and the token signing key.
+
+## Verify recovery in isolation
+
+1. Create a separate deployment directory.
+2. Restore a copy of the backup there.
+3. Use the recorded software version and plugin set.
+4. Bind its listener to a different local port.
+5. Keep test bots stopped and prevent accidental access to the production target.
+6. Start the restored backend and connect an authenticated client.
+
+Check users, instances, account counts, settings, and scripts.
+Run one disposable bot against a test Minecraft server to check the complete connection path.
+Do not mark the backup usable until this recovery check succeeds.
+
+## Restore the original deployment
+
+Stop the current backend before replacing its data.
+Preserve its current data in a separate directory first.
+Restore the verified backup and its matching software and plugins.
+Preserve file ownership, especially the container's UID/GID `1001` for writable data.
+
+Start the backend. Repeat the authenticated access and instance checks.
+Start one bot before resuming the remaining workload.
+
+## Signing keys and rollback
+
+Restoring `secret-key.bin` preserves the signing identity of the backed-up server.
+Treat that key as a credential.
+A software rollback can require its pre-upgrade data copy. Read [upgrade and rollback](/docs/server/upgrades) before changing versions.

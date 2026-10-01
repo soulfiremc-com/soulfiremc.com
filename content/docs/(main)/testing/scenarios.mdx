@@ -1,0 +1,44 @@
+---
+title: Reproduce player workflows
+sidebarTitle: "Player workflows"
+description: Add behavior that exercises the system you actually want to measure.
+icon: BookOpen
+---
+
+Choose a workflow that matches the question in your [run manifest](/docs/testing/prepare).
+Keep the idle login test as a baseline.
+
+## Chat and commands
+
+Use [scoped commands](/docs/how-to/commands) to send a message from one bot first.
+For repeatable behavior, use a [visual script](/docs/scripting/first-script) or [SDK chat recipe](/docs/sdk/recipes/reply-to-chat).
+Record message frequency and Minecraft permissions.
+
+## Movement and chunk loading
+
+Use [pathfinding](/docs/sdk/pathfinding) or movement nodes to follow a known route.
+Repeat the same coordinates for comparison runs.
+Separate movement through existing chunks from new chunk generation.
+A random route changes the workload between runs.
+
+## Inventories and world actions
+
+Use [inventory workflows](/docs/sdk/inventory) or the [item-transfer recipe](/docs/sdk/recipes/transfer-items).
+Prepare the same container, items, and permissions before each run.
+Check the final inventory state as well as the action result.
+
+Use a disposable world copy for block collection or excavation.
+Record the blocks and search radius. Restore the same fixture between comparisons.
+
+## Authentication and reconnects
+
+Exercise one login path at a time: offline account, Microsoft account, or a server authentication plugin.
+Use [auto-register](/docs/how-to/auto-register) only for the target plugin that needs it.
+Record the disconnect reason and time to reconnect.
+Do not mix duplicate-name disconnects with network recovery measurements.
+
+## Automate the scenario
+
+Choose [visual scripting, SDK, or plugins](/docs/automation) based on the required behavior.
+Export the script or save the complete SDK program with the run notes.
+Record any server-owned task IDs so you can cancel them during cleanup.

@@ -1,91 +1,49 @@
 ---
-title: Docs
-description: Install SoulFire, connect your first bots, automate them, and look up product details.
+title: SoulFire documentation
+sidebarTitle: "Overview"
+description: Connect a bot, test a Minecraft server, and build repeatable automation.
 icon: Compass
 ---
 
-import {
-  Bot,
-  Code,
-  Compass,
-  DownloadIcon,
-  FileText,
-  Lightbulb,
-  TriangleAlert,
-  Waypoints,
-  Workflow,
-  Wrench,
-} from 'lucide-react';
 import { Cards, Card } from 'fumadocs-ui/components/card';
-import { Callout } from 'fumadocs-ui/components/callout';
 
-<Callout type="info">
-  New users can start with the local GUI.
-  Choose a setup, install SoulFire, then connect your first bots in the desktop app.
-</Callout>
+SoulFire runs Minecraft clients without a game window. You control them from the desktop app, visual scripts, or an SDK.
+Use it to test servers you operate, reproduce player workflows, and develop bot behavior.
 
-SoulFire is a Minecraft bot framework for server testing, automation, and development.
-The documentation groups pages by task.
+## Connect your first bot
 
-## Start here
+[Install SoulFire](/docs/start-here), then complete the [first-bot tutorial](/docs/start-here/gui-mode).
+You will create one offline account, connect to a test server, send chat, and stop the bot.
+No plugin or programming experience is required.
 
-Follow these pages in order if this is your first time with SoulFire.
+## What do you want to do?
 
 <Cards>
-  <Card
-    icon={<Compass />}
-    title="Choose Your Setup"
-    href="/docs/start-here/choose-your-setup"
-  >
-    Choose the local GUI, CLI automation, or a remote dedicated server.
-  </Card>
-  <Card
-    icon={<DownloadIcon />}
-    title="Install SoulFire"
-    href="/docs/start-here"
-  >
-    Pick the right desktop or server install path.
-  </Card>
-  <Card
-    icon={<Workflow />}
-    title="Run Your First Bots"
-    href="/docs/start-here/gui-mode"
-  >
-    Create an instance, configure a target, and start bots from the GUI.
-  </Card>
+  <Card title="User guide" href="/docs/how-to">Manage instances, accounts, proxies, settings, commands, and the bot view.</Card>
+  <Card title="Server testing" href="/docs/testing">Establish a baseline, add bots in stages, reproduce behavior, and record results.</Card>
+  <Card title="Automation" href="/docs/automation">Choose visual scripting or the SDK, then build repeatable bot workflows.</Card>
+  <Card title="Server administration" href="/docs/server">Deploy the backend, manage access, preserve data, and upgrade with a rollback plan.</Card>
+  <Card title="Plugin development" href="/docs/development">Build a Fabric plugin with events, settings, and direct Minecraft access.</Card>
+  <Card title="Concepts" href="/docs/concepts">Understand the client/server model, bot lifecycle, and task ownership.</Card>
+  <Card title="Reference" href="/docs/reference">Look up commands, flags, account formats, and supported versions.</Card>
+  <Card title="Troubleshooting" href="/docs/troubleshooting">Diagnose connection, authentication, proxy, script, and deployment problems.</Card>
 </Cards>
 
-## Browse by goal
+## Look up a detail or solve a problem
 
-<Cards>
-  <Card icon={<Compass />} title="Start Here" href="/docs/start-here">
-    Installation and first-run guides for new users.
-  </Card>
-  <Card icon={<Wrench />} title="How-to Guides" href="/docs/how-to">
-    Complete specific tasks such as importing accounts, proxies, and plugins.
-  </Card>
-  <Card icon={<Code />} title="SDK" href="/docs/sdk">
-    Control SoulFire from a TypeScript or Python program.
-  </Card>
-  <Card icon={<Bot />} title="Automation" href="/docs/automation">
-    Choose the best way to automate your bots.
-  </Card>
-  <Card icon={<Workflow />} title="Scripting" href="/docs/scripting">
-    Build bot behaviors with drag-and-drop nodes.
-  </Card>
-  <Card icon={<TriangleAlert />} title="Troubleshooting" href="/docs/troubleshooting">
-    Fix connection, authentication, proxy, scripting, and deployment problems.
-  </Card>
-  <Card icon={<Code />} title="Development" href="/docs/development">
-    Build custom Fabric plugins when scripting is not enough and you need low-level access.
-  </Card>
-  <Card icon={<Waypoints />} title="OpenAPI" href="/docs/openapi">
-    Read the generated HTTP API reference.
-  </Card>
-  <Card icon={<FileText />} title="Reference" href="/docs/reference">
-    Look up commands, flags, formats, versions, and built-in plugin lists.
-  </Card>
-  <Card icon={<Lightbulb />} title="Concepts" href="/docs/concepts">
-    Learn how SoulFire clients, servers, and plugins work together.
-  </Card>
-</Cards>
+- [Reference](/docs/reference): commands, flags, formats, versions, and terminology.
+- [Node reference](/docs/scripting/node-reference): built-in nodes and their ports.
+- [SDK reference](/docs/sdk/api): source-linked method signatures and options.
+- [HTTP API reference](/docs/openapi): unary JSON endpoints and their contracts.
+- [Troubleshooting](/docs/troubleshooting): symptoms, diagnostic steps, and recovery.
+- [Concepts](/docs/concepts): the client/server model and ownership of bot work.
+
+## Two different servers
+
+The **SoulFire server** runs your bots and stores instance data.
+The **Minecraft server** is the target that those bots join.
+For a local first run, the desktop app starts the SoulFire server for you.
+A remote SoulFire server uses the same client and workflows.
+
+Use SoulFire on Minecraft servers that you own or have permission to test.
+For support, bring the versions and relevant error from the [diagnostic checklist](/docs/troubleshooting#collect-a-useful-report).

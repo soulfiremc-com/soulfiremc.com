@@ -1,0 +1,57 @@
+---
+title: SoulFireProtocol
+description: Public TypeScript members of SoulFireProtocol.
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+Compose Effect operations with `yield*` inside a scoped workflow. Properties expose sub-clients and state.
+
+## info
+
+```ts
+info(
+  options?: CallOptions,
+): Effect.Effect<BotProtocolInfo, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/protocol.ts#L45)
+
+## schemas
+
+```ts
+schemas(
+  direction: PacketDirection,
+  options?: CallOptions,
+): Effect.Effect<readonly PacketSchema[], SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/protocol.ts#L53)
+
+## packets
+
+```ts
+packets(
+  options: WatchPacketsOptions = {},
+): Stream.Stream<RawPacketEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/protocol.ts#L68)
+
+## send
+
+```ts
+send(
+  encodedPacket: Uint8Array,
+  options: SendRawPacketOptions = {},
+): Effect.Effect<
+  {
+    name: string;
+    encodedBytes: number;
+  },
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/protocol.ts#L84)

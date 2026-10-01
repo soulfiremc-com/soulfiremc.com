@@ -1,0 +1,71 @@
+---
+title: SoulFireFleetTaskGroup
+description: Public Python members of SoulFireFleetTaskGroup.
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+Methods decorated with `@fn` return effects. Their implementation signatures use `EffectGen` for the generator body. Compose them with `yield from` inside a scoped workflow.
+
+## size
+
+```python
+@property
+def size(self) -> int
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/fleet.py#L205)
+
+## events
+
+```python
+def events(
+    self,
+    *,
+    after_revision: int | None = None,
+    headers: Headers = None,
+    timeout_ms: int | None = None,
+    buffer_size: int = 64,
+) -> Stream[FleetTaskStreamEvent, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/fleet.py#L208)
+
+## results
+
+```python
+@fn("SoulFireFleetTaskGroup.results")
+def results(
+    self, *, concurrency: int = 8, headers: Headers = None, timeout_ms: int | None = None
+) -> EffectGen[FleetTaskReport[ResultT], SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/fleet.py#L227)
+
+## require_results
+
+```python
+@fn("SoulFireFleetTaskGroup.require_results")
+def require_results(
+    self, *, concurrency: int = 8, headers: Headers = None, timeout_ms: int | None = None
+) -> EffectGen[tuple[ResultT, ...], SoulFireOperationError | FleetTaskGroupError[ResultT]]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/fleet.py#L253)
+
+## cancel
+
+```python
+@fn("SoulFireFleetTaskGroup.cancel")
+def cancel(
+    self,
+    reason: str = "",
+    *,
+    concurrency: int = 8,
+    headers: Headers = None,
+    timeout_ms: int | None = None,
+) -> EffectGen[FleetOperationReport[BotTask], SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/fleet.py#L264)

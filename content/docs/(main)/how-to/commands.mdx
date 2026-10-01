@@ -1,0 +1,56 @@
+---
+title: Run a command for one bot
+sidebarTitle: "Commands"
+description: Use the instance terminal and bot selector without affecting an entire fleet.
+icon: SquareTerminal
+---
+
+The instance **Terminal** accepts SoulFire commands.
+These commands run on the SoulFire backend. They differ from Minecraft chat commands.
+
+## Send chat through one bot
+
+With `DocsBot_1` connected in your tutorial instance, run:
+
+```text
+bot DocsBot_1 say Hello from one bot
+```
+
+Check that only `DocsBot_1` sends the message.
+The `bot` selector accepts a comma-separated list of account names.
+
+## Inspect before changing state
+
+```text
+online
+bot DocsBot_1 health
+```
+
+Check the selected instance and bot names before running a movement or inventory command.
+A command without a bot selector can affect multiple bots in its scope.
+
+## Send a Minecraft command
+
+```text
+bot DocsBot_1 say /help
+```
+
+The Minecraft server handles `/help` with the bot's permissions.
+A SoulFire access token does not grant Minecraft operator permissions.
+
+## Stop movement and bot sessions
+
+```text
+bot DocsBot_1 control reset
+bots stop
+```
+
+`control reset` clears movement inputs. It does not disconnect the bot.
+`bots stop` requests stopped state for configured bots in the selected instance scope.
+The plain `stop` command shuts down the SoulFire backend.
+
+## Look up the available commands
+
+Run `help` in the terminal.
+Use [command reference](/docs/reference/commands) for selectors, actions, and task commands.
+Plugins can add commands, so the live server help is the final authority for your installation.

@@ -1,5 +1,6 @@
 ---
 title: Import Accounts
+sidebarTitle: "Accounts"
 description: Add offline or Microsoft accounts to a SoulFire instance.
 icon: UserPlus
 ---
@@ -9,7 +10,7 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 ## Before you start
 
-- If you do not import any accounts, SoulFire can generate offline accounts from the configured **Name format**.
+- Add at least one account before starting a run. Generate offline accounts explicitly from the client dialog.
 - Use offline accounts only on servers that accept them.
 - For exact file formats and defaults, see [Account Formats](/docs/reference/account-formats).
 
@@ -30,6 +31,17 @@ import { Callout } from 'fumadocs-ui/components/callout';
 | **Microsoft Java Cookies** | You want to import a browser login session |
 | **Microsoft Java Access Token** | You only have a short-lived access token |
 | **Offline** | The target server accepts offline-mode accounts |
+
+## Generate offline accounts
+
+Open **Account Settings** and use the offline account generation dialog.
+Set the amount and a name format such as `TestBot_%d`.
+The client replaces `%d` with a number, starting at `1`.
+Review the duplicate-handling mode before generating accounts.
+
+Check the resulting account list before starting bots.
+If you press **Start** with an empty list, the client can open this dialog for you.
+It does not turn a name format into a persistent server setting.
 
 ## Import accounts in the GUI
 
@@ -57,7 +69,7 @@ import { Callout } from 'fumadocs-ui/components/callout';
     ### Review the imported accounts
 
     Make sure that the instance shows the expected accounts.
-    Then start the bots.
+    Start one bot first. Check its login result before starting the remaining accounts.
   </Step>
 </Steps>
 
@@ -75,7 +87,6 @@ For the full flag list, see [Command line flags](/docs/reference/cli-flags).
 
 | Setting | What it changes |
 | --- | --- |
-| **Name format** | Controls how generated offline accounts are named |
 | **Shuffle accounts** | Randomizes the account order before bots join |
 | **Use proxies for account auth** | Sends Microsoft authentication through your configured proxies |
 | **Account import concurrency** | Controls how many account imports run at the same time |

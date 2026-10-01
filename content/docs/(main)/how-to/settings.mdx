@@ -1,0 +1,42 @@
+---
+title: Change settings deliberately
+sidebarTitle: "Settings"
+description: Change the correct settings layer and check its effect with one bot.
+icon: BookOpen
+---
+
+Settings affect different stages of a bot session.
+Changing an authentication setting does not change the Minecraft target or enable a plugin.
+
+## Choose the correct page
+
+| Goal | Page |
+| --- | --- |
+| Change target address, version, join timing, or timeout | Bot Settings |
+| Add accounts, shuffle them, or route account authentication through proxies | Account Settings |
+| Add proxy routes and check them | Proxy Settings |
+| Enable a built-in behavior and change its parameters | Plugin Settings |
+| Change the backend's server-wide behavior | Server settings |
+
+## Change a running workflow
+
+1. Record the current value and the expected effect.
+2. Stop one test bot if the change affects login, target, version, or routing.
+3. Save the new setting in the intended instance.
+4. Restart that bot and inspect its state and logs.
+5. Apply the change to the remaining bots after the result matches your expectation.
+
+A saved setting does not prove that an existing connection uses the new value.
+Target and authentication behavior need a new connection to exercise them.
+
+## Keep experiments reproducible
+
+Record the target version, account type, proxy route, enabled plugins, join timing, and scripts.
+Change one factor between comparison runs.
+Use [test preparation](/docs/testing/prepare) for a complete run record.
+
+## Read settings from the SDK
+
+Use the [administration API](/docs/sdk/administration) to inspect and update an instance's settings.
+Use the server's settings metadata for valid keys and value types.
+Do not invent a setting from a label in a screenshot.

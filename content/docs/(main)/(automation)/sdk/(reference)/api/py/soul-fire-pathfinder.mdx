@@ -1,0 +1,108 @@
+---
+title: SoulFirePathfinder
+description: Public Python members of SoulFirePathfinder.
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+Methods decorated with `@fn` return effects. Their implementation signatures use `EffectGen` for the generator body. Compose them with `yield from` inside a scoped workflow.
+
+## plan
+
+```python
+@fn("SoulFirePathfinder.plan")
+def plan(
+    self,
+    goal: PathfindGoal,
+    *,
+    options: PathfindOptions | None = None,
+    include_descriptions: bool = False,
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+) -> EffectGen[PathPlan, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/pathfinding.py#L68)
+
+## go_to
+
+```python
+@fn("SoulFirePathfinder.go_to")
+def go_to(
+    self,
+    goal: PathfindGoal,
+    *,
+    options: PathfindOptions | None = None,
+    conflict_policy: BotTaskConflictPolicy = BOT_TASK_CONFLICT_POLICY_UNSPECIFIED,
+    reconnect_policy: BotTaskReconnectPolicy = BOT_TASK_RECONNECT_POLICY_UNSPECIFIED,
+    priority: BotTaskPriority = BOT_TASK_PRIORITY_UNSPECIFIED,
+    deadline: datetime | None = None,
+    idempotency_key: str | None = None,
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+) -> EffectGen[SoulFireTask[GoToTaskResult], SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/pathfinding.py#L92)
+
+## run
+
+```python
+def run(
+    self,
+    goal: PathfindGoal,
+    *,
+    options: PathfindOptions | None = None,
+    reconnect_policy: BotTaskReconnectPolicy = BOT_TASK_RECONNECT_POLICY_UNSPECIFIED,
+    deadline: datetime | None = None,
+    idempotency_key: str | None = None,
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/pathfinding.py#L119)
+
+## follow
+
+```python
+@fn("SoulFirePathfinder.follow")
+def follow(
+    self,
+    target: EntityTargetLike,
+    *,
+    distance: float = 3,
+    options: PathfindOptions | None = None,
+    target_unavailable_timeout_seconds: int = 0,
+    conflict_policy: BotTaskConflictPolicy = BOT_TASK_CONFLICT_POLICY_UNSPECIFIED,
+    reconnect_policy: BotTaskReconnectPolicy = BOT_TASK_RECONNECT_POLICY_UNSPECIFIED,
+    priority: BotTaskPriority = BOT_TASK_PRIORITY_UNSPECIFIED,
+    deadline: datetime | None = None,
+    idempotency_key: str | None = None,
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+) -> EffectGen[SoulFireTask[FollowEntityTaskResult], SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/pathfinding.py#L141)
+
+## run_follow
+
+```python
+def run_follow(
+    self,
+    target: EntityTargetLike,
+    *,
+    distance: float = 3,
+    options: PathfindOptions | None = None,
+    target_unavailable_timeout_seconds: int = 0,
+    reconnect_policy: BotTaskReconnectPolicy = BOT_TASK_RECONNECT_POLICY_UNSPECIFIED,
+    deadline: datetime | None = None,
+    idempotency_key: str | None = None,
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/pathfinding.py#L172)

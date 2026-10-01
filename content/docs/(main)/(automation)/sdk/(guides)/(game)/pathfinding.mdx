@@ -1,0 +1,227 @@
+---
+title: Pathfinding
+sidebarTitle: "Pathfinding"
+description: Plan, inspect, follow, and stop paths for SoulFire bots.
+icon: Route
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from '../../../../../../../src/components/mdx/sdk-tabs';
+
+SoulFire plans and runs paths on the server near the Minecraft game loop.
+The SDK provides typed goals, planning options, durable task handles, and progress streams.
+
+## Build a goal
+
+The goal helpers cover exact blocks, nearby world positions, moving entities,
+XZ columns, Y levels, block breaking, block placement, retreat, and
+first-completed composites.
+
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
+    ```ts
+    const goal = goals.any([
+      goals.near(
+        {
+          dimension: "minecraft:overworld",
+          x: 120,
+          y: 68,
+          z: -40,
+        },
+        2,
+      ),
+      goals.awayFromEntity(hostile.reference, 24),
+    ]);
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python
+    goal = goals.any(
+        [
+            goals.near(
+                WorldTarget(
+                    dimension="minecraft:overworld",
+                    x=120,
+                    y=68,
+                    z=-40,
+                ),
+                2,
+            ),
+            goals.away_from_entity(hostile.reference, 24),
+        ]
+    )
+    ```
+  </Tab>
+</Tabs>
+
+Add the target's connection epoch to entity goals.
+After reconnect, SoulFire rejects a stale reference instead of following an entity that reused the network ID.
+
+## Preview a path
+
+Planning does not move the bot and requires only read access:
+
+```ts
+const plan = yield* bot.pathfinder.plan(goal, {
+  path: {
+    allowMining: false,
+    allowPlacing: true,
+    searchTimeoutSeconds: 10,
+    placeBlockPenalty: 12,
+  },
+  includeDescriptions: true,
+});
+```
+
+```python
+plan = yield from bot.pathfinder.plan(
+    goal,
+    options=PathfindOptions(
+        allow_mining=False,
+        allow_placing=True,
+        search_timeout_seconds=10,
+        place_block_penalty=12,
+    ),
+    include_descriptions=True,
+)
+```
+
+The plan distinguishes complete, partial, unreachable, expired, cancelled, quality-bound, and pending-world-data results. It includes ordered movement steps, blocks to break, blocks to
+place, the maximum execution budget, and an explanation for partial plans.
+
+Use preview for user confirmation, cost estimates, build material checks, and
+debug visualizations. The world can change after planning, so execution still
+replans when required.
+
+## Choose search quality and limits
+
+The planner uses Anytime Repairing A* (ARA*).
+It searches a captured world revision and repairs candidate routes toward the requested quality bound.
+
+| Mode | Initial epsilon | Default quality bound |
+| --- | ---: | ---: |
+| `PRECISION` | 1.0 | 1.0 |
+| `NORMAL` | 2.5 | 1.2 |
+| `URGENT` | 3.0 | 1.5 |
+| `ESCAPE` | 4.0 | 2.0 |
+
+An unset mode uses `NORMAL`.
+`PRECISION` performs exact A* search.
+The quality bound applies to `routeCost.optimizationCost`, not to each individual cost component.
+
+```ts
+import { PathfindSearchMode } from "@soulfiremc/sdk";
+
+const plan = yield* bot.pathfinder.plan(goal, {
+  path: {
+    searchMode: PathfindSearchMode.NORMAL,
+    maximumQualityBound: 1.2,
+    maximumExpandedStates: 50_000,
+    maximumFallDistance: 3,
+    maximumParkourGap: 0,
+    smoothCamera: true,
+    protectedBlocks: [chestPosition],
+  },
+});
+```
+
+```python
+from soulfire.bot_live_pb2 import PATHFIND_SEARCH_MODE_NORMAL, PathfindOptions
+
+plan = yield from bot.pathfinder.plan(
+    goal,
+    options=PathfindOptions(
+        search_mode=PATHFIND_SEARCH_MODE_NORMAL,
+        maximum_quality_bound=1.2,
+        maximum_expanded_states=50_000,
+        maximum_fall_distance=3,
+        maximum_parkour_gap=0,
+        smooth_camera=True,
+        protected_blocks=[chest_position],
+    ),
+)
+```
+
+`maximumQualityBound` must be between 1.0 and the selected mode's initial epsilon.
+The planner does not execute a complete route that misses the requested bound.
+A zero expansion budget uses the server default.
+Ordinary falls and parkour gaps cannot exceed three blocks.
+A zero parkour gap disables parkour.
+Protected blocks cannot be broken and must belong to the bot's current dimension.
+Camera smoothing stays within the movement controller's safe tolerances.
+
+## Inspect search diagnostics
+
+Plans include route damage, world changes, placed blocks, broken blocks, duration cost, and optimization cost.
+They also report the quality bound, expanded states, generated transitions, search duration, and repair iterations.
+
+`WORLD_DATA_PENDING` means that required client chunks were absent from the captured world.
+Inspect `unavailableChunks` and wait for world data before another search.
+`QUALITY_BOUND_NOT_MET` means that no complete route met the requested quality bound within the search limits.
+A zero `qualityBound` means that the result contains no certified complete route.
+
+`frontierReason` distinguishes a level boundary, search deadline, and expansion budget.
+Use `worldRevision` to identify the captured navigation state.
+These diagnostics distinguish missing world data and exhausted search budgets from an unreachable goal.
+
+## Execute a durable path
+
+`goTo` or `go_to` returns a task handle immediately. `run` streams the task
+until it reaches a terminal state.
+
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
+    ```ts
+    const task = yield* bot.pathfinder.goTo(goal, {
+      path: {
+        allowMining: true,
+        allowPlacing: true,
+        timeoutSeconds: 120,
+      },
+      idempotencyKey: crypto.randomUUID(),
+    });
+
+    const result = yield* task.result();
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python
+    task = yield from bot.pathfinder.go_to(
+        goal,
+        options=PathfindOptions(
+            allow_mining=True,
+            allow_placing=True,
+            timeout_seconds=120,
+        ),
+        idempotency_key=str(uuid.uuid4()),
+    )
+
+    result = yield from task.result()
+    ```
+  </Tab>
+</Tabs>
+
+The task retains progress, ownership, priority, resource conflicts, deadline,
+reconnect policy, and cancellation state. It can keep running when the SDK
+process disconnects if its selected policy allows that.
+
+## Follow a moving entity
+
+```ts
+const task = yield* bot.pathfinder.follow(hostile.reference, 3, {
+  targetUnavailableTimeoutSeconds: 10,
+});
+```
+
+The server resolves the entity on each replan. Following fails clearly when
+the connection epoch changes or the target remains unavailable beyond the
+configured grace period.
+
+<Callout type="warning">
+  Mining and placement change the world. Leave both disabled for observation
+  and navigation-only tools, or acquire an appropriate control lease and
+  permission before enabling them.
+</Callout>
+
+Use the [task APIs](/docs/sdk/tasks) for cancellation, disconnect policy,
+resource arbitration, and multi-bot coordination.

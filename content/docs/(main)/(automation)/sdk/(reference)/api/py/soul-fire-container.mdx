@@ -1,0 +1,81 @@
+---
+title: SoulFireContainer
+description: Public Python members of SoulFireContainer.
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+Methods decorated with `@fn` return effects. Their implementation signatures use `EffectGen` for the generator body. Compose them with `yield from` inside a scoped workflow.
+
+## snapshot
+
+```python
+@property
+def snapshot(self) -> ContainerSnapshot
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/semantic.py#L617)
+
+## closed
+
+```python
+@property
+def closed(self) -> bool
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/semantic.py#L621)
+
+## refresh
+
+```python
+@fn("SoulFireContainer.refresh")
+def refresh(
+    self, *, timeout_ms: int | None = None
+) -> EffectGen[ContainerSnapshot, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/semantic.py#L625)
+
+## deposit
+
+```python
+@fn("SoulFireContainer.deposit")
+def deposit(
+    self,
+    selector: ItemSelector,
+    count: int,
+    *,
+    idempotency_key: str | None = None,
+    timeout_ms: int | None = None,
+) -> EffectGen[ContainerSnapshot, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/semantic.py#L649)
+
+## withdraw
+
+```python
+@fn("SoulFireContainer.withdraw")
+def withdraw(
+    self,
+    selector: ItemSelector,
+    count: int,
+    *,
+    idempotency_key: str | None = None,
+    timeout_ms: int | None = None,
+) -> EffectGen[ContainerSnapshot, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/semantic.py#L669)
+
+## close
+
+```python
+@fn("SoulFireContainer.close")
+def close(
+    self, *, idempotency_key: str | None = None, timeout_ms: int | None = None
+) -> EffectGen[ContainerSnapshot, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/semantic.py#L689)

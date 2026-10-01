@@ -1,0 +1,139 @@
+---
+title: Inventory and containers
+sidebarTitle: "Inventory"
+description: Read inventories and move items safely between containers.
+icon: PackageOpen
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from '../../../../../../../src/components/mdx/sdk-tabs';
+
+Use `bot.inventory` to query or move items.
+Use a container handle for several operations on the same menu.
+The handle includes the latest revision and rejects a stale or replaced menu.
+
+## Open, transfer, and close
+
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
+    ```ts
+    yield* Effect.scoped(
+      Effect.gen(function* () {
+        const chest = yield* bot.inventory.openScoped(chestPosition);
+
+        yield* chest.deposit(
+          { itemIds: ["minecraft:cobblestone"] },
+          64,
+        );
+        yield* chest.withdraw(
+          { tags: ["minecraft:foods"] },
+          16,
+        );
+      }),
+    );
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python
+    chest = yield from bot.inventory.open(chest_position)
+    yield from chest.deposit(
+        ItemSelector(item_ids=["minecraft:cobblestone"]),
+        64,
+    )
+    yield from chest.withdraw(
+        ItemSelector(tags=["minecraft:foods"]),
+        16,
+    )
+    ```
+  </Tab>
+</Tabs>
+
+`deposit` moves an exact item count from the inventory or hotbar into the container.
+`withdraw` moves items in the other direction.
+Both methods plan the full transfer before they click any slots.
+They stop if the source has too few items or the destination has too little space.
+
+## Inspect current state
+
+Read `container.snapshot` without another RPC. It contains:
+
+- Container and state IDs
+- A stable content revision
+- Container type and semantic layout
+- Every slot and its inventory area
+- Cursor contents
+- Selected hotbar slot
+- `pathBuildingBlockCount` or `path_building_block_count` for disposable full blocks available to route construction
+
+Call `refresh` after another actor changes the menu.
+If a different menu is open, the handle closes and raises `SoulFireContainerClosedError`.
+
+## Choose the best item
+
+SoulFire can rank the bot's tools, melee weapons, armor, food, and safe
+scaffold blocks. Every recommendation includes its slot, item snapshot,
+total score, and the factors that produced that score.
+
+<Tabs items={['TypeScript', 'Python']}>
+  <Tab value="TypeScript">
+    ```ts
+    const tool = yield* bot.inventory.bestTool(blockPosition, {
+      preferHotbar: true,
+      preferHighDurability: true,
+      preferredEnchantmentIds: ["minecraft:fortune"],
+      excludedEnchantmentIds: ["minecraft:vanishing_curse"],
+    });
+
+    if (tool !== undefined) {
+      yield* Effect.logInfo(tool.factors);
+    }
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python
+    tool = yield from bot.inventory.best_tool(
+        block_position,
+        prefer_hotbar=True,
+        prefer_high_durability=True,
+        preferred_enchantment_ids=["minecraft:fortune"],
+        excluded_enchantment_ids=["minecraft:vanishing_curse"],
+    )
+    ```
+  </Tab>
+</Tabs>
+
+Tool rankings use the loaded target block and the bot's real mining
+calculation. Weapon rankings consider attack damage and speed. Armor rankings
+consider defense, toughness, and knockback resistance. Food rankings reject
+harmful consumables and compare nutrition with saturation. Scaffold rankings
+only include safe, non-falling block items.
+
+Use `rank` when you want several candidates. Enchantment preferences add a
+visible score factor, while exclusions remove a candidate entirely. The
+response carries the inventory revision so a later mutation can reject stale
+input.
+
+## Retry safely
+
+Supply an idempotency key when retrying an operation after an uncertain
+network result:
+
+```ts
+yield* chest.deposit(selector, 64, {
+  idempotencyKey: crypto.randomUUID(),
+});
+```
+
+The server binds the key to the authenticated user, bot, operation, and
+request fingerprint. Reusing it with different input is rejected.
+
+<Callout type="info">
+  The SDK also exposes `snapshot`, `count`, `find`, `move`, `transfer`, `toss`,
+  `rank`, `selectHotbar`, `equip`, and `unequip` for one-off inventory
+  operations. `unequip` moves a main-hand, offhand, or armor item into the
+  first compatible empty player slot.
+  Generated protocol clients remain available for unusual container fields.
+</Callout>
+
+Continue with [durable production tasks](/docs/sdk/tasks) for crafting,
+smelting, brewing, and exact-count villager trading.

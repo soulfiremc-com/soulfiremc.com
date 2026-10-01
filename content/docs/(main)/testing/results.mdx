@@ -1,0 +1,48 @@
+---
+title: Record results and clean up
+sidebarTitle: "Results and cleanup"
+description: Preserve evidence and return both servers to their expected state.
+icon: BookOpen
+---
+
+## Record what happened
+
+Complete the manifest from [test preparation](/docs/testing/prepare).
+Include these observations for every stage:
+
+| Observation | Why it matters |
+| --- | --- |
+| Requested and actual connected bots | Shows whether SoulFire delivered the workload |
+| Login success and disconnect reasons | Separates rejected logins from capacity problems |
+| Tick duration and resource metrics | Shows target responsiveness and saturation |
+| SoulFire resources | Identifies limits on the bot backend |
+| Bot actions and final state | Shows whether the intended workflow completed |
+| Time after the stop | Shows whether the target recovered |
+
+Preserve logs with timestamps, profiler reports, script exports, SDK programs, and relevant screenshots.
+Remove tokens, passwords, cookies, and account secrets before sharing artifacts.
+
+## Interpret a result
+
+State whether the run meets the criteria you chose before the test.
+List any changed variables or missing observations.
+A run with failed logins or a saturated SoulFire backend does not establish the target's player capacity.
+
+Repeat an important comparison with the same fixture.
+Report the observed range across repeats instead of treating one peak as a universal limit.
+
+## Clean up
+
+1. Pause scripts and other automation.
+2. Cancel server-owned tasks that the run created.
+3. Stop all test bots.
+4. Check that the Minecraft player list returns to baseline.
+5. Restore the world fixture if the workflow changed it.
+6. Preserve the run artifacts before deleting its instance.
+
+Do not use the SoulFire `stop` command unless you intend to shut down the entire bot backend.
+
+## Next action
+
+Choose one change from the evidence, then repeat the same workload.
+If you need support, include the symptom and the [diagnostic report](/docs/troubleshooting#collect-a-useful-report).

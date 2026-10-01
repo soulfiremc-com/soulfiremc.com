@@ -1,0 +1,470 @@
+---
+title: SoulFireAdmin
+description: Public TypeScript members of SoulFireAdmin.
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+Compose Effect operations with `yield*` inside a scoped workflow. Properties expose sub-clients and state.
+
+## clientData
+
+```ts
+clientData(
+  options?: CallOptions,
+): Effect.Effect<ClientDataResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L122)
+
+## generateWebDavToken
+
+```ts
+generateWebDavToken(
+  options?: CallOptions,
+): Effect.Effect<string, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L130)
+
+## generateApiToken
+
+```ts
+generateApiToken(
+  options?: CallOptions,
+): Effect.Effect<string, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L140)
+
+## updateUsername
+
+```ts
+updateUsername(
+  username: string,
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L150)
+
+## updateEmail
+
+```ts
+updateEmail(
+  email: string,
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L165)
+
+## invalidateOwnSessions
+
+```ts
+invalidateOwnSessions(
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L177)
+
+## serverInfo
+
+```ts
+serverInfo(
+  options?: CallOptions,
+): Effect.Effect<ServerInfoResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L188)
+
+## updateServerConfig
+
+```ts
+updateServerConfig(
+  config: ServerConfig,
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L196)
+
+## setServerConfigEntry
+
+```ts
+setServerConfigEntry(
+  request: Input<typeof ServerUpdateConfigEntryRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L211)
+
+## users
+
+```ts
+users(
+  options?: CallOptions,
+): Effect.Effect<UserListResponse_User[], SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L226)
+
+## user
+
+```ts
+user(
+  userId: string,
+  options?: CallOptions,
+): Effect.Effect<UserInfoResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L236)
+
+## createUser
+
+```ts
+createUser(
+  request: Input<typeof UserCreateRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<string, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L245)
+
+## deleteUser
+
+```ts
+deleteUser(
+  userId: string,
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L256)
+
+## updateUser
+
+```ts
+updateUser(
+  request: Input<typeof UpdateUserRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L268)
+
+## invalidateUserSessions
+
+```ts
+invalidateUserSessions(
+  userId: string,
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L280)
+
+## generateUserApiToken
+
+```ts
+generateUserApiToken(
+  userId: string,
+  options?: CallOptions,
+): Effect.Effect<string, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L295)
+
+## userPluginPermissionGrants
+
+```ts
+userPluginPermissionGrants(
+  userId: string,
+  options?: CallOptions,
+): Effect.Effect<UserPluginPermissionGrant[], SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L309)
+
+## setUserPluginPermissionGrant
+
+```ts
+setUserPluginPermissionGrant(
+  userId: string,
+  request: UserInput<typeof SetUserPluginPermissionGrantRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<UserPluginPermissionGrant, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L323)
+
+## deleteUserPluginPermissionGrant
+
+```ts
+deleteUserPluginPermissionGrant(
+  userId: string,
+  request: UserInput<typeof DeleteUserPluginPermissionGrantRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L336)
+
+## previousLogs
+
+```ts
+previousLogs(
+  request: Input<typeof PreviousLogRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<LogString[], SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L352)
+
+## logs
+
+```ts
+logs(
+  request: Input<typeof LogRequestSchema>,
+  options?: CallOptions,
+): Stream.Stream<LogResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L363)
+
+## serverMetrics
+
+```ts
+serverMetrics(
+  since?: Timestamp,
+  options?: CallOptions,
+): Effect.Effect<GetServerMetricsResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L376)
+
+## instanceMetrics
+
+```ts
+instanceMetrics(
+  instanceId: string,
+  since?: Timestamp,
+  options?: CallOptions,
+): Effect.Effect<GetInstanceMetricsResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L388)
+
+## executeCommand
+
+```ts
+executeCommand(
+  request: Input<typeof CommandRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<CommandResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L401)
+
+## completeCommand
+
+```ts
+completeCommand(
+  request: Input<typeof CommandCompletionRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<CommandCompletionResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L410)
+
+## download
+
+```ts
+download(
+  request: Input<typeof DownloadRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<DownloadResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L419)
+
+## pluginStats
+
+```ts
+pluginStats(
+  instanceId: string,
+  options?: CallOptions,
+): Effect.Effect<PluginRuntimeStat[], SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L428)
+
+## auditLog
+
+```ts
+auditLog(
+  instanceId: string,
+  options?: CallOptions,
+): Effect.Effect<
+  InstanceAuditLogResponse_AuditLogEntry[],
+  SoulFireOperationError
+>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L442)
+
+## scripts
+
+```ts
+scripts(
+  instanceId: string,
+  options?: CallOptions,
+): Effect.Effect<ScriptInfo[], SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L459)
+
+## script
+
+```ts
+script(
+  instanceId: string,
+  scriptId: string,
+  options?: CallOptions,
+): Effect.Effect<GetScriptResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L470)
+
+## createScript
+
+```ts
+createScript(
+  instanceId: string,
+  request: InstanceInput<typeof CreateScriptRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<CreateScriptResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L483)
+
+## updateScript
+
+```ts
+updateScript(
+  instanceId: string,
+  request: InstanceInput<typeof UpdateScriptRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<UpdateScriptResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L496)
+
+## deleteScript
+
+```ts
+deleteScript(
+  instanceId: string,
+  scriptId: string,
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L509)
+
+## activateScript
+
+```ts
+activateScript(
+  instanceId: string,
+  request: InstanceInput<typeof ActivateScriptRequestSchema>,
+  options?: CallOptions,
+): Stream.Stream<ScriptEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L525)
+
+## deactivateScript
+
+```ts
+deactivateScript(
+  instanceId: string,
+  scriptId: string,
+  options?: CallOptions,
+): Effect.Effect<void, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L542)
+
+## scriptStatus
+
+```ts
+scriptStatus(
+  instanceId: string,
+  scriptId: string,
+  options?: CallOptions,
+): Effect.Effect<GetScriptStatusResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L558)
+
+## scriptLogs
+
+```ts
+scriptLogs(
+  instanceId: string,
+  request: InstanceInput<typeof SubscribeScriptLogsRequestSchema>,
+  options?: CallOptions,
+): Stream.Stream<ScriptLogEntry, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L571)
+
+## nodeTypes
+
+```ts
+nodeTypes(
+  request: Input<typeof GetNodeTypesRequestSchema> = {},
+  options?: CallOptions,
+): Effect.Effect<GetNodeTypesResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L588)
+
+## scriptRegistryData
+
+```ts
+scriptRegistryData(
+  request: Input<typeof GetRegistryDataRequestSchema> = {},
+  options?: CallOptions,
+): Effect.Effect<GetRegistryDataResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L597)
+
+## validateScript
+
+```ts
+validateScript(
+  instanceId: string,
+  request: InstanceInput<typeof ValidateScriptRequestSchema>,
+  options?: CallOptions,
+): Effect.Effect<ValidateScriptResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L606)
+
+## dryRunScript
+
+```ts
+dryRunScript(
+  instanceId: string,
+  request: InstanceInput<typeof DryRunScriptRequestSchema>,
+  options?: CallOptions,
+): Stream.Stream<ScriptEvent, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/admin.ts#L619)

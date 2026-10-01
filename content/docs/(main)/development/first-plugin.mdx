@@ -1,5 +1,6 @@
 ---
 title: Build Your First Plugin
+sidebarTitle: "First plugin"
 description: Build a SoulFire plugin from the official template and load it as a Fabric mod.
 icon: Plug
 ---
@@ -34,6 +35,19 @@ At the end of this guide, you will have:
 - a built jar in `build/libs`
 - a jar that loads from SoulFire's `minecraft/mods` directory
 
+## Align the template with your backend
+
+The template is a starting project, not a promise that its pinned dependencies match your backend.
+At this audit, it pins `2.9.1-SNAPSHOT` and Minecraft `1.21.11_unobfuscated`.
+The native examples below compile against the [2.11.0 source baseline](/docs/sdk/compatibility), whose runtime uses Minecraft `26.3`.
+
+Compare the template's Minecraft, Fabric Loader, SoulFire, Loom, and Java versions with the backend you will run.
+Update the dependency set together. Do not change only the SoulFire version and retain incompatible Minecraft classes.
+For a released backend, use its matching published artifacts and source.
+For source development, use the matching backend build and local Maven artifacts.
+
+Read [Gradle and project layout](/docs/development/gradle-and-project-layout) before making that change.
+
 ## Create the project
 
 <Steps>
@@ -66,7 +80,7 @@ At the end of this guide, you will have:
 
     SoulFire plugins are Fabric mods, so the JVM entrypoint is still a normal `ModInitializer`:
 
-    ```java
+    ```java title="Main.java" doc-test
     package com.example.myplugin;
 
     import com.soulfiremc.server.api.SoulFireAPI;
@@ -75,12 +89,12 @@ At the end of this guide, you will have:
     public final class Main implements ModInitializer {
       @Override
       public void onInitialize() {
-        SoulFireAPI.registerServerExtension(new MyPlugin());
+        SoulFireAPI.loadPlugin(new MyPlugin());
       }
     }
     ```
 
-    `SoulFireAPI.registerServerExtension(...)` registers the plugin with SoulFire.
+    `SoulFireAPI.loadPlugin(...)` registers the plugin with SoulFire.
   </Step>
 
   <Step>
@@ -88,17 +102,19 @@ At the end of this guide, you will have:
 
     For external plugins, extend `ExternalPlugin` and provide `PluginInfo`:
 
-    ```java
+    ```java title="MyPlugin.java" doc-test
     package com.example.myplugin;
 
     import com.soulfiremc.server.api.ExternalPlugin;
     import com.soulfiremc.server.api.PluginInfo;
     import com.soulfiremc.server.api.event.bot.BotConnectionInitEvent;
-    import lombok.extern.slf4j.Slf4j;
+    import org.slf4j.Logger;
+    import org.slf4j.LoggerFactory;
     import net.lenni0451.lambdaevents.EventHandler;
 
-    @Slf4j
     public final class MyPlugin extends ExternalPlugin {
+      private static final Logger LOGGER = LoggerFactory.getLogger(MyPlugin.class);
+
       public MyPlugin() {
         super(new PluginInfo(
           "my-plugin",
@@ -112,7 +128,7 @@ At the end of this guide, you will have:
 
       @EventHandler
       public void onBotInit(BotConnectionInitEvent event) {
-        log.info("Bot {} was initialized", event.connection().accountName());
+        LOGGER.info("Bot {} was initialized", event.connection().accountName());
       }
     }
     ```
@@ -133,10 +149,23 @@ At the end of this guide, you will have:
 
     Copy the jar into SoulFire's Fabric mods directory and restart SoulFire:
 
-    - integrated GUI or CLI install: `soulfire/minecraft/mods`
-    - dedicated server install: `minecraft/mods` next to the server jar
+    - all deployments: `minecraft/mods` under the backend's base directory
+    - Docker: `/soulfire/data/minecraft/mods` inside the container
+
+    Use [persistent data](/docs/server/data) to locate that directory.
+    The remote client's installation directory is not the backend's mod directory.
   </Step>
 </Steps>
+
+## Check the event with one bot
+
+Start one bot in a test instance.
+Expect the backend log to include `Bot <account name> was initialized`.
+This event occurs during initialization, before a usable player and world necessarily exist.
+Use a later lifecycle event for actions that need a joined player.
+
+Stop the bot after the check.
+If the plugin appears in `plugins` but produces no event output, inspect event registration and the selected instance.
 
 ## Add settings and a plugin page
 

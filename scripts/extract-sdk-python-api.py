@@ -8,11 +8,18 @@ from pathlib import Path
 
 
 def extract(source_dir: Path) -> dict[str, list[dict[str, str | int]]]:
+    package = source_dir / "sdk" / "python" / "src" / "soulfire"
+    exports = ast.parse((package / "__init__.py").read_text())
+    exported_names = {
+        item.asname or item.name
+        for statement in exports.body if isinstance(statement, ast.ImportFrom)
+        for item in statement.names
+    }
     files = {
-        "client.py": ["SoulFire", "SoulFireInstance"],
-        "bot.py": ["SoulFireBot"],
-        "tasks.py": ["SoulFireTasks", "SoulFireTask"],
-        "semantic.py": ["SoulFireChat"],
+        path.name: [node.name for node in ast.parse(path.read_text()).body
+                    if isinstance(node, ast.ClassDef) and node.name in exported_names]
+        for path in sorted(package.glob("*.py"))
+        if not path.name.endswith(("_pb2.py", "_connect.py"))
     }
     result = {}
     for filename, class_names in files.items():
@@ -30,11 +37,12 @@ def extract(source_dir: Path) -> dict[str, list[dict[str, str | int]]]:
                 if member.name.startswith("_"):
                     continue
                 body_line = member.body[0].lineno
-                if body_line <= member.lineno:
-                    raise ValueError(f"Expected a multiline signature for {cls.name}.{member.name}")
-                signature = textwrap.dedent(
-                    "\n".join(lines[member.lineno - 1 : body_line - 1])
-                ).rstrip()
+                if body_line == member.lineno:
+                    signature = lines[member.lineno - 1][:member.body[0].col_offset].strip()
+                else:
+                    signature = textwrap.dedent(
+                        "\n".join(lines[member.lineno - 1 : body_line - 1])
+                    ).rstrip()
                 signature = signature.removesuffix(":")
                 # @fn exposes an Effect while the implementation uses EffectGen.
                 effect_decorator = "".join(
@@ -43,8 +51,8 @@ def extract(source_dir: Path) -> dict[str, list[dict[str, str | int]]]:
                     if isinstance(item, ast.Call) and isinstance(item.func, ast.Name) and item.func.id == "fn"
                 )
                 decorators = (
-                    "@classmethod\n"
-                    if any(isinstance(item, ast.Name) and item.id == "classmethod" for item in member.decorator_list)
+                    "".join(f"@{item.id}\n" for item in member.decorator_list if isinstance(item, ast.Name) and item.id in {"classmethod", "staticmethod", "property"})
+                    if any(isinstance(item, ast.Name) and item.id in {"classmethod", "staticmethod", "property"} for item in member.decorator_list)
                     else ""
                 )
                 methods.append(
@@ -53,9 +61,11 @@ def extract(source_dir: Path) -> dict[str, list[dict[str, str | int]]]:
                         "signature": f"{decorators}{effect_decorator}{signature}",
                         "line": member.lineno,
                         "file": filename,
+                        "description": ast.get_docstring(member) or "",
                     }
                 )
-            result[cls.name] = methods
+            if methods:
+                result[cls.name] = methods
     return result
 
 

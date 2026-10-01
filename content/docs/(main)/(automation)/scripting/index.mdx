@@ -1,0 +1,32 @@
+---
+title: Build visual bot behavior
+sidebarTitle: "Overview"
+description: Start with a two-node script, then learn execution, state, and debugging.
+icon: Workflow
+---
+
+import { Cards, Card } from 'fumadocs-ui/components/card';
+
+Visual scripts connect event triggers, data operations, and bot actions.
+The SoulFire backend executes the graph. The editor does not need to stay open.
+Scripts belong to an instance and act within that instance's bot context.
+
+## Learn by doing
+
+[Build your first script](/docs/scripting/first-script) to send one message when a bot joins.
+The tutorial includes a downloadable graph and a cleanup step.
+
+<Cards>
+  <Card title="Execution and data" href="/docs/scripting/execution-and-data">Understand which wires run nodes and which wires supply values.</Card>
+  <Card title="Triggers" href="/docs/scripting/triggers">Choose the event that starts a workflow.</Card>
+  <Card title="Variables and persistence" href="/docs/scripting/state">Choose state lifetime and reset behavior.</Card>
+  <Card title="Debug a graph" href="/docs/scripting/debugging">Use validation, logs, previews, and quotas.</Card>
+  <Card title="Importable recipes" href="/docs/scripting/recipes">Download small graphs with expected results.</Card>
+  <Card title="Node reference" href="/docs/scripting/node-reference">Look up IDs, input defaults, and output ports from the source.</Card>
+</Cards>
+
+## When to use another tool
+
+Use the [SDK](/docs/sdk) for a program with external libraries, typed errors, and fleet coordination.
+Use a [Fabric plugin](/docs/development) for custom backend events or direct Minecraft access.
+[Compare automation methods](/docs/automation) before building a large workflow.

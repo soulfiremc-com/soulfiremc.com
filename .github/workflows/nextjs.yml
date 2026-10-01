@@ -23,8 +23,25 @@ jobs:
       - name: Install dependencies
         run: bun ci
 
+      - name: Install Python for SDK documentation checks
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+
+      - name: Install Java for plugin documentation checks
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "25"
+
       - name: Run typecheck
         run: bun run typecheck
 
       - name: Run check
         run: bun run check
+
+      - name: Check documentation links, references, and examples
+        run: bun run check-docs
+
+      - name: Run tests
+        run: bun run test

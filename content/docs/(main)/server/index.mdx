@@ -1,0 +1,34 @@
+---
+title: Run a SoulFire server
+sidebarTitle: "Overview"
+description: Deploy and maintain the backend that owns your bot sessions and data.
+icon: Server
+---
+
+import { Cards, Card } from 'fumadocs-ui/components/card';
+
+A dedicated SoulFire server runs the backend independently of the desktop app.
+Use it for shared access, remote machines, and sessions that must continue after a client disconnects.
+It is separate from the Minecraft server that the bots join.
+
+## Deploy
+
+<Cards>
+  <Card title="Automated Linux setup" href="/docs/server/automated-setup">Use the official setup script for Docker and HTTPS.</Card>
+  <Card title="Docker" href="/docs/server/docker">Manage the container and persistent data yourself.</Card>
+  <Card title="Java" href="/docs/server/java">Run the dedicated JAR and configure its listener.</Card>
+</Cards>
+
+## Operate
+
+- [Access and HTTPS](/docs/server/access): connect clients and manage permissions.
+- [Persistent data](/docs/server/data): understand what must survive a restart.
+- [Backup and restore](/docs/server/backup-and-restore): create a consistent copy and verify recovery.
+- [Upgrade and rollback](/docs/server/upgrades): preserve the old software and matching data.
+- [Logs and performance](/docs/server/performance): diagnose failures and measure the backend.
+
+## Verify the deployment
+
+A healthy backend must answer its health check, accept an authenticated client, and connect a bot to your Minecraft target.
+A container marked healthy only proves the first of these.
+Complete the [first-bot tutorial](/docs/start-here/gui-mode) with **Dedicated server (remote)** after deployment.

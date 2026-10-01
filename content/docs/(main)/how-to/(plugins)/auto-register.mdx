@@ -1,0 +1,171 @@
+---
+title: Auto Register
+sidebarTitle: "Auto register"
+description: Configure SoulFire's auto-register plugin to respond to AuthMe-style register and login prompts automatically.
+icon: KeyRound
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+## What this is for
+
+Use `auto-register` when the target server expects players to register or log in through chat commands after joining.
+
+The current built-in behavior is simple:
+
+- if a chat message contains `/register` or `/reg`, SoulFire sends the configured register command
+- if a chat message contains `/login` or `/l`, SoulFire sends the configured login command
+- the command is sent after a random delay in milliseconds
+
+This works with AuthMe-style flows and similar chat login plugins.
+
+## What it expects
+
+This plugin works best when the server clearly tells the player which command to use in chat.
+
+It is a good fit when the server displays prompts such as:
+
+- `/register password password`
+- `/login password`
+- `/reg password password`
+- `/l password`
+
+It is a poor fit for:
+
+- GUI-based login systems
+- plugin flows that hide the command entirely
+- custom registration systems that do not expose standard chat prompts
+
+## Configure auto-register
+
+<Steps>
+  <Step>
+    ### Enable the plugin
+
+    Open **Plugins** and enable **Auto Register**.
+  </Step>
+
+  <Step>
+    ### Set the register command
+
+    Configure the exact command template used for registration.
+
+    The default is:
+
+    ```text
+    /register %password% %password%
+    ```
+  </Step>
+
+  <Step>
+    ### Set the login command
+
+    Configure the exact command template used for login.
+
+    The default is:
+
+    ```text
+    /login %password%
+    ```
+  </Step>
+
+  <Step>
+    ### Choose the password format
+
+    Set the password that replaces `%password%`.
+
+    The current implementation uses one shared configured password string.
+  </Step>
+
+  <Step>
+    ### Configure the send delay
+
+    Set a min/max delay in milliseconds before the command is sent.
+    The random delay changes the send time for each login.
+  </Step>
+</Steps>
+
+## Test it safely
+
+Start with one bot on one server.
+
+Make sure that:
+
+- the server actually shows a prompt containing `/register`, `/reg`, `/login`, or `/l`
+- the command template matches the server's expected syntax
+- the password format is what you intended
+- the server accepts the command after the chosen delay
+
+After this test works, increase the bot count.
+
+## Command examples
+
+These are reasonable starting points.
+Do not assume every server uses the same syntax.
+
+**Common registration command**
+
+```text
+/register %password% %password%
+```
+
+**Common login command**
+
+```text
+/login %password%
+```
+
+**If the server uses a different alias**
+
+```text
+/reg %password% %password%
+```
+
+## Delay guidance
+
+The delay controls when SoulFire sends the command after the prompt.
+
+- Keep the delay low if the server expects a fast response and the chat prompt is reliable.
+- Increase it slightly if the server, proxy, or chat pipeline is noisy and immediate responses misfire.
+- Do not push it arbitrarily high unless the server clearly needs it.
+
+## Security notes
+
+Treat the configured password as sensitive.
+
+- Do not reuse an important real-world password here.
+- Assume anyone with access to the instance settings can see or reuse it.
+- Prefer a dedicated test password for bots.
+
+<Callout type="warn">
+  This plugin does not prove that a server is safe to automate.
+  It only automates a chat-command login flow that already exists.
+</Callout>
+
+## Known limitations
+
+- It uses simple text matches in chat.
+- It does not currently support advanced per-bot password generation logic.
+- It will not help with non-chat registration systems.
+- It depends on the prompt reaching the bot in readable chat text.
+
+## Common failure patterns
+
+**Nothing happens after join**
+
+The server can use an unsupported prompt format, or the message can bypass normal chat.
+
+**The wrong command is sent**
+
+Your configured command template does not match the server's syntax.
+
+**The command is right, but registration still fails**
+
+Review the password format, command alias, and timing for that server.
+
+## Related pages
+
+- [Import Accounts](/docs/how-to/import-accounts)
+- [Accounts And Authentication](/docs/troubleshooting/accounts-and-authentication)
+- [Install Plugins](/docs/how-to/install-plugins)

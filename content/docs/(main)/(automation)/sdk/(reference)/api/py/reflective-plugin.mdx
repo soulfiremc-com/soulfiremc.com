@@ -1,0 +1,77 @@
+---
+title: ReflectivePlugin
+description: Public Python members of ReflectivePlugin.
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+Methods decorated with `@fn` return effects. Their implementation signatures use `EffectGen` for the generator body. Compose them with `yield from` inside a scoped workflow.
+
+## call
+
+```python
+@fn("ReflectivePlugin.call")
+def call(
+    self,
+    service_name: str,
+    method_name: str,
+    value: dict[str, Any],
+    *,
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+) -> EffectGen[ReflectiveMessage, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/plugins.py#L174)
+
+## start_task
+
+```python
+@fn("ReflectivePlugin.start_task")
+def start_task(
+    self,
+    tasks: SoulFireTasks,
+    input_type_url: str,
+    value: dict[str, Any],
+    **options: Unpack[TaskStartOptions],
+) -> EffectGen[SoulFireTask[Message], SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/plugins.py#L198)
+
+## stream
+
+```python
+def stream(
+    self,
+    service_name: str,
+    method_name: str,
+    value: dict[str, Any],
+    *,
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+) -> Stream[ReflectiveMessage, SoulFireOperationError]:
+    @gen
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/plugins.py#L208)
+
+## events
+
+```python
+def events(
+    self,
+    *,
+    type_urls: tuple[str, ...] = (),
+    instance_id: str | None = None,
+    bot_id: str | None = None,
+    task_id: str | None = None,
+    after_sequence: int = 0,
+    headers: dict[str, str] | None = None,
+    timeout_ms: int | None = None,
+) -> Stream[ReflectivePluginEvent, SoulFireOperationError]:
+    @gen
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/plugins.py#L239)

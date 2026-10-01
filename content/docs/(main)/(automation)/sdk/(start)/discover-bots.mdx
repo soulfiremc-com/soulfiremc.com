@@ -1,0 +1,79 @@
+---
+title: Find instance and bot IDs
+sidebarTitle: "Find bot IDs"
+description: Print the identifiers used by SDK recipes from an authenticated connection.
+icon: Search
+---
+
+Recipe environment variables use IDs rather than display names.
+An instance ID selects the saved instance. A bot ID is the account's profile ID in that instance.
+
+Complete the matching [TypeScript](/docs/sdk/typescript) or [Python](/docs/sdk/python) tutorial first.
+Keep its `SOULFIRE_URL` and `SOULFIRE_TOKEN` environment variables.
+
+## TypeScript
+
+Save `list-bots.ts` in your application directory:
+
+```ts title="list-bots.ts" doc-test
+import { Effect } from "effect";
+import { SoulFire } from "@soulfiremc/sdk";
+
+const baseUrl = process.env.SOULFIRE_URL;
+const token = process.env.SOULFIRE_TOKEN;
+if (!baseUrl || !token) throw new Error("Set SOULFIRE_URL and SOULFIRE_TOKEN");
+
+await Effect.runPromise(Effect.scoped(Effect.gen(function* () {
+  const client = yield* SoulFire.connect({ baseUrl, token });
+  for (const instance of yield* client.instances()) {
+    console.log(`Instance ${instance.friendlyName}: ${instance.id}`);
+    for (const bot of yield* client.instance(instance.id).bots()) {
+      console.log(`  Bot ${bot.accountName}: ${bot.profileId}`);
+    }
+  }
+})));
+```
+
+Run `bun run list-bots.ts`.
+
+## Python
+
+Save `list_bots.py` in your tutorial directory:
+
+```python title="list_bots.py" doc-test
+import asyncio
+import os
+
+from effect_py import EffectGen, Scope, gen, run_async, scoped
+from soulfire import SoulFire, SoulFireOperationError
+
+
+@gen
+def program() -> EffectGen[None, SoulFireOperationError, Scope]:
+    client = yield from SoulFire.connect(
+        os.environ["SOULFIRE_URL"], token=os.environ["SOULFIRE_TOKEN"]
+    )
+    instances = yield from client.instances()
+    for instance in instances:
+        print(f"Instance {instance.friendly_name}: {instance.id}")
+        bots = yield from client.instance(instance.id).bots()
+        for bot in bots:
+            print(f"  Bot {bot.account_name}: {bot.profile_id}")
+
+
+asyncio.run(run_async(scoped(program).or_die()))
+```
+
+Run `.venv/bin/python list_bots.py`.
+
+## Use the output
+
+Copy an instance ID and one of its bot IDs into the variables required by a recipe:
+
+```bash
+export SOULFIRE_INSTANCE_ID="THE_PRINTED_INSTANCE_ID"
+export SOULFIRE_BOT_ID="THE_PRINTED_BOT_ID"
+```
+
+Both programs list saved accounts. Listing a bot does not start it or prove that it is online.
+If the expected instance is absent, check the token user's permissions and the backend URL.

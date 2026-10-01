@@ -1,0 +1,214 @@
+---
+title: Forwarding Bypass
+sidebarTitle: "Forwarding bypass"
+description: Configure Modern, BungeeGuard, legacy forwarding, or SoulFireBypass for an online-mode proxy network.
+icon: ShieldCheck
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+## What this is for
+
+Use `forwarding-bypass` when a proxy requires forwarded player data instead of a direct login.
+
+The plugin supports:
+
+- BungeeCord-style legacy forwarding
+- BungeeGuard-protected legacy forwarding
+- Velocity modern forwarding
+- the external `SoulFireBypass` proxy plugin for allowing SoulFire bots onto an online-mode proxy network without disabling online mode globally
+
+If your target is a normal standalone server with no proxy forwarding in front of it, leave this plugin off.
+
+## What the built-in plugin supports
+
+SoulFire ships `forwarding-bypass` as a built-in plugin.
+It exposes these modes:
+
+| Mode | Use this when | Needs a secret | Uses `player-address` |
+|------|---------------|----------------|-----------------------|
+| `LEGACY` | The backend expects classic BungeeCord IP forwarding | No | Yes |
+| `BUNGEE_GUARD` | The backend uses BungeeGuard on top of legacy forwarding | Yes | Yes |
+| `MODERN` | The proxy/backend uses Velocity modern forwarding | Yes | Yes |
+| `SF_BYPASS` | You installed the separate SoulFireBypass plugin on the proxy | Yes | No |
+
+The related CLI flags are:
+
+- `--forwarding-bypass-enabled`
+- `--forwarding-bypass-forwarding-mode`
+- `--forwarding-bypass-secret`
+- `--forwarding-bypass-player-address`
+
+<Callout type="warn">
+  Forwarding is trust-sensitive infrastructure.
+  Select the correct mode and protect the secret.
+  An incorrect setup can create an authentication bypass.
+</Callout>
+
+## Enable forwarding-bypass in SoulFire
+
+<Steps>
+  <Step>
+    ### Open the instance
+
+    Open the SoulFire instance that will run the bots.
+  </Step>
+
+  <Step>
+    ### Enable the plugin
+
+    Open **Plugins** and enable **Forwarding Bypass**.
+  </Step>
+
+  <Step>
+    ### Select the forwarding mode
+
+    Open **Plugin Settings** and choose the mode that matches your proxy/backend setup.
+  </Step>
+
+  <Step>
+    ### Fill in the shared values
+
+    Set the secret if your selected mode needs one.
+    Set `player-address` if your selected mode uses it and you want the backend to see a specific player IP.
+  </Step>
+
+  <Step>
+    ### Start a small test first
+
+    Start with one bot.
+    Make sure that the backend accepts it before you add more bots.
+  </Step>
+</Steps>
+
+## How each mode behaves
+
+### Legacy
+
+`LEGACY` rewrites the handshake hostname with classic BungeeCord forwarding data.
+Use it only if your target actually expects that older forwarding format.
+
+### BungeeGuard
+
+`BUNGEE_GUARD` uses the legacy forwarding format and appends the BungeeGuard token inside the forwarded profile properties.
+Use the same token configured on your network.
+
+### Modern
+
+`MODERN` answers Velocity's `velocity:player_info` forwarding request during login.
+Use the same forwarding secret configured between your Velocity proxy and backend servers.
+
+### SoulFire Bypass
+
+`SF_BYPASS` is different from standard proxy forwarding.
+Instead of imitating normal forwarded player data, SoulFire appends a marker containing your shared key to the handshake hostname.
+The external proxy plugin reads that marker and forces offline-mode login only for connections carrying a valid key.
+
+This lets offline-mode SoulFire bots join an online-mode proxy without changing the global proxy mode.
+
+## Set up SoulFireBypass
+
+[SoulFireBypass on Modrinth](https://modrinth.com/plugin/soulfirebypass) is a separate proxy plugin.
+Its published description says it allows SoulFire to bypass online-mode auth on your server.
+The source code is published at [soulfiremc-com/SoulFireBypass](https://github.com/soulfiremc-com/SoulFireBypass).
+
+Use it when:
+
+- your public network still needs normal online-mode authentication for real players
+- you want a controlled exception for SoulFire bots
+- you do not want to disable online mode globally for tests
+
+<Callout type="warn">
+  Anyone who knows a valid SoulFireBypass key can impersonate a player through the proxy path protected by that plugin.
+  Treat the key like a password and rotate it if it is exposed.
+</Callout>
+
+### Proxy-side setup
+
+<Steps>
+  <Step>
+    ### Install the plugin on the proxy
+
+    Download `SoulFireBypass` from [Modrinth](https://modrinth.com/plugin/soulfirebypass) and place it on your proxy.
+
+    The Modrinth listing currently advertises Velocity, BungeeCord, and Waterfall compatibility.
+  </Step>
+
+  <Step>
+    ### Start the proxy once
+
+    Start the proxy so the plugin creates its data folder and `config.yml`.
+  </Step>
+
+  <Step>
+    ### Configure allowed keys
+
+    Edit the generated `config.yml` and replace the placeholder value under `allowed-keys` with a strong secret.
+
+    ```yml
+    allowed-keys:
+      - replace_this_with_a_long_random_key
+    ```
+  </Step>
+
+  <Step>
+    ### Restart the proxy
+
+    Restart after saving the config so the new key is loaded.
+  </Step>
+</Steps>
+
+### SoulFire-side setup
+
+<Steps>
+  <Step>
+    ### Enable Forwarding Bypass
+
+    In SoulFire, enable the built-in **Forwarding Bypass** plugin.
+  </Step>
+
+  <Step>
+    ### Select SoulFire Bypass mode
+
+    Set `forwarding-mode` to `SF_BYPASS`.
+  </Step>
+
+  <Step>
+    ### Use the same key
+
+    Set the plugin secret in SoulFire to the same value you added to `allowed-keys` on the proxy.
+  </Step>
+
+  <Step>
+    ### Join through the proxy entry point
+
+    Point SoulFire at the normal proxy address, not a backend server.
+  </Step>
+</Steps>
+
+## What SoulFireBypass actually changes
+
+With standard online-mode proxy auth, the proxy expects a normal authenticated player login flow.
+SoulFireBypass changes only one narrow part of that decision:
+
+- if the incoming handshake contains a valid `SF_<key>` marker, the proxy plugin forces offline-mode handling for that connection
+- if the key is missing or wrong, the connection stays on the normal online-mode path
+- this lets you keep normal auth for regular players while granting SoulFire a controlled bypass path
+
+This is not a general replacement for Velocity modern forwarding or BungeeGuard.
+It is a separate opt-in bypass path specifically for SoulFire.
+
+## Recommended usage
+
+- Use `MODERN` if you are connecting through a standard Velocity modern-forwarding setup and do not need SoulFireBypass.
+- Use `BUNGEE_GUARD` if you are testing against an older Bungee-style network protected by BungeeGuard.
+- Use `SF_BYPASS` if you specifically want SoulFire offline-mode bots to reach an otherwise online-mode proxy network.
+- Do not enable `forwarding-bypass` unless the server architecture actually requires it.
+
+## Related pages
+
+- [Install Plugins](/docs/how-to/install-plugins)
+- [Built-in Plugins](/docs/reference/built-in-plugins)
+- [Plugins](/docs/concepts/plugins)
+- [Proxies](/docs/troubleshooting/proxies)

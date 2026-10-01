@@ -1,3 +1,4 @@
+import { referencedSchemas } from "./openapi-contract";
 import { createOpenAPI } from "fumadocs-openapi/server";
 import type { OpenAPIPageProps_Spec } from "fumadocs-openapi/ui";
 import openApiDocument from "../../../public/sf-openapi.json" with { type: "json" };
@@ -31,6 +32,7 @@ type OpenApiOperation = {
       description?: string;
     }
   >;
+  security?: unknown;
   summary?: string;
   tags?: string[];
 };
@@ -42,6 +44,8 @@ type OpenApiSection = {
 };
 
 type OpenApiContentDocument = {
+  components?: { schemas?: Record<string, unknown>; securitySchemes?: unknown };
+  security?: unknown;
   paths?: Record<string, Record<string, unknown>>;
   webhooks?: Record<string, Record<string, unknown>>;
 };
@@ -70,7 +74,7 @@ export function isOpenApiPage(page: {
 }
 
 export function getOpenApiPageText(page: OpenApiPageLike) {
-  const sections = getOpenApiSections(page);
+  const sections = getOpenApiSections(page, true);
   const lines = [`# ${page.data.title}`, `URL: ${page.url}`];
 
   if (page.data.description) {
@@ -99,7 +103,10 @@ export function getOpenApiStructuredData(page: OpenApiPageLike) {
   };
 }
 
-function getOpenApiSections(page: OpenApiPageLike): OpenApiSection[] {
+function getOpenApiSections(
+  page: OpenApiPageLike,
+  includeContracts = false,
+): OpenApiSection[] {
   const props = page.data.getOpenAPIPageProps();
   const document = props.payload.bundled as OpenApiContentDocument;
   const sections: OpenApiSection[] = [];
@@ -109,7 +116,9 @@ function getOpenApiSections(page: OpenApiPageLike): OpenApiSection[] {
     const operation = pathItem?.[item.method] as OpenApiOperation | undefined;
 
     sections.push({
-      content: formatSectionContent(operation ?? {}),
+      content: includeContracts
+        ? formatContractContent(operation ?? {}, document)
+        : formatSectionContent(operation ?? {}),
       heading: `${item.method.toUpperCase()} ${item.path}`,
       id: toHeadingId(item.method, item.path),
     });
@@ -120,7 +129,9 @@ function getOpenApiSections(page: OpenApiPageLike): OpenApiSection[] {
     const operation = pathItem?.[item.method] as OpenApiOperation | undefined;
 
     sections.push({
-      content: formatSectionContent(operation ?? {}),
+      content: includeContracts
+        ? formatContractContent(operation ?? {}, document)
+        : formatSectionContent(operation ?? {}),
       heading: `Webhook ${item.method.toUpperCase()} /${item.name}`,
       id: toHeadingId(item.method, item.name),
     });
@@ -139,6 +150,23 @@ function getOpenApiSections(page: OpenApiPageLike): OpenApiSection[] {
       id: toHeadingId("page", page.slugs.join("/")),
     },
   ];
+}
+
+function formatContractContent(
+  operation: OpenApiOperation,
+  document: OpenApiContentDocument,
+) {
+  const contract = {
+    security: operation.security ?? document.security,
+    parameters: operation.parameters,
+    requestBody: operation.requestBody,
+    responses: operation.responses,
+  };
+  const schemas = referencedSchemas(
+    contract,
+    document.components?.schemas ?? {},
+  );
+  return `${formatSectionContent(operation)}\n\n### Request, response, and authentication contracts\n\n\`\`\`json\n${JSON.stringify({ ...contract, components: { securitySchemes: document.components?.securitySchemes, schemas } }, null, 2)}\n\`\`\``;
 }
 
 function cleanText(value: string) {

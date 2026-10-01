@@ -1,0 +1,308 @@
+---
+title: TypeScript runtime and advanced examples
+sidebarTitle: "TypeScript runtime"
+description: Build scoped TypeScript workflows with Effect, typed errors, and streams.
+icon: Code
+---
+
+
+The TypeScript SDK uses Effect for operations, streams, typed errors, and scoped resources.
+SDK calls describe work. They send requests when the Effect runtime executes the workflow.
+
+Use `yield*` inside `Effect.gen` to compose SDK operations.
+Keep connections and their consumers inside `Effect.scoped`.
+At an async application boundary, run the complete workflow with `Effect.runPromise`.
+
+See the [connection options](/docs/sdk/api/types) for supported fields.
+
+## Prerequisites
+
+Complete the [source-compatible SDK installation](/docs/sdk/compatibility) first.
+The snippets here demonstrate runtime integration, not a separate first-run procedure.
+
+
+Effect and `@effect/platform` are peer dependencies.
+Use one compatible Effect runtime in the application.
+
+## Run a managed local server on Node.js
+
+Local JVM download and process management use explicit Node.js entry points and
+require Node.js 22 or newer.
+The example creates or reuses an instance and an offline bot.
+Run an offline-mode Minecraft server at `127.0.0.1:25565` before the program.
+For this source baseline, set `SOULFIRE_JAR` to a matching dedicated JAR before running the example.
+The source installer accepts `jarPath`, so it can use a source build without a published release.
+Without `jarPath`, `install()` downloads a release. The registry's latest release can have an incompatible API.
+
+```ts title="local-effect.ts" doc-test lineNumbers
+import { Effect, Stream } from "effect";
+import { AccountTypeCredentials } from "@soulfiremc/sdk";
+import { SoulFire } from "@soulfiremc/sdk/node";
+
+const program = Effect.scoped(
+  Effect.gen(function* () {
+    const jarPath = process.env.SOULFIRE_JAR;
+    if (!jarPath) throw new Error("Set SOULFIRE_JAR to a compatible dedicated JAR");
+    const soulfire = yield* SoulFire.install({ jarPath });
+    const name = "Hello World";
+    const existing = (yield* soulfire.instances()).find(
+      (item) => item.friendlyName === name,
+    );
+    const instance = existing
+      ? soulfire.instance(existing.id)
+      : yield* soulfire.createInstance(name);
+
+    const username = "SoulFireBot";
+    let botId = (yield* instance.bots()).find(
+      (item) => item.accountName === username,
+    )?.profileId;
+    if (!botId) {
+      const results = yield* instance.loginCredentials({
+        service: AccountTypeCredentials.OFFLINE,
+        payload: [username],
+      }).pipe(Stream.runCollect);
+      for (const result of results) {
+        if (result.data.case === "oneSuccess" && result.data.value.account) {
+          const account = result.data.value.account;
+          yield* instance.addAccounts([account]);
+          botId = account.profileId;
+        }
+      }
+    }
+    if (!botId) throw new Error("Could not create an offline bot");
+
+    const bot = instance.bot(botId);
+    yield* bot.start();
+    yield* bot.waitForOnline();
+    yield* bot.chat.send("Hello from SoulFire");
+    yield* bot.stop();
+  }),
+);
+
+await Effect.runPromise(program);
+```
+
+Use `@soulfiremc/sdk/bun` for managed installation on Bun.
+The universal entry point keeps process and filesystem modules out of browser and worker bundles.
+
+Run `bunx tsx local-effect.ts` after installation and setting `SOULFIRE_JAR`.
+Expect the greeting in Minecraft chat and the managed backend to stop at scope completion.
+Read the [source build instructions](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/docs/vulkan-runtime.md) before packaging a dedicated source JAR.
+
+## Connect and send chat
+
+```ts title="connect-effect.ts" doc-test lineNumbers
+import { Effect } from "effect";
+import { SoulFire } from "@soulfiremc/sdk";
+
+const program = Effect.scoped(
+  Effect.gen(function* () {
+    const soulfire = yield* SoulFire.connect({
+      baseUrl: "https://soulfire.example.com",
+      token: process.env.SOULFIRE_TOKEN,
+    });
+
+    const bot = soulfire.instance("instance-uuid").bot("bot-uuid");
+    yield* bot.start();
+    yield* bot.waitForOnline();
+    yield* bot.chat.send("Hello from SoulFire");
+    yield* bot.stop();
+  }),
+);
+
+await Effect.runPromise(program);
+```
+
+The connection handshake checks server compatibility and required
+capabilities before the client becomes available.
+
+## Use Effect Platform
+
+`@effect/platform` is the general compatibility layer for Effect. SoulFire can
+consume its portable `HttpClient` service instead of relying on a global
+`fetch`:
+
+```ts
+const client = yield* SoulFire.connectWithHttpClient({
+  baseUrl: "https://soulfire.example.com",
+  token,
+});
+```
+
+Use the runtime entry point when SoulFire provides the HTTP layer:
+
+- `@soulfiremc/sdk/node` uses
+  `@effect/platform-node/NodeHttpClient.layerUndiciWithoutDispatcher`
+  with `dispatcherLayerGlobal`.
+- `@soulfiremc/sdk/browser` uses
+  `@effect/platform/FetchHttpClient`.
+- `@soulfiremc/sdk/bun` uses the same portable fetch layer over Bun's native
+  Fetch implementation.
+
+The universal entry point keeps `HttpClient` as an application-provided
+service. This is useful in tests, workers, Deno, and applications with a
+custom client policy. Runtime-specific filesystem, process, socket, and worker
+services can come from `@effect/platform-browser`, `@effect/platform-node`,
+or `@effect/platform-bun` when the application needs them.
+
+For custom integrations, `@soulfiremc/sdk/platform` exports
+`makeEffectHttpClientFetch`.
+
+## Stream bot events
+
+```ts
+yield* bot.events().pipe(
+  Stream.runForEach((event) =>
+    Effect.logInfo("Bot event", { kind: event.event.case })
+  ),
+);
+```
+
+The stream stays associated with the configured bot across Minecraft
+reconnects. Use `bot.observe()` when the application wants synchronized state
+instead of processing every delta itself.
+
+## Interact with blocks and beds
+
+Use `interactBlock` when the intent is to activate a block rather than place
+against it. SoulFire checks that the target is loaded and reachable.
+
+```ts
+yield* bot.interactBlock({
+  position: buttonPosition,
+  face: BlockFace.NORTH,
+  hand: Hand.MAIN,
+});
+
+yield* bot.sleep({
+  bed: bedPosition,
+  hand: Hand.MAIN,
+});
+
+yield* bot.wake();
+```
+
+`sleep` completes after the server confirms the sleeping state. Invalid
+targets, daytime restrictions, occupied beds, and rejected interactions
+surface as typed action failures.
+
+## Run concurrent fleet work
+
+Effect controls concurrency and interruption without losing error types:
+
+```ts
+yield* Effect.forEach(
+  botIds,
+  (botId) =>
+    soulfire
+      .instance(instanceId)
+      .bot(botId)
+      .chat
+      .send("Ready"),
+  { concurrency: 20, discard: true },
+);
+```
+
+## Integrate with an async application
+
+Convert the complete workflow at the host boundary:
+
+```ts
+await Effect.runPromise(program, { signal: controller.signal });
+```
+
+The signal interrupts the workflow and waits for scoped cleanup.
+Use `Effect.runPromiseExit` to inspect typed failures and defects separately.
+
+Effect provides adapters for host stream APIs:
+
+```ts
+const readable = Stream.toReadableStream(bot.events());
+const events = Stream.toAsyncIterable(bot.events());
+```
+
+Consume these adapters while the connection's scope remains open.
+Closing the scope ends the underlying RPC subscriptions.
+
+## Execute production tasks
+
+Recipe inspection and execution are available through `bot.recipes`:
+
+```ts
+const recipes = yield* bot.recipes.list({
+  resultItemId: "minecraft:iron_ingot",
+});
+
+const task = yield* bot.recipes.smelt(
+  { itemIds: ["minecraft:raw_iron"] },
+  8,
+  {
+    fuel: { tags: ["minecraft:coals"] },
+    station: furnacePosition,
+  },
+);
+
+yield* task.result();
+```
+
+Crafting and smelting run on the SoulFire server as resource-aware tasks.
+Interrupt the local stream for a call-owned task.
+Keep the task handle when the task must survive the SDK process.
+
+## Provide a shared layer
+
+<Steps>
+  <Step>
+    ### Define a program dependency
+
+    ```ts
+    import { Effect } from "effect";
+    import { SoulFireService } from "@soulfiremc/sdk";
+
+    const announce = Effect.gen(function* () {
+      const soulfire = yield* SoulFireService;
+      yield* soulfire
+        .instance(instanceId)
+        .bot(botId)
+        .chat
+        .send("Ready");
+    });
+    ```
+  </Step>
+  <Step>
+    ### Provide the live client
+
+    ```ts
+    await Effect.runPromise(
+      announce.pipe(
+        Effect.provide(SoulFire.layer({ baseUrl, token })),
+      ),
+    );
+    ```
+  </Step>
+</Steps>
+
+Replace that layer in tests to run application logic without a network
+connection.
+
+## Use generated protocol definitions
+
+High-level modules cover normal application work. Generated protobuf services
+remain available for advanced protocol access:
+
+```ts
+import {
+  InstanceService,
+} from "@soulfiremc/sdk/generated/soulfire/instance_pb";
+
+const client = soulfire.service(InstanceService);
+```
+
+<Callout type="warn">
+  Generated clients expose the wire contract directly. They do not add the
+  validation, task ownership, cleanup, or stable error behavior of the
+  high-level SDK.
+</Callout>
+
+Continue with [durable tasks](/docs/sdk/tasks) or
+[plugin-defined APIs](/docs/sdk/plugins).

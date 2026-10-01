@@ -131,7 +131,7 @@ const clientLoader = browserCollections.docs.createClientLoader<{
             />
           </div>
         </div>
-        <DocsBody className="dark:prose-invert">
+        <DocsBody>
           <MDX
             components={getMDXComponents({
               a: ({ href, ...anchorProps }) => {
@@ -258,7 +258,7 @@ function DocsPageRoute() {
               <DocsTitle>{page.title}</DocsTitle>
               <DocsDescription>{page.description}</DocsDescription>
             </div>
-            <DocsBody className="dark:prose-invert">
+            <DocsBody>
               <APIPage {...page.props} />
             </DocsBody>
             <Feedback />

@@ -1,0 +1,36 @@
+---
+title: Inspect what a bot sees
+sidebarTitle: "Bot view"
+description: Use a bot view to diagnose loaded world state and camera output.
+icon: Camera
+---
+
+A bot view helps you inspect the world around a connected bot.
+Use it after a connection succeeds, rather than as a test of authentication.
+
+## Inspect one bot
+
+1. Open the instance's **Overview**.
+2. Select a connected bot and open its detail view.
+3. Open its point-of-view controls.
+4. Compare the view with a normal player at the same location.
+
+Check the position, dimension, loaded chunks, and nearby objects.
+A bot can be connected while the world has not loaded enough for the action you want.
+
+## Capture an image
+
+The terminal provides camera exports for selected bots:
+
+```text
+bot DocsBot_1 export-basic-render 640 360
+```
+
+Use `export-render-debug-dump` to collect camera and device details for a rendering problem.
+Read [commands](/docs/reference/commands) for supported arguments.
+The backend writes exports to its data directories, not the remote client's computer.
+
+## Automate camera inspection
+
+Use [SDK camera and maps](/docs/sdk/camera) for captures, streams, and world maps.
+A screenshot is useful evidence for a failed interaction. Also record the bot position, connection state, and action error.

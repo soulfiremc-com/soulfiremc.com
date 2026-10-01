@@ -1,0 +1,65 @@
+---
+title: SoulFireCamera
+description: Public TypeScript members of SoulFireCamera.
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+Compose Effect operations with `yield*` inside a scoped workflow. Properties expose sub-clients and state.
+
+## capture
+
+Renders what the bot sees as a PNG (base64 in `imageBase64`). The size
+defaults to 854x480, at most 1920x1080. The camera defaults to the bot's
+eyes, facing where it looks; `cameraX/Y/Z`, `yRot` and `xRot` move it.
+
+```ts
+capture(
+  options: CameraRenderOptions = {},
+  call?: CallOptions,
+): Effect.Effect<BotRenderPovResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/camera.ts#L46)
+
+## captureBytes
+
+The `capture` image, decoded.
+
+```ts
+captureBytes(
+  options: CameraRenderOptions = {},
+  call?: CallOptions,
+): Effect.Effect<Uint8Array, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/camera.ts#L61)
+
+## frames
+
+Rendered frames, one per `intervalMs`, which defaults to 1000, from 100 to
+60000. A slow reader gets the newest frame and a count of the dropped ones.
+
+```ts
+frames(
+  options: CameraStreamOptions = {},
+): Stream.Stream<BotPovFrame, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/camera.ts#L74)
+
+## worldMap
+
+Top-down terrain around `centerX` and `centerZ`, which default to the bot's
+position. `radius` defaults to 64, from 1 to 256, and `sampleStep` to 1,
+from 1 to 16. Entities too with `includeEntities`.
+
+```ts
+worldMap(
+  options: WorldMapOptions = {},
+  call?: CallOptions,
+): Effect.Effect<BotWorldMapResponse, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/camera.ts#L95)

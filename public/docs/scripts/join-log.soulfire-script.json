@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "name": "Log a bot join",
+  "description": "A small documentation recipe. Review and save before enabling.",
+  "paused": true,
+  "nodes": [
+    {
+      "id": "joined",
+      "type": "trigger.on_join",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "data": {}
+    },
+    {
+      "id": "action",
+      "type": "action.print",
+      "position": {
+        "x": 360,
+        "y": 0
+      },
+      "data": {}
+    }
+  ],
+  "edges": [
+    {
+      "id": "join-execution",
+      "source": "joined",
+      "target": "action",
+      "sourceHandle": "out",
+      "targetHandle": "in"
+    },
+    {
+      "id": "join-username",
+      "source": "joined",
+      "target": "action",
+      "sourceHandle": "username",
+      "targetHandle": "message"
+    }
+  ]
+}

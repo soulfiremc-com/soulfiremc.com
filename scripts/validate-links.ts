@@ -1,5 +1,8 @@
-import { readdir, readFile } from "node:fs/promises";
+import { access, readdir, readFile } from "node:fs/promises";
 import path from "node:path";
+import { docsRedirects } from "../src/lib/docs/redirects";
+import { loader, type VirtualFile } from "fumadocs-core/source";
+import type { Node as PageTreeNode } from "fumadocs-core/page-tree";
 import GithubSlugger from "github-slugger";
 import {
   type FileObject,
@@ -29,6 +32,7 @@ type RouteFile = FileObject & {
 };
 
 async function checkLinks() {
+  await checkNavigation();
   const files = await getFiles();
   const publicUrls = await getPublicUrls();
 
@@ -50,8 +54,20 @@ async function checkLinks() {
     },
   });
 
-  for (const url of [...publicUrls, ...REDIRECT_URLS]) {
+  for (const url of [
+    ...publicUrls,
+    ...REDIRECT_URLS,
+    ...[...docsRedirects.keys()].map((slug) => `/docs/${slug}`),
+  ]) {
     scanned.urls.set(url, {});
+  }
+
+  for (const [slug, destination] of docsRedirects) {
+    if (!files.some((file) => file.url === destination)) {
+      throw new Error(
+        `Broken documentation redirect: ${slug} -> ${destination}`,
+      );
+    }
   }
 
   printErrors(
@@ -65,6 +81,95 @@ async function checkLinks() {
       checkRelativePaths: "as-url",
     }),
     true,
+  );
+}
+
+async function checkNavigation() {
+  const metadataFiles = await walkFiles(
+    DOCS_DIR,
+    (filePath) => path.basename(filePath) === "meta.json",
+  );
+  for (const filePath of metadataFiles) {
+    const metadata = JSON.parse(await readFile(filePath, "utf8")) as {
+      pages?: string[];
+      pagesIndex?: string;
+      root?: boolean | string;
+    };
+    if (!metadata.pages) continue;
+    const directory = path.dirname(filePath);
+    const index = metadata.pagesIndex ?? "index";
+    if (!metadata.root && metadata.pages.includes(index)) {
+      throw new Error(
+        `Section overview must be its collapsible heading, not a child: ${filePath}`,
+      );
+    }
+    if (metadata.pagesIndex) {
+      const indexPath = path.resolve(directory, metadata.pagesIndex);
+      const matches = await Promise.allSettled([
+        access(`${indexPath}.mdx`),
+        access(`${indexPath}.md`),
+      ]);
+      if (!matches.some((result) => result.status === "fulfilled")) {
+        throw new Error(`Missing section overview in ${filePath}`);
+      }
+    }
+    const entries = await readdir(path.dirname(filePath));
+    for (const page of metadata.pages) {
+      // Fumadocs expands virtual sources and rest entries at load time.
+      if (page.startsWith("...")) continue;
+      if (
+        !entries.includes(page) &&
+        !entries.includes(`${page}.mdx`) &&
+        !entries.includes(`${page}.md`)
+      ) {
+        throw new Error(`Missing sidebar entry ${page} in ${filePath}`);
+      }
+    }
+  }
+
+  const pageFiles = await walkMdxFiles(DOCS_DIR);
+  const files: VirtualFile[] = pageFiles.map((filePath) => ({
+    type: "page",
+    path: toPosixPath(path.relative(DOCS_DIR, filePath)),
+    // Ownership and URL checks need file paths, not compiled MDX content.
+    data: { title: path.basename(filePath, ".mdx") },
+  }));
+  for (const filePath of metadataFiles) {
+    files.push({
+      type: "meta",
+      path: toPosixPath(path.relative(DOCS_DIR, filePath)),
+      data: JSON.parse(await readFile(filePath, "utf8")),
+    });
+  }
+  const source = loader({ baseUrl: "/docs", source: { files } });
+  const visible = new Set<string>();
+  function collect(nodes: PageTreeNode[]) {
+    for (const node of nodes) {
+      const page =
+        node.type === "page"
+          ? node
+          : node.type === "folder"
+            ? node.index
+            : undefined;
+      if (page) {
+        if (visible.has(page.url)) {
+          throw new Error(`Duplicate sidebar page: ${page.url}`);
+        }
+        visible.add(page.url);
+      }
+      if (node.type === "folder") collect(node.children);
+    }
+  }
+  collect(source.getPageTree().children);
+  for (const page of source.getPages()) {
+    if (!visible.has(page.url)) {
+      throw new Error(
+        `Documentation page is missing from the sidebar: ${page.url}`,
+      );
+    }
+  }
+  console.log(
+    `Checked sidebar ownership for ${pageFiles.length} documentation pages.`,
   );
 }
 

@@ -1,0 +1,85 @@
+---
+title: Configure AI features
+sidebarTitle: "AI features"
+description: Connect a compatible provider and verify one chat or image workflow before scaling it.
+icon: BrainCircuit
+---
+
+SoulFire calls an AI provider through its shared **AI Settings**.
+Visual **LLM Chat**, the **AI Chat Bot** plugin, and image-based **Captcha Solver** use that connection.
+[MCP](/docs/how-to/mcp) works in the other direction: an external assistant calls SoulFire tools.
+
+## Configure the provider
+
+1. Open **AI Settings** in the intended instance.
+2. Set **API Base URL** to the provider's compatible API base.
+3. Set **API Key** to a key accepted by that provider.
+4. Review **API Request Timeout** and **API Max Retries**.
+5. Set a model explicitly in the feature you will use.
+
+The pinned source uses a 60-second request timeout and five maximum retries.
+A long timeout or many retries can delay the result without correcting a rejected request.
+The provider must support the request format used by that feature.
+An OpenAI-compatible label does not guarantee support for images or every parameter.
+
+For OpenAI, consult the [API reference](https://developers.openai.com/api/reference/overview) and [model catalog](https://developers.openai.com/api/docs/models/all).
+For another provider or local server, use its current compatibility documentation and exact model IDs.
+The provider URL must be reachable from the SoulFire backend, including inside Docker.
+
+## Verify AI Chat Bot
+
+1. Configure the provider first.
+2. Enable **AI Chat Bot** in the instance's plugin settings.
+3. Select a text-capable model that your provider account can use.
+4. Set a trigger keyword such as `!ai` and a short prompt.
+5. Start one bot and send `!ai hello` from a normal Minecraft player.
+
+Expect one reply from the bot. Inspect backend logs if no reply appears.
+The plugin retains a limited per-connection history and limits output for Minecraft chat.
+A message containing `<keyword> reset` clears that connection's history.
+Use **Filter keyword** if the response must omit the trigger text.
+
+Pause the plugin or stop the bot after the check.
+Record the model, latency, and request volume before using it with a fleet.
+
+## Use LLM Chat in a graph
+
+Start with one trigger, **LLM Chat**, and **Print**.
+Set a text prompt and the model override, then inspect the returned value.
+Connect the result to **Send Chat** only after the value matches the intended behavior.
+Use [script debugging](/docs/scripting/debugging) to inspect errors and repeated execution.
+
+A timer, loop, or busy chat trigger can multiply provider requests.
+Use rate limits and bounded execution for repeated work.
+
+## Configure Captcha Solver
+
+Choose the target server's actual challenge format:
+
+| Mode or source | Purpose |
+| --- | --- |
+| `CHAT_MESSAGE` | A chat message triggers an image request |
+| `TEXT_BASED` | A regular expression captures a code already present in chat |
+| `MAP_IN_HAND` | The challenge image comes from a map held by the bot |
+| `POV_RENDER` | The challenge image comes from a rendered bot view |
+
+For an image workflow, select a model that accepts image input.
+Set the trigger text, image source, prompt, and response command in the plugin settings.
+For text capture, use a regular expression with a capture group and the matching response command.
+Check the captured value and sent command with one bot on your test target.
+
+An image model cannot correct a missing map or an unusable camera image.
+Inspect the captured image first. Use [bot view inspection](/docs/how-to/pov) for camera diagnostics.
+
+## Diagnose the request
+
+| Symptom | Next check |
+| --- | --- |
+| Authentication or permission error | Provider key, project access, and model availability |
+| Model not found | Exact model ID for that provider |
+| Timeout or connection error | Backend route, base URL, and provider status |
+| No request occurs | Enabled state, trigger keyword, and graph execution |
+| Repeated requests | Trigger frequency, loops, reconnects, and rate limits |
+| Unusable response | Prompt, input image, output limits, and model capabilities |
+
+Preserve the provider status and error message, with secrets removed, before changing settings.

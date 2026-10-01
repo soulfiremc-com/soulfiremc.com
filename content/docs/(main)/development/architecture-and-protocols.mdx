@@ -1,5 +1,6 @@
 ---
 title: Architecture And Protocols
+sidebarTitle: "Architecture and protocols"
 description: Learn how SoulFire starts, loads plugins, manages bots, and processes actions from the GUI or CLI.
 icon: Network
 ---
@@ -39,7 +40,7 @@ For plugin authors, the important points are:
 SoulFire has two plugin loading models:
 
 - **internal plugins** are scanned from `com.soulfiremc.server.plugins` using `@InternalPluginClass`
-- **external plugins** are ordinary Fabric mods that call `SoulFireAPI.registerServerExtension(...)` from a `ModInitializer`
+- **external plugins** are ordinary Fabric mods that call `SoulFireAPI.loadPlugin(...)` from a `ModInitializer`
 
 The built-in plugin directory contains useful examples.
 Internal and external plugins use the same event, settings, metadata, and control APIs.
@@ -85,7 +86,7 @@ The important implementation detail is what happens after the RPC call arrives:
 1. the request is resolved to an online `BotConnection`
 2. permissions are checked
 3. SoulFire schedules a low-level operation through `BotControlAPI` or direct player and gameMode access
-4. control state or staged tasks drive the actual Minecraft-side behavior
+4. control state or sequence tasks drive the actual Minecraft-side behavior
 
 Plugins follow the same process.
 
@@ -93,12 +94,12 @@ Plugins follow the same process.
 
 The typical path is:
 
-`GUI or CLI action -> gRPC/proto request -> service implementation -> BotConnection -> ControlState or ControllingTask -> Minecraft classes or mixin hook`
+`GUI or CLI action -> gRPC/proto request -> service implementation -> BotConnection -> ControlState or ControlTask -> Minecraft classes or mixin hook`
 
 Examples from the current implementation:
 
 - movement RPCs write to `ControlState`
-- rotation, hotbar, inventory, mouse, and dialog actions typically use `ControllingTask.singleTick(...)`
+- rotation, hotbar, inventory, mouse, and dialog actions typically use `ControlTask.once(...)`
 - multi-step automation uses staged controlling tasks
 - input booleans become real player movement through SoulFire's keyboard input mixin
 
