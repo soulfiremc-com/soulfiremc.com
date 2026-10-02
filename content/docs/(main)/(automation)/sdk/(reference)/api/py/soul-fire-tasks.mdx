@@ -4,7 +4,7 @@ description: Public Python members of SoulFireTasks.
 icon: Code
 ---
 
-Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
 
 Methods decorated with `@fn` return effects. Their implementation signatures use `EffectGen` for the generator body. Compose them with `yield from` inside a scoped workflow.
 
@@ -30,7 +30,7 @@ def start[ResultT: Message](
 ) -> EffectGen[SoulFireTask[ResultT], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L303)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L304)
 
 ## run
 
@@ -52,7 +52,7 @@ def run(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L344)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L345)
 
 ## run_go_to
 
@@ -70,7 +70,7 @@ def run_go_to(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L382)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L383)
 
 ## go_to
 
@@ -91,7 +91,7 @@ def go_to(
 ) -> EffectGen[SoulFireTask[GoToTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L403)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L404)
 
 ## run_follow_entity
 
@@ -111,7 +111,7 @@ def run_follow_entity(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L430)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L431)
 
 ## follow_entity
 
@@ -134,7 +134,7 @@ def follow_entity(
 ) -> EffectGen[SoulFireTask[FollowEntityTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L453)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L454)
 
 ## run_attack_entity
 
@@ -160,7 +160,7 @@ def run_attack_entity(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L488)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L489)
 
 ## attack_entity
 
@@ -189,7 +189,7 @@ def attack_entity(
 ) -> EffectGen[SoulFireTask[AttackEntityTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L528)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L529)
 
 ## run_attack_nearest
 
@@ -217,7 +217,7 @@ def run_attack_nearest(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L578)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L579)
 
 ## attack_nearest
 
@@ -248,7 +248,7 @@ def attack_nearest(
 ) -> EffectGen[SoulFireTask[AttackNearestTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L622)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L623)
 
 ## run_ranged_attack
 
@@ -276,7 +276,7 @@ def run_ranged_attack(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L676)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L677)
 
 ## ranged_attack
 
@@ -307,7 +307,7 @@ def ranged_attack(
 ) -> EffectGen[SoulFireTask[RangedAttackTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L720)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L721)
 
 ## run_flee
 
@@ -330,7 +330,7 @@ def run_flee(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L774)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L775)
 
 ## flee
 
@@ -356,7 +356,7 @@ def flee(
 ) -> EffectGen[SoulFireTask[FleeTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L808)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L809)
 
 ## run_guard
 
@@ -387,7 +387,7 @@ def run_guard(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L852)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L853)
 
 ## guard
 
@@ -421,7 +421,7 @@ def guard(
 ) -> EffectGen[SoulFireTask[GuardTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L903)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L904)
 
 ## run_protect
 
@@ -452,7 +452,7 @@ def run_protect(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L964)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L965)
 
 ## protect
 
@@ -486,7 +486,7 @@ def protect(
 ) -> EffectGen[SoulFireTask[GuardTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1015)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1016)
 
 ## run_sleep
 
@@ -507,7 +507,7 @@ def run_sleep(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1076)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1077)
 
 ## sleep
 
@@ -531,7 +531,7 @@ def sleep(
 ) -> EffectGen[SoulFireTask[SleepTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1100)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1101)
 
 ## run_fish
 
@@ -554,7 +554,7 @@ def run_fish(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1136)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1137)
 
 ## fish
 
@@ -580,7 +580,7 @@ def fish(
 ) -> EffectGen[SoulFireTask[FishTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1170)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1171)
 
 ## run_farm
 
@@ -605,7 +605,7 @@ def run_farm(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1214)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1215)
 
 ## farm
 
@@ -633,7 +633,7 @@ def farm(
 ) -> EffectGen[SoulFireTask[FarmTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1252)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1253)
 
 ## run_breed
 
@@ -660,7 +660,7 @@ def run_breed(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1300)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1301)
 
 ## breed
 
@@ -690,7 +690,7 @@ def breed(
 ) -> EffectGen[SoulFireTask[BreedTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1342)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1343)
 
 ## run_explore
 
@@ -713,7 +713,7 @@ def run_explore(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1394)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1395)
 
 ## explore
 
@@ -739,7 +739,7 @@ def explore(
 ) -> EffectGen[SoulFireTask[ExploreTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1428)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1429)
 
 ## run_stash
 
@@ -759,7 +759,7 @@ def run_stash(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1472)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1473)
 
 ## stash
 
@@ -782,7 +782,7 @@ def stash(
 ) -> EffectGen[SoulFireTask[ContainerTransferTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1501)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1502)
 
 ## run_withdraw
 
@@ -802,7 +802,7 @@ def run_withdraw(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1540)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1541)
 
 ## withdraw
 
@@ -825,7 +825,7 @@ def withdraw(
 ) -> EffectGen[SoulFireTask[ContainerTransferTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1569)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1570)
 
 ## run_maintain_loadout
 
@@ -848,7 +848,7 @@ def run_maintain_loadout(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1608)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1609)
 
 ## maintain_loadout
 
@@ -874,7 +874,7 @@ def maintain_loadout(
 ) -> EffectGen[SoulFireTask[MaintainLoadoutTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1642)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1643)
 
 ## balance_loadout
 
@@ -898,7 +898,7 @@ def balance_loadout(
 ) -> EffectGen[SoulFireTask[MaintainLoadoutTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1687)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1688)
 
 ## run_auto_eat
 
@@ -920,7 +920,7 @@ def run_auto_eat(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1722)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1723)
 
 ## auto_eat
 
@@ -945,7 +945,7 @@ def auto_eat(
 ) -> EffectGen[SoulFireTask[AutoEatTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1754)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1755)
 
 ## run_auto_respawn
 
@@ -963,7 +963,7 @@ def run_auto_respawn(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1796)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1797)
 
 ## auto_respawn
 
@@ -984,7 +984,7 @@ def auto_respawn(
 ) -> EffectGen[SoulFireTask[AutoRespawnTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1817)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1818)
 
 ## run_auto_totem
 
@@ -1004,7 +1004,7 @@ def run_auto_totem(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1848)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1849)
 
 ## auto_totem
 
@@ -1027,7 +1027,7 @@ def auto_totem(
 ) -> EffectGen[SoulFireTask[AutoTotemTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1876)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1877)
 
 ## run_auto_armor
 
@@ -1046,7 +1046,7 @@ def run_auto_armor(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1914)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1915)
 
 ## auto_armor
 
@@ -1068,14 +1068,14 @@ def auto_armor(
 ) -> EffectGen[SoulFireTask[AutoArmorTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1936)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1937)
 
 ## run_collect_blocks
 
 ```python
 def run_collect_blocks(
     self,
-    block_ids: Iterable[str] = (),
+    block_ids: str | Iterable[str] = (),
     *,
     tags: Iterable[str] = (),
     count: int = 1,
@@ -1092,7 +1092,7 @@ def run_collect_blocks(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L1970)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1971)
 
 ## collect_blocks
 
@@ -1100,7 +1100,7 @@ def run_collect_blocks(
 @fn("SoulFireTasks.collect_blocks")
 def collect_blocks(
     self,
-    block_ids: Iterable[str] = (),
+    block_ids: str | Iterable[str] = (),
     *,
     tags: Iterable[str] = (),
     count: int = 1,
@@ -1119,7 +1119,7 @@ def collect_blocks(
 ) -> EffectGen[SoulFireTask[CollectBlocksTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L2006)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2007)
 
 ## run_excavate
 
@@ -1139,7 +1139,7 @@ def run_excavate(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L2052)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2053)
 
 ## excavate
 
@@ -1162,7 +1162,7 @@ def excavate(
 ) -> EffectGen[SoulFireTask[ExcavateTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L2075)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2076)
 
 ## run_build
 
@@ -1188,7 +1188,7 @@ def run_build(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L2108)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2109)
 
 ## build
 
@@ -1217,7 +1217,7 @@ def build(
 ) -> EffectGen[SoulFireTask[BuildTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L2148)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2149)
 
 ## run_craft
 
@@ -1236,7 +1236,7 @@ def run_craft(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L2198)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2199)
 
 ## craft
 
@@ -1258,7 +1258,7 @@ def craft(
 ) -> EffectGen[SoulFireTask[CraftTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L2220)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2221)
 
 ## run_smelt
 
@@ -1278,7 +1278,7 @@ def run_smelt(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L2248)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2249)
 
 ## smelt
 
@@ -1301,7 +1301,7 @@ def smelt(
 ) -> EffectGen[SoulFireTask[SmeltTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L2271)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2272)
 
 ## run_brew
 
@@ -1323,7 +1323,7 @@ def run_brew(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L2300)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2301)
 
 ## brew
 
@@ -1348,7 +1348,7 @@ def brew(
 ) -> EffectGen[SoulFireTask[BrewTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L2325)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2326)
 
 ## run_villager_trade
 
@@ -1368,7 +1368,7 @@ def run_villager_trade(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L2360)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2361)
 
 ## villager_trade
 
@@ -1391,7 +1391,7 @@ def villager_trade(
 ) -> EffectGen[SoulFireTask[VillagerTradeTaskResult], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L2383)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2384)
 
 ## get
 
@@ -1407,7 +1407,7 @@ def get[ResultT: Message](
 ) -> EffectGen[SoulFireTask[ResultT], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L2419)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2420)
 
 ## list
 
@@ -1424,7 +1424,7 @@ def list(
 ) -> EffectGen[list[BotTask], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L2437)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2438)
 
 ## watch
 
@@ -1440,4 +1440,4 @@ def watch(
 ) -> Stream[BotTaskEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/tasks.py#L2470)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2471)

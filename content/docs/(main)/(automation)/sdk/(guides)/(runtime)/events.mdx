@@ -13,6 +13,26 @@ import { Tab, Tabs } from '../../../../../../../src/components/mdx/sdk-tabs';
 Use the raw stream for temporary activity such as sounds and particles.
 Use a session for retained state such as entities, blocks, weather, and scoreboards.
 
+## Read state after managed setup
+
+`createBot`, `getOrCreateBot`, and `bot.connect()` already attach a synchronized session and wait for the initial player snapshot.
+Python provides the same behavior through `create_bot`, `get_or_create_bot`, and `bot.connect()`.
+Read `bot.state` without opening another observer:
+
+```ts
+yield* Effect.logInfo(bot.state.player);
+```
+
+```python
+from effect_py import sync
+
+yield from sync(lambda: print(bot.state.player))
+```
+
+`bot.state` contains the latest received data. It can change between reads.
+Before connection, or while replacement snapshots arrive after reconnect, player state can be absent.
+Use `bot.observe()` when you need an explicit session handle, custom filters, or state predicates.
+
 ## Watch an entire instance
 
 `instance.events()` combines events from selected bots into one connection.

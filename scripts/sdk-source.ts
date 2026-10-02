@@ -4,7 +4,7 @@ import { dirname, join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 
 export const sdkRepository = "https://github.com/soulfiremc-com/SoulFire";
-export const sdkRevision = "213ec6322325e94c8068c079344b66f8158628e2";
+export const sdkRevision = "878ba24b85ee4a1ec170ed738b7664b61ace1a2d";
 
 export function sdkSource() {
   const directory = resolve(

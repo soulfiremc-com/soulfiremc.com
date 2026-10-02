@@ -20,7 +20,12 @@ A running request can coexist with a disconnect and retry delay.
 
 The SoulFire server owns requested state.
 Closing a remote GUI or SDK connection does not automatically request stopped state.
-Use an explicit stop action at the end of a tutorial or test.
+The SDK's managed setup and `bot.connect()` add scoped ownership.
+They stop bots that the scope starts and leave bots already requested to run running.
+They also close observation subscriptions. Managed installation stops its local backend when the scope closes.
+
+The lower-level `bot.start()` changes requested state without registering a stop finalizer.
+Use `bot.stop()` explicitly when that work must end with your application.
 
 ## Actions and durable tasks
 
@@ -29,7 +34,9 @@ A stream observes updates while its consumer remains connected.
 A durable task runs on the backend and can survive the SDK connection that created it.
 
 Closing the SDK scope releases its connection and local subscriptions.
-Cancel a durable task explicitly if it must not continue.
+Cancel a detached durable task explicitly if it must not continue.
+`bot.collect` and call-owned `run*` task streams cancel unfinished work on interruption.
+A surviving task still needs an available backend and bot.
 The [task guide](/docs/sdk/tasks) describes handles, progress, cancellation, and result errors.
 
 ## Connection epochs

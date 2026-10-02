@@ -40,7 +40,7 @@ It is a dated comparison, not an automatic CI compatibility gate.
 
 | Mineflayer concept | SoulFire equivalent |
 | --- | --- |
-| One in-process `bot` | `soulfire.instance(id).bot(id)` remote handle |
+| Bot construction | `SoulFire.createBot({ server, username })` or Python `SoulFire.create_bot(server=..., username=...)` |
 | Mutable `bot.world` | `bot.world` snapshots and bounded queries |
 | EventEmitter state | `bot.events()` or synchronized `bot.observe()` |
 | Movement plugin | `bot.pathfinder` and durable `bot.tasks` |
@@ -51,6 +51,10 @@ It is a dated comparison, not an automatic CI compatibility gate.
 `BotSession` retains entities, blocks, inventory, player-list entries, weather,
 boss bars, scoreboards, and stream revision metadata. It discards stale entity
 references when a bot reconnects.
+
+Use the [first program](/docs/sdk/typescript) for managed installation or [named setup](/docs/sdk/discover-bots) for a shared backend.
+The creation helper returns a ready bot with synchronized `bot.state` and scoped cleanup.
+Existing IDs remain available through `client.instance(id).bot(id)`.
 
 ## Replace event listeners
 
@@ -170,7 +174,7 @@ typed API.
 
 ## Migration checklist
 
-- Replace process-local bot construction with an instance and bot handle.
+- Replace process-local bot construction with scoped `createBot` or `create_bot` setup.
 - Replace mutable reads with world snapshots or a synchronized session.
 - Replace EventEmitter listeners with resumable streams.
 - Replace multi-tick loops with durable tasks.

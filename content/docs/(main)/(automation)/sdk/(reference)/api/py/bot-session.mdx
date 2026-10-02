@@ -4,7 +4,7 @@ description: Public Python members of BotSession.
 icon: Code
 ---
 
-Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
 
 Methods decorated with `@fn` return effects. Their implementation signatures use `EffectGen` for the generator body. Compose them with `yield from` inside a scoped workflow.
 
@@ -14,11 +14,15 @@ Methods decorated with `@fn` return effects. Their implementation signatures use
 @classmethod
 @fn("BotSession.open")
 def open(
-    cls, stream: BotEventStreamFactory, options: BotSessionOptions | None = None
+    cls,
+    stream: BotEventStreamFactory,
+    options: BotSessionOptions | None = None,
+    *,
+    ready_timeout: float | None = None,
 ) -> EffectGen[BotSession, SoulFireOperationError, Scope]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/session.py#L578)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/session.py#L579)
 
 ## state
 
@@ -27,7 +31,7 @@ def open(
 def state(self) -> BotSessionState
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/session.py#L592)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/session.py#L610)
 
 ## events
 
@@ -36,7 +40,7 @@ def events(self) -> Stream[BotEvent, SoulFireOperationError]:
     @gen
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/session.py#L595)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/session.py#L613)
 
 ## wait_for
 
@@ -50,7 +54,18 @@ def wait_for(
     @gen
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/session.py#L629)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/session.py#L647)
+
+## wait_for_state
+
+```python
+def wait_for_state(
+    self, predicate: Callable[[BotSessionState], bool]
+) -> Effect[BotSessionState, SoulFireOperationError]:
+    @gen
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/session.py#L680)
 
 ## once
 
@@ -60,7 +75,7 @@ def once(
 ) -> Effect[BotEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/session.py#L662)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/session.py#L700)
 
 ## close
 
@@ -69,4 +84,4 @@ def once(
 def close(self) -> EffectGen[None]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/session.py#L670)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/session.py#L708)

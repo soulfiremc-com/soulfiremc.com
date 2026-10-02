@@ -4,7 +4,7 @@ description: Public Python members of SoulFireInstance.
 icon: Code
 ---
 
-Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
 
 Methods decorated with `@fn` return effects. Their implementation signatures use `EffectGen` for the generator body. Compose them with `yield from` inside a scoped workflow.
 
@@ -15,7 +15,26 @@ Methods decorated with `@fn` return effects. Their implementation signatures use
 def fleet(self) -> SoulFireFleet
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L560)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L625)
+
+## get_or_create_bot
+
+```python
+@fn("SoulFireInstance.get_or_create_bot")
+def get_or_create_bot(
+    self,
+    name: str,
+    *,
+    auth: Literal["offline", "microsoft"] = "offline",
+    username: str | None = None,
+    start: bool = True,
+    ready_timeout: float = 30.0,
+    on_device_code: Callable[[DeviceCode], Effect[None, SoulFireOperationError]] | None = None,
+    timeout_ms: int | None = None,
+) -> EffectGen[SoulFireBot, SoulFireOperationError, Scope]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L629)
 
 ## bot
 
@@ -23,7 +42,7 @@ def fleet(self) -> SoulFireFleet
 def bot(self, bot_id: str) -> SoulFireBot
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L563)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L705)
 
 ## info
 
@@ -34,7 +53,7 @@ def info(
 ) -> EffectGen[InstanceInfo, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L580)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L722)
 
 ## delete
 
@@ -45,7 +64,7 @@ def delete(
 ) -> EffectGen[None, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L601)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L743)
 
 ## update_name
 
@@ -60,7 +79,7 @@ def update_name(
 ) -> EffectGen[None, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L612)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L754)
 
 ## set_config_entry
 
@@ -77,7 +96,7 @@ def set_config_entry(
 ) -> EffectGen[None, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L629)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L771)
 
 ## add_accounts
 
@@ -92,7 +111,7 @@ def add_accounts(
 ) -> EffectGen[None, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L650)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L792)
 
 ## remove_accounts
 
@@ -107,7 +126,7 @@ def remove_accounts(
 ) -> EffectGen[None, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L667)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L809)
 
 ## add_proxies
 
@@ -122,7 +141,7 @@ def add_proxies(
 ) -> EffectGen[None, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L686)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L828)
 
 ## remove_proxies
 
@@ -137,7 +156,7 @@ def remove_proxies(
 ) -> EffectGen[None, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L703)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L845)
 
 ## login_credentials
 
@@ -152,7 +171,7 @@ def login_credentials(
 ) -> Stream[CredentialsAuthResponse, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L719)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L861)
 
 ## login_device_code
 
@@ -166,7 +185,7 @@ def login_device_code(
 ) -> Stream[DeviceCodeAuthResponse, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L736)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L878)
 
 ## refresh_account
 
@@ -181,7 +200,7 @@ def refresh_account(
 ) -> EffectGen[RefreshResponse, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L753)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L895)
 
 ## bots
 
@@ -192,7 +211,7 @@ def bots(
 ) -> EffectGen[list[BotListEntry], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L777)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L919)
 
 ## watch_bot_statuses
 
@@ -202,7 +221,7 @@ def watch_bot_statuses(
 ) -> Stream[WatchBotStatusesResponse, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L788)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L930)
 
 ## events
 
@@ -219,7 +238,7 @@ def events(
 ) -> Stream[InstanceEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L798)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L940)
 
 ## start
 
@@ -235,7 +254,7 @@ def start(
 ) -> EffectGen[list[BotStatus], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L825)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L967)
 
 ## stop
 
@@ -251,7 +270,7 @@ def stop(
 ) -> EffectGen[list[BotStatus], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L855)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L997)
 
 ## restart
 
@@ -267,4 +286,4 @@ def restart(
 ) -> EffectGen[list[BotStatus], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L885)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L1027)

@@ -4,7 +4,7 @@ description: Public Python members of Stream.
 icon: Code
 ---
 
-Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
 
 Methods decorated with `@fn` return effects. Their implementation signatures use `EffectGen` for the generator body. Compose them with `yield from` inside a scoped workflow.
 
@@ -14,7 +14,7 @@ Methods decorated with `@fn` return effects. Their implementation signatures use
 def map[B](self, transform: Callable[[A], B]) -> Stream[B, E, R]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/streams.py#L54)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/streams.py#L54)
 
 ## filter
 
@@ -24,7 +24,7 @@ def filter(self, predicate: Callable[[A], bool]) -> Stream[A, E, R]:
     @gen
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/streams.py#L65)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/streams.py#L65)
 
 ## map_effect
 
@@ -36,7 +36,7 @@ def map_effect[B, E2 = Never, R2 = Never](
     @gen
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/streams.py#L82)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/streams.py#L82)
 
 ## tap
 
@@ -48,7 +48,7 @@ def tap[E2 = Never, R2 = Never](
     @gen
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/streams.py#L101)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/streams.py#L101)
 
 ## take
 
@@ -58,7 +58,7 @@ def take(self, count: int) -> Stream[A, E, R]:
     @gen
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/streams.py#L120)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/streams.py#L120)
 
 ## run_fold
 
@@ -68,7 +68,7 @@ def run_fold[B](self, initial: B, combine: Callable[[B, A], B]) -> Effect[B, E, 
     @gen
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/streams.py#L139)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/streams.py#L139)
 
 ## merge
 
@@ -81,7 +81,7 @@ def merge[A2, E2 = Never, R2 = Never](
     @gen
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/streams.py#L154)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/streams.py#L154)
 
 ## run_collect
 
@@ -91,7 +91,7 @@ def run_collect(self) -> Effect[tuple[A, ...], E, R]:
     @gen
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/streams.py#L198)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/streams.py#L198)
 
 ## run_for_each
 
@@ -103,7 +103,7 @@ def run_for_each[E2 = Never, R2 = Never](
     @gen
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/streams.py#L212)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/streams.py#L212)
 
 ## run_drain
 
@@ -111,7 +111,7 @@ def run_for_each[E2 = Never, R2 = Never](
 def run_drain(self) -> Effect[None, E, R]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/streams.py#L227)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/streams.py#L227)
 
 ## run_head
 
@@ -119,7 +119,7 @@ def run_drain(self) -> Effect[None, E, R]
 def run_head(self) -> Effect[A | None, E, R]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/streams.py#L230)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/streams.py#L230)
 
 ## unwrap
 
@@ -130,4 +130,4 @@ def unwrap[A2, E2 = Never, R2 = Never](
 ) -> Stream[A2, E2, R2]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/streams.py#L234)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/streams.py#L234)

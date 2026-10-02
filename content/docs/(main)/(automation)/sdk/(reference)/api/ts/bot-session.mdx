@@ -4,9 +4,9 @@ description: Public TypeScript members of BotSession.
 icon: Code
 ---
 
-Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
 
-Compose Effect operations with `yield*` inside a scoped workflow. Properties expose sub-clients and state.
+Compose Effect v4 operations with `yield*` inside a scoped workflow. Properties expose sub-clients and state.
 
 ## open
 
@@ -17,7 +17,7 @@ static open(
 ): Effect.Effect<BotSession, SoulFireOperationError, Scope.Scope>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/session.ts#L168)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L168)
 
 ## state
 
@@ -25,7 +25,7 @@ static open(
 get state(): BotSessionState
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/session.ts#L196)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L196)
 
 ## events
 
@@ -35,7 +35,7 @@ Subscribes lazily; slow readers lose the oldest buffered events.
 events(): Stream.Stream<BotEvent, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/session.ts#L201)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L201)
 
 ## waitFor
 
@@ -46,7 +46,19 @@ waitFor(
 ): Effect.Effect<BotEvent, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/session.ts#L207)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L207)
+
+## waitForState
+
+Checks current state after subscribing, so a concurrent update cannot be missed.
+
+```ts
+waitForState(
+  predicate: (state: BotSessionState) => boolean,
+): Effect.Effect<BotSessionState, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L239)
 
 ## once
 
@@ -57,7 +69,7 @@ once(
 ): Effect.Effect<BotEvent, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/session.ts#L238)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L250)
 
 ## close
 
@@ -65,4 +77,4 @@ once(
 close(): Effect.Effect<void>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/session.ts#L245)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L257)

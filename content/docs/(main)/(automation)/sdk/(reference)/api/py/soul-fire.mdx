@@ -4,7 +4,7 @@ description: Public Python members of SoulFire.
 icon: Code
 ---
 
-Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
 
 Methods decorated with `@fn` return effects. Their implementation signatures use `EffectGen` for the generator body. Compose them with `yield from` inside a scoped workflow.
 
@@ -25,7 +25,7 @@ def connect(
 ) -> EffectGen[SoulFire, SoulFireOperationError, Scope]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L209)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L228)
 
 ## unauthenticated
 
@@ -44,7 +44,7 @@ def unauthenticated(
 ) -> EffectGen[SoulFire, SoulFireOperationError, Scope]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L232)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L251)
 
 ## install
 
@@ -65,7 +65,7 @@ def install(
 ) -> EffectGen[SoulFire, SoulFireOperationError, Scope]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L260)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L279)
 
 ## set_token
 
@@ -73,7 +73,28 @@ def install(
 def set_token(self, token: TokenProvider | None) -> None
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L299)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L318)
+
+## create_bot
+
+```python
+@classmethod
+@fn("SoulFire.create_bot")
+def create_bot(
+    cls,
+    *,
+    server: str,
+    username: str,
+    auth: Literal["offline", "microsoft"] = "offline",
+    instance_name: str | None = None,
+    name: str | None = None,
+    ready_timeout: float = 30.0,
+    on_device_code: Callable[[DeviceCode], Effect[None, SoulFireOperationError]] | None = None,
+    installation: ManagedInstallOptions | None = None,
+) -> EffectGen[SoulFireBot, SoulFireOperationError, Scope]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L323)
 
 ## local_server
 
@@ -82,7 +103,7 @@ def set_token(self, token: TokenProvider | None) -> None
 def local_server(self) -> LocalSoulFireServer | None
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L303)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L350)
 
 ## server
 
@@ -91,7 +112,7 @@ def local_server(self) -> LocalSoulFireServer | None
 def server(self) -> ServerMetadata
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L308)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L355)
 
 ## identity
 
@@ -100,7 +121,7 @@ def server(self) -> ServerMetadata
 def identity(self) -> SdkIdentity
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L312)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L359)
 
 ## capabilities
 
@@ -109,7 +130,7 @@ def identity(self) -> SdkIdentity
 def capabilities(self) -> CapabilitySet
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L316)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L363)
 
 ## limits
 
@@ -118,7 +139,7 @@ def capabilities(self) -> CapabilitySet
 def limits(self) -> MappingProxyType[str, int]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L320)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L367)
 
 ## plugins
 
@@ -127,7 +148,7 @@ def limits(self) -> MappingProxyType[str, int]
 def plugins(self) -> PluginCatalog
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L324)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L371)
 
 ## admin
 
@@ -136,7 +157,7 @@ def plugins(self) -> PluginCatalog
 def admin(self) -> SoulFireAdmin
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L330)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L377)
 
 ## local_server_logs
 
@@ -145,7 +166,7 @@ def admin(self) -> SoulFireAdmin
 def local_server_logs(self) -> tuple[str, ...]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L345)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L392)
 
 ## is_local_server_running
 
@@ -154,7 +175,7 @@ def local_server_logs(self) -> tuple[str, ...]
 def is_local_server_running(self) -> bool
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L350)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L397)
 
 ## restart_local_server
 
@@ -163,7 +184,7 @@ def is_local_server_running(self) -> bool
 def restart_local_server(self) -> EffectGen[None, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L355)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L402)
 
 ## stop_local_server
 
@@ -172,7 +193,7 @@ def restart_local_server(self) -> EffectGen[None, SoulFireOperationError]
 def stop_local_server(self) -> EffectGen[None, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L360)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L407)
 
 ## service
 
@@ -180,7 +201,7 @@ def stop_local_server(self) -> EffectGen[None, SoulFireOperationError]
 def service[ClientT](self, client_type: Callable[..., ClientT]) -> ClientT
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L364)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L411)
 
 ## instance
 
@@ -188,7 +209,7 @@ def service[ClientT](self, client_type: Callable[..., ClientT]) -> ClientT
 def instance(self, instance_id: str) -> SoulFireInstance
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L374)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L421)
 
 ## instances
 
@@ -199,7 +220,7 @@ def instances(
 ) -> EffectGen[list[InstanceListResponse.Instance], SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L394)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L441)
 
 ## create_instance
 
@@ -214,7 +235,22 @@ def create_instance(
 ) -> EffectGen[SoulFireInstance, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L406)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L453)
+
+## get_or_create_instance
+
+```python
+@fn("SoulFire.get_or_create_instance")
+def get_or_create_instance(
+    self,
+    name: str,
+    *,
+    server: str | None = None,
+    timeout_ms: int | None = None,
+) -> EffectGen[SoulFireInstance, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L471)
 
 ## begin_login
 
@@ -225,7 +261,7 @@ def begin_login(
 ) -> EffectGen[NextAuthFlowResponse, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L424)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L489)
 
 ## complete_login
 
@@ -241,7 +277,7 @@ def complete_login(
 ) -> EffectGen[NextAuthFlowResponse, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L437)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L502)
 
 ## close
 
@@ -250,7 +286,7 @@ def complete_login(
 def close(self) -> EffectGen[None]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L459)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L524)
 
 ## negotiate
 
@@ -259,4 +295,4 @@ def close(self) -> EffectGen[None]
 def negotiate(self) -> EffectGen[None, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/client.py#L485)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L550)

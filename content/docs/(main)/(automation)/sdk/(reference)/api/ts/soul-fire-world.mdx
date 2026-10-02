@@ -4,9 +4,9 @@ description: Public TypeScript members of SoulFireWorld.
 icon: Code
 ---
 
-Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
 
-Compose Effect operations with `yield*` inside a scoped workflow. Properties expose sub-clients and state.
+Compose Effect v4 operations with `yield*` inside a scoped workflow. Properties expose sub-clients and state.
 
 ## player
 
@@ -16,7 +16,7 @@ player(
 ): Effect.Effect<PlayerSnapshot, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/world.ts#L49)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/world.ts#L49)
 
 ## block
 
@@ -27,7 +27,7 @@ block(
 ): Effect.Effect<GetWorldBlockResponse, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/world.ts#L71)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/world.ts#L71)
 
 ## queryBlocks
 
@@ -45,7 +45,7 @@ queryBlocks(
 ): Effect.Effect<QueryBlocksResponse, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/world.ts#L91)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/world.ts#L91)
 
 ## entity
 
@@ -56,7 +56,7 @@ entity(
 ): Effect.Effect<GetWorldEntityResponse, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/world.ts#L103)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/world.ts#L103)
 
 ## queryEntities
 
@@ -71,7 +71,7 @@ queryEntities(
 ): Effect.Effect<QueryEntitiesResponse, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/world.ts#L120)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/world.ts#L120)
 
 ## raycast
 
@@ -86,7 +86,7 @@ raycast(
 ): Effect.Effect<RaycastResponse, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/world.ts#L137)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/world.ts#L137)
 
 ## raycastFromPlayer
 
@@ -99,7 +99,7 @@ raycastFromPlayer(
 ): Effect.Effect<RaycastResponse, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/world.ts#L152)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/world.ts#L152)
 
 ## blockAtCursor
 
@@ -114,7 +114,7 @@ blockAtCursor(
 ): Effect.Effect<BlockSnapshot | undefined, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/world.ts#L169)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/world.ts#L169)
 
 ## entityAtCursor
 
@@ -129,7 +129,7 @@ entityAtCursor(
 ): Effect.Effect<EntitySnapshot | undefined, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/world.ts#L187)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/world.ts#L187)
 
 ## estimateExplosionDamage
 
@@ -145,7 +145,7 @@ estimateExplosionDamage(
 ): Effect.Effect<EstimateExplosionDamageResponse, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/world.ts#L206)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/world.ts#L206)
 
 ## canSeeBlock
 
@@ -158,7 +158,7 @@ canSeeBlock(
 ): Effect.Effect<CanSeeBlockResponse, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/world.ts#L221)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/world.ts#L221)
 
 ## estimateDigTime
 
@@ -172,4 +172,4 @@ estimateDigTime(
 ): Effect.Effect<EstimateDigTimeResponse, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/world.ts#L237)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/world.ts#L237)

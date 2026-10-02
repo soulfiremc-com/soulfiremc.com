@@ -31,9 +31,10 @@ Do not remove a published URL just to make the sidebar simpler.
 ## Check facts against the implementation
 
 The source revision in `scripts/sdk-source.ts` defines the SDK and built-in node
-reference. SDK registry releases can lag behind that source. Update the public
-installation guide in `content/docs/(main)/(automation)/sdk/(start)/compatibility.mdx` when changing
-the baseline. Check the backend handshake and required plugins, too.
+reference. Keep the SDK baseline aligned with a published release. Verify npm
+and PyPI versions. Update the public installation guide in
+`content/docs/(main)/(automation)/sdk/(start)/compatibility.mdx` when changing the
+baseline. Check the backend handshake and required plugins, too.
 
 For GUI procedures, inspect the matching SoulFireClient source or a running
 client. Record the version when adding screenshots. For commands and settings,
@@ -43,8 +44,9 @@ hardware recommendation.
 
 Keep operational examples explicit about ports, storage paths, token audience,
 working directories, and cleanup. Tutorials must include an expected result and
-a stop procedure. Use the `Docs tutorial` instance and `DocsBot_1` account for
-shared beginner examples so readers can move between guides.
+a stop procedure. SDK beginner examples use managed setup with the `DocsBot_1`
+account and a Minecraft server at `localhost:25565`. Keep manual account discovery
+for existing-backend guides.
 
 ## Regenerate references
 

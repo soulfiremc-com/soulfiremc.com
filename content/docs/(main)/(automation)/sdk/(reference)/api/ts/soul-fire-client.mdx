@@ -4,9 +4,9 @@ description: Public TypeScript members of SoulFireClient.
 icon: Code
 ---
 
-Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
 
-Compose Effect operations with `yield*` inside a scoped workflow. Properties expose sub-clients and state.
+Compose Effect v4 operations with `yield*` inside a scoped workflow. Properties expose sub-clients and state.
 
 ## connect
 
@@ -19,7 +19,7 @@ static connect(
 ): Effect.Effect<SoulFireClient, SoulFireConnectionError, Scope.Scope>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L291)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L328)
 
 ## unauthenticated
 
@@ -31,7 +31,7 @@ static unauthenticated(
 ): Effect.Effect<SoulFireClient, SoulFireConnectionError, Scope.Scope>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L305)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L342)
 
 ## connectManaged
 
@@ -42,7 +42,7 @@ static connectManaged(
 ): Effect.Effect<SoulFireClient, SoulFireConnectionError, Scope.Scope>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L317)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L354)
 
 ## setToken
 
@@ -50,7 +50,7 @@ static connectManaged(
 setToken(token: string | TokenProvider | undefined): void
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L333)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L370)
 
 ## localServer
 
@@ -58,7 +58,7 @@ setToken(token: string | TokenProvider | undefined): void
 get localServer(): LocalSoulFireServer | undefined
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L337)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L374)
 
 ## server
 
@@ -66,7 +66,7 @@ get localServer(): LocalSoulFireServer | undefined
 get server(): ServerMetadata
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L341)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L378)
 
 ## identity
 
@@ -74,7 +74,7 @@ get server(): ServerMetadata
 get identity(): Readonly<SdkIdentity>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L345)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L382)
 
 ## capabilities
 
@@ -82,7 +82,7 @@ get identity(): Readonly<SdkIdentity>
 get capabilities(): CapabilitySet
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L349)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L386)
 
 ## limits
 
@@ -90,7 +90,7 @@ get capabilities(): CapabilitySet
 get limits(): ReadonlyMap<string, bigint>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L353)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L390)
 
 ## plugins
 
@@ -98,7 +98,7 @@ get limits(): ReadonlyMap<string, bigint>
 get plugins(): PluginCatalog
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L357)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L394)
 
 ## admin
 
@@ -106,7 +106,7 @@ get plugins(): PluginCatalog
 get admin(): SoulFireAdmin
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L366)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L403)
 
 ## localServerLogs
 
@@ -114,7 +114,7 @@ get admin(): SoulFireAdmin
 get localServerLogs(): readonly string[]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L370)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L407)
 
 ## isLocalServerRunning
 
@@ -122,7 +122,7 @@ get localServerLogs(): readonly string[]
 get isLocalServerRunning(): boolean
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L374)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L411)
 
 ## restartLocalServer
 
@@ -130,7 +130,7 @@ get isLocalServerRunning(): boolean
 restartLocalServer(): Effect.Effect<void, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L378)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L415)
 
 ## stopLocalServer
 
@@ -138,7 +138,7 @@ restartLocalServer(): Effect.Effect<void, SoulFireOperationError>
 stopLocalServer(): Effect.Effect<void, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L385)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L422)
 
 ## service
 
@@ -146,7 +146,7 @@ stopLocalServer(): Effect.Effect<void, SoulFireOperationError>
 service<T extends DescService>(service: T): Client<T>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L392)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L429)
 
 ## instance
 
@@ -156,7 +156,7 @@ A handle for `instanceId`, without a request.
 instance(instanceId: string): SoulFireInstance
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L399)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L436)
 
 ## instances
 
@@ -166,7 +166,7 @@ instances(
 ): Effect.Effect<InstanceListResponse_Instance[], SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L419)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L456)
 
 ## createInstance
 
@@ -177,7 +177,32 @@ createInstance(
 ): Effect.Effect<SoulFireInstance, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L430)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L467)
+
+## getOrCreateInstance
+
+Gets an instance owned by this user, or creates it with its server address.
+
+```ts
+getOrCreateInstance(
+  name: string,
+  options: GetOrCreateInstanceOptions = {},
+): Effect.Effect<SoulFireInstance, SoulFireOperationError>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L483)
+
+## createBot
+
+Creates or reuses a ready bot without exposing instance or account IDs.
+
+```ts
+createBot(
+  options: CreateBotOptions,
+): Effect.Effect<SoulFireBot, SoulFireOperationError, Scope.Scope>
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L503)
 
 ## beginLogin
 
@@ -188,7 +213,7 @@ beginLogin(
 ): Effect.Effect<NextAuthFlowResponse, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L445)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L518)
 
 ## completeLogin
 
@@ -200,7 +225,7 @@ completeLogin(
 ): Effect.Effect<NextAuthFlowResponse, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L454)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L527)
 
 ## close
 
@@ -208,4 +233,4 @@ completeLogin(
 close(): Effect.Effect<void>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/client.ts#L477)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L550)

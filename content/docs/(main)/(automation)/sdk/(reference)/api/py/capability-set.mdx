@@ -4,7 +4,7 @@ description: Public Python members of CapabilitySet.
 icon: Code
 ---
 
-Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
 
 Methods decorated with `@fn` return effects. Their implementation signatures use `EffectGen` for the generator body. Compose them with `yield from` inside a scoped workflow.
 
@@ -14,7 +14,7 @@ Methods decorated with `@fn` return effects. Their implementation signatures use
 def supports(self, capability: str, *, minimum_revision: int = 1) -> bool
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/connection.py#L41)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/connection.py#L41)
 
 ## require
 
@@ -22,7 +22,7 @@ def supports(self, capability: str, *, minimum_revision: int = 1) -> bool
 def require(self, capability: str, *, minimum_revision: int = 1) -> None
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/connection.py#L44)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/connection.py#L44)
 
 ## revision
 
@@ -30,7 +30,7 @@ def require(self, capability: str, *, minimum_revision: int = 1) -> None
 def revision(self, capability: str) -> int | None
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/connection.py#L48)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/connection.py#L48)
 
 ## revisions
 
@@ -39,4 +39,4 @@ def revision(self, capability: str) -> int | None
 def revisions(self) -> MappingProxyType[str, int]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/connection.py#L52)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/connection.py#L52)

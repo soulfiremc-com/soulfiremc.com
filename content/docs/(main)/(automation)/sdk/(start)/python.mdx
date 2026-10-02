@@ -1,43 +1,25 @@
 ---
 title: Your first Python program
 sidebarTitle: "Python"
-description: Find one bot, connect it, send chat, and stop it with scoped cleanup.
+description: Create a ready Minecraft bot with Python 3.14 and effect-py, then send chat.
 icon: Code
 ---
 
-This program uses CPython 3.14 and the Effect-based SDK.
-It sends one message and registers a stop action for scope cleanup.
+This program creates a ready bot from a Minecraft server address and username.
+The SDK downloads SoulFire and Java when needed and manages setup and cleanup.
 
-## Install the matching SDK
+## Prepare the Minecraft server
 
-Complete [SDK versions and installation](/docs/sdk/compatibility).
-Use the virtual environment from that guide for every command on this page.
+Start a Minecraft server that accepts offline accounts at `localhost:25565`.
+Change `server` in the program if your server uses another address.
+The default authentication is `"offline"`.
+For a server that requires a Microsoft account, see [account authentication](/docs/sdk/discover-bots#authenticate-a-microsoft-account).
 
-## Prepare the backend
+## Install the SDK
 
-1. Connect to a compatible SoulFire server from the desktop app.
-2. Create an instance named `Docs tutorial`.
-3. Add one account named `DocsBot_1` and set the Minecraft target.
-4. Stop that bot before running this program.
-5. Run `generate-token api` in the backend console or authenticated terminal.
-
-Use the [first-bot tutorial](/docs/start-here/gui-mode) to prepare the instance.
-For a dedicated backend, use [server access](/docs/server/access).
-The program finds the instance and bot by their names, so no UUID placeholders remain.
-
-## Set the connection
-
-In the terminal that will run the program, set:
-
-```bash
-export SOULFIRE_URL="http://127.0.0.1:38765"
-export SOULFIRE_TOKEN="YOUR_API_TOKEN"
-```
-
-Use the backend's HTTPS URL for a remote deployment.
-`SOULFIRE_URL` is the SoulFire API address, not the Minecraft server address.
-Keep the token in your environment rather than the source file.
-On PowerShell, use `$env:SOULFIRE_URL = "..."` and `$env:SOULFIRE_TOKEN = "..."`.
+Complete the [Python installation](/docs/sdk/compatibility#install-the-python-sdk).
+Use that virtual environment for every command on this page.
+The SDK requires CPython 3.14 or newer and installs the pinned effect-py runtime.
 
 ## Save the complete program
 
@@ -45,37 +27,27 @@ Create `first_bot.py`:
 
 ```python title="first_bot.py" doc-test lineNumbers
 import asyncio
-import os
 
-from effect_py import EffectGen, Scope, add_finalizer, gen, run_async, scoped
+from effect_py import EffectGen, Scope, gen, run_async, scoped, sync
 from soulfire import SoulFire, SoulFireOperationError
 
 
 @gen
 def program() -> EffectGen[None, SoulFireOperationError, Scope]:
-    client = yield from SoulFire.connect(
-        os.environ["SOULFIRE_URL"], token=os.environ["SOULFIRE_TOKEN"]
+    bot = yield from SoulFire.create_bot(
+        server="localhost:25565",
+        username="DocsBot_1",
+        installation={"version": "2.10.2"},
     )
-    instances = yield from client.instances()
-    record = next((item for item in instances if item.friendly_name == "Docs tutorial"), None)
-    if record is None:
-        raise RuntimeError("Create the Docs tutorial instance first")
-    instance = client.instance(record.id)
-    accounts = yield from instance.bots()
-    account = next((item for item in accounts if item.account_name == "DocsBot_1"), None)
-    if account is None:
-        raise RuntimeError("Add the DocsBot_1 account first")
-    bot = instance.bot(account.profile_id)
-
-    yield from add_finalizer(lambda _: bot.stop().or_die())
-    yield from bot.start()
-    yield from bot.wait_for_online()
-    yield from bot.chat.send("Hello from the Python tutorial")
-    print(f"Sent chat from {account.account_name}; stopping the bot")
+    yield from bot.chat.send("Hello from SoulFire")
+    yield from sync(lambda: print(bot.state.player))
 
 
 asyncio.run(run_async(scoped(program).or_die()))
 ```
+
+`server` is the Minecraft address.
+The SDK supplies the local SoulFire API URL and token and creates or finds the instance and account.
 
 ## Run and check the result
 
@@ -84,28 +56,33 @@ asyncio.run(run_async(scoped(program).or_die()))
 ```
 
 On Windows, run `.venv\Scripts\python first_bot.py`.
-Check these results:
+The first run downloads a dedicated backend and Java into `.soulfire` under the working directory.
+Later runs reuse those files and the saved account.
+Expect `Hello from SoulFire` in Minecraft chat and a player snapshot in the terminal.
+The scope closes subscriptions and the managed backend when the program finishes.
 
-- The program prints `Sent chat from DocsBot_1; stopping the bot`.
-- Minecraft chat shows `Hello from the Python tutorial` from that account.
-- The bot leaves the player list when the program finishes.
-
-If the SDK handshake fails, compare backend and SDK API versions.
-If Minecraft login fails, inspect the disconnect reason in **Overview**.
-If cleanup cannot reach the backend, stop the bot from the GUI after restoring access.
+Use `installation={"directory": "...", "version": "2.10.2"}` to choose the data directory and backend version.
+Without a version, managed installation selects the latest release.
 
 ## Read the code
 
+`SoulFire.create_bot` installs a local backend and returns a ready, observed bot.
+It waits for the initial player snapshot, with a default 30-second deadline.
+Set `ready_timeout` in seconds to change that deadline.
+`bot.state` contains the latest synchronized state.
+
 `@gen` defines an Effect workflow. `yield from` runs its operations.
-`scoped` owns the connection and the stop finalizer.
-`run_async` runs the workflow through the async runtime.
+`scoped` owns the connection, subscriptions, and managed process.
+`sync` puts the print operation inside the workflow.
+`run_async` runs the complete workflow through the async runtime.
 `or_die()` converts remaining typed failures into boundary errors.
 
-Use `or_die()` at the application boundary after you decide how to handle expected errors.
-In a larger application, inspect failures or recover inside the workflow instead.
-Read [runtime and advanced examples](/docs/sdk/python-runtime) for streams, managed servers, layers, and service integration.
+Use `or_die()` at the application boundary after handling expected errors.
+In a larger application, use effect-py recovery operators or `run_async_exit` to inspect failures.
+Constructing an effect alone does not send a request.
 
 ## Next step
 
-[Discover IDs](/docs/sdk/discover-bots), then run a complete [recipe](/docs/sdk/recipes).
+Use [named instances and bots](/docs/sdk/discover-bots) to reuse one backend for several accounts or connect to an existing server.
+Try [replying to chat](/docs/sdk/recipes/reply-to-chat), or read the [runtime guide](/docs/sdk/python-runtime) for layers and streams.
 Read [task ownership](/docs/concepts/bot-lifecycle) before submitting durable work.

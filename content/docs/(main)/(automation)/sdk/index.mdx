@@ -9,14 +9,14 @@ import { Cards, Card } from 'fumadocs-ui/components/card';
 import { Callout } from 'fumadocs-ui/components/callout';
 
 Start with [SDK versions and installation](/docs/sdk/compatibility).
-These guides use the pinned 2.11.0 Effect-based source, which differs from the published 2.10.0 APIs at the audit date.
+These guides describe the published `2.10.2` SDKs, with Effect v4 for TypeScript and effect-py for Python.
 
 The SoulFire SDK is the official API for Minecraft automation.
 Your application controls one bot or a fleet.
 SoulFire manages connections, reconnects, permissions, tasks, and plugins.
 
 <Callout type="info">
-  The TypeScript SDK uses Effect.
+  The TypeScript SDK uses Effect v4.
   The Python SDK requires CPython 3.14.
   The Python SDK uses effect-py.
 </Callout>
@@ -34,7 +34,8 @@ SoulFire manages connections, reconnects, permissions, tasks, and plugins.
 
 ## Build something useful
 
-Start with a complete program. Each recipe has TypeScript and Python code you can run after setting your server URL, token, instance ID, and bot ID.
+Start with a Minecraft server address and username. The SDK can install a local backend and return a ready bot.
+For an existing backend, use named provisioning or attach to saved bot IDs.
 
 - [Reply to chat](/docs/sdk/recipes/reply-to-chat) with a bot.
 - [Collect blocks](/docs/sdk/recipes/collect-blocks) with a durable task.
@@ -57,6 +58,8 @@ SoulFire
 ├── server metadata and negotiated capabilities
 ├── administrative services and scoped telemetry
 ├── plugin catalog and reflective RPC
+├── createBot / getOrCreateInstance (TypeScript)
+├── get_or_create_instance (Python)
 └── instance(instanceId)
     ├── fleet lifecycle and status streams
     ├── selectors, work distribution, and task groups
@@ -72,8 +75,9 @@ SoulFire
 
 An instance separates permissions and settings.
 Each Minecraft account is a separate bot.
-SoulFire saves the requested bot state.
-It can reconnect the bot after the SDK program stops.
+Named setup reuses saved resources. `bot.connect()` owns observation and stops bots that its scope starts.
+The lower-level `start` API changes saved requested state until an explicit stop.
+See [bot lifecycle](/docs/concepts/bot-lifecycle) for cleanup and task ownership.
 
 ## Run the examples
 

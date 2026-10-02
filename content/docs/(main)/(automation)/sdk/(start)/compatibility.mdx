@@ -1,83 +1,76 @@
 ---
 title: SDK versions and installation
 sidebarTitle: "Installation and versions"
-description: Install the exact API baseline used by these examples instead of mixing incompatible releases.
+description: Install the released TypeScript and Python SDKs with their matching runtimes.
 icon: GitBranch
 ---
 
-import { Callout } from 'fumadocs-ui/components/callout';
+The examples and generated reference use SoulFire SDK `2.10.2`.
+The TypeScript SDK requires Effect v4. The Python SDK requires CPython 3.14 or newer and uses effect-py.
+Both packages are available from their package registries.
 
-<Callout type="warning">
-  These guides describe the Effect-based SDK in the 2.11.0 source tree.
-  At the documentation audit on October 1, 2026, npm and PyPI still published 2.10.0.
-  The Python 2.10.0 package exposes different async/sync APIs. Do not run these examples against that package.
-</Callout>
+## Install the TypeScript SDK
 
-## The documentation baseline
-
-Examples and generated reference use the [pinned SoulFire source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2).
-The SDK source reports version `2.11.0`.
-Use a SoulFire backend compatible with that API baseline.
-The connection handshake checks API versions, features, and required plugins before returning a usable client.
-
-The install instructions below use the pinned source directly.
-They remain reproducible even if a package registry changes its latest release.
-For released software, consult the README shipped with that release and its matching API.
-
-## TypeScript source installation
-
-Install Git and Bun. Clone and build the pinned SDK:
+Create an application with Bun:
 
 ```bash
-git clone https://github.com/soulfiremc-com/SoulFire.git SoulFire-sdk-source
-cd SoulFire-sdk-source
-git checkout --detach 213ec6322325e94c8068c079344b66f8158628e2
-bun install --frozen-lockfile
-cd sdk/typescript
-bun run build
-```
-
-Create your application beside the source checkout:
-
-```bash
-cd ../../..
 mkdir soulfire-tutorial
 cd soulfire-tutorial
 bun init -y
-bun add ../SoulFire-sdk-source/sdk/typescript effect @effect/platform
+bun add @soulfiremc/sdk@2.10.2 effect@^4
 ```
 
-Save the complete [TypeScript tutorial](/docs/sdk/typescript) in `soulfire-tutorial`.
-Keep the source checkout available while using this local package dependency.
+For Node.js 22 or newer, install the Node runtime too:
 
-## Python source installation
+```bash
+npm install @soulfiremc/sdk@2.10.2 effect@^4 @effect/platform-node@^4
+npm install --save-dev tsx
+```
 
-Install Git and CPython 3.14 or newer.
-Create a virtual environment and install the pinned package:
+Choose the entry point for your application:
+
+| Runtime | Import | Managed local server |
+| --- | --- | --- |
+| Bun | `@soulfiremc/sdk/bun` | Yes |
+| Node.js 22+ | `@soulfiremc/sdk/node` | Yes |
+| Browser | `@soulfiremc/sdk/browser` | No |
+| Workers, Deno, or custom transport | `@soulfiremc/sdk` | No |
+
+The universal entry point connects to an existing backend.
+`connectWithHttpClient` and `layerWithHttpClient` accept the Effect v4 `effect/http/HttpClient` service.
+The Node, browser, and Bun entry points supply their HTTP layer.
+Effect v4 includes portable HTTP modules. These examples do not require `@effect/platform`.
+
+Continue with [your first TypeScript program](/docs/sdk/typescript).
+
+## Install the Python SDK
+
+Create a virtual environment with CPython 3.14 or newer:
 
 ```bash
 mkdir soulfire-python-tutorial
 cd soulfire-python-tutorial
 python3.14 -m venv .venv
-.venv/bin/python -m pip install "soulfire @ git+https://github.com/soulfiremc-com/SoulFire.git@213ec6322325e94c8068c079344b66f8158628e2#subdirectory=sdk/python"
+.venv/bin/python -m pip install soulfire==2.10.2
 ```
 
-On Windows, use `py -3.14 -m venv .venv` and `.venv\Scripts\python` in place of `.venv/bin/python`.
-The package installs `effect-python`, which provides the `effect_py` module, and its required RPC dependencies.
+On Windows, use `py -3.14 -m venv .venv` and `.venv\Scripts\python` for the remaining commands.
+The SDK installs `effect-python==0.1.0a2`, which provides the `effect_py` module, and its RPC dependencies.
+Keep that pinned effect-py version when using this SDK release.
 
-## Obtain a matching backend
+Continue with [your first Python program](/docs/sdk/python).
 
-If you already have a backend, try the connection handshake before writing automation.
-A compatibility failure needs a matching backend or an SDK made for that release.
+## Choose a backend
 
-To build this exact backend baseline, check out the same revision and install Java 25.
-Packaging also requires native Vulkan artifacts. Follow the source tree's
-[native runtime build instructions](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/docs/vulkan-runtime.md).
-They include the Linux builder and the platform-specific packaging command.
+For a local script, `SoulFire.createBot` or Python `SoulFire.create_bot` downloads SoulFire and Java when needed.
+It creates or reuses the instance and account, starts the bot, and waits for its initial player snapshot.
+The tutorials pin the managed backend with `installation.version` or Python `installation={"version": "2.10.2"}`.
+Without a version, managed installation selects the latest release.
 
-Use the resulting JAR from `dedicated-launcher/build/libs` with the
-[Java deployment guide](/docs/server/java). Keep it in a separate test deployment
-until you have verified the backend, plugins, and SDK together.
+For an existing backend, use `SoulFire.connect` with its API URL and token.
+The handshake checks API versions, capabilities, and required plugins.
+Named instance provisioning requires the `instance.provisioning.v1` capability.
+See [named setup and existing bots](/docs/sdk/discover-bots).
 
 ## Check the installed version
 
@@ -93,11 +86,32 @@ Python:
 .venv/bin/python -c "from importlib.metadata import version; print(version('soulfire'))"
 ```
 
-Expect `2.11.0` from this source baseline.
-The backend must also pass the SDK handshake. A matching package label alone does not prove compatibility.
+Expect SDK version `2.10.2`. A matching version label alone does not prove backend compatibility.
+The backend must also pass the connection handshake.
 
-## Generated and live reference
+## Migrate older applications
 
-The [SDK API](/docs/sdk/api) and [node reference](/docs/scripting/node-reference) link to the pinned source.
+The TypeScript high-level API uses Effect operations, streams, and scopes.
+Compose calls with `yield*` inside `Effect.gen` and run the complete workflow once at the application boundary.
+Use Effect v4 imports such as `effect/http/FetchHttpClient` instead of Effect v3 platform modules.
+
+The Python high-level API uses lazy effects instead of the older async/sync client API.
+Compose calls with `yield from` inside `@gen` or `@fn`.
+Run the workflow with `run_async(scoped(program).or_die())` at the application boundary.
+Stream callbacks return effects; consumers use `run_for_each`, `run_collect`, or other effect-based operations.
+Generated protocol clients remain available for direct transport integration.
+Read the [TypeScript runtime](/docs/sdk/typescript-runtime) and [Python runtime](/docs/sdk/python-runtime) guides for details.
+
+## Source and generated reference
+
+The documentation uses the [2.10.2 release source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d).
+The [SDK API](/docs/sdk/api) and [node reference](/docs/scripting/node-reference) link to that revision.
 The [HTTP schema](/docs/openapi) reports its own version and covers unary JSON operations.
-The connected server's metadata, node palette, and command help describe its actual installed capabilities.
+The connected backend's metadata and node palette describe its installed capabilities.
+
+For SDK development, clone the same revision, run `bun install --frozen-lockfile`, and build from `sdk/typescript`.
+For a Python source install, use:
+
+```bash
+.venv/bin/python -m pip install "soulfire @ git+https://github.com/soulfiremc-com/SoulFire.git@878ba24b85ee4a1ec170ed738b7664b61ace1a2d#subdirectory=sdk/python"
+```

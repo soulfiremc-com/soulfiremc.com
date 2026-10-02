@@ -15,7 +15,7 @@ Constructing an effect does not send a request.
 
 ## Prerequisites
 
-Complete the [source-compatible SDK installation](/docs/sdk/compatibility) first.
+Complete the [released SDK installation](/docs/sdk/compatibility) first.
 The snippets here demonstrate runtime integration, not a separate first-run procedure.
 
 
@@ -23,7 +23,7 @@ Use the installation commands from the compatibility guide.
 
 ## Connect and send chat
 
-The complete [first program](/docs/sdk/python) includes account discovery, environment settings, and bot-stop cleanup.
+The complete [first program](/docs/sdk/python) includes managed installation and account setup.
 The following example shows how the runtime fits around an operation when IDs are already known.
 
 Use `yield from` inside a generator decorated with `@gen`.
@@ -44,10 +44,8 @@ def program() -> EffectGen[None, SoulFireOperationError, Scope]:
         token=os.environ["SOULFIRE_TOKEN"],
     )
     bot = client.instance("instance-uuid").bot("bot-uuid")
-    yield from bot.start()
-    yield from bot.wait_for_online()
+    yield from bot.connect()
     yield from bot.chat.send("Hello from SoulFire")
-    yield from bot.stop()
 
 
 asyncio.run(run_async(scoped(program).or_die()))
@@ -61,15 +59,39 @@ Use `run_async_exit` to inspect typed failures without converting them into exce
 Use `or_die()` only at a boundary where no recovery remains.
 RPCs and streams require the async runtime.
 
-## Managed installation and source builds
+## Manage a local backend
 
-`SoulFire.install(version="MATCHING_RELEASE_TAG")` downloads a dedicated release and supplies an API token.
-Its scope stops the managed backend after completion, failure, or interruption.
-The Python installer in this baseline does not expose the TypeScript installer's `jarPath` option.
+`SoulFire.create_bot(server=..., username=...)` installs a backend and returns a ready, observed bot.
+It defaults to offline authentication and waits up to 30 seconds for the initial player snapshot.
+Set `ready_timeout` in seconds to change that deadline.
+For Microsoft accounts, pass `auth="microsoft"` and complete the device-code sign-in on first creation.
 
-Use `install` only when a compatible dedicated release is available.
-For the pinned source baseline, start a matching backend separately and use [the Python connection tutorial](/docs/sdk/python).
-Do not assume that the latest published release matches this SDK source.
+For several bots, install once:
+
+```python
+client = yield from SoulFire.install(version="2.10.2")
+instance = yield from client.get_or_create_instance("farm", server="localhost:25565")
+bot = yield from instance.get_or_create_bot("Builder")
+```
+
+Named provisioning reuses saved resources and rejects conflicting configuration.
+`get_or_create_bot(..., start=False)` returns an account handle without starting it.
+Call `yield from bot.connect()` when ready.
+
+Downloads and data stay in `.soulfire` under the working directory.
+The `installation` dictionary in `create_bot` forwards options to `SoulFire.install`:
+
+- `directory` and `version`: choose the data directory and released backend.
+- `java_args`, `port`, `startup_timeout`, and `on_log`: configure the managed process.
+- `timeout_ms` and `interceptors`: configure RPC transport.
+
+Python `startup_timeout` and `ready_timeout` use seconds.
+The Python installer does not expose TypeScript's `jarPath` or `javaPath` options.
+For a source-built backend, start it separately and use `SoulFire.connect`.
+
+Scope exit stops the managed process and closes subscriptions.
+On an existing backend, `bot.connect()` stops a bot started by its scope and leaves an already-running bot running.
+Read [named setup](/docs/sdk/discover-bots) for complete programs against an existing backend.
 
 ## Consume scoped streams
 

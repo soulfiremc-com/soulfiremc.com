@@ -4,7 +4,7 @@ description: Public Python members of SoulFireInventory.
 icon: Code
 ---
 
-Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
 
 Methods decorated with `@fn` return effects. Their implementation signatures use `EffectGen` for the generator body. Compose them with `yield from` inside a scoped workflow.
 
@@ -17,7 +17,7 @@ def snapshot(
 ) -> EffectGen[ContainerSnapshot, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/semantic.py#L754)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L755)
 
 ## count
 
@@ -25,14 +25,14 @@ def snapshot(
 @fn("SoulFireInventory.count")
 def count(
     self,
-    selector: ItemSelector,
+    selector: str | ItemSelector,
     *,
     areas: Iterable[InventoryArea] = (),
     timeout_ms: int | None = None,
 ) -> EffectGen[int, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/semantic.py#L766)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L767)
 
 ## find
 
@@ -47,7 +47,7 @@ def find(
 ) -> EffectGen[FindInventorySlotsResponse, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/semantic.py#L783)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L785)
 
 ## rank
 
@@ -70,7 +70,7 @@ def rank(
 ) -> EffectGen[RankInventoryItemsResponse, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/semantic.py#L801)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L803)
 
 ## best_tool
 
@@ -81,7 +81,7 @@ def best_tool(
 ) -> EffectGen[InventoryItemRecommendation | None, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/semantic.py#L839)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L841)
 
 ## best_weapon
 
@@ -92,7 +92,7 @@ def best_weapon(
 ) -> EffectGen[InventoryItemRecommendation | None, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/semantic.py#L854)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L856)
 
 ## best_armor
 
@@ -103,7 +103,7 @@ def best_armor(
 ) -> EffectGen[InventoryItemRecommendation | None, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/semantic.py#L862)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L864)
 
 ## best_food
 
@@ -114,7 +114,7 @@ def best_food(
 ) -> EffectGen[InventoryItemRecommendation | None, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/semantic.py#L877)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L879)
 
 ## best_scaffold
 
@@ -125,7 +125,7 @@ def best_scaffold(
 ) -> EffectGen[InventoryItemRecommendation | None, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/semantic.py#L885)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L887)
 
 ## move
 
@@ -143,7 +143,7 @@ def move(
 ) -> EffectGen[InventoryMutationResponse, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/semantic.py#L893)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L895)
 
 ## transfer
 
@@ -162,7 +162,7 @@ def transfer(
 ) -> EffectGen[InventoryMutationResponse, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/semantic.py#L922)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L924)
 
 ## toss
 
@@ -179,7 +179,7 @@ def toss(
 ) -> EffectGen[InventoryMutationResponse, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/semantic.py#L953)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L955)
 
 ## select_hotbar
 
@@ -196,7 +196,7 @@ def select_hotbar(
 ) -> EffectGen[InventoryMutationResponse, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/semantic.py#L980)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L982)
 
 ## equip
 
@@ -213,7 +213,7 @@ def equip(
 ) -> EffectGen[InventoryMutationResponse, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/semantic.py#L1016)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L1018)
 
 ## unequip
 
@@ -230,7 +230,7 @@ def unequip(
 ) -> EffectGen[InventoryMutationResponse, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/semantic.py#L1043)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L1045)
 
 ## open
 
@@ -244,4 +244,4 @@ def open(
 ) -> Effect[SoulFireContainer, SoulFireOperationError, Scope]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/semantic.py#L1069)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L1071)

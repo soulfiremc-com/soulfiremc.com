@@ -25,23 +25,23 @@ SoulFire does not contain a beat-game planner.
 ### Install the packages
 
 ```bash
-bun add @soulfiremc/sdk @soulfiremc/beat-game effect
+bun add @soulfiremc/sdk@2.10.2 @soulfiremc/beat-game@2.10.2 effect@^4
 ```
 
-### Connect and start the runner
+### Create a ready bot and start the runner
 
-```ts
-import { SoulFire } from "@soulfiremc/sdk/node";
+```ts title="beat-game.ts" doc-test
+import { SoulFire } from "@soulfiremc/sdk/bun";
 import { beatGame } from "@soulfiremc/beat-game";
 import { Effect, Stream } from "effect";
 
 const program = Effect.scoped(
   Effect.gen(function* () {
-    const soulfire = yield* SoulFire.connect({
-      baseUrl: "https://soulfire.example.com",
-      token: process.env.SOULFIRE_TOKEN,
+    const bot = yield* SoulFire.createBot({
+      server: "localhost:25565",
+      username: "Survivor",
+      installation: { version: "2.10.2" },
     });
-    const bot = soulfire.instance(instanceId).bot(botId);
     const run = yield* beatGame(bot);
 
     yield* Effect.forkScoped(
@@ -60,7 +60,13 @@ const program = Effect.scoped(
 );
 
 const result = await Effect.runPromise(program);
+console.log(result);
 ```
+
+Run an offline-mode survival Minecraft server at `localhost:25565`, save the file, and run `bun run beat-game.ts`.
+For Node.js, use `@soulfiremc/sdk/node` and the [Node runtime installation](/docs/sdk/compatibility).
+For an existing backend, use [named provisioning](/docs/sdk/discover-bots) and attach the bot in the same scope.
+The SDK and runner both require Effect v4. The former `/promise` entry point is removed.
 
 ### Keep the worker alive
 

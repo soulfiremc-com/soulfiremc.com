@@ -4,9 +4,9 @@ description: Public TypeScript members of SoulFireInventory.
 icon: Code
 ---
 
-Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
 
-Compose Effect operations with `yield*` inside a scoped workflow. Properties expose sub-clients and state.
+Compose Effect v4 operations with `yield*` inside a scoped workflow. Properties expose sub-clients and state.
 
 ## snapshot
 
@@ -19,7 +19,7 @@ snapshot(
 ): Effect.Effect<ContainerSnapshot, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/inventory.ts#L244)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L245)
 
 ## count
 
@@ -28,12 +28,12 @@ hotbar, armor, offhand and crafting slots.
 
 ```ts
 count(
-  request: InventoryRequest<typeof CountItemsRequestSchema>,
+  request: string | InventoryRequest<typeof CountItemsRequestSchema>,
   options?: CallOptions,
 ): Effect.Effect<bigint, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/inventory.ts#L270)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L271)
 
 ## find
 
@@ -47,7 +47,7 @@ find(
 ): Effect.Effect<FindInventorySlotsResponse, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/inventory.ts#L289)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L294)
 
 ## rank
 
@@ -63,7 +63,7 @@ rank(
 ): Effect.Effect<RankInventoryItemsResponse, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/inventory.ts#L306)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L311)
 
 ## bestTool
 
@@ -80,7 +80,7 @@ bestTool(
 >
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/inventory.ts#L322)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L327)
 
 ## bestWeapon
 
@@ -94,7 +94,7 @@ bestWeapon(
 >
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/inventory.ts#L337)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L342)
 
 ## bestArmor
 
@@ -109,7 +109,7 @@ bestArmor(
 >
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/inventory.ts#L347)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L352)
 
 ## bestFood
 
@@ -123,7 +123,7 @@ bestFood(
 >
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/inventory.ts#L362)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L367)
 
 ## bestScaffold
 
@@ -137,7 +137,7 @@ bestScaffold(
 >
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/inventory.ts#L372)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L377)
 
 ## move
 
@@ -151,7 +151,7 @@ move(
 ): Effect.Effect<InventoryMutationResponse, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/inventory.ts#L386)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L391)
 
 ## transfer
 
@@ -166,7 +166,7 @@ transfer(
 ): Effect.Effect<InventoryMutationResponse, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/inventory.ts#L403)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L408)
 
 ## toss
 
@@ -179,7 +179,7 @@ toss(
 ): Effect.Effect<InventoryMutationResponse, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/inventory.ts#L418)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L423)
 
 ## selectHotbar
 
@@ -193,7 +193,7 @@ selectHotbar(
 ): Effect.Effect<InventoryMutationResponse, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/inventory.ts#L434)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L439)
 
 ## equip
 
@@ -208,7 +208,7 @@ equip(
 ): Effect.Effect<InventoryMutationResponse, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/inventory.ts#L451)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L456)
 
 ## unequip
 
@@ -223,7 +223,7 @@ unequip(
 ): Effect.Effect<InventoryMutationResponse, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/inventory.ts#L468)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L473)
 
 ## open
 
@@ -236,7 +236,7 @@ open(
 ): Effect.Effect<SoulFireContainer, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/inventory.ts#L483)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L488)
 
 ## openScoped
 
@@ -246,4 +246,4 @@ openScoped(
 ): Effect.Effect<SoulFireContainer, SoulFireOperationError, Scope.Scope>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/inventory.ts#L543)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L548)

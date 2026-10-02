@@ -4,9 +4,9 @@ description: Public TypeScript members of PluginCatalog.
 icon: Code
 ---
 
-Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
 
-Compose Effect operations with `yield*` inside a scoped workflow. Properties expose sub-clients and state.
+Compose Effect v4 operations with `yield*` inside a scoped workflow. Properties expose sub-clients and state.
 
 ## revision
 
@@ -14,7 +14,7 @@ Compose Effect operations with `yield*` inside a scoped workflow. Properties exp
 get revision(): bigint
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/plugins.ts#L339)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/plugins.ts#L339)
 
 ## all
 
@@ -22,7 +22,7 @@ get revision(): bigint
 all(): readonly PluginApiDescriptor[]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/plugins.ts#L343)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/plugins.ts#L343)
 
 ## get
 
@@ -30,7 +30,7 @@ all(): readonly PluginApiDescriptor[]
 get(pluginId: string): PluginApiDescriptor | undefined
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/plugins.ts#L347)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/plugins.ts#L347)
 
 ## requireDescriptor
 
@@ -38,7 +38,7 @@ get(pluginId: string): PluginApiDescriptor | undefined
 requireDescriptor(pluginId: string): PluginApiDescriptor
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/plugins.ts#L351)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/plugins.ts#L351)
 
 ## require
 
@@ -48,7 +48,7 @@ require<T extends SoulFireExtension>(
 ): Effect.Effect<T, SoulFirePluginError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/plugins.ts#L359)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/plugins.ts#L359)
 
 ## service
 
@@ -59,7 +59,7 @@ service<T extends DescService>(
 ): Client<T>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/plugins.ts#L380)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/plugins.ts#L380)
 
 ## refresh
 
@@ -69,7 +69,7 @@ refresh(
 ): Effect.Effect<readonly PluginApiDescriptor[], SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/plugins.ts#L398)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/plugins.ts#L398)
 
 ## descriptorSet
 
@@ -80,7 +80,7 @@ descriptorSet(
 ): Effect.Effect<Uint8Array, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/plugins.ts#L410)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/plugins.ts#L410)
 
 ## reflective
 
@@ -91,7 +91,7 @@ reflective(
 ): Effect.Effect<ReflectivePlugin, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/plugins.ts#L446)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/plugins.ts#L446)
 
 ## watch
 
@@ -101,7 +101,7 @@ watch(
 ): Stream.Stream<PluginApiEvent, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/plugins.ts#L478)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/plugins.ts#L478)
 
 ## events
 
@@ -116,7 +116,7 @@ events(
 ): Stream.Stream<PluginEvent, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/plugins.ts#L509)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/plugins.ts#L509)
 
 ## typedEvents
 
@@ -130,4 +130,4 @@ typedEvents<T extends DescMessage>(
 ): Stream.Stream<TypedPluginEvent<T>, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/plugins.ts#L532)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/plugins.ts#L532)

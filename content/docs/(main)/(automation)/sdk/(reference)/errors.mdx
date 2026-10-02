@@ -24,27 +24,37 @@ The error type tells the application whether to retry, change input, inspect pro
 
 ## Effect error channels
 
-The Effect entry point exposes tagged errors. Handle expected cases without
-catching defects:
+The Effect v4 API exposes tagged errors. Use `Effect.catchTag` to recover from one error family.
+For a read-only RPC, restrict retries to retryable transport failures:
 
-```ts
-const program = bot.chat.send("hello").pipe(
-  Effect.catchTag("SoulFireRpcError", (error) =>
-    error.retryable
-      ? Effect.retry(
-          bot.chat.send("hello"),
-          Schedule.exponential("100 millis").pipe(
-            Schedule.compose(Schedule.recurs(4)),
-          ),
-        )
-      : Effect.fail(error)
-  ),
-);
+```ts title="retry-read.ts" doc-test
+import { Effect, Schedule } from "effect";
+import { SoulFire } from "@soulfiremc/sdk";
+
+const program = Effect.scoped(Effect.gen(function* () {
+  const client = yield* SoulFire.connect({
+    baseUrl: "https://soulfire.example.com",
+    token: process.env.SOULFIRE_TOKEN,
+  });
+  const bot = client.instance("instance-uuid").bot("bot-uuid");
+  const info = yield* bot.info().pipe(
+    Effect.retry({
+      schedule: Schedule.exponential("100 millis"),
+      times: 4,
+      while: (error) => error._tag === "SoulFireRpcError" && error.retryable,
+    }),
+  );
+  yield* Effect.logInfo(info.status);
+}));
+
+await Effect.runPromise(program);
 ```
 
 `SoulFireRpcError` preserves the operation name, ConnectRPC code, request ID,
 retryability, and original cause. Connection, task, plugin, and behavior
 operations use their own tagged error types.
+
+This example retries a read at most four times after its first attempt. It does not repeat a chat mutation.
 
 Effect interruption cancels the underlying request or stream. Acquire clients,
 sessions, leases, and local server processes in a scope so interruption also

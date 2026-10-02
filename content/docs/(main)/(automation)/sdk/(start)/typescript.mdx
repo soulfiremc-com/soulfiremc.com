@@ -1,43 +1,24 @@
 ---
 title: Your first TypeScript program
 sidebarTitle: "TypeScript"
-description: Find one bot, connect it, send chat, and stop it with scoped cleanup.
+description: Create a ready Minecraft bot with managed installation, send chat, and close its scope.
 icon: Code
 ---
 
-This program uses the desktop tutorial's instance and account.
-It sends one message and stops the bot when its scope closes, including after a workflow error.
+This program creates a ready bot from a Minecraft server address and username.
+The SDK downloads SoulFire and Java when needed and manages setup and cleanup.
 
-## Install the matching SDK
+## Prepare the Minecraft server
 
-Complete [SDK versions and installation](/docs/sdk/compatibility).
-Run the following code from the application directory created by that guide.
+Start a Minecraft server that accepts offline accounts at `localhost:25565`.
+Change `server` in the program if your server uses another address.
+The default authentication is `"offline"`.
+For a server that requires a Microsoft account, see [account authentication](/docs/sdk/discover-bots#authenticate-a-microsoft-account).
 
-## Prepare the backend
+## Install the SDK
 
-1. Connect to a compatible SoulFire server from the desktop app.
-2. Create an instance named `Docs tutorial`.
-3. Add one account named `DocsBot_1` and set the Minecraft target.
-4. Stop that bot before running this program.
-5. Run `generate-token api` in the backend console or authenticated terminal.
-
-Use the [first-bot tutorial](/docs/start-here/gui-mode) to prepare the instance.
-For a dedicated backend, use [server access](/docs/server/access).
-The program finds the instance and bot by their names, so no UUID placeholders remain.
-
-## Set the connection
-
-In the terminal that will run the program, set:
-
-```bash
-export SOULFIRE_URL="http://127.0.0.1:38765"
-export SOULFIRE_TOKEN="YOUR_API_TOKEN"
-```
-
-Use the backend's HTTPS URL for a remote deployment.
-`SOULFIRE_URL` is the SoulFire API address, not the Minecraft server address.
-Keep the token in your environment rather than the source file.
-On PowerShell, use `$env:SOULFIRE_URL = "..."` and `$env:SOULFIRE_TOKEN = "..."`.
+Complete the [Bun installation](/docs/sdk/compatibility#install-the-typescript-sdk).
+Run the program from that application directory.
 
 ## Save the complete program
 
@@ -45,38 +26,26 @@ Create `first-bot.ts`:
 
 ```ts title="first-bot.ts" doc-test lineNumbers
 import { Effect } from "effect";
-import { SoulFire } from "@soulfiremc/sdk";
-
-const baseUrl = process.env.SOULFIRE_URL;
-const token = process.env.SOULFIRE_TOKEN;
-if (!baseUrl || !token) {
-  throw new Error("Set SOULFIRE_URL and SOULFIRE_TOKEN first");
-}
+import { SoulFire } from "@soulfiremc/sdk/bun";
 
 const program = Effect.scoped(
   Effect.gen(function* () {
-    const client = yield* SoulFire.connect({ baseUrl, token });
-    const record = (yield* client.instances()).find(
-      (item) => item.friendlyName === "Docs tutorial",
-    );
-    if (!record) throw new Error("Create the Docs tutorial instance first");
-    const instance = client.instance(record.id);
-    const account = (yield* instance.bots()).find(
-      (item) => item.accountName === "DocsBot_1",
-    );
-    if (!account) throw new Error("Add the DocsBot_1 account first");
-    const bot = instance.bot(account.profileId);
+    const bot = yield* SoulFire.createBot({
+      server: "localhost:25565",
+      username: "DocsBot_1",
+      installation: { version: "2.10.2" },
+    });
 
-    yield* Effect.addFinalizer(() => bot.stop().pipe(Effect.orDie));
-    yield* bot.start();
-    yield* bot.waitForOnline();
-    yield* bot.chat.send("Hello from the TypeScript tutorial");
-    console.log(`Sent chat from ${account.accountName}; stopping the bot`);
+    yield* bot.chat.send("Hello from SoulFire");
+    yield* Effect.logInfo(`Health: ${bot.state.player?.health}`);
   }),
 );
 
 await Effect.runPromise(program);
 ```
+
+`server` is the Minecraft address.
+The SDK supplies the local SoulFire API URL and token and creates or finds the instance and account.
 
 ## Run and check the result
 
@@ -84,28 +53,35 @@ await Effect.runPromise(program);
 bun run first-bot.ts
 ```
 
-Check three results:
+The first run downloads a dedicated backend and Java into `.soulfire` under the working directory.
+Later runs reuse those files and the saved account.
+Expect `Hello from SoulFire` in Minecraft chat and a health value in the program log.
+The scope closes subscriptions and the managed backend when the program finishes.
 
-- The program prints `Sent chat from DocsBot_1; stopping the bot`.
-- Minecraft chat shows `Hello from the TypeScript tutorial` from that account.
-- The bot leaves the Minecraft player list when the program finishes.
-
-A successful connection is separate from a successful Minecraft login.
-If login fails, inspect the bot's disconnect reason in **Overview**.
-If cleanup cannot reach the backend, stop the bot from the GUI after restoring access.
+Use `installation.directory` to choose another data directory.
+The example pins the backend to `2.10.2`; omit `installation.version` to select the latest release.
 
 ## Read the code
 
-`SoulFire.connect` returns an Effect that opens an authenticated connection.
-`yield*` runs each operation inside `Effect.gen`.
-`Effect.scoped` closes the connection and runs the bot-stop finalizer.
-`Effect.runPromise` runs the complete program at the application boundary.
+`SoulFire.createBot` installs a local backend and returns a ready, observed bot.
+It waits for the initial player snapshot, with a default 30-second deadline.
+Set `readyTimeoutMs` to change that deadline.
+`bot.state` contains the latest synchronized state.
 
-Constructing an Effect alone does not send its request.
-Do not move the bot out of its connection's scope.
-Read [runtime and advanced examples](/docs/sdk/typescript-runtime) for streams, concurrency, managed servers, and platform layers.
+`yield*` runs each operation inside `Effect.gen`.
+`Effect.scoped` owns the connection, subscriptions, and managed process.
+`Effect.runPromise` runs the complete workflow at the application boundary.
+Constructing an Effect alone does not send a request.
+
+## Use Node.js
+
+Install the [Node.js dependencies](/docs/sdk/compatibility#install-the-typescript-sdk).
+Import `SoulFire` from `@soulfiremc/sdk/node` instead of `@soulfiremc/sdk/bun`.
+Run the file with `npx tsx first-bot.ts` on Node.js 22 or newer.
+For a standalone Node application, `NodeRuntime.runMain(program)` also handles process interruption and scoped cleanup.
 
 ## Next step
 
-[Discover IDs](/docs/sdk/discover-bots) for other recipes, or [reply to chat](/docs/sdk/recipes/reply-to-chat).
-Read [task ownership](/docs/concepts/bot-lifecycle) before submitting work that can outlive this program.
+Use [named instances and bots](/docs/sdk/discover-bots) to reuse one backend for several accounts or connect to an existing server.
+Try [replying to chat](/docs/sdk/recipes/reply-to-chat), or read the [runtime guide](/docs/sdk/typescript-runtime) for layers and streams.
+Read [task ownership](/docs/concepts/bot-lifecycle) before submitting work that can outlive your program.

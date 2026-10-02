@@ -1,19 +1,165 @@
 ---
-title: Find instance and bot IDs
-sidebarTitle: "Find bot IDs"
-description: Print the identifiers used by SDK recipes from an authenticated connection.
+title: Named setup and existing bots
+sidebarTitle: "Instances and bots"
+description: Reuse named instances and accounts, authenticate Microsoft accounts, or attach to existing bot IDs.
 icon: Search
 ---
 
-Recipe environment variables use IDs rather than display names.
+Use names for normal setup. Instance names belong to the authenticated SoulFire user; bot names belong to one instance.
+Repeated calls reuse saved accounts and preserve their configuration.
+Conflicting server addresses, usernames, or authentication methods fail explicitly.
+
+## Reuse one managed backend
+
+Install once when several bots share a backend.
+These complete programs create two ready bots in the same instance:
+
+```ts title="named-bots.ts" doc-test lineNumbers
+import { Effect } from "effect";
+import { SoulFire } from "@soulfiremc/sdk/bun";
+
+const program = Effect.scoped(Effect.gen(function* () {
+  const client = yield* SoulFire.install({ version: "2.10.2" });
+  const instance = yield* client.getOrCreateInstance("farm", {
+    server: "localhost:25565",
+  });
+  const builder = yield* instance.getOrCreateBot("Builder");
+  const miner = yield* instance.getOrCreateBot("Miner");
+  yield* builder.chat.send("Builder ready");
+  yield* miner.chat.send("Miner ready");
+}));
+
+await Effect.runPromise(program);
+```
+
+```python title="named_bots.py" doc-test lineNumbers
+import asyncio
+
+from effect_py import EffectGen, Scope, gen, run_async, scoped
+from soulfire import SoulFire, SoulFireOperationError
+
+
+@gen
+def program() -> EffectGen[None, SoulFireOperationError, Scope]:
+    client = yield from SoulFire.install(version="2.10.2")
+    instance = yield from client.get_or_create_instance("farm", server="localhost:25565")
+    builder = yield from instance.get_or_create_bot("Builder")
+    miner = yield from instance.get_or_create_bot("Miner")
+    yield from builder.chat.send("Builder ready")
+    yield from miner.chat.send("Miner ready")
+
+
+asyncio.run(run_async(scoped(program).or_die()))
+```
+
+The default account type is offline. Point `server` at a Minecraft server that accepts those accounts.
+Both bots and the managed process stay inside the scope.
+
+`SoulFire.createBot` and Python `SoulFire.create_bot` use the server address as the instance name and the username as the bot name.
+Set `instanceName` / `instance_name` or `name` to choose other names.
+For multiple bots, use one installed client as shown above.
+
+## Connect to an existing backend
+
+Generate an API token with `generate-token api` in the backend console or authenticated terminal.
+See [server access](/docs/server/access).
+Set the backend address and token in the terminal that will run your program:
+
+```bash
+export SOULFIRE_URL="http://127.0.0.1:38765"
+export SOULFIRE_TOKEN="YOUR_API_TOKEN"
+```
+
+`SOULFIRE_URL` is the SoulFire API address. The `server` argument is the Minecraft address.
+Use HTTPS for a remote backend. On PowerShell, use `$env:SOULFIRE_URL = "..."` and `$env:SOULFIRE_TOKEN = "..."`.
+
+The TypeScript client provides `createBot` after the connection handshake:
+
+```ts title="existing-server.ts" doc-test lineNumbers
+import { Effect } from "effect";
+import { SoulFire } from "@soulfiremc/sdk";
+
+const baseUrl = process.env.SOULFIRE_URL;
+const token = process.env.SOULFIRE_TOKEN;
+if (!baseUrl || !token) throw new Error("Set SOULFIRE_URL and SOULFIRE_TOKEN");
+
+const program = Effect.scoped(Effect.gen(function* () {
+  const client = yield* SoulFire.connect({ baseUrl, token });
+  const bot = yield* client.createBot({
+    server: "localhost:25565",
+    username: "Builder",
+  });
+  yield* bot.chat.send("Ready");
+}));
+
+await Effect.runPromise(program);
+```
+
+In Python, provision names through the connected instance.
+`SoulFire.create_bot` is the managed-installation shortcut, so use `get_or_create_bot` for an existing backend:
+
+```python title="existing_server.py" doc-test lineNumbers
+import asyncio
+import os
+
+from effect_py import EffectGen, Scope, gen, run_async, scoped
+from soulfire import SoulFire, SoulFireOperationError
+
+
+@gen
+def program() -> EffectGen[None, SoulFireOperationError, Scope]:
+    client = yield from SoulFire.connect(
+        os.environ["SOULFIRE_URL"], token=os.environ["SOULFIRE_TOKEN"]
+    )
+    instance = yield from client.get_or_create_instance("farm", server="localhost:25565")
+    bot = yield from instance.get_or_create_bot("Builder")
+    yield from bot.chat.send("Ready")
+
+
+asyncio.run(run_async(scoped(program).or_die()))
+```
+
+Named provisioning requires the server capability `instance.provisioning.v1`.
+When the scope starts a stopped bot, cleanup stops that bot.
+When it attaches to a bot whose requested state is already running, cleanup leaves that bot running.
+
+## Configure before starting
+
+Pass `start: false` in TypeScript or `start=False` in Python to create or find an account without starting it.
+After configuring the instance, call `bot.connect()` inside the scope.
+It starts the bot if needed, observes state, and waits for the initial player snapshot.
+
+The default readiness deadline is 30 seconds.
+Use `readyTimeoutMs` in TypeScript or `ready_timeout` in Python seconds to change it.
+
+## Authenticate a Microsoft account
+
+Set `auth` to `"microsoft"` for servers that require Microsoft authentication:
+
+```ts
+const bot = yield* instance.getOrCreateBot("main-account", {
+  auth: "microsoft",
+  onDeviceCode: (code) => Effect.logInfo(
+    `Sign in at ${code.verificationUri} with code ${code.userCode}`,
+  ),
+});
+```
+
+```python
+bot = yield from instance.get_or_create_bot("main-account", auth="microsoft")
+```
+
+On first creation, the default handler shows the device-code URL and code.
+Complete sign-in with the account that owns Minecraft.
+Later calls reuse the saved account.
+Custom `onDeviceCode` / `on_device_code` callbacks return effects.
+The managed `createBot` / `create_bot` shortcuts accept these authentication options too.
+
+## Find instance and bot IDs
+
+IDs remain useful for administration and attaching to existing resources.
 An instance ID selects the saved instance. A bot ID is the account's profile ID in that instance.
-
-Complete the matching [TypeScript](/docs/sdk/typescript) or [Python](/docs/sdk/python) tutorial first.
-Keep its `SOULFIRE_URL` and `SOULFIRE_TOKEN` environment variables.
-
-## TypeScript
-
-Save `list-bots.ts` in your application directory:
+These programs list saved accounts without starting them:
 
 ```ts title="list-bots.ts" doc-test
 import { Effect } from "effect";
@@ -33,12 +179,6 @@ await Effect.runPromise(Effect.scoped(Effect.gen(function* () {
   }
 })));
 ```
-
-Run `bun run list-bots.ts`.
-
-## Python
-
-Save `list_bots.py` in your tutorial directory:
 
 ```python title="list_bots.py" doc-test
 import asyncio
@@ -64,16 +204,7 @@ def program() -> EffectGen[None, SoulFireOperationError, Scope]:
 asyncio.run(run_async(scoped(program).or_die()))
 ```
 
-Run `.venv/bin/python list_bots.py`.
-
-## Use the output
-
-Copy an instance ID and one of its bot IDs into the variables required by a recipe:
-
-```bash
-export SOULFIRE_INSTANCE_ID="THE_PRINTED_INSTANCE_ID"
-export SOULFIRE_BOT_ID="THE_PRINTED_BOT_ID"
-```
-
-Both programs list saved accounts. Listing a bot does not start it or prove that it is online.
-If the expected instance is absent, check the token user's permissions and the backend URL.
+Run `bun run list-bots.ts` or `.venv/bin/python list_bots.py`.
+Use the printed IDs with `client.instance(instanceId).bot(botId)` or the Python equivalent.
+Call `yield* bot.connect()` or `yield from bot.connect()` to attach with scoped readiness and cleanup.
+Read [bot state and task ownership](/docs/concepts/bot-lifecycle) for the lower-level `start` and `stop` lifecycle.

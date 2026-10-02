@@ -23,6 +23,10 @@ type AstNode = {
 };
 const source = sdkSource();
 buildSdk(source);
+execFileSync("bun", ["run", "build"], {
+  cwd: join(source, "sdk/beat-game"),
+  stdio: "inherit",
+});
 const directory = mkdtempSync(join(source, "sdk/typescript/.docs-recipes-"));
 const typescriptFiles: string[] = [];
 const pythonFiles: string[] = [];

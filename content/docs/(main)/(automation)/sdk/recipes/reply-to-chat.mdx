@@ -30,7 +30,7 @@ This program starts a bot, watches for `ping`, and sends `pong`. It keeps runnin
         const bot = soulfire
           .instance(env("SOULFIRE_INSTANCE_ID"))
           .bot(env("SOULFIRE_BOT_ID"));
-        yield* bot.start();
+        yield* bot.connect();
 
         yield* bot.chat.watch("ping").pipe(
           Stream.runForEach((match) =>
@@ -63,7 +63,7 @@ This program starts a bot, watches for `ping`, and sends `pong`. It keeps runnin
         bot = soulfire.instance(os.environ["SOULFIRE_INSTANCE_ID"]).bot(
             os.environ["SOULFIRE_BOT_ID"]
         )
-        yield from bot.start()
+        yield from bot.connect()
 
         @fn("reply to ping")
         def reply(match: ChatMatch) -> EffectGen[None, SoulFireOperationError]:

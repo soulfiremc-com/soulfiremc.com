@@ -11,7 +11,7 @@ Point the bot at an entity within five blocks before running this program. It re
 <Tabs items={['TypeScript', 'Python']} groupId="recipe-language">
   <Tab value="TypeScript">
     ```ts title="follow-entity.ts" doc-test lineNumbers
-    import { Effect, Stream } from "effect";
+    import { Effect } from "effect";
     import { SoulFire } from "@soulfiremc/sdk";
 
     function env(name: string): string {
@@ -78,4 +78,5 @@ Point the bot at an entity within five blocks before running this program. It re
   </Tab>
 </Tabs>
 
+This recipe uses `start` rather than scoped `connect` so the bot and detached follow task stay running after the program exits.
 The server owns the follow task after it starts. Use [task controls](/docs/sdk/tasks) to watch it, stop it, or reconnect to it by ID.

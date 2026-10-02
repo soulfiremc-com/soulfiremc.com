@@ -4,7 +4,7 @@ description: Built-in node IDs, input defaults, output ports, and source links.
 icon: Workflow
 ---
 
-Generated from the [pinned SoulFire source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). This snapshot contains 179 built-in nodes in 18 categories. Plugins can add other nodes. The connected server's palette is authoritative for its installed version.
+Generated from the [pinned SoulFire source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). This snapshot contains 179 built-in nodes in 18 categories. Plugins can add other nodes. The connected server's palette is authoritative for its installed version.
 
 Input defaults are JSON values. An execution wire selects when an action runs. A data wire supplies a value. An optional bot input overrides the bot in execution context. Read [execution and data](/docs/scripting/execution-and-data) before wiring a graph.
 
@@ -31,7 +31,7 @@ None.
 | `serverAddress` (Server Address) | `string` | The server address |
 | `username` (Username) | `string` | The bot's username |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnBotInitNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnBotInitNode.java)
 
 ### On Chat
 
@@ -53,7 +53,7 @@ None.
 | `messagePlainText` (Message (Plain Text)) | `string` | The chat message as plain text |
 | `timestamp` (Timestamp) | `number` | Timestamp when the message was received |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnChatNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnChatNode.java)
 
 ### On Container Open
 
@@ -75,7 +75,7 @@ None.
 | `containerName` (Container Name) | `string` | The name of opened container |
 | `containerType` (Container Type) | `string` | The type of opened container |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnContainerOpenNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnContainerOpenNode.java)
 
 ### On Damage
 
@@ -97,7 +97,7 @@ None.
 | `previousHealth` (Previous Health) | `number` | Health before damage |
 | `newHealth` (New Health) | `number` | Health after damage |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnDamageNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnDamageNode.java)
 
 ### On Death
 
@@ -117,7 +117,7 @@ None.
 | `bot` (Bot) | `bot` | The bot that died |
 | `shouldRespawn` (Should Respawn) | `boolean` | Whether the bot should respawn |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnDeathNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnDeathNode.java)
 
 ### On Disconnect
 
@@ -137,7 +137,7 @@ None.
 | `bot` (Bot) | `bot` | The bot that was disconnected |
 | `reason` (Reason) | `string` | The disconnect reason message |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnDisconnectNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnDisconnectNode.java)
 
 ### On Interval
 
@@ -158,7 +158,7 @@ Fires at a configurable interval. Does not provide a bot; use GetBots + ForEachB
 | `out` (Out) | `exec` | Execution output |
 | `executionCount` (Execution Count) | `number` | Number of times this trigger has fired |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnIntervalNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnIntervalNode.java)
 
 ### On Join
 
@@ -179,7 +179,7 @@ None.
 | `serverAddress` (Server Address) | `string` | The server address |
 | `username` (Username) | `string` | The bot's username |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnJoinNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnJoinNode.java)
 
 ### On Post Entity Tick
 
@@ -199,7 +199,7 @@ None.
 | `bot` (Bot) | `bot` | The bot that ticked |
 | `tickCount` (Tick Count) | `number` | Ticks since script started |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnPostEntityTickNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnPostEntityTickNode.java)
 
 ### On Pre Entity Tick
 
@@ -219,7 +219,7 @@ None.
 | `bot` (Bot) | `bot` | The bot that ticked |
 | `tickCount` (Tick Count) | `number` | Ticks since script started |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnPreEntityTickNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnPreEntityTickNode.java)
 
 ### On Script End
 
@@ -238,7 +238,7 @@ None.
 | `out` (Out) | `exec` | Execution output |
 | `timestamp` (Timestamp) | `number` | The timestamp when the script is ending |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnScriptEndNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnScriptEndNode.java)
 
 ### On Script Init
 
@@ -257,7 +257,7 @@ None.
 | `out` (Out) | `exec` | Execution output |
 | `timestamp` (Timestamp) | `number` | The timestamp when the script was initialized |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnScriptInitNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnScriptInitNode.java)
 
 ## Actions
 
@@ -280,7 +280,7 @@ Makes the bot attack the entity it's looking at (left click)
 | --- | --- | --- |
 | `out` (Out) | `exec` | Execution output |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/action/AttackNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/AttackNode.java)
 
 ### Break Block
 
@@ -305,7 +305,7 @@ Pathfinds to and breaks a block at the specified position
 | `success` (Success) | `boolean` | Whether it succeeded |
 | `errorMessage` (Error Message) | `string` | Error details |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/action/BreakBlockNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/BreakBlockNode.java)
 
 ### Click Slot
 
@@ -328,7 +328,7 @@ Clicks an inventory slot (left, right, or shift click)
 | --- | --- | --- |
 | `out` (Out) | `exec` | Execution output |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/action/ClickSlotNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/ClickSlotNode.java)
 
 ### Close Inventory
 
@@ -349,7 +349,7 @@ Closes any open container or inventory screen
 | --- | --- | --- |
 | `out` (Out) | `exec` | Execution output |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/action/CloseInventoryNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/CloseInventoryNode.java)
 
 ### Drop Item
 
@@ -371,7 +371,7 @@ Drops the item currently held on the cursor
 | --- | --- | --- |
 | `out` (Out) | `exec` | Execution output |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/action/DropItemNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/DropItemNode.java)
 
 ### Drop Slot
 
@@ -393,7 +393,7 @@ Picks up an item from a slot and drops it outside the inventory
 | --- | --- | --- |
 | `out` (Out) | `exec` | Execution output |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/action/DropSlotNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/DropSlotNode.java)
 
 ### Jump
 
@@ -414,7 +414,7 @@ Makes the bot jump once
 | --- | --- | --- |
 | `out` (Out) | `exec` | Execution output |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/action/JumpNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/JumpNode.java)
 
 ### Look At
 
@@ -436,7 +436,7 @@ Makes the bot look at a specific position in the world
 | --- | --- | --- |
 | `out` (Out) | `exec` | Execution output |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/action/LookAtNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/LookAtNode.java)
 
 ### Move Backward
 
@@ -458,7 +458,7 @@ Sets the bot's backward movement state (S key)
 | --- | --- | --- |
 | `out` (Out) | `exec` | Execution output |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/action/MoveBackwardNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/MoveBackwardNode.java)
 
 ### Move Forward
 
@@ -480,7 +480,7 @@ Sets the bot's forward movement state (W key)
 | --- | --- | --- |
 | `out` (Out) | `exec` | Execution output |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/action/MoveForwardNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/MoveForwardNode.java)
 
 ### Open Inventory
 
@@ -501,7 +501,7 @@ Opens the player's inventory screen
 | --- | --- | --- |
 | `out` (Out) | `exec` | Execution output |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/action/OpenInventoryNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/OpenInventoryNode.java)
 
 ### Pathfind Away From
 
@@ -527,7 +527,7 @@ Moves the bot away from a position using pathfinding
 | `success` (Success) | `boolean` | Whether it succeeded |
 | `errorMessage` (Error Message) | `string` | Error details |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/action/PathfindAwayFromNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/PathfindAwayFromNode.java)
 
 ### Pathfind To
 
@@ -552,7 +552,7 @@ Moves the bot to a target position using pathfinding
 | `success` (Success) | `boolean` | Whether it succeeded |
 | `errorMessage` (Error Message) | `string` | Error details |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/action/PathfindToNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/PathfindToNode.java)
 
 ### Place Block
 
@@ -577,7 +577,7 @@ Pathfinds to and places a block at the specified position
 | `success` (Success) | `boolean` | Whether it succeeded |
 | `errorMessage` (Error Message) | `string` | Error details |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/action/PlaceBlockNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/PlaceBlockNode.java)
 
 ### Print
 
@@ -599,7 +599,7 @@ Logs a message for debugging purposes
 | --- | --- | --- |
 | `out` (Out) | `exec` | Execution output |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/action/PrintNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/PrintNode.java)
 
 ### Respawn
 
@@ -620,7 +620,7 @@ Respawns the bot after death
 | --- | --- | --- |
 | `out` (Out) | `exec` | Execution output |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/action/RespawnNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/RespawnNode.java)
 
 ### Select Slot
 
@@ -642,7 +642,7 @@ Selects a hotbar slot (0-8)
 | --- | --- | --- |
 | `out` (Out) | `exec` | Execution output |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SelectSlotNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SelectSlotNode.java)
 
 ### Send Chat
 
@@ -664,7 +664,7 @@ Sends a chat message or command
 | --- | --- | --- |
 | `out` (Out) | `exec` | Execution output |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SendChatNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SendChatNode.java)
 
 ### Set Rotation
 
@@ -687,7 +687,7 @@ Sets the bot's rotation (yaw and pitch in degrees)
 | --- | --- | --- |
 | `out` (Out) | `exec` | Execution output |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SetRotationNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SetRotationNode.java)
 
 ### Sneak
 
@@ -709,7 +709,7 @@ Sets the bot's sneaking state
 | --- | --- | --- |
 | `out` (Out) | `exec` | Execution output |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SneakNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SneakNode.java)
 
 ### Sprint
 
@@ -731,7 +731,7 @@ Sets the bot's sprinting state
 | --- | --- | --- |
 | `out` (Out) | `exec` | Execution output |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SprintNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SprintNode.java)
 
 ### Strafe Left
 
@@ -753,7 +753,7 @@ Sets the bot's left strafe movement state (A key)
 | --- | --- | --- |
 | `out` (Out) | `exec` | Execution output |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/action/StrafeLeftNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/StrafeLeftNode.java)
 
 ### Strafe Right
 
@@ -775,7 +775,7 @@ Sets the bot's right strafe movement state (D key)
 | --- | --- | --- |
 | `out` (Out) | `exec` | Execution output |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/action/StrafeRightNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/StrafeRightNode.java)
 
 ### Swing Hand
 
@@ -796,7 +796,7 @@ Swings the bot's arm without attacking (cosmetic swing)
 | --- | --- | --- |
 | `out` (Out) | `exec` | Execution output |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SwingHandNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SwingHandNode.java)
 
 ### Use Item
 
@@ -817,7 +817,7 @@ Uses the item in the bot's hand (right click)
 | --- | --- | --- |
 | `out` (Out) | `exec` | Execution output |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/action/UseItemNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/UseItemNode.java)
 
 ### Wait
 
@@ -842,7 +842,7 @@ Delays execution for a specified duration with optional random jitter
 | `out` (Out) | `exec` | Execution output |
 | `actualMs` (Actual (ms)) | `number` | Actual delay used |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/action/WaitNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/WaitNode.java)
 
 ## Data
 
@@ -867,7 +867,7 @@ Checks if the bot has line-of-sight to a position (raytrace)
 | `out` (Out) | `exec` | Execution output |
 | `visible` (Visible) | `boolean` | Whether the position is visible |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/CanSeePositionNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/CanSeePositionNode.java)
 
 ### Filter Bots
 
@@ -890,7 +890,7 @@ Filters a list of bots by name using a regex pattern
 | `out` (Out) | `exec` | Execution output |
 | `bots` (Bots) | `list<bot>` | Filtered list of bots |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/FilterBotsNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/FilterBotsNode.java)
 
 ### Find Block
 
@@ -916,7 +916,7 @@ Finds the nearest block of a specific type within range
 | `position` (Position) | `vector3` | Block position |
 | `distance` (Distance) | `number` | Distance to the block |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/FindBlockNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/FindBlockNode.java)
 
 ### Find Entity
 
@@ -947,7 +947,7 @@ Finds the nearest entity of a specific type within range
 | `entityId` (Entity ID) | `number` | The entity's ID |
 | `distance` (Distance) | `number` | Distance to the entity |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/FindEntityNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/FindEntityNode.java)
 
 ### Find Item
 
@@ -976,7 +976,7 @@ Searches inventory for items by ID or food filter
 | `isHotbar` (Is Hotbar) | `boolean` | Whether the slot is in the hotbar |
 | `hotbarIndex` (Hotbar Index) | `number` | Hotbar index (0-8), or -1 if not hotbar |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/FindItemNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/FindItemNode.java)
 
 ### Get Armor
 
@@ -999,7 +999,7 @@ Gets the bot's armor value and toughness
 | `armorValue` (Armor) | `number` | Total armor points |
 | `armorToughness` (Toughness) | `number` | Armor toughness value |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetArmorNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetArmorNode.java)
 
 ### Get Biome
 
@@ -1021,7 +1021,7 @@ Gets the biome at the bot's current position
 | `out` (Out) | `exec` | Execution output |
 | `biome` (Biome) | `string` | Current biome identifier |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBiomeNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBiomeNode.java)
 
 ### Get Block
 
@@ -1048,7 +1048,7 @@ Gets information about a block at a specific position
 | `isAir` (Is Air) | `boolean` | Whether the block is air |
 | `isSolid` (Is Solid) | `boolean` | Whether the block is solid |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBlockNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBlockNode.java)
 
 ### Get Bot By Name
 
@@ -1071,7 +1071,7 @@ Finds a bot by its account name
 | `bot` (Bot) | `bot` | The found bot (null if not found) |
 | `found` (Found) | `boolean` | Whether the bot was found |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBotByNameNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBotByNameNode.java)
 
 ### Get Bot Info
 
@@ -1094,7 +1094,7 @@ Gets basic information about the bot
 | `name` (Name) | `string` | Bot's username |
 | `uuid` (UUID) | `string` | Bot's unique identifier |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBotInfoNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBotInfoNode.java)
 
 ### Get Bot State
 
@@ -1121,7 +1121,7 @@ Gets various movement and state flags of the bot
 | `isSneaking` (Sneaking) | `boolean` | True if bot is sneaking |
 | `isFallFlying` (Elytra Flying) | `boolean` | True if bot is elytra flying |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBotStateNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBotStateNode.java)
 
 ### Get Bots
 
@@ -1142,7 +1142,7 @@ Returns all connected bots in the instance
 | `out` (Out) | `exec` | Execution output |
 | `bots` (Bots) | `list<bot>` | List of all connected bots |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBotsNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBotsNode.java)
 
 ### Get Dimension
 
@@ -1167,7 +1167,7 @@ Gets the bot's current dimension
 | `isNether` (Is Nether) | `boolean` | True if in nether |
 | `isEnd` (Is End) | `boolean` | True if in the end |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetDimensionNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetDimensionNode.java)
 
 ### Get Effects
 
@@ -1191,7 +1191,7 @@ Gets the bot's active potion effects
 | `effectNames` (Effects) | `string` | Comma-separated effect names |
 | `hasEffects` (Has Effects) | `boolean` | True if any effects are active |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetEffectsNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetEffectsNode.java)
 
 ### Get Entity State
 
@@ -1226,7 +1226,7 @@ Gets an entity state by integer ID or UUID, including its position, health, and 
 | `pitch` (Pitch) | `number` | Entity pitch rotation (vertical) |
 | `motion` (Motion) | `vector3` | Entity motion/velocity vector |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetEntityStateNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetEntityStateNode.java)
 
 ### Get Experience
 
@@ -1250,7 +1250,7 @@ Gets the bot's experience level and points
 | `totalXp` (Total XP) | `number` | Total experience points |
 | `xpProgress` (XP Progress) | `number` | Progress to next level (0-1) |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetExperienceNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetExperienceNode.java)
 
 ### Get Gamemode
 
@@ -1276,7 +1276,7 @@ Gets the bot's current gamemode
 | `isAdventure` (Is Adventure) | `boolean` | True if in adventure mode |
 | `isSpectator` (Is Spectator) | `boolean` | True if in spectator mode |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetGamemodeNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetGamemodeNode.java)
 
 ### Get Health
 
@@ -1299,7 +1299,7 @@ Gets the bot's current health and max health
 | `health` (Health) | `number` | Current health |
 | `maxHealth` (Max Health) | `number` | Maximum health |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetHealthNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetHealthNode.java)
 
 ### Get Hunger
 
@@ -1323,7 +1323,7 @@ Gets the bot's food level and saturation
 | `saturation` (Saturation) | `number` | Current saturation |
 | `needsFood` (Needs Food) | `boolean` | Whether the bot needs food (food level &lt; 20) |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetHungerNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetHungerNode.java)
 
 ### Get Inventory
 
@@ -1348,7 +1348,7 @@ Gets information about an item in a specific inventory slot
 | `count` (Count) | `number` | Stack count |
 | `isEmpty` (Is Empty) | `boolean` | Whether the slot is empty |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetInventoryNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetInventoryNode.java)
 
 ### Get Light Level
 
@@ -1372,7 +1372,7 @@ Gets the light level at the bot's current position
 | `skyLight` (Sky Light) | `number` | Light from sky (0-15) |
 | `combinedLight` (Combined) | `number` | Maximum of block and sky light |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetLightLevelNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetLightLevelNode.java)
 
 ### Get Position
 
@@ -1394,7 +1394,7 @@ Gets the bot's current position in the world
 | `out` (Out) | `exec` | Execution output |
 | `position` (Position) | `vector3` | Current position |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetPositionNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetPositionNode.java)
 
 ### Get Rotation
 
@@ -1417,7 +1417,7 @@ Gets the bot's current rotation (yaw and pitch)
 | `yaw` (Yaw) | `number` | Horizontal rotation (-180 to 180) |
 | `pitch` (Pitch) | `number` | Vertical rotation (-90 to 90) |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetRotationNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetRotationNode.java)
 
 ### Get Selected Slot
 
@@ -1441,7 +1441,7 @@ Gets the bot's currently selected hotbar slot and item
 | `itemId` (Item ID) | `string` | Item in selected slot |
 | `itemCount` (Count) | `number` | Stack count in selected slot |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetSelectedSlotNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetSelectedSlotNode.java)
 
 ### Get Target Block
 
@@ -1467,7 +1467,7 @@ Gets the block the bot is currently looking at (raycast)
 | `position` (Position) | `vector3` | Block position |
 | `distance` (Distance) | `number` | Distance to block |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetTargetBlockNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetTargetBlockNode.java)
 
 ### Get Time
 
@@ -1492,7 +1492,7 @@ Gets the current game time and day/night status
 | `isDay` (Is Day) | `boolean` | True if daytime (6000-18000) |
 | `isNight` (Is Night) | `boolean` | True if nighttime |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetTimeNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetTimeNode.java)
 
 ### Get Velocity
 
@@ -1515,7 +1515,7 @@ Gets the bot's current velocity and speed
 | `velocity` (Velocity) | `vector3` | Current velocity vector |
 | `speed` (Speed) | `number` | Movement speed (magnitude) |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetVelocityNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetVelocityNode.java)
 
 ### Get Weather
 
@@ -1540,7 +1540,7 @@ Gets the current weather conditions
 | `rainLevel` (Rain Level) | `number` | Rain intensity (0-1) |
 | `thunderLevel` (Thunder Level) | `number` | Thunder intensity (0-1) |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetWeatherNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetWeatherNode.java)
 
 ### Is Container Open
 
@@ -1562,7 +1562,7 @@ Checks if a container or inventory screen is open
 | `out` (Out) | `exec` | Execution output |
 | `isOpen` (Is Open) | `boolean` | Whether a container or inventory screen is open |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/data/IsContainerOpenNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/IsContainerOpenNode.java)
 
 ## Flow Control
 
@@ -1588,7 +1588,7 @@ Branches execution based on a boolean condition
 | `branch` (Branch) | `string` | Which branch was taken |
 | `condition` (Condition) | `boolean` | The evaluated condition |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/BranchNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/BranchNode.java)
 
 ### Debounce
 
@@ -1613,7 +1613,7 @@ Rate-limits execution by enforcing a cooldown period
 | `allowed` (Allowed) | `boolean` | Whether execution was allowed |
 | `remainingMs` (Remaining (ms)) | `number` | Milliseconds until next allowed execution |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/DebounceNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/DebounceNode.java)
 
 ### For Each
 
@@ -1639,7 +1639,7 @@ Iterates over each item in a list
 | `isComplete` (Complete) | `boolean` | Whether iteration is done |
 | `size` (Size) | `number` | Total items count |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/ForEachNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/ForEachNode.java)
 
 ### For Each Bot
 
@@ -1665,7 +1665,7 @@ Iterates over each bot in a list
 | `count` (Count) | `number` | Total number of bots |
 | `isComplete` (Complete) | `boolean` | Whether iteration is done |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/ForEachBotNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/ForEachBotNode.java)
 
 ### Gate
 
@@ -1690,7 +1690,7 @@ Conditionally passes through execution and values
 | `passed` (Passed) | `boolean` | Whether execution was allowed |
 | `value` (Value) | `any` | The passed-through value |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/GateNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/GateNode.java)
 
 ### Loop
 
@@ -1715,7 +1715,7 @@ Repeats execution a specified number of times
 | `isComplete` (Complete) | `boolean` | Whether loop is done |
 | `count` (Count) | `number` | Total iteration count |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/LoopNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/LoopNode.java)
 
 ### Rate Limit
 
@@ -1743,7 +1743,7 @@ Limits execution rate using a token bucket algorithm
 | `tokensRemaining` (Tokens Remaining) | `number` | Tokens left in bucket |
 | `retryAfterMs` (Retry After (ms)) | `number` | Milliseconds until tokens available |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/RateLimitNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/RateLimitNode.java)
 
 ### Repeat Until
 
@@ -1768,7 +1768,7 @@ Repeats execution until a condition is met (do-while semantics)
 | `index` (Index) | `number` | Current iteration index |
 | `conditionMet` (Condition Met) | `boolean` | Whether the condition was met (false if limit reached) |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/RepeatUntilNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/RepeatUntilNode.java)
 
 ### Result
 
@@ -1787,7 +1787,7 @@ Reports a boolean result back to a loop's check chain
 
 None.
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/ResultNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/ResultNode.java)
 
 ### Sequence
 
@@ -1816,7 +1816,7 @@ Executes multiple branches in order
 | `exec_7` (Then 7) | `exec` | Eighth branch |
 | `branchCount` (Branch Count) | `number` | Number of branches |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/SequenceNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/SequenceNode.java)
 
 ### Switch
 
@@ -1849,7 +1849,7 @@ Performs a multi-way branch based on a value
 | `caseIndex` (Case Index) | `number` | Index of matched case (-1 for default) |
 | `matched` (Matched) | `boolean` | Whether any case matched |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/SwitchNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/SwitchNode.java)
 
 ## Logic
 
@@ -1872,7 +1872,7 @@ Returns true if both inputs are true
 | --- | --- | --- |
 | `result` (Result) | `boolean` | A AND B |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/logic/AndNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/logic/AndNode.java)
 
 ### Compare
 
@@ -1894,7 +1894,7 @@ Compares two values using a specified operator
 | --- | --- | --- |
 | `result` (Result) | `boolean` | Comparison result |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/logic/CompareNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/logic/CompareNode.java)
 
 ### Not
 
@@ -1914,7 +1914,7 @@ Inverts a boolean value
 | --- | --- | --- |
 | `result` (Result) | `boolean` | NOT value |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/logic/NotNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/logic/NotNode.java)
 
 ### Or
 
@@ -1935,7 +1935,7 @@ Returns true if either input is true
 | --- | --- | --- |
 | `result` (Result) | `boolean` | A OR B |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/logic/OrNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/logic/OrNode.java)
 
 ### Xor
 
@@ -1956,7 +1956,7 @@ Returns true if exactly one input is true
 | --- | --- | --- |
 | `result` (Result) | `boolean` | A XOR B |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/logic/XorNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/logic/XorNode.java)
 
 ## Math
 
@@ -1978,7 +1978,7 @@ Returns the absolute value of a number
 | --- | --- | --- |
 | `result` (Result) | `number` | Absolute value |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/math/AbsNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/AbsNode.java)
 
 ### Add
 
@@ -1999,7 +1999,7 @@ Adds two numbers together
 | --- | --- | --- |
 | `result` (Result) | `number` | Sum of A and B |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/math/AddNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/AddNode.java)
 
 ### B-Spline
 
@@ -2023,7 +2023,7 @@ Performs cubic B-spline curve interpolation
 | --- | --- | --- |
 | `result` (Result) | `number` | Interpolated value |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/math/BSplineNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/BSplineNode.java)
 
 ### Ceiling
 
@@ -2043,7 +2043,7 @@ Rounds a number up to the nearest integer
 | --- | --- | --- |
 | `result` (Result) | `number` | Rounded up value |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/math/CeilNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/CeilNode.java)
 
 ### Clamp
 
@@ -2065,7 +2065,7 @@ Constrains a value within a range
 | --- | --- | --- |
 | `result` (Result) | `number` | Clamped value |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/math/ClampNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/ClampNode.java)
 
 ### Cosine
 
@@ -2085,7 +2085,7 @@ Calculates the cosine of an angle in degrees
 | --- | --- | --- |
 | `result` (Result) | `number` | Cosine of angle |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/math/CosNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/CosNode.java)
 
 ### Distance
 
@@ -2106,7 +2106,7 @@ Calculates the distance between two 3D points
 | --- | --- | --- |
 | `distance` (Distance) | `number` | Distance between points |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/math/DistanceNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/DistanceNode.java)
 
 ### Divide
 
@@ -2127,7 +2127,7 @@ Divides A by B
 | --- | --- | --- |
 | `result` (Result) | `number` | A divided by B |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/math/DivideNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/DivideNode.java)
 
 ### Floor
 
@@ -2147,7 +2147,7 @@ Rounds a number down to the nearest integer
 | --- | --- | --- |
 | `result` (Result) | `number` | Rounded down value |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/math/FloorNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/FloorNode.java)
 
 ### Formula
 
@@ -2174,7 +2174,7 @@ Evaluates a custom mathematical expression
 | `result` (Result) | `number` | Expression result |
 | `error` (Error) | `string` | Error message if any |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/math/FormulaNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/FormulaNode.java)
 
 ### Lerp
 
@@ -2196,7 +2196,7 @@ Linearly interpolates between two values
 | --- | --- | --- |
 | `result` (Result) | `number` | Interpolated value |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/math/LerpNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/LerpNode.java)
 
 ### Maximum
 
@@ -2217,7 +2217,7 @@ Returns the larger of two numbers
 | --- | --- | --- |
 | `result` (Result) | `number` | Larger of A and B |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/math/MaxNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/MaxNode.java)
 
 ### Minimum
 
@@ -2238,7 +2238,7 @@ Returns the smaller of two numbers
 | --- | --- | --- |
 | `result` (Result) | `number` | Smaller of A and B |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/math/MinNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/MinNode.java)
 
 ### Modulo
 
@@ -2259,7 +2259,7 @@ Computes the remainder of A divided by B
 | --- | --- | --- |
 | `result` (Result) | `number` | Remainder of A divided by B |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/math/ModuloNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/ModuloNode.java)
 
 ### Multiply
 
@@ -2280,7 +2280,7 @@ Multiplies two numbers together
 | --- | --- | --- |
 | `result` (Result) | `number` | A times B |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/math/MultiplyNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/MultiplyNode.java)
 
 ### Power
 
@@ -2301,7 +2301,7 @@ Raises a number to a power
 | --- | --- | --- |
 | `result` (Result) | `number` | Base raised to exponent |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/math/PowNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/PowNode.java)
 
 ### Random
 
@@ -2322,7 +2322,7 @@ Generates a random number within a range
 | --- | --- | --- |
 | `result` (Result) | `number` | Random number between min and max |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/math/RandomNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/RandomNode.java)
 
 ### Round
 
@@ -2342,7 +2342,7 @@ Rounds a number to the nearest integer
 | --- | --- | --- |
 | `result` (Result) | `number` | Rounded value |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/math/RoundNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/RoundNode.java)
 
 ### Sine
 
@@ -2362,7 +2362,7 @@ Calculates the sine of an angle in degrees
 | --- | --- | --- |
 | `result` (Result) | `number` | Sine of angle |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/math/SinNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/SinNode.java)
 
 ### Square Root
 
@@ -2382,7 +2382,7 @@ Calculates the square root of a number
 | --- | --- | --- |
 | `result` (Result) | `number` | Square root |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/math/SqrtNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/SqrtNode.java)
 
 ### Subtract
 
@@ -2403,7 +2403,7 @@ Subtracts B from A
 | --- | --- | --- |
 | `result` (Result) | `number` | A minus B |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/math/SubtractNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/SubtractNode.java)
 
 ### Tangent
 
@@ -2423,7 +2423,7 @@ Calculates the tangent of an angle in degrees
 | --- | --- | --- |
 | `result` (Result) | `number` | Tangent of angle |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/math/TanNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/TanNode.java)
 
 ## String
 
@@ -2446,7 +2446,7 @@ Concatenates two strings together
 | --- | --- | --- |
 | `result` (Result) | `string` | Concatenated string |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/string/ConcatNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/ConcatNode.java)
 
 ### Ends With
 
@@ -2468,7 +2468,7 @@ Checks if a string ends with a suffix
 | --- | --- | --- |
 | `result` (Result) | `boolean` | True if text ends with suffix |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/string/EndsWithNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/EndsWithNode.java)
 
 ### Format
 
@@ -2489,7 +2489,7 @@ Formats a template string by replacing placeholders such as {0} and {1} with arg
 | --- | --- | --- |
 | `result` (Result) | `string` | Formatted string |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/string/FormatNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/FormatNode.java)
 
 ### Index Of
 
@@ -2511,7 +2511,7 @@ Finds the index of the first occurrence of a substring
 | --- | --- | --- |
 | `index` (Index) | `number` | Index of first occurrence (-1 if not found) |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/string/IndexOfNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/IndexOfNode.java)
 
 ### Regex Match
 
@@ -2537,7 +2537,7 @@ Tests if a string matches a regex pattern and extracts capture groups
 | `allMatches` (All Matches) | `list<string>` | All matches found |
 | `error` (Error) | `string` | Error message if pattern is invalid |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/string/RegexMatchNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/RegexMatchNode.java)
 
 ### Regex Replace
 
@@ -2563,7 +2563,7 @@ Replaces matches of a regex pattern with a replacement string
 | `count` (Count) | `number` | Number of replacements made |
 | `error` (Error) | `string` | Error message if pattern is invalid |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/string/RegexReplaceNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/RegexReplaceNode.java)
 
 ### Replace
 
@@ -2586,7 +2586,7 @@ Replaces occurrences of a substring with another string
 | --- | --- | --- |
 | `result` (Result) | `string` | String with replacements made |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/string/ReplaceNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/ReplaceNode.java)
 
 ### Split
 
@@ -2607,7 +2607,7 @@ Splits a string into a list by a delimiter
 | --- | --- | --- |
 | `result` (Result) | `list<string>` | List of split strings |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/string/SplitNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/SplitNode.java)
 
 ### Starts With
 
@@ -2629,7 +2629,7 @@ Checks if a string starts with a prefix
 | --- | --- | --- |
 | `result` (Result) | `boolean` | True if text starts with prefix |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/string/StartsWithNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/StartsWithNode.java)
 
 ### String Contains
 
@@ -2651,7 +2651,7 @@ Checks if a string contains a substring
 | --- | --- | --- |
 | `result` (Result) | `boolean` | True if text contains search string |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/string/StringContainsNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/StringContainsNode.java)
 
 ### String Length
 
@@ -2671,7 +2671,7 @@ Returns the length of a string
 | --- | --- | --- |
 | `length` (Length) | `number` | Length of the string |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/string/StringLengthNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/StringLengthNode.java)
 
 ### Substring
 
@@ -2693,7 +2693,7 @@ Extracts a substring from start index to end index
 | --- | --- | --- |
 | `result` (Result) | `string` | Extracted substring |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/string/SubstringNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/SubstringNode.java)
 
 ### To Lower Case
 
@@ -2713,7 +2713,7 @@ Converts a string to lowercase
 | --- | --- | --- |
 | `result` (Result) | `string` | Lowercase string |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/string/ToLowerCaseNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/ToLowerCaseNode.java)
 
 ### To Upper Case
 
@@ -2733,7 +2733,7 @@ Converts a string to uppercase
 | --- | --- | --- |
 | `result` (Result) | `string` | Uppercase string |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/string/ToUpperCaseNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/ToUpperCaseNode.java)
 
 ### Trim
 
@@ -2753,7 +2753,7 @@ Removes whitespace from both ends of a string
 | --- | --- | --- |
 | `result` (Result) | `string` | Trimmed string |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/string/TrimNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/TrimNode.java)
 
 ## Collection
 
@@ -2776,7 +2776,7 @@ Returns a new collection with the item added
 | --- | --- | --- |
 | `collection` (Collection) | `C` | The updated collection |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionAddNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionAddNode.java)
 
 ### Collection Add All
 
@@ -2797,7 +2797,7 @@ Returns a new collection with all items from another collection added
 | --- | --- | --- |
 | `collection` (Collection) | `C` | The updated collection |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionAddAllNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionAddAllNode.java)
 
 ### Collection Contains
 
@@ -2818,7 +2818,7 @@ Checks if a list or set contains a specific item
 | --- | --- | --- |
 | `result` (Result) | `boolean` | Whether the collection contains the item |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionContainsNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionContainsNode.java)
 
 ### Collection Is Empty
 
@@ -2838,7 +2838,7 @@ Checks if a list or set is empty
 | --- | --- | --- |
 | `result` (Result) | `boolean` | Whether the collection is empty |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionIsEmptyNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionIsEmptyNode.java)
 
 ### Collection Remove
 
@@ -2859,7 +2859,7 @@ Returns a new collection with the first matching item removed
 | --- | --- | --- |
 | `collection` (Collection) | `C` | The updated collection |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionRemoveNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionRemoveNode.java)
 
 ### Collection Remove All
 
@@ -2880,7 +2880,7 @@ Returns a new collection with all matching items removed
 | --- | --- | --- |
 | `collection` (Collection) | `C` | The updated collection |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionRemoveAllNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionRemoveAllNode.java)
 
 ### Collection Retain All
 
@@ -2901,7 +2901,7 @@ Returns a new collection that keeps only items present in the other collection
 | --- | --- | --- |
 | `collection` (Collection) | `C` | The updated collection |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionRetainAllNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionRetainAllNode.java)
 
 ### Collection Size
 
@@ -2921,7 +2921,7 @@ Returns the size of a list or set
 | --- | --- | --- |
 | `size` (Size) | `number` | The number of items in the collection |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionSizeNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionSizeNode.java)
 
 ### Collection to List
 
@@ -2941,7 +2941,7 @@ Converts a collection to a list
 | --- | --- | --- |
 | `list` (List) | `list<any>` | The collection as an ordered list |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionToListNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionToListNode.java)
 
 ### Collection to Set
 
@@ -2961,7 +2961,7 @@ Converts a collection to a set
 | --- | --- | --- |
 | `set` (Set) | `set<any>` | The collection as an ordered set |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionToSetNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionToSetNode.java)
 
 ### List Add
 
@@ -2982,7 +2982,7 @@ Returns a new list with an item appended
 | --- | --- | --- |
 | `list` (List) | `list<T>` | The updated list |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/ListAddNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/ListAddNode.java)
 
 ### List Create
 
@@ -3002,7 +3002,7 @@ Creates a native list from ordered inputs
 | --- | --- | --- |
 | `list` (List) | `list<any>` | The created list |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/ListCreateNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/ListCreateNode.java)
 
 ### List Remove At
 
@@ -3023,7 +3023,7 @@ Returns a new list with the item at the given index removed
 | --- | --- | --- |
 | `list` (List) | `list<T>` | The updated list |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/ListRemoveAtNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/ListRemoveAtNode.java)
 
 ### Map Keys
 
@@ -3043,7 +3043,7 @@ Returns the keys of a map/object as a list
 | --- | --- | --- |
 | `keys` (Keys) | `list<string>` | The keys of the map |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/MapKeysNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/MapKeysNode.java)
 
 ### Map Values
 
@@ -3063,7 +3063,7 @@ Returns the values of a map/object as a list in insertion order
 | --- | --- | --- |
 | `values` (Values) | `list<any>` | The values of the map |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/MapValuesNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/MapValuesNode.java)
 
 ### Set Create
 
@@ -3083,7 +3083,7 @@ Creates a native set from inputs while preserving first-seen order
 | --- | --- | --- |
 | `set` (Set) | `set<any>` | The created set |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/SetCreateNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/SetCreateNode.java)
 
 ## List
 
@@ -3106,7 +3106,7 @@ Gets the first item in a list
 | `item` (Item) | `T` | The first item in the list |
 | `found` (Found) | `boolean` | Whether the list was non-empty |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/list/FirstNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/list/FirstNode.java)
 
 ### Get At Index
 
@@ -3128,7 +3128,7 @@ Gets an item at a specific index in a list
 | `item` (Item) | `T` | The item at the specified index |
 | `found` (Found) | `boolean` | Whether the index was valid |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/list/GetAtNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/list/GetAtNode.java)
 
 ### Join to String
 
@@ -3149,7 +3149,7 @@ Joins list items into a string with a separator
 | --- | --- | --- |
 | `result` (Result) | `string` | The joined string |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/list/JoinToStringNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/list/JoinToStringNode.java)
 
 ### Last
 
@@ -3170,7 +3170,7 @@ Gets the last item in a list
 | `item` (Item) | `T` | The last item in the list |
 | `found` (Found) | `boolean` | Whether the list was non-empty |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/list/LastNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/list/LastNode.java)
 
 ### List Contains
 
@@ -3191,7 +3191,7 @@ Checks if a list contains a specific item
 | --- | --- | --- |
 | `result` (Result) | `boolean` | Whether the list contains the item |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/list/ListContainsNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/list/ListContainsNode.java)
 
 ### List Length
 
@@ -3211,7 +3211,7 @@ Returns the length of a list
 | --- | --- | --- |
 | `length` (Length) | `number` | Number of items in the list |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/list/ListLengthNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/list/ListLengthNode.java)
 
 ### Range
 
@@ -3233,7 +3233,7 @@ Generates a list of numbers from start to end with a given step
 | --- | --- | --- |
 | `list` (List) | `list<number>` | Generated list of numbers |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/list/RangeNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/list/RangeNode.java)
 
 ## Constants
 
@@ -3255,7 +3255,7 @@ Outputs a constant boolean value
 | --- | --- | --- |
 | `value` (Value) | `boolean` | The constant value |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/constant/BooleanConstantNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/constant/BooleanConstantNode.java)
 
 ### Number
 
@@ -3275,7 +3275,7 @@ Outputs a constant number value
 | --- | --- | --- |
 | `value` (Value) | `number` | The constant value |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/constant/NumberConstantNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/constant/NumberConstantNode.java)
 
 ### String
 
@@ -3295,7 +3295,7 @@ Outputs a constant string value
 | --- | --- | --- |
 | `value` (Value) | `string` | The constant value |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/constant/StringConstantNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/constant/StringConstantNode.java)
 
 ### Vector3
 
@@ -3320,7 +3320,7 @@ Outputs a constant 3D vector with both a typed vector and x, y, z components
 | `y` (Y) | `number` | Y component |
 | `z` (Z) | `number` | Z component |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/constant/Vector3ConstantNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/constant/Vector3ConstantNode.java)
 
 ## Utility
 
@@ -3344,7 +3344,7 @@ Creates a 3D vector from x, y, z components
 | --- | --- | --- |
 | `vector` (Vector) | `vector3` | Created 3D vector |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/util/CreateVector3Node.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/util/CreateVector3Node.java)
 
 ### Is Empty
 
@@ -3364,7 +3364,7 @@ Checks if a value is null or empty (works with strings and lists)
 | --- | --- | --- |
 | `result` (Result) | `boolean` | True if value is null or empty |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/util/IsEmptyNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/util/IsEmptyNode.java)
 
 ### Is Null
 
@@ -3384,7 +3384,7 @@ Checks if a value is null
 | --- | --- | --- |
 | `result` (Result) | `boolean` | True if value is null |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/util/IsNullNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/util/IsNullNode.java)
 
 ### Split Vector3
 
@@ -3406,7 +3406,7 @@ Splits a 3D vector into x, y, z components
 | `y` (Y) | `number` | Y component |
 | `z` (Z) | `number` | Z component |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/util/SplitVector3Node.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/util/SplitVector3Node.java)
 
 ### Timestamp
 
@@ -3431,7 +3431,7 @@ Gets the current timestamp in various formats
 | `formatted` (Formatted) | `string` | Formatted date string |
 | `iso` (ISO) | `string` | ISO 8601 formatted string |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/util/TimestampNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/util/TimestampNode.java)
 
 ### To Number
 
@@ -3453,7 +3453,7 @@ Parses a string to a number
 | `result` (Result) | `number` | Parsed number or default |
 | `success` (Success) | `boolean` | Whether parsing succeeded |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/util/ToNumberNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/util/ToNumberNode.java)
 
 ### To String
 
@@ -3473,7 +3473,7 @@ Converts any value to a string
 | --- | --- | --- |
 | `result` (Result) | `string` | String representation |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/util/ToStringNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/util/ToStringNode.java)
 
 ## Network
 
@@ -3506,7 +3506,7 @@ Performs HTTP requests with full control over method, headers, and body
 | `success` (Success) | `boolean` | Whether request succeeded (2xx status) |
 | `errorMessage` (Error Message) | `string` | Error message if failed |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/network/WebFetchNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/network/WebFetchNode.java)
 
 ## AI
 
@@ -3539,7 +3539,7 @@ Sends a prompt to an LLM and returns the response using the bot's AI settings
 | `errorMessage` (Error Message) | `string` | Error message if failed |
 | `tokensUsed` (Tokens Used) | `number` | Total tokens used |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/ai/LLMChatNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/ai/LLMChatNode.java)
 
 ## JSON
 
@@ -3561,7 +3561,7 @@ Creates a JSON array from multiple inputs
 | --- | --- | --- |
 | `array` (Array) | `string` | JSON array string |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonArrayNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonArrayNode.java)
 
 ### JSON Get
 
@@ -3584,7 +3584,7 @@ Extracts a value from JSON using a path expression
 | `value` (Value) | `any` | Extracted value |
 | `found` (Found) | `boolean` | Whether the path was found |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonGetNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonGetNode.java)
 
 ### JSON Object
 
@@ -3605,7 +3605,7 @@ Creates a JSON object from key-value pairs
 | --- | --- | --- |
 | `object` (Object) | `string` | JSON object string |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonObjectNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonObjectNode.java)
 
 ### JSON Parse
 
@@ -3627,7 +3627,7 @@ Parses a JSON string into a usable object
 | `success` (Success) | `boolean` | Whether parsing succeeded |
 | `errorMessage` (Error Message) | `string` | Parse error if failed |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonParseNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonParseNode.java)
 
 ### JSON Set
 
@@ -3650,7 +3650,7 @@ Sets a value in JSON at a specified path
 | `result` (Result) | `string` | Modified JSON string |
 | `success` (Success) | `boolean` | Whether the operation succeeded |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonSetNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonSetNode.java)
 
 ### JSON Stringify
 
@@ -3671,7 +3671,7 @@ Converts a value to a JSON string with optional pretty printing
 | --- | --- | --- |
 | `json` (JSON) | `string` | JSON string representation |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonStringifyNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonStringifyNode.java)
 
 ## Encoding
 
@@ -3695,7 +3695,7 @@ Decodes a Base64 string
 | `decoded` (Decoded) | `string` | Decoded string |
 | `success` (Success) | `boolean` | Whether decoding succeeded |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/Base64DecodeNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/Base64DecodeNode.java)
 
 ### Base64 Encode
 
@@ -3716,7 +3716,7 @@ Encodes a string to Base64
 | --- | --- | --- |
 | `encoded` (Encoded) | `string` | Base64 encoded string |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/Base64EncodeNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/Base64EncodeNode.java)
 
 ### Compress/Decompress
 
@@ -3739,7 +3739,7 @@ Compresses or decompresses data using GZIP
 | `success` (Success) | `boolean` | Whether operation succeeded |
 | `ratio` (Ratio) | `number` | Compression ratio (original/compressed) |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/CompressionNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/CompressionNode.java)
 
 ### Decrypt
 
@@ -3762,7 +3762,7 @@ Decrypts an AES-encrypted string
 | `success` (Success) | `boolean` | Whether decryption succeeded |
 | `errorMessage` (Error Message) | `string` | Error message if failed |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/DecryptNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/DecryptNode.java)
 
 ### Encrypt
 
@@ -3785,7 +3785,7 @@ Encrypts a string using AES encryption
 | `success` (Success) | `boolean` | Whether encryption succeeded |
 | `errorMessage` (Error Message) | `string` | Error message if failed |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/EncryptNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/EncryptNode.java)
 
 ### Hash
 
@@ -3808,7 +3808,7 @@ Computes a cryptographic hash of the input
 | `hash` (Hash) | `string` | Computed hash |
 | `success` (Success) | `boolean` | Whether hashing succeeded |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/HashNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/HashNode.java)
 
 ## State
 
@@ -3836,7 +3836,7 @@ In-memory key-value cache with optional TTL
 | `found` (Found) | `boolean` | Whether key was found |
 | `success` (Success) | `boolean` | Whether operation succeeded |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/state/CacheNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/state/CacheNode.java)
 
 ### State Machine
 
@@ -3864,7 +3864,7 @@ Simple state machine for bot behavior management
 | `previousState` (Previous State) | `string` | Previous state (after transition) |
 | `transitionAllowed` (Transition Allowed) | `boolean` | Whether transition was allowed |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/state/StateNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/state/StateNode.java)
 
 ## Integration
 
@@ -3894,7 +3894,7 @@ Sends messages to a Discord webhook
 | `success` (Success) | `boolean` | Whether message was sent |
 | `errorMessage` (Error Message) | `string` | Error details if failed |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/integration/DiscordWebhookNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/integration/DiscordWebhookNode.java)
 
 ## Variables
 
@@ -3922,7 +3922,7 @@ Retrieves a value from the bot's persistent metadata
 | `value` (Value) | `any` | Retrieved value |
 | `found` (Found) | `boolean` | Whether variable was found |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/GetPersistentBotVariableNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/GetPersistentBotVariableNode.java)
 
 ### Get Persistent Instance Variable
 
@@ -3947,7 +3947,7 @@ Retrieves a value from the instance's persistent metadata
 | `value` (Value) | `any` | Retrieved value |
 | `found` (Found) | `boolean` | Whether variable was found |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/GetPersistentInstanceVariableNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/GetPersistentInstanceVariableNode.java)
 
 ### Get Session Bot Variable
 
@@ -3972,7 +3972,7 @@ Retrieves a value from the bot's session metadata
 | `value` (Value) | `any` | Retrieved value |
 | `found` (Found) | `boolean` | Whether variable was found |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/GetSessionBotVariableNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/GetSessionBotVariableNode.java)
 
 ### Get Session Instance Variable
 
@@ -3996,7 +3996,7 @@ Retrieves a value from the instance's session metadata
 | `value` (Value) | `any` | Retrieved value |
 | `found` (Found) | `boolean` | Whether variable was found |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/GetSessionInstanceVariableNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/GetSessionInstanceVariableNode.java)
 
 ### Set Persistent Bot Variable
 
@@ -4021,7 +4021,7 @@ Stores a value in the bot's persistent metadata (survives disconnects)
 | `out` (Out) | `exec` | Execution output |
 | `success` (Success) | `boolean` | Whether storage succeeded |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/SetPersistentBotVariableNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/SetPersistentBotVariableNode.java)
 
 ### Set Persistent Instance Variable
 
@@ -4045,7 +4045,7 @@ Stores a value in the instance's persistent metadata (survives restarts)
 | `out` (Out) | `exec` | Execution output |
 | `success` (Success) | `boolean` | Whether storage succeeded |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/SetPersistentInstanceVariableNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/SetPersistentInstanceVariableNode.java)
 
 ### Set Session Bot Variable
 
@@ -4069,7 +4069,7 @@ Stores a value in the bot's session metadata (lost on disconnect)
 | `out` (Out) | `exec` | Execution output |
 | `success` (Success) | `boolean` | Whether storage succeeded |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/SetSessionBotVariableNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/SetSessionBotVariableNode.java)
 
 ### Set Session Instance Variable
 
@@ -4092,4 +4092,4 @@ Stores a value in the instance's session metadata (lost on restart)
 | `out` (Out) | `exec` | Execution output |
 | `success` (Success) | `boolean` | Whether storage succeeded |
 
-[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/SetSessionInstanceVariableNode.java)
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/SetSessionInstanceVariableNode.java)

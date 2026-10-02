@@ -10,7 +10,10 @@ import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from '../../../../../../src/components/mdx/sdk-tabs';
 
 A durable task runs on the SoulFire server.
-It continues when the SDK program disconnects.
+A detached task can continue after the SDK disconnects while its backend and bot remain available.
+Managed installation closes the local backend at scope exit.
+Scoped bot connection also stops bots started by that scope.
+Use an existing backend and a bot kept running when work must survive your application.
 Use a durable task for progress updates, cancellation, or shared bot control.
 
 <Cards>

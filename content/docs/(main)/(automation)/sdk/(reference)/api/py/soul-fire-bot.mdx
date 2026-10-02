@@ -4,9 +4,49 @@ description: Public Python members of SoulFireBot.
 icon: Code
 ---
 
-Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
 
 Methods decorated with `@fn` return effects. Their implementation signatures use `EffectGen` for the generator body. Compose them with `yield from` inside a scoped workflow.
+
+## state
+
+```python
+@property
+def state(self) -> BotSessionState
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L191)
+
+## connect
+
+```python
+@fn("SoulFireBot.connect")
+def connect(
+    self, *, ready_timeout: float = 30.0, timeout_ms: int | None = None
+) -> EffectGen[None, SoulFireOperationError, Scope]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L195)
+
+## collect
+
+```python
+@fn("SoulFireBot.collect")
+def collect(
+    self,
+    target: str | Iterable[str],
+    *,
+    count: int = 1,
+    search_radius: int = 32,
+    avoid_submerged_targets: bool = False,
+    require_line_of_sight: bool = False,
+    options: PathfindOptions | None = None,
+    timeout_ms: int | None = None,
+) -> EffectGen[CollectBlocksTaskResult, SoulFireOperationError]:
+    @gen
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L247)
 
 ## tasks
 
@@ -15,7 +55,7 @@ Methods decorated with `@fn` return effects. Their implementation signatures use
 def tasks(self) -> SoulFireTasks
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L168)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L281)
 
 ## pathfinder
 
@@ -24,7 +64,7 @@ def tasks(self) -> SoulFireTasks
 def pathfinder(self) -> SoulFirePathfinder
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L179)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L292)
 
 ## chat
 
@@ -33,7 +73,7 @@ def pathfinder(self) -> SoulFirePathfinder
 def chat(self) -> SoulFireChat
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L188)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L301)
 
 ## inventory
 
@@ -42,7 +82,7 @@ def chat(self) -> SoulFireChat
 def inventory(self) -> SoulFireInventory
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L198)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L315)
 
 ## recipes
 
@@ -51,7 +91,7 @@ def inventory(self) -> SoulFireInventory
 def recipes(self) -> SoulFireRecipes
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L207)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L324)
 
 ## registry
 
@@ -60,7 +100,7 @@ def recipes(self) -> SoulFireRecipes
 def registry(self) -> SoulFireRegistry
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L215)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L332)
 
 ## world
 
@@ -69,7 +109,7 @@ def registry(self) -> SoulFireRegistry
 def world(self) -> SoulFireWorld
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L221)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L338)
 
 ## camera
 
@@ -78,7 +118,7 @@ def world(self) -> SoulFireWorld
 def camera(self) -> SoulFireCamera
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L227)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L344)
 
 ## protocol
 
@@ -87,7 +127,7 @@ def camera(self) -> SoulFireCamera
 def protocol(self) -> SoulFireProtocol
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L231)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L348)
 
 ## start
 
@@ -98,7 +138,7 @@ def start(
 ) -> EffectGen[BotStatus, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L237)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L354)
 
 ## stop
 
@@ -109,7 +149,7 @@ def stop(
 ) -> EffectGen[BotStatus, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L254)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L371)
 
 ## restart
 
@@ -120,7 +160,7 @@ def restart(
 ) -> EffectGen[BotStatus, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L271)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L388)
 
 ## status
 
@@ -131,7 +171,7 @@ def status(
 ) -> EffectGen[BotStatus, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L284)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L401)
 
 ## info
 
@@ -142,7 +182,7 @@ def info(
 ) -> EffectGen[BotInfoResponse, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L290)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L407)
 
 ## wait_for_online
 
@@ -154,7 +194,7 @@ def wait_for_online(
     @gen
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L304)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L421)
 
 ## events
 
@@ -164,18 +204,22 @@ def events(
 ) -> Stream[BotEvent, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L335)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L452)
 
 ## observe
 
 ```python
 @fn("SoulFireBot.observe")
 def observe(
-    self, options: BotSessionOptions | None = None, *, timeout_ms: int | None = None
+    self,
+    options: BotSessionOptions | None = None,
+    *,
+    timeout_ms: int | None = None,
+    ready_timeout: float | None = None,
 ) -> EffectGen[BotSession, SoulFireOperationError, Scope]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L351)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L470)
 
 ## send_chat
 
@@ -186,7 +230,7 @@ def send_chat(
 ) -> EffectGen[BotActionResult, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L366)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L491)
 
 ## get_block
 
@@ -197,7 +241,7 @@ def get_block(
 ) -> EffectGen[GetBlockResponse, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L382)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L507)
 
 ## find_blocks
 
@@ -213,7 +257,7 @@ def find_blocks(
 ) -> EffectGen[FindBlocksResponse, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L398)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L523)
 
 ## list_nearby_entities
 
@@ -229,7 +273,7 @@ def list_nearby_entities(
 ) -> EffectGen[ListNearbyEntitiesResponse, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L423)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L548)
 
 ## dig_block
 
@@ -240,7 +284,7 @@ def dig_block(
 ) -> EffectGen[BotActionResult, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L448)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L573)
 
 ## place_block
 
@@ -256,7 +300,7 @@ def place_block(
 ) -> EffectGen[BotActionResult, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L464)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L589)
 
 ## interact_block
 
@@ -273,7 +317,7 @@ def interact_block(
 ) -> EffectGen[BotActionResult, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L489)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L614)
 
 ## use_item
 
@@ -284,7 +328,7 @@ def use_item(
 ) -> EffectGen[BotActionResult, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L516)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L641)
 
 ## release_item
 
@@ -295,7 +339,7 @@ def release_item(
 ) -> EffectGen[BotActionResult, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L530)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L655)
 
 ## attack_entity
 
@@ -306,7 +350,7 @@ def attack_entity(
 ) -> EffectGen[BotActionResult, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L544)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L669)
 
 ## interact_entity
 
@@ -322,7 +366,7 @@ def interact_entity(
 ) -> EffectGen[BotActionResult, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L563)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L688)
 
 ## swing_arm
 
@@ -333,7 +377,7 @@ def swing_arm(
 ) -> EffectGen[BotActionResult, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L588)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L713)
 
 ## respawn
 
@@ -344,7 +388,7 @@ def respawn(
 ) -> EffectGen[BotActionResult, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L602)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L727)
 
 ## sleep
 
@@ -355,7 +399,7 @@ def sleep(
 ) -> EffectGen[BotActionResult, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L616)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L741)
 
 ## wake
 
@@ -366,7 +410,7 @@ def wake(
 ) -> EffectGen[BotActionResult, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L630)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L755)
 
 ## mount
 
@@ -377,7 +421,7 @@ def mount(
 ) -> EffectGen[MountEntityResponse, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L644)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L769)
 
 ## dismount
 
@@ -388,7 +432,7 @@ def dismount(
 ) -> EffectGen[BotActionResult, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L661)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L786)
 
 ## set_vehicle_control
 
@@ -410,7 +454,7 @@ def set_vehicle_control(
 ) -> EffectGen[SetVehicleControlResponse, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L675)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L800)
 
 ## update_sign
 
@@ -426,7 +470,7 @@ def update_sign(
 ) -> EffectGen[BotActionResult, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L712)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L837)
 
 ## write_book
 
@@ -442,7 +486,7 @@ def write_book(
 ) -> EffectGen[BotActionResult, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L737)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L862)
 
 ## respond_resource_pack
 
@@ -453,7 +497,7 @@ def respond_resource_pack(
 ) -> EffectGen[BotActionResult, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L762)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L887)
 
 ## set_flying
 
@@ -464,7 +508,7 @@ def set_flying(
 ) -> EffectGen[BotActionResult, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L778)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L903)
 
 ## start_elytra_flight
 
@@ -475,7 +519,7 @@ def start_elytra_flight(
 ) -> EffectGen[BotActionResult, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L792)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L917)
 
 ## set_creative_slot
 
@@ -491,7 +535,7 @@ def set_creative_slot(
 ) -> EffectGen[BotActionResult, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L806)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L931)
 
 ## wait_for_chunks
 
@@ -502,7 +546,7 @@ def wait_for_chunks(
 ) -> EffectGen[WaitForChunksResponse, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L832)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L957)
 
 ## go_to
 
@@ -516,7 +560,7 @@ def go_to(
 ) -> Stream[PathfindProgress, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L850)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L975)
 
 ## stop_pathfinding
 
@@ -527,7 +571,7 @@ def stop_pathfinding(
 ) -> EffectGen[None, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L869)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L994)
 
 ## inventory_state
 
@@ -538,7 +582,7 @@ def inventory_state(
 ) -> EffectGen[BotInventoryStateResponse, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L882)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L1007)
 
 ## click_inventory
 
@@ -554,7 +598,7 @@ def click_inventory(
 ) -> EffectGen[None, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L896)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L1021)
 
 ## transfer_inventory_slot
 
@@ -565,7 +609,7 @@ def transfer_inventory_slot(
 ) -> EffectGen[None, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L923)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L1048)
 
 ## drop_inventory_slot
 
@@ -576,7 +620,7 @@ def drop_inventory_slot(
 ) -> EffectGen[None, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L929)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L1054)
 
 ## move_inventory_stack
 
@@ -587,7 +631,7 @@ def move_inventory_stack(
 ) -> EffectGen[None, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L935)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L1060)
 
 ## select_hotbar
 
@@ -598,7 +642,7 @@ def select_hotbar(
 ) -> EffectGen[None, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L945)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L1070)
 
 ## set_movement
 
@@ -618,7 +662,7 @@ def set_movement(
 ) -> EffectGen[None, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L963)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L1088)
 
 ## reset_movement
 
@@ -629,7 +673,7 @@ def reset_movement(
 ) -> EffectGen[None, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L1001)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L1126)
 
 ## look
 
@@ -640,7 +684,7 @@ def look(
 ) -> EffectGen[None, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L1017)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L1142)
 
 ## open_inventory
 
@@ -651,7 +695,7 @@ def open_inventory(
 ) -> EffectGen[None, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L1035)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L1160)
 
 ## close_container
 
@@ -662,7 +706,18 @@ def close_container(
 ) -> EffectGen[None, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L1051)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L1176)
+
+## click_container_button
+
+```python
+@fn("SoulFireBot.click_container_button")
+def click_container_button(
+    self, button_id: int, *, timeout_ms: int | None = None
+) -> EffectGen[None, SoulFireOperationError]
+```
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L1192)
 
 ## acquire_control
 
@@ -672,7 +727,7 @@ def acquire_control(
 ) -> Effect[SoulFireBotControlLease, SoulFireOperationError, Scope]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L1066)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L1211)
 
 ## renew_control
 
@@ -683,7 +738,7 @@ def renew_control(
 ) -> EffectGen[BotControlLease, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L1109)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L1254)
 
 ## release_control
 
@@ -694,4 +749,4 @@ def release_control(
 ) -> EffectGen[None, SoulFireOperationError]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/python/src/soulfire/bot.py#L1137)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L1282)

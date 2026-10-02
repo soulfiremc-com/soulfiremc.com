@@ -1384,9 +1384,9 @@ function Page() {
             Build with the SoulFire SDKs
           </h2>
           <p className="max-w-[700px] text-muted-foreground md:text-lg">
-            Connect to your SoulFire backend, find a tutorial bot by name, send
-            chat, and stop it. Follow the language guide for the matching SDK,
-            API token, and Minecraft target setup.
+            Create a ready bot from a Minecraft server address and username. The
+            SDK handles the local backend, account setup, synchronized state,
+            and scoped cleanup.
           </p>
         </div>
         <div className="grid gap-4 lg:grid-cols-2">
@@ -1394,10 +1394,10 @@ function Page() {
             <div className="flex flex-col gap-2 p-5 sm:p-6">
               <h3 className="text-xl font-semibold">TypeScript SDK</h3>
               <p className="text-sm text-muted-foreground">
-                Run scoped bot operations with TypeScript and Effect.
+                Run scoped bot operations with TypeScript and Effect v4.
               </p>
               <code className="text-xs text-muted-foreground">
-                Source-compatible installation in the TypeScript guide
+                bun add @soulfiremc/sdk@2.10.2 effect@^4
               </code>
             </div>
             <div className="flex-1 border-y bg-muted/40">
@@ -1419,11 +1419,10 @@ function Page() {
             <div className="flex flex-col gap-2 p-5 sm:p-6">
               <h3 className="text-xl font-semibold">Python SDK</h3>
               <p className="text-sm text-muted-foreground">
-                Run a managed local server with Python 3.14+. Use async or sync
-                code to control it.
+                Run scoped bot operations with Python 3.14+ and effect-py.
               </p>
               <code className="text-xs text-muted-foreground">
-                Source-compatible installation in the Python guide
+                python -m pip install soulfire==2.10.2
               </code>
             </div>
             <div className="flex-1 border-y bg-muted/40">

@@ -10,7 +10,9 @@ Each recipe starts with a working connection and shows the same job in TypeScrip
 ## Before you start
 
 Complete the [matching SDK installation](/docs/sdk/compatibility) and one first-program tutorial.
-Use [Find instance and bot IDs](/docs/sdk/discover-bots) to obtain the identifiers below.
+These recipes attach to saved accounts on an existing backend.
+Use [named setup and ID discovery](/docs/sdk/discover-bots#find-instance-and-bot-ids) to obtain the identifiers below.
+For automatic local setup, use the managed first program instead.
 
 Python requires CPython 3.14 or newer. Set these values for every recipe:
 
@@ -21,7 +23,7 @@ export SOULFIRE_INSTANCE_ID="your-instance-uuid"
 export SOULFIRE_BOT_ID="your-bot-uuid"
 ```
 
-The recipes use TypeScript Effect and Python effect-py.
+The recipes use TypeScript Effect v4 and Python effect-py.
 See the [TypeScript guide](/docs/sdk/typescript) or [Python guide](/docs/sdk/python) for runtime setup and scoped cleanup.
 
 ## Pick a job
@@ -39,5 +41,7 @@ Run a Python file with your virtual environment's Python, such as `.venv/bin/pyt
 
 Read the recipe's prerequisites and expected result before starting it.
 Continuous recipes run until interrupted. Finite recipes finish after their action or task completes.
-After interruption, cancel durable work and stop the bot explicitly if the recipe does not own that cleanup.
+Recipes that use `bot.connect()` stop bots they start when the scope closes. Already-running bots remain running.
+The follow recipe uses the lower-level `start` API so its detached task can continue after the program exits.
+Cancel detached tasks and stop their bots explicitly when that work must end.
 See [bot state and task ownership](/docs/concepts/bot-lifecycle).

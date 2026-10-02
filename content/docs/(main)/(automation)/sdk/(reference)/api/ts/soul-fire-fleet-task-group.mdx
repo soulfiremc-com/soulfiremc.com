@@ -4,9 +4,9 @@ description: Public TypeScript members of SoulFireFleetTaskGroup.
 icon: Code
 ---
 
-Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/213ec6322325e94c8068c079344b66f8158628e2). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
 
-Compose Effect operations with `yield*` inside a scoped workflow. Properties expose sub-clients and state.
+Compose Effect v4 operations with `yield*` inside a scoped workflow. Properties expose sub-clients and state.
 
 ## size
 
@@ -14,7 +14,7 @@ Compose Effect operations with `yield*` inside a scoped workflow. Properties exp
 get size(): number
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/fleet.ts#L158)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/fleet.ts#L158)
 
 ## botIds
 
@@ -22,7 +22,7 @@ get size(): number
 get botIds(): readonly string[]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/fleet.ts#L161)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/fleet.ts#L161)
 
 ## taskIds
 
@@ -30,7 +30,7 @@ get botIds(): readonly string[]
 get taskIds(): readonly string[]
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/fleet.ts#L164)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/fleet.ts#L164)
 
 ## task
 
@@ -38,7 +38,7 @@ get taskIds(): readonly string[]
 task(botId: string): SoulFireTask<Result> | undefined
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/fleet.ts#L167)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/fleet.ts#L167)
 
 ## events
 
@@ -49,7 +49,7 @@ events(options?: {
 }): Stream.Stream<FleetTaskEvent, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/fleet.ts#L171)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/fleet.ts#L171)
 
 ## results
 
@@ -59,7 +59,7 @@ results(options?: {
 }): Effect.Effect<FleetTaskReport<Result>>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/fleet.ts#L183)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/fleet.ts#L183)
 
 ## requireResults
 
@@ -72,7 +72,7 @@ requireResults(options?: {
 >
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/fleet.ts#L220)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/fleet.ts#L220)
 
 ## cancel
 
@@ -83,4 +83,4 @@ cancel(
 ): Effect.Effect<FleetTaskReport<undefined>, SoulFireOperationError>
 ```
 
-[Source](https://github.com/soulfiremc-com/SoulFire/blob/213ec6322325e94c8068c079344b66f8158628e2/sdk/typescript/src/fleet.ts#L235)
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/fleet.ts#L235)

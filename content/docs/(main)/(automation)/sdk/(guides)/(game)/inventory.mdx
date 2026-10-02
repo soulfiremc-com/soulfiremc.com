@@ -12,6 +12,30 @@ Use `bot.inventory` to query or move items.
 Use a container handle for several operations on the same menu.
 The handle includes the latest revision and rejects a stale or replaced menu.
 
+## Select items by ID or tag
+
+Pass an item ID such as `"bread"`, or prefix a tag with `#`, such as `"#logs"`.
+IDs without a namespace use `minecraft`.
+Counts accept these strings directly. Use `itemSelector` / `item_selector` to build selectors for other inventory and container operations:
+
+```ts
+import { itemSelector } from "@soulfiremc/sdk";
+
+const logs = yield* bot.inventory.count("#logs");
+yield* chest.deposit(itemSelector("cobblestone"), 64);
+yield* chest.withdraw(itemSelector("#foods"), 16);
+```
+
+```python
+from soulfire import item_selector
+
+logs = yield from bot.inventory.count("#logs")
+yield from chest.deposit(item_selector("cobblestone"), 64)
+yield from chest.withdraw(item_selector("#foods"), 16)
+```
+
+Use a structured selector when you need fingerprints, several IDs, or other advanced filters.
+
 ## Open, transfer, and close
 
 <Tabs items={['TypeScript', 'Python']}>
@@ -52,6 +76,24 @@ The handle includes the latest revision and rejects a stale or replaced menu.
 `withdraw` moves items in the other direction.
 Both methods plan the full transfer before they click any slots.
 They stop if the source has too few items or the destination has too little space.
+
+## Click a container button
+
+Use `bot.clickContainerButton(buttonId)` or Python `bot.click_container_button(button_id)` for menu buttons, such as enchanting choices:
+
+```ts
+yield* bot.clickContainerButton(0);
+```
+
+```python
+yield from bot.click_container_button(0)
+```
+
+The menu must already be open. Button IDs depend on its type: enchanting options use 0 through 2.
+Stonecutter recipes and loom patterns use their positions in the menu list.
+A lectern uses 1 for the previous page, 2 for the next page, and 3 to take the book.
+The call sends the click without waiting for Minecraft to accept it.
+Inspect updated menu state before assuming that the requested operation succeeded.
 
 ## Inspect current state
 

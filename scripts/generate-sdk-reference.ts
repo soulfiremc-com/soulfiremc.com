@@ -9,7 +9,8 @@ const directory = sdkSource();
 const output = resolve("content/docs/(main)/(automation)/sdk/(reference)/api");
 buildSdk(directory);
 const entry = join(directory, "sdk/typescript/src/index.ts");
-const program = ts.createProgram([entry], {
+const managedEntry = join(directory, "sdk/typescript/src/bun.ts");
+const program = ts.createProgram([entry, managedEntry], {
   target: ts.ScriptTarget.ESNext,
   module: ts.ModuleKind.NodeNext,
   moduleResolution: ts.ModuleResolutionKind.NodeNext,
@@ -44,7 +45,7 @@ type Member = {
   description: string;
   source: string;
 };
-type ClassPage = { name: string; members: Member[] };
+type ClassPage = { name: string; members: Member[]; introduction?: string };
 const classes: ClassPage[] = [];
 for (const file of program.getSourceFiles()) {
   if (
@@ -114,6 +115,54 @@ for (const file of program.getSourceFiles()) {
     if (members.length) classes.push({ name: declaration.name.text, members });
   }
 }
+const managedModule = checker.getSymbolAtLocation(
+  program.getSourceFile(managedEntry)!,
+);
+const managedSoulFire =
+  managedModule &&
+  checker
+    .getExportsOfModule(managedModule)
+    .find((symbol) => symbol.name === "SoulFire");
+if (!managedSoulFire?.valueDeclaration)
+  throw new Error("Missing managed SoulFire entry point");
+const facadeType = checker.getTypeOfSymbolAtLocation(
+  managedSoulFire,
+  managedSoulFire.valueDeclaration,
+);
+const facadeMembers = checker
+  .getPropertiesOfType(facadeType)
+  .map((property) => {
+    const declaration = property.valueDeclaration ?? property.declarations?.[0];
+    if (!declaration)
+      throw new Error(`Missing SoulFire declaration: ${property.name}`);
+    const type = checker.getTypeOfSymbolAtLocation(property, declaration);
+    const signatures = checker.getSignaturesOfType(type, ts.SignatureKind.Call);
+    if (!signatures.length)
+      throw new Error(`Missing SoulFire call signature: ${property.name}`);
+    const file = declaration.getSourceFile();
+    return {
+      name: property.name,
+      signature: signatures
+        .map(
+          (signature) =>
+            `${property.name}${checker.signatureToString(signature, undefined, ts.TypeFormatFlags.NoTruncation)}`,
+        )
+        .join("\n"),
+      description: ts.displayPartsToString(
+        property.getDocumentationComment(checker),
+      ),
+      source: sourceLink(
+        file,
+        file.getLineAndCharacterOfPosition(declaration.getStart(file)).line + 1,
+      ),
+    };
+  });
+classes.push({
+  name: "SoulFire",
+  introduction:
+    "Import this facade from `@soulfiremc/sdk/bun` or `@soulfiremc/sdk/node` for managed `createBot`, `install`, and `installLayer`. The universal and browser entry points connect to existing backends and do not expose these managed operations. Runtime entry points supply their HTTP layer; `connectWithHttpClient` and `layerWithHttpClient` require the application-provided `effect/http/HttpClient` service.\n\n",
+  members: facadeMembers,
+});
 classes.sort((a, b) => a.name.localeCompare(b.name, "en"));
 if (!classes.some((item) => item.name === "SoulFireBot"))
   throw new Error("Missing public SDK classes");
@@ -133,7 +182,7 @@ function writeClasses(language: "typescript" | "python", items: ClassPage[]) {
       .join("\n\n");
     docsOutput(
       join(output, folder, `${slug(item.name)}.mdx`),
-      `---\ntitle: ${item.name}\ndescription: Public ${language === "typescript" ? "TypeScript" : "Python"} members of ${item.name}.\nicon: Code\n---\n\n${intro}${language === "python" ? "Methods decorated with `@fn` return effects. Their implementation signatures use `EffectGen` for the generator body. Compose them with `yield from` inside a scoped workflow.\n\n" : "Compose Effect operations with `yield*` inside a scoped workflow. Properties expose sub-clients and state.\n\n"}${content}\n`,
+      `---\ntitle: ${item.name}\ndescription: Public ${language === "typescript" ? "TypeScript" : "Python"} members of ${item.name}.\nicon: Code\n---\n\n${intro}${item.introduction ?? ""}${language === "python" ? "Methods decorated with `@fn` return effects. Their implementation signatures use `EffectGen` for the generator body. Compose them with `yield from` inside a scoped workflow.\n\n" : "Compose Effect v4 operations with `yield*` inside a scoped workflow. Properties expose sub-clients and state.\n\n"}${content}\n`,
     );
   }
   for (const file of readdirSync(join(output, folder))) {
