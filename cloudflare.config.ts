@@ -8,6 +8,9 @@ export default defineConfig({
     compatibilityFlags: ["nodejs_compat"],
     entrypoint,
     observability: {
+      issues: {
+        enabled: true,
+      },
       enabled: true,
       logs: {
         enabled: true,
