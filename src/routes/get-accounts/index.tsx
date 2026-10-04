@@ -289,6 +289,7 @@ const BADGES = [
   "free",
   "high-quality",
   "instant-delivery",
+  "replacement-warranty",
   "lifetime-warranty",
   "12h-warranty",
   "bulk-discount",

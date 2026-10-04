@@ -22,6 +22,7 @@ export type FilterableBadge =
   | "free"
   | "high-quality"
   | "instant-delivery"
+  | "replacement-warranty"
   | "lifetime-warranty"
   | "12h-warranty"
   | "bulk-discount";
@@ -189,6 +190,13 @@ export const BADGE_CONFIG: Record<
       "Accounts are delivered automatically and instantly after purchase - no waiting required.",
     icon: <Zap className="h-3 w-3" />,
   },
+  "replacement-warranty": {
+    label: "Replacement Warranty",
+    className: "bg-success/10 text-success",
+    description:
+      "Replacement coverage is available if an account stops working, subject to the shop's warranty terms.",
+    icon: <Shield className="h-3 w-3" />,
+  },
   "lifetime-warranty": {
     label: "Lifetime Warranty",
     className: "bg-success/10 text-success",
@@ -274,6 +282,7 @@ export const FILTER_BADGES: FilterableBadge[] = [
   "free",
   "high-quality",
   "instant-delivery",
+  "replacement-warranty",
   "lifetime-warranty",
   "bulk-discount",
 ];
@@ -709,6 +718,33 @@ export const SHOPS: Shop[] = [
         priceValue: 0.02,
         priceDetails:
           "Prices range from 2¢ for Hypixel-banned alts up to 10¢ for Hypixel-unbanned accounts, with various ban checks available. Accounts are delivered instantly after checkout.",
+      },
+    },
+  },
+  {
+    slug: "kynoselling",
+    name: "KynoSelling",
+    url: "https://kynoselling.xyz",
+    websiteUrl: "https://kynoselling.xyz",
+    paymentMethods: ["Crypto (LTC, BTC, SOL)", "Card"],
+    listings: {
+      "nfa-accounts": {
+        summary:
+          "Budget Minecraft NFA alts with instant automated delivery (<30s). Pre-checked Hypixel, Donut unban guarantee, replacement warranty, and 24/7 support.",
+        badges: ["instant-delivery", "high-quality", "replacement-warranty"],
+        price: "8¢",
+        priceValue: 0.08,
+        priceDetails:
+          "Shop pricing ranges from $0.08 to $5.99 across budget NFA alts and full-email-access MFA accounts.",
+      },
+      "mfa-accounts": {
+        summary:
+          "Verified Minecraft MFAs (Full Email Access) with instant automated delivery (<30s). Pre-checked Hypixel, Donut unban guarantee, replacement warranty, and 24/7 support.",
+        badges: ["instant-delivery", "high-quality", "replacement-warranty"],
+        price: "$5.99",
+        priceValue: 5.99,
+        priceDetails:
+          "Shop pricing ranges from $0.08 to $5.99 across budget NFA alts and full-email-access MFA accounts.",
       },
     },
   },
