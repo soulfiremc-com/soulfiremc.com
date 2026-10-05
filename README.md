@@ -90,3 +90,9 @@ bun run build
 ```
 
 The D1 tests run with Miniflare and do not use the remote database.
+
+## Contributing and support
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md) for local setup and review expectations.
+Use [SUPPORT.md](SUPPORT.md) for questions and issue routing.
+Follow the [community code of conduct](https://github.com/soulfiremc-com/.github/blob/main/CODE_OF_CONDUCT.md) and report vulnerabilities through the [private security contacts](https://github.com/soulfiremc-com/.github/blob/main/SECURITY.md).

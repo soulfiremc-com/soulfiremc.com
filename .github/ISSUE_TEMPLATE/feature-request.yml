@@ -1,0 +1,42 @@
+name: Feature request
+description: Propose an improvement to soulfiremc.com and explain its use case.
+body:
+  - type: markdown
+    attributes:
+      value: Describe the use case before the implementation. For questions and issue routing, read [SUPPORT.md](https://github.com/soulfiremc-com/soulfiremc.com/blob/main/SUPPORT.md).
+  - type: checkboxes
+    id: existing-requests
+    attributes:
+      label: Existing proposals
+      options:
+        - label: I searched open and closed issues for similar proposals.
+          required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: Explain who needs this change, what they want to do, and what prevents them today.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Describe the desired result. Include a workflow, command, or API example if useful.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives
+      description: Describe existing features or workarounds you considered and their limits.
+  - type: textarea
+    id: compatibility
+    attributes:
+      label: Scope and compatibility
+      description: Name affected components and any effect on existing users, APIs, permissions, or performance.
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Add references or examples. Mention if you want to help implement or test the proposal.

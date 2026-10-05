@@ -1,7 +1,55 @@
-# Contributing documentation
+# Contributing to soulfiremc.com
+
+This repository maintains the SoulFire website, documentation, and executable examples.
+This guide covers local development, validation, and pull requests.
+
+## Before you start
+
+Search [open and closed issues](https://github.com/soulfiremc-com/soulfiremc.com/issues) before reporting a problem or proposing a feature.
+Small fixes can go directly to a pull request. Discuss substantial changes in an issue before implementation.
+For usage questions and issue routing, read [SUPPORT.md](SUPPORT.md).
+Follow the [community code of conduct](https://github.com/soulfiremc-com/.github/blob/main/CODE_OF_CONDUCT.md).
+Report vulnerabilities privately through the [security policy](https://github.com/soulfiremc-com/.github/blob/main/SECURITY.md).
+
+## Website and application changes
+
+Install Git and Bun at the version in `package.json`.
+Documentation reference checks also need Python 3.14 and Java 25.
+Use the pinned Cloudflare `cf` CLI through the package scripts.
+
+```bash
+bun install --frozen-lockfile
+bun run db:migrate
+bun dev
+```
+
+The migration command above updates the local D1 database, not the remote database.
+Do not use production OAuth credentials, API tokens, or database exports for ordinary development.
+For features that require secrets, configure private local values according to `cloudflare.config.ts` and keep them out of Git.
+
+- `src/routes/`: website routes and application flows.
+- `src/components/`: shared and application UI.
+- `src/lib/` and `src/server.ts`: application logic and server integration.
+- `content/docs/`: documentation pages and navigation metadata.
+- `public/docs/`: downloadable examples and documentation assets.
+- `scripts/`: reference generation, example checks, and development tools.
+- `tests/`: application and documentation logic tests.
+
+For schema changes, edit the schema first and run `bunx drizzle-kit generate --name <migration-name>`.
+Commit the generated `drizzle-d1/` SQL and metadata exactly as produced. Do not hand-edit migration artifacts.
+Run local migrations and relevant tests before submission.
+Remote migrations and deployment require maintainer coordination. Follow the [README migration workflow](README.md#database-migrations).
+
+Use the existing Oxlint and Oxfmt configuration. Run `bun run check` after every change.
+Use `bun run typecheck` and `bun run test` for application changes.
+Run `bun run build` for changes that affect the production build.
+For UI changes, verify keyboard access, mobile layouts, and leaf loading states.
+Try consumer changes before modifying components in `src/components/ui/`.
+
+## Documentation writing workflow
 
 Write for a reader with a task to complete. Start with the result, state the
-prerequisites, and show how the reader can check that the task worked.
+prerequisites, and show how the reader can verify that the task worked.
 
 ## Choose the right page
 
@@ -82,7 +130,7 @@ for each language. Keep focused API fragments unmarked and label them as fragmen
 `check-plugin-examples` compiles marked Java examples in the first-plugin and
 bot-control guides against the real backend classes. Bot-control fragments run
 inside a method with a `BotConnection connection` parameter supplied by the checker.
-These checks catch API drift; they do not start a Minecraft session.
+These checks catch API drift. They do not start a Minecraft session.
 
 Downloadable script graphs belong in `public/docs/scripts`. The script checker
 checks their export shape, node IDs, ports, inline values, required inputs, and
@@ -109,3 +157,25 @@ Preview changed pages with `bun dev`. Check the sidebar, code tabs, downloads,
 tables, images, search, and old URLs at desktop and mobile widths. Read the
 procedure in order and follow it on a local test server. Record any runtime
 checks that you could not perform.
+
+## Submit a pull request
+
+Keep the change focused on one problem. Avoid unrelated formatting and dependency updates.
+Use Conventional Commit subjects such as `docs(contributing): clarify local setup` or `fix(build): correct packaging`.
+Use a meaningful scope, imperative wording, and a subject under 72 characters.
+For non-trivial changes, add a body that explains the motivation and important tradeoffs.
+For breaking changes, include a `BREAKING CHANGE:` footer and migration instructions.
+Do not bypass Git hooks. Let all configured checks finish.
+
+Complete the pull request template with the problem, resulting behavior, and affected files.
+If a related issue exists, link it.
+Use `Closes #123` only if the change fully resolves that issue.
+Record application and documentation check results, source versions, and any runtime or preview checks.
+Explain any checks that you could not perform.
+For visible changes, include screenshots and the environment used to capture them.
+Open a draft for early feedback on substantial changes.
+Respond to review comments and rerun affected checks after revisions.
+
+Update documentation and examples with behavior changes. Remove obsolete code rather than leaving placeholders or shims.
+Do not commit credentials, private logs, dependency directories, or generated build artifacts.
+Respect existing license notices and submit only material that you have the right to contribute.
