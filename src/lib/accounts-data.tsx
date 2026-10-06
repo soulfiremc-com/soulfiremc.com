@@ -727,6 +727,7 @@ export const SHOPS: Shop[] = [
     logo: "/accounts/kynoselling.png",
     url: "https://kynoselling.xyz/?ref=SOULFIRE",
     websiteUrl: "https://kynoselling.xyz/?ref=SOULFIRE",
+    discordUrl: "https://kynoselling.xyz/discord",
     paymentMethods: ["Crypto (LTC, BTC, SOL)", "Card"],
     listings: {
       "nfa-accounts": {
