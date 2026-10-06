@@ -724,25 +724,40 @@ export const SHOPS: Shop[] = [
   {
     slug: "kynoselling",
     name: "KynoSelling",
-    url: "https://kynoselling.xyz",
-    websiteUrl: "https://kynoselling.xyz",
+    logo: "/accounts/kynoselling.png",
+    url: "https://kynoselling.xyz/?ref=SOULFIRE",
+    websiteUrl: "https://kynoselling.xyz/?ref=SOULFIRE",
     paymentMethods: ["Crypto (LTC, BTC, SOL)", "Card"],
     listings: {
       "nfa-accounts": {
         summary:
           "Budget Minecraft NFA alts with instant automated delivery (<30s). Pre-checked Hypixel, Donut unban guarantee, replacement warranty, and 24/7 support.",
-        badges: ["instant-delivery", "high-quality", "replacement-warranty"],
+        badges: [
+          "affiliate",
+          "instant-delivery",
+          "high-quality",
+          "replacement-warranty",
+        ],
         price: "8¢",
         priceValue: 0.08,
+        couponCode: "SOULFIRE10",
+        couponDiscount: "10% off",
         priceDetails:
           "Shop pricing ranges from $0.08 to $5.99 across budget NFA alts and full-email-access MFA accounts.",
       },
       "mfa-accounts": {
         summary:
           "Verified Minecraft MFAs (Full Email Access) with instant automated delivery (<30s). Pre-checked Hypixel, Donut unban guarantee, replacement warranty, and 24/7 support.",
-        badges: ["instant-delivery", "high-quality", "replacement-warranty"],
+        badges: [
+          "affiliate",
+          "instant-delivery",
+          "high-quality",
+          "replacement-warranty",
+        ],
         price: "$5.99",
         priceValue: 5.99,
+        couponCode: "SOULFIRE10",
+        couponDiscount: "10% off",
         priceDetails:
           "Shop pricing ranges from $0.08 to $5.99 across budget NFA alts and full-email-access MFA accounts.",
       },
