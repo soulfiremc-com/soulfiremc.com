@@ -111,7 +111,7 @@ The existing `--check` mode compares saved pages with generated output.
 
 The full SDK references live at [ts.soulfiremc.com](https://ts.soulfiremc.com/)
 and [py.soulfiremc.com](https://py.soulfiremc.com/).
-TypeDoc and mkdocstrings build these static sites from the SoulFire repository.
+TypeDoc and Sphinx with AutoAPI build these static sites from the SoulFire repository.
 Keep signatures, defaults, comments, and docstrings in the SDK source.
 See [the reference publishing instructions](https://github.com/soulfiremc-com/SoulFire/tree/main/sdk/reference).
 Keep tutorials, recipes, and explanations in this website.
