@@ -1,0 +1,486 @@
+---
+title: "protocol_connect module"
+description: "Python API signatures, fields, and source for protocol_connect module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`BotProtocolService`](/docs/sdk/api/py/generated-protocol-connect#botprotocolservice) | class |
+| [`BotProtocolServiceASGIApplication`](/docs/sdk/api/py/generated-protocol-connect#botprotocolserviceasgiapplication) | class |
+| [`BotProtocolServiceClient`](/docs/sdk/api/py/generated-protocol-connect#botprotocolserviceclient) | class |
+| [`BotProtocolServiceClientSync`](/docs/sdk/api/py/generated-protocol-connect#botprotocolserviceclientsync) | class |
+| [`BotProtocolServiceSync`](/docs/sdk/api/py/generated-protocol-connect#botprotocolservicesync) | class |
+| [`BotProtocolServiceWSGIApplication`](/docs/sdk/api/py/generated-protocol-connect#botprotocolservicewsgiapplication) | class |
+
+## BotProtocolService
+
+**Class** in `protocol_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L37).
+
+**Import from:** `soulfire.protocol_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class BotProtocolService(Protocol)
+```
+
+### `get_protocol_info`
+
+```python
+async def get_protocol_info(self, request: BotProtocolRequest, ctx: RequestContext[BotProtocolRequest, BotProtocolInfo]) -> BotProtocolInfo
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotProtocolRequest`](/docs/sdk/api/py/generated-protocol-pb2#botprotocolrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotProtocolRequest, BotProtocolInfo]` ([`BotProtocolRequest`](/docs/sdk/api/py/generated-protocol-pb2#botprotocolrequest), [`BotProtocolInfo`](/docs/sdk/api/py/bot-protocol-info)) | Required | positional or keyword |
+
+**Returns:** [`BotProtocolInfo`](/docs/sdk/api/py/bot-protocol-info).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L38)
+
+### `list_packet_schemas`
+
+```python
+async def list_packet_schemas(self, request: ListPacketSchemasRequest, ctx: RequestContext[ListPacketSchemasRequest, ListPacketSchemasResponse]) -> ListPacketSchemasResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ListPacketSchemasRequest`](/docs/sdk/api/py/generated-protocol-pb2#listpacketschemasrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[ListPacketSchemasRequest, ListPacketSchemasResponse]` ([`ListPacketSchemasRequest`](/docs/sdk/api/py/generated-protocol-pb2#listpacketschemasrequest), [`ListPacketSchemasResponse`](/docs/sdk/api/py/generated-protocol-pb2#listpacketschemasresponse)) | Required | positional or keyword |
+
+**Returns:** [`ListPacketSchemasResponse`](/docs/sdk/api/py/generated-protocol-pb2#listpacketschemasresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L41)
+
+### `watch_packets`
+
+```python
+def watch_packets(self, request: WatchPacketsRequest, ctx: RequestContext[WatchPacketsRequest, RawPacketEvent]) -> AsyncIterator[RawPacketEvent]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`WatchPacketsRequest`](/docs/sdk/api/py/generated-protocol-pb2#watchpacketsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[WatchPacketsRequest, RawPacketEvent]` ([`WatchPacketsRequest`](/docs/sdk/api/py/generated-protocol-pb2#watchpacketsrequest), [`RawPacketEvent`](/docs/sdk/api/py/raw-packet-event)) | Required | positional or keyword |
+
+**Returns:** `AsyncIterator[RawPacketEvent]` ([`RawPacketEvent`](/docs/sdk/api/py/raw-packet-event)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L44)
+
+### `send_raw_packet`
+
+```python
+async def send_raw_packet(self, request: SendRawPacketRequest, ctx: RequestContext[SendRawPacketRequest, SendRawPacketResponse]) -> SendRawPacketResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`SendRawPacketRequest`](/docs/sdk/api/py/generated-protocol-pb2#sendrawpacketrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[SendRawPacketRequest, SendRawPacketResponse]` ([`SendRawPacketRequest`](/docs/sdk/api/py/generated-protocol-pb2#sendrawpacketrequest), [`SendRawPacketResponse`](/docs/sdk/api/py/generated-protocol-pb2#sendrawpacketresponse)) | Required | positional or keyword |
+
+**Returns:** [`SendRawPacketResponse`](/docs/sdk/api/py/generated-protocol-pb2#sendrawpacketresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L47)
+
+## BotProtocolServiceASGIApplication
+
+**Class** in `protocol_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L51).
+
+**Import from:** `soulfire.protocol_connect`.
+
+**Bases:** `ConnectASGIApplication[BotProtocolService]` ([`BotProtocolService`](/docs/sdk/api/py/generated-protocol-connect#botprotocolservice)).
+
+```python
+class BotProtocolServiceASGIApplication(ConnectASGIApplication[BotProtocolService])
+```
+
+**Referenced types:** [`BotProtocolService`](/docs/sdk/api/py/generated-protocol-connect#botprotocolservice).
+
+### `__init__`
+
+```python
+def __init__(self, service: BotProtocolService | AsyncGenerator[BotProtocolService], *, interceptors: Iterable[Interceptor]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | `BotProtocolService \| AsyncGenerator[BotProtocolService]` ([`BotProtocolService`](/docs/sdk/api/py/generated-protocol-connect#botprotocolservice)) | Required | positional or keyword |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `compressions` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L52)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L112)
+
+## BotProtocolServiceClient
+
+**Class** in `protocol_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L117).
+
+**Import from:** `soulfire.protocol_connect`.
+
+**Bases:** `ConnectClient`.
+
+```python
+class BotProtocolServiceClient(ConnectClient)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[Interceptor]=(), http_client: Client | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `http_client` | `Client \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L118)
+
+### `get_protocol_info`
+
+```python
+async def get_protocol_info(self, request: BotProtocolRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotProtocolInfo
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotProtocolRequest`](/docs/sdk/api/py/generated-protocol-pb2#botprotocolrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotProtocolInfo`](/docs/sdk/api/py/bot-protocol-info).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L142)
+
+### `list_packet_schemas`
+
+```python
+async def list_packet_schemas(self, request: ListPacketSchemasRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> ListPacketSchemasResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ListPacketSchemasRequest`](/docs/sdk/api/py/generated-protocol-pb2#listpacketschemasrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`ListPacketSchemasResponse`](/docs/sdk/api/py/generated-protocol-pb2#listpacketschemasresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L162)
+
+### `watch_packets`
+
+```python
+def watch_packets(self, request: WatchPacketsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> AsyncIterator[RawPacketEvent]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`WatchPacketsRequest`](/docs/sdk/api/py/generated-protocol-pb2#watchpacketsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `AsyncIterator[RawPacketEvent]` ([`RawPacketEvent`](/docs/sdk/api/py/raw-packet-event)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L182)
+
+### `send_raw_packet`
+
+```python
+async def send_raw_packet(self, request: SendRawPacketRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> SendRawPacketResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`SendRawPacketRequest`](/docs/sdk/api/py/generated-protocol-pb2#sendrawpacketrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`SendRawPacketResponse`](/docs/sdk/api/py/generated-protocol-pb2#sendrawpacketresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L202)
+
+## BotProtocolServiceClientSync
+
+**Class** in `protocol_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L300).
+
+**Import from:** `soulfire.protocol_connect`.
+
+**Bases:** `ConnectClientSync`.
+
+```python
+class BotProtocolServiceClientSync(ConnectClientSync)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[InterceptorSync]=(), http_client: SyncClient | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | keyword only |
+| `http_client` | `SyncClient \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L301)
+
+### `get_protocol_info`
+
+```python
+def get_protocol_info(self, request: BotProtocolRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotProtocolInfo
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotProtocolRequest`](/docs/sdk/api/py/generated-protocol-pb2#botprotocolrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotProtocolInfo`](/docs/sdk/api/py/bot-protocol-info).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L325)
+
+### `list_packet_schemas`
+
+```python
+def list_packet_schemas(self, request: ListPacketSchemasRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> ListPacketSchemasResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ListPacketSchemasRequest`](/docs/sdk/api/py/generated-protocol-pb2#listpacketschemasrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`ListPacketSchemasResponse`](/docs/sdk/api/py/generated-protocol-pb2#listpacketschemasresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L344)
+
+### `watch_packets`
+
+```python
+def watch_packets(self, request: WatchPacketsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> Iterator[RawPacketEvent]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`WatchPacketsRequest`](/docs/sdk/api/py/generated-protocol-pb2#watchpacketsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Iterator[RawPacketEvent]` ([`RawPacketEvent`](/docs/sdk/api/py/raw-packet-event)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L363)
+
+### `send_raw_packet`
+
+```python
+def send_raw_packet(self, request: SendRawPacketRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> SendRawPacketResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`SendRawPacketRequest`](/docs/sdk/api/py/generated-protocol-pb2#sendrawpacketrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`SendRawPacketResponse`](/docs/sdk/api/py/generated-protocol-pb2#sendrawpacketresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L382)
+
+## BotProtocolServiceSync
+
+**Class** in `protocol_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L222).
+
+**Import from:** `soulfire.protocol_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class BotProtocolServiceSync(Protocol)
+```
+
+### `get_protocol_info`
+
+```python
+def get_protocol_info(self, request: BotProtocolRequest, ctx: RequestContext[BotProtocolRequest, BotProtocolInfo]) -> BotProtocolInfo
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotProtocolRequest`](/docs/sdk/api/py/generated-protocol-pb2#botprotocolrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotProtocolRequest, BotProtocolInfo]` ([`BotProtocolRequest`](/docs/sdk/api/py/generated-protocol-pb2#botprotocolrequest), [`BotProtocolInfo`](/docs/sdk/api/py/bot-protocol-info)) | Required | positional or keyword |
+
+**Returns:** [`BotProtocolInfo`](/docs/sdk/api/py/bot-protocol-info).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L223)
+
+### `list_packet_schemas`
+
+```python
+def list_packet_schemas(self, request: ListPacketSchemasRequest, ctx: RequestContext[ListPacketSchemasRequest, ListPacketSchemasResponse]) -> ListPacketSchemasResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ListPacketSchemasRequest`](/docs/sdk/api/py/generated-protocol-pb2#listpacketschemasrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[ListPacketSchemasRequest, ListPacketSchemasResponse]` ([`ListPacketSchemasRequest`](/docs/sdk/api/py/generated-protocol-pb2#listpacketschemasrequest), [`ListPacketSchemasResponse`](/docs/sdk/api/py/generated-protocol-pb2#listpacketschemasresponse)) | Required | positional or keyword |
+
+**Returns:** [`ListPacketSchemasResponse`](/docs/sdk/api/py/generated-protocol-pb2#listpacketschemasresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L226)
+
+### `watch_packets`
+
+```python
+def watch_packets(self, request: WatchPacketsRequest, ctx: RequestContext[WatchPacketsRequest, RawPacketEvent]) -> Iterator[RawPacketEvent]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`WatchPacketsRequest`](/docs/sdk/api/py/generated-protocol-pb2#watchpacketsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[WatchPacketsRequest, RawPacketEvent]` ([`WatchPacketsRequest`](/docs/sdk/api/py/generated-protocol-pb2#watchpacketsrequest), [`RawPacketEvent`](/docs/sdk/api/py/raw-packet-event)) | Required | positional or keyword |
+
+**Returns:** `Iterator[RawPacketEvent]` ([`RawPacketEvent`](/docs/sdk/api/py/raw-packet-event)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L229)
+
+### `send_raw_packet`
+
+```python
+def send_raw_packet(self, request: SendRawPacketRequest, ctx: RequestContext[SendRawPacketRequest, SendRawPacketResponse]) -> SendRawPacketResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`SendRawPacketRequest`](/docs/sdk/api/py/generated-protocol-pb2#sendrawpacketrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[SendRawPacketRequest, SendRawPacketResponse]` ([`SendRawPacketRequest`](/docs/sdk/api/py/generated-protocol-pb2#sendrawpacketrequest), [`SendRawPacketResponse`](/docs/sdk/api/py/generated-protocol-pb2#sendrawpacketresponse)) | Required | positional or keyword |
+
+**Returns:** [`SendRawPacketResponse`](/docs/sdk/api/py/generated-protocol-pb2#sendrawpacketresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L232)
+
+## BotProtocolServiceWSGIApplication
+
+**Class** in `protocol_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L236).
+
+**Import from:** `soulfire.protocol_connect`.
+
+**Bases:** `ConnectWSGIApplication`.
+
+```python
+class BotProtocolServiceWSGIApplication(ConnectWSGIApplication)
+```
+
+### `__init__`
+
+```python
+def __init__(self, service: BotProtocolServiceSync, interceptors: Iterable[InterceptorSync]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | [`BotProtocolServiceSync`](/docs/sdk/api/py/generated-protocol-connect#botprotocolservicesync) | Required | positional or keyword |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | positional or keyword |
+| `read_max_bytes` | `int \| None` | `None` | positional or keyword |
+| `compressions` | `Iterable[Compression] \| None` | `None` | positional or keyword |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L237)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/protocol_connect.py#L295)

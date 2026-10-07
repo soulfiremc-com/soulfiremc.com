@@ -1,0 +1,72 @@
+---
+title: "FarmTaskResult"
+description: "TypeScript API signatures, fields, and source for FarmTaskResult."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/task_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L1403).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/task_pb`.
+
+```ts
+type FarmTaskResult = Message<"soulfire.v1.FarmTaskResult"> & {
+  /**
+   * @generated from field: soulfire.v1.FarmCompletionReason reason = 1;
+   */
+  reason: FarmCompletionReason;
+
+  /**
+   * @generated from field: uint32 crops_harvested = 2;
+   */
+  cropsHarvested: number;
+
+  /**
+   * @generated from field: uint32 crops_replanted = 3;
+   */
+  cropsReplanted: number;
+
+  /**
+   * @generated from field: uint32 failed_harvests = 4;
+   */
+  failedHarvests: number;
+
+  /**
+   * @generated from field: soulfire.v1.WorldPosition final_position = 5;
+   */
+  finalPosition?: WorldPosition | undefined;
+};
+```
+
+**Referenced types:** [`FarmCompletionReason`](/docs/sdk/api/ts/generated-soulfire-task-pb#farmcompletionreason), [`WorldPosition`](/docs/sdk/api/ts/world-position).
+
+## `reason`
+
+**Type:** [`FarmCompletionReason`](/docs/sdk/api/ts/generated-soulfire-task-pb#farmcompletionreason).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L1407)
+
+## `cropsHarvested`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L1412)
+
+## `cropsReplanted`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L1417)
+
+## `failedHarvests`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L1422)
+
+## `finalPosition`
+
+**Type:** `WorldPosition | undefined` ([`WorldPosition`](/docs/sdk/api/ts/world-position)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L1427)

@@ -1,0 +1,83 @@
+---
+title: "CreateBotOptions"
+description: "TypeScript API signatures, fields, and source for CreateBotOptions."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Interface** in `client`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L194).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`.
+
+**Bases:** `Omit<GetOrCreateBotOptions, "start">` ([`GetOrCreateBotOptions`](/docs/sdk/api/ts/get-or-create-bot-options)).
+
+```ts
+interface CreateBotOptions extends Omit<GetOrCreateBotOptions, "start">
+```
+
+**Referenced types:** [`GetOrCreateBotOptions`](/docs/sdk/api/ts/get-or-create-bot-options).
+
+## `server`
+
+**Modifiers:** `readonly`.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L195)
+
+## `username`
+
+**Modifiers:** `readonly`.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L196)
+
+## `instanceName`
+
+**Modifiers:** `readonly`.
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L197)
+
+## `name`
+
+**Modifiers:** `readonly`.
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L198)
+
+## `call`
+
+**Modifiers:** `readonly`.
+
+**Type:** `CallOptions | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L191)
+
+## `auth`
+
+**Modifiers:** `readonly`.
+
+**Type:** `"offline" | "microsoft" | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L184)
+
+## `readyTimeoutMs`
+
+**Modifiers:** `readonly`.
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L187)
+
+## `onDeviceCode`
+
+**Modifiers:** `readonly`.
+
+**Type:** `((code: DeviceCode) => Effect<void, SoulFireOperationError, never>) | undefined` ([`DeviceCode`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#devicecode), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L188)

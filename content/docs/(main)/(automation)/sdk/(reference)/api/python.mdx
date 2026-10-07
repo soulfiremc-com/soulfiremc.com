@@ -1,51 +1,65 @@
 ---
-title: Python API
-description: Public client classes, methods, and properties from the pinned SDK source.
+title: "Python API"
+description: "Public Python exports, functions, types, and protocol declarations."
 icon: Code
 ---
 
 Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
 
-Choose a class to inspect its public members. Start with [the first Python program](/docs/sdk/python) for runtime setup.
+Start with [the first Python program](/docs/sdk/python) for runtime setup. Choose a module to inspect its declarations. Parameter and return types link to their definitions.
 
-| Class | Members |
+## Import paths
+
+| Import path | Declarations |
 | --- | --- |
-| [AttackNearest](/docs/sdk/api/py/attack-nearest) | 1 |
-| [AutoArmor](/docs/sdk/api/py/auto-armor) | 1 |
-| [AutoEat](/docs/sdk/api/py/auto-eat) | 1 |
-| [AutoRespawn](/docs/sdk/api/py/auto-respawn) | 1 |
-| [AutoTotem](/docs/sdk/api/py/auto-totem) | 1 |
-| [BotBehavior](/docs/sdk/api/py/bot-behavior) | 1 |
-| [BotSession](/docs/sdk/api/py/bot-session) | 7 |
-| [Build](/docs/sdk/api/py/build) | 1 |
-| [CapabilitySet](/docs/sdk/api/py/capability-set) | 4 |
-| [CollectBlocks](/docs/sdk/api/py/collect-blocks) | 1 |
-| [ExamplePluginClient](/docs/sdk/api/py/example-plugin-client) | 2 |
-| [FleetOperationReport](/docs/sdk/api/py/fleet-operation-report) | 2 |
-| [FleetTaskReport](/docs/sdk/api/py/fleet-task-report) | 2 |
-| [FollowEntity](/docs/sdk/api/py/follow-entity) | 1 |
-| [FunctionBehavior](/docs/sdk/api/py/function-behavior) | 1 |
-| [Goals](/docs/sdk/api/py/goals) | 10 |
-| [PluginCatalog](/docs/sdk/api/py/plugin-catalog) | 8 |
-| [ReflectivePlugin](/docs/sdk/api/py/reflective-plugin) | 4 |
-| [SoulFire](/docs/sdk/api/py/soul-fire) | 25 |
-| [SoulFireAdmin](/docs/sdk/api/py/soul-fire-admin) | 41 |
-| [SoulFireBot](/docs/sdk/api/py/soul-fire-bot) | 62 |
-| [SoulFireBotControlLease](/docs/sdk/api/py/soul-fire-bot-control-lease) | 3 |
-| [SoulFireCamera](/docs/sdk/api/py/soul-fire-camera) | 4 |
-| [SoulFireChat](/docs/sdk/api/py/soul-fire-chat) | 6 |
-| [SoulFireContainer](/docs/sdk/api/py/soul-fire-container) | 6 |
-| [SoulFireFleet](/docs/sdk/api/py/soul-fire-fleet) | 6 |
-| [SoulFireFleetTaskGroup](/docs/sdk/api/py/soul-fire-fleet-task-group) | 5 |
-| [SoulFireInstance](/docs/sdk/api/py/soul-fire-instance) | 20 |
-| [SoulFireInventory](/docs/sdk/api/py/soul-fire-inventory) | 16 |
-| [SoulFirePathfinder](/docs/sdk/api/py/soul-fire-pathfinder) | 5 |
-| [SoulFirePluginModule](/docs/sdk/api/py/soul-fire-plugin-module) | 2 |
-| [SoulFireProtocol](/docs/sdk/api/py/soul-fire-protocol) | 4 |
-| [SoulFireRecipes](/docs/sdk/api/py/soul-fire-recipes) | 7 |
-| [SoulFireRegistry](/docs/sdk/api/py/soul-fire-registry) | 4 |
-| [SoulFireService](/docs/sdk/api/py/soul-fire-service) | 8 |
-| [SoulFireTask](/docs/sdk/api/py/soul-fire-task) | 8 |
-| [SoulFireTasks](/docs/sdk/api/py/soul-fire-tasks) | 60 |
-| [SoulFireWorld](/docs/sdk/api/py/soul-fire-world) | 12 |
-| [Stream](/docs/sdk/api/py/stream) | 12 |
+| `soulfire` | 167 |
+| `soulfire.actions` | 2 |
+| `soulfire.admin` | 2 |
+| `soulfire.behaviors` | 26 |
+| `soulfire.bot` | 3 |
+| `soulfire.camera` | 5 |
+| `soulfire.client` | 7 |
+| `soulfire.concurrency` | 2 |
+| `soulfire.connection` | 6 |
+| `soulfire.errors` | 19 |
+| `soulfire.example_plugin` | 2 |
+| `soulfire.fleet` | 20 |
+| `soulfire.pathfinding` | 9 |
+| `soulfire.plugins` | 7 |
+| `soulfire.protocol` | 1 |
+| `soulfire.resources` | 1 |
+| `soulfire.selectors` | 3 |
+| `soulfire.semantic` | 12 |
+| `soulfire.session` | 12 |
+| `soulfire.streams` | 5 |
+| `soulfire.tasks` | 11 |
+| `soulfire.transport` | 3 |
+
+## Modules
+
+| Module | Pages |
+| --- | --- |
+| [`actions`](/docs/sdk/api/py/module-actions) | 2 |
+| [`admin`](/docs/sdk/api/py/module-admin) | 2 |
+| [`behaviors`](/docs/sdk/api/py/module-behaviors) | 26 |
+| [`bot`](/docs/sdk/api/py/module-bot) | 3 |
+| [`camera`](/docs/sdk/api/py/module-camera) | 5 |
+| [`client`](/docs/sdk/api/py/module-client) | 7 |
+| [`concurrency`](/docs/sdk/api/py/module-concurrency) | 2 |
+| [`connection`](/docs/sdk/api/py/module-connection) | 6 |
+| [`errors`](/docs/sdk/api/py/module-errors) | 19 |
+| [`example_plugin`](/docs/sdk/api/py/module-example-plugin) | 2 |
+| [`fleet`](/docs/sdk/api/py/module-fleet) | 20 |
+| [`_install`](/docs/sdk/api/py/module-install) | 1 |
+| [`pathfinding`](/docs/sdk/api/py/module-pathfinding) | 9 |
+| [`plugins`](/docs/sdk/api/py/module-plugins) | 7 |
+| [`protocol`](/docs/sdk/api/py/module-protocol) | 1 |
+| [`Protocol types`](/docs/sdk/api/py/module-protocol-types) | 47 |
+| [`resources`](/docs/sdk/api/py/module-resources) | 1 |
+| [`selectors`](/docs/sdk/api/py/module-selectors) | 3 |
+| [`semantic`](/docs/sdk/api/py/module-semantic) | 12 |
+| [`session`](/docs/sdk/api/py/module-session) | 12 |
+| [`streams`](/docs/sdk/api/py/module-streams) | 5 |
+| [`tasks`](/docs/sdk/api/py/module-tasks) | 11 |
+| [`transport`](/docs/sdk/api/py/module-transport) | 3 |
+| [`Generated protocol modules`](/docs/sdk/api/py/module-generated) | 59 |

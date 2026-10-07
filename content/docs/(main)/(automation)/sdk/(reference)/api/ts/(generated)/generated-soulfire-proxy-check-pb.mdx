@@ -1,0 +1,325 @@
+---
+title: "generated/soulfire/proxy-check_pb module"
+description: "TypeScript API signatures, fields, and source for generated/soulfire/proxy-check_pb module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`file_soulfire_proxy_check`](/docs/sdk/api/ts/generated-soulfire-proxy-check-pb#file_soulfire_proxy_check) | object |
+| [`ProxyCheckEnd`](/docs/sdk/api/ts/generated-soulfire-proxy-check-pb#proxycheckend) | type |
+| [`ProxyCheckEndSchema`](/docs/sdk/api/ts/generated-soulfire-proxy-check-pb#proxycheckendschema) | object |
+| [`ProxyCheckRequest`](/docs/sdk/api/ts/generated-soulfire-proxy-check-pb#proxycheckrequest) | type |
+| [`ProxyCheckRequestSchema`](/docs/sdk/api/ts/generated-soulfire-proxy-check-pb#proxycheckrequestschema) | object |
+| [`ProxyCheckResponse`](/docs/sdk/api/ts/generated-soulfire-proxy-check-pb#proxycheckresponse) | type |
+| [`ProxyCheckResponseSchema`](/docs/sdk/api/ts/generated-soulfire-proxy-check-pb#proxycheckresponseschema) | object |
+| [`ProxyCheckResponseSingle`](/docs/sdk/api/ts/generated-soulfire-proxy-check-pb#proxycheckresponsesingle) | type |
+| [`ProxyCheckResponseSingleSchema`](/docs/sdk/api/ts/generated-soulfire-proxy-check-pb#proxycheckresponsesingleschema) | object |
+| [`ProxyCheckService`](/docs/sdk/api/ts/generated-soulfire-proxy-check-pb#proxycheckservice) | object |
+
+## file_soulfire_proxy_check
+
+**Object** in `generated/soulfire/proxy-check_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/proxy-check_pb.ts#L16).
+
+Describes the file soulfire/proxy-check.proto.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/proxy-check_pb`.
+
+```ts
+file_soulfire_proxy_check: DescFile
+```
+
+## ProxyCheckEnd
+
+**Type** in `generated/soulfire/proxy-check_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/proxy-check_pb.ts#L114).
+
+Sentinel message indicating that all proxy checks have completed.
+This is the final message sent in the response stream, signaling
+that no more ProxyCheckResponseSingle messages will follow.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/proxy-check_pb`.
+
+```ts
+type ProxyCheckEnd = Message<"soulfire.v1.ProxyCheckEnd"> & {
+};
+```
+
+## ProxyCheckEndSchema
+
+**Object** in `generated/soulfire/proxy-check_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/proxy-check_pb.ts#L121).
+
+Describes the message soulfire.v1.ProxyCheckEnd.
+Use `create(ProxyCheckEndSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/proxy-check_pb`.
+
+```ts
+ProxyCheckEndSchema: GenMessage<Message<"soulfire.v1.ProxyCheckEnd">>
+```
+
+## ProxyCheckRequest
+
+**Type** in `generated/soulfire/proxy-check_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/proxy-check_pb.ts#L26).
+
+Request message for checking the validity of one or more proxies.
+The check is performed by attempting to connect to a Minecraft server
+through each proxy and measuring the connection latency.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/proxy-check_pb`.
+
+```ts
+type ProxyCheckRequest = Message<"soulfire.v1.ProxyCheckRequest"> & {
+  /**
+   * The UUID of the instance to use for proxy checking.
+   * The instance provides configuration such as the target Minecraft server address
+   * (configured via ProxySettings.PROXY_CHECK_ADDRESS, defaults to "mc.hypixel.net"),
+   * the protocol version, and concurrency settings.
+   * The user must have CHECK_PROXY permission on this instance.
+   *
+   * @generated from field: string instance_id = 1;
+   */
+  instanceId: string;
+
+  /**
+   * List of proxies to check. Each proxy will be tested by attempting to
+   * establish a connection to the configured Minecraft server through it.
+   * Proxies are checked concurrently based on the instance's PROXY_CHECK_CONCURRENCY
+   * setting (defaults to 10 concurrent checks).
+   *
+   * @generated from field: repeated soulfire.v1.ProxyProto proxy = 2;
+   */
+  proxy: ProxyProto[];
+};
+```
+
+**Referenced types:** [`ProxyProto`](/docs/sdk/api/ts/proxy-proto).
+
+### `instanceId`
+
+The UUID of the instance to use for proxy checking.
+The instance provides configuration such as the target Minecraft server address
+(configured via ProxySettings.PROXY_CHECK_ADDRESS, defaults to "mc.hypixel.net"),
+the protocol version, and concurrency settings.
+The user must have CHECK_PROXY permission on this instance.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/proxy-check_pb.ts#L36)
+
+### `proxy`
+
+List of proxies to check. Each proxy will be tested by attempting to
+establish a connection to the configured Minecraft server through it.
+Proxies are checked concurrently based on the instance's PROXY_CHECK_CONCURRENCY
+setting (defaults to 10 concurrent checks).
+
+**Type:** `ProxyProto[]` ([`ProxyProto`](/docs/sdk/api/ts/proxy-proto)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/proxy-check_pb.ts#L46)
+
+## ProxyCheckRequestSchema
+
+**Object** in `generated/soulfire/proxy-check_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/proxy-check_pb.ts#L53).
+
+Describes the message soulfire.v1.ProxyCheckRequest.
+Use `create(ProxyCheckRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/proxy-check_pb`.
+
+```ts
+ProxyCheckRequestSchema: GenMessage<ProxyCheckRequest>
+```
+
+**Referenced types:** [`ProxyCheckRequest`](/docs/sdk/api/ts/generated-soulfire-proxy-check-pb#proxycheckrequest).
+
+## ProxyCheckResponse
+
+**Type** in `generated/soulfire/proxy-check_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/proxy-check_pb.ts#L130).
+
+Response message for proxy checking, sent as a stream.
+Each message contains either a single proxy check result or an end marker.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/proxy-check_pb`.
+
+```ts
+type ProxyCheckResponse = Message<"soulfire.v1.ProxyCheckResponse"> & {
+  /**
+   * @generated from oneof soulfire.v1.ProxyCheckResponse.data
+   */
+  data: {
+    /**
+     * A single proxy check result. Multiple of these will be streamed
+     * as each proxy check completes, allowing the client to process
+     * results incrementally rather than waiting for all checks to finish.
+     *
+     * @generated from field: soulfire.v1.ProxyCheckResponseSingle single = 4;
+     */
+    value: ProxyCheckResponseSingle;
+    case: "single";
+  } | {
+    /**
+     * End-of-stream marker indicating all proxy checks are complete.
+     * This is always the last message in the stream before it closes.
+     *
+     * @generated from field: soulfire.v1.ProxyCheckEnd end = 5;
+     */
+    value: ProxyCheckEnd;
+    case: "end";
+  } | { case: undefined; value?: undefined };
+};
+```
+
+**Referenced types:** [`ProxyCheckResponseSingle`](/docs/sdk/api/ts/generated-soulfire-proxy-check-pb#proxycheckresponsesingle), [`ProxyCheckEnd`](/docs/sdk/api/ts/generated-soulfire-proxy-check-pb#proxycheckend).
+
+### `data`
+
+**Type:** `{ value: ProxyCheckResponseSingle; case: "single"; } | { value: Message<"soulfire.v1.ProxyCheckEnd">; case: "end"; } | { case: undefined; value?: undefined; }` ([`ProxyCheckResponseSingle`](/docs/sdk/api/ts/generated-soulfire-proxy-check-pb#proxycheckresponsesingle)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/proxy-check_pb.ts#L134)
+
+## ProxyCheckResponseSchema
+
+**Object** in `generated/soulfire/proxy-check_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/proxy-check_pb.ts#L160).
+
+Describes the message soulfire.v1.ProxyCheckResponse.
+Use `create(ProxyCheckResponseSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/proxy-check_pb`.
+
+```ts
+ProxyCheckResponseSchema: GenMessage<ProxyCheckResponse>
+```
+
+**Referenced types:** [`ProxyCheckResponse`](/docs/sdk/api/ts/generated-soulfire-proxy-check-pb#proxycheckresponse).
+
+## ProxyCheckResponseSingle
+
+**Type** in `generated/soulfire/proxy-check_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/proxy-check_pb.ts#L61).
+
+Result of checking a single proxy's validity and performance.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/proxy-check_pb`.
+
+```ts
+type ProxyCheckResponseSingle = Message<"soulfire.v1.ProxyCheckResponseSingle"> & {
+  /**
+   * The proxy that was checked. This is echoed back from the request
+   * to allow correlation when checking multiple proxies.
+   *
+   * @generated from field: soulfire.v1.ProxyProto proxy = 1;
+   */
+  proxy?: ProxyProto | undefined;
+
+  /**
+   * Whether the proxy check was successful. A proxy is considered valid if
+   * a connection through it to the Minecraft server was established successfully
+   * and a status response packet was received within the 30-second timeout.
+   * If false, the proxy failed to connect, timed out, or encountered an error.
+   *
+   * @generated from field: bool valid = 2;
+   */
+  valid: boolean;
+
+  /**
+   * The time in milliseconds taken to complete the proxy check.
+   * This measures the total time from starting the connection attempt
+   * until receiving the server status response (or until failure/timeout).
+   * Useful for comparing proxy performance and choosing the fastest proxies.
+   *
+   * @generated from field: int32 latency = 3;
+   */
+  latency: number;
+
+  /**
+   * The real IP address as seen by the target server (if available).
+   * This field may be empty if the IP could not be determined.
+   * Note: Currently not populated by the implementation.
+   *
+   * @generated from field: string real_ip = 4;
+   */
+  realIp: string;
+};
+```
+
+**Referenced types:** [`ProxyProto`](/docs/sdk/api/ts/proxy-proto), [`timeout`](/docs/sdk/api/ts/timeout), [`until`](/docs/sdk/api/ts/until).
+
+### `proxy`
+
+The proxy that was checked. This is echoed back from the request
+to allow correlation when checking multiple proxies.
+
+**Type:** `ProxyProto | undefined` ([`ProxyProto`](/docs/sdk/api/ts/proxy-proto)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/proxy-check_pb.ts#L68)
+
+### `valid`
+
+Whether the proxy check was successful. A proxy is considered valid if
+a connection through it to the Minecraft server was established successfully
+and a status response packet was received within the 30-second timeout.
+If false, the proxy failed to connect, timed out, or encountered an error.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/proxy-check_pb.ts#L78)
+
+### `latency`
+
+The time in milliseconds taken to complete the proxy check.
+This measures the total time from starting the connection attempt
+until receiving the server status response (or until failure/timeout).
+Useful for comparing proxy performance and choosing the fastest proxies.
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/proxy-check_pb.ts#L88)
+
+### `realIp`
+
+The real IP address as seen by the target server (if available).
+This field may be empty if the IP could not be determined.
+Note: Currently not populated by the implementation.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/proxy-check_pb.ts#L97)
+
+## ProxyCheckResponseSingleSchema
+
+**Object** in `generated/soulfire/proxy-check_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/proxy-check_pb.ts#L104).
+
+Describes the message soulfire.v1.ProxyCheckResponseSingle.
+Use `create(ProxyCheckResponseSingleSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/proxy-check_pb`.
+
+```ts
+ProxyCheckResponseSingleSchema: GenMessage<ProxyCheckResponseSingle>
+```
+
+**Referenced types:** [`ProxyCheckResponseSingle`](/docs/sdk/api/ts/generated-soulfire-proxy-check-pb#proxycheckresponsesingle).
+
+## ProxyCheckService
+
+**Object** in `generated/soulfire/proxy-check_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/proxy-check_pb.ts#L175).
+
+Service for validating proxy servers by testing their ability to connect
+to Minecraft servers. This is useful for filtering out dead or slow proxies
+before using them for bot connections.
+
+The service tests proxies by attempting to establish a Minecraft protocol
+connection through each proxy to a configurable target server and waiting
+for a status response packet. Results include whether the proxy works and
+its latency.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/proxy-check_pb`.
+
+```ts
+ProxyCheckService: GenService<{ check: { methodKind: "server_streaming"; input: GenMessage<ProxyCheckRequest>; output: GenMessage<ProxyCheckResponse>; }; }>
+```
+
+**Referenced types:** [`ProxyCheckRequest`](/docs/sdk/api/ts/generated-soulfire-proxy-check-pb#proxycheckrequest), [`ProxyCheckResponse`](/docs/sdk/api/ts/generated-soulfire-proxy-check-pb#proxycheckresponse).

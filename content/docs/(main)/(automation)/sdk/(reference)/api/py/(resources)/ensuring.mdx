@@ -1,0 +1,26 @@
+---
+title: "ensuring"
+description: "Python API signatures, fields, and source for ensuring."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Function** in `resources`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/resources.py#L8).
+
+Run a scope finalizer after success, failure, defect, or interruption.
+
+**Import from:** `soulfire.resources`.
+
+```python
+def ensuring[A, E = Never, R = Never](effect: Effect[A, E, R], finalizer: Effect[object]) -> Effect[A, E, R]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `effect` | `Effect[A, E, R]` | Required | positional or keyword |
+| `finalizer` | `Effect[object]` | Required | positional or keyword |
+
+**Returns:** `Effect[A, E, R]`.

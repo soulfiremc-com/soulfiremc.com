@@ -1,0 +1,84 @@
+---
+title: "BotChunkEvent"
+description: "Python API signatures, fields, and source for BotChunkEvent."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `bot_live_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L651).
+
+**Import from:** `soulfire`, `soulfire.bot_live_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class BotChunkEvent(_message.Message)
+```
+
+## `KIND_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L653)
+
+## `CHUNK_X_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L654)
+
+## `CHUNK_Z_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L655)
+
+## `DIMENSION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L656)
+
+## `kind`
+
+**Type:** [`ChunkEventKind`](/docs/sdk/api/py/chunk-event-kind).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L657)
+
+## `chunk_x`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L658)
+
+## `chunk_z`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L659)
+
+## `dimension`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L660)
+
+## `__init__`
+
+```python
+def __init__(self, kind: _Optional[_Union[ChunkEventKind, str]]=..., chunk_x: _Optional[int]=..., chunk_z: _Optional[int]=..., dimension: _Optional[str]=...) -> None
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `kind` | `_Optional[_Union[ChunkEventKind, str]]` ([`ChunkEventKind`](/docs/sdk/api/py/chunk-event-kind)) | `...` | positional or keyword |
+| `chunk_x` | `_Optional[int]` | `...` | positional or keyword |
+| `chunk_z` | `_Optional[int]` | `...` | positional or keyword |
+| `dimension` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L661)

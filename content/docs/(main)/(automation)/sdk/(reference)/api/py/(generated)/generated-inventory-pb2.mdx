@@ -1,0 +1,2207 @@
+---
+title: "inventory_pb2 module"
+description: "Python API signatures, fields, and source for inventory_pb2 module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`CloseSemanticContainerRequest`](/docs/sdk/api/py/generated-inventory-pb2#closesemanticcontainerrequest) | class |
+| [`ContainerSnapshot`](/docs/sdk/api/py/generated-inventory-pb2#containersnapshot) | class |
+| [`CountItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#countitemsrequest) | class |
+| [`CountItemsResponse`](/docs/sdk/api/py/generated-inventory-pb2#countitemsresponse) | class |
+| [`DESCRIPTOR`](/docs/sdk/api/py/generated-inventory-pb2#descriptor) | constant |
+| [`EquipItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#equipitemrequest) | class |
+| [`FindInventorySlotsRequest`](/docs/sdk/api/py/generated-inventory-pb2#findinventoryslotsrequest) | class |
+| [`FindInventorySlotsResponse`](/docs/sdk/api/py/generated-inventory-pb2#findinventoryslotsresponse) | class |
+| [`GetContainerSnapshotRequest`](/docs/sdk/api/py/generated-inventory-pb2#getcontainersnapshotrequest) | class |
+| [`GetContainerSnapshotResponse`](/docs/sdk/api/py/generated-inventory-pb2#getcontainersnapshotresponse) | class |
+| [`INVENTORY_AREA_ARMOR`](/docs/sdk/api/py/generated-inventory-pb2#inventory_area_armor) | constant |
+| [`INVENTORY_AREA_CONTAINER`](/docs/sdk/api/py/generated-inventory-pb2#inventory_area_container) | constant |
+| [`INVENTORY_AREA_CRAFTING`](/docs/sdk/api/py/generated-inventory-pb2#inventory_area_crafting) | constant |
+| [`INVENTORY_AREA_CURSOR`](/docs/sdk/api/py/generated-inventory-pb2#inventory_area_cursor) | constant |
+| [`INVENTORY_AREA_HOTBAR`](/docs/sdk/api/py/generated-inventory-pb2#inventory_area_hotbar) | constant |
+| [`INVENTORY_AREA_MAIN`](/docs/sdk/api/py/generated-inventory-pb2#inventory_area_main) | constant |
+| [`INVENTORY_AREA_OFFHAND`](/docs/sdk/api/py/generated-inventory-pb2#inventory_area_offhand) | constant |
+| [`INVENTORY_AREA_PLAYER`](/docs/sdk/api/py/generated-inventory-pb2#inventory_area_player) | constant |
+| [`INVENTORY_AREA_UNSPECIFIED`](/docs/sdk/api/py/generated-inventory-pb2#inventory_area_unspecified) | constant |
+| [`INVENTORY_RECOMMENDATION_KIND_ARMOR`](/docs/sdk/api/py/generated-inventory-pb2#inventory_recommendation_kind_armor) | constant |
+| [`INVENTORY_RECOMMENDATION_KIND_FOOD`](/docs/sdk/api/py/generated-inventory-pb2#inventory_recommendation_kind_food) | constant |
+| [`INVENTORY_RECOMMENDATION_KIND_MELEE_WEAPON`](/docs/sdk/api/py/generated-inventory-pb2#inventory_recommendation_kind_melee_weapon) | constant |
+| [`INVENTORY_RECOMMENDATION_KIND_SCAFFOLD`](/docs/sdk/api/py/generated-inventory-pb2#inventory_recommendation_kind_scaffold) | constant |
+| [`INVENTORY_RECOMMENDATION_KIND_TOOL`](/docs/sdk/api/py/generated-inventory-pb2#inventory_recommendation_kind_tool) | constant |
+| [`INVENTORY_RECOMMENDATION_KIND_UNSPECIFIED`](/docs/sdk/api/py/generated-inventory-pb2#inventory_recommendation_kind_unspecified) | constant |
+| [`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea) | enum |
+| [`InventoryItemRecommendation`](/docs/sdk/api/py/generated-inventory-pb2#inventoryitemrecommendation) | class |
+| [`InventoryItemScoreFactor`](/docs/sdk/api/py/generated-inventory-pb2#inventoryitemscorefactor) | class |
+| [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse) | class |
+| [`InventoryRecommendationKind`](/docs/sdk/api/py/generated-inventory-pb2#inventoryrecommendationkind) | enum |
+| [`InventoryScope`](/docs/sdk/api/py/generated-inventory-pb2#inventoryscope) | class |
+| [`InventorySlotSnapshot`](/docs/sdk/api/py/generated-inventory-pb2#inventoryslotsnapshot) | class |
+| [`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector) | class |
+| [`MoveInventoryItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#moveinventoryitemrequest) | class |
+| [`OpenBlockContainerRequest`](/docs/sdk/api/py/generated-inventory-pb2#openblockcontainerrequest) | class |
+| [`RankInventoryItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#rankinventoryitemsrequest) | class |
+| [`RankInventoryItemsResponse`](/docs/sdk/api/py/generated-inventory-pb2#rankinventoryitemsresponse) | class |
+| [`SelectHotbarItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#selecthotbaritemrequest) | class |
+| [`TossItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#tossitemsrequest) | class |
+| [`TransferItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#transferitemsrequest) | class |
+| [`UnequipItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#unequipitemrequest) | class |
+
+## CloseSemanticContainerRequest
+
+**Class** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L324).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class CloseSemanticContainerRequest(_message.Message)
+```
+
+### `SCOPE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L326)
+
+### `CONTAINER_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L327)
+
+### `IDEMPOTENCY_KEY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L328)
+
+### `scope`
+
+**Type:** [`InventoryScope`](/docs/sdk/api/py/generated-inventory-pb2#inventoryscope).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L329)
+
+### `container_id`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L330)
+
+### `idempotency_key`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L331)
+
+### `__init__`
+
+```python
+def __init__(self, scope: _Optional[_Union[InventoryScope, _Mapping]]=..., container_id: _Optional[int]=..., idempotency_key: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `scope` | `_Optional[_Union[InventoryScope, _Mapping]]` ([`InventoryScope`](/docs/sdk/api/py/generated-inventory-pb2#inventoryscope)) | `...` | positional or keyword |
+| `container_id` | `_Optional[int]` | `...` | positional or keyword |
+| `idempotency_key` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L332)
+
+## ContainerSnapshot
+
+**Class** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L85).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class ContainerSnapshot(_message.Message)
+```
+
+### `CONTAINER_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L87)
+
+### `STATE_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L88)
+
+### `REVISION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L89)
+
+### `CONTAINER_TYPE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L90)
+
+### `TITLE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L91)
+
+### `LAYOUT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L92)
+
+### `SLOTS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L93)
+
+### `CARRIED_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L94)
+
+### `SELECTED_HOTBAR_SLOT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L95)
+
+### `PATH_BUILDING_BLOCK_COUNT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L96)
+
+### `container_id`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L97)
+
+### `state_id`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L98)
+
+### `revision`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L99)
+
+### `container_type`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L100)
+
+### `title`
+
+**Type:** [`_domain_pb2.TextComponent`](/docs/sdk/api/py/text-component).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L101)
+
+### `layout`
+
+**Type:** [`_bot_pb2.ContainerLayout`](/docs/sdk/api/py/generated-bot-pb2#containerlayout).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L102)
+
+### `slots`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[InventorySlotSnapshot]` ([`InventorySlotSnapshot`](/docs/sdk/api/py/generated-inventory-pb2#inventoryslotsnapshot)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L103)
+
+### `carried`
+
+**Type:** [`_domain_pb2.ItemStackSnapshot`](/docs/sdk/api/py/item-stack-snapshot).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L104)
+
+### `selected_hotbar_slot`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L105)
+
+### `path_building_block_count`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L106)
+
+### `__init__`
+
+```python
+def __init__(self, container_id: _Optional[int]=..., state_id: _Optional[int]=..., revision: _Optional[int]=..., container_type: _Optional[str]=..., title: _Optional[_Union[_domain_pb2.TextComponent, _Mapping]]=..., layout: _Optional[_Union[_bot_pb2.ContainerLayout, _Mapping]]=..., slots: _Optional[_Iterable[_Union[InventorySlotSnapshot, _Mapping]]]=..., carried: _Optional[_Union[_domain_pb2.ItemStackSnapshot, _Mapping]]=..., selected_hotbar_slot: _Optional[int]=..., path_building_block_count: _Optional[int]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `container_id` | `_Optional[int]` | `...` | positional or keyword |
+| `state_id` | `_Optional[int]` | `...` | positional or keyword |
+| `revision` | `_Optional[int]` | `...` | positional or keyword |
+| `container_type` | `_Optional[str]` | `...` | positional or keyword |
+| `title` | `_Optional[_Union[_domain_pb2.TextComponent, _Mapping]]` ([`_domain_pb2.TextComponent`](/docs/sdk/api/py/text-component)) | `...` | positional or keyword |
+| `layout` | `_Optional[_Union[_bot_pb2.ContainerLayout, _Mapping]]` ([`_bot_pb2.ContainerLayout`](/docs/sdk/api/py/generated-bot-pb2#containerlayout)) | `...` | positional or keyword |
+| `slots` | `_Optional[_Iterable[_Union[InventorySlotSnapshot, _Mapping]]]` ([`InventorySlotSnapshot`](/docs/sdk/api/py/generated-inventory-pb2#inventoryslotsnapshot)) | `...` | positional or keyword |
+| `carried` | `_Optional[_Union[_domain_pb2.ItemStackSnapshot, _Mapping]]` ([`_domain_pb2.ItemStackSnapshot`](/docs/sdk/api/py/item-stack-snapshot)) | `...` | positional or keyword |
+| `selected_hotbar_slot` | `_Optional[int]` | `...` | positional or keyword |
+| `path_building_block_count` | `_Optional[int]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L107)
+
+## CountItemsRequest
+
+**Class** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L129).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class CountItemsRequest(_message.Message)
+```
+
+### `SCOPE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L131)
+
+### `SELECTOR_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L132)
+
+### `AREAS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L133)
+
+### `scope`
+
+**Type:** [`InventoryScope`](/docs/sdk/api/py/generated-inventory-pb2#inventoryscope).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L134)
+
+### `selector`
+
+**Type:** [`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L135)
+
+### `areas`
+
+**Type:** `_containers.RepeatedScalarFieldContainer[InventoryArea]` ([`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L136)
+
+### `__init__`
+
+```python
+def __init__(self, scope: _Optional[_Union[InventoryScope, _Mapping]]=..., selector: _Optional[_Union[ItemSelector, _Mapping]]=..., areas: _Optional[_Iterable[_Union[InventoryArea, str]]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `scope` | `_Optional[_Union[InventoryScope, _Mapping]]` ([`InventoryScope`](/docs/sdk/api/py/generated-inventory-pb2#inventoryscope)) | `...` | positional or keyword |
+| `selector` | `_Optional[_Union[ItemSelector, _Mapping]]` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `...` | positional or keyword |
+| `areas` | `_Optional[_Iterable[_Union[InventoryArea, str]]]` ([`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L137)
+
+## CountItemsResponse
+
+**Class** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L139).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class CountItemsResponse(_message.Message)
+```
+
+### `COUNT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L141)
+
+### `count`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L142)
+
+### `__init__`
+
+```python
+def __init__(self, count: _Optional[int]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `count` | `_Optional[int]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L143)
+
+## DESCRIPTOR
+
+**Constant** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L15).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+```python
+DESCRIPTOR: _descriptor.FileDescriptor
+```
+
+## EquipItemRequest
+
+**Class** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L278).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class EquipItemRequest(_message.Message)
+```
+
+### `SCOPE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L280)
+
+### `SELECTOR_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L281)
+
+### `EQUIPMENT_SLOT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L282)
+
+### `EXPECTED_REVISION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L283)
+
+### `IDEMPOTENCY_KEY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L284)
+
+### `scope`
+
+**Type:** [`InventoryScope`](/docs/sdk/api/py/generated-inventory-pb2#inventoryscope).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L285)
+
+### `selector`
+
+**Type:** [`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L286)
+
+### `equipment_slot`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L287)
+
+### `expected_revision`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L288)
+
+### `idempotency_key`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L289)
+
+### `__init__`
+
+```python
+def __init__(self, scope: _Optional[_Union[InventoryScope, _Mapping]]=..., selector: _Optional[_Union[ItemSelector, _Mapping]]=..., equipment_slot: _Optional[str]=..., expected_revision: _Optional[int]=..., idempotency_key: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `scope` | `_Optional[_Union[InventoryScope, _Mapping]]` ([`InventoryScope`](/docs/sdk/api/py/generated-inventory-pb2#inventoryscope)) | `...` | positional or keyword |
+| `selector` | `_Optional[_Union[ItemSelector, _Mapping]]` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `...` | positional or keyword |
+| `equipment_slot` | `_Optional[str]` | `...` | positional or keyword |
+| `expected_revision` | `_Optional[int]` | `...` | positional or keyword |
+| `idempotency_key` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L290)
+
+## FindInventorySlotsRequest
+
+**Class** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L145).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class FindInventorySlotsRequest(_message.Message)
+```
+
+### `SCOPE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L147)
+
+### `SELECTOR_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L148)
+
+### `AREAS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L149)
+
+### `scope`
+
+**Type:** [`InventoryScope`](/docs/sdk/api/py/generated-inventory-pb2#inventoryscope).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L150)
+
+### `selector`
+
+**Type:** [`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L151)
+
+### `areas`
+
+**Type:** `_containers.RepeatedScalarFieldContainer[InventoryArea]` ([`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L152)
+
+### `__init__`
+
+```python
+def __init__(self, scope: _Optional[_Union[InventoryScope, _Mapping]]=..., selector: _Optional[_Union[ItemSelector, _Mapping]]=..., areas: _Optional[_Iterable[_Union[InventoryArea, str]]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `scope` | `_Optional[_Union[InventoryScope, _Mapping]]` ([`InventoryScope`](/docs/sdk/api/py/generated-inventory-pb2#inventoryscope)) | `...` | positional or keyword |
+| `selector` | `_Optional[_Union[ItemSelector, _Mapping]]` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `...` | positional or keyword |
+| `areas` | `_Optional[_Iterable[_Union[InventoryArea, str]]]` ([`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L153)
+
+## FindInventorySlotsResponse
+
+**Class** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L155).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class FindInventorySlotsResponse(_message.Message)
+```
+
+### `SLOTS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L157)
+
+### `REVISION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L158)
+
+### `slots`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[InventorySlotSnapshot]` ([`InventorySlotSnapshot`](/docs/sdk/api/py/generated-inventory-pb2#inventoryslotsnapshot)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L159)
+
+### `revision`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L160)
+
+### `__init__`
+
+```python
+def __init__(self, slots: _Optional[_Iterable[_Union[InventorySlotSnapshot, _Mapping]]]=..., revision: _Optional[int]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `slots` | `_Optional[_Iterable[_Union[InventorySlotSnapshot, _Mapping]]]` ([`InventorySlotSnapshot`](/docs/sdk/api/py/generated-inventory-pb2#inventoryslotsnapshot)) | `...` | positional or keyword |
+| `revision` | `_Optional[int]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L161)
+
+## GetContainerSnapshotRequest
+
+**Class** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L117).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class GetContainerSnapshotRequest(_message.Message)
+```
+
+### `SCOPE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L119)
+
+### `scope`
+
+**Type:** [`InventoryScope`](/docs/sdk/api/py/generated-inventory-pb2#inventoryscope).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L120)
+
+### `__init__`
+
+```python
+def __init__(self, scope: _Optional[_Union[InventoryScope, _Mapping]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `scope` | `_Optional[_Union[InventoryScope, _Mapping]]` ([`InventoryScope`](/docs/sdk/api/py/generated-inventory-pb2#inventoryscope)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L121)
+
+## GetContainerSnapshotResponse
+
+**Class** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L123).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class GetContainerSnapshotResponse(_message.Message)
+```
+
+### `CONTAINER_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L125)
+
+### `container`
+
+**Type:** [`ContainerSnapshot`](/docs/sdk/api/py/generated-inventory-pb2#containersnapshot).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L126)
+
+### `__init__`
+
+```python
+def __init__(self, container: _Optional[_Union[ContainerSnapshot, _Mapping]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `container` | `_Optional[_Union[ContainerSnapshot, _Mapping]]` ([`ContainerSnapshot`](/docs/sdk/api/py/generated-inventory-pb2#containersnapshot)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L127)
+
+## INVENTORY_AREA_ARMOR
+
+**Constant** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L41).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+```python
+INVENTORY_AREA_ARMOR: InventoryArea
+```
+
+**Referenced types:** [`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea).
+
+## INVENTORY_AREA_CONTAINER
+
+**Constant** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L38).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+```python
+INVENTORY_AREA_CONTAINER: InventoryArea
+```
+
+**Referenced types:** [`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea).
+
+## INVENTORY_AREA_CRAFTING
+
+**Constant** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L43).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+```python
+INVENTORY_AREA_CRAFTING: InventoryArea
+```
+
+**Referenced types:** [`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea).
+
+## INVENTORY_AREA_CURSOR
+
+**Constant** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L44).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+```python
+INVENTORY_AREA_CURSOR: InventoryArea
+```
+
+**Referenced types:** [`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea).
+
+## INVENTORY_AREA_HOTBAR
+
+**Constant** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L40).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+```python
+INVENTORY_AREA_HOTBAR: InventoryArea
+```
+
+**Referenced types:** [`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea).
+
+## INVENTORY_AREA_MAIN
+
+**Constant** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L39).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+```python
+INVENTORY_AREA_MAIN: InventoryArea
+```
+
+**Referenced types:** [`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea).
+
+## INVENTORY_AREA_OFFHAND
+
+**Constant** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L42).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+```python
+INVENTORY_AREA_OFFHAND: InventoryArea
+```
+
+**Referenced types:** [`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea).
+
+## INVENTORY_AREA_PLAYER
+
+**Constant** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L45).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+```python
+INVENTORY_AREA_PLAYER: InventoryArea
+```
+
+**Referenced types:** [`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea).
+
+## INVENTORY_AREA_UNSPECIFIED
+
+**Constant** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L37).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+```python
+INVENTORY_AREA_UNSPECIFIED: InventoryArea
+```
+
+**Referenced types:** [`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea).
+
+## INVENTORY_RECOMMENDATION_KIND_ARMOR
+
+**Constant** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L49).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+```python
+INVENTORY_RECOMMENDATION_KIND_ARMOR: InventoryRecommendationKind
+```
+
+**Referenced types:** [`InventoryRecommendationKind`](/docs/sdk/api/py/generated-inventory-pb2#inventoryrecommendationkind).
+
+## INVENTORY_RECOMMENDATION_KIND_FOOD
+
+**Constant** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L50).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+```python
+INVENTORY_RECOMMENDATION_KIND_FOOD: InventoryRecommendationKind
+```
+
+**Referenced types:** [`InventoryRecommendationKind`](/docs/sdk/api/py/generated-inventory-pb2#inventoryrecommendationkind).
+
+## INVENTORY_RECOMMENDATION_KIND_MELEE_WEAPON
+
+**Constant** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L48).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+```python
+INVENTORY_RECOMMENDATION_KIND_MELEE_WEAPON: InventoryRecommendationKind
+```
+
+**Referenced types:** [`InventoryRecommendationKind`](/docs/sdk/api/py/generated-inventory-pb2#inventoryrecommendationkind).
+
+## INVENTORY_RECOMMENDATION_KIND_SCAFFOLD
+
+**Constant** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L51).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+```python
+INVENTORY_RECOMMENDATION_KIND_SCAFFOLD: InventoryRecommendationKind
+```
+
+**Referenced types:** [`InventoryRecommendationKind`](/docs/sdk/api/py/generated-inventory-pb2#inventoryrecommendationkind).
+
+## INVENTORY_RECOMMENDATION_KIND_TOOL
+
+**Constant** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L47).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+```python
+INVENTORY_RECOMMENDATION_KIND_TOOL: InventoryRecommendationKind
+```
+
+**Referenced types:** [`InventoryRecommendationKind`](/docs/sdk/api/py/generated-inventory-pb2#inventoryrecommendationkind).
+
+## INVENTORY_RECOMMENDATION_KIND_UNSPECIFIED
+
+**Constant** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L46).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+```python
+INVENTORY_RECOMMENDATION_KIND_UNSPECIFIED: InventoryRecommendationKind
+```
+
+**Referenced types:** [`InventoryRecommendationKind`](/docs/sdk/api/py/generated-inventory-pb2#inventoryrecommendationkind).
+
+## InventoryArea
+
+**Enum** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L17).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+**Bases:** `int`.
+
+```python
+class InventoryArea(int, metaclass=_enum_type_wrapper.EnumTypeWrapper)
+```
+
+### `INVENTORY_AREA_UNSPECIFIED`
+
+**Type:** `_ClassVar[InventoryArea]` ([`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L19)
+
+### `INVENTORY_AREA_CONTAINER`
+
+**Type:** `_ClassVar[InventoryArea]` ([`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L20)
+
+### `INVENTORY_AREA_MAIN`
+
+**Type:** `_ClassVar[InventoryArea]` ([`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L21)
+
+### `INVENTORY_AREA_HOTBAR`
+
+**Type:** `_ClassVar[InventoryArea]` ([`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L22)
+
+### `INVENTORY_AREA_ARMOR`
+
+**Type:** `_ClassVar[InventoryArea]` ([`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L23)
+
+### `INVENTORY_AREA_OFFHAND`
+
+**Type:** `_ClassVar[InventoryArea]` ([`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L24)
+
+### `INVENTORY_AREA_CRAFTING`
+
+**Type:** `_ClassVar[InventoryArea]` ([`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L25)
+
+### `INVENTORY_AREA_CURSOR`
+
+**Type:** `_ClassVar[InventoryArea]` ([`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L26)
+
+### `INVENTORY_AREA_PLAYER`
+
+**Type:** `_ClassVar[InventoryArea]` ([`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L27)
+
+## InventoryItemRecommendation
+
+**Class** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L173).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class InventoryItemRecommendation(_message.Message)
+```
+
+### `SLOT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L175)
+
+### `SCORE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L176)
+
+### `FACTORS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L177)
+
+### `slot`
+
+**Type:** [`InventorySlotSnapshot`](/docs/sdk/api/py/generated-inventory-pb2#inventoryslotsnapshot).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L178)
+
+### `score`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L179)
+
+### `factors`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[InventoryItemScoreFactor]` ([`InventoryItemScoreFactor`](/docs/sdk/api/py/generated-inventory-pb2#inventoryitemscorefactor)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L180)
+
+### `__init__`
+
+```python
+def __init__(self, slot: _Optional[_Union[InventorySlotSnapshot, _Mapping]]=..., score: _Optional[float]=..., factors: _Optional[_Iterable[_Union[InventoryItemScoreFactor, _Mapping]]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `slot` | `_Optional[_Union[InventorySlotSnapshot, _Mapping]]` ([`InventorySlotSnapshot`](/docs/sdk/api/py/generated-inventory-pb2#inventoryslotsnapshot)) | `...` | positional or keyword |
+| `score` | `_Optional[float]` | `...` | positional or keyword |
+| `factors` | `_Optional[_Iterable[_Union[InventoryItemScoreFactor, _Mapping]]]` ([`InventoryItemScoreFactor`](/docs/sdk/api/py/generated-inventory-pb2#inventoryitemscorefactor)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L181)
+
+## InventoryItemScoreFactor
+
+**Class** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L163).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class InventoryItemScoreFactor(_message.Message)
+```
+
+### `NAME_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L165)
+
+### `CONTRIBUTION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L166)
+
+### `DETAIL_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L167)
+
+### `name`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L168)
+
+### `contribution`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L169)
+
+### `detail`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L170)
+
+### `__init__`
+
+```python
+def __init__(self, name: _Optional[str]=..., contribution: _Optional[float]=..., detail: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `name` | `_Optional[str]` | `...` | positional or keyword |
+| `contribution` | `_Optional[float]` | `...` | positional or keyword |
+| `detail` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L171)
+
+## InventoryMutationResponse
+
+**Class** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L306).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class InventoryMutationResponse(_message.Message)
+```
+
+### `ACTION_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L308)
+
+### `CONTAINER_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L309)
+
+### `action_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L310)
+
+### `container`
+
+**Type:** [`ContainerSnapshot`](/docs/sdk/api/py/generated-inventory-pb2#containersnapshot).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L311)
+
+### `__init__`
+
+```python
+def __init__(self, action_id: _Optional[str]=..., container: _Optional[_Union[ContainerSnapshot, _Mapping]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `action_id` | `_Optional[str]` | `...` | positional or keyword |
+| `container` | `_Optional[_Union[ContainerSnapshot, _Mapping]]` ([`ContainerSnapshot`](/docs/sdk/api/py/generated-inventory-pb2#containersnapshot)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L312)
+
+## InventoryRecommendationKind
+
+**Enum** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L29).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+**Bases:** `int`.
+
+```python
+class InventoryRecommendationKind(int, metaclass=_enum_type_wrapper.EnumTypeWrapper)
+```
+
+### `INVENTORY_RECOMMENDATION_KIND_UNSPECIFIED`
+
+**Type:** `_ClassVar[InventoryRecommendationKind]` ([`InventoryRecommendationKind`](/docs/sdk/api/py/generated-inventory-pb2#inventoryrecommendationkind)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L31)
+
+### `INVENTORY_RECOMMENDATION_KIND_TOOL`
+
+**Type:** `_ClassVar[InventoryRecommendationKind]` ([`InventoryRecommendationKind`](/docs/sdk/api/py/generated-inventory-pb2#inventoryrecommendationkind)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L32)
+
+### `INVENTORY_RECOMMENDATION_KIND_MELEE_WEAPON`
+
+**Type:** `_ClassVar[InventoryRecommendationKind]` ([`InventoryRecommendationKind`](/docs/sdk/api/py/generated-inventory-pb2#inventoryrecommendationkind)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L33)
+
+### `INVENTORY_RECOMMENDATION_KIND_ARMOR`
+
+**Type:** `_ClassVar[InventoryRecommendationKind]` ([`InventoryRecommendationKind`](/docs/sdk/api/py/generated-inventory-pb2#inventoryrecommendationkind)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L34)
+
+### `INVENTORY_RECOMMENDATION_KIND_FOOD`
+
+**Type:** `_ClassVar[InventoryRecommendationKind]` ([`InventoryRecommendationKind`](/docs/sdk/api/py/generated-inventory-pb2#inventoryrecommendationkind)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L35)
+
+### `INVENTORY_RECOMMENDATION_KIND_SCAFFOLD`
+
+**Type:** `_ClassVar[InventoryRecommendationKind]` ([`InventoryRecommendationKind`](/docs/sdk/api/py/generated-inventory-pb2#inventoryrecommendationkind)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L36)
+
+## InventoryScope
+
+**Class** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L109).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class InventoryScope(_message.Message)
+```
+
+### `INSTANCE_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L111)
+
+### `BOT_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L112)
+
+### `instance_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L113)
+
+### `bot_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L114)
+
+### `__init__`
+
+```python
+def __init__(self, instance_id: _Optional[str]=..., bot_id: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instance_id` | `_Optional[str]` | `...` | positional or keyword |
+| `bot_id` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L115)
+
+## InventorySlotSnapshot
+
+**Class** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L71).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class InventorySlotSnapshot(_message.Message)
+```
+
+### `SLOT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L73)
+
+### `AREA_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L74)
+
+### `ITEM_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L75)
+
+### `MAY_PLACE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L76)
+
+### `MAY_PICKUP_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L77)
+
+### `slot`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L78)
+
+### `area`
+
+**Type:** [`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L79)
+
+### `item`
+
+**Type:** [`_domain_pb2.ItemStackSnapshot`](/docs/sdk/api/py/item-stack-snapshot).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L80)
+
+### `may_place`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L81)
+
+### `may_pickup`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L82)
+
+### `__init__`
+
+```python
+def __init__(self, slot: _Optional[int]=..., area: _Optional[_Union[InventoryArea, str]]=..., item: _Optional[_Union[_domain_pb2.ItemStackSnapshot, _Mapping]]=..., may_place: bool=..., may_pickup: bool=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `slot` | `_Optional[int]` | `...` | positional or keyword |
+| `area` | `_Optional[_Union[InventoryArea, str]]` ([`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea)) | `...` | positional or keyword |
+| `item` | `_Optional[_Union[_domain_pb2.ItemStackSnapshot, _Mapping]]` ([`_domain_pb2.ItemStackSnapshot`](/docs/sdk/api/py/item-stack-snapshot)) | `...` | positional or keyword |
+| `may_place` | `bool` | `...` | positional or keyword |
+| `may_pickup` | `bool` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L83)
+
+## ItemSelector
+
+**Class** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L53).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class ItemSelector(_message.Message)
+```
+
+### `ITEM_IDS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L55)
+
+### `TAGS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L56)
+
+### `FINGERPRINT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L57)
+
+### `NAME_CONTAINS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L58)
+
+### `ENCHANTMENT_IDS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L59)
+
+### `MINIMUM_COUNT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L60)
+
+### `MINIMUM_REMAINING_DURABILITY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L61)
+
+### `item_ids`
+
+**Type:** `_containers.RepeatedScalarFieldContainer[str]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L62)
+
+### `tags`
+
+**Type:** `_containers.RepeatedScalarFieldContainer[str]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L63)
+
+### `fingerprint`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L64)
+
+### `name_contains`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L65)
+
+### `enchantment_ids`
+
+**Type:** `_containers.RepeatedScalarFieldContainer[str]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L66)
+
+### `minimum_count`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L67)
+
+### `minimum_remaining_durability`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L68)
+
+### `__init__`
+
+```python
+def __init__(self, item_ids: _Optional[_Iterable[str]]=..., tags: _Optional[_Iterable[str]]=..., fingerprint: _Optional[str]=..., name_contains: _Optional[str]=..., enchantment_ids: _Optional[_Iterable[str]]=..., minimum_count: _Optional[int]=..., minimum_remaining_durability: _Optional[int]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `item_ids` | `_Optional[_Iterable[str]]` | `...` | positional or keyword |
+| `tags` | `_Optional[_Iterable[str]]` | `...` | positional or keyword |
+| `fingerprint` | `_Optional[str]` | `...` | positional or keyword |
+| `name_contains` | `_Optional[str]` | `...` | positional or keyword |
+| `enchantment_ids` | `_Optional[_Iterable[str]]` | `...` | positional or keyword |
+| `minimum_count` | `_Optional[int]` | `...` | positional or keyword |
+| `minimum_remaining_durability` | `_Optional[int]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L69)
+
+## MoveInventoryItemRequest
+
+**Class** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L217).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class MoveInventoryItemRequest(_message.Message)
+```
+
+### `SCOPE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L219)
+
+### `SOURCE_SLOT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L220)
+
+### `DESTINATION_SLOT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L221)
+
+### `COUNT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L222)
+
+### `EXPECTED_REVISION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L223)
+
+### `IDEMPOTENCY_KEY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L224)
+
+### `scope`
+
+**Type:** [`InventoryScope`](/docs/sdk/api/py/generated-inventory-pb2#inventoryscope).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L225)
+
+### `source_slot`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L226)
+
+### `destination_slot`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L227)
+
+### `count`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L228)
+
+### `expected_revision`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L229)
+
+### `idempotency_key`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L230)
+
+### `__init__`
+
+```python
+def __init__(self, scope: _Optional[_Union[InventoryScope, _Mapping]]=..., source_slot: _Optional[int]=..., destination_slot: _Optional[int]=..., count: _Optional[int]=..., expected_revision: _Optional[int]=..., idempotency_key: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `scope` | `_Optional[_Union[InventoryScope, _Mapping]]` ([`InventoryScope`](/docs/sdk/api/py/generated-inventory-pb2#inventoryscope)) | `...` | positional or keyword |
+| `source_slot` | `_Optional[int]` | `...` | positional or keyword |
+| `destination_slot` | `_Optional[int]` | `...` | positional or keyword |
+| `count` | `_Optional[int]` | `...` | positional or keyword |
+| `expected_revision` | `_Optional[int]` | `...` | positional or keyword |
+| `idempotency_key` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L231)
+
+## OpenBlockContainerRequest
+
+**Class** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L314).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class OpenBlockContainerRequest(_message.Message)
+```
+
+### `SCOPE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L316)
+
+### `POSITION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L317)
+
+### `IDEMPOTENCY_KEY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L318)
+
+### `scope`
+
+**Type:** [`InventoryScope`](/docs/sdk/api/py/generated-inventory-pb2#inventoryscope).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L319)
+
+### `position`
+
+**Type:** [`_common_pb2.BlockPosition`](/docs/sdk/api/py/block-position).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L320)
+
+### `idempotency_key`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L321)
+
+### `__init__`
+
+```python
+def __init__(self, scope: _Optional[_Union[InventoryScope, _Mapping]]=..., position: _Optional[_Union[_common_pb2.BlockPosition, _Mapping]]=..., idempotency_key: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `scope` | `_Optional[_Union[InventoryScope, _Mapping]]` ([`InventoryScope`](/docs/sdk/api/py/generated-inventory-pb2#inventoryscope)) | `...` | positional or keyword |
+| `position` | `_Optional[_Union[_common_pb2.BlockPosition, _Mapping]]` ([`_common_pb2.BlockPosition`](/docs/sdk/api/py/block-position)) | `...` | positional or keyword |
+| `idempotency_key` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L322)
+
+## RankInventoryItemsRequest
+
+**Class** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L183).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class RankInventoryItemsRequest(_message.Message)
+```
+
+### `SCOPE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L185)
+
+### `KIND_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L186)
+
+### `SELECTOR_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L187)
+
+### `AREAS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L188)
+
+### `TARGET_BLOCK_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L189)
+
+### `EQUIPMENT_SLOT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L190)
+
+### `LIMIT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L191)
+
+### `PREFER_HOTBAR_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L192)
+
+### `PREFERRED_ENCHANTMENT_IDS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L193)
+
+### `EXCLUDED_ENCHANTMENT_IDS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L194)
+
+### `PREFER_HIGH_DURABILITY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L195)
+
+### `scope`
+
+**Type:** [`InventoryScope`](/docs/sdk/api/py/generated-inventory-pb2#inventoryscope).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L196)
+
+### `kind`
+
+**Type:** [`InventoryRecommendationKind`](/docs/sdk/api/py/generated-inventory-pb2#inventoryrecommendationkind).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L197)
+
+### `selector`
+
+**Type:** [`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L198)
+
+### `areas`
+
+**Type:** `_containers.RepeatedScalarFieldContainer[InventoryArea]` ([`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L199)
+
+### `target_block`
+
+**Type:** [`_common_pb2.BlockPosition`](/docs/sdk/api/py/block-position).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L200)
+
+### `equipment_slot`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L201)
+
+### `limit`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L202)
+
+### `prefer_hotbar`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L203)
+
+### `preferred_enchantment_ids`
+
+**Type:** `_containers.RepeatedScalarFieldContainer[str]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L204)
+
+### `excluded_enchantment_ids`
+
+**Type:** `_containers.RepeatedScalarFieldContainer[str]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L205)
+
+### `prefer_high_durability`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L206)
+
+### `__init__`
+
+```python
+def __init__(self, scope: _Optional[_Union[InventoryScope, _Mapping]]=..., kind: _Optional[_Union[InventoryRecommendationKind, str]]=..., selector: _Optional[_Union[ItemSelector, _Mapping]]=..., areas: _Optional[_Iterable[_Union[InventoryArea, str]]]=..., target_block: _Optional[_Union[_common_pb2.BlockPosition, _Mapping]]=..., equipment_slot: _Optional[str]=..., limit: _Optional[int]=..., prefer_hotbar: bool=..., preferred_enchantment_ids: _Optional[_Iterable[str]]=..., excluded_enchantment_ids: _Optional[_Iterable[str]]=..., prefer_high_durability: bool=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `scope` | `_Optional[_Union[InventoryScope, _Mapping]]` ([`InventoryScope`](/docs/sdk/api/py/generated-inventory-pb2#inventoryscope)) | `...` | positional or keyword |
+| `kind` | `_Optional[_Union[InventoryRecommendationKind, str]]` ([`InventoryRecommendationKind`](/docs/sdk/api/py/generated-inventory-pb2#inventoryrecommendationkind)) | `...` | positional or keyword |
+| `selector` | `_Optional[_Union[ItemSelector, _Mapping]]` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `...` | positional or keyword |
+| `areas` | `_Optional[_Iterable[_Union[InventoryArea, str]]]` ([`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea)) | `...` | positional or keyword |
+| `target_block` | `_Optional[_Union[_common_pb2.BlockPosition, _Mapping]]` ([`_common_pb2.BlockPosition`](/docs/sdk/api/py/block-position)) | `...` | positional or keyword |
+| `equipment_slot` | `_Optional[str]` | `...` | positional or keyword |
+| `limit` | `_Optional[int]` | `...` | positional or keyword |
+| `prefer_hotbar` | `bool` | `...` | positional or keyword |
+| `preferred_enchantment_ids` | `_Optional[_Iterable[str]]` | `...` | positional or keyword |
+| `excluded_enchantment_ids` | `_Optional[_Iterable[str]]` | `...` | positional or keyword |
+| `prefer_high_durability` | `bool` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L207)
+
+## RankInventoryItemsResponse
+
+**Class** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L209).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class RankInventoryItemsResponse(_message.Message)
+```
+
+### `RECOMMENDATIONS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L211)
+
+### `REVISION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L212)
+
+### `recommendations`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[InventoryItemRecommendation]` ([`InventoryItemRecommendation`](/docs/sdk/api/py/generated-inventory-pb2#inventoryitemrecommendation)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L213)
+
+### `revision`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L214)
+
+### `__init__`
+
+```python
+def __init__(self, recommendations: _Optional[_Iterable[_Union[InventoryItemRecommendation, _Mapping]]]=..., revision: _Optional[int]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `recommendations` | `_Optional[_Iterable[_Union[InventoryItemRecommendation, _Mapping]]]` ([`InventoryItemRecommendation`](/docs/sdk/api/py/generated-inventory-pb2#inventoryitemrecommendation)) | `...` | positional or keyword |
+| `revision` | `_Optional[int]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L215)
+
+## SelectHotbarItemRequest
+
+**Class** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L264).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class SelectHotbarItemRequest(_message.Message)
+```
+
+### `SCOPE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L266)
+
+### `HOTBAR_SLOT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L267)
+
+### `SELECTOR_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L268)
+
+### `EXPECTED_REVISION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L269)
+
+### `IDEMPOTENCY_KEY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L270)
+
+### `scope`
+
+**Type:** [`InventoryScope`](/docs/sdk/api/py/generated-inventory-pb2#inventoryscope).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L271)
+
+### `hotbar_slot`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L272)
+
+### `selector`
+
+**Type:** [`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L273)
+
+### `expected_revision`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L274)
+
+### `idempotency_key`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L275)
+
+### `__init__`
+
+```python
+def __init__(self, scope: _Optional[_Union[InventoryScope, _Mapping]]=..., hotbar_slot: _Optional[int]=..., selector: _Optional[_Union[ItemSelector, _Mapping]]=..., expected_revision: _Optional[int]=..., idempotency_key: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `scope` | `_Optional[_Union[InventoryScope, _Mapping]]` ([`InventoryScope`](/docs/sdk/api/py/generated-inventory-pb2#inventoryscope)) | `...` | positional or keyword |
+| `hotbar_slot` | `_Optional[int]` | `...` | positional or keyword |
+| `selector` | `_Optional[_Union[ItemSelector, _Mapping]]` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `...` | positional or keyword |
+| `expected_revision` | `_Optional[int]` | `...` | positional or keyword |
+| `idempotency_key` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L276)
+
+## TossItemsRequest
+
+**Class** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L250).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class TossItemsRequest(_message.Message)
+```
+
+### `SCOPE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L252)
+
+### `SELECTOR_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L253)
+
+### `COUNT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L254)
+
+### `EXPECTED_REVISION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L255)
+
+### `IDEMPOTENCY_KEY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L256)
+
+### `scope`
+
+**Type:** [`InventoryScope`](/docs/sdk/api/py/generated-inventory-pb2#inventoryscope).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L257)
+
+### `selector`
+
+**Type:** [`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L258)
+
+### `count`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L259)
+
+### `expected_revision`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L260)
+
+### `idempotency_key`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L261)
+
+### `__init__`
+
+```python
+def __init__(self, scope: _Optional[_Union[InventoryScope, _Mapping]]=..., selector: _Optional[_Union[ItemSelector, _Mapping]]=..., count: _Optional[int]=..., expected_revision: _Optional[int]=..., idempotency_key: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `scope` | `_Optional[_Union[InventoryScope, _Mapping]]` ([`InventoryScope`](/docs/sdk/api/py/generated-inventory-pb2#inventoryscope)) | `...` | positional or keyword |
+| `selector` | `_Optional[_Union[ItemSelector, _Mapping]]` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `...` | positional or keyword |
+| `count` | `_Optional[int]` | `...` | positional or keyword |
+| `expected_revision` | `_Optional[int]` | `...` | positional or keyword |
+| `idempotency_key` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L262)
+
+## TransferItemsRequest
+
+**Class** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L233).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class TransferItemsRequest(_message.Message)
+```
+
+### `SCOPE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L235)
+
+### `SELECTOR_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L236)
+
+### `COUNT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L237)
+
+### `FROM_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L238)
+
+### `TO_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L239)
+
+### `EXPECTED_REVISION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L240)
+
+### `IDEMPOTENCY_KEY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L241)
+
+### `scope`
+
+**Type:** [`InventoryScope`](/docs/sdk/api/py/generated-inventory-pb2#inventoryscope).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L242)
+
+### `selector`
+
+**Type:** [`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L243)
+
+### `count`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L244)
+
+### `to`
+
+**Type:** [`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L245)
+
+### `expected_revision`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L246)
+
+### `idempotency_key`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L247)
+
+### `__init__`
+
+```python
+def __init__(self, scope: _Optional[_Union[InventoryScope, _Mapping]]=..., selector: _Optional[_Union[ItemSelector, _Mapping]]=..., count: _Optional[int]=..., to: _Optional[_Union[InventoryArea, str]]=..., expected_revision: _Optional[int]=..., idempotency_key: _Optional[str]=..., **kwargs) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `scope` | `_Optional[_Union[InventoryScope, _Mapping]]` ([`InventoryScope`](/docs/sdk/api/py/generated-inventory-pb2#inventoryscope)) | `...` | positional or keyword |
+| `selector` | `_Optional[_Union[ItemSelector, _Mapping]]` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `...` | positional or keyword |
+| `count` | `_Optional[int]` | `...` | positional or keyword |
+| `to` | `_Optional[_Union[InventoryArea, str]]` ([`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea)) | `...` | positional or keyword |
+| `expected_revision` | `_Optional[int]` | `...` | positional or keyword |
+| `idempotency_key` | `_Optional[str]` | `...` | positional or keyword |
+| `**kwargs` | No type annotation | Optional | variadic keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L248)
+
+## UnequipItemRequest
+
+**Class** in `inventory_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L292).
+
+**Import from:** `soulfire.inventory_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class UnequipItemRequest(_message.Message)
+```
+
+### `SCOPE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L294)
+
+### `EQUIPMENT_SLOT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L295)
+
+### `DESTINATION_AREA_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L296)
+
+### `EXPECTED_REVISION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L297)
+
+### `IDEMPOTENCY_KEY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L298)
+
+### `scope`
+
+**Type:** [`InventoryScope`](/docs/sdk/api/py/generated-inventory-pb2#inventoryscope).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L299)
+
+### `equipment_slot`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L300)
+
+### `destination_area`
+
+**Type:** [`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L301)
+
+### `expected_revision`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L302)
+
+### `idempotency_key`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L303)
+
+### `__init__`
+
+```python
+def __init__(self, scope: _Optional[_Union[InventoryScope, _Mapping]]=..., equipment_slot: _Optional[str]=..., destination_area: _Optional[_Union[InventoryArea, str]]=..., expected_revision: _Optional[int]=..., idempotency_key: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `scope` | `_Optional[_Union[InventoryScope, _Mapping]]` ([`InventoryScope`](/docs/sdk/api/py/generated-inventory-pb2#inventoryscope)) | `...` | positional or keyword |
+| `equipment_slot` | `_Optional[str]` | `...` | positional or keyword |
+| `destination_area` | `_Optional[_Union[InventoryArea, str]]` ([`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea)) | `...` | positional or keyword |
+| `expected_revision` | `_Optional[int]` | `...` | positional or keyword |
+| `idempotency_key` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_pb2.pyi#L304)

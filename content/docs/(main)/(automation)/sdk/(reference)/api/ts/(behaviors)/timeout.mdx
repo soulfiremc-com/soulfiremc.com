@@ -1,0 +1,26 @@
+---
+title: "timeout"
+description: "TypeScript API signatures, fields, and source for timeout."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Function** in `behaviors`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/behaviors.ts#L91).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`.
+
+```ts
+timeout<A, E, R>(behavior: BotBehavior<A, E, R>, durationMs: number): BotBehavior<A, SoulFireBehaviorError | E, R>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `behavior` | `BotBehavior<A, E, R>` ([`BotBehavior`](/docs/sdk/api/ts/bot-behavior)) | Required |  |
+| `durationMs` | `number` | Required |  |
+
+**Returns:** `BotBehavior<A, SoulFireBehaviorError | E, R>` ([`BotBehavior`](/docs/sdk/api/ts/bot-behavior), [`SoulFireBehaviorError`](/docs/sdk/api/ts/soul-fire-behavior-error)).
+
+**Referenced types:** [`BotBehavior`](/docs/sdk/api/ts/bot-behavior), [`SoulFireBehaviorError`](/docs/sdk/api/ts/soul-fire-behavior-error).

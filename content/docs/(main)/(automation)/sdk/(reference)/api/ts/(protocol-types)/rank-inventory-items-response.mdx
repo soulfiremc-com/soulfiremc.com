@@ -1,0 +1,39 @@
+---
+title: "RankInventoryItemsResponse"
+description: "TypeScript API signatures, fields, and source for RankInventoryItemsResponse."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/inventory_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/inventory_pb.ts#L461).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/inventory_pb`.
+
+```ts
+type RankInventoryItemsResponse = Message<"soulfire.v1.RankInventoryItemsResponse"> & {
+  /**
+   * @generated from field: repeated soulfire.v1.InventoryItemRecommendation recommendations = 1;
+   */
+  recommendations: InventoryItemRecommendation[];
+
+  /**
+   * @generated from field: uint64 revision = 2;
+   */
+  revision: bigint;
+};
+```
+
+**Referenced types:** [`InventoryItemRecommendation`](/docs/sdk/api/ts/inventory-item-recommendation).
+
+## `recommendations`
+
+**Type:** `InventoryItemRecommendation[]` ([`InventoryItemRecommendation`](/docs/sdk/api/ts/inventory-item-recommendation)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/inventory_pb.ts#L465)
+
+## `revision`
+
+**Type:** `bigint`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/inventory_pb.ts#L470)

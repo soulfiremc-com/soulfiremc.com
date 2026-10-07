@@ -1,0 +1,964 @@
+---
+title: "generated/soulfire/registry_pb module"
+description: "TypeScript API signatures, fields, and source for generated/soulfire/registry_pb module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`file_soulfire_registry`](/docs/sdk/api/ts/generated-soulfire-registry-pb#file_soulfire_registry) | object |
+| [`GetRegistryEntryRequest`](/docs/sdk/api/ts/generated-soulfire-registry-pb#getregistryentryrequest) | type |
+| [`GetRegistryEntryRequestSchema`](/docs/sdk/api/ts/generated-soulfire-registry-pb#getregistryentryrequestschema) | object |
+| [`GetRegistryEntryResponse`](/docs/sdk/api/ts/generated-soulfire-registry-pb#getregistryentryresponse) | type |
+| [`GetRegistryEntryResponseSchema`](/docs/sdk/api/ts/generated-soulfire-registry-pb#getregistryentryresponseschema) | object |
+| [`GetRegistryIdentityRequest`](/docs/sdk/api/ts/generated-soulfire-registry-pb#getregistryidentityrequest) | type |
+| [`GetRegistryIdentityRequestSchema`](/docs/sdk/api/ts/generated-soulfire-registry-pb#getregistryidentityrequestschema) | object |
+| [`GetRegistryIdentityResponse`](/docs/sdk/api/ts/generated-soulfire-registry-pb#getregistryidentityresponse) | type |
+| [`GetRegistryIdentityResponseSchema`](/docs/sdk/api/ts/generated-soulfire-registry-pb#getregistryidentityresponseschema) | object |
+| [`ListRegistryEntriesRequest`](/docs/sdk/api/ts/generated-soulfire-registry-pb#listregistryentriesrequest) | type |
+| [`ListRegistryEntriesRequestSchema`](/docs/sdk/api/ts/generated-soulfire-registry-pb#listregistryentriesrequestschema) | object |
+| [`ListRegistryEntriesResponse`](/docs/sdk/api/ts/generated-soulfire-registry-pb#listregistryentriesresponse) | type |
+| [`ListRegistryEntriesResponseSchema`](/docs/sdk/api/ts/generated-soulfire-registry-pb#listregistryentriesresponseschema) | object |
+| [`ListRegistryTagsRequest`](/docs/sdk/api/ts/generated-soulfire-registry-pb#listregistrytagsrequest) | type |
+| [`ListRegistryTagsRequestSchema`](/docs/sdk/api/ts/generated-soulfire-registry-pb#listregistrytagsrequestschema) | object |
+| [`ListRegistryTagsResponse`](/docs/sdk/api/ts/generated-soulfire-registry-pb#listregistrytagsresponse) | type |
+| [`ListRegistryTagsResponseSchema`](/docs/sdk/api/ts/generated-soulfire-registry-pb#listregistrytagsresponseschema) | object |
+| [`MinecraftRegistryEntry`](/docs/sdk/api/ts/generated-soulfire-registry-pb#minecraftregistryentry) | type |
+| [`MinecraftRegistryEntrySchema`](/docs/sdk/api/ts/generated-soulfire-registry-pb#minecraftregistryentryschema) | object |
+| [`RegistryIdentity`](/docs/sdk/api/ts/generated-soulfire-registry-pb#registryidentity) | type |
+| [`RegistryIdentitySchema`](/docs/sdk/api/ts/generated-soulfire-registry-pb#registryidentityschema) | object |
+| [`RegistryKind`](/docs/sdk/api/ts/generated-soulfire-registry-pb#registrykind) | enum |
+| [`RegistryKindSchema`](/docs/sdk/api/ts/generated-soulfire-registry-pb#registrykindschema) | object |
+| [`RegistryService`](/docs/sdk/api/ts/generated-soulfire-registry-pb#registryservice) | object |
+| [`RegistryTag`](/docs/sdk/api/ts/generated-soulfire-registry-pb#registrytag) | type |
+| [`RegistryTagSchema`](/docs/sdk/api/ts/generated-soulfire-registry-pb#registrytagschema) | object |
+
+## file_soulfire_registry
+
+**Object** in `generated/soulfire/registry_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L15).
+
+Describes the file soulfire/registry.proto.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/registry_pb`.
+
+```ts
+file_soulfire_registry: DescFile
+```
+
+## GetRegistryEntryRequest
+
+**Type** in `generated/soulfire/registry_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L218).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/registry_pb`.
+
+```ts
+type GetRegistryEntryRequest = Message<"soulfire.v1.GetRegistryEntryRequest"> & {
+  /**
+   * @generated from field: soulfire.v1.RegistryKind kind = 1;
+   */
+  kind: RegistryKind;
+
+  /**
+   * @generated from field: string id = 2;
+   */
+  id: string;
+
+  /**
+   * @generated from field: optional string instance_id = 3;
+   */
+  instanceId?: string | undefined;
+
+  /**
+   * @generated from field: optional string bot_id = 4;
+   */
+  botId?: string | undefined;
+};
+```
+
+**Referenced types:** [`RegistryKind`](/docs/sdk/api/ts/generated-soulfire-registry-pb#registrykind).
+
+### `kind`
+
+**Type:** [`RegistryKind`](/docs/sdk/api/ts/generated-soulfire-registry-pb#registrykind).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L222)
+
+### `id`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L227)
+
+### `instanceId`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L232)
+
+### `botId`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L237)
+
+## GetRegistryEntryRequestSchema
+
+**Object** in `generated/soulfire/registry_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L244).
+
+Describes the message soulfire.v1.GetRegistryEntryRequest.
+Use `create(GetRegistryEntryRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/registry_pb`.
+
+```ts
+GetRegistryEntryRequestSchema: GenMessage<GetRegistryEntryRequest>
+```
+
+**Referenced types:** [`GetRegistryEntryRequest`](/docs/sdk/api/ts/generated-soulfire-registry-pb#getregistryentryrequest).
+
+## GetRegistryEntryResponse
+
+**Type** in `generated/soulfire/registry_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L250).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/registry_pb`.
+
+```ts
+type GetRegistryEntryResponse = Message<"soulfire.v1.GetRegistryEntryResponse"> & {
+  /**
+   * @generated from field: soulfire.v1.MinecraftRegistryEntry entry = 1;
+   */
+  entry?: MinecraftRegistryEntry | undefined;
+
+  /**
+   * @generated from field: string registry_hash = 2;
+   */
+  registryHash: string;
+};
+```
+
+**Referenced types:** [`MinecraftRegistryEntry`](/docs/sdk/api/ts/generated-soulfire-registry-pb#minecraftregistryentry).
+
+### `entry`
+
+**Type:** `MinecraftRegistryEntry | undefined` ([`MinecraftRegistryEntry`](/docs/sdk/api/ts/generated-soulfire-registry-pb#minecraftregistryentry)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L254)
+
+### `registryHash`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L259)
+
+## GetRegistryEntryResponseSchema
+
+**Object** in `generated/soulfire/registry_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L266).
+
+Describes the message soulfire.v1.GetRegistryEntryResponse.
+Use `create(GetRegistryEntryResponseSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/registry_pb`.
+
+```ts
+GetRegistryEntryResponseSchema: GenMessage<GetRegistryEntryResponse>
+```
+
+**Referenced types:** [`GetRegistryEntryResponse`](/docs/sdk/api/ts/generated-soulfire-registry-pb#getregistryentryresponse).
+
+## GetRegistryIdentityRequest
+
+**Type** in `generated/soulfire/registry_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L95).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/registry_pb`.
+
+```ts
+type GetRegistryIdentityRequest = Message<"soulfire.v1.GetRegistryIdentityRequest"> & {
+  /**
+   * @generated from field: optional string instance_id = 1;
+   */
+  instanceId?: string | undefined;
+
+  /**
+   * @generated from field: optional string bot_id = 2;
+   */
+  botId?: string | undefined;
+};
+```
+
+### `instanceId`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L99)
+
+### `botId`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L104)
+
+## GetRegistryIdentityRequestSchema
+
+**Object** in `generated/soulfire/registry_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L111).
+
+Describes the message soulfire.v1.GetRegistryIdentityRequest.
+Use `create(GetRegistryIdentityRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/registry_pb`.
+
+```ts
+GetRegistryIdentityRequestSchema: GenMessage<GetRegistryIdentityRequest>
+```
+
+**Referenced types:** [`GetRegistryIdentityRequest`](/docs/sdk/api/ts/generated-soulfire-registry-pb#getregistryidentityrequest).
+
+## GetRegistryIdentityResponse
+
+**Type** in `generated/soulfire/registry_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L117).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/registry_pb`.
+
+```ts
+type GetRegistryIdentityResponse = Message<"soulfire.v1.GetRegistryIdentityResponse"> & {
+  /**
+   * @generated from field: soulfire.v1.RegistryIdentity identity = 1;
+   */
+  identity?: RegistryIdentity | undefined;
+
+  /**
+   * @generated from field: repeated soulfire.v1.RegistryKind supported_kinds = 2;
+   */
+  supportedKinds: RegistryKind[];
+
+  /**
+   * @generated from field: repeated string protocol_features = 3;
+   */
+  protocolFeatures: string[];
+};
+```
+
+**Referenced types:** [`RegistryIdentity`](/docs/sdk/api/ts/generated-soulfire-registry-pb#registryidentity), [`RegistryKind`](/docs/sdk/api/ts/generated-soulfire-registry-pb#registrykind).
+
+### `identity`
+
+**Type:** `RegistryIdentity | undefined` ([`RegistryIdentity`](/docs/sdk/api/ts/generated-soulfire-registry-pb#registryidentity)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L121)
+
+### `supportedKinds`
+
+**Type:** `RegistryKind[]` ([`RegistryKind`](/docs/sdk/api/ts/generated-soulfire-registry-pb#registrykind)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L126)
+
+### `protocolFeatures`
+
+**Type:** `string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L131)
+
+## GetRegistryIdentityResponseSchema
+
+**Object** in `generated/soulfire/registry_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L138).
+
+Describes the message soulfire.v1.GetRegistryIdentityResponse.
+Use `create(GetRegistryIdentityResponseSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/registry_pb`.
+
+```ts
+GetRegistryIdentityResponseSchema: GenMessage<GetRegistryIdentityResponse>
+```
+
+**Referenced types:** [`GetRegistryIdentityResponse`](/docs/sdk/api/ts/generated-soulfire-registry-pb#getregistryidentityresponse).
+
+## ListRegistryEntriesRequest
+
+**Type** in `generated/soulfire/registry_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L144).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/registry_pb`.
+
+```ts
+type ListRegistryEntriesRequest = Message<"soulfire.v1.ListRegistryEntriesRequest"> & {
+  /**
+   * @generated from field: soulfire.v1.RegistryKind kind = 1;
+   */
+  kind: RegistryKind;
+
+  /**
+   * @generated from field: string id_prefix = 2;
+   */
+  idPrefix: string;
+
+  /**
+   * @generated from field: repeated string tags = 3;
+   */
+  tags: string[];
+
+  /**
+   * @generated from field: uint32 page_size = 4;
+   */
+  pageSize: number;
+
+  /**
+   * @generated from field: string page_token = 5;
+   */
+  pageToken: string;
+
+  /**
+   * @generated from field: optional string instance_id = 6;
+   */
+  instanceId?: string | undefined;
+
+  /**
+   * @generated from field: optional string bot_id = 7;
+   */
+  botId?: string | undefined;
+};
+```
+
+**Referenced types:** [`RegistryKind`](/docs/sdk/api/ts/generated-soulfire-registry-pb#registrykind).
+
+### `kind`
+
+**Type:** [`RegistryKind`](/docs/sdk/api/ts/generated-soulfire-registry-pb#registrykind).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L148)
+
+### `idPrefix`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L153)
+
+### `tags`
+
+**Type:** `string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L158)
+
+### `pageSize`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L163)
+
+### `pageToken`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L168)
+
+### `instanceId`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L173)
+
+### `botId`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L178)
+
+## ListRegistryEntriesRequestSchema
+
+**Object** in `generated/soulfire/registry_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L185).
+
+Describes the message soulfire.v1.ListRegistryEntriesRequest.
+Use `create(ListRegistryEntriesRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/registry_pb`.
+
+```ts
+ListRegistryEntriesRequestSchema: GenMessage<ListRegistryEntriesRequest>
+```
+
+**Referenced types:** [`ListRegistryEntriesRequest`](/docs/sdk/api/ts/generated-soulfire-registry-pb#listregistryentriesrequest).
+
+## ListRegistryEntriesResponse
+
+**Type** in `generated/soulfire/registry_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L191).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/registry_pb`.
+
+```ts
+type ListRegistryEntriesResponse = Message<"soulfire.v1.ListRegistryEntriesResponse"> & {
+  /**
+   * @generated from field: repeated soulfire.v1.MinecraftRegistryEntry entries = 1;
+   */
+  entries: MinecraftRegistryEntry[];
+
+  /**
+   * @generated from field: string next_page_token = 2;
+   */
+  nextPageToken: string;
+
+  /**
+   * @generated from field: string registry_hash = 3;
+   */
+  registryHash: string;
+};
+```
+
+**Referenced types:** [`MinecraftRegistryEntry`](/docs/sdk/api/ts/generated-soulfire-registry-pb#minecraftregistryentry).
+
+### `entries`
+
+**Type:** `MinecraftRegistryEntry[]` ([`MinecraftRegistryEntry`](/docs/sdk/api/ts/generated-soulfire-registry-pb#minecraftregistryentry)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L195)
+
+### `nextPageToken`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L200)
+
+### `registryHash`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L205)
+
+## ListRegistryEntriesResponseSchema
+
+**Object** in `generated/soulfire/registry_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L212).
+
+Describes the message soulfire.v1.ListRegistryEntriesResponse.
+Use `create(ListRegistryEntriesResponseSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/registry_pb`.
+
+```ts
+ListRegistryEntriesResponseSchema: GenMessage<ListRegistryEntriesResponse>
+```
+
+**Referenced types:** [`ListRegistryEntriesResponse`](/docs/sdk/api/ts/generated-soulfire-registry-pb#listregistryentriesresponse).
+
+## ListRegistryTagsRequest
+
+**Type** in `generated/soulfire/registry_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L272).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/registry_pb`.
+
+```ts
+type ListRegistryTagsRequest = Message<"soulfire.v1.ListRegistryTagsRequest"> & {
+  /**
+   * @generated from field: soulfire.v1.RegistryKind kind = 1;
+   */
+  kind: RegistryKind;
+
+  /**
+   * @generated from field: string prefix = 2;
+   */
+  prefix: string;
+
+  /**
+   * @generated from field: uint32 page_size = 3;
+   */
+  pageSize: number;
+
+  /**
+   * @generated from field: string page_token = 4;
+   */
+  pageToken: string;
+
+  /**
+   * @generated from field: optional string instance_id = 5;
+   */
+  instanceId?: string | undefined;
+
+  /**
+   * @generated from field: optional string bot_id = 6;
+   */
+  botId?: string | undefined;
+};
+```
+
+**Referenced types:** [`RegistryKind`](/docs/sdk/api/ts/generated-soulfire-registry-pb#registrykind).
+
+### `kind`
+
+**Type:** [`RegistryKind`](/docs/sdk/api/ts/generated-soulfire-registry-pb#registrykind).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L276)
+
+### `prefix`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L281)
+
+### `pageSize`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L286)
+
+### `pageToken`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L291)
+
+### `instanceId`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L296)
+
+### `botId`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L301)
+
+## ListRegistryTagsRequestSchema
+
+**Object** in `generated/soulfire/registry_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L308).
+
+Describes the message soulfire.v1.ListRegistryTagsRequest.
+Use `create(ListRegistryTagsRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/registry_pb`.
+
+```ts
+ListRegistryTagsRequestSchema: GenMessage<ListRegistryTagsRequest>
+```
+
+**Referenced types:** [`ListRegistryTagsRequest`](/docs/sdk/api/ts/generated-soulfire-registry-pb#listregistrytagsrequest).
+
+## ListRegistryTagsResponse
+
+**Type** in `generated/soulfire/registry_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L341).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/registry_pb`.
+
+```ts
+type ListRegistryTagsResponse = Message<"soulfire.v1.ListRegistryTagsResponse"> & {
+  /**
+   * @generated from field: repeated soulfire.v1.RegistryTag tags = 1;
+   */
+  tags: RegistryTag[];
+
+  /**
+   * @generated from field: string next_page_token = 2;
+   */
+  nextPageToken: string;
+
+  /**
+   * @generated from field: string registry_hash = 3;
+   */
+  registryHash: string;
+};
+```
+
+**Referenced types:** [`RegistryTag`](/docs/sdk/api/ts/generated-soulfire-registry-pb#registrytag).
+
+### `tags`
+
+**Type:** `RegistryTag[]` ([`RegistryTag`](/docs/sdk/api/ts/generated-soulfire-registry-pb#registrytag)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L345)
+
+### `nextPageToken`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L350)
+
+### `registryHash`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L355)
+
+## ListRegistryTagsResponseSchema
+
+**Object** in `generated/soulfire/registry_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L362).
+
+Describes the message soulfire.v1.ListRegistryTagsResponse.
+Use `create(ListRegistryTagsResponseSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/registry_pb`.
+
+```ts
+ListRegistryTagsResponseSchema: GenMessage<ListRegistryTagsResponse>
+```
+
+**Referenced types:** [`ListRegistryTagsResponse`](/docs/sdk/api/ts/generated-soulfire-registry-pb#listregistrytagsresponse).
+
+## MinecraftRegistryEntry
+
+**Type** in `generated/soulfire/registry_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L53).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/registry_pb`.
+
+```ts
+type MinecraftRegistryEntry = Message<"soulfire.v1.MinecraftRegistryEntry"> & {
+  /**
+   * @generated from field: soulfire.v1.RegistryKind kind = 1;
+   */
+  kind: RegistryKind;
+
+  /**
+   * @generated from field: string id = 2;
+   */
+  id: string;
+
+  /**
+   * @generated from field: optional int32 numeric_id = 3;
+   */
+  numericId?: number | undefined;
+
+  /**
+   * @generated from field: string display_name = 4;
+   */
+  displayName: string;
+
+  /**
+   * @generated from field: google.protobuf.Struct properties = 5;
+   */
+  properties?: JsonObject | undefined;
+
+  /**
+   * @generated from field: repeated string tags = 6;
+   */
+  tags: string[];
+};
+```
+
+**Referenced types:** [`RegistryKind`](/docs/sdk/api/ts/generated-soulfire-registry-pb#registrykind).
+
+### `kind`
+
+**Type:** [`RegistryKind`](/docs/sdk/api/ts/generated-soulfire-registry-pb#registrykind).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L57)
+
+### `id`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L62)
+
+### `numericId`
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L67)
+
+### `displayName`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L72)
+
+### `properties`
+
+**Type:** `JsonObject | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L77)
+
+### `tags`
+
+**Type:** `string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L82)
+
+## MinecraftRegistryEntrySchema
+
+**Object** in `generated/soulfire/registry_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L89).
+
+Describes the message soulfire.v1.MinecraftRegistryEntry.
+Use `create(MinecraftRegistryEntrySchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/registry_pb`.
+
+```ts
+MinecraftRegistryEntrySchema: GenMessage<MinecraftRegistryEntry>
+```
+
+**Referenced types:** [`MinecraftRegistryEntry`](/docs/sdk/api/ts/generated-soulfire-registry-pb#minecraftregistryentry).
+
+## RegistryIdentity
+
+**Type** in `generated/soulfire/registry_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L21).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/registry_pb`.
+
+```ts
+type RegistryIdentity = Message<"soulfire.v1.RegistryIdentity"> & {
+  /**
+   * @generated from field: string soulfire_version = 1;
+   */
+  soulfireVersion: string;
+
+  /**
+   * @generated from field: string minecraft_version = 2;
+   */
+  minecraftVersion: string;
+
+  /**
+   * @generated from field: int32 protocol_version = 3;
+   */
+  protocolVersion: number;
+
+  /**
+   * @generated from field: string registry_hash = 4;
+   */
+  registryHash: string;
+};
+```
+
+### `soulfireVersion`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L25)
+
+### `minecraftVersion`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L30)
+
+### `protocolVersion`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L35)
+
+### `registryHash`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L40)
+
+## RegistryIdentitySchema
+
+**Object** in `generated/soulfire/registry_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L47).
+
+Describes the message soulfire.v1.RegistryIdentity.
+Use `create(RegistryIdentitySchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/registry_pb`.
+
+```ts
+RegistryIdentitySchema: GenMessage<RegistryIdentity>
+```
+
+**Referenced types:** [`RegistryIdentity`](/docs/sdk/api/ts/generated-soulfire-registry-pb#registryidentity).
+
+## RegistryKind
+
+**Enum** in `generated/soulfire/registry_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L368).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/registry_pb`.
+
+```ts
+enum RegistryKind
+```
+
+### `UNSPECIFIED`
+
+**Type:** `RegistryKind.UNSPECIFIED`.
+
+**Value:** `0`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L372)
+
+### `BLOCK`
+
+**Type:** `RegistryKind.BLOCK`.
+
+**Value:** `1`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L377)
+
+### `ITEM`
+
+**Type:** `RegistryKind.ITEM`.
+
+**Value:** `2`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L382)
+
+### `ENTITY_TYPE`
+
+**Type:** `RegistryKind.ENTITY_TYPE`.
+
+**Value:** `3`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L387)
+
+### `BIOME`
+
+**Type:** `RegistryKind.BIOME`.
+
+**Value:** `4`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L392)
+
+### `DIMENSION`
+
+**Type:** `RegistryKind.DIMENSION`.
+
+**Value:** `5`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L397)
+
+### `RECIPE`
+
+**Type:** `RegistryKind.RECIPE`.
+
+**Value:** `6`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L402)
+
+### `ENCHANTMENT`
+
+**Type:** `RegistryKind.ENCHANTMENT`.
+
+**Value:** `7`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L407)
+
+### `EFFECT`
+
+**Type:** `RegistryKind.EFFECT`.
+
+**Value:** `8`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L412)
+
+### `ATTRIBUTE`
+
+**Type:** `RegistryKind.ATTRIBUTE`.
+
+**Value:** `9`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L417)
+
+### `GAME_EVENT`
+
+**Type:** `RegistryKind.GAME_EVENT`.
+
+**Value:** `10`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L422)
+
+### `SOUND`
+
+**Type:** `RegistryKind.SOUND`.
+
+**Value:** `11`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L427)
+
+### `PARTICLE`
+
+**Type:** `RegistryKind.PARTICLE`.
+
+**Value:** `12`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L432)
+
+### `CONTAINER`
+
+**Type:** `RegistryKind.CONTAINER`.
+
+**Value:** `13`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L437)
+
+## RegistryKindSchema
+
+**Object** in `generated/soulfire/registry_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L443).
+
+Describes the enum soulfire.v1.RegistryKind.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/registry_pb`.
+
+```ts
+RegistryKindSchema: GenEnum<RegistryKind>
+```
+
+**Referenced types:** [`RegistryKind`](/docs/sdk/api/ts/generated-soulfire-registry-pb#registrykind).
+
+## RegistryService
+
+**Object** in `generated/soulfire/registry_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L449).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/registry_pb`.
+
+```ts
+RegistryService: GenService<{ getRegistryIdentity: { methodKind: "unary"; input: GenMessage<GetRegistryIdentityRequest>; output: GenMessage<GetRegistryIdentityResponse>; }; listRegistryEntries: { methodKind: "unary"; input: GenMessage<ListRegistryEntriesRequest>; output: GenMessage<ListRegistryEntriesResponse>; }; getRegistryEntry: { methodKind: "unary"; input: GenMessage<GetRegistryEntryRequest>; output: GenMessage<GetRegistryEntryResponse>; }; listRegistryTags: { methodKind: "unary"; input: GenMessage<ListRegistryTagsRequest>; output: GenMessage<ListRegistryTagsResponse>; }; }>
+```
+
+**Referenced types:** [`GetRegistryIdentityRequest`](/docs/sdk/api/ts/generated-soulfire-registry-pb#getregistryidentityrequest), [`GetRegistryIdentityResponse`](/docs/sdk/api/ts/generated-soulfire-registry-pb#getregistryidentityresponse), [`ListRegistryEntriesRequest`](/docs/sdk/api/ts/generated-soulfire-registry-pb#listregistryentriesrequest), [`ListRegistryEntriesResponse`](/docs/sdk/api/ts/generated-soulfire-registry-pb#listregistryentriesresponse), [`GetRegistryEntryRequest`](/docs/sdk/api/ts/generated-soulfire-registry-pb#getregistryentryrequest), [`GetRegistryEntryResponse`](/docs/sdk/api/ts/generated-soulfire-registry-pb#getregistryentryresponse), [`ListRegistryTagsRequest`](/docs/sdk/api/ts/generated-soulfire-registry-pb#listregistrytagsrequest), [`ListRegistryTagsResponse`](/docs/sdk/api/ts/generated-soulfire-registry-pb#listregistrytagsresponse).
+
+## RegistryTag
+
+**Type** in `generated/soulfire/registry_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L314).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/registry_pb`.
+
+```ts
+type RegistryTag = Message<"soulfire.v1.RegistryTag"> & {
+  /**
+   * @generated from field: soulfire.v1.RegistryKind kind = 1;
+   */
+  kind: RegistryKind;
+
+  /**
+   * @generated from field: string id = 2;
+   */
+  id: string;
+
+  /**
+   * @generated from field: repeated string values = 3;
+   */
+  values: string[];
+};
+```
+
+**Referenced types:** [`RegistryKind`](/docs/sdk/api/ts/generated-soulfire-registry-pb#registrykind).
+
+### `kind`
+
+**Type:** [`RegistryKind`](/docs/sdk/api/ts/generated-soulfire-registry-pb#registrykind).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L318)
+
+### `id`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L323)
+
+### `values`
+
+**Type:** `string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L328)
+
+## RegistryTagSchema
+
+**Object** in `generated/soulfire/registry_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/registry_pb.ts#L335).
+
+Describes the message soulfire.v1.RegistryTag.
+Use `create(RegistryTagSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/registry_pb`.
+
+```ts
+RegistryTagSchema: GenMessage<RegistryTag>
+```
+
+**Referenced types:** [`RegistryTag`](/docs/sdk/api/ts/generated-soulfire-registry-pb#registrytag).

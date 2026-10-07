@@ -1,0 +1,1044 @@
+---
+title: "metrics_pb2 module"
+description: "Python API signatures, fields, and source for metrics_pb2 module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`BotPosition`](/docs/sdk/api/py/generated-metrics-pb2#botposition) | class |
+| [`DESCRIPTOR`](/docs/sdk/api/py/generated-metrics-pb2#descriptor) | constant |
+| [`GetInstanceMetricsRequest`](/docs/sdk/api/py/generated-metrics-pb2#getinstancemetricsrequest) | class |
+| [`GetInstanceMetricsResponse`](/docs/sdk/api/py/generated-metrics-pb2#getinstancemetricsresponse) | class |
+| [`GetServerMetricsRequest`](/docs/sdk/api/py/generated-metrics-pb2#getservermetricsrequest) | class |
+| [`GetServerMetricsResponse`](/docs/sdk/api/py/generated-metrics-pb2#getservermetricsresponse) | class |
+| [`MetricsDistributions`](/docs/sdk/api/py/generated-metrics-pb2#metricsdistributions) | class |
+| [`MetricsDistributions.DimensionCountsEntry`](/docs/sdk/api/py/generated-metrics-pb2#metricsdistributionsdimensioncountsentry) | class |
+| [`MetricsDistributions.GameModeCountsEntry`](/docs/sdk/api/py/generated-metrics-pb2#metricsdistributionsgamemodecountsentry) | class |
+| [`MetricsSnapshot`](/docs/sdk/api/py/generated-metrics-pb2#metricssnapshot) | class |
+| [`ServerMetricsSnapshot`](/docs/sdk/api/py/generated-metrics-pb2#servermetricssnapshot) | class |
+
+## BotPosition
+
+**Class** in `metrics_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L85).
+
+**Import from:** `soulfire.metrics_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class BotPosition(_message.Message)
+```
+
+### `X_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L87)
+
+### `Z_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L88)
+
+### `DIMENSION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L89)
+
+### `x`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L90)
+
+### `z`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L91)
+
+### `dimension`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L92)
+
+### `__init__`
+
+```python
+def __init__(self, x: _Optional[float]=..., z: _Optional[float]=..., dimension: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `x` | `_Optional[float]` | `...` | positional or keyword |
+| `z` | `_Optional[float]` | `...` | positional or keyword |
+| `dimension` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L93)
+
+## DESCRIPTOR
+
+**Constant** in `metrics_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L13).
+
+**Import from:** `soulfire.metrics_pb2`.
+
+```python
+DESCRIPTOR: _descriptor.FileDescriptor
+```
+
+## GetInstanceMetricsRequest
+
+**Class** in `metrics_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L95).
+
+**Import from:** `soulfire.metrics_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class GetInstanceMetricsRequest(_message.Message)
+```
+
+### `INSTANCE_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L97)
+
+### `SINCE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L98)
+
+### `instance_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L99)
+
+### `since`
+
+**Type:** `_timestamp_pb2.Timestamp`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L100)
+
+### `__init__`
+
+```python
+def __init__(self, instance_id: _Optional[str]=..., since: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instance_id` | `_Optional[str]` | `...` | positional or keyword |
+| `since` | `_Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L101)
+
+## GetInstanceMetricsResponse
+
+**Class** in `metrics_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L103).
+
+**Import from:** `soulfire.metrics_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class GetInstanceMetricsResponse(_message.Message)
+```
+
+### `SNAPSHOTS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L105)
+
+### `DISTRIBUTIONS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L106)
+
+### `snapshots`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[MetricsSnapshot]` ([`MetricsSnapshot`](/docs/sdk/api/py/generated-metrics-pb2#metricssnapshot)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L107)
+
+### `distributions`
+
+**Type:** [`MetricsDistributions`](/docs/sdk/api/py/generated-metrics-pb2#metricsdistributions).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L108)
+
+### `__init__`
+
+```python
+def __init__(self, snapshots: _Optional[_Iterable[_Union[MetricsSnapshot, _Mapping]]]=..., distributions: _Optional[_Union[MetricsDistributions, _Mapping]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `snapshots` | `_Optional[_Iterable[_Union[MetricsSnapshot, _Mapping]]]` ([`MetricsSnapshot`](/docs/sdk/api/py/generated-metrics-pb2#metricssnapshot)) | `...` | positional or keyword |
+| `distributions` | `_Optional[_Union[MetricsDistributions, _Mapping]]` ([`MetricsDistributions`](/docs/sdk/api/py/generated-metrics-pb2#metricsdistributions)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L109)
+
+## GetServerMetricsRequest
+
+**Class** in `metrics_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L155).
+
+**Import from:** `soulfire.metrics_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class GetServerMetricsRequest(_message.Message)
+```
+
+### `SINCE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L157)
+
+### `since`
+
+**Type:** `_timestamp_pb2.Timestamp`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L158)
+
+### `__init__`
+
+```python
+def __init__(self, since: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `since` | `_Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L159)
+
+## GetServerMetricsResponse
+
+**Class** in `metrics_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L161).
+
+**Import from:** `soulfire.metrics_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class GetServerMetricsResponse(_message.Message)
+```
+
+### `SNAPSHOTS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L163)
+
+### `snapshots`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[ServerMetricsSnapshot]` ([`ServerMetricsSnapshot`](/docs/sdk/api/py/generated-metrics-pb2#servermetricssnapshot)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L164)
+
+### `__init__`
+
+```python
+def __init__(self, snapshots: _Optional[_Iterable[_Union[ServerMetricsSnapshot, _Mapping]]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `snapshots` | `_Optional[_Iterable[_Union[ServerMetricsSnapshot, _Mapping]]]` ([`ServerMetricsSnapshot`](/docs/sdk/api/py/generated-metrics-pb2#servermetricssnapshot)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L165)
+
+## MetricsDistributions
+
+**Class** in `metrics_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L57).
+
+**Import from:** `soulfire.metrics_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class MetricsDistributions(_message.Message)
+```
+
+### `HEALTH_HISTOGRAM_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L73)
+
+### `FOOD_HISTOGRAM_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L74)
+
+### `DIMENSION_COUNTS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L75)
+
+### `GAME_MODE_COUNTS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L76)
+
+### `BOT_POSITIONS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L77)
+
+### `health_histogram`
+
+**Type:** `_containers.RepeatedScalarFieldContainer[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L78)
+
+### `food_histogram`
+
+**Type:** `_containers.RepeatedScalarFieldContainer[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L79)
+
+### `dimension_counts`
+
+**Type:** `_containers.ScalarMap[str, int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L80)
+
+### `game_mode_counts`
+
+**Type:** `_containers.ScalarMap[str, int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L81)
+
+### `bot_positions`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[BotPosition]` ([`BotPosition`](/docs/sdk/api/py/generated-metrics-pb2#botposition)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L82)
+
+### `__init__`
+
+```python
+def __init__(self, health_histogram: _Optional[_Iterable[int]]=..., food_histogram: _Optional[_Iterable[int]]=..., dimension_counts: _Optional[_Mapping[str, int]]=..., game_mode_counts: _Optional[_Mapping[str, int]]=..., bot_positions: _Optional[_Iterable[_Union[BotPosition, _Mapping]]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `health_histogram` | `_Optional[_Iterable[int]]` | `...` | positional or keyword |
+| `food_histogram` | `_Optional[_Iterable[int]]` | `...` | positional or keyword |
+| `dimension_counts` | `_Optional[_Mapping[str, int]]` | `...` | positional or keyword |
+| `game_mode_counts` | `_Optional[_Mapping[str, int]]` | `...` | positional or keyword |
+| `bot_positions` | `_Optional[_Iterable[_Union[BotPosition, _Mapping]]]` ([`BotPosition`](/docs/sdk/api/py/generated-metrics-pb2#botposition)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L83)
+
+## MetricsDistributions.DimensionCountsEntry
+
+**Class** in `metrics_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L59).
+
+**Import from:** `soulfire.metrics_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class MetricsDistributions.DimensionCountsEntry(_message.Message)
+```
+
+### `KEY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L61)
+
+### `VALUE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L62)
+
+### `key`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L63)
+
+### `value`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L64)
+
+### `__init__`
+
+```python
+def __init__(self, key: _Optional[str]=..., value: _Optional[int]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `key` | `_Optional[str]` | `...` | positional or keyword |
+| `value` | `_Optional[int]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L65)
+
+## MetricsDistributions.GameModeCountsEntry
+
+**Class** in `metrics_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L66).
+
+**Import from:** `soulfire.metrics_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class MetricsDistributions.GameModeCountsEntry(_message.Message)
+```
+
+### `KEY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L68)
+
+### `VALUE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L69)
+
+### `key`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L70)
+
+### `value`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L71)
+
+### `__init__`
+
+```python
+def __init__(self, key: _Optional[str]=..., value: _Optional[int]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `key` | `_Optional[str]` | `...` | positional or keyword |
+| `value` | `_Optional[int]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L72)
+
+## MetricsSnapshot
+
+**Class** in `metrics_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L15).
+
+**Import from:** `soulfire.metrics_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class MetricsSnapshot(_message.Message)
+```
+
+### `TIMESTAMP_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L17)
+
+### `BOTS_ONLINE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L18)
+
+### `BOTS_TOTAL_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L19)
+
+### `PACKETS_SENT_TOTAL_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L20)
+
+### `PACKETS_RECEIVED_TOTAL_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L21)
+
+### `BYTES_SENT_TOTAL_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L22)
+
+### `BYTES_RECEIVED_TOTAL_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L23)
+
+### `PACKETS_SENT_PER_SECOND_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L24)
+
+### `PACKETS_RECEIVED_PER_SECOND_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L25)
+
+### `BYTES_SENT_PER_SECOND_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L26)
+
+### `BYTES_RECEIVED_PER_SECOND_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L27)
+
+### `AVG_TICK_DURATION_MS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L28)
+
+### `MAX_TICK_DURATION_MS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L29)
+
+### `AVG_HEALTH_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L30)
+
+### `AVG_FOOD_LEVEL_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L31)
+
+### `TOTAL_LOADED_CHUNKS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L32)
+
+### `TOTAL_TRACKED_ENTITIES_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L33)
+
+### `CONNECTIONS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L34)
+
+### `DISCONNECTIONS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L35)
+
+### `timestamp`
+
+**Type:** `_timestamp_pb2.Timestamp`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L36)
+
+### `bots_online`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L37)
+
+### `bots_total`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L38)
+
+### `packets_sent_total`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L39)
+
+### `packets_received_total`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L40)
+
+### `bytes_sent_total`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L41)
+
+### `bytes_received_total`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L42)
+
+### `packets_sent_per_second`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L43)
+
+### `packets_received_per_second`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L44)
+
+### `bytes_sent_per_second`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L45)
+
+### `bytes_received_per_second`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L46)
+
+### `avg_tick_duration_ms`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L47)
+
+### `max_tick_duration_ms`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L48)
+
+### `avg_health`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L49)
+
+### `avg_food_level`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L50)
+
+### `total_loaded_chunks`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L51)
+
+### `total_tracked_entities`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L52)
+
+### `connections`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L53)
+
+### `disconnections`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L54)
+
+### `__init__`
+
+```python
+def __init__(self, timestamp: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]]=..., bots_online: _Optional[int]=..., bots_total: _Optional[int]=..., packets_sent_total: _Optional[int]=..., packets_received_total: _Optional[int]=..., bytes_sent_total: _Optional[int]=..., bytes_received_total: _Optional[int]=..., packets_sent_per_second: _Optional[float]=..., packets_received_per_second: _Optional[float]=..., bytes_sent_per_second: _Optional[float]=..., bytes_received_per_second: _Optional[float]=..., avg_tick_duration_ms: _Optional[float]=..., max_tick_duration_ms: _Optional[float]=..., avg_health: _Optional[float]=..., avg_food_level: _Optional[float]=..., total_loaded_chunks: _Optional[int]=..., total_tracked_entities: _Optional[int]=..., connections: _Optional[int]=..., disconnections: _Optional[int]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `timestamp` | `_Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]]` | `...` | positional or keyword |
+| `bots_online` | `_Optional[int]` | `...` | positional or keyword |
+| `bots_total` | `_Optional[int]` | `...` | positional or keyword |
+| `packets_sent_total` | `_Optional[int]` | `...` | positional or keyword |
+| `packets_received_total` | `_Optional[int]` | `...` | positional or keyword |
+| `bytes_sent_total` | `_Optional[int]` | `...` | positional or keyword |
+| `bytes_received_total` | `_Optional[int]` | `...` | positional or keyword |
+| `packets_sent_per_second` | `_Optional[float]` | `...` | positional or keyword |
+| `packets_received_per_second` | `_Optional[float]` | `...` | positional or keyword |
+| `bytes_sent_per_second` | `_Optional[float]` | `...` | positional or keyword |
+| `bytes_received_per_second` | `_Optional[float]` | `...` | positional or keyword |
+| `avg_tick_duration_ms` | `_Optional[float]` | `...` | positional or keyword |
+| `max_tick_duration_ms` | `_Optional[float]` | `...` | positional or keyword |
+| `avg_health` | `_Optional[float]` | `...` | positional or keyword |
+| `avg_food_level` | `_Optional[float]` | `...` | positional or keyword |
+| `total_loaded_chunks` | `_Optional[int]` | `...` | positional or keyword |
+| `total_tracked_entities` | `_Optional[int]` | `...` | positional or keyword |
+| `connections` | `_Optional[int]` | `...` | positional or keyword |
+| `disconnections` | `_Optional[int]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L55)
+
+## ServerMetricsSnapshot
+
+**Class** in `metrics_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L111).
+
+**Import from:** `soulfire.metrics_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class ServerMetricsSnapshot(_message.Message)
+```
+
+### `TIMESTAMP_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L113)
+
+### `PROCESS_CPU_LOAD_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L114)
+
+### `SYSTEM_CPU_LOAD_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L115)
+
+### `HEAP_USED_BYTES_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L116)
+
+### `HEAP_COMMITTED_BYTES_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L117)
+
+### `HEAP_MAX_BYTES_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L118)
+
+### `NON_HEAP_USED_BYTES_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L119)
+
+### `THREAD_COUNT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L120)
+
+### `DAEMON_THREAD_COUNT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L121)
+
+### `GC_COLLECTION_COUNT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L122)
+
+### `GC_COLLECTION_TIME_MS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L123)
+
+### `UPTIME_MS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L124)
+
+### `AVAILABLE_PROCESSORS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L125)
+
+### `TOTAL_BOTS_ONLINE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L126)
+
+### `TOTAL_BOTS_TOTAL_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L127)
+
+### `TOTAL_BOTS_DESIRED_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L128)
+
+### `INSTANCES_WITH_DESIRED_BOTS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L129)
+
+### `TOTAL_BOTS_STARTING_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L130)
+
+### `TOTAL_BOTS_RETRYING_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L131)
+
+### `TOTAL_BOTS_FAILED_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L132)
+
+### `timestamp`
+
+**Type:** `_timestamp_pb2.Timestamp`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L133)
+
+### `process_cpu_load`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L134)
+
+### `system_cpu_load`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L135)
+
+### `heap_used_bytes`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L136)
+
+### `heap_committed_bytes`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L137)
+
+### `heap_max_bytes`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L138)
+
+### `non_heap_used_bytes`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L139)
+
+### `thread_count`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L140)
+
+### `daemon_thread_count`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L141)
+
+### `gc_collection_count`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L142)
+
+### `gc_collection_time_ms`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L143)
+
+### `uptime_ms`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L144)
+
+### `available_processors`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L145)
+
+### `total_bots_online`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L146)
+
+### `total_bots_total`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L147)
+
+### `total_bots_desired`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L148)
+
+### `instances_with_desired_bots`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L149)
+
+### `total_bots_starting`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L150)
+
+### `total_bots_retrying`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L151)
+
+### `total_bots_failed`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L152)
+
+### `__init__`
+
+```python
+def __init__(self, timestamp: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]]=..., process_cpu_load: _Optional[float]=..., system_cpu_load: _Optional[float]=..., heap_used_bytes: _Optional[int]=..., heap_committed_bytes: _Optional[int]=..., heap_max_bytes: _Optional[int]=..., non_heap_used_bytes: _Optional[int]=..., thread_count: _Optional[int]=..., daemon_thread_count: _Optional[int]=..., gc_collection_count: _Optional[int]=..., gc_collection_time_ms: _Optional[int]=..., uptime_ms: _Optional[int]=..., available_processors: _Optional[int]=..., total_bots_online: _Optional[int]=..., total_bots_total: _Optional[int]=..., total_bots_desired: _Optional[int]=..., instances_with_desired_bots: _Optional[int]=..., total_bots_starting: _Optional[int]=..., total_bots_retrying: _Optional[int]=..., total_bots_failed: _Optional[int]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `timestamp` | `_Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]]` | `...` | positional or keyword |
+| `process_cpu_load` | `_Optional[float]` | `...` | positional or keyword |
+| `system_cpu_load` | `_Optional[float]` | `...` | positional or keyword |
+| `heap_used_bytes` | `_Optional[int]` | `...` | positional or keyword |
+| `heap_committed_bytes` | `_Optional[int]` | `...` | positional or keyword |
+| `heap_max_bytes` | `_Optional[int]` | `...` | positional or keyword |
+| `non_heap_used_bytes` | `_Optional[int]` | `...` | positional or keyword |
+| `thread_count` | `_Optional[int]` | `...` | positional or keyword |
+| `daemon_thread_count` | `_Optional[int]` | `...` | positional or keyword |
+| `gc_collection_count` | `_Optional[int]` | `...` | positional or keyword |
+| `gc_collection_time_ms` | `_Optional[int]` | `...` | positional or keyword |
+| `uptime_ms` | `_Optional[int]` | `...` | positional or keyword |
+| `available_processors` | `_Optional[int]` | `...` | positional or keyword |
+| `total_bots_online` | `_Optional[int]` | `...` | positional or keyword |
+| `total_bots_total` | `_Optional[int]` | `...` | positional or keyword |
+| `total_bots_desired` | `_Optional[int]` | `...` | positional or keyword |
+| `instances_with_desired_bots` | `_Optional[int]` | `...` | positional or keyword |
+| `total_bots_starting` | `_Optional[int]` | `...` | positional or keyword |
+| `total_bots_retrying` | `_Optional[int]` | `...` | positional or keyword |
+| `total_bots_failed` | `_Optional[int]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_pb2.pyi#L153)

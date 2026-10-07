@@ -1,0 +1,156 @@
+---
+title: "SoulFirePathfinder"
+description: "Python API signatures, fields, and source for SoulFirePathfinder."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `pathfinding`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding.py#L58).
+
+**Import from:** `soulfire`, `soulfire.pathfinding`.
+
+```python
+class SoulFirePathfinder
+```
+
+## `__init__`
+
+```python
+def __init__(self, instance_id: str, bot_id: str, client: PathfinderServiceClient, tasks: SoulFireTasks) -> None
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instance_id` | `str` | Required | positional or keyword |
+| `bot_id` | `str` | Required | positional or keyword |
+| `client` | [`PathfinderServiceClient`](/docs/sdk/api/py/generated-pathfinding-connect#pathfinderserviceclient) | Required | positional or keyword |
+| `tasks` | [`SoulFireTasks`](/docs/sdk/api/py/soul-fire-tasks) | Required | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding.py#L59)
+
+## `plan`
+
+```python
+def plan(self, goal: PathfindGoal, *, options: PathfindOptions | None=None, include_descriptions: bool=False, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[PathPlan, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `goal` | [`PathfindGoal`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindgoal) | Required | positional or keyword |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `include_descriptions` | `bool` | `False` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[PathPlan, SoulFireOperationError]` ([`PathPlan`](/docs/sdk/api/py/generated-pathfinding-pb2#pathplan), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding.py#L68)
+
+## `go_to`
+
+```python
+def go_to(self, goal: PathfindGoal, *, options: PathfindOptions | None=None, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[GoToTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `goal` | [`PathfindGoal`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindgoal) | Required | positional or keyword |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[GoToTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`GoToTaskResult`](/docs/sdk/api/py/generated-task-pb2#gototaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding.py#L92)
+
+## `run`
+
+```python
+def run(self, goal: PathfindGoal, *, options: PathfindOptions | None=None, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `goal` | [`PathfindGoal`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindgoal) | Required | positional or keyword |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding.py#L119)
+
+## `follow`
+
+```python
+def follow(self, target: EntityTargetLike, *, distance: float=3, options: PathfindOptions | None=None, target_unavailable_timeout_seconds: int=0, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[FollowEntityTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `target` | [`EntityTargetLike`](/docs/sdk/api/py/entity-target-like) | Required | positional or keyword |
+| `distance` | `float` | `3` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `target_unavailable_timeout_seconds` | `int` | `0` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[FollowEntityTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`FollowEntityTaskResult`](/docs/sdk/api/py/generated-task-pb2#followentitytaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding.py#L141)
+
+## `run_follow`
+
+```python
+def run_follow(self, target: EntityTargetLike, *, distance: float=3, options: PathfindOptions | None=None, target_unavailable_timeout_seconds: int=0, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `target` | [`EntityTargetLike`](/docs/sdk/api/py/entity-target-like) | Required | positional or keyword |
+| `distance` | `float` | `3` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `target_unavailable_timeout_seconds` | `int` | `0` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding.py#L172)

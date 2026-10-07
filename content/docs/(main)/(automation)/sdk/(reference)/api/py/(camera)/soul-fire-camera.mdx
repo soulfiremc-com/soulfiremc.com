@@ -1,0 +1,114 @@
+---
+title: "SoulFireCamera"
+description: "Python API signatures, fields, and source for SoulFireCamera."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `camera`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/camera.py#L53).
+
+Async camera, frame-stream, and map-view access for one bot.
+
+**Import from:** `soulfire`, `soulfire.camera`.
+
+```python
+class SoulFireCamera
+```
+
+## `__init__`
+
+```python
+def __init__(self, instance_id: str, bot_id: str, client: BotServiceClient) -> None
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instance_id` | `str` | Required | positional or keyword |
+| `bot_id` | `str` | Required | positional or keyword |
+| `client` | [`BotServiceClient`](/docs/sdk/api/py/generated-bot-connect#botserviceclient) | Required | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/camera.py#L56)
+
+## `capture`
+
+```python
+def capture(self, options: CameraRenderOptions=_DEFAULT_CAMERA_OPTIONS, *, headers: Headers=None, timeout_ms: int | None=None) -> Effect[BotRenderPovResponse, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`CameraRenderOptions`](/docs/sdk/api/py/camera-render-options) | `_DEFAULT_CAMERA_OPTIONS` | positional or keyword |
+| `headers` | [`Headers`](/docs/sdk/api/py/headers-camera) | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[BotRenderPovResponse, SoulFireOperationError]` ([`BotRenderPovResponse`](/docs/sdk/api/py/generated-bot-pb2#botrenderpovresponse), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/camera.py#L62)
+
+## `capture_bytes`
+
+```python
+def capture_bytes(self, options: CameraRenderOptions=_DEFAULT_CAMERA_OPTIONS, *, headers: Headers=None, timeout_ms: int | None=None) -> Effect[bytes, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`CameraRenderOptions`](/docs/sdk/api/py/camera-render-options) | `_DEFAULT_CAMERA_OPTIONS` | positional or keyword |
+| `headers` | [`Headers`](/docs/sdk/api/py/headers-camera) | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[bytes, SoulFireOperationError]` ([`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/camera.py#L81)
+
+## `frames`
+
+```python
+def frames(self, options: CameraRenderOptions=_DEFAULT_CAMERA_OPTIONS, *, interval_ms: int=0, headers: Headers=None, timeout_ms: int | None=None) -> Stream[BotPovFrame, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`CameraRenderOptions`](/docs/sdk/api/py/camera-render-options) | `_DEFAULT_CAMERA_OPTIONS` | positional or keyword |
+| `interval_ms` | `int` | `0` | keyword only |
+| `headers` | [`Headers`](/docs/sdk/api/py/headers-camera) | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotPovFrame, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotPovFrame`](/docs/sdk/api/py/generated-bot-pb2#botpovframe), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/camera.py#L91)
+
+## `world_map`
+
+```python
+def world_map(self, options: WorldMapOptions=_DEFAULT_WORLD_MAP_OPTIONS, *, headers: Headers=None, timeout_ms: int | None=None) -> Effect[BotWorldMapResponse, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`WorldMapOptions`](/docs/sdk/api/py/world-map-options) | `_DEFAULT_WORLD_MAP_OPTIONS` | positional or keyword |
+| `headers` | [`Headers`](/docs/sdk/api/py/headers-camera) | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[BotWorldMapResponse, SoulFireOperationError]` ([`BotWorldMapResponse`](/docs/sdk/api/py/generated-bot-pb2#botworldmapresponse), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/camera.py#L109)

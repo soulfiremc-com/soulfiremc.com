@@ -1,0 +1,525 @@
+---
+title: "SoulFire"
+description: "TypeScript API signatures, fields, and source for SoulFire."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+The runtime entry points expose different operations and HTTP requirements. Choose the import that matches your runtime.
+
+**Object** in `bun`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/bun.ts#L64).
+
+**Import from:** `@soulfiremc/sdk/bun`.
+
+**Referenced types:** [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options), [`SoulFireClient`](/docs/sdk/api/ts/soul-fire-client), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error), [`SoulFireService`](/docs/sdk/api/ts/soul-fire-service), [`SoulFireInstallOptions`](/docs/sdk/api/ts/soul-fire-install-options), [`ManagedBotOptions`](/docs/sdk/api/ts/managed-bot-options), [`SoulFireBot`](/docs/sdk/api/ts/soul-fire-bot), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error), [`LocalServerController`](/docs/sdk/api/ts/local-server-controller).
+
+## `connect`
+
+```ts
+connect(options: SoulFireOptions): Effect<SoulFireClient, SoulFireConnectionError, Scope>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options) | Required |  |
+
+**Returns:** `Effect<SoulFireClient, SoulFireConnectionError, Scope>` ([`SoulFireClient`](/docs/sdk/api/ts/soul-fire-client), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/bun.ts#L66)
+
+## `layer`
+
+```ts
+layer(options: SoulFireOptions): Layer<SoulFireService, SoulFireConnectionError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options) | Required |  |
+
+**Returns:** `Layer<SoulFireService, SoulFireConnectionError, never>` ([`SoulFireService`](/docs/sdk/api/ts/soul-fire-service), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/bun.ts#L67)
+
+## `install`
+
+```ts
+install(options?: SoulFireInstallOptions): Effect<SoulFireClient, SoulFireConnectionError, Scope>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireInstallOptions`](/docs/sdk/api/ts/soul-fire-install-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireClient, SoulFireConnectionError, Scope>` ([`SoulFireClient`](/docs/sdk/api/ts/soul-fire-client), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/bun.ts#L68)
+
+## `installLayer`
+
+```ts
+installLayer(options?: SoulFireInstallOptions): Layer<SoulFireService, SoulFireConnectionError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireInstallOptions`](/docs/sdk/api/ts/soul-fire-install-options) | `{}` |  |
+
+**Returns:** `Layer<SoulFireService, SoulFireConnectionError, never>` ([`SoulFireService`](/docs/sdk/api/ts/soul-fire-service), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/bun.ts#L69)
+
+## `createBot`
+
+```ts
+createBot(options: ManagedBotOptions): Effect<SoulFireBot, SoulFireOperationError | SoulFireConnectionError, Scope>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`ManagedBotOptions`](/docs/sdk/api/ts/managed-bot-options) | Required |  |
+
+**Returns:** `Effect<SoulFireBot, SoulFireOperationError | SoulFireConnectionError, Scope>` ([`SoulFireBot`](/docs/sdk/api/ts/soul-fire-bot), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/bun.ts#L70)
+
+## `unauthenticated`
+
+```ts
+unauthenticated(options: SoulFireOptions): Effect<SoulFireClient, SoulFireConnectionError, Scope>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options) | Required |  |
+
+**Returns:** `Effect<SoulFireClient, SoulFireConnectionError, Scope>` ([`SoulFireClient`](/docs/sdk/api/ts/soul-fire-client), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2740)
+
+## `connectManaged`
+
+```ts
+connectManaged(options: SoulFireOptions, localServer: LocalServerController): Effect<SoulFireClient, SoulFireConnectionError, Scope>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options) | Required |  |
+| `localServer` | [`LocalServerController`](/docs/sdk/api/ts/local-server-controller) | Required |  |
+
+**Returns:** `Effect<SoulFireClient, SoulFireConnectionError, Scope>` ([`SoulFireClient`](/docs/sdk/api/ts/soul-fire-client), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2741)
+
+## `connectWithHttpClient`
+
+```ts
+connectWithHttpClient(options: SoulFireOptions): Effect<SoulFireClient, SoulFireConnectionError, Scope | HttpClient>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options) | Required |  |
+
+**Returns:** `Effect<SoulFireClient, SoulFireConnectionError, Scope | HttpClient>` ([`SoulFireClient`](/docs/sdk/api/ts/soul-fire-client), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2742)
+
+## `layerWithHttpClient`
+
+```ts
+layerWithHttpClient(options: SoulFireOptions): Layer<SoulFireService, SoulFireConnectionError, HttpClient>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options) | Required |  |
+
+**Returns:** `Layer<SoulFireService, SoulFireConnectionError, HttpClient>` ([`SoulFireService`](/docs/sdk/api/ts/soul-fire-service), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2752)
+
+## node entry point
+
+**Object** in `node`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/node.ts#L68).
+
+**Import from:** `@soulfiremc/sdk/node`.
+
+**Referenced types:** [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options), [`SoulFireClient`](/docs/sdk/api/ts/soul-fire-client), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error), [`SoulFireService`](/docs/sdk/api/ts/soul-fire-service), [`SoulFireInstallOptions`](/docs/sdk/api/ts/soul-fire-install-options), [`ManagedBotOptions`](/docs/sdk/api/ts/managed-bot-options), [`SoulFireBot`](/docs/sdk/api/ts/soul-fire-bot), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error), [`LocalServerController`](/docs/sdk/api/ts/local-server-controller).
+
+### `connect`
+
+```ts
+connect(options: SoulFireOptions): Effect<SoulFireClient, SoulFireConnectionError, Scope>
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options) | Required |  |
+
+**Returns:** `Effect<SoulFireClient, SoulFireConnectionError, Scope>` ([`SoulFireClient`](/docs/sdk/api/ts/soul-fire-client), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/node.ts#L70)
+
+### `layer`
+
+```ts
+layer(options: SoulFireOptions): Layer<SoulFireService, SoulFireConnectionError, never>
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options) | Required |  |
+
+**Returns:** `Layer<SoulFireService, SoulFireConnectionError, never>` ([`SoulFireService`](/docs/sdk/api/ts/soul-fire-service), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/node.ts#L71)
+
+### `install`
+
+```ts
+install(options?: SoulFireInstallOptions): Effect<SoulFireClient, SoulFireConnectionError, Scope>
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireInstallOptions`](/docs/sdk/api/ts/soul-fire-install-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireClient, SoulFireConnectionError, Scope>` ([`SoulFireClient`](/docs/sdk/api/ts/soul-fire-client), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/node.ts#L72)
+
+### `installLayer`
+
+```ts
+installLayer(options?: SoulFireInstallOptions): Layer<SoulFireService, SoulFireConnectionError, never>
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireInstallOptions`](/docs/sdk/api/ts/soul-fire-install-options) | `{}` |  |
+
+**Returns:** `Layer<SoulFireService, SoulFireConnectionError, never>` ([`SoulFireService`](/docs/sdk/api/ts/soul-fire-service), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/node.ts#L73)
+
+### `createBot`
+
+```ts
+createBot(options: ManagedBotOptions): Effect<SoulFireBot, SoulFireOperationError | SoulFireConnectionError, Scope>
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`ManagedBotOptions`](/docs/sdk/api/ts/managed-bot-options) | Required |  |
+
+**Returns:** `Effect<SoulFireBot, SoulFireOperationError | SoulFireConnectionError, Scope>` ([`SoulFireBot`](/docs/sdk/api/ts/soul-fire-bot), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/node.ts#L74)
+
+### `unauthenticated`
+
+```ts
+unauthenticated(options: SoulFireOptions): Effect<SoulFireClient, SoulFireConnectionError, Scope>
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options) | Required |  |
+
+**Returns:** `Effect<SoulFireClient, SoulFireConnectionError, Scope>` ([`SoulFireClient`](/docs/sdk/api/ts/soul-fire-client), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2740)
+
+### `connectManaged`
+
+```ts
+connectManaged(options: SoulFireOptions, localServer: LocalServerController): Effect<SoulFireClient, SoulFireConnectionError, Scope>
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options) | Required |  |
+| `localServer` | [`LocalServerController`](/docs/sdk/api/ts/local-server-controller) | Required |  |
+
+**Returns:** `Effect<SoulFireClient, SoulFireConnectionError, Scope>` ([`SoulFireClient`](/docs/sdk/api/ts/soul-fire-client), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2741)
+
+### `connectWithHttpClient`
+
+```ts
+connectWithHttpClient(options: SoulFireOptions): Effect<SoulFireClient, SoulFireConnectionError, Scope | HttpClient>
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options) | Required |  |
+
+**Returns:** `Effect<SoulFireClient, SoulFireConnectionError, Scope | HttpClient>` ([`SoulFireClient`](/docs/sdk/api/ts/soul-fire-client), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2742)
+
+### `layerWithHttpClient`
+
+```ts
+layerWithHttpClient(options: SoulFireOptions): Layer<SoulFireService, SoulFireConnectionError, HttpClient>
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options) | Required |  |
+
+**Returns:** `Layer<SoulFireService, SoulFireConnectionError, HttpClient>` ([`SoulFireService`](/docs/sdk/api/ts/soul-fire-service), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2752)
+
+## browser entry point
+
+**Object** in `browser`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/browser.ts#L33).
+
+Browser entry point backed by Effect Platform's fetch client.
+
+**Import from:** `@soulfiremc/sdk/browser`.
+
+**Referenced types:** [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options), [`SoulFireClient`](/docs/sdk/api/ts/soul-fire-client), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error), [`SoulFireService`](/docs/sdk/api/ts/soul-fire-service), [`LocalServerController`](/docs/sdk/api/ts/local-server-controller).
+
+### `connect`
+
+```ts
+connect(options: SoulFireOptions): Effect<SoulFireClient, SoulFireConnectionError, Scope>
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options) | Required |  |
+
+**Returns:** `Effect<SoulFireClient, SoulFireConnectionError, Scope>` ([`SoulFireClient`](/docs/sdk/api/ts/soul-fire-client), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/browser.ts#L35)
+
+### `layer`
+
+```ts
+layer(options: SoulFireOptions): Layer<SoulFireService, SoulFireConnectionError, never>
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options) | Required |  |
+
+**Returns:** `Layer<SoulFireService, SoulFireConnectionError, never>` ([`SoulFireService`](/docs/sdk/api/ts/soul-fire-service), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/browser.ts#L36)
+
+### `unauthenticated`
+
+```ts
+unauthenticated(options: SoulFireOptions): Effect<SoulFireClient, SoulFireConnectionError, Scope>
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options) | Required |  |
+
+**Returns:** `Effect<SoulFireClient, SoulFireConnectionError, Scope>` ([`SoulFireClient`](/docs/sdk/api/ts/soul-fire-client), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2740)
+
+### `connectManaged`
+
+```ts
+connectManaged(options: SoulFireOptions, localServer: LocalServerController): Effect<SoulFireClient, SoulFireConnectionError, Scope>
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options) | Required |  |
+| `localServer` | [`LocalServerController`](/docs/sdk/api/ts/local-server-controller) | Required |  |
+
+**Returns:** `Effect<SoulFireClient, SoulFireConnectionError, Scope>` ([`SoulFireClient`](/docs/sdk/api/ts/soul-fire-client), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2741)
+
+### `connectWithHttpClient`
+
+```ts
+connectWithHttpClient(options: SoulFireOptions): Effect<SoulFireClient, SoulFireConnectionError, Scope | HttpClient>
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options) | Required |  |
+
+**Returns:** `Effect<SoulFireClient, SoulFireConnectionError, Scope | HttpClient>` ([`SoulFireClient`](/docs/sdk/api/ts/soul-fire-client), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2742)
+
+### `layerWithHttpClient`
+
+```ts
+layerWithHttpClient(options: SoulFireOptions): Layer<SoulFireService, SoulFireConnectionError, HttpClient>
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options) | Required |  |
+
+**Returns:** `Layer<SoulFireService, SoulFireConnectionError, HttpClient>` ([`SoulFireService`](/docs/sdk/api/ts/soul-fire-service), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2752)
+
+## Universal entry point
+
+**Object** in `client`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2738).
+
+**Import from:** `@soulfiremc/sdk`.
+
+**Referenced types:** [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options), [`SoulFireClient`](/docs/sdk/api/ts/soul-fire-client), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error), [`LocalServerController`](/docs/sdk/api/ts/local-server-controller), [`SoulFireService`](/docs/sdk/api/ts/soul-fire-service).
+
+### `connect`
+
+```ts
+connect(options: SoulFireOptions): Effect<SoulFireClient, SoulFireConnectionError, Scope>
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options) | Required |  |
+
+**Returns:** `Effect<SoulFireClient, SoulFireConnectionError, Scope>` ([`SoulFireClient`](/docs/sdk/api/ts/soul-fire-client), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2739)
+
+### `unauthenticated`
+
+```ts
+unauthenticated(options: SoulFireOptions): Effect<SoulFireClient, SoulFireConnectionError, Scope>
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options) | Required |  |
+
+**Returns:** `Effect<SoulFireClient, SoulFireConnectionError, Scope>` ([`SoulFireClient`](/docs/sdk/api/ts/soul-fire-client), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2740)
+
+### `connectManaged`
+
+```ts
+connectManaged(options: SoulFireOptions, localServer: LocalServerController): Effect<SoulFireClient, SoulFireConnectionError, Scope>
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options) | Required |  |
+| `localServer` | [`LocalServerController`](/docs/sdk/api/ts/local-server-controller) | Required |  |
+
+**Returns:** `Effect<SoulFireClient, SoulFireConnectionError, Scope>` ([`SoulFireClient`](/docs/sdk/api/ts/soul-fire-client), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2741)
+
+### `connectWithHttpClient`
+
+```ts
+connectWithHttpClient(options: SoulFireOptions): Effect<SoulFireClient, SoulFireConnectionError, Scope | HttpClient>
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options) | Required |  |
+
+**Returns:** `Effect<SoulFireClient, SoulFireConnectionError, Scope | HttpClient>` ([`SoulFireClient`](/docs/sdk/api/ts/soul-fire-client), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2742)
+
+### `layer`
+
+```ts
+layer(options: SoulFireOptions): Layer<SoulFireService, SoulFireConnectionError, never>
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options) | Required |  |
+
+**Returns:** `Layer<SoulFireService, SoulFireConnectionError, never>` ([`SoulFireService`](/docs/sdk/api/ts/soul-fire-service), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2749)
+
+### `layerWithHttpClient`
+
+```ts
+layerWithHttpClient(options: SoulFireOptions): Layer<SoulFireService, SoulFireConnectionError, HttpClient>
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options) | Required |  |
+
+**Returns:** `Layer<SoulFireService, SoulFireConnectionError, HttpClient>` ([`SoulFireService`](/docs/sdk/api/ts/soul-fire-service), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2752)

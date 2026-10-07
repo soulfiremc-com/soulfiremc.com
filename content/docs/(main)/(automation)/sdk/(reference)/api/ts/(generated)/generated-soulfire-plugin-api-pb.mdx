@@ -1,0 +1,1894 @@
+---
+title: "generated/soulfire/plugin_api_pb module"
+description: "TypeScript API signatures, fields, and source for generated/soulfire/plugin_api_pb module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`file_soulfire_plugin_api`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#file_soulfire_plugin_api) | object |
+| [`GetPluginApiRequest`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#getpluginapirequest) | type |
+| [`GetPluginApiRequestSchema`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#getpluginapirequestschema) | object |
+| [`GetPluginApiResponse`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#getpluginapiresponse) | type |
+| [`GetPluginApiResponseSchema`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#getpluginapiresponseschema) | object |
+| [`GetPluginDescriptorSetRequest`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#getplugindescriptorsetrequest) | type |
+| [`GetPluginDescriptorSetRequestSchema`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#getplugindescriptorsetrequestschema) | object |
+| [`GetPluginDescriptorSetResponse`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#getplugindescriptorsetresponse) | type |
+| [`GetPluginDescriptorSetResponseSchema`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#getplugindescriptorsetresponseschema) | object |
+| [`ListPluginApisRequest`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#listpluginapisrequest) | type |
+| [`ListPluginApisRequestSchema`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#listpluginapisrequestschema) | object |
+| [`ListPluginApisResponse`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#listpluginapisresponse) | type |
+| [`ListPluginApisResponseSchema`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#listpluginapisresponseschema) | object |
+| [`PluginApiDescriptor`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginapidescriptor) | type |
+| [`PluginApiDescriptorSchema`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginapidescriptorschema) | object |
+| [`PluginApiEvent`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginapievent) | type |
+| [`PluginApiEventKind`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginapieventkind) | enum |
+| [`PluginApiEventKindSchema`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginapieventkindschema) | object |
+| [`PluginApiEventSchema`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginapieventschema) | object |
+| [`PluginApiService`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginapiservice) | object |
+| [`PluginApiStability`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginapistability) | enum |
+| [`PluginApiStabilitySchema`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginapistabilityschema) | object |
+| [`PluginEvent`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginevent) | type |
+| [`PluginEventKind`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#plugineventkind) | enum |
+| [`PluginEventKindSchema`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#plugineventkindschema) | object |
+| [`PluginEventSchema`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#plugineventschema) | object |
+| [`PluginEventScope`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#plugineventscope) | type |
+| [`PluginEventScopeSchema`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#plugineventscopeschema) | object |
+| [`PluginEventTypeDescriptor`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#plugineventtypedescriptor) | type |
+| [`PluginEventTypeDescriptorSchema`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#plugineventtypedescriptorschema) | object |
+| [`PluginPermissionDefault`](/docs/sdk/api/ts/plugin-permission-default) | enum |
+| [`PluginPermissionDefaultSchema`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginpermissiondefaultschema) | object |
+| [`PluginPermissionDescriptor`](/docs/sdk/api/ts/plugin-permission-descriptor) | type |
+| [`PluginPermissionDescriptorSchema`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginpermissiondescriptorschema) | object |
+| [`PluginPermissionRisk`](/docs/sdk/api/ts/plugin-permission-risk) | enum |
+| [`PluginPermissionRiskSchema`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginpermissionriskschema) | object |
+| [`PluginPermissionScope`](/docs/sdk/api/ts/plugin-permission-scope) | enum |
+| [`PluginPermissionScopeSchema`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginpermissionscopeschema) | object |
+| [`PluginRpcMethodDescriptor`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginrpcmethoddescriptor) | type |
+| [`PluginRpcMethodDescriptorSchema`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginrpcmethoddescriptorschema) | object |
+| [`PluginRpcServiceDescriptor`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginrpcservicedescriptor) | type |
+| [`PluginRpcServiceDescriptorSchema`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginrpcservicedescriptorschema) | object |
+| [`PluginSdkPackages`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginsdkpackages) | type |
+| [`PluginSdkPackagesSchema`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginsdkpackagesschema) | object |
+| [`PluginTaskTypeDescriptor`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#plugintasktypedescriptor) | type |
+| [`PluginTaskTypeDescriptorSchema`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#plugintasktypedescriptorschema) | object |
+| [`WatchPluginApisRequest`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#watchpluginapisrequest) | type |
+| [`WatchPluginApisRequestSchema`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#watchpluginapisrequestschema) | object |
+| [`WatchPluginEventsRequest`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#watchplugineventsrequest) | type |
+| [`WatchPluginEventsRequestSchema`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#watchplugineventsrequestschema) | object |
+
+## file_soulfire_plugin_api
+
+**Object** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L17).
+
+Describes the file soulfire/plugin_api.proto.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+file_soulfire_plugin_api: DescFile
+```
+
+## GetPluginApiRequest
+
+**Type** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L403).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+type GetPluginApiRequest = Message<"soulfire.v1.GetPluginApiRequest"> & {
+  /**
+   * @generated from field: string plugin_id = 1;
+   */
+  pluginId: string;
+};
+```
+
+### `pluginId`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L407)
+
+## GetPluginApiRequestSchema
+
+**Object** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L414).
+
+Describes the message soulfire.v1.GetPluginApiRequest.
+Use `create(GetPluginApiRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+GetPluginApiRequestSchema: GenMessage<GetPluginApiRequest>
+```
+
+**Referenced types:** [`GetPluginApiRequest`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#getpluginapirequest).
+
+## GetPluginApiResponse
+
+**Type** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L420).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+type GetPluginApiResponse = Message<"soulfire.v1.GetPluginApiResponse"> & {
+  /**
+   * @generated from field: soulfire.v1.PluginApiDescriptor plugin = 1;
+   */
+  plugin?: PluginApiDescriptor | undefined;
+
+  /**
+   * @generated from field: uint64 revision = 2;
+   */
+  revision: bigint;
+};
+```
+
+**Referenced types:** [`PluginApiDescriptor`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginapidescriptor).
+
+### `plugin`
+
+**Type:** `PluginApiDescriptor | undefined` ([`PluginApiDescriptor`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginapidescriptor)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L424)
+
+### `revision`
+
+**Type:** `bigint`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L429)
+
+## GetPluginApiResponseSchema
+
+**Object** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L436).
+
+Describes the message soulfire.v1.GetPluginApiResponse.
+Use `create(GetPluginApiResponseSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+GetPluginApiResponseSchema: GenMessage<GetPluginApiResponse>
+```
+
+**Referenced types:** [`GetPluginApiResponse`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#getpluginapiresponse).
+
+## GetPluginDescriptorSetRequest
+
+**Type** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L442).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+type GetPluginDescriptorSetRequest = Message<"soulfire.v1.GetPluginDescriptorSetRequest"> & {
+  /**
+   * @generated from field: string plugin_id = 1;
+   */
+  pluginId: string;
+
+  /**
+   * When set, the server rejects a changed descriptor instead of returning it.
+   *
+   * @generated from field: optional string expected_sha256 = 2;
+   */
+  expectedSha256?: string | undefined;
+};
+```
+
+### `pluginId`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L446)
+
+### `expectedSha256`
+
+When set, the server rejects a changed descriptor instead of returning it.
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L453)
+
+## GetPluginDescriptorSetRequestSchema
+
+**Object** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L460).
+
+Describes the message soulfire.v1.GetPluginDescriptorSetRequest.
+Use `create(GetPluginDescriptorSetRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+GetPluginDescriptorSetRequestSchema: GenMessage<GetPluginDescriptorSetRequest>
+```
+
+**Referenced types:** [`GetPluginDescriptorSetRequest`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#getplugindescriptorsetrequest).
+
+## GetPluginDescriptorSetResponse
+
+**Type** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L466).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+type GetPluginDescriptorSetResponse = Message<"soulfire.v1.GetPluginDescriptorSetResponse"> & {
+  /**
+   * @generated from field: string plugin_id = 1;
+   */
+  pluginId: string;
+
+  /**
+   * @generated from field: string plugin_version = 2;
+   */
+  pluginVersion: string;
+
+  /**
+   * @generated from field: string descriptor_sha256 = 3;
+   */
+  descriptorSha256: string;
+
+  /**
+   * Serialized google.protobuf.FileDescriptorSet.
+   *
+   * @generated from field: bytes descriptor_set = 4;
+   */
+  descriptorSet: Uint8Array;
+};
+```
+
+### `pluginId`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L470)
+
+### `pluginVersion`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L475)
+
+### `descriptorSha256`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L480)
+
+### `descriptorSet`
+
+Serialized google.protobuf.FileDescriptorSet.
+
+**Type:** `Uint8Array<ArrayBufferLike>`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L487)
+
+## GetPluginDescriptorSetResponseSchema
+
+**Object** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L494).
+
+Describes the message soulfire.v1.GetPluginDescriptorSetResponse.
+Use `create(GetPluginDescriptorSetResponseSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+GetPluginDescriptorSetResponseSchema: GenMessage<GetPluginDescriptorSetResponse>
+```
+
+**Referenced types:** [`GetPluginDescriptorSetResponse`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#getplugindescriptorsetresponse).
+
+## ListPluginApisRequest
+
+**Type** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L368).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+type ListPluginApisRequest = Message<"soulfire.v1.ListPluginApisRequest"> & {
+};
+```
+
+## ListPluginApisRequestSchema
+
+**Object** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L375).
+
+Describes the message soulfire.v1.ListPluginApisRequest.
+Use `create(ListPluginApisRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+ListPluginApisRequestSchema: GenMessage<Message<"soulfire.v1.ListPluginApisRequest">>
+```
+
+## ListPluginApisResponse
+
+**Type** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L381).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+type ListPluginApisResponse = Message<"soulfire.v1.ListPluginApisResponse"> & {
+  /**
+   * @generated from field: repeated soulfire.v1.PluginApiDescriptor plugins = 1;
+   */
+  plugins: PluginApiDescriptor[];
+
+  /**
+   * @generated from field: uint64 revision = 2;
+   */
+  revision: bigint;
+};
+```
+
+**Referenced types:** [`PluginApiDescriptor`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginapidescriptor).
+
+### `plugins`
+
+**Type:** `PluginApiDescriptor[]` ([`PluginApiDescriptor`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginapidescriptor)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L385)
+
+### `revision`
+
+**Type:** `bigint`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L390)
+
+## ListPluginApisResponseSchema
+
+**Object** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L397).
+
+Describes the message soulfire.v1.ListPluginApisResponse.
+Use `create(ListPluginApisResponseSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+ListPluginApisResponseSchema: GenMessage<ListPluginApisResponse>
+```
+
+**Referenced types:** [`ListPluginApisResponse`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#listpluginapisresponse).
+
+## PluginApiDescriptor
+
+**Type** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L261).
+
+Complete discoverable description of a plugin API.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+type PluginApiDescriptor = Message<"soulfire.v1.PluginApiDescriptor"> & {
+  /**
+   * @generated from field: string plugin_id = 1;
+   */
+  pluginId: string;
+
+  /**
+   * @generated from field: string plugin_version = 2;
+   */
+  pluginVersion: string;
+
+  /**
+   * @generated from field: string description = 3;
+   */
+  description: string;
+
+  /**
+   * @generated from field: string author = 4;
+   */
+  author: string;
+
+  /**
+   * @generated from field: string license = 5;
+   */
+  license: string;
+
+  /**
+   * @generated from field: string website_url = 6;
+   */
+  websiteUrl: string;
+
+  /**
+   * @generated from field: string required_soulfire_version = 7;
+   */
+  requiredSoulfireVersion: string;
+
+  /**
+   * @generated from field: uint32 api_major_version = 8;
+   */
+  apiMajorVersion: number;
+
+  /**
+   * @generated from field: string descriptor_sha256 = 9;
+   */
+  descriptorSha256: string;
+
+  /**
+   * @generated from field: repeated soulfire.v1.PluginRpcServiceDescriptor services = 10;
+   */
+  services: PluginRpcServiceDescriptor[];
+
+  /**
+   * @generated from field: repeated soulfire.v1.PluginPermissionDescriptor permissions = 11;
+   */
+  permissions: PluginPermissionDescriptor[];
+
+  /**
+   * @generated from field: repeated string event_type_urls = 12;
+   */
+  eventTypeUrls: string[];
+
+  /**
+   * @generated from field: repeated string task_type_urls = 13;
+   */
+  taskTypeUrls: string[];
+
+  /**
+   * @generated from field: soulfire.v1.PluginApiStability stability = 14;
+   */
+  stability: PluginApiStability;
+
+  /**
+   * @generated from field: soulfire.v1.PluginSdkPackages sdk_packages = 15;
+   */
+  sdkPackages?: PluginSdkPackages | undefined;
+
+  /**
+   * @generated from field: optional string documentation_url = 16;
+   */
+  documentationUrl?: string | undefined;
+
+  /**
+   * @generated from field: optional string source_url = 17;
+   */
+  sourceUrl?: string | undefined;
+
+  /**
+   * @generated from field: repeated soulfire.v1.PluginEventTypeDescriptor event_types = 18;
+   */
+  eventTypes: PluginEventTypeDescriptor[];
+
+  /**
+   * @generated from field: repeated soulfire.v1.PluginTaskTypeDescriptor task_types = 19;
+   */
+  taskTypes: PluginTaskTypeDescriptor[];
+};
+```
+
+**Referenced types:** [`PluginRpcServiceDescriptor`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginrpcservicedescriptor), [`PluginPermissionDescriptor`](/docs/sdk/api/ts/plugin-permission-descriptor), [`PluginApiStability`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginapistability), [`PluginSdkPackages`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginsdkpackages), [`PluginEventTypeDescriptor`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#plugineventtypedescriptor), [`PluginTaskTypeDescriptor`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#plugintasktypedescriptor).
+
+### `pluginId`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L265)
+
+### `pluginVersion`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L270)
+
+### `description`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L275)
+
+### `author`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L280)
+
+### `license`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L285)
+
+### `websiteUrl`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L290)
+
+### `requiredSoulfireVersion`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L295)
+
+### `apiMajorVersion`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L300)
+
+### `descriptorSha256`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L305)
+
+### `services`
+
+**Type:** `PluginRpcServiceDescriptor[]` ([`PluginRpcServiceDescriptor`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginrpcservicedescriptor)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L310)
+
+### `permissions`
+
+**Type:** `PluginPermissionDescriptor[]` ([`PluginPermissionDescriptor`](/docs/sdk/api/ts/plugin-permission-descriptor)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L315)
+
+### `eventTypeUrls`
+
+**Type:** `string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L320)
+
+### `taskTypeUrls`
+
+**Type:** `string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L325)
+
+### `stability`
+
+**Type:** [`PluginApiStability`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginapistability).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L330)
+
+### `sdkPackages`
+
+**Type:** `PluginSdkPackages | undefined` ([`PluginSdkPackages`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginsdkpackages)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L335)
+
+### `documentationUrl`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L340)
+
+### `sourceUrl`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L345)
+
+### `eventTypes`
+
+**Type:** `PluginEventTypeDescriptor[]` ([`PluginEventTypeDescriptor`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#plugineventtypedescriptor)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L350)
+
+### `taskTypes`
+
+**Type:** `PluginTaskTypeDescriptor[]` ([`PluginTaskTypeDescriptor`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#plugintasktypedescriptor)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L355)
+
+## PluginApiDescriptorSchema
+
+**Object** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L362).
+
+Describes the message soulfire.v1.PluginApiDescriptor.
+Use `create(PluginApiDescriptorSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+PluginApiDescriptorSchema: GenMessage<PluginApiDescriptor>
+```
+
+**Referenced types:** [`PluginApiDescriptor`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginapidescriptor).
+
+## PluginApiEvent
+
+**Type** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L520).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+type PluginApiEvent = Message<"soulfire.v1.PluginApiEvent"> & {
+  /**
+   * @generated from field: uint64 revision = 1;
+   */
+  revision: bigint;
+
+  /**
+   * @generated from field: soulfire.v1.PluginApiEventKind kind = 2;
+   */
+  kind: PluginApiEventKind;
+
+  /**
+   * @generated from field: optional soulfire.v1.PluginApiDescriptor plugin = 3;
+   */
+  plugin?: PluginApiDescriptor | undefined;
+
+  /**
+   * Populated for snapshot events.
+   *
+   * @generated from field: repeated soulfire.v1.PluginApiDescriptor plugins = 4;
+   */
+  plugins: PluginApiDescriptor[];
+
+  /**
+   * Populated for removed events.
+   *
+   * @generated from field: optional string removed_plugin_id = 5;
+   */
+  removedPluginId?: string | undefined;
+};
+```
+
+**Referenced types:** [`PluginApiEventKind`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginapieventkind), [`PluginApiDescriptor`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginapidescriptor).
+
+### `revision`
+
+**Type:** `bigint`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L524)
+
+### `kind`
+
+**Type:** [`PluginApiEventKind`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginapieventkind).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L529)
+
+### `plugin`
+
+**Type:** `PluginApiDescriptor | undefined` ([`PluginApiDescriptor`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginapidescriptor)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L534)
+
+### `plugins`
+
+Populated for snapshot events.
+
+**Type:** `PluginApiDescriptor[]` ([`PluginApiDescriptor`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginapidescriptor)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L541)
+
+### `removedPluginId`
+
+Populated for removed events.
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L548)
+
+## PluginApiEventKind
+
+**Enum** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L842).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+enum PluginApiEventKind
+```
+
+### `UNSPECIFIED`
+
+**Type:** `PluginApiEventKind.UNSPECIFIED`.
+
+**Value:** `0`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L846)
+
+### `SNAPSHOT`
+
+**Type:** `PluginApiEventKind.SNAPSHOT`.
+
+**Value:** `1`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L851)
+
+### `ADDED`
+
+**Type:** `PluginApiEventKind.ADDED`.
+
+**Value:** `2`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L856)
+
+### `UPDATED`
+
+**Type:** `PluginApiEventKind.UPDATED`.
+
+**Value:** `3`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L861)
+
+### `REMOVED`
+
+**Type:** `PluginApiEventKind.REMOVED`.
+
+**Value:** `4`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L866)
+
+## PluginApiEventKindSchema
+
+**Object** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L872).
+
+Describes the enum soulfire.v1.PluginApiEventKind.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+PluginApiEventKindSchema: GenEnum<PluginApiEventKind>
+```
+
+**Referenced types:** [`PluginApiEventKind`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginapieventkind).
+
+## PluginApiEventSchema
+
+**Object** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L555).
+
+Describes the message soulfire.v1.PluginApiEvent.
+Use `create(PluginApiEventSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+PluginApiEventSchema: GenMessage<PluginApiEvent>
+```
+
+**Referenced types:** [`PluginApiEvent`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginapievent).
+
+## PluginApiService
+
+**Object** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L906).
+
+Discovers typed APIs registered by SoulFire server plugins.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+PluginApiService: GenService<{ listPluginApis: { methodKind: "unary"; input: GenMessage<Message<"soulfire.v1.ListPluginApisRequest">>; output: GenMessage<ListPluginApisResponse>; }; getPluginApi: { methodKind: "unary"; input: GenMessage<GetPluginApiRequest>; output: GenMessage<GetPluginApiResponse>; }; getPluginDescriptorSet: { methodKind: "unary"; input: GenMessage<GetPluginDescriptorSetRequest>; output: GenMessage<GetPluginDescriptorSetResponse>; }; watchPluginApis: { methodKind: "server_streaming"; input: GenMessage<WatchPluginApisRequest>; output: GenMessage<PluginApiEvent>; }; watchPluginEvents: { methodKind: "server_streaming"; input: GenMessage<WatchPluginEventsRequest>; output: GenMessage<PluginEvent>; }; }>
+```
+
+**Referenced types:** [`ListPluginApisResponse`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#listpluginapisresponse), [`GetPluginApiRequest`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#getpluginapirequest), [`GetPluginApiResponse`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#getpluginapiresponse), [`GetPluginDescriptorSetRequest`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#getplugindescriptorsetrequest), [`GetPluginDescriptorSetResponse`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#getplugindescriptorsetresponse), [`WatchPluginApisRequest`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#watchpluginapisrequest), [`PluginApiEvent`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginapievent), [`WatchPluginEventsRequest`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#watchplugineventsrequest), [`PluginEvent`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginevent).
+
+## PluginApiStability
+
+**Enum** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L806).
+
+Stability level of a plugin API.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+enum PluginApiStability
+```
+
+### `UNSPECIFIED`
+
+**Type:** `PluginApiStability.UNSPECIFIED`.
+
+**Value:** `0`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L810)
+
+### `EXPERIMENTAL`
+
+**Type:** `PluginApiStability.EXPERIMENTAL`.
+
+**Value:** `1`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L815)
+
+### `BETA`
+
+**Type:** `PluginApiStability.BETA`.
+
+**Value:** `2`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L820)
+
+### `STABLE`
+
+**Type:** `PluginApiStability.STABLE`.
+
+**Value:** `3`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L825)
+
+### `DEPRECATED`
+
+**Type:** `PluginApiStability.DEPRECATED`.
+
+**Value:** `4`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L830)
+
+## PluginApiStabilitySchema
+
+**Object** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L836).
+
+Describes the enum soulfire.v1.PluginApiStability.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+PluginApiStabilitySchema: GenEnum<PluginApiStability>
+```
+
+**Referenced types:** [`PluginApiStability`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginapistability).
+
+## PluginEvent
+
+**Type** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L638).
+
+Normalized event envelope shared by typed and reflective SDK consumers.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+type PluginEvent = Message<"soulfire.v1.PluginEvent"> & {
+  /**
+   * @generated from field: uint64 sequence = 1;
+   */
+  sequence: bigint;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp emitted_at = 2;
+   */
+  emittedAt?: Timestamp | undefined;
+
+  /**
+   * @generated from field: soulfire.v1.PluginEventKind kind = 3;
+   */
+  kind: PluginEventKind;
+
+  /**
+   * @generated from field: optional string plugin_id = 4;
+   */
+  pluginId?: string | undefined;
+
+  /**
+   * @generated from field: optional string type_url = 5;
+   */
+  typeUrl?: string | undefined;
+
+  /**
+   * @generated from field: soulfire.v1.PluginEventScope scope = 6;
+   */
+  scope?: PluginEventScope | undefined;
+
+  /**
+   * @generated from field: optional google.protobuf.Any payload = 7;
+   */
+  payload?: Any | undefined;
+
+  /**
+   * @generated from field: uint64 dropped_before = 8;
+   */
+  droppedBefore: bigint;
+
+  /**
+   * @generated from field: bool resume_gap = 9;
+   */
+  resumeGap: boolean;
+};
+```
+
+**Referenced types:** [`PluginEventKind`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#plugineventkind), [`PluginEventScope`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#plugineventscope).
+
+### `sequence`
+
+**Type:** `bigint`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L642)
+
+### `emittedAt`
+
+**Type:** `Timestamp | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L647)
+
+### `kind`
+
+**Type:** [`PluginEventKind`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#plugineventkind).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L652)
+
+### `pluginId`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L657)
+
+### `typeUrl`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L662)
+
+### `scope`
+
+**Type:** `PluginEventScope | undefined` ([`PluginEventScope`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#plugineventscope)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L667)
+
+### `payload`
+
+**Type:** `Any | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L672)
+
+### `droppedBefore`
+
+**Type:** `bigint`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L677)
+
+### `resumeGap`
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L682)
+
+## PluginEventKind
+
+**Enum** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L878).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+enum PluginEventKind
+```
+
+### `UNSPECIFIED`
+
+**Type:** `PluginEventKind.UNSPECIFIED`.
+
+**Value:** `0`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L882)
+
+### `READY`
+
+**Type:** `PluginEventKind.READY`.
+
+**Value:** `1`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L887)
+
+### `DATA`
+
+**Type:** `PluginEventKind.DATA`.
+
+**Value:** `2`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L892)
+
+## PluginEventKindSchema
+
+**Object** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L898).
+
+Describes the enum soulfire.v1.PluginEventKind.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+PluginEventKindSchema: GenEnum<PluginEventKind>
+```
+
+**Referenced types:** [`PluginEventKind`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#plugineventkind).
+
+## PluginEventSchema
+
+**Object** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L689).
+
+Describes the message soulfire.v1.PluginEvent.
+Use `create(PluginEventSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+PluginEventSchema: GenMessage<PluginEvent>
+```
+
+**Referenced types:** [`PluginEvent`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginevent).
+
+## PluginEventScope
+
+**Type** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L564).
+
+Scope attached to one plugin event. An empty scope represents a global
+event. Bot and task events also carry their containing instance.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+type PluginEventScope = Message<"soulfire.v1.PluginEventScope"> & {
+  /**
+   * @generated from field: optional string instance_id = 1;
+   */
+  instanceId?: string | undefined;
+
+  /**
+   * @generated from field: optional string bot_id = 2;
+   */
+  botId?: string | undefined;
+
+  /**
+   * @generated from field: optional string task_id = 3;
+   */
+  taskId?: string | undefined;
+};
+```
+
+### `instanceId`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L568)
+
+### `botId`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L573)
+
+### `taskId`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L578)
+
+## PluginEventScopeSchema
+
+**Object** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L585).
+
+Describes the message soulfire.v1.PluginEventScope.
+Use `create(PluginEventScopeSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+PluginEventScopeSchema: GenMessage<PluginEventScope>
+```
+
+**Referenced types:** [`PluginEventScope`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#plugineventscope).
+
+## PluginEventTypeDescriptor
+
+**Type** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L174).
+
+A typed event published by a plugin.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+type PluginEventTypeDescriptor = Message<"soulfire.v1.PluginEventTypeDescriptor"> & {
+  /**
+   * @generated from field: string type_url = 1;
+   */
+  typeUrl: string;
+
+  /**
+   * @generated from field: repeated string permissions = 2;
+   */
+  permissions: string[];
+};
+```
+
+### `typeUrl`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L178)
+
+### `permissions`
+
+**Type:** `string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L183)
+
+## PluginEventTypeDescriptorSchema
+
+**Object** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L190).
+
+Describes the message soulfire.v1.PluginEventTypeDescriptor.
+Use `create(PluginEventTypeDescriptorSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+PluginEventTypeDescriptorSchema: GenMessage<PluginEventTypeDescriptor>
+```
+
+**Referenced types:** [`PluginEventTypeDescriptor`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#plugineventtypedescriptor).
+
+## PluginPermissionDefault
+
+**Enum** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L773).
+
+The default grant used when no explicit user grant exists.
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+enum PluginPermissionDefault
+```
+
+### `UNSPECIFIED`
+
+**Type:** `PluginPermissionDefault.UNSPECIFIED`.
+
+**Value:** `0`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L777)
+
+### `ADMIN_ONLY`
+
+**Type:** `PluginPermissionDefault.ADMIN_ONLY`.
+
+**Value:** `1`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L782)
+
+### `AUTHENTICATED`
+
+**Type:** `PluginPermissionDefault.AUTHENTICATED`.
+
+**Value:** `2`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L787)
+
+### `INSTANCE_OWNER`
+
+**Type:** `PluginPermissionDefault.INSTANCE_OWNER`.
+
+**Value:** `3`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L792)
+
+## PluginPermissionDefaultSchema
+
+**Object** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L798).
+
+Describes the enum soulfire.v1.PluginPermissionDefault.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+PluginPermissionDefaultSchema: GenEnum<PluginPermissionDefault>
+```
+
+**Referenced types:** [`PluginPermissionDefault`](/docs/sdk/api/ts/plugin-permission-default).
+
+## PluginPermissionDescriptor
+
+**Type** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L25).
+
+A dynamically registered permission owned by a plugin.
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+type PluginPermissionDescriptor = Message<"soulfire.v1.PluginPermissionDescriptor"> & {
+  /**
+   * Full stable permission ID in the form plugin.<plugin-id>.<permission>.
+   *
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * @generated from field: string plugin_id = 2;
+   */
+  pluginId: string;
+
+  /**
+   * @generated from field: soulfire.v1.PluginPermissionScope scope = 3;
+   */
+  scope: PluginPermissionScope;
+
+  /**
+   * @generated from field: soulfire.v1.PluginPermissionRisk risk = 4;
+   */
+  risk: PluginPermissionRisk;
+
+  /**
+   * @generated from field: string display_name = 5;
+   */
+  displayName: string;
+
+  /**
+   * @generated from field: string description = 6;
+   */
+  description: string;
+
+  /**
+   * @generated from field: soulfire.v1.PluginPermissionDefault default_grant = 7;
+   */
+  defaultGrant: PluginPermissionDefault;
+};
+```
+
+**Referenced types:** [`PluginPermissionScope`](/docs/sdk/api/ts/plugin-permission-scope), [`PluginPermissionRisk`](/docs/sdk/api/ts/plugin-permission-risk), [`PluginPermissionDefault`](/docs/sdk/api/ts/plugin-permission-default).
+
+### `id`
+
+Full stable permission ID in the form plugin.&lt;plugin-id&gt;.&lt;permission&gt;.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L31)
+
+### `pluginId`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L36)
+
+### `scope`
+
+**Type:** [`PluginPermissionScope`](/docs/sdk/api/ts/plugin-permission-scope).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L41)
+
+### `risk`
+
+**Type:** [`PluginPermissionRisk`](/docs/sdk/api/ts/plugin-permission-risk).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L46)
+
+### `displayName`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L51)
+
+### `description`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L56)
+
+### `defaultGrant`
+
+**Type:** [`PluginPermissionDefault`](/docs/sdk/api/ts/plugin-permission-default).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L61)
+
+## PluginPermissionDescriptorSchema
+
+**Object** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L68).
+
+Describes the message soulfire.v1.PluginPermissionDescriptor.
+Use `create(PluginPermissionDescriptorSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+PluginPermissionDescriptorSchema: GenMessage<PluginPermissionDescriptor>
+```
+
+**Referenced types:** [`PluginPermissionDescriptor`](/docs/sdk/api/ts/plugin-permission-descriptor).
+
+## PluginPermissionRisk
+
+**Enum** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L735).
+
+The potential impact of an operation guarded by a plugin permission.
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+enum PluginPermissionRisk
+```
+
+### `UNSPECIFIED`
+
+**Type:** `PluginPermissionRisk.UNSPECIFIED`.
+
+**Value:** `0`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L739)
+
+### `READ`
+
+**Type:** `PluginPermissionRisk.READ`.
+
+**Value:** `1`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L744)
+
+### `CONTROL`
+
+**Type:** `PluginPermissionRisk.CONTROL`.
+
+**Value:** `2`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L749)
+
+### `MUTATION`
+
+**Type:** `PluginPermissionRisk.MUTATION`.
+
+**Value:** `3`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L754)
+
+### `DESTRUCTIVE`
+
+**Type:** `PluginPermissionRisk.DESTRUCTIVE`.
+
+**Value:** `4`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L759)
+
+## PluginPermissionRiskSchema
+
+**Object** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L765).
+
+Describes the enum soulfire.v1.PluginPermissionRisk.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+PluginPermissionRiskSchema: GenEnum<PluginPermissionRisk>
+```
+
+**Referenced types:** [`PluginPermissionRisk`](/docs/sdk/api/ts/plugin-permission-risk).
+
+## PluginPermissionScope
+
+**Enum** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L697).
+
+The scope in which a plugin permission is evaluated.
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+enum PluginPermissionScope
+```
+
+### `UNSPECIFIED`
+
+**Type:** `PluginPermissionScope.UNSPECIFIED`.
+
+**Value:** `0`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L701)
+
+### `GLOBAL`
+
+**Type:** `PluginPermissionScope.GLOBAL`.
+
+**Value:** `1`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L706)
+
+### `INSTANCE`
+
+**Type:** `PluginPermissionScope.INSTANCE`.
+
+**Value:** `2`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L711)
+
+### `BOT`
+
+**Type:** `PluginPermissionScope.BOT`.
+
+**Value:** `3`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L716)
+
+### `TASK`
+
+**Type:** `PluginPermissionScope.TASK`.
+
+**Value:** `4`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L721)
+
+## PluginPermissionScopeSchema
+
+**Object** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L727).
+
+Describes the enum soulfire.v1.PluginPermissionScope.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+PluginPermissionScopeSchema: GenEnum<PluginPermissionScope>
+```
+
+**Referenced types:** [`PluginPermissionScope`](/docs/sdk/api/ts/plugin-permission-scope).
+
+## PluginRpcMethodDescriptor
+
+**Type** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L76).
+
+Metadata about one method exposed by a plugin RPC service.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+type PluginRpcMethodDescriptor = Message<"soulfire.v1.PluginRpcMethodDescriptor"> & {
+  /**
+   * @generated from field: string name = 1;
+   */
+  name: string;
+
+  /**
+   * @generated from field: string full_name = 2;
+   */
+  fullName: string;
+
+  /**
+   * @generated from field: string input_type_url = 3;
+   */
+  inputTypeUrl: string;
+
+  /**
+   * @generated from field: string output_type_url = 4;
+   */
+  outputTypeUrl: string;
+
+  /**
+   * @generated from field: bool client_streaming = 5;
+   */
+  clientStreaming: boolean;
+
+  /**
+   * @generated from field: bool server_streaming = 6;
+   */
+  serverStreaming: boolean;
+
+  /**
+   * @generated from field: repeated string permissions = 7;
+   */
+  permissions: string[];
+
+  /**
+   * @generated from field: string display_name = 8;
+   */
+  displayName: string;
+
+  /**
+   * @generated from field: string description = 9;
+   */
+  description: string;
+
+  /**
+   * @generated from field: bool exposed_to_mcp = 10;
+   */
+  exposedToMcp: boolean;
+
+  /**
+   * @generated from field: bool mcp_requires_confirmation = 11;
+   */
+  mcpRequiresConfirmation: boolean;
+};
+```
+
+### `name`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L80)
+
+### `fullName`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L85)
+
+### `inputTypeUrl`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L90)
+
+### `outputTypeUrl`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L95)
+
+### `clientStreaming`
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L100)
+
+### `serverStreaming`
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L105)
+
+### `permissions`
+
+**Type:** `string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L110)
+
+### `displayName`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L115)
+
+### `description`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L120)
+
+### `exposedToMcp`
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L125)
+
+### `mcpRequiresConfirmation`
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L130)
+
+## PluginRpcMethodDescriptorSchema
+
+**Object** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L137).
+
+Describes the message soulfire.v1.PluginRpcMethodDescriptor.
+Use `create(PluginRpcMethodDescriptorSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+PluginRpcMethodDescriptorSchema: GenMessage<PluginRpcMethodDescriptor>
+```
+
+**Referenced types:** [`PluginRpcMethodDescriptor`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginrpcmethoddescriptor).
+
+## PluginRpcServiceDescriptor
+
+**Type** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L145).
+
+Metadata about one gRPC service exposed by a plugin.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+type PluginRpcServiceDescriptor = Message<"soulfire.v1.PluginRpcServiceDescriptor"> & {
+  /**
+   * @generated from field: string name = 1;
+   */
+  name: string;
+
+  /**
+   * @generated from field: string full_name = 2;
+   */
+  fullName: string;
+
+  /**
+   * @generated from field: repeated soulfire.v1.PluginRpcMethodDescriptor methods = 3;
+   */
+  methods: PluginRpcMethodDescriptor[];
+};
+```
+
+**Referenced types:** [`PluginRpcMethodDescriptor`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginrpcmethoddescriptor).
+
+### `name`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L149)
+
+### `fullName`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L154)
+
+### `methods`
+
+**Type:** `PluginRpcMethodDescriptor[]` ([`PluginRpcMethodDescriptor`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginrpcmethoddescriptor)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L159)
+
+## PluginRpcServiceDescriptorSchema
+
+**Object** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L166).
+
+Describes the message soulfire.v1.PluginRpcServiceDescriptor.
+Use `create(PluginRpcServiceDescriptorSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+PluginRpcServiceDescriptorSchema: GenMessage<PluginRpcServiceDescriptor>
+```
+
+**Referenced types:** [`PluginRpcServiceDescriptor`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginrpcservicedescriptor).
+
+## PluginSdkPackages
+
+**Type** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L232).
+
+Optional package coordinates for a plugin's typed SDK companions.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+type PluginSdkPackages = Message<"soulfire.v1.PluginSdkPackages"> & {
+  /**
+   * @generated from field: optional string typescript_package = 1;
+   */
+  typescriptPackage?: string | undefined;
+
+  /**
+   * @generated from field: optional string python_package = 2;
+   */
+  pythonPackage?: string | undefined;
+
+  /**
+   * @generated from field: optional string maven_artifact = 3;
+   */
+  mavenArtifact?: string | undefined;
+};
+```
+
+### `typescriptPackage`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L236)
+
+### `pythonPackage`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L241)
+
+### `mavenArtifact`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L246)
+
+## PluginSdkPackagesSchema
+
+**Object** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L253).
+
+Describes the message soulfire.v1.PluginSdkPackages.
+Use `create(PluginSdkPackagesSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+PluginSdkPackagesSchema: GenMessage<PluginSdkPackages>
+```
+
+**Referenced types:** [`PluginSdkPackages`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#pluginsdkpackages).
+
+## PluginTaskTypeDescriptor
+
+**Type** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L198).
+
+A typed task provider contributed by a plugin.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+type PluginTaskTypeDescriptor = Message<"soulfire.v1.PluginTaskTypeDescriptor"> & {
+  /**
+   * @generated from field: string input_type_url = 1;
+   */
+  inputTypeUrl: string;
+
+  /**
+   * @generated from field: string result_type_url = 2;
+   */
+  resultTypeUrl: string;
+
+  /**
+   * @generated from field: optional string progress_type_url = 3;
+   */
+  progressTypeUrl?: string | undefined;
+
+  /**
+   * @generated from field: repeated string permissions = 4;
+   */
+  permissions: string[];
+};
+```
+
+### `inputTypeUrl`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L202)
+
+### `resultTypeUrl`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L207)
+
+### `progressTypeUrl`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L212)
+
+### `permissions`
+
+**Type:** `string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L217)
+
+## PluginTaskTypeDescriptorSchema
+
+**Object** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L224).
+
+Describes the message soulfire.v1.PluginTaskTypeDescriptor.
+Use `create(PluginTaskTypeDescriptorSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+PluginTaskTypeDescriptorSchema: GenMessage<PluginTaskTypeDescriptor>
+```
+
+**Referenced types:** [`PluginTaskTypeDescriptor`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#plugintasktypedescriptor).
+
+## WatchPluginApisRequest
+
+**Type** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L500).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+type WatchPluginApisRequest = Message<"soulfire.v1.WatchPluginApisRequest"> & {
+  /**
+   * A known catalog revision. The server always starts with a snapshot when
+   * this value is zero or no longer resumable.
+   *
+   * @generated from field: uint64 after_revision = 1;
+   */
+  afterRevision: bigint;
+};
+```
+
+### `afterRevision`
+
+A known catalog revision. The server always starts with a snapshot when
+this value is zero or no longer resumable.
+
+**Type:** `bigint`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L507)
+
+## WatchPluginApisRequestSchema
+
+**Object** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L514).
+
+Describes the message soulfire.v1.WatchPluginApisRequest.
+Use `create(WatchPluginApisRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+WatchPluginApisRequestSchema: GenMessage<WatchPluginApisRequest>
+```
+
+**Referenced types:** [`WatchPluginApisRequest`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#watchpluginapisrequest).
+
+## WatchPluginEventsRequest
+
+**Type** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L591).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+type WatchPluginEventsRequest = Message<"soulfire.v1.WatchPluginEventsRequest"> & {
+  /**
+   * @generated from field: repeated string plugin_ids = 1;
+   */
+  pluginIds: string[];
+
+  /**
+   * @generated from field: repeated string type_urls = 2;
+   */
+  typeUrls: string[];
+
+  /**
+   * @generated from field: optional string instance_id = 3;
+   */
+  instanceId?: string | undefined;
+
+  /**
+   * @generated from field: optional string bot_id = 4;
+   */
+  botId?: string | undefined;
+
+  /**
+   * @generated from field: optional string task_id = 5;
+   */
+  taskId?: string | undefined;
+
+  /**
+   * The last sequence observed by the caller. Events are not retained. The
+   * initial READY event sets resume_gap when replay was not possible.
+   *
+   * @generated from field: uint64 after_sequence = 6;
+   */
+  afterSequence: bigint;
+};
+```
+
+### `pluginIds`
+
+**Type:** `string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L595)
+
+### `typeUrls`
+
+**Type:** `string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L600)
+
+### `instanceId`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L605)
+
+### `botId`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L610)
+
+### `taskId`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L615)
+
+### `afterSequence`
+
+The last sequence observed by the caller. Events are not retained. The
+initial READY event sets resume_gap when replay was not possible.
+
+**Type:** `bigint`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L623)
+
+## WatchPluginEventsRequestSchema
+
+**Object** in `generated/soulfire/plugin_api_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/plugin_api_pb.ts#L630).
+
+Describes the message soulfire.v1.WatchPluginEventsRequest.
+Use `create(WatchPluginEventsRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/plugin_api_pb`.
+
+```ts
+WatchPluginEventsRequestSchema: GenMessage<WatchPluginEventsRequest>
+```
+
+**Referenced types:** [`WatchPluginEventsRequest`](/docs/sdk/api/ts/generated-soulfire-plugin-api-pb#watchplugineventsrequest).

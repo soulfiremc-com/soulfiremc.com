@@ -1,0 +1,135 @@
+---
+title: "SoulFireContainer"
+description: "Python API signatures, fields, and source for SoulFireContainer."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `semantic`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L603).
+
+**Import from:** `soulfire`, `soulfire.semantic`.
+
+```python
+class SoulFireContainer
+```
+
+## `__init__`
+
+```python
+def __init__(self, scope: InventoryScope, client: InventoryServiceClient, headers: HeaderProvider, snapshot: ContainerSnapshot) -> None
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `scope` | [`InventoryScope`](/docs/sdk/api/py/generated-inventory-pb2#inventoryscope) | Required | positional or keyword |
+| `client` | [`InventoryServiceClient`](/docs/sdk/api/py/generated-inventory-connect#inventoryserviceclient) | Required | positional or keyword |
+| `headers` | [`HeaderProvider`](/docs/sdk/api/py/header-provider) | Required | positional or keyword |
+| `snapshot` | [`ContainerSnapshot`](/docs/sdk/api/py/generated-inventory-pb2#containersnapshot) | Required | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L604)
+
+## `snapshot`
+
+```python
+@property
+def snapshot(self) -> ContainerSnapshot
+```
+
+**Returns:** [`ContainerSnapshot`](/docs/sdk/api/py/generated-inventory-pb2#containersnapshot).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L618)
+
+## `closed`
+
+```python
+@property
+def closed(self) -> bool
+```
+
+**Returns:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L622)
+
+## `refresh`
+
+```python
+def refresh(self, *, timeout_ms: int | None=None) -> Effect[ContainerSnapshot, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[ContainerSnapshot, SoulFireOperationError]` ([`ContainerSnapshot`](/docs/sdk/api/py/generated-inventory-pb2#containersnapshot), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L626)
+
+## `deposit`
+
+```python
+def deposit(self, selector: ItemSelector, count: int, *, idempotency_key: str | None=None, timeout_ms: int | None=None) -> Effect[ContainerSnapshot, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `selector` | [`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector) | Required | positional or keyword |
+| `count` | `int` | Required | positional or keyword |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[ContainerSnapshot, SoulFireOperationError]` ([`ContainerSnapshot`](/docs/sdk/api/py/generated-inventory-pb2#containersnapshot), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L650)
+
+## `withdraw`
+
+```python
+def withdraw(self, selector: ItemSelector, count: int, *, idempotency_key: str | None=None, timeout_ms: int | None=None) -> Effect[ContainerSnapshot, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `selector` | [`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector) | Required | positional or keyword |
+| `count` | `int` | Required | positional or keyword |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[ContainerSnapshot, SoulFireOperationError]` ([`ContainerSnapshot`](/docs/sdk/api/py/generated-inventory-pb2#containersnapshot), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L670)
+
+## `close`
+
+```python
+def close(self, *, idempotency_key: str | None=None, timeout_ms: int | None=None) -> Effect[ContainerSnapshot, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[ContainerSnapshot, SoulFireOperationError]` ([`ContainerSnapshot`](/docs/sdk/api/py/generated-inventory-pb2#containersnapshot), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L690)

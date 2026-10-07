@@ -1,0 +1,1046 @@
+---
+title: "inventory_connect module"
+description: "Python API signatures, fields, and source for inventory_connect module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`InventoryService`](/docs/sdk/api/py/generated-inventory-connect#inventoryservice) | class |
+| [`InventoryServiceASGIApplication`](/docs/sdk/api/py/generated-inventory-connect#inventoryserviceasgiapplication) | class |
+| [`InventoryServiceClient`](/docs/sdk/api/py/generated-inventory-connect#inventoryserviceclient) | class |
+| [`InventoryServiceClientSync`](/docs/sdk/api/py/generated-inventory-connect#inventoryserviceclientsync) | class |
+| [`InventoryServiceSync`](/docs/sdk/api/py/generated-inventory-connect#inventoryservicesync) | class |
+| [`InventoryServiceWSGIApplication`](/docs/sdk/api/py/generated-inventory-connect#inventoryservicewsgiapplication) | class |
+
+## InventoryService
+
+**Class** in `inventory_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L37).
+
+**Import from:** `soulfire.inventory_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class InventoryService(Protocol)
+```
+
+### `get_container_snapshot`
+
+```python
+async def get_container_snapshot(self, request: GetContainerSnapshotRequest, ctx: RequestContext[GetContainerSnapshotRequest, GetContainerSnapshotResponse]) -> GetContainerSnapshotResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetContainerSnapshotRequest`](/docs/sdk/api/py/generated-inventory-pb2#getcontainersnapshotrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[GetContainerSnapshotRequest, GetContainerSnapshotResponse]` ([`GetContainerSnapshotRequest`](/docs/sdk/api/py/generated-inventory-pb2#getcontainersnapshotrequest), [`GetContainerSnapshotResponse`](/docs/sdk/api/py/generated-inventory-pb2#getcontainersnapshotresponse)) | Required | positional or keyword |
+
+**Returns:** [`GetContainerSnapshotResponse`](/docs/sdk/api/py/generated-inventory-pb2#getcontainersnapshotresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L38)
+
+### `count_items`
+
+```python
+async def count_items(self, request: CountItemsRequest, ctx: RequestContext[CountItemsRequest, CountItemsResponse]) -> CountItemsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`CountItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#countitemsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[CountItemsRequest, CountItemsResponse]` ([`CountItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#countitemsrequest), [`CountItemsResponse`](/docs/sdk/api/py/generated-inventory-pb2#countitemsresponse)) | Required | positional or keyword |
+
+**Returns:** [`CountItemsResponse`](/docs/sdk/api/py/generated-inventory-pb2#countitemsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L41)
+
+### `find_inventory_slots`
+
+```python
+async def find_inventory_slots(self, request: FindInventorySlotsRequest, ctx: RequestContext[FindInventorySlotsRequest, FindInventorySlotsResponse]) -> FindInventorySlotsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`FindInventorySlotsRequest`](/docs/sdk/api/py/generated-inventory-pb2#findinventoryslotsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[FindInventorySlotsRequest, FindInventorySlotsResponse]` ([`FindInventorySlotsRequest`](/docs/sdk/api/py/generated-inventory-pb2#findinventoryslotsrequest), [`FindInventorySlotsResponse`](/docs/sdk/api/py/generated-inventory-pb2#findinventoryslotsresponse)) | Required | positional or keyword |
+
+**Returns:** [`FindInventorySlotsResponse`](/docs/sdk/api/py/generated-inventory-pb2#findinventoryslotsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L44)
+
+### `rank_inventory_items`
+
+```python
+async def rank_inventory_items(self, request: RankInventoryItemsRequest, ctx: RequestContext[RankInventoryItemsRequest, RankInventoryItemsResponse]) -> RankInventoryItemsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`RankInventoryItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#rankinventoryitemsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[RankInventoryItemsRequest, RankInventoryItemsResponse]` ([`RankInventoryItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#rankinventoryitemsrequest), [`RankInventoryItemsResponse`](/docs/sdk/api/py/generated-inventory-pb2#rankinventoryitemsresponse)) | Required | positional or keyword |
+
+**Returns:** [`RankInventoryItemsResponse`](/docs/sdk/api/py/generated-inventory-pb2#rankinventoryitemsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L47)
+
+### `move_inventory_item`
+
+```python
+async def move_inventory_item(self, request: MoveInventoryItemRequest, ctx: RequestContext[MoveInventoryItemRequest, InventoryMutationResponse]) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`MoveInventoryItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#moveinventoryitemrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[MoveInventoryItemRequest, InventoryMutationResponse]` ([`MoveInventoryItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#moveinventoryitemrequest), [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse)) | Required | positional or keyword |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L50)
+
+### `transfer_items`
+
+```python
+async def transfer_items(self, request: TransferItemsRequest, ctx: RequestContext[TransferItemsRequest, InventoryMutationResponse]) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`TransferItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#transferitemsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[TransferItemsRequest, InventoryMutationResponse]` ([`TransferItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#transferitemsrequest), [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse)) | Required | positional or keyword |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L53)
+
+### `toss_items`
+
+```python
+async def toss_items(self, request: TossItemsRequest, ctx: RequestContext[TossItemsRequest, InventoryMutationResponse]) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`TossItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#tossitemsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[TossItemsRequest, InventoryMutationResponse]` ([`TossItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#tossitemsrequest), [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse)) | Required | positional or keyword |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L56)
+
+### `select_hotbar_item`
+
+```python
+async def select_hotbar_item(self, request: SelectHotbarItemRequest, ctx: RequestContext[SelectHotbarItemRequest, InventoryMutationResponse]) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`SelectHotbarItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#selecthotbaritemrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[SelectHotbarItemRequest, InventoryMutationResponse]` ([`SelectHotbarItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#selecthotbaritemrequest), [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse)) | Required | positional or keyword |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L59)
+
+### `equip_item`
+
+```python
+async def equip_item(self, request: EquipItemRequest, ctx: RequestContext[EquipItemRequest, InventoryMutationResponse]) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`EquipItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#equipitemrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[EquipItemRequest, InventoryMutationResponse]` ([`EquipItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#equipitemrequest), [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse)) | Required | positional or keyword |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L62)
+
+### `unequip_item`
+
+```python
+async def unequip_item(self, request: UnequipItemRequest, ctx: RequestContext[UnequipItemRequest, InventoryMutationResponse]) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`UnequipItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#unequipitemrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[UnequipItemRequest, InventoryMutationResponse]` ([`UnequipItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#unequipitemrequest), [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse)) | Required | positional or keyword |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L65)
+
+### `open_block_container`
+
+```python
+async def open_block_container(self, request: OpenBlockContainerRequest, ctx: RequestContext[OpenBlockContainerRequest, InventoryMutationResponse]) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`OpenBlockContainerRequest`](/docs/sdk/api/py/generated-inventory-pb2#openblockcontainerrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[OpenBlockContainerRequest, InventoryMutationResponse]` ([`OpenBlockContainerRequest`](/docs/sdk/api/py/generated-inventory-pb2#openblockcontainerrequest), [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse)) | Required | positional or keyword |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L68)
+
+### `close_semantic_container`
+
+```python
+async def close_semantic_container(self, request: CloseSemanticContainerRequest, ctx: RequestContext[CloseSemanticContainerRequest, InventoryMutationResponse]) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`CloseSemanticContainerRequest`](/docs/sdk/api/py/generated-inventory-pb2#closesemanticcontainerrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[CloseSemanticContainerRequest, InventoryMutationResponse]` ([`CloseSemanticContainerRequest`](/docs/sdk/api/py/generated-inventory-pb2#closesemanticcontainerrequest), [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse)) | Required | positional or keyword |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L71)
+
+## InventoryServiceASGIApplication
+
+**Class** in `inventory_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L75).
+
+**Import from:** `soulfire.inventory_connect`.
+
+**Bases:** `ConnectASGIApplication[InventoryService]` ([`InventoryService`](/docs/sdk/api/py/generated-inventory-connect#inventoryservice)).
+
+```python
+class InventoryServiceASGIApplication(ConnectASGIApplication[InventoryService])
+```
+
+**Referenced types:** [`InventoryService`](/docs/sdk/api/py/generated-inventory-connect#inventoryservice).
+
+### `__init__`
+
+```python
+def __init__(self, service: InventoryService | AsyncGenerator[InventoryService], *, interceptors: Iterable[Interceptor]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | `InventoryService \| AsyncGenerator[InventoryService]` ([`InventoryService`](/docs/sdk/api/py/generated-inventory-connect#inventoryservice)) | Required | positional or keyword |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `compressions` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L76)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L216)
+
+## InventoryServiceClient
+
+**Class** in `inventory_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L221).
+
+**Import from:** `soulfire.inventory_connect`.
+
+**Bases:** `ConnectClient`.
+
+```python
+class InventoryServiceClient(ConnectClient)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[Interceptor]=(), http_client: Client | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `http_client` | `Client \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L222)
+
+### `get_container_snapshot`
+
+```python
+async def get_container_snapshot(self, request: GetContainerSnapshotRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> GetContainerSnapshotResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetContainerSnapshotRequest`](/docs/sdk/api/py/generated-inventory-pb2#getcontainersnapshotrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`GetContainerSnapshotResponse`](/docs/sdk/api/py/generated-inventory-pb2#getcontainersnapshotresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L246)
+
+### `count_items`
+
+```python
+async def count_items(self, request: CountItemsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> CountItemsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`CountItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#countitemsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`CountItemsResponse`](/docs/sdk/api/py/generated-inventory-pb2#countitemsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L266)
+
+### `find_inventory_slots`
+
+```python
+async def find_inventory_slots(self, request: FindInventorySlotsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> FindInventorySlotsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`FindInventorySlotsRequest`](/docs/sdk/api/py/generated-inventory-pb2#findinventoryslotsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`FindInventorySlotsResponse`](/docs/sdk/api/py/generated-inventory-pb2#findinventoryslotsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L286)
+
+### `rank_inventory_items`
+
+```python
+async def rank_inventory_items(self, request: RankInventoryItemsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> RankInventoryItemsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`RankInventoryItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#rankinventoryitemsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`RankInventoryItemsResponse`](/docs/sdk/api/py/generated-inventory-pb2#rankinventoryitemsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L306)
+
+### `move_inventory_item`
+
+```python
+async def move_inventory_item(self, request: MoveInventoryItemRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`MoveInventoryItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#moveinventoryitemrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L326)
+
+### `transfer_items`
+
+```python
+async def transfer_items(self, request: TransferItemsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`TransferItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#transferitemsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L346)
+
+### `toss_items`
+
+```python
+async def toss_items(self, request: TossItemsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`TossItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#tossitemsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L366)
+
+### `select_hotbar_item`
+
+```python
+async def select_hotbar_item(self, request: SelectHotbarItemRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`SelectHotbarItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#selecthotbaritemrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L386)
+
+### `equip_item`
+
+```python
+async def equip_item(self, request: EquipItemRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`EquipItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#equipitemrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L406)
+
+### `unequip_item`
+
+```python
+async def unequip_item(self, request: UnequipItemRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`UnequipItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#unequipitemrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L426)
+
+### `open_block_container`
+
+```python
+async def open_block_container(self, request: OpenBlockContainerRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`OpenBlockContainerRequest`](/docs/sdk/api/py/generated-inventory-pb2#openblockcontainerrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L446)
+
+### `close_semantic_container`
+
+```python
+async def close_semantic_container(self, request: CloseSemanticContainerRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`CloseSemanticContainerRequest`](/docs/sdk/api/py/generated-inventory-pb2#closesemanticcontainerrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L466)
+
+## InventoryServiceClientSync
+
+**Class** in `inventory_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L668).
+
+**Import from:** `soulfire.inventory_connect`.
+
+**Bases:** `ConnectClientSync`.
+
+```python
+class InventoryServiceClientSync(ConnectClientSync)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[InterceptorSync]=(), http_client: SyncClient | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | keyword only |
+| `http_client` | `SyncClient \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L669)
+
+### `get_container_snapshot`
+
+```python
+def get_container_snapshot(self, request: GetContainerSnapshotRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> GetContainerSnapshotResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetContainerSnapshotRequest`](/docs/sdk/api/py/generated-inventory-pb2#getcontainersnapshotrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`GetContainerSnapshotResponse`](/docs/sdk/api/py/generated-inventory-pb2#getcontainersnapshotresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L693)
+
+### `count_items`
+
+```python
+def count_items(self, request: CountItemsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> CountItemsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`CountItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#countitemsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`CountItemsResponse`](/docs/sdk/api/py/generated-inventory-pb2#countitemsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L712)
+
+### `find_inventory_slots`
+
+```python
+def find_inventory_slots(self, request: FindInventorySlotsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> FindInventorySlotsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`FindInventorySlotsRequest`](/docs/sdk/api/py/generated-inventory-pb2#findinventoryslotsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`FindInventorySlotsResponse`](/docs/sdk/api/py/generated-inventory-pb2#findinventoryslotsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L731)
+
+### `rank_inventory_items`
+
+```python
+def rank_inventory_items(self, request: RankInventoryItemsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> RankInventoryItemsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`RankInventoryItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#rankinventoryitemsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`RankInventoryItemsResponse`](/docs/sdk/api/py/generated-inventory-pb2#rankinventoryitemsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L750)
+
+### `move_inventory_item`
+
+```python
+def move_inventory_item(self, request: MoveInventoryItemRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`MoveInventoryItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#moveinventoryitemrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L769)
+
+### `transfer_items`
+
+```python
+def transfer_items(self, request: TransferItemsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`TransferItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#transferitemsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L788)
+
+### `toss_items`
+
+```python
+def toss_items(self, request: TossItemsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`TossItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#tossitemsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L807)
+
+### `select_hotbar_item`
+
+```python
+def select_hotbar_item(self, request: SelectHotbarItemRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`SelectHotbarItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#selecthotbaritemrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L826)
+
+### `equip_item`
+
+```python
+def equip_item(self, request: EquipItemRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`EquipItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#equipitemrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L845)
+
+### `unequip_item`
+
+```python
+def unequip_item(self, request: UnequipItemRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`UnequipItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#unequipitemrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L864)
+
+### `open_block_container`
+
+```python
+def open_block_container(self, request: OpenBlockContainerRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`OpenBlockContainerRequest`](/docs/sdk/api/py/generated-inventory-pb2#openblockcontainerrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L883)
+
+### `close_semantic_container`
+
+```python
+def close_semantic_container(self, request: CloseSemanticContainerRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`CloseSemanticContainerRequest`](/docs/sdk/api/py/generated-inventory-pb2#closesemanticcontainerrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L902)
+
+## InventoryServiceSync
+
+**Class** in `inventory_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L486).
+
+**Import from:** `soulfire.inventory_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class InventoryServiceSync(Protocol)
+```
+
+### `get_container_snapshot`
+
+```python
+def get_container_snapshot(self, request: GetContainerSnapshotRequest, ctx: RequestContext[GetContainerSnapshotRequest, GetContainerSnapshotResponse]) -> GetContainerSnapshotResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetContainerSnapshotRequest`](/docs/sdk/api/py/generated-inventory-pb2#getcontainersnapshotrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[GetContainerSnapshotRequest, GetContainerSnapshotResponse]` ([`GetContainerSnapshotRequest`](/docs/sdk/api/py/generated-inventory-pb2#getcontainersnapshotrequest), [`GetContainerSnapshotResponse`](/docs/sdk/api/py/generated-inventory-pb2#getcontainersnapshotresponse)) | Required | positional or keyword |
+
+**Returns:** [`GetContainerSnapshotResponse`](/docs/sdk/api/py/generated-inventory-pb2#getcontainersnapshotresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L487)
+
+### `count_items`
+
+```python
+def count_items(self, request: CountItemsRequest, ctx: RequestContext[CountItemsRequest, CountItemsResponse]) -> CountItemsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`CountItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#countitemsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[CountItemsRequest, CountItemsResponse]` ([`CountItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#countitemsrequest), [`CountItemsResponse`](/docs/sdk/api/py/generated-inventory-pb2#countitemsresponse)) | Required | positional or keyword |
+
+**Returns:** [`CountItemsResponse`](/docs/sdk/api/py/generated-inventory-pb2#countitemsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L490)
+
+### `find_inventory_slots`
+
+```python
+def find_inventory_slots(self, request: FindInventorySlotsRequest, ctx: RequestContext[FindInventorySlotsRequest, FindInventorySlotsResponse]) -> FindInventorySlotsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`FindInventorySlotsRequest`](/docs/sdk/api/py/generated-inventory-pb2#findinventoryslotsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[FindInventorySlotsRequest, FindInventorySlotsResponse]` ([`FindInventorySlotsRequest`](/docs/sdk/api/py/generated-inventory-pb2#findinventoryslotsrequest), [`FindInventorySlotsResponse`](/docs/sdk/api/py/generated-inventory-pb2#findinventoryslotsresponse)) | Required | positional or keyword |
+
+**Returns:** [`FindInventorySlotsResponse`](/docs/sdk/api/py/generated-inventory-pb2#findinventoryslotsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L493)
+
+### `rank_inventory_items`
+
+```python
+def rank_inventory_items(self, request: RankInventoryItemsRequest, ctx: RequestContext[RankInventoryItemsRequest, RankInventoryItemsResponse]) -> RankInventoryItemsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`RankInventoryItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#rankinventoryitemsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[RankInventoryItemsRequest, RankInventoryItemsResponse]` ([`RankInventoryItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#rankinventoryitemsrequest), [`RankInventoryItemsResponse`](/docs/sdk/api/py/generated-inventory-pb2#rankinventoryitemsresponse)) | Required | positional or keyword |
+
+**Returns:** [`RankInventoryItemsResponse`](/docs/sdk/api/py/generated-inventory-pb2#rankinventoryitemsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L496)
+
+### `move_inventory_item`
+
+```python
+def move_inventory_item(self, request: MoveInventoryItemRequest, ctx: RequestContext[MoveInventoryItemRequest, InventoryMutationResponse]) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`MoveInventoryItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#moveinventoryitemrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[MoveInventoryItemRequest, InventoryMutationResponse]` ([`MoveInventoryItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#moveinventoryitemrequest), [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse)) | Required | positional or keyword |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L499)
+
+### `transfer_items`
+
+```python
+def transfer_items(self, request: TransferItemsRequest, ctx: RequestContext[TransferItemsRequest, InventoryMutationResponse]) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`TransferItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#transferitemsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[TransferItemsRequest, InventoryMutationResponse]` ([`TransferItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#transferitemsrequest), [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse)) | Required | positional or keyword |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L502)
+
+### `toss_items`
+
+```python
+def toss_items(self, request: TossItemsRequest, ctx: RequestContext[TossItemsRequest, InventoryMutationResponse]) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`TossItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#tossitemsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[TossItemsRequest, InventoryMutationResponse]` ([`TossItemsRequest`](/docs/sdk/api/py/generated-inventory-pb2#tossitemsrequest), [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse)) | Required | positional or keyword |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L505)
+
+### `select_hotbar_item`
+
+```python
+def select_hotbar_item(self, request: SelectHotbarItemRequest, ctx: RequestContext[SelectHotbarItemRequest, InventoryMutationResponse]) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`SelectHotbarItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#selecthotbaritemrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[SelectHotbarItemRequest, InventoryMutationResponse]` ([`SelectHotbarItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#selecthotbaritemrequest), [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse)) | Required | positional or keyword |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L508)
+
+### `equip_item`
+
+```python
+def equip_item(self, request: EquipItemRequest, ctx: RequestContext[EquipItemRequest, InventoryMutationResponse]) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`EquipItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#equipitemrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[EquipItemRequest, InventoryMutationResponse]` ([`EquipItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#equipitemrequest), [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse)) | Required | positional or keyword |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L511)
+
+### `unequip_item`
+
+```python
+def unequip_item(self, request: UnequipItemRequest, ctx: RequestContext[UnequipItemRequest, InventoryMutationResponse]) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`UnequipItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#unequipitemrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[UnequipItemRequest, InventoryMutationResponse]` ([`UnequipItemRequest`](/docs/sdk/api/py/generated-inventory-pb2#unequipitemrequest), [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse)) | Required | positional or keyword |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L514)
+
+### `open_block_container`
+
+```python
+def open_block_container(self, request: OpenBlockContainerRequest, ctx: RequestContext[OpenBlockContainerRequest, InventoryMutationResponse]) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`OpenBlockContainerRequest`](/docs/sdk/api/py/generated-inventory-pb2#openblockcontainerrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[OpenBlockContainerRequest, InventoryMutationResponse]` ([`OpenBlockContainerRequest`](/docs/sdk/api/py/generated-inventory-pb2#openblockcontainerrequest), [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse)) | Required | positional or keyword |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L517)
+
+### `close_semantic_container`
+
+```python
+def close_semantic_container(self, request: CloseSemanticContainerRequest, ctx: RequestContext[CloseSemanticContainerRequest, InventoryMutationResponse]) -> InventoryMutationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`CloseSemanticContainerRequest`](/docs/sdk/api/py/generated-inventory-pb2#closesemanticcontainerrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[CloseSemanticContainerRequest, InventoryMutationResponse]` ([`CloseSemanticContainerRequest`](/docs/sdk/api/py/generated-inventory-pb2#closesemanticcontainerrequest), [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse)) | Required | positional or keyword |
+
+**Returns:** [`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L520)
+
+## InventoryServiceWSGIApplication
+
+**Class** in `inventory_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L524).
+
+**Import from:** `soulfire.inventory_connect`.
+
+**Bases:** `ConnectWSGIApplication`.
+
+```python
+class InventoryServiceWSGIApplication(ConnectWSGIApplication)
+```
+
+### `__init__`
+
+```python
+def __init__(self, service: InventoryServiceSync, interceptors: Iterable[InterceptorSync]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | [`InventoryServiceSync`](/docs/sdk/api/py/generated-inventory-connect#inventoryservicesync) | Required | positional or keyword |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | positional or keyword |
+| `read_max_bytes` | `int \| None` | `None` | positional or keyword |
+| `compressions` | `Iterable[Compression] \| None` | `None` | positional or keyword |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L525)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/inventory_connect.py#L663)

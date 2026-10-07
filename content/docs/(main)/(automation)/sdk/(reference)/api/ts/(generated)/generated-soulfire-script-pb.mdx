@@ -1,0 +1,4896 @@
+---
+title: "generated/soulfire/script_pb module"
+description: "TypeScript API signatures, fields, and source for generated/soulfire/script_pb module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`ActivateScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#activatescriptrequest) | type |
+| [`ActivateScriptRequestSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#activatescriptrequestschema) | object |
+| [`CategoryDefinition`](/docs/sdk/api/ts/generated-soulfire-script-pb#categorydefinition) | type |
+| [`CategoryDefinitionSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#categorydefinitionschema) | object |
+| [`CreateScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#createscriptrequest) | type |
+| [`CreateScriptRequestSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#createscriptrequestschema) | object |
+| [`CreateScriptResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#createscriptresponse) | type |
+| [`CreateScriptResponseSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#createscriptresponseschema) | object |
+| [`DeactivateScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#deactivatescriptrequest) | type |
+| [`DeactivateScriptRequestSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#deactivatescriptrequestschema) | object |
+| [`DeactivateScriptResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#deactivatescriptresponse) | type |
+| [`DeactivateScriptResponseSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#deactivatescriptresponseschema) | object |
+| [`DeleteScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#deletescriptrequest) | type |
+| [`DeleteScriptRequestSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#deletescriptrequestschema) | object |
+| [`DeleteScriptResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#deletescriptresponse) | type |
+| [`DeleteScriptResponseSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#deletescriptresponseschema) | object |
+| [`DiagnosticSeverity`](/docs/sdk/api/ts/generated-soulfire-script-pb#diagnosticseverity) | enum |
+| [`DiagnosticSeveritySchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#diagnosticseverityschema) | object |
+| [`DryRunScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#dryrunscriptrequest) | type |
+| [`DryRunScriptRequestSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#dryrunscriptrequestschema) | object |
+| [`EdgeStyle`](/docs/sdk/api/ts/generated-soulfire-script-pb#edgestyle) | enum |
+| [`EdgeStyleSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#edgestyleschema) | object |
+| [`EdgeType`](/docs/sdk/api/ts/generated-soulfire-script-pb#edgetype) | enum |
+| [`EdgeTypeSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#edgetypeschema) | object |
+| [`ExecutionStats`](/docs/sdk/api/ts/generated-soulfire-script-pb#executionstats) | type |
+| [`ExecutionStatsSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#executionstatsschema) | object |
+| [`file_soulfire_script`](/docs/sdk/api/ts/generated-soulfire-script-pb#file_soulfire_script) | object |
+| [`GetNodeTypesRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#getnodetypesrequest) | type |
+| [`GetNodeTypesRequestSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#getnodetypesrequestschema) | object |
+| [`GetNodeTypesResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#getnodetypesresponse) | type |
+| [`GetNodeTypesResponseSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#getnodetypesresponseschema) | object |
+| [`GetRegistryDataRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#getregistrydatarequest) | type |
+| [`GetRegistryDataRequestSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#getregistrydatarequestschema) | object |
+| [`GetRegistryDataResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#getregistrydataresponse) | type |
+| [`GetRegistryDataResponseSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#getregistrydataresponseschema) | object |
+| [`GetScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#getscriptrequest) | type |
+| [`GetScriptRequestSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#getscriptrequestschema) | object |
+| [`GetScriptResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#getscriptresponse) | type |
+| [`GetScriptResponseSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#getscriptresponseschema) | object |
+| [`GetScriptStatusRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#getscriptstatusrequest) | type |
+| [`GetScriptStatusRequestSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#getscriptstatusrequestschema) | object |
+| [`GetScriptStatusResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#getscriptstatusresponse) | type |
+| [`GetScriptStatusResponseSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#getscriptstatusresponseschema) | object |
+| [`HandleShape`](/docs/sdk/api/ts/generated-soulfire-script-pb#handleshape) | enum |
+| [`HandleShapeSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#handleshapeschema) | object |
+| [`ListScriptsRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#listscriptsrequest) | type |
+| [`ListScriptsRequestSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#listscriptsrequestschema) | object |
+| [`ListScriptsResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#listscriptsresponse) | type |
+| [`ListScriptsResponseSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#listscriptsresponseschema) | object |
+| [`LogLevel`](/docs/sdk/api/ts/generated-soulfire-script-pb#loglevel) | enum |
+| [`LogLevelSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#loglevelschema) | object |
+| [`NodeCompleted`](/docs/sdk/api/ts/generated-soulfire-script-pb#nodecompleted) | type |
+| [`NodeCompletedSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#nodecompletedschema) | object |
+| [`NodeError`](/docs/sdk/api/ts/generated-soulfire-script-pb#nodeerror) | type |
+| [`NodeErrorSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#nodeerrorschema) | object |
+| [`NodeStarted`](/docs/sdk/api/ts/generated-soulfire-script-pb#nodestarted) | type |
+| [`NodeStartedSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#nodestartedschema) | object |
+| [`NodeTypeDefinition`](/docs/sdk/api/ts/generated-soulfire-script-pb#nodetypedefinition) | type |
+| [`NodeTypeDefinitionSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#nodetypedefinitionschema) | object |
+| [`ParameterizedType`](/docs/sdk/api/ts/generated-soulfire-script-pb#parameterizedtype) | type |
+| [`ParameterizedTypeSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#parameterizedtypeschema) | object |
+| [`PortDefinition`](/docs/sdk/api/ts/generated-soulfire-script-pb#portdefinition) | type |
+| [`PortDefinitionSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#portdefinitionschema) | object |
+| [`PortType`](/docs/sdk/api/ts/generated-soulfire-script-pb#porttype) | enum |
+| [`PortTypeMetadata`](/docs/sdk/api/ts/generated-soulfire-script-pb#porttypemetadata) | type |
+| [`PortTypeMetadataSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#porttypemetadataschema) | object |
+| [`PortTypeSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#porttypeschema) | object |
+| [`Position`](/docs/sdk/api/ts/generated-soulfire-script-pb#position) | type |
+| [`PositionSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#positionschema) | object |
+| [`RegistryEntry`](/docs/sdk/api/ts/generated-soulfire-script-pb#registryentry) | type |
+| [`RegistryEntrySchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#registryentryschema) | object |
+| [`ScriptCompleted`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptcompleted) | type |
+| [`ScriptCompletedSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptcompletedschema) | object |
+| [`ScriptData`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptdata) | type |
+| [`ScriptDataSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptdataschema) | object |
+| [`ScriptEdge`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptedge) | type |
+| [`ScriptEdgeSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptedgeschema) | object |
+| [`ScriptEvent`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptevent) | type |
+| [`ScriptEventSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#scripteventschema) | object |
+| [`ScriptInfo`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptinfo) | type |
+| [`ScriptInfoSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptinfoschema) | object |
+| [`ScriptLog`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptlog) | type |
+| [`ScriptLogEntry`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptlogentry) | type |
+| [`ScriptLogEntrySchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptlogentryschema) | object |
+| [`ScriptLogSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptlogschema) | object |
+| [`ScriptNode`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptnode) | type |
+| [`ScriptNodeSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptnodeschema) | object |
+| [`ScriptQuotas`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptquotas) | type |
+| [`ScriptQuotasSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptquotasschema) | object |
+| [`ScriptService`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptservice) | object |
+| [`ScriptStarted`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptstarted) | type |
+| [`ScriptStartedSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptstartedschema) | object |
+| [`ScriptStatus`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptstatus) | type |
+| [`ScriptStatusSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptstatusschema) | object |
+| [`SubscribeScriptLogsRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#subscribescriptlogsrequest) | type |
+| [`SubscribeScriptLogsRequestSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#subscribescriptlogsrequestschema) | object |
+| [`TypeDescriptor`](/docs/sdk/api/ts/generated-soulfire-script-pb#typedescriptor) | type |
+| [`TypeDescriptorSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#typedescriptorschema) | object |
+| [`UpdateScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#updatescriptrequest) | type |
+| [`UpdateScriptRequestSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#updatescriptrequestschema) | object |
+| [`UpdateScriptResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#updatescriptresponse) | type |
+| [`UpdateScriptResponseSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#updatescriptresponseschema) | object |
+| [`ValidateScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#validatescriptrequest) | type |
+| [`ValidateScriptRequestSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#validatescriptrequestschema) | object |
+| [`ValidateScriptResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#validatescriptresponse) | type |
+| [`ValidateScriptResponseSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#validatescriptresponseschema) | object |
+| [`ValidationDiagnostic`](/docs/sdk/api/ts/generated-soulfire-script-pb#validationdiagnostic) | type |
+| [`ValidationDiagnosticSchema`](/docs/sdk/api/ts/generated-soulfire-script-pb#validationdiagnosticschema) | object |
+
+## ActivateScriptRequest
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1584).
+
+Request to activate a script (register its event listeners).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type ActivateScriptRequest = Message<"soulfire.v1.ActivateScriptRequest"> & {
+  /**
+   * The instance containing the script.
+   * Format: UUID string.
+   *
+   * @generated from field: string instance_id = 1;
+   */
+  instanceId: string;
+
+  /**
+   * The ID of the script to activate.
+   * Format: UUID string.
+   *
+   * @generated from field: string script_id = 2;
+   */
+  scriptId: string;
+};
+```
+
+### `instanceId`
+
+The instance containing the script.
+Format: UUID string.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1591)
+
+### `scriptId`
+
+The ID of the script to activate.
+Format: UUID string.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1599)
+
+## ActivateScriptRequestSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1606).
+
+Describes the message soulfire.v1.ActivateScriptRequest.
+Use `create(ActivateScriptRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+ActivateScriptRequestSchema: GenMessage<ActivateScriptRequest>
+```
+
+**Referenced types:** [`ActivateScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#activatescriptrequest).
+
+## CategoryDefinition
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1781).
+
+Definition of a node category for organizing the node palette.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type CategoryDefinition = Message<"soulfire.v1.CategoryDefinition"> & {
+  /**
+   * The unique identifier for this category.
+   * Examples: "triggers", "actions", "math", "logic".
+   *
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * Human-readable name displayed in the UI.
+   * Examples: "Triggers", "Actions", "Math", "Logic".
+   *
+   * @generated from field: string display_name = 2;
+   */
+  displayName: string;
+
+  /**
+   * Icon identifier for the category.
+   * Examples: "zap", "play", "calculator", "git-branch".
+   *
+   * @generated from field: string icon = 3;
+   */
+  icon: string;
+
+  /**
+   * Optional description of this category.
+   *
+   * @generated from field: string description = 4;
+   */
+  description: string;
+
+  /**
+   * Sort order for displaying categories (lower = earlier).
+   *
+   * @generated from field: int32 sort_order = 5;
+   */
+  sortOrder: number;
+};
+```
+
+### `id`
+
+The unique identifier for this category.
+Examples: "triggers", "actions", "math", "logic".
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1788)
+
+### `displayName`
+
+Human-readable name displayed in the UI.
+Examples: "Triggers", "Actions", "Math", "Logic".
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1796)
+
+### `icon`
+
+Icon identifier for the category.
+Examples: "zap", "play", "calculator", "git-branch".
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1804)
+
+### `description`
+
+Optional description of this category.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1811)
+
+### `sortOrder`
+
+Sort order for displaying categories (lower = earlier).
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1818)
+
+## CategoryDefinitionSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1825).
+
+Describes the message soulfire.v1.CategoryDefinition.
+Use `create(CategoryDefinitionSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+CategoryDefinitionSchema: GenMessage<CategoryDefinition>
+```
+
+**Referenced types:** [`CategoryDefinition`](/docs/sdk/api/ts/generated-soulfire-script-pb#categorydefinition).
+
+## CreateScriptRequest
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1219).
+
+Request to create a new script.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type CreateScriptRequest = Message<"soulfire.v1.CreateScriptRequest"> & {
+  /**
+   * The instance to create the script in.
+   * Format: UUID string.
+   *
+   * @generated from field: string instance_id = 1;
+   */
+  instanceId: string;
+
+  /**
+   * The human-readable name for the script.
+   *
+   * @generated from field: string name = 2;
+   */
+  name: string;
+
+  /**
+   * Optional description of what the script does.
+   *
+   * @generated from field: string description = 3;
+   */
+  description: string;
+
+  /**
+   * Initial nodes for the script graph.
+   * Can be empty to create a blank script.
+   *
+   * @generated from field: repeated soulfire.v1.ScriptNode nodes = 5;
+   */
+  nodes: ScriptNode[];
+
+  /**
+   * Initial edges for the script graph.
+   * Can be empty to create a blank script.
+   *
+   * @generated from field: repeated soulfire.v1.ScriptEdge edges = 6;
+   */
+  edges: ScriptEdge[];
+
+  /**
+   * Whether the script should be created in paused state.
+   * If false (default), the script starts running immediately after creation.
+   *
+   * @generated from field: bool paused = 7;
+   */
+  paused: boolean;
+
+  /**
+   * Optional resource quotas for this script.
+   *
+   * @generated from field: soulfire.v1.ScriptQuotas quotas = 8;
+   */
+  quotas?: ScriptQuotas | undefined;
+};
+```
+
+**Referenced types:** [`ScriptNode`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptnode), [`ScriptEdge`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptedge), [`ScriptQuotas`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptquotas).
+
+### `instanceId`
+
+The instance to create the script in.
+Format: UUID string.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1226)
+
+### `name`
+
+The human-readable name for the script.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1233)
+
+### `description`
+
+Optional description of what the script does.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1240)
+
+### `nodes`
+
+Initial nodes for the script graph.
+Can be empty to create a blank script.
+
+**Type:** `ScriptNode[]` ([`ScriptNode`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptnode)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1248)
+
+### `edges`
+
+Initial edges for the script graph.
+Can be empty to create a blank script.
+
+**Type:** `ScriptEdge[]` ([`ScriptEdge`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptedge)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1256)
+
+### `paused`
+
+Whether the script should be created in paused state.
+If false (default), the script starts running immediately after creation.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1264)
+
+### `quotas`
+
+Optional resource quotas for this script.
+
+**Type:** `ScriptQuotas | undefined` ([`ScriptQuotas`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptquotas)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1271)
+
+## CreateScriptRequestSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1278).
+
+Describes the message soulfire.v1.CreateScriptRequest.
+Use `create(CreateScriptRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+CreateScriptRequestSchema: GenMessage<CreateScriptRequest>
+```
+
+**Referenced types:** [`CreateScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#createscriptrequest).
+
+## CreateScriptResponse
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1286).
+
+Response after successfully creating a script.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type CreateScriptResponse = Message<"soulfire.v1.CreateScriptResponse"> & {
+  /**
+   * The complete script data including the generated ID.
+   *
+   * @generated from field: soulfire.v1.ScriptData script = 1;
+   */
+  script?: ScriptData | undefined;
+
+  /**
+   * Validation diagnostics (warnings) from building the script graph.
+   *
+   * @generated from field: repeated soulfire.v1.ValidationDiagnostic diagnostics = 2;
+   */
+  diagnostics: ValidationDiagnostic[];
+};
+```
+
+**Referenced types:** [`ScriptData`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptdata), [`ValidationDiagnostic`](/docs/sdk/api/ts/generated-soulfire-script-pb#validationdiagnostic).
+
+### `script`
+
+The complete script data including the generated ID.
+
+**Type:** `ScriptData | undefined` ([`ScriptData`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptdata)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1292)
+
+### `diagnostics`
+
+Validation diagnostics (warnings) from building the script graph.
+
+**Type:** `ValidationDiagnostic[]` ([`ValidationDiagnostic`](/docs/sdk/api/ts/generated-soulfire-script-pb#validationdiagnostic)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1299)
+
+## CreateScriptResponseSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1306).
+
+Describes the message soulfire.v1.CreateScriptResponse.
+Use `create(CreateScriptResponseSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+CreateScriptResponseSchema: GenMessage<CreateScriptResponse>
+```
+
+**Referenced types:** [`CreateScriptResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#createscriptresponse).
+
+## DeactivateScriptRequest
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1614).
+
+Request to deactivate an active script.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type DeactivateScriptRequest = Message<"soulfire.v1.DeactivateScriptRequest"> & {
+  /**
+   * The instance containing the script.
+   * Format: UUID string.
+   *
+   * @generated from field: string instance_id = 1;
+   */
+  instanceId: string;
+
+  /**
+   * The ID of the script to deactivate.
+   * Format: UUID string.
+   *
+   * @generated from field: string script_id = 2;
+   */
+  scriptId: string;
+};
+```
+
+### `instanceId`
+
+The instance containing the script.
+Format: UUID string.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1621)
+
+### `scriptId`
+
+The ID of the script to deactivate.
+Format: UUID string.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1629)
+
+## DeactivateScriptRequestSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1636).
+
+Describes the message soulfire.v1.DeactivateScriptRequest.
+Use `create(DeactivateScriptRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+DeactivateScriptRequestSchema: GenMessage<DeactivateScriptRequest>
+```
+
+**Referenced types:** [`DeactivateScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#deactivatescriptrequest).
+
+## DeactivateScriptResponse
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1645).
+
+Response after successfully deactivating a script.
+Empty response indicates success.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type DeactivateScriptResponse = Message<"soulfire.v1.DeactivateScriptResponse"> & {
+};
+```
+
+## DeactivateScriptResponseSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1652).
+
+Describes the message soulfire.v1.DeactivateScriptResponse.
+Use `create(DeactivateScriptResponseSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+DeactivateScriptResponseSchema: GenMessage<Message<"soulfire.v1.DeactivateScriptResponse">>
+```
+
+## DeleteScriptRequest
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1494).
+
+Request to delete a script.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type DeleteScriptRequest = Message<"soulfire.v1.DeleteScriptRequest"> & {
+  /**
+   * The instance containing the script.
+   * Format: UUID string.
+   *
+   * @generated from field: string instance_id = 1;
+   */
+  instanceId: string;
+
+  /**
+   * The ID of the script to delete.
+   * Format: UUID string.
+   *
+   * @generated from field: string script_id = 2;
+   */
+  scriptId: string;
+};
+```
+
+### `instanceId`
+
+The instance containing the script.
+Format: UUID string.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1501)
+
+### `scriptId`
+
+The ID of the script to delete.
+Format: UUID string.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1509)
+
+## DeleteScriptRequestSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1516).
+
+Describes the message soulfire.v1.DeleteScriptRequest.
+Use `create(DeleteScriptRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+DeleteScriptRequestSchema: GenMessage<DeleteScriptRequest>
+```
+
+**Referenced types:** [`DeleteScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#deletescriptrequest).
+
+## DeleteScriptResponse
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1525).
+
+Response after successfully deleting a script.
+Empty response indicates success.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type DeleteScriptResponse = Message<"soulfire.v1.DeleteScriptResponse"> & {
+};
+```
+
+## DeleteScriptResponseSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1532).
+
+Describes the message soulfire.v1.DeleteScriptResponse.
+Use `create(DeleteScriptResponseSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+DeleteScriptResponseSchema: GenMessage<Message<"soulfire.v1.DeleteScriptResponse">>
+```
+
+## DiagnosticSeverity
+
+**Enum** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2320).
+
+Severity level for validation diagnostics.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+enum DiagnosticSeverity
+```
+
+### `DIAGNOSTIC_ERROR`
+
+Error that prevents script execution.
+
+**Type:** `DiagnosticSeverity.DIAGNOSTIC_ERROR`.
+
+**Value:** `0`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2326)
+
+### `DIAGNOSTIC_WARNING`
+
+Warning that does not prevent execution but may indicate issues.
+
+**Type:** `DiagnosticSeverity.DIAGNOSTIC_WARNING`.
+
+**Value:** `1`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2333)
+
+## DiagnosticSeveritySchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2339).
+
+Describes the enum soulfire.v1.DiagnosticSeverity.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+DiagnosticSeveritySchema: GenEnum<DiagnosticSeverity>
+```
+
+**Referenced types:** [`DiagnosticSeverity`](/docs/sdk/api/ts/generated-soulfire-script-pb#diagnosticseverity).
+
+## DryRunScriptRequest
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2048).
+
+Request to dry-run a script from a specific trigger node with mock inputs.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type DryRunScriptRequest = Message<"soulfire.v1.DryRunScriptRequest"> & {
+  /**
+   * The instance ID for context (may be used for registry data).
+   *
+   * @generated from field: string instance_id = 1;
+   */
+  instanceId: string;
+
+  /**
+   * The ID of the saved script to dry-run.
+   *
+   * @generated from field: string script_id = 2;
+   */
+  scriptId: string;
+
+  /**
+   * The trigger node ID to start execution from.
+   *
+   * @generated from field: string trigger_node_id = 3;
+   */
+  triggerNodeId: string;
+
+  /**
+   * Mock input values for the trigger (port ID -> value).
+   *
+   * @generated from field: map<string, google.protobuf.Value> mock_inputs = 4;
+   */
+  mockInputs: { [key: string]: Value };
+};
+```
+
+### `instanceId`
+
+The instance ID for context (may be used for registry data).
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2054)
+
+### `scriptId`
+
+The ID of the saved script to dry-run.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2061)
+
+### `triggerNodeId`
+
+The trigger node ID to start execution from.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2068)
+
+### `mockInputs`
+
+Mock input values for the trigger (port ID -&gt; value).
+
+**Type:** `{ [key: string]: Value; }`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2075)
+
+## DryRunScriptRequestSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2082).
+
+Describes the message soulfire.v1.DryRunScriptRequest.
+Use `create(DryRunScriptRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+DryRunScriptRequestSchema: GenMessage<DryRunScriptRequest>
+```
+
+**Referenced types:** [`DryRunScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#dryrunscriptrequest).
+
+## EdgeStyle
+
+**Enum** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2381).
+
+Visual style for edges connected to this port type.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+enum EdgeStyle
+```
+
+### `DEFAULT`
+
+Default bezier curve style.
+
+**Type:** `EdgeStyle.DEFAULT`.
+
+**Value:** `0`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2387)
+
+### `ANIMATED`
+
+Animated flow style with moving dashes, typically for execution edges.
+
+**Type:** `EdgeStyle.ANIMATED`.
+
+**Value:** `1`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2394)
+
+### `DASHED`
+
+Dashed line style.
+
+**Type:** `EdgeStyle.DASHED`.
+
+**Value:** `2`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2401)
+
+## EdgeStyleSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2407).
+
+Describes the enum soulfire.v1.EdgeStyle.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+EdgeStyleSchema: GenEnum<EdgeStyle>
+```
+
+**Referenced types:** [`EdgeStyle`](/docs/sdk/api/ts/generated-soulfire-script-pb#edgestyle).
+
+## EdgeType
+
+**Enum** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2133).
+
+The type of connection between nodes in the visual script editor.
+Determines how data and control flow between nodes.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+enum EdgeType
+```
+
+### `EXECUTION`
+
+Execution edge that controls the order of node execution.
+When a node completes, execution flows through its outgoing execution edges.
+
+**Type:** `EdgeType.EXECUTION`.
+
+**Value:** `0`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2140)
+
+### `DATA`
+
+Data edge that passes values between nodes.
+Data edges transfer output values from one node's output port to another node's input port.
+
+**Type:** `EdgeType.DATA`.
+
+**Value:** `1`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2148)
+
+## EdgeTypeSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2154).
+
+Describes the enum soulfire.v1.EdgeType.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+EdgeTypeSchema: GenEnum<EdgeType>
+```
+
+**Referenced types:** [`EdgeType`](/docs/sdk/api/ts/generated-soulfire-script-pb#edgetype).
+
+## ExecutionStats
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L926).
+
+Execution statistics emitted when a trigger chain completes.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type ExecutionStats = Message<"soulfire.v1.ExecutionStats"> & {
+  /**
+   * Total number of node executions in this chain.
+   *
+   * @generated from field: int64 node_count = 1;
+   */
+  nodeCount: bigint;
+
+  /**
+   * Maximum allowed node executions.
+   *
+   * @generated from field: int64 max_count = 2;
+   */
+  maxCount: bigint;
+};
+```
+
+### `nodeCount`
+
+Total number of node executions in this chain.
+
+**Type:** `bigint`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L932)
+
+### `maxCount`
+
+Maximum allowed node executions.
+
+**Type:** `bigint`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L939)
+
+## ExecutionStatsSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L946).
+
+Describes the message soulfire.v1.ExecutionStats.
+Use `create(ExecutionStatsSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+ExecutionStatsSchema: GenMessage<ExecutionStats>
+```
+
+**Referenced types:** [`ExecutionStats`](/docs/sdk/api/ts/generated-soulfire-script-pb#executionstats).
+
+## file_soulfire_script
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L17).
+
+Describes the file soulfire/script.proto.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+file_soulfire_script: DescFile
+```
+
+## GetNodeTypesRequest
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1750).
+
+Request to get all available node types.
+This enables clients to render nodes without hardcoded knowledge.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type GetNodeTypesRequest = Message<"soulfire.v1.GetNodeTypesRequest"> & {
+  /**
+   * Optional filter by category ID (references CategoryDefinition.id).
+   * Examples: "triggers", "actions", "math".
+   * If empty, returns all node types.
+   *
+   * @generated from field: optional string category = 1;
+   */
+  category?: string | undefined;
+
+  /**
+   * Whether to include deprecated node types.
+   * Default is false.
+   *
+   * @generated from field: bool include_deprecated = 2;
+   */
+  includeDeprecated: boolean;
+};
+```
+
+### `category`
+
+Optional filter by category ID (references CategoryDefinition.id).
+Examples: "triggers", "actions", "math".
+If empty, returns all node types.
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1758)
+
+### `includeDeprecated`
+
+Whether to include deprecated node types.
+Default is false.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1766)
+
+## GetNodeTypesRequestSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1773).
+
+Describes the message soulfire.v1.GetNodeTypesRequest.
+Use `create(GetNodeTypesRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+GetNodeTypesRequestSchema: GenMessage<GetNodeTypesRequest>
+```
+
+**Referenced types:** [`GetNodeTypesRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#getnodetypesrequest).
+
+## GetNodeTypesResponse
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1833).
+
+Response containing all available node types.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type GetNodeTypesResponse = Message<"soulfire.v1.GetNodeTypesResponse"> & {
+  /**
+   * List of all node type definitions.
+   * Clients can use this to render any node and validate connections.
+   *
+   * @generated from field: repeated soulfire.v1.NodeTypeDefinition node_types = 1;
+   */
+  nodeTypes: NodeTypeDefinition[];
+
+  /**
+   * List of all categories with their metadata.
+   * Useful for building category filters and palette sections in the UI.
+   *
+   * @generated from field: repeated soulfire.v1.CategoryDefinition categories = 2;
+   */
+  categories: CategoryDefinition[];
+
+  /**
+   * Metadata for each port type including colors and compatibility.
+   * Clients should use this instead of hardcoded port type info.
+   *
+   * @generated from field: repeated soulfire.v1.PortTypeMetadata port_type_metadata = 3;
+   */
+  portTypeMetadata: PortTypeMetadata[];
+};
+```
+
+**Referenced types:** [`NodeTypeDefinition`](/docs/sdk/api/ts/generated-soulfire-script-pb#nodetypedefinition), [`CategoryDefinition`](/docs/sdk/api/ts/generated-soulfire-script-pb#categorydefinition), [`PortTypeMetadata`](/docs/sdk/api/ts/generated-soulfire-script-pb#porttypemetadata).
+
+### `nodeTypes`
+
+List of all node type definitions.
+Clients can use this to render any node and validate connections.
+
+**Type:** `NodeTypeDefinition[]` ([`NodeTypeDefinition`](/docs/sdk/api/ts/generated-soulfire-script-pb#nodetypedefinition)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1840)
+
+### `categories`
+
+List of all categories with their metadata.
+Useful for building category filters and palette sections in the UI.
+
+**Type:** `CategoryDefinition[]` ([`CategoryDefinition`](/docs/sdk/api/ts/generated-soulfire-script-pb#categorydefinition)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1848)
+
+### `portTypeMetadata`
+
+Metadata for each port type including colors and compatibility.
+Clients should use this instead of hardcoded port type info.
+
+**Type:** `PortTypeMetadata[]` ([`PortTypeMetadata`](/docs/sdk/api/ts/generated-soulfire-script-pb#porttypemetadata)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1856)
+
+## GetNodeTypesResponseSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1863).
+
+Describes the message soulfire.v1.GetNodeTypesResponse.
+Use `create(GetNodeTypesResponseSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+GetNodeTypesResponseSchema: GenMessage<GetNodeTypesResponse>
+```
+
+**Referenced types:** [`GetNodeTypesResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#getnodetypesresponse).
+
+## GetRegistryDataRequest
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1928).
+
+Request to get Minecraft registry data for autocomplete and validation.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type GetRegistryDataRequest = Message<"soulfire.v1.GetRegistryDataRequest"> & {
+  /**
+   * Optional: specific registry to fetch. If empty, returns all registries.
+   * Valid values: "blocks", "entities", "items", "biomes"
+   *
+   * @generated from field: optional string registry = 1;
+   */
+  registry?: string | undefined;
+};
+```
+
+### `registry`
+
+Optional: specific registry to fetch. If empty, returns all registries.
+Valid values: "blocks", "entities", "items", "biomes"
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1935)
+
+## GetRegistryDataRequestSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1942).
+
+Describes the message soulfire.v1.GetRegistryDataRequest.
+Use `create(GetRegistryDataRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+GetRegistryDataRequestSchema: GenMessage<GetRegistryDataRequest>
+```
+
+**Referenced types:** [`GetRegistryDataRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#getregistrydatarequest).
+
+## GetRegistryDataResponse
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2090).
+
+Response containing Minecraft registry data.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type GetRegistryDataResponse = Message<"soulfire.v1.GetRegistryDataResponse"> & {
+  /**
+   * Block types (e.g., "minecraft:stone", "minecraft:diamond_ore").
+   *
+   * @generated from field: repeated soulfire.v1.RegistryEntry blocks = 1;
+   */
+  blocks: RegistryEntry[];
+
+  /**
+   * Entity types (e.g., "minecraft:zombie", "minecraft:player").
+   *
+   * @generated from field: repeated soulfire.v1.RegistryEntry entities = 2;
+   */
+  entities: RegistryEntry[];
+
+  /**
+   * Item types (e.g., "minecraft:diamond", "minecraft:stick").
+   *
+   * @generated from field: repeated soulfire.v1.RegistryEntry items = 3;
+   */
+  items: RegistryEntry[];
+
+  /**
+   * Biome types (e.g., "minecraft:plains", "minecraft:forest").
+   *
+   * @generated from field: repeated soulfire.v1.RegistryEntry biomes = 4;
+   */
+  biomes: RegistryEntry[];
+};
+```
+
+**Referenced types:** [`RegistryEntry`](/docs/sdk/api/ts/generated-soulfire-script-pb#registryentry).
+
+### `blocks`
+
+Block types (e.g., "minecraft:stone", "minecraft:diamond_ore").
+
+**Type:** `RegistryEntry[]` ([`RegistryEntry`](/docs/sdk/api/ts/generated-soulfire-script-pb#registryentry)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2096)
+
+### `entities`
+
+Entity types (e.g., "minecraft:zombie", "minecraft:player").
+
+**Type:** `RegistryEntry[]` ([`RegistryEntry`](/docs/sdk/api/ts/generated-soulfire-script-pb#registryentry)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2103)
+
+### `items`
+
+Item types (e.g., "minecraft:diamond", "minecraft:stick").
+
+**Type:** `RegistryEntry[]` ([`RegistryEntry`](/docs/sdk/api/ts/generated-soulfire-script-pb#registryentry)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2110)
+
+### `biomes`
+
+Biome types (e.g., "minecraft:plains", "minecraft:forest").
+
+**Type:** `RegistryEntry[]` ([`RegistryEntry`](/docs/sdk/api/ts/generated-soulfire-script-pb#registryentry)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2117)
+
+## GetRegistryDataResponseSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2124).
+
+Describes the message soulfire.v1.GetRegistryDataResponse.
+Use `create(GetRegistryDataResponseSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+GetRegistryDataResponseSchema: GenMessage<GetRegistryDataResponse>
+```
+
+**Referenced types:** [`GetRegistryDataResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#getregistrydataresponse).
+
+## GetScriptRequest
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1314).
+
+Request to retrieve a specific script by ID.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type GetScriptRequest = Message<"soulfire.v1.GetScriptRequest"> & {
+  /**
+   * The instance containing the script.
+   * Format: UUID string.
+   *
+   * @generated from field: string instance_id = 1;
+   */
+  instanceId: string;
+
+  /**
+   * The ID of the script to retrieve.
+   * Format: UUID string.
+   *
+   * @generated from field: string script_id = 2;
+   */
+  scriptId: string;
+};
+```
+
+### `instanceId`
+
+The instance containing the script.
+Format: UUID string.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1321)
+
+### `scriptId`
+
+The ID of the script to retrieve.
+Format: UUID string.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1329)
+
+## GetScriptRequestSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1336).
+
+Describes the message soulfire.v1.GetScriptRequest.
+Use `create(GetScriptRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+GetScriptRequestSchema: GenMessage<GetScriptRequest>
+```
+
+**Referenced types:** [`GetScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#getscriptrequest).
+
+## GetScriptResponse
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1344).
+
+Response containing the requested script.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type GetScriptResponse = Message<"soulfire.v1.GetScriptResponse"> & {
+  /**
+   * The complete script data including all nodes and edges.
+   *
+   * @generated from field: soulfire.v1.ScriptData script = 1;
+   */
+  script?: ScriptData | undefined;
+};
+```
+
+**Referenced types:** [`ScriptData`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptdata).
+
+### `script`
+
+The complete script data including all nodes and edges.
+
+**Type:** `ScriptData | undefined` ([`ScriptData`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptdata)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1350)
+
+## GetScriptResponseSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1357).
+
+Describes the message soulfire.v1.GetScriptResponse.
+Use `create(GetScriptResponseSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+GetScriptResponseSchema: GenMessage<GetScriptResponse>
+```
+
+**Referenced types:** [`GetScriptResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#getscriptresponse).
+
+## GetScriptStatusRequest
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1660).
+
+Request to get the execution status of a script.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type GetScriptStatusRequest = Message<"soulfire.v1.GetScriptStatusRequest"> & {
+  /**
+   * The instance containing the script.
+   * Format: UUID string.
+   *
+   * @generated from field: string instance_id = 1;
+   */
+  instanceId: string;
+
+  /**
+   * The ID of the script to check.
+   * Format: UUID string.
+   *
+   * @generated from field: string script_id = 2;
+   */
+  scriptId: string;
+};
+```
+
+### `instanceId`
+
+The instance containing the script.
+Format: UUID string.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1667)
+
+### `scriptId`
+
+The ID of the script to check.
+Format: UUID string.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1675)
+
+## GetScriptStatusRequestSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1682).
+
+Describes the message soulfire.v1.GetScriptStatusRequest.
+Use `create(GetScriptStatusRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+GetScriptStatusRequestSchema: GenMessage<GetScriptStatusRequest>
+```
+
+**Referenced types:** [`GetScriptStatusRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#getscriptstatusrequest).
+
+## GetScriptStatusResponse
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1690).
+
+Response containing the script's execution status.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type GetScriptStatusResponse = Message<"soulfire.v1.GetScriptStatusResponse"> & {
+  /**
+   * The current status of the script.
+   *
+   * @generated from field: soulfire.v1.ScriptStatus status = 1;
+   */
+  status?: ScriptStatus | undefined;
+};
+```
+
+**Referenced types:** [`ScriptStatus`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptstatus).
+
+### `status`
+
+The current status of the script.
+
+**Type:** `ScriptStatus | undefined` ([`ScriptStatus`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptstatus)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1696)
+
+## GetScriptStatusResponseSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1703).
+
+Describes the message soulfire.v1.GetScriptStatusResponse.
+Use `create(GetScriptStatusResponseSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+GetScriptStatusResponseSchema: GenMessage<GetScriptStatusResponse>
+```
+
+**Referenced types:** [`GetScriptStatusResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#getscriptstatusresponse).
+
+## HandleShape
+
+**Enum** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2347).
+
+Shape of the port handle in the visual editor.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+enum HandleShape
+```
+
+### `CIRCLE`
+
+Circular handle, default for data ports.
+
+**Type:** `HandleShape.CIRCLE`.
+
+**Value:** `0`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2353)
+
+### `SQUARE`
+
+Square handle, typically used for execution/flow ports.
+
+**Type:** `HandleShape.SQUARE`.
+
+**Value:** `1`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2360)
+
+### `DIAMOND`
+
+Diamond-shaped handle, for special port types.
+
+**Type:** `HandleShape.DIAMOND`.
+
+**Value:** `2`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2367)
+
+## HandleShapeSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2373).
+
+Describes the enum soulfire.v1.HandleShape.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+HandleShapeSchema: GenEnum<HandleShape>
+```
+
+**Referenced types:** [`HandleShape`](/docs/sdk/api/ts/generated-soulfire-script-pb#handleshape).
+
+## ListScriptsRequest
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1540).
+
+Request to list all scripts in an instance.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type ListScriptsRequest = Message<"soulfire.v1.ListScriptsRequest"> & {
+  /**
+   * The instance to list scripts from.
+   * Format: UUID string.
+   *
+   * @generated from field: string instance_id = 1;
+   */
+  instanceId: string;
+};
+```
+
+### `instanceId`
+
+The instance to list scripts from.
+Format: UUID string.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1547)
+
+## ListScriptsRequestSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1554).
+
+Describes the message soulfire.v1.ListScriptsRequest.
+Use `create(ListScriptsRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+ListScriptsRequestSchema: GenMessage<ListScriptsRequest>
+```
+
+**Referenced types:** [`ListScriptsRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#listscriptsrequest).
+
+## ListScriptsResponse
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1562).
+
+Response containing the list of scripts.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type ListScriptsResponse = Message<"soulfire.v1.ListScriptsResponse"> & {
+  /**
+   * Summary information for each script in the instance.
+   * Does not include full node/edge data to reduce payload size.
+   *
+   * @generated from field: repeated soulfire.v1.ScriptInfo scripts = 1;
+   */
+  scripts: ScriptInfo[];
+};
+```
+
+**Referenced types:** [`ScriptInfo`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptinfo).
+
+### `scripts`
+
+Summary information for each script in the instance.
+Does not include full node/edge data to reduce payload size.
+
+**Type:** `ScriptInfo[]` ([`ScriptInfo`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptinfo)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1569)
+
+## ListScriptsResponseSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1576).
+
+Describes the message soulfire.v1.ListScriptsResponse.
+Use `create(ListScriptsResponseSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+ListScriptsResponseSchema: GenMessage<ListScriptsResponse>
+```
+
+**Referenced types:** [`ListScriptsResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#listscriptsresponse).
+
+## LogLevel
+
+**Enum** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2275).
+
+Log levels for script execution logging.
+Maps to standard logging severity levels for filtering and display.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+enum LogLevel
+```
+
+### `DEBUG`
+
+Debug level for verbose diagnostic information.
+Typically only shown when troubleshooting scripts.
+
+**Type:** `LogLevel.DEBUG`.
+
+**Value:** `0`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2282)
+
+### `INFO`
+
+Informational messages about script execution progress.
+Normal operational messages.
+
+**Type:** `LogLevel.INFO`.
+
+**Value:** `1`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2290)
+
+### `WARN`
+
+Warning level for potentially problematic situations.
+Script continues execution but something unexpected occurred.
+
+**Type:** `LogLevel.WARN`.
+
+**Value:** `2`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2298)
+
+### `ERROR`
+
+Error level for failures that may affect script execution.
+Indicates a problem that needs attention.
+
+**Type:** `LogLevel.ERROR`.
+
+**Value:** `3`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2306)
+
+## LogLevelSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2312).
+
+Describes the enum soulfire.v1.LogLevel.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+LogLevelSchema: GenEnum<LogLevel>
+```
+
+**Referenced types:** [`LogLevel`](/docs/sdk/api/ts/generated-soulfire-script-pb#loglevel).
+
+## NodeCompleted
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L883).
+
+Event emitted when a node completes execution successfully.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type NodeCompleted = Message<"soulfire.v1.NodeCompleted"> & {
+  /**
+   * The ID of the node that completed execution.
+   *
+   * @generated from field: string node_id = 1;
+   */
+  nodeId: string;
+
+  /**
+   * The output values produced by the node.
+   * Keys are output port names, values are the data produced.
+   *
+   * @generated from field: map<string, google.protobuf.Value> outputs = 2;
+   */
+  outputs: { [key: string]: Value };
+
+  /**
+   * When the node completed execution.
+   *
+   * @generated from field: google.protobuf.Timestamp timestamp = 3;
+   */
+  timestamp?: Timestamp | undefined;
+
+  /**
+   * Execution time in nanoseconds for profiling.
+   *
+   * @generated from field: int64 execution_time_nanos = 4;
+   */
+  executionTimeNanos: bigint;
+};
+```
+
+### `nodeId`
+
+The ID of the node that completed execution.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L889)
+
+### `outputs`
+
+The output values produced by the node.
+Keys are output port names, values are the data produced.
+
+**Type:** `{ [key: string]: Value; }`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L897)
+
+### `timestamp`
+
+When the node completed execution.
+
+**Type:** `Timestamp | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L904)
+
+### `executionTimeNanos`
+
+Execution time in nanoseconds for profiling.
+
+**Type:** `bigint`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L911)
+
+## NodeCompletedSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L918).
+
+Describes the message soulfire.v1.NodeCompleted.
+Use `create(NodeCompletedSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+NodeCompletedSchema: GenMessage<NodeCompleted>
+```
+
+**Referenced types:** [`NodeCompleted`](/docs/sdk/api/ts/generated-soulfire-script-pb#nodecompleted).
+
+## NodeError
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L954).
+
+Event emitted when a node encounters an error during execution.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type NodeError = Message<"soulfire.v1.NodeError"> & {
+  /**
+   * The ID of the node that encountered the error.
+   *
+   * @generated from field: string node_id = 1;
+   */
+  nodeId: string;
+
+  /**
+   * A description of what went wrong.
+   *
+   * @generated from field: string error_message = 2;
+   */
+  errorMessage: string;
+
+  /**
+   * When the error occurred.
+   *
+   * @generated from field: google.protobuf.Timestamp timestamp = 3;
+   */
+  timestamp?: Timestamp | undefined;
+};
+```
+
+### `nodeId`
+
+The ID of the node that encountered the error.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L960)
+
+### `errorMessage`
+
+A description of what went wrong.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L967)
+
+### `timestamp`
+
+When the error occurred.
+
+**Type:** `Timestamp | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L974)
+
+## NodeErrorSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L981).
+
+Describes the message soulfire.v1.NodeError.
+Use `create(NodeErrorSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+NodeErrorSchema: GenMessage<NodeError>
+```
+
+**Referenced types:** [`NodeError`](/docs/sdk/api/ts/generated-soulfire-script-pb#nodeerror).
+
+## NodeStarted
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L855).
+
+Event emitted when a node begins execution.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type NodeStarted = Message<"soulfire.v1.NodeStarted"> & {
+  /**
+   * The ID of the node that started executing.
+   *
+   * @generated from field: string node_id = 1;
+   */
+  nodeId: string;
+
+  /**
+   * When the node started execution.
+   *
+   * @generated from field: google.protobuf.Timestamp timestamp = 2;
+   */
+  timestamp?: Timestamp | undefined;
+};
+```
+
+### `nodeId`
+
+The ID of the node that started executing.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L861)
+
+### `timestamp`
+
+When the node started execution.
+
+**Type:** `Timestamp | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L868)
+
+## NodeStartedSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L875).
+
+Describes the message soulfire.v1.NodeStarted.
+Use `create(NodeStartedSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+NodeStartedSchema: GenMessage<NodeStarted>
+```
+
+**Referenced types:** [`NodeStarted`](/docs/sdk/api/ts/generated-soulfire-script-pb#nodestarted).
+
+## NodeTypeDefinition
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L238).
+
+Complete definition of a node type.
+Contains all metadata needed to render the node in an editor
+and validate its connections without hardcoded client knowledge.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type NodeTypeDefinition = Message<"soulfire.v1.NodeTypeDefinition"> & {
+  /**
+   * The unique type identifier for this node.
+   * Examples: "trigger.on_tick", "action.pathfind", "math.add".
+   *
+   * @generated from field: string type = 1;
+   */
+  type: string;
+
+  /**
+   * Human-readable name displayed in the UI.
+   * Examples: "On Tick", "Pathfind To", "Add".
+   *
+   * @generated from field: string display_name = 2;
+   */
+  displayName: string;
+
+  /**
+   * Description of what this node does.
+   * Displayed in tooltips and node palettes.
+   *
+   * @generated from field: string description = 3;
+   */
+  description: string;
+
+  /**
+   * Category ID for organizing nodes in the palette.
+   * References CategoryDefinition.id from GetNodeTypesResponse.
+   * Examples: "triggers", "actions", "math", "logic", "flow".
+   *
+   * @generated from field: string category = 4;
+   */
+  category: string;
+
+  /**
+   * Whether this is a trigger node (entry point for execution).
+   * Trigger nodes have no execution input and start script flows.
+   *
+   * @generated from field: bool is_trigger = 5;
+   */
+  isTrigger: boolean;
+
+  /**
+   * The input ports for this node type.
+   * Includes both data inputs and execution inputs.
+   *
+   * @generated from field: repeated soulfire.v1.PortDefinition inputs = 6;
+   */
+  inputs: PortDefinition[];
+
+  /**
+   * The output ports for this node type.
+   * Includes both data outputs and execution outputs.
+   *
+   * @generated from field: repeated soulfire.v1.PortDefinition outputs = 7;
+   */
+  outputs: PortDefinition[];
+
+  /**
+   * Optional icon identifier for rendering.
+   * Can be an icon name or emoji.
+   *
+   * @generated from field: string icon = 8;
+   */
+  icon: string;
+
+  /**
+   * Optional color hint for the node (hex color code).
+   * Used for visual distinction between node categories.
+   *
+   * @generated from field: string color = 9;
+   */
+  color: string;
+
+  /**
+   * Keywords for searching/filtering nodes in the palette.
+   *
+   * @generated from field: repeated string keywords = 10;
+   */
+  keywords: string[];
+
+  /**
+   * Whether this node is deprecated and should be avoided.
+   *
+   * @generated from field: bool deprecated = 11;
+   */
+  deprecated: boolean;
+
+  /**
+   * If deprecated, message explaining what to use instead.
+   *
+   * @generated from field: string deprecation_message = 12;
+   */
+  deprecationMessage: string;
+
+  /**
+   * Whether this is a layout node (reroute, frame, etc.).
+   * Layout nodes have special minimal rendering and don't execute logic.
+   *
+   * @generated from field: bool is_layout_node = 13;
+   */
+  isLayoutNode: boolean;
+
+  /**
+   * Whether this node can be muted (bypassed during execution).
+   * When muted, inputs pass through to outputs unchanged.
+   *
+   * @generated from field: bool supports_muting = 14;
+   */
+  supportsMuting: boolean;
+
+  /**
+   * Whether this node supports inline preview of its output.
+   *
+   * @generated from field: bool supports_preview = 15;
+   */
+  supportsPreview: boolean;
+
+  /**
+   * Whether this node is expensive (slow, may block).
+   * Used for visual warnings in tick-path analysis.
+   *
+   * @generated from field: bool is_expensive = 16;
+   */
+  isExpensive: boolean;
+};
+```
+
+**Referenced types:** [`Tick`](/docs/sdk/api/ts/generated-soulfire-plugin-example-v1-example-pb#tick), [`GetNodeTypesResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#getnodetypesresponse), [`PortDefinition`](/docs/sdk/api/ts/generated-soulfire-script-pb#portdefinition).
+
+### `type`
+
+The unique type identifier for this node.
+Examples: "trigger.on_tick", "action.pathfind", "math.add".
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L245)
+
+### `displayName`
+
+Human-readable name displayed in the UI.
+Examples: "On Tick", "Pathfind To", "Add".
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L253)
+
+### `description`
+
+Description of what this node does.
+Displayed in tooltips and node palettes.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L261)
+
+### `category`
+
+Category ID for organizing nodes in the palette.
+References CategoryDefinition.id from GetNodeTypesResponse.
+Examples: "triggers", "actions", "math", "logic", "flow".
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L270)
+
+### `isTrigger`
+
+Whether this is a trigger node (entry point for execution).
+Trigger nodes have no execution input and start script flows.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L278)
+
+### `inputs`
+
+The input ports for this node type.
+Includes both data inputs and execution inputs.
+
+**Type:** `PortDefinition[]` ([`PortDefinition`](/docs/sdk/api/ts/generated-soulfire-script-pb#portdefinition)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L286)
+
+### `outputs`
+
+The output ports for this node type.
+Includes both data outputs and execution outputs.
+
+**Type:** `PortDefinition[]` ([`PortDefinition`](/docs/sdk/api/ts/generated-soulfire-script-pb#portdefinition)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L294)
+
+### `icon`
+
+Optional icon identifier for rendering.
+Can be an icon name or emoji.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L302)
+
+### `color`
+
+Optional color hint for the node (hex color code).
+Used for visual distinction between node categories.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L310)
+
+### `keywords`
+
+Keywords for searching/filtering nodes in the palette.
+
+**Type:** `string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L317)
+
+### `deprecated`
+
+Whether this node is deprecated and should be avoided.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L324)
+
+### `deprecationMessage`
+
+If deprecated, message explaining what to use instead.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L331)
+
+### `isLayoutNode`
+
+Whether this is a layout node (reroute, frame, etc.).
+Layout nodes have special minimal rendering and don't execute logic.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L339)
+
+### `supportsMuting`
+
+Whether this node can be muted (bypassed during execution).
+When muted, inputs pass through to outputs unchanged.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L347)
+
+### `supportsPreview`
+
+Whether this node supports inline preview of its output.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L354)
+
+### `isExpensive`
+
+Whether this node is expensive (slow, may block).
+Used for visual warnings in tick-path analysis.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L362)
+
+## NodeTypeDefinitionSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L369).
+
+Describes the message soulfire.v1.NodeTypeDefinition.
+Use `create(NodeTypeDefinitionSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+NodeTypeDefinitionSchema: GenMessage<NodeTypeDefinition>
+```
+
+**Referenced types:** [`NodeTypeDefinition`](/docs/sdk/api/ts/generated-soulfire-script-pb#nodetypedefinition).
+
+## ParameterizedType
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L103).
+
+A parameterized type with a base type and type arguments.
+For example, List&lt;Bot&gt; has base=LIST and params=[Simple(BOT)].
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type ParameterizedType = Message<"soulfire.v1.ParameterizedType"> & {
+  /**
+   * The container type (e.g., LIST, MAP).
+   *
+   * @generated from field: soulfire.v1.PortType base = 1;
+   */
+  base: PortType;
+
+  /**
+   * The type arguments (e.g., [BOT] for List<Bot>, [STRING, NUMBER] for Map<String, Number>).
+   *
+   * @generated from field: repeated soulfire.v1.TypeDescriptor params = 2;
+   */
+  params: TypeDescriptor[];
+};
+```
+
+**Referenced types:** [`PortType`](/docs/sdk/api/ts/generated-soulfire-script-pb#porttype), [`TypeDescriptor`](/docs/sdk/api/ts/generated-soulfire-script-pb#typedescriptor).
+
+### `base`
+
+The container type (e.g., LIST, MAP).
+
+**Type:** [`PortType`](/docs/sdk/api/ts/generated-soulfire-script-pb#porttype).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L109)
+
+### `params`
+
+The type arguments (e.g., [BOT] for List&lt;Bot&gt;, [STRING, NUMBER] for Map&lt;String, Number&gt;).
+
+**Type:** `TypeDescriptor[]` ([`TypeDescriptor`](/docs/sdk/api/ts/generated-soulfire-script-pb#typedescriptor)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L116)
+
+## ParameterizedTypeSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L123).
+
+Describes the message soulfire.v1.ParameterizedType.
+Use `create(ParameterizedTypeSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+ParameterizedTypeSchema: GenMessage<ParameterizedType>
+```
+
+**Referenced types:** [`ParameterizedType`](/docs/sdk/api/ts/generated-soulfire-script-pb#parameterizedtype).
+
+## PortDefinition
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L132).
+
+Definition of a port (input or output) on a node type.
+Describes the port's type, constraints, and display properties.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type PortDefinition = Message<"soulfire.v1.PortDefinition"> & {
+  /**
+   * The identifier for this port.
+   * Used in edge connections (source_handle/target_handle).
+   * Examples: "value", "target", "bot", "exec_in", "exec_out".
+   *
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * Human-readable name displayed in the UI.
+   * Examples: "Target Position", "Bot", "Message".
+   *
+   * @generated from field: string display_name = 2;
+   */
+  displayName: string;
+
+  /**
+   * The data type this port accepts or produces.
+   *
+   * @generated from field: soulfire.v1.PortType port_type = 3;
+   */
+  portType: PortType;
+
+  /**
+   * Whether this input is required for the node to execute.
+   * Only applicable for input ports.
+   *
+   * @generated from field: bool required = 4;
+   */
+  required: boolean;
+
+  /**
+   * Default value for this port when not connected (JSON-encoded).
+   * Only applicable for input ports.
+   *
+   * @generated from field: optional string default_value = 5;
+   */
+  defaultValue?: string | undefined;
+
+  /**
+   * Optional description explaining what this port is for.
+   *
+   * @generated from field: string description = 6;
+   */
+  description: string;
+
+  /**
+   * For list ports, the type of elements in the list.
+   * Only applicable when port_type is PORT_TYPE_LIST.
+   *
+   * @generated from field: optional soulfire.v1.PortType element_type = 7;
+   */
+  elementType?: PortType | undefined;
+
+  /**
+   * Whether this input accepts multiple connections (Blender-style multi-input).
+   * When true, all connected values are collected into a list.
+   * Visually rendered as a pill/ellipsis shaped socket.
+   *
+   * @generated from field: bool multi_input = 8;
+   */
+  multiInput: boolean;
+
+  /**
+   * For polymorphic ports, the list of accepted types.
+   * If non-empty, this port can accept any of these types and will
+   * adapt its behavior based on the connected type.
+   *
+   * @generated from field: repeated soulfire.v1.PortType accepted_types = 9;
+   */
+  acceptedTypes: PortType[];
+
+  /**
+   * For dynamic output ports, the ID of the input port to inherit type from.
+   * Used for polymorphic nodes where output type depends on input type.
+   *
+   * @generated from field: string infer_type_from = 10;
+   */
+  inferTypeFrom: string;
+
+  /**
+   * Optional generic type descriptor for parameterized types.
+   * When present, provides richer type information than the flat port_type field.
+   * For example, List<Bot> or a type variable T that resolves from connections.
+   *
+   * @generated from field: optional soulfire.v1.TypeDescriptor type_descriptor = 11;
+   */
+  typeDescriptor?: TypeDescriptor | undefined;
+};
+```
+
+**Referenced types:** [`Position`](/docs/sdk/api/ts/generated-soulfire-script-pb#position), [`PortType`](/docs/sdk/api/ts/generated-soulfire-script-pb#porttype), [`TypeDescriptor`](/docs/sdk/api/ts/generated-soulfire-script-pb#typedescriptor).
+
+### `id`
+
+The identifier for this port.
+Used in edge connections (source_handle/target_handle).
+Examples: "value", "target", "bot", "exec_in", "exec_out".
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L140)
+
+### `displayName`
+
+Human-readable name displayed in the UI.
+Examples: "Target Position", "Bot", "Message".
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L148)
+
+### `portType`
+
+The data type this port accepts or produces.
+
+**Type:** [`PortType`](/docs/sdk/api/ts/generated-soulfire-script-pb#porttype).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L155)
+
+### `required`
+
+Whether this input is required for the node to execute.
+Only applicable for input ports.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L163)
+
+### `defaultValue`
+
+Default value for this port when not connected (JSON-encoded).
+Only applicable for input ports.
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L171)
+
+### `description`
+
+Optional description explaining what this port is for.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L178)
+
+### `elementType`
+
+For list ports, the type of elements in the list.
+Only applicable when port_type is PORT_TYPE_LIST.
+
+**Type:** `PortType | undefined` ([`PortType`](/docs/sdk/api/ts/generated-soulfire-script-pb#porttype)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L186)
+
+### `multiInput`
+
+Whether this input accepts multiple connections (Blender-style multi-input).
+When true, all connected values are collected into a list.
+Visually rendered as a pill/ellipsis shaped socket.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L195)
+
+### `acceptedTypes`
+
+For polymorphic ports, the list of accepted types.
+If non-empty, this port can accept any of these types and will
+adapt its behavior based on the connected type.
+
+**Type:** `PortType[]` ([`PortType`](/docs/sdk/api/ts/generated-soulfire-script-pb#porttype)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L204)
+
+### `inferTypeFrom`
+
+For dynamic output ports, the ID of the input port to inherit type from.
+Used for polymorphic nodes where output type depends on input type.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L212)
+
+### `typeDescriptor`
+
+Optional generic type descriptor for parameterized types.
+When present, provides richer type information than the flat port_type field.
+For example, List&lt;Bot&gt; or a type variable T that resolves from connections.
+
+**Type:** `TypeDescriptor | undefined` ([`TypeDescriptor`](/docs/sdk/api/ts/generated-soulfire-script-pb#typedescriptor)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L221)
+
+## PortDefinitionSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L228).
+
+Describes the message soulfire.v1.PortDefinition.
+Use `create(PortDefinitionSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+PortDefinitionSchema: GenMessage<PortDefinition>
+```
+
+**Referenced types:** [`PortDefinition`](/docs/sdk/api/ts/generated-soulfire-script-pb#portdefinition).
+
+## PortType
+
+**Enum** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2163).
+
+The data type of a node port.
+Used for validation and UI rendering of connections.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+enum PortType
+```
+
+### `ANY`
+
+Any type - accepts all values. Used for generic nodes.
+
+**Type:** `PortType.ANY`.
+
+**Value:** `0`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2169)
+
+### `NUMBER`
+
+Numeric value (integer or floating point).
+
+**Type:** `PortType.NUMBER`.
+
+**Value:** `1`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2176)
+
+### `STRING`
+
+Text string value.
+
+**Type:** `PortType.STRING`.
+
+**Value:** `2`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2183)
+
+### `BOOLEAN`
+
+Boolean true/false value.
+
+**Type:** `PortType.BOOLEAN`.
+
+**Value:** `3`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2190)
+
+### `VECTOR3`
+
+3D vector with x, y, z components.
+
+**Type:** `PortType.VECTOR3`.
+
+**Value:** `4`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2197)
+
+### `BOT`
+
+Reference to a bot connection.
+
+**Type:** `PortType.BOT`.
+
+**Value:** `5`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2204)
+
+### `LIST`
+
+List/array of values.
+
+**Type:** `PortType.LIST`.
+
+**Value:** `6`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2211)
+
+### `EXEC`
+
+Execution flow port (not data).
+
+**Type:** `PortType.EXEC`.
+
+**Value:** `7`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2218)
+
+### `BLOCK`
+
+Block type identifier.
+
+**Type:** `PortType.BLOCK`.
+
+**Value:** `8`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2225)
+
+### `ENTITY`
+
+Entity reference.
+
+**Type:** `PortType.ENTITY`.
+
+**Value:** `9`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2232)
+
+### `ITEM`
+
+Item stack reference.
+
+**Type:** `PortType.ITEM`.
+
+**Value:** `10`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2239)
+
+### `MAP`
+
+Key-value map of entries.
+
+**Type:** `PortType.MAP`.
+
+**Value:** `11`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2246)
+
+### `SET`
+
+Set of unique values with stable insertion order.
+
+**Type:** `PortType.SET`.
+
+**Value:** `12`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2253)
+
+### `COLLECTION`
+
+Any Java-like collection type. LIST and SET are compatible with COLLECTION.
+
+**Type:** `PortType.COLLECTION`.
+
+**Value:** `13`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2260)
+
+## PortTypeMetadata
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1871).
+
+Metadata for a port type, enabling data-driven port rendering.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type PortTypeMetadata = Message<"soulfire.v1.PortTypeMetadata"> & {
+  /**
+   * The port type this metadata applies to.
+   *
+   * @generated from field: soulfire.v1.PortType port_type = 1;
+   */
+  portType: PortType;
+
+  /**
+   * Display color for this port type (hex color code, e.g., "#22c55e").
+   *
+   * @generated from field: string color = 2;
+   */
+  color: string;
+
+  /**
+   * Human-readable name for this port type.
+   *
+   * @generated from field: string display_name = 3;
+   */
+  displayName: string;
+
+  /**
+   * List of port types that can be implicitly converted to this type.
+   * Used for connection validation. Empty means only exact matches allowed.
+   *
+   * @generated from field: repeated soulfire.v1.PortType compatible_from = 4;
+   */
+  compatibleFrom: PortType[];
+
+  /**
+   * Shape of the handle for this port type in the visual editor.
+   *
+   * @generated from field: soulfire.v1.HandleShape handle_shape = 5;
+   */
+  handleShape: HandleShape;
+
+  /**
+   * Visual style for edges of this port type.
+   *
+   * @generated from field: soulfire.v1.EdgeStyle edge_style = 6;
+   */
+  edgeStyle: EdgeStyle;
+};
+```
+
+**Referenced types:** [`PortType`](/docs/sdk/api/ts/generated-soulfire-script-pb#porttype), [`HandleShape`](/docs/sdk/api/ts/generated-soulfire-script-pb#handleshape), [`EdgeStyle`](/docs/sdk/api/ts/generated-soulfire-script-pb#edgestyle).
+
+### `portType`
+
+The port type this metadata applies to.
+
+**Type:** [`PortType`](/docs/sdk/api/ts/generated-soulfire-script-pb#porttype).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1877)
+
+### `color`
+
+Display color for this port type (hex color code, e.g., "#22c55e").
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1884)
+
+### `displayName`
+
+Human-readable name for this port type.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1891)
+
+### `compatibleFrom`
+
+List of port types that can be implicitly converted to this type.
+Used for connection validation. Empty means only exact matches allowed.
+
+**Type:** `PortType[]` ([`PortType`](/docs/sdk/api/ts/generated-soulfire-script-pb#porttype)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1899)
+
+### `handleShape`
+
+Shape of the handle for this port type in the visual editor.
+
+**Type:** [`HandleShape`](/docs/sdk/api/ts/generated-soulfire-script-pb#handleshape).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1906)
+
+### `edgeStyle`
+
+Visual style for edges of this port type.
+
+**Type:** [`EdgeStyle`](/docs/sdk/api/ts/generated-soulfire-script-pb#edgestyle).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1913)
+
+## PortTypeMetadataSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1920).
+
+Describes the message soulfire.v1.PortTypeMetadata.
+Use `create(PortTypeMetadataSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+PortTypeMetadataSchema: GenMessage<PortTypeMetadata>
+```
+
+**Referenced types:** [`PortTypeMetadata`](/docs/sdk/api/ts/generated-soulfire-script-pb#porttypemetadata).
+
+## PortTypeSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2266).
+
+Describes the enum soulfire.v1.PortType.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+PortTypeSchema: GenEnum<PortType>
+```
+
+**Referenced types:** [`PortType`](/docs/sdk/api/ts/generated-soulfire-script-pb#porttype).
+
+## Position
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L26).
+
+Represents the 2D position of a node in the visual script editor canvas.
+Used for rendering the node graph and preserving user layout preferences.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type Position = Message<"soulfire.v1.Position"> & {
+  /**
+   * The horizontal position in canvas coordinates.
+   * Positive values extend to the right.
+   *
+   * @generated from field: double x = 1;
+   */
+  x: number;
+
+  /**
+   * The vertical position in canvas coordinates.
+   * Positive values extend downward.
+   *
+   * @generated from field: double y = 2;
+   */
+  y: number;
+};
+```
+
+### `x`
+
+The horizontal position in canvas coordinates.
+Positive values extend to the right.
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L33)
+
+### `y`
+
+The vertical position in canvas coordinates.
+Positive values extend downward.
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L41)
+
+## PositionSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L48).
+
+Describes the message soulfire.v1.Position.
+Use `create(PositionSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+PositionSchema: GenMessage<Position>
+```
+
+**Referenced types:** [`Position`](/docs/sdk/api/ts/generated-soulfire-script-pb#position).
+
+## RegistryEntry
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1950).
+
+A single registry entry (block, entity, item, or biome).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type RegistryEntry = Message<"soulfire.v1.RegistryEntry"> & {
+  /**
+   * The namespaced identifier (e.g., "minecraft:diamond_ore").
+   *
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * Human-readable display name.
+   *
+   * @generated from field: string display_name = 2;
+   */
+  displayName: string;
+
+  /**
+   * Optional icon or texture identifier.
+   *
+   * @generated from field: string icon = 3;
+   */
+  icon: string;
+
+  /**
+   * Optional category/group for organizing in UI.
+   *
+   * @generated from field: string category = 4;
+   */
+  category: string;
+};
+```
+
+### `id`
+
+The namespaced identifier (e.g., "minecraft:diamond_ore").
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1956)
+
+### `displayName`
+
+Human-readable display name.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1963)
+
+### `icon`
+
+Optional icon or texture identifier.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1970)
+
+### `category`
+
+Optional category/group for organizing in UI.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1977)
+
+## RegistryEntrySchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1984).
+
+Describes the message soulfire.v1.RegistryEntry.
+Use `create(RegistryEntrySchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+RegistryEntrySchema: GenMessage<RegistryEntry>
+```
+
+**Referenced types:** [`RegistryEntry`](/docs/sdk/api/ts/generated-soulfire-script-pb#registryentry).
+
+## ScriptCompleted
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1063).
+
+Event emitted when a triggered node chain finishes executing.
+Note: This indicates one trigger chain completed, not that the script
+is done - the script remains active and will respond to future triggers.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type ScriptCompleted = Message<"soulfire.v1.ScriptCompleted"> & {
+  /**
+   * The ID of the script that completed the chain.
+   *
+   * @generated from field: string script_id = 1;
+   */
+  scriptId: string;
+
+  /**
+   * Whether the chain completed successfully without errors.
+   *
+   * @generated from field: bool success = 2;
+   */
+  success: boolean;
+
+  /**
+   * When the chain completed execution.
+   *
+   * @generated from field: google.protobuf.Timestamp timestamp = 3;
+   */
+  timestamp?: Timestamp | undefined;
+};
+```
+
+### `scriptId`
+
+The ID of the script that completed the chain.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1069)
+
+### `success`
+
+Whether the chain completed successfully without errors.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1076)
+
+### `timestamp`
+
+When the chain completed execution.
+
+**Type:** `Timestamp | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1083)
+
+## ScriptCompletedSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1090).
+
+Describes the message soulfire.v1.ScriptCompleted.
+Use `create(ScriptCompletedSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+ScriptCompletedSchema: GenMessage<ScriptCompleted>
+```
+
+**Referenced types:** [`ScriptCompleted`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptcompleted).
+
+## ScriptData
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L562).
+
+Complete data structure representing a visual script.
+Contains all nodes, edges, and metadata needed to render and execute the script.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type ScriptData = Message<"soulfire.v1.ScriptData"> & {
+  /**
+   * Unique identifier for this script.
+   * Format: UUID string.
+   *
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * Human-readable name for the script.
+   * Displayed in the UI and used for identification.
+   *
+   * @generated from field: string name = 2;
+   */
+  name: string;
+
+  /**
+   * Optional description explaining what the script does.
+   * Displayed in script listings and detail views.
+   *
+   * @generated from field: string description = 3;
+   */
+  description: string;
+
+  /**
+   * The list of nodes that make up this script's graph.
+   * Nodes are executed based on execution edge connections.
+   *
+   * @generated from field: repeated soulfire.v1.ScriptNode nodes = 4;
+   */
+  nodes: ScriptNode[];
+
+  /**
+   * The list of edges connecting nodes in this script.
+   * Defines both execution flow and data transfer between nodes.
+   *
+   * @generated from field: repeated soulfire.v1.ScriptEdge edges = 5;
+   */
+  edges: ScriptEdge[];
+
+  /**
+   * The instance this script belongs to.
+   * Scripts are always associated with a specific instance.
+   * Format: UUID string.
+   *
+   * @generated from field: string instance_id = 7;
+   */
+  instanceId: string;
+
+  /**
+   * Whether this script is paused (not running).
+   * Scripts run by default. When paused, they won't be started on server startup
+   * or when created/updated.
+   *
+   * @generated from field: bool paused = 8;
+   */
+  paused: boolean;
+
+  /**
+   * Optional resource quotas for this script.
+   *
+   * @generated from field: soulfire.v1.ScriptQuotas quotas = 9;
+   */
+  quotas?: ScriptQuotas | undefined;
+};
+```
+
+**Referenced types:** [`ScriptNode`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptnode), [`ScriptEdge`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptedge), [`ScriptQuotas`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptquotas).
+
+### `id`
+
+Unique identifier for this script.
+Format: UUID string.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L569)
+
+### `name`
+
+Human-readable name for the script.
+Displayed in the UI and used for identification.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L577)
+
+### `description`
+
+Optional description explaining what the script does.
+Displayed in script listings and detail views.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L585)
+
+### `nodes`
+
+The list of nodes that make up this script's graph.
+Nodes are executed based on execution edge connections.
+
+**Type:** `ScriptNode[]` ([`ScriptNode`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptnode)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L593)
+
+### `edges`
+
+The list of edges connecting nodes in this script.
+Defines both execution flow and data transfer between nodes.
+
+**Type:** `ScriptEdge[]` ([`ScriptEdge`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptedge)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L601)
+
+### `instanceId`
+
+The instance this script belongs to.
+Scripts are always associated with a specific instance.
+Format: UUID string.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L610)
+
+### `paused`
+
+Whether this script is paused (not running).
+Scripts run by default. When paused, they won't be started on server startup
+or when created/updated.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L619)
+
+### `quotas`
+
+Optional resource quotas for this script.
+
+**Type:** `ScriptQuotas | undefined` ([`ScriptQuotas`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptquotas)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L626)
+
+## ScriptDataSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L633).
+
+Describes the message soulfire.v1.ScriptData.
+Use `create(ScriptDataSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+ScriptDataSchema: GenMessage<ScriptData>
+```
+
+**Referenced types:** [`ScriptData`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptdata).
+
+## ScriptEdge
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L490).
+
+Represents a connection between two nodes in the visual script graph.
+Edges define how execution flows and how data passes between nodes.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type ScriptEdge = Message<"soulfire.v1.ScriptEdge"> & {
+  /**
+   * Unique identifier for this edge within the script.
+   * Format: UUID string.
+   *
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * The ID of the source node where this edge originates.
+   * Must reference a valid node ID in the script's nodes list.
+   *
+   * @generated from field: string source = 2;
+   */
+  source: string;
+
+  /**
+   * The handle/port identifier on the source node.
+   * Identifies which output port of the source node this edge connects from.
+   * Examples: "exec_out", "value", "true", "false".
+   *
+   * @generated from field: string source_handle = 3;
+   */
+  sourceHandle: string;
+
+  /**
+   * The ID of the target node where this edge terminates.
+   * Must reference a valid node ID in the script's nodes list.
+   *
+   * @generated from field: string target = 4;
+   */
+  target: string;
+
+  /**
+   * The handle/port identifier on the target node.
+   * Identifies which input port of the target node this edge connects to.
+   * Examples: "exec_in", "message", "condition".
+   *
+   * @generated from field: string target_handle = 5;
+   */
+  targetHandle: string;
+
+  /**
+   * The type of this edge, determining whether it carries execution flow or data.
+   *
+   * @generated from field: soulfire.v1.EdgeType edge_type = 6;
+   */
+  edgeType: EdgeType;
+
+  /**
+   * Explicit order for edges targeting the same multi-input port.
+   * Lower values are materialized first. Ignored for non-multi-input ports.
+   *
+   * @generated from field: optional int32 order = 7;
+   */
+  order?: number | undefined;
+};
+```
+
+**Referenced types:** [`EdgeType`](/docs/sdk/api/ts/generated-soulfire-script-pb#edgetype).
+
+### `id`
+
+Unique identifier for this edge within the script.
+Format: UUID string.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L497)
+
+### `source`
+
+The ID of the source node where this edge originates.
+Must reference a valid node ID in the script's nodes list.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L505)
+
+### `sourceHandle`
+
+The handle/port identifier on the source node.
+Identifies which output port of the source node this edge connects from.
+Examples: "exec_out", "value", "true", "false".
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L514)
+
+### `target`
+
+The ID of the target node where this edge terminates.
+Must reference a valid node ID in the script's nodes list.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L522)
+
+### `targetHandle`
+
+The handle/port identifier on the target node.
+Identifies which input port of the target node this edge connects to.
+Examples: "exec_in", "message", "condition".
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L531)
+
+### `edgeType`
+
+The type of this edge, determining whether it carries execution flow or data.
+
+**Type:** [`EdgeType`](/docs/sdk/api/ts/generated-soulfire-script-pb#edgetype).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L538)
+
+### `order`
+
+Explicit order for edges targeting the same multi-input port.
+Lower values are materialized first. Ignored for non-multi-input ports.
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L546)
+
+## ScriptEdgeSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L553).
+
+Describes the message soulfire.v1.ScriptEdge.
+Use `create(ScriptEdgeSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+ScriptEdgeSchema: GenMessage<ScriptEdge>
+```
+
+**Referenced types:** [`ScriptEdge`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptedge).
+
+## ScriptEvent
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1142).
+
+Union type for all script execution events.
+Streamed to clients during script activation to provide real-time feedback.
+Events represent individual trigger chain executions, not script lifecycle.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type ScriptEvent = Message<"soulfire.v1.ScriptEvent"> & {
+  /**
+   * The specific event that occurred.
+   *
+   * @generated from oneof soulfire.v1.ScriptEvent.event
+   */
+  event: {
+    /**
+     * A node started executing.
+     *
+     * @generated from field: soulfire.v1.NodeStarted node_started = 1;
+     */
+    value: NodeStarted;
+    case: "nodeStarted";
+  } | {
+    /**
+     * A node completed execution successfully.
+     *
+     * @generated from field: soulfire.v1.NodeCompleted node_completed = 2;
+     */
+    value: NodeCompleted;
+    case: "nodeCompleted";
+  } | {
+    /**
+     * A node encountered an error.
+     *
+     * @generated from field: soulfire.v1.NodeError node_error = 3;
+     */
+    value: NodeError;
+    case: "nodeError";
+  } | {
+    /**
+     * A trigger chain finished executing.
+     *
+     * @generated from field: soulfire.v1.ScriptCompleted script_completed = 4;
+     */
+    value: ScriptCompleted;
+    case: "scriptCompleted";
+  } | {
+    /**
+     * A trigger fired and began executing a chain.
+     *
+     * @generated from field: soulfire.v1.ScriptStarted script_started = 5;
+     */
+    value: ScriptStarted;
+    case: "scriptStarted";
+  } | {
+    /**
+     * A script logged a message.
+     *
+     * @generated from field: soulfire.v1.ScriptLog script_log = 6;
+     */
+    value: ScriptLog;
+    case: "scriptLog";
+  } | {
+    /**
+     * Execution statistics for a completed trigger chain.
+     *
+     * @generated from field: soulfire.v1.ExecutionStats execution_stats = 7;
+     */
+    value: ExecutionStats;
+    case: "executionStats";
+  } | { case: undefined; value?: undefined };
+};
+```
+
+**Referenced types:** [`NodeStarted`](/docs/sdk/api/ts/generated-soulfire-script-pb#nodestarted), [`NodeCompleted`](/docs/sdk/api/ts/generated-soulfire-script-pb#nodecompleted), [`NodeError`](/docs/sdk/api/ts/generated-soulfire-script-pb#nodeerror), [`ScriptCompleted`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptcompleted), [`ScriptStarted`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptstarted), [`ScriptLog`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptlog), [`ExecutionStats`](/docs/sdk/api/ts/generated-soulfire-script-pb#executionstats).
+
+### `event`
+
+The specific event that occurred.
+
+**Type:** `{ value: NodeStarted; case: "nodeStarted"; } | { value: NodeCompleted; case: "nodeCompleted"; } | { value: NodeError; case: "nodeError"; } | { value: ScriptCompleted; case: "scriptCompleted"; } | { value: ScriptStarted; case: "scriptStarted"; } | { value: ScriptLog; case: "scriptLog"; } | { value: ExecutionStats; case: "executionStats"; } | { case: undefined; value?: undefined; }` ([`NodeStarted`](/docs/sdk/api/ts/generated-soulfire-script-pb#nodestarted), [`NodeCompleted`](/docs/sdk/api/ts/generated-soulfire-script-pb#nodecompleted), [`NodeError`](/docs/sdk/api/ts/generated-soulfire-script-pb#nodeerror), [`ScriptCompleted`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptcompleted), [`ScriptStarted`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptstarted), [`ScriptLog`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptlog), [`ExecutionStats`](/docs/sdk/api/ts/generated-soulfire-script-pb#executionstats)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1148)
+
+## ScriptEventSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1211).
+
+Describes the message soulfire.v1.ScriptEvent.
+Use `create(ScriptEventSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+ScriptEventSchema: GenMessage<ScriptEvent>
+```
+
+**Referenced types:** [`ScriptEvent`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptevent).
+
+## ScriptInfo
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L692).
+
+Summary information about a script for listing purposes.
+Contains metadata without the full node graph to reduce payload size.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type ScriptInfo = Message<"soulfire.v1.ScriptInfo"> & {
+  /**
+   * Unique identifier for this script.
+   * Format: UUID string.
+   *
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * Human-readable name for the script.
+   *
+   * @generated from field: string name = 2;
+   */
+  name: string;
+
+  /**
+   * Optional description of what the script does.
+   *
+   * @generated from field: string description = 3;
+   */
+  description: string;
+
+  /**
+   * The instance this script belongs to.
+   * Format: UUID string.
+   *
+   * @generated from field: string instance_id = 5;
+   */
+  instanceId: string;
+
+  /**
+   * Timestamp when the script was first created.
+   *
+   * @generated from field: google.protobuf.Timestamp created_at = 6;
+   */
+  createdAt?: Timestamp | undefined;
+
+  /**
+   * Timestamp when the script was last modified.
+   *
+   * @generated from field: google.protobuf.Timestamp updated_at = 7;
+   */
+  updatedAt?: Timestamp | undefined;
+
+  /**
+   * Whether this script is paused (not running).
+   *
+   * @generated from field: bool paused = 8;
+   */
+  paused: boolean;
+};
+```
+
+### `id`
+
+Unique identifier for this script.
+Format: UUID string.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L699)
+
+### `name`
+
+Human-readable name for the script.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L706)
+
+### `description`
+
+Optional description of what the script does.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L713)
+
+### `instanceId`
+
+The instance this script belongs to.
+Format: UUID string.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L721)
+
+### `createdAt`
+
+Timestamp when the script was first created.
+
+**Type:** `Timestamp | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L728)
+
+### `updatedAt`
+
+Timestamp when the script was last modified.
+
+**Type:** `Timestamp | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L735)
+
+### `paused`
+
+Whether this script is paused (not running).
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L742)
+
+## ScriptInfoSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L749).
+
+Describes the message soulfire.v1.ScriptInfo.
+Use `create(ScriptInfoSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+ScriptInfoSchema: GenMessage<ScriptInfo>
+```
+
+**Referenced types:** [`ScriptInfo`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptinfo).
+
+## ScriptLog
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L989).
+
+Event emitted when a script logs a message (e.g., from Print node).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type ScriptLog = Message<"soulfire.v1.ScriptLog"> & {
+  /**
+   * The ID of the node that produced the log (if applicable).
+   *
+   * @generated from field: optional string node_id = 1;
+   */
+  nodeId?: string | undefined;
+
+  /**
+   * The log level (debug, info, warn, error).
+   *
+   * @generated from field: string level = 2;
+   */
+  level: string;
+
+  /**
+   * The log message content.
+   *
+   * @generated from field: string message = 3;
+   */
+  message: string;
+
+  /**
+   * When the log was produced.
+   *
+   * @generated from field: google.protobuf.Timestamp timestamp = 4;
+   */
+  timestamp?: Timestamp | undefined;
+};
+```
+
+### `nodeId`
+
+The ID of the node that produced the log (if applicable).
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L995)
+
+### `level`
+
+The log level (debug, info, warn, error).
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1002)
+
+### `message`
+
+The log message content.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1009)
+
+### `timestamp`
+
+When the log was produced.
+
+**Type:** `Timestamp | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1016)
+
+## ScriptLogEntry
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L804).
+
+A single log entry generated during script execution.
+Provides detailed information about script operations for debugging and monitoring.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type ScriptLogEntry = Message<"soulfire.v1.ScriptLogEntry"> & {
+  /**
+   * The script that generated this log entry.
+   * Format: UUID string.
+   *
+   * @generated from field: string script_id = 1;
+   */
+  scriptId: string;
+
+  /**
+   * The node that generated this log entry, if applicable.
+   * May be empty for script-level log entries.
+   *
+   * @generated from field: string node_id = 2;
+   */
+  nodeId: string;
+
+  /**
+   * The severity level of this log entry.
+   *
+   * @generated from field: soulfire.v1.LogLevel level = 3;
+   */
+  level: LogLevel;
+
+  /**
+   * The log message content.
+   *
+   * @generated from field: string message = 4;
+   */
+  message: string;
+
+  /**
+   * When this log entry was created.
+   *
+   * @generated from field: google.protobuf.Timestamp timestamp = 5;
+   */
+  timestamp?: Timestamp | undefined;
+};
+```
+
+**Referenced types:** [`LogLevel`](/docs/sdk/api/ts/generated-soulfire-script-pb#loglevel).
+
+### `scriptId`
+
+The script that generated this log entry.
+Format: UUID string.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L811)
+
+### `nodeId`
+
+The node that generated this log entry, if applicable.
+May be empty for script-level log entries.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L819)
+
+### `level`
+
+The severity level of this log entry.
+
+**Type:** [`LogLevel`](/docs/sdk/api/ts/generated-soulfire-script-pb#loglevel).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L826)
+
+### `message`
+
+The log message content.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L833)
+
+### `timestamp`
+
+When this log entry was created.
+
+**Type:** `Timestamp | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L840)
+
+## ScriptLogEntrySchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L847).
+
+Describes the message soulfire.v1.ScriptLogEntry.
+Use `create(ScriptLogEntrySchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+ScriptLogEntrySchema: GenMessage<ScriptLogEntry>
+```
+
+**Referenced types:** [`ScriptLogEntry`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptlogentry).
+
+## ScriptLogSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1023).
+
+Describes the message soulfire.v1.ScriptLog.
+Use `create(ScriptLogSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+ScriptLogSchema: GenMessage<ScriptLog>
+```
+
+**Referenced types:** [`ScriptLog`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptlog).
+
+## ScriptNode
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L379).
+
+Represents a single node in the visual script graph.
+Nodes are the building blocks of scripts, each performing a specific action
+or computation when executed.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type ScriptNode = Message<"soulfire.v1.ScriptNode"> & {
+  /**
+   * Unique identifier for this node within the script.
+   * Used to reference this node in edges and during execution tracking.
+   * Format: UUID string.
+   *
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * The type identifier for this node, determining its behavior and available ports.
+   * Examples: "trigger.on_chat", "action.send_message", "control.delay", "logic.condition".
+   *
+   * @generated from field: string type = 2;
+   */
+  type: string;
+
+  /**
+   * The visual position of this node on the editor canvas.
+   * Persisted to maintain the user's layout when reopening the script.
+   *
+   * @generated from field: soulfire.v1.Position position = 3;
+   */
+  position?: Position | undefined;
+
+  /**
+   * Configuration data for this node instance.
+   * Contains node-specific settings and parameter values.
+   * The structure depends on the node type.
+   *
+   * @generated from field: map<string, google.protobuf.Value> data = 4;
+   */
+  data: { [key: string]: Value };
+
+  /**
+   * Whether this node is muted (bypassed during execution).
+   * When muted, the node passes inputs directly to outputs without processing.
+   * Visually shown as grayed out with pass-through indicator.
+   *
+   * @generated from field: bool muted = 5;
+   */
+  muted: boolean;
+
+  /**
+   * Whether this node is collapsed (showing only header).
+   * Collapsed nodes still function normally but take less visual space.
+   *
+   * @generated from field: bool collapsed = 6;
+   */
+  collapsed: boolean;
+
+  /**
+   * For frame nodes: the width of the frame.
+   *
+   * @generated from field: optional double width = 7;
+   */
+  width?: number | undefined;
+
+  /**
+   * For frame nodes: the height of the frame.
+   *
+   * @generated from field: optional double height = 8;
+   */
+  height?: number | undefined;
+
+  /**
+   * For frame nodes: IDs of nodes contained within this frame.
+   * Updated automatically based on node positions.
+   *
+   * @generated from field: repeated string contained_nodes = 9;
+   */
+  containedNodes: string[];
+
+  /**
+   * Optional label override for this node instance.
+   * If set, displayed instead of the node type's default label.
+   *
+   * @generated from field: string label = 10;
+   */
+  label: string;
+
+  /**
+   * For reroute nodes: the resolved port type based on connections.
+   * Dynamically updated when connections change.
+   *
+   * @generated from field: optional soulfire.v1.PortType resolved_type = 11;
+   */
+  resolvedType?: PortType | undefined;
+
+  /**
+   * Parent frame node ID, if this node is inside a frame.
+   *
+   * @generated from field: string parent_frame_id = 12;
+   */
+  parentFrameId: string;
+};
+```
+
+**Referenced types:** [`Position`](/docs/sdk/api/ts/generated-soulfire-script-pb#position), [`PortType`](/docs/sdk/api/ts/generated-soulfire-script-pb#porttype).
+
+### `id`
+
+Unique identifier for this node within the script.
+Used to reference this node in edges and during execution tracking.
+Format: UUID string.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L387)
+
+### `type`
+
+The type identifier for this node, determining its behavior and available ports.
+Examples: "trigger.on_chat", "action.send_message", "control.delay", "logic.condition".
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L395)
+
+### `position`
+
+The visual position of this node on the editor canvas.
+Persisted to maintain the user's layout when reopening the script.
+
+**Type:** `Position | undefined` ([`Position`](/docs/sdk/api/ts/generated-soulfire-script-pb#position)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L403)
+
+### `data`
+
+Configuration data for this node instance.
+Contains node-specific settings and parameter values.
+The structure depends on the node type.
+
+**Type:** `{ [key: string]: Value; }`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L412)
+
+### `muted`
+
+Whether this node is muted (bypassed during execution).
+When muted, the node passes inputs directly to outputs without processing.
+Visually shown as grayed out with pass-through indicator.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L421)
+
+### `collapsed`
+
+Whether this node is collapsed (showing only header).
+Collapsed nodes still function normally but take less visual space.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L429)
+
+### `width`
+
+For frame nodes: the width of the frame.
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L436)
+
+### `height`
+
+For frame nodes: the height of the frame.
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L443)
+
+### `containedNodes`
+
+For frame nodes: IDs of nodes contained within this frame.
+Updated automatically based on node positions.
+
+**Type:** `string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L451)
+
+### `label`
+
+Optional label override for this node instance.
+If set, displayed instead of the node type's default label.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L459)
+
+### `resolvedType`
+
+For reroute nodes: the resolved port type based on connections.
+Dynamically updated when connections change.
+
+**Type:** `PortType | undefined` ([`PortType`](/docs/sdk/api/ts/generated-soulfire-script-pb#porttype)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L467)
+
+### `parentFrameId`
+
+Parent frame node ID, if this node is inside a frame.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L474)
+
+## ScriptNodeSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L481).
+
+Describes the message soulfire.v1.ScriptNode.
+Use `create(ScriptNodeSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+ScriptNodeSchema: GenMessage<ScriptNode>
+```
+
+**Referenced types:** [`ScriptNode`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptnode).
+
+## ScriptQuotas
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L642).
+
+Resource quotas for limiting script execution.
+All fields are optional; unset fields use server defaults.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type ScriptQuotas = Message<"soulfire.v1.ScriptQuotas"> & {
+  /**
+   * Maximum number of node executions per trigger invocation.
+   *
+   * @generated from field: optional int64 max_execution_count = 1;
+   */
+  maxExecutionCount?: bigint | undefined;
+
+  /**
+   * Maximum wall-clock time for a single trigger execution in milliseconds.
+   *
+   * @generated from field: optional int64 max_execution_time_ms = 2;
+   */
+  maxExecutionTimeMs?: bigint | undefined;
+
+  /**
+   * Maximum number of concurrent trigger invocations.
+   *
+   * @generated from field: optional int32 max_concurrent_triggers = 3;
+   */
+  maxConcurrentTriggers?: number | undefined;
+
+  /**
+   * Maximum number of entries in the script's state store.
+   *
+   * @generated from field: optional int64 max_state_store_entries = 4;
+   */
+  maxStateStoreEntries?: bigint | undefined;
+
+  /**
+   * When true, disables per-node and data edge timeouts entirely.
+   *
+   * @generated from field: bool disable_timeouts = 5;
+   */
+  disableTimeouts: boolean;
+};
+```
+
+### `maxExecutionCount`
+
+Maximum number of node executions per trigger invocation.
+
+**Type:** `bigint | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L648)
+
+### `maxExecutionTimeMs`
+
+Maximum wall-clock time for a single trigger execution in milliseconds.
+
+**Type:** `bigint | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L655)
+
+### `maxConcurrentTriggers`
+
+Maximum number of concurrent trigger invocations.
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L662)
+
+### `maxStateStoreEntries`
+
+Maximum number of entries in the script's state store.
+
+**Type:** `bigint | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L669)
+
+### `disableTimeouts`
+
+When true, disables per-node and data edge timeouts entirely.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L676)
+
+## ScriptQuotasSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L683).
+
+Describes the message soulfire.v1.ScriptQuotas.
+Use `create(ScriptQuotasSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+ScriptQuotasSchema: GenMessage<ScriptQuotas>
+```
+
+**Referenced types:** [`ScriptQuotas`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptquotas).
+
+## ScriptService
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2441).
+
+ScriptService provides management and execution capabilities for visual node-based
+automation scripts within SoulFire.
+
+The visual scripting system allows users to create automation workflows by connecting
+nodes in a graph. Each node represents an action, condition, or event trigger.
+Nodes are connected by edges that define execution flow and data transfer.
+
+SCRIPT LIFECYCLE:
+1. Create a script using CreateScript with initial nodes/edges or empty graph
+2. Edit the script using UpdateScript to modify the node graph
+3. Activate the script using ActivateScript to register event listeners
+4. Monitor execution via SubscribeScriptEvents or GetScriptStatus
+5. Deactivate using DeactivateScript when done
+6. Delete unused scripts with DeleteScript
+
+Scripts are reactive state machines - they don't "run" but rather listen for
+trigger events and execute node chains in response. Activation registers the
+listeners, deactivation removes them and cancels any pending async operations.
+
+PERMISSIONS: Script operations require appropriate instance permissions.
+The specific permissions are TBD but will likely include:
+- READ_SCRIPT: View script definitions and status
+- UPDATE_SCRIPT: Create, modify, and delete scripts
+- EXECUTE_SCRIPT: Activate and deactivate scripts
+
+LOGGING: Script execution logs can be streamed via SubscribeScriptLogs or
+filtered using InstanceScriptLogScope in the LogsService (see logs.proto).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+ScriptService: GenService<{ createScript: { methodKind: "unary"; input: GenMessage<CreateScriptRequest>; output: GenMessage<CreateScriptResponse>; }; getScript: { methodKind: "unary"; input: GenMessage<GetScriptRequest>; output: GenMessage<GetScriptResponse>; }; updateScript: { methodKind: "unary"; input: GenMessage<UpdateScriptRequest>; output: GenMessage<UpdateScriptResponse>; }; deleteScript: { methodKind: "unary"; input: GenMessage<DeleteScriptRequest>; output: GenMessage<Message<"soulfire.v1.DeleteScriptResponse">>; }; listScripts: { methodKind: "unary"; input: GenMessage<ListScriptsRequest>; output: GenMessage<ListScriptsResponse>; }; activateScript: { methodKind: "server_streaming"; input: GenMessage<ActivateScriptRequest>; output: GenMessage<ScriptEvent>; }; deactivateScript: { methodKind: "unary"; input: GenMessage<DeactivateScriptRequest>; output: GenMessage<Message<"soulfire.v1.DeactivateScriptResponse">>; }; getScriptStatus: { methodKind: "unary"; input: GenMessage<GetScriptStatusRequest>; output: GenMessage<GetScriptStatusResponse>; }; subscribeScriptLogs: { methodKind: "server_streaming"; input: GenMessage<SubscribeScriptLogsRequest>; output: GenMessage<ScriptLogEntry>; }; getNodeTypes: { methodKind: "unary"; input: GenMessage<GetNodeTypesRequest>; output: GenMessage<GetNodeTypesResponse>; }; getRegistryData: { methodKind: "unary"; input: GenMessage<GetRegistryDataRequest>; output: GenMessage<GetRegistryDataResponse>; }; validateScript: { methodKind: "unary"; input: GenMessage<ValidateScriptRequest>; output: GenMessage<ValidateScriptResponse>; }; dryRunScript: { methodKind: "server_streaming"; input: GenMessage<DryRunScriptRequest>; output: GenMessage<ScriptEvent>; }; }>
+```
+
+**Referenced types:** [`CreateScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#createscriptrequest), [`CreateScriptResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#createscriptresponse), [`GetScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#getscriptrequest), [`GetScriptResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#getscriptresponse), [`UpdateScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#updatescriptrequest), [`UpdateScriptResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#updatescriptresponse), [`DeleteScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#deletescriptrequest), [`ListScriptsRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#listscriptsrequest), [`ListScriptsResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#listscriptsresponse), [`ActivateScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#activatescriptrequest), [`ScriptEvent`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptevent), [`DeactivateScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#deactivatescriptrequest), [`GetScriptStatusRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#getscriptstatusrequest), [`GetScriptStatusResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#getscriptstatusresponse), [`SubscribeScriptLogsRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#subscribescriptlogsrequest), [`ScriptLogEntry`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptlogentry), [`GetNodeTypesRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#getnodetypesrequest), [`GetNodeTypesResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#getnodetypesresponse), [`GetRegistryDataRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#getregistrydatarequest), [`GetRegistryDataResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#getregistrydataresponse), [`ValidateScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#validatescriptrequest), [`ValidateScriptResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#validatescriptresponse), [`DryRunScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#dryrunscriptrequest).
+
+## ScriptStarted
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1033).
+
+Event emitted when a trigger fires and begins executing a node chain.
+Note: Scripts are reactive - this indicates a trigger event occurred,
+not that the script "started running" in the traditional sense.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type ScriptStarted = Message<"soulfire.v1.ScriptStarted"> & {
+  /**
+   * The ID of the script containing the triggered chain.
+   *
+   * @generated from field: string script_id = 1;
+   */
+  scriptId: string;
+
+  /**
+   * When the trigger fired and execution began.
+   *
+   * @generated from field: google.protobuf.Timestamp timestamp = 2;
+   */
+  timestamp?: Timestamp | undefined;
+};
+```
+
+### `scriptId`
+
+The ID of the script containing the triggered chain.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1039)
+
+### `timestamp`
+
+When the trigger fired and execution began.
+
+**Type:** `Timestamp | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1046)
+
+## ScriptStartedSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1053).
+
+Describes the message soulfire.v1.ScriptStarted.
+Use `create(ScriptStartedSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+ScriptStartedSchema: GenMessage<ScriptStarted>
+```
+
+**Referenced types:** [`ScriptStarted`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptstarted).
+
+## ScriptStatus
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L758).
+
+Runtime status information for a script.
+Provides information about current activation state and statistics.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type ScriptStatus = Message<"soulfire.v1.ScriptStatus"> & {
+  /**
+   * The script this status applies to.
+   * Format: UUID string.
+   *
+   * @generated from field: string script_id = 1;
+   */
+  scriptId: string;
+
+  /**
+   * Whether the script is currently active (listening for triggers).
+   *
+   * @generated from field: bool is_active = 2;
+   */
+  isActive: boolean;
+
+  /**
+   * The ID of the currently executing node, if any.
+   * Only present when a node is actively executing.
+   *
+   * @generated from field: optional string active_node_id = 3;
+   */
+  activeNodeId?: string | undefined;
+
+  /**
+   * The total number of times this script has been activated.
+   * Incremented each time ActivateScript is called.
+   *
+   * @generated from field: int64 activation_count = 4;
+   */
+  activationCount: bigint;
+};
+```
+
+### `scriptId`
+
+The script this status applies to.
+Format: UUID string.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L765)
+
+### `isActive`
+
+Whether the script is currently active (listening for triggers).
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L772)
+
+### `activeNodeId`
+
+The ID of the currently executing node, if any.
+Only present when a node is actively executing.
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L780)
+
+### `activationCount`
+
+The total number of times this script has been activated.
+Incremented each time ActivateScript is called.
+
+**Type:** `bigint`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L788)
+
+## ScriptStatusSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L795).
+
+Describes the message soulfire.v1.ScriptStatus.
+Use `create(ScriptStatusSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+ScriptStatusSchema: GenMessage<ScriptStatus>
+```
+
+**Referenced types:** [`ScriptStatus`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptstatus).
+
+## SubscribeScriptLogsRequest
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1711).
+
+Request to subscribe to log entries from a script.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type SubscribeScriptLogsRequest = Message<"soulfire.v1.SubscribeScriptLogsRequest"> & {
+  /**
+   * The instance containing the script.
+   * Format: UUID string.
+   *
+   * @generated from field: string instance_id = 1;
+   */
+  instanceId: string;
+
+  /**
+   * The ID of the script to receive logs from.
+   * Format: UUID string.
+   *
+   * @generated from field: string script_id = 2;
+   */
+  scriptId: string;
+
+  /**
+   * Minimum log level to receive.
+   * Only log entries at this level or higher severity will be streamed.
+   *
+   * @generated from field: soulfire.v1.LogLevel min_level = 3;
+   */
+  minLevel: LogLevel;
+};
+```
+
+**Referenced types:** [`LogLevel`](/docs/sdk/api/ts/generated-soulfire-script-pb#loglevel).
+
+### `instanceId`
+
+The instance containing the script.
+Format: UUID string.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1718)
+
+### `scriptId`
+
+The ID of the script to receive logs from.
+Format: UUID string.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1726)
+
+### `minLevel`
+
+Minimum log level to receive.
+Only log entries at this level or higher severity will be streamed.
+
+**Type:** [`LogLevel`](/docs/sdk/api/ts/generated-soulfire-script-pb#loglevel).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1734)
+
+## SubscribeScriptLogsRequestSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1741).
+
+Describes the message soulfire.v1.SubscribeScriptLogsRequest.
+Use `create(SubscribeScriptLogsRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+SubscribeScriptLogsRequestSchema: GenMessage<SubscribeScriptLogsRequest>
+```
+
+**Referenced types:** [`SubscribeScriptLogsRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#subscribescriptlogsrequest).
+
+## TypeDescriptor
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L58).
+
+A recursive type descriptor for generic/parameterized port types.
+Supports simple types (NUMBER, STRING), parameterized types (List&lt;Bot&gt;, Map&lt;String, Number&gt;),
+and type variables (T, K, V) that are resolved based on connections.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type TypeDescriptor = Message<"soulfire.v1.TypeDescriptor"> & {
+  /**
+   * @generated from oneof soulfire.v1.TypeDescriptor.kind
+   */
+  kind: {
+    /**
+     * A simple, non-parameterized type (e.g., NUMBER, STRING, BOT).
+     *
+     * @generated from field: soulfire.v1.PortType simple = 1;
+     */
+    value: PortType;
+    case: "simple";
+  } | {
+    /**
+     * A parameterized type like List<T> or Map<K, V>.
+     *
+     * @generated from field: soulfire.v1.ParameterizedType parameterized = 2;
+     */
+    value: ParameterizedType;
+    case: "parameterized";
+  } | {
+    /**
+     * A type variable name (e.g., "T", "K", "V") that gets resolved from connections.
+     * Type variables are scoped per node: each node instance has its own bindings.
+     *
+     * @generated from field: string type_variable = 3;
+     */
+    value: string;
+    case: "typeVariable";
+  } | { case: undefined; value?: undefined };
+};
+```
+
+**Referenced types:** [`PortType`](/docs/sdk/api/ts/generated-soulfire-script-pb#porttype), [`ParameterizedType`](/docs/sdk/api/ts/generated-soulfire-script-pb#parameterizedtype).
+
+### `kind`
+
+**Type:** `{ value: PortType; case: "simple"; } | { value: ParameterizedType; case: "parameterized"; } | { value: string; case: "typeVariable"; } | { case: undefined; value?: undefined; }` ([`PortType`](/docs/sdk/api/ts/generated-soulfire-script-pb#porttype), [`ParameterizedType`](/docs/sdk/api/ts/generated-soulfire-script-pb#parameterizedtype)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L62)
+
+## TypeDescriptorSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L94).
+
+Describes the message soulfire.v1.TypeDescriptor.
+Use `create(TypeDescriptorSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+TypeDescriptorSchema: GenMessage<TypeDescriptor>
+```
+
+**Referenced types:** [`TypeDescriptor`](/docs/sdk/api/ts/generated-soulfire-script-pb#typedescriptor).
+
+## UpdateScriptRequest
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1365).
+
+Request to update an existing script.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type UpdateScriptRequest = Message<"soulfire.v1.UpdateScriptRequest"> & {
+  /**
+   * The instance containing the script.
+   * Format: UUID string.
+   *
+   * @generated from field: string instance_id = 1;
+   */
+  instanceId: string;
+
+  /**
+   * The ID of the script to update.
+   * Format: UUID string.
+   *
+   * @generated from field: string script_id = 2;
+   */
+  scriptId: string;
+
+  /**
+   * Updated name for the script.
+   * If not set, the name remains unchanged.
+   *
+   * @generated from field: optional string name = 3;
+   */
+  name?: string | undefined;
+
+  /**
+   * Updated description for the script.
+   * If not set, the description remains unchanged.
+   *
+   * @generated from field: optional string description = 4;
+   */
+  description?: string | undefined;
+
+  /**
+   * Updated list of nodes.
+   * If provided, replaces the entire node list.
+   * If not provided, nodes remain unchanged.
+   *
+   * @generated from field: repeated soulfire.v1.ScriptNode nodes = 6;
+   */
+  nodes: ScriptNode[];
+
+  /**
+   * Updated list of edges.
+   * If provided, replaces the entire edge list.
+   * If not provided, edges remain unchanged.
+   *
+   * @generated from field: repeated soulfire.v1.ScriptEdge edges = 7;
+   */
+  edges: ScriptEdge[];
+
+  /**
+   * Whether the nodes field should be updated (allows setting to empty list).
+   *
+   * @generated from field: bool update_nodes = 8;
+   */
+  updateNodes: boolean;
+
+  /**
+   * Whether the edges field should be updated (allows setting to empty list).
+   *
+   * @generated from field: bool update_edges = 9;
+   */
+  updateEdges: boolean;
+
+  /**
+   * Updated paused setting.
+   * If not set, the paused setting remains unchanged.
+   * If set to false and script was paused, the script will be restarted.
+   *
+   * @generated from field: optional bool paused = 10;
+   */
+  paused?: boolean | undefined;
+
+  /**
+   * Updated resource quotas for this script.
+   *
+   * @generated from field: soulfire.v1.ScriptQuotas quotas = 11;
+   */
+  quotas?: ScriptQuotas | undefined;
+
+  /**
+   * Whether the quotas field should be updated (allows clearing quotas).
+   *
+   * @generated from field: bool update_quotas = 12;
+   */
+  updateQuotas: boolean;
+};
+```
+
+**Referenced types:** [`ScriptNode`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptnode), [`ScriptEdge`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptedge), [`ScriptQuotas`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptquotas).
+
+### `instanceId`
+
+The instance containing the script.
+Format: UUID string.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1372)
+
+### `scriptId`
+
+The ID of the script to update.
+Format: UUID string.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1380)
+
+### `name`
+
+Updated name for the script.
+If not set, the name remains unchanged.
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1388)
+
+### `description`
+
+Updated description for the script.
+If not set, the description remains unchanged.
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1396)
+
+### `nodes`
+
+Updated list of nodes.
+If provided, replaces the entire node list.
+If not provided, nodes remain unchanged.
+
+**Type:** `ScriptNode[]` ([`ScriptNode`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptnode)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1405)
+
+### `edges`
+
+Updated list of edges.
+If provided, replaces the entire edge list.
+If not provided, edges remain unchanged.
+
+**Type:** `ScriptEdge[]` ([`ScriptEdge`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptedge)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1414)
+
+### `updateNodes`
+
+Whether the nodes field should be updated (allows setting to empty list).
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1421)
+
+### `updateEdges`
+
+Whether the edges field should be updated (allows setting to empty list).
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1428)
+
+### `paused`
+
+Updated paused setting.
+If not set, the paused setting remains unchanged.
+If set to false and script was paused, the script will be restarted.
+
+**Type:** `boolean | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1437)
+
+### `quotas`
+
+Updated resource quotas for this script.
+
+**Type:** `ScriptQuotas | undefined` ([`ScriptQuotas`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptquotas)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1444)
+
+### `updateQuotas`
+
+Whether the quotas field should be updated (allows clearing quotas).
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1451)
+
+## UpdateScriptRequestSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1458).
+
+Describes the message soulfire.v1.UpdateScriptRequest.
+Use `create(UpdateScriptRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+UpdateScriptRequestSchema: GenMessage<UpdateScriptRequest>
+```
+
+**Referenced types:** [`UpdateScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#updatescriptrequest).
+
+## UpdateScriptResponse
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1466).
+
+Response after successfully updating a script.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type UpdateScriptResponse = Message<"soulfire.v1.UpdateScriptResponse"> & {
+  /**
+   * The updated script data.
+   *
+   * @generated from field: soulfire.v1.ScriptData script = 1;
+   */
+  script?: ScriptData | undefined;
+
+  /**
+   * Validation diagnostics (warnings) from building the script graph.
+   *
+   * @generated from field: repeated soulfire.v1.ValidationDiagnostic diagnostics = 2;
+   */
+  diagnostics: ValidationDiagnostic[];
+};
+```
+
+**Referenced types:** [`ScriptData`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptdata), [`ValidationDiagnostic`](/docs/sdk/api/ts/generated-soulfire-script-pb#validationdiagnostic).
+
+### `script`
+
+The updated script data.
+
+**Type:** `ScriptData | undefined` ([`ScriptData`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptdata)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1472)
+
+### `diagnostics`
+
+Validation diagnostics (warnings) from building the script graph.
+
+**Type:** `ValidationDiagnostic[]` ([`ValidationDiagnostic`](/docs/sdk/api/ts/generated-soulfire-script-pb#validationdiagnostic)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1479)
+
+## UpdateScriptResponseSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1486).
+
+Describes the message soulfire.v1.UpdateScriptResponse.
+Use `create(UpdateScriptResponseSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+UpdateScriptResponseSchema: GenMessage<UpdateScriptResponse>
+```
+
+**Referenced types:** [`UpdateScriptResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#updatescriptresponse).
+
+## ValidateScriptRequest
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1992).
+
+Request to validate a script graph without saving it.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type ValidateScriptRequest = Message<"soulfire.v1.ValidateScriptRequest"> & {
+  /**
+   * The instance context for validation.
+   *
+   * @generated from field: string instance_id = 1;
+   */
+  instanceId: string;
+
+  /**
+   * The nodes to validate.
+   *
+   * @generated from field: repeated soulfire.v1.ScriptNode nodes = 2;
+   */
+  nodes: ScriptNode[];
+
+  /**
+   * The edges to validate.
+   *
+   * @generated from field: repeated soulfire.v1.ScriptEdge edges = 3;
+   */
+  edges: ScriptEdge[];
+};
+```
+
+**Referenced types:** [`ScriptNode`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptnode), [`ScriptEdge`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptedge).
+
+### `instanceId`
+
+The instance context for validation.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1998)
+
+### `nodes`
+
+The nodes to validate.
+
+**Type:** `ScriptNode[]` ([`ScriptNode`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptnode)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2005)
+
+### `edges`
+
+The edges to validate.
+
+**Type:** `ScriptEdge[]` ([`ScriptEdge`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptedge)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2012)
+
+## ValidateScriptRequestSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2019).
+
+Describes the message soulfire.v1.ValidateScriptRequest.
+Use `create(ValidateScriptRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+ValidateScriptRequestSchema: GenMessage<ValidateScriptRequest>
+```
+
+**Referenced types:** [`ValidateScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#validatescriptrequest).
+
+## ValidateScriptResponse
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2027).
+
+Response containing validation diagnostics.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type ValidateScriptResponse = Message<"soulfire.v1.ValidateScriptResponse"> & {
+  /**
+   * All diagnostics (errors and warnings) for the script graph.
+   *
+   * @generated from field: repeated soulfire.v1.ValidationDiagnostic diagnostics = 1;
+   */
+  diagnostics: ValidationDiagnostic[];
+};
+```
+
+**Referenced types:** [`ValidationDiagnostic`](/docs/sdk/api/ts/generated-soulfire-script-pb#validationdiagnostic).
+
+### `diagnostics`
+
+All diagnostics (errors and warnings) for the script graph.
+
+**Type:** `ValidationDiagnostic[]` ([`ValidationDiagnostic`](/docs/sdk/api/ts/generated-soulfire-script-pb#validationdiagnostic)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2033)
+
+## ValidateScriptResponseSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L2040).
+
+Describes the message soulfire.v1.ValidateScriptResponse.
+Use `create(ValidateScriptResponseSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+ValidateScriptResponseSchema: GenMessage<ValidateScriptResponse>
+```
+
+**Referenced types:** [`ValidateScriptResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#validatescriptresponse).
+
+## ValidationDiagnostic
+
+**Type** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1098).
+
+A structured validation diagnostic with node/edge context and severity.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+type ValidationDiagnostic = Message<"soulfire.v1.ValidationDiagnostic"> & {
+  /**
+   * The node related to this diagnostic, or empty for graph-level issues.
+   *
+   * @generated from field: string node_id = 1;
+   */
+  nodeId: string;
+
+  /**
+   * A composite edge key related to this diagnostic, or empty.
+   *
+   * @generated from field: string edge_id = 2;
+   */
+  edgeId: string;
+
+  /**
+   * Human-readable description of the issue.
+   *
+   * @generated from field: string message = 3;
+   */
+  message: string;
+
+  /**
+   * Severity level of this diagnostic.
+   *
+   * @generated from field: soulfire.v1.DiagnosticSeverity severity = 4;
+   */
+  severity: DiagnosticSeverity;
+};
+```
+
+**Referenced types:** [`DiagnosticSeverity`](/docs/sdk/api/ts/generated-soulfire-script-pb#diagnosticseverity).
+
+### `nodeId`
+
+The node related to this diagnostic, or empty for graph-level issues.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1104)
+
+### `edgeId`
+
+A composite edge key related to this diagnostic, or empty.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1111)
+
+### `message`
+
+Human-readable description of the issue.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1118)
+
+### `severity`
+
+Severity level of this diagnostic.
+
+**Type:** [`DiagnosticSeverity`](/docs/sdk/api/ts/generated-soulfire-script-pb#diagnosticseverity).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1125)
+
+## ValidationDiagnosticSchema
+
+**Object** in `generated/soulfire/script_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/script_pb.ts#L1132).
+
+Describes the message soulfire.v1.ValidationDiagnostic.
+Use `create(ValidationDiagnosticSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/script_pb`.
+
+```ts
+ValidationDiagnosticSchema: GenMessage<ValidationDiagnostic>
+```
+
+**Referenced types:** [`ValidationDiagnostic`](/docs/sdk/api/ts/generated-soulfire-script-pb#validationdiagnostic).

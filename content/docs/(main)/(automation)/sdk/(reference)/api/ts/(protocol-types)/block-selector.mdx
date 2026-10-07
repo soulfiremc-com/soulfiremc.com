@@ -1,0 +1,160 @@
+---
+title: "BlockSelector"
+description: "TypeScript API signatures, fields, and source for BlockSelector."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/world_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L71).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/world_pb`.
+
+```ts
+type BlockSelector = Message<"soulfire.v1.BlockSelector"> & {
+  /**
+   * @generated from field: repeated string block_ids = 1;
+   */
+  blockIds: string[];
+
+  /**
+   * @generated from field: repeated string tags = 2;
+   */
+  tags: string[];
+
+  /**
+   * @generated from field: map<string, string> properties = 3;
+   */
+  properties: { [key: string]: string };
+
+  /**
+   * @generated from field: optional bool solid = 4;
+   */
+  solid?: boolean | undefined;
+
+  /**
+   * @generated from field: optional bool replaceable = 5;
+   */
+  replaceable?: boolean | undefined;
+
+  /**
+   * @generated from field: optional bool interactive = 6;
+   */
+  interactive?: boolean | undefined;
+
+  /**
+   * @generated from field: optional bool diggable = 7;
+   */
+  diggable?: boolean | undefined;
+
+  /**
+   * @generated from field: repeated string effective_tool_tags = 8;
+   */
+  effectiveToolTags: string[];
+
+  /**
+   * @generated from field: repeated string biome_ids = 9;
+   */
+  biomeIds: string[];
+
+  /**
+   * @generated from field: optional soulfire.v1.IntRange sky_light = 10;
+   */
+  skyLight?: IntRange | undefined;
+
+  /**
+   * @generated from field: optional soulfire.v1.IntRange block_light = 11;
+   */
+  blockLight?: IntRange | undefined;
+
+  /**
+   * @generated from field: bool include_block_entity = 12;
+   */
+  includeBlockEntity: boolean;
+
+  /**
+   * @generated from field: bool require_line_of_sight = 13;
+   */
+  requireLineOfSight: boolean;
+};
+```
+
+**Referenced types:** [`IntRange`](/docs/sdk/api/ts/generated-soulfire-world-pb#intrange).
+
+## `blockIds`
+
+**Type:** `string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L75)
+
+## `tags`
+
+**Type:** `string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L80)
+
+## `properties`
+
+**Type:** `{ [key: string]: string; }`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L85)
+
+## `solid`
+
+**Type:** `boolean | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L90)
+
+## `replaceable`
+
+**Type:** `boolean | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L95)
+
+## `interactive`
+
+**Type:** `boolean | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L100)
+
+## `diggable`
+
+**Type:** `boolean | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L105)
+
+## `effectiveToolTags`
+
+**Type:** `string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L110)
+
+## `biomeIds`
+
+**Type:** `string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L115)
+
+## `skyLight`
+
+**Type:** `IntRange | undefined` ([`IntRange`](/docs/sdk/api/ts/generated-soulfire-world-pb#intrange)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L120)
+
+## `blockLight`
+
+**Type:** `IntRange | undefined` ([`IntRange`](/docs/sdk/api/ts/generated-soulfire-world-pb#intrange)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L125)
+
+## `includeBlockEntity`
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L130)
+
+## `requireLineOfSight`
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L135)

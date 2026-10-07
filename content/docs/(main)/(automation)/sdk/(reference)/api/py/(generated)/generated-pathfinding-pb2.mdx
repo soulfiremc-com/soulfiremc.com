@@ -1,0 +1,1143 @@
+---
+title: "pathfinding_pb2 module"
+description: "Python API signatures, fields, and source for pathfinding_pb2 module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`DESCRIPTOR`](/docs/sdk/api/py/generated-pathfinding-pb2#descriptor) | constant |
+| [`PATH_FRONTIER_REASON_LEVEL_BOUNDARY`](/docs/sdk/api/py/generated-pathfinding-pb2#path_frontier_reason_level_boundary) | constant |
+| [`PATH_FRONTIER_REASON_NONE`](/docs/sdk/api/py/generated-pathfinding-pb2#path_frontier_reason_none) | constant |
+| [`PATH_FRONTIER_REASON_SEARCH_BUDGET`](/docs/sdk/api/py/generated-pathfinding-pb2#path_frontier_reason_search_budget) | constant |
+| [`PATH_FRONTIER_REASON_SEARCH_DEADLINE`](/docs/sdk/api/py/generated-pathfinding-pb2#path_frontier_reason_search_deadline) | constant |
+| [`PATH_FRONTIER_REASON_UNSPECIFIED`](/docs/sdk/api/py/generated-pathfinding-pb2#path_frontier_reason_unspecified) | constant |
+| [`PATH_PLAN_STATUS_CANCELLED`](/docs/sdk/api/py/generated-pathfinding-pb2#path_plan_status_cancelled) | constant |
+| [`PATH_PLAN_STATUS_COMPLETE`](/docs/sdk/api/py/generated-pathfinding-pb2#path_plan_status_complete) | constant |
+| [`PATH_PLAN_STATUS_PARTIAL`](/docs/sdk/api/py/generated-pathfinding-pb2#path_plan_status_partial) | constant |
+| [`PATH_PLAN_STATUS_QUALITY_BOUND_NOT_MET`](/docs/sdk/api/py/generated-pathfinding-pb2#path_plan_status_quality_bound_not_met) | constant |
+| [`PATH_PLAN_STATUS_SEARCH_EXPIRED`](/docs/sdk/api/py/generated-pathfinding-pb2#path_plan_status_search_expired) | constant |
+| [`PATH_PLAN_STATUS_UNREACHABLE`](/docs/sdk/api/py/generated-pathfinding-pb2#path_plan_status_unreachable) | constant |
+| [`PATH_PLAN_STATUS_UNSPECIFIED`](/docs/sdk/api/py/generated-pathfinding-pb2#path_plan_status_unspecified) | constant |
+| [`PATH_PLAN_STATUS_WORLD_DATA_PENDING`](/docs/sdk/api/py/generated-pathfinding-pb2#path_plan_status_world_data_pending) | constant |
+| [`PATH_STEP_KIND_BREAK_BLOCK`](/docs/sdk/api/py/generated-pathfinding-pb2#path_step_kind_break_block) | constant |
+| [`PATH_STEP_KIND_INTERACT`](/docs/sdk/api/py/generated-pathfinding-pb2#path_step_kind_interact) | constant |
+| [`PATH_STEP_KIND_JUMP`](/docs/sdk/api/py/generated-pathfinding-pb2#path_step_kind_jump) | constant |
+| [`PATH_STEP_KIND_MOVE`](/docs/sdk/api/py/generated-pathfinding-pb2#path_step_kind_move) | constant |
+| [`PATH_STEP_KIND_PLACE_BLOCK`](/docs/sdk/api/py/generated-pathfinding-pb2#path_step_kind_place_block) | constant |
+| [`PATH_STEP_KIND_RECALCULATE`](/docs/sdk/api/py/generated-pathfinding-pb2#path_step_kind_recalculate) | constant |
+| [`PATH_STEP_KIND_UNSPECIFIED`](/docs/sdk/api/py/generated-pathfinding-pb2#path_step_kind_unspecified) | constant |
+| [`PathChunk`](/docs/sdk/api/py/generated-pathfinding-pb2#pathchunk) | class |
+| [`PathFrontierReason`](/docs/sdk/api/py/generated-pathfinding-pb2#pathfrontierreason) | enum |
+| [`PathPlan`](/docs/sdk/api/py/generated-pathfinding-pb2#pathplan) | class |
+| [`PathPlanStatus`](/docs/sdk/api/py/generated-pathfinding-pb2#pathplanstatus) | enum |
+| [`PathRouteCost`](/docs/sdk/api/py/generated-pathfinding-pb2#pathroutecost) | class |
+| [`PathStep`](/docs/sdk/api/py/generated-pathfinding-pb2#pathstep) | class |
+| [`PathStepKind`](/docs/sdk/api/py/generated-pathfinding-pb2#pathstepkind) | enum |
+| [`PlanPathRequest`](/docs/sdk/api/py/generated-pathfinding-pb2#planpathrequest) | class |
+| [`PlanPathResponse`](/docs/sdk/api/py/generated-pathfinding-pb2#planpathresponse) | class |
+
+## DESCRIPTOR
+
+**Constant** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L13).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+```python
+DESCRIPTOR: _descriptor.FileDescriptor
+```
+
+## PATH_FRONTIER_REASON_LEVEL_BOUNDARY
+
+**Constant** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L60).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+```python
+PATH_FRONTIER_REASON_LEVEL_BOUNDARY: PathFrontierReason
+```
+
+**Referenced types:** [`PathFrontierReason`](/docs/sdk/api/py/generated-pathfinding-pb2#pathfrontierreason).
+
+## PATH_FRONTIER_REASON_NONE
+
+**Constant** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L59).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+```python
+PATH_FRONTIER_REASON_NONE: PathFrontierReason
+```
+
+**Referenced types:** [`PathFrontierReason`](/docs/sdk/api/py/generated-pathfinding-pb2#pathfrontierreason).
+
+## PATH_FRONTIER_REASON_SEARCH_BUDGET
+
+**Constant** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L62).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+```python
+PATH_FRONTIER_REASON_SEARCH_BUDGET: PathFrontierReason
+```
+
+**Referenced types:** [`PathFrontierReason`](/docs/sdk/api/py/generated-pathfinding-pb2#pathfrontierreason).
+
+## PATH_FRONTIER_REASON_SEARCH_DEADLINE
+
+**Constant** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L61).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+```python
+PATH_FRONTIER_REASON_SEARCH_DEADLINE: PathFrontierReason
+```
+
+**Referenced types:** [`PathFrontierReason`](/docs/sdk/api/py/generated-pathfinding-pb2#pathfrontierreason).
+
+## PATH_FRONTIER_REASON_UNSPECIFIED
+
+**Constant** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L58).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+```python
+PATH_FRONTIER_REASON_UNSPECIFIED: PathFrontierReason
+```
+
+**Referenced types:** [`PathFrontierReason`](/docs/sdk/api/py/generated-pathfinding-pb2#pathfrontierreason).
+
+## PATH_PLAN_STATUS_CANCELLED
+
+**Constant** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L55).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+```python
+PATH_PLAN_STATUS_CANCELLED: PathPlanStatus
+```
+
+**Referenced types:** [`PathPlanStatus`](/docs/sdk/api/py/generated-pathfinding-pb2#pathplanstatus).
+
+## PATH_PLAN_STATUS_COMPLETE
+
+**Constant** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L51).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+```python
+PATH_PLAN_STATUS_COMPLETE: PathPlanStatus
+```
+
+**Referenced types:** [`PathPlanStatus`](/docs/sdk/api/py/generated-pathfinding-pb2#pathplanstatus).
+
+## PATH_PLAN_STATUS_PARTIAL
+
+**Constant** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L52).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+```python
+PATH_PLAN_STATUS_PARTIAL: PathPlanStatus
+```
+
+**Referenced types:** [`PathPlanStatus`](/docs/sdk/api/py/generated-pathfinding-pb2#pathplanstatus).
+
+## PATH_PLAN_STATUS_QUALITY_BOUND_NOT_MET
+
+**Constant** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L56).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+```python
+PATH_PLAN_STATUS_QUALITY_BOUND_NOT_MET: PathPlanStatus
+```
+
+**Referenced types:** [`PathPlanStatus`](/docs/sdk/api/py/generated-pathfinding-pb2#pathplanstatus).
+
+## PATH_PLAN_STATUS_SEARCH_EXPIRED
+
+**Constant** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L54).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+```python
+PATH_PLAN_STATUS_SEARCH_EXPIRED: PathPlanStatus
+```
+
+**Referenced types:** [`PathPlanStatus`](/docs/sdk/api/py/generated-pathfinding-pb2#pathplanstatus).
+
+## PATH_PLAN_STATUS_UNREACHABLE
+
+**Constant** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L53).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+```python
+PATH_PLAN_STATUS_UNREACHABLE: PathPlanStatus
+```
+
+**Referenced types:** [`PathPlanStatus`](/docs/sdk/api/py/generated-pathfinding-pb2#pathplanstatus).
+
+## PATH_PLAN_STATUS_UNSPECIFIED
+
+**Constant** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L50).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+```python
+PATH_PLAN_STATUS_UNSPECIFIED: PathPlanStatus
+```
+
+**Referenced types:** [`PathPlanStatus`](/docs/sdk/api/py/generated-pathfinding-pb2#pathplanstatus).
+
+## PATH_PLAN_STATUS_WORLD_DATA_PENDING
+
+**Constant** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L57).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+```python
+PATH_PLAN_STATUS_WORLD_DATA_PENDING: PathPlanStatus
+```
+
+**Referenced types:** [`PathPlanStatus`](/docs/sdk/api/py/generated-pathfinding-pb2#pathplanstatus).
+
+## PATH_STEP_KIND_BREAK_BLOCK
+
+**Constant** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L45).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+```python
+PATH_STEP_KIND_BREAK_BLOCK: PathStepKind
+```
+
+**Referenced types:** [`PathStepKind`](/docs/sdk/api/py/generated-pathfinding-pb2#pathstepkind).
+
+## PATH_STEP_KIND_INTERACT
+
+**Constant** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L48).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+```python
+PATH_STEP_KIND_INTERACT: PathStepKind
+```
+
+**Referenced types:** [`PathStepKind`](/docs/sdk/api/py/generated-pathfinding-pb2#pathstepkind).
+
+## PATH_STEP_KIND_JUMP
+
+**Constant** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L47).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+```python
+PATH_STEP_KIND_JUMP: PathStepKind
+```
+
+**Referenced types:** [`PathStepKind`](/docs/sdk/api/py/generated-pathfinding-pb2#pathstepkind).
+
+## PATH_STEP_KIND_MOVE
+
+**Constant** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L44).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+```python
+PATH_STEP_KIND_MOVE: PathStepKind
+```
+
+**Referenced types:** [`PathStepKind`](/docs/sdk/api/py/generated-pathfinding-pb2#pathstepkind).
+
+## PATH_STEP_KIND_PLACE_BLOCK
+
+**Constant** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L46).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+```python
+PATH_STEP_KIND_PLACE_BLOCK: PathStepKind
+```
+
+**Referenced types:** [`PathStepKind`](/docs/sdk/api/py/generated-pathfinding-pb2#pathstepkind).
+
+## PATH_STEP_KIND_RECALCULATE
+
+**Constant** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L49).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+```python
+PATH_STEP_KIND_RECALCULATE: PathStepKind
+```
+
+**Referenced types:** [`PathStepKind`](/docs/sdk/api/py/generated-pathfinding-pb2#pathstepkind).
+
+## PATH_STEP_KIND_UNSPECIFIED
+
+**Constant** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L43).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+```python
+PATH_STEP_KIND_UNSPECIFIED: PathStepKind
+```
+
+**Referenced types:** [`PathStepKind`](/docs/sdk/api/py/generated-pathfinding-pb2#pathstepkind).
+
+## PathChunk
+
+**Class** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L80).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class PathChunk(_message.Message)
+```
+
+### `X_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L82)
+
+### `Z_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L83)
+
+### `x`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L84)
+
+### `z`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L85)
+
+### `__init__`
+
+```python
+def __init__(self, x: _Optional[int]=..., z: _Optional[int]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `x` | `_Optional[int]` | `...` | positional or keyword |
+| `z` | `_Optional[int]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L86)
+
+## PathFrontierReason
+
+**Enum** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L36).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+**Bases:** `int`.
+
+```python
+class PathFrontierReason(int, metaclass=_enum_type_wrapper.EnumTypeWrapper)
+```
+
+### `PATH_FRONTIER_REASON_UNSPECIFIED`
+
+**Type:** `_ClassVar[PathFrontierReason]` ([`PathFrontierReason`](/docs/sdk/api/py/generated-pathfinding-pb2#pathfrontierreason)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L38)
+
+### `PATH_FRONTIER_REASON_NONE`
+
+**Type:** `_ClassVar[PathFrontierReason]` ([`PathFrontierReason`](/docs/sdk/api/py/generated-pathfinding-pb2#pathfrontierreason)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L39)
+
+### `PATH_FRONTIER_REASON_LEVEL_BOUNDARY`
+
+**Type:** `_ClassVar[PathFrontierReason]` ([`PathFrontierReason`](/docs/sdk/api/py/generated-pathfinding-pb2#pathfrontierreason)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L40)
+
+### `PATH_FRONTIER_REASON_SEARCH_DEADLINE`
+
+**Type:** `_ClassVar[PathFrontierReason]` ([`PathFrontierReason`](/docs/sdk/api/py/generated-pathfinding-pb2#pathfrontierreason)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L41)
+
+### `PATH_FRONTIER_REASON_SEARCH_BUDGET`
+
+**Type:** `_ClassVar[PathFrontierReason]` ([`PathFrontierReason`](/docs/sdk/api/py/generated-pathfinding-pb2#pathfrontierreason)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L42)
+
+## PathPlan
+
+**Class** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L102).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class PathPlan(_message.Message)
+```
+
+### `STATUS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L104)
+
+### `START_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L105)
+
+### `STEPS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L106)
+
+### `BLOCKS_TO_BREAK_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L107)
+
+### `BLOCKS_TO_PLACE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L108)
+
+### `MAXIMUM_TICKS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L109)
+
+### `PARTIAL_REASON_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L110)
+
+### `SEARCH_MODE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L111)
+
+### `QUALITY_BOUND_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L112)
+
+### `ROUTE_COST_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L113)
+
+### `EXPANDED_STATES_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L114)
+
+### `GENERATED_TRANSITIONS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L115)
+
+### `SEARCH_ELAPSED_MILLIS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L116)
+
+### `FRONTIER_REASON_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L117)
+
+### `INITIAL_EPSILON_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L118)
+
+### `FINAL_EPSILON_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L119)
+
+### `REPAIR_ITERATIONS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L120)
+
+### `REPAIRED_INCONSISTENT_STATES_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L121)
+
+### `INCUMBENT_IMPROVEMENTS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L122)
+
+### `REQUIRED_QUALITY_BOUND_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L123)
+
+### `WORLD_REVISION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L124)
+
+### `UNAVAILABLE_CHUNKS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L125)
+
+### `status`
+
+**Type:** [`PathPlanStatus`](/docs/sdk/api/py/generated-pathfinding-pb2#pathplanstatus).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L126)
+
+### `start`
+
+**Type:** [`_common_pb2.BlockPosition`](/docs/sdk/api/py/block-position).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L127)
+
+### `steps`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[PathStep]` ([`PathStep`](/docs/sdk/api/py/generated-pathfinding-pb2#pathstep)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L128)
+
+### `blocks_to_break`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[_common_pb2.BlockPosition]` ([`_common_pb2.BlockPosition`](/docs/sdk/api/py/block-position)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L129)
+
+### `blocks_to_place`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[_common_pb2.BlockPosition]` ([`_common_pb2.BlockPosition`](/docs/sdk/api/py/block-position)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L130)
+
+### `maximum_ticks`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L131)
+
+### `partial_reason`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L132)
+
+### `search_mode`
+
+**Type:** [`_bot_live_pb2.PathfindSearchMode`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindsearchmode).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L133)
+
+### `quality_bound`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L134)
+
+### `route_cost`
+
+**Type:** [`PathRouteCost`](/docs/sdk/api/py/generated-pathfinding-pb2#pathroutecost).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L135)
+
+### `expanded_states`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L136)
+
+### `generated_transitions`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L137)
+
+### `search_elapsed_millis`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L138)
+
+### `frontier_reason`
+
+**Type:** [`PathFrontierReason`](/docs/sdk/api/py/generated-pathfinding-pb2#pathfrontierreason).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L139)
+
+### `initial_epsilon`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L140)
+
+### `final_epsilon`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L141)
+
+### `repair_iterations`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L142)
+
+### `repaired_inconsistent_states`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L143)
+
+### `incumbent_improvements`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L144)
+
+### `required_quality_bound`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L145)
+
+### `world_revision`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L146)
+
+### `unavailable_chunks`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[PathChunk]` ([`PathChunk`](/docs/sdk/api/py/generated-pathfinding-pb2#pathchunk)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L147)
+
+### `__init__`
+
+```python
+def __init__(self, status: _Optional[_Union[PathPlanStatus, str]]=..., start: _Optional[_Union[_common_pb2.BlockPosition, _Mapping]]=..., steps: _Optional[_Iterable[_Union[PathStep, _Mapping]]]=..., blocks_to_break: _Optional[_Iterable[_Union[_common_pb2.BlockPosition, _Mapping]]]=..., blocks_to_place: _Optional[_Iterable[_Union[_common_pb2.BlockPosition, _Mapping]]]=..., maximum_ticks: _Optional[int]=..., partial_reason: _Optional[str]=..., search_mode: _Optional[_Union[_bot_live_pb2.PathfindSearchMode, str]]=..., quality_bound: _Optional[float]=..., route_cost: _Optional[_Union[PathRouteCost, _Mapping]]=..., expanded_states: _Optional[int]=..., generated_transitions: _Optional[int]=..., search_elapsed_millis: _Optional[int]=..., frontier_reason: _Optional[_Union[PathFrontierReason, str]]=..., initial_epsilon: _Optional[float]=..., final_epsilon: _Optional[float]=..., repair_iterations: _Optional[int]=..., repaired_inconsistent_states: _Optional[int]=..., incumbent_improvements: _Optional[int]=..., required_quality_bound: _Optional[float]=..., world_revision: _Optional[int]=..., unavailable_chunks: _Optional[_Iterable[_Union[PathChunk, _Mapping]]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `status` | `_Optional[_Union[PathPlanStatus, str]]` ([`PathPlanStatus`](/docs/sdk/api/py/generated-pathfinding-pb2#pathplanstatus)) | `...` | positional or keyword |
+| `start` | `_Optional[_Union[_common_pb2.BlockPosition, _Mapping]]` ([`_common_pb2.BlockPosition`](/docs/sdk/api/py/block-position)) | `...` | positional or keyword |
+| `steps` | `_Optional[_Iterable[_Union[PathStep, _Mapping]]]` ([`PathStep`](/docs/sdk/api/py/generated-pathfinding-pb2#pathstep)) | `...` | positional or keyword |
+| `blocks_to_break` | `_Optional[_Iterable[_Union[_common_pb2.BlockPosition, _Mapping]]]` ([`_common_pb2.BlockPosition`](/docs/sdk/api/py/block-position)) | `...` | positional or keyword |
+| `blocks_to_place` | `_Optional[_Iterable[_Union[_common_pb2.BlockPosition, _Mapping]]]` ([`_common_pb2.BlockPosition`](/docs/sdk/api/py/block-position)) | `...` | positional or keyword |
+| `maximum_ticks` | `_Optional[int]` | `...` | positional or keyword |
+| `partial_reason` | `_Optional[str]` | `...` | positional or keyword |
+| `search_mode` | `_Optional[_Union[_bot_live_pb2.PathfindSearchMode, str]]` ([`_bot_live_pb2.PathfindSearchMode`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindsearchmode)) | `...` | positional or keyword |
+| `quality_bound` | `_Optional[float]` | `...` | positional or keyword |
+| `route_cost` | `_Optional[_Union[PathRouteCost, _Mapping]]` ([`PathRouteCost`](/docs/sdk/api/py/generated-pathfinding-pb2#pathroutecost)) | `...` | positional or keyword |
+| `expanded_states` | `_Optional[int]` | `...` | positional or keyword |
+| `generated_transitions` | `_Optional[int]` | `...` | positional or keyword |
+| `search_elapsed_millis` | `_Optional[int]` | `...` | positional or keyword |
+| `frontier_reason` | `_Optional[_Union[PathFrontierReason, str]]` ([`PathFrontierReason`](/docs/sdk/api/py/generated-pathfinding-pb2#pathfrontierreason)) | `...` | positional or keyword |
+| `initial_epsilon` | `_Optional[float]` | `...` | positional or keyword |
+| `final_epsilon` | `_Optional[float]` | `...` | positional or keyword |
+| `repair_iterations` | `_Optional[int]` | `...` | positional or keyword |
+| `repaired_inconsistent_states` | `_Optional[int]` | `...` | positional or keyword |
+| `incumbent_improvements` | `_Optional[int]` | `...` | positional or keyword |
+| `required_quality_bound` | `_Optional[float]` | `...` | positional or keyword |
+| `world_revision` | `_Optional[int]` | `...` | positional or keyword |
+| `unavailable_chunks` | `_Optional[_Iterable[_Union[PathChunk, _Mapping]]]` ([`PathChunk`](/docs/sdk/api/py/generated-pathfinding-pb2#pathchunk)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L148)
+
+## PathPlanStatus
+
+**Enum** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L25).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+**Bases:** `int`.
+
+```python
+class PathPlanStatus(int, metaclass=_enum_type_wrapper.EnumTypeWrapper)
+```
+
+### `PATH_PLAN_STATUS_UNSPECIFIED`
+
+**Type:** `_ClassVar[PathPlanStatus]` ([`PathPlanStatus`](/docs/sdk/api/py/generated-pathfinding-pb2#pathplanstatus)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L27)
+
+### `PATH_PLAN_STATUS_COMPLETE`
+
+**Type:** `_ClassVar[PathPlanStatus]` ([`PathPlanStatus`](/docs/sdk/api/py/generated-pathfinding-pb2#pathplanstatus)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L28)
+
+### `PATH_PLAN_STATUS_PARTIAL`
+
+**Type:** `_ClassVar[PathPlanStatus]` ([`PathPlanStatus`](/docs/sdk/api/py/generated-pathfinding-pb2#pathplanstatus)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L29)
+
+### `PATH_PLAN_STATUS_UNREACHABLE`
+
+**Type:** `_ClassVar[PathPlanStatus]` ([`PathPlanStatus`](/docs/sdk/api/py/generated-pathfinding-pb2#pathplanstatus)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L30)
+
+### `PATH_PLAN_STATUS_SEARCH_EXPIRED`
+
+**Type:** `_ClassVar[PathPlanStatus]` ([`PathPlanStatus`](/docs/sdk/api/py/generated-pathfinding-pb2#pathplanstatus)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L31)
+
+### `PATH_PLAN_STATUS_CANCELLED`
+
+**Type:** `_ClassVar[PathPlanStatus]` ([`PathPlanStatus`](/docs/sdk/api/py/generated-pathfinding-pb2#pathplanstatus)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L32)
+
+### `PATH_PLAN_STATUS_QUALITY_BOUND_NOT_MET`
+
+**Type:** `_ClassVar[PathPlanStatus]` ([`PathPlanStatus`](/docs/sdk/api/py/generated-pathfinding-pb2#pathplanstatus)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L33)
+
+### `PATH_PLAN_STATUS_WORLD_DATA_PENDING`
+
+**Type:** `_ClassVar[PathPlanStatus]` ([`PathPlanStatus`](/docs/sdk/api/py/generated-pathfinding-pb2#pathplanstatus)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L34)
+
+## PathRouteCost
+
+**Class** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L64).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class PathRouteCost(_message.Message)
+```
+
+### `EXPECTED_DAMAGE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L66)
+
+### `IRREVERSIBLE_CHANGES_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L67)
+
+### `PLACED_BLOCKS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L68)
+
+### `BROKEN_BLOCKS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L69)
+
+### `DURATION_COST_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L70)
+
+### `OPTIMIZATION_COST_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L71)
+
+### `expected_damage`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L72)
+
+### `irreversible_changes`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L73)
+
+### `placed_blocks`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L74)
+
+### `broken_blocks`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L75)
+
+### `duration_cost`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L76)
+
+### `optimization_cost`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L77)
+
+### `__init__`
+
+```python
+def __init__(self, expected_damage: _Optional[float]=..., irreversible_changes: _Optional[int]=..., placed_blocks: _Optional[int]=..., broken_blocks: _Optional[int]=..., duration_cost: _Optional[float]=..., optimization_cost: _Optional[float]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `expected_damage` | `_Optional[float]` | `...` | positional or keyword |
+| `irreversible_changes` | `_Optional[int]` | `...` | positional or keyword |
+| `placed_blocks` | `_Optional[int]` | `...` | positional or keyword |
+| `broken_blocks` | `_Optional[int]` | `...` | positional or keyword |
+| `duration_cost` | `_Optional[float]` | `...` | positional or keyword |
+| `optimization_cost` | `_Optional[float]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L78)
+
+## PathStep
+
+**Class** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L88).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class PathStep(_message.Message)
+```
+
+### `INDEX_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L90)
+
+### `KIND_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L91)
+
+### `POSITION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L92)
+
+### `DESCRIPTION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L93)
+
+### `MAXIMUM_TICKS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L94)
+
+### `index`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L95)
+
+### `kind`
+
+**Type:** [`PathStepKind`](/docs/sdk/api/py/generated-pathfinding-pb2#pathstepkind).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L96)
+
+### `position`
+
+**Type:** [`_common_pb2.BlockPosition`](/docs/sdk/api/py/block-position).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L97)
+
+### `description`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L98)
+
+### `maximum_ticks`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L99)
+
+### `__init__`
+
+```python
+def __init__(self, index: _Optional[int]=..., kind: _Optional[_Union[PathStepKind, str]]=..., position: _Optional[_Union[_common_pb2.BlockPosition, _Mapping]]=..., description: _Optional[str]=..., maximum_ticks: _Optional[int]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `index` | `_Optional[int]` | `...` | positional or keyword |
+| `kind` | `_Optional[_Union[PathStepKind, str]]` ([`PathStepKind`](/docs/sdk/api/py/generated-pathfinding-pb2#pathstepkind)) | `...` | positional or keyword |
+| `position` | `_Optional[_Union[_common_pb2.BlockPosition, _Mapping]]` ([`_common_pb2.BlockPosition`](/docs/sdk/api/py/block-position)) | `...` | positional or keyword |
+| `description` | `_Optional[str]` | `...` | positional or keyword |
+| `maximum_ticks` | `_Optional[int]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L100)
+
+## PathStepKind
+
+**Enum** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L15).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+**Bases:** `int`.
+
+```python
+class PathStepKind(int, metaclass=_enum_type_wrapper.EnumTypeWrapper)
+```
+
+### `PATH_STEP_KIND_UNSPECIFIED`
+
+**Type:** `_ClassVar[PathStepKind]` ([`PathStepKind`](/docs/sdk/api/py/generated-pathfinding-pb2#pathstepkind)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L17)
+
+### `PATH_STEP_KIND_MOVE`
+
+**Type:** `_ClassVar[PathStepKind]` ([`PathStepKind`](/docs/sdk/api/py/generated-pathfinding-pb2#pathstepkind)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L18)
+
+### `PATH_STEP_KIND_BREAK_BLOCK`
+
+**Type:** `_ClassVar[PathStepKind]` ([`PathStepKind`](/docs/sdk/api/py/generated-pathfinding-pb2#pathstepkind)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L19)
+
+### `PATH_STEP_KIND_PLACE_BLOCK`
+
+**Type:** `_ClassVar[PathStepKind]` ([`PathStepKind`](/docs/sdk/api/py/generated-pathfinding-pb2#pathstepkind)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L20)
+
+### `PATH_STEP_KIND_JUMP`
+
+**Type:** `_ClassVar[PathStepKind]` ([`PathStepKind`](/docs/sdk/api/py/generated-pathfinding-pb2#pathstepkind)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L21)
+
+### `PATH_STEP_KIND_INTERACT`
+
+**Type:** `_ClassVar[PathStepKind]` ([`PathStepKind`](/docs/sdk/api/py/generated-pathfinding-pb2#pathstepkind)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L22)
+
+### `PATH_STEP_KIND_RECALCULATE`
+
+**Type:** `_ClassVar[PathStepKind]` ([`PathStepKind`](/docs/sdk/api/py/generated-pathfinding-pb2#pathstepkind)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L23)
+
+## PlanPathRequest
+
+**Class** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L150).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class PlanPathRequest(_message.Message)
+```
+
+### `INSTANCE_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L152)
+
+### `BOT_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L153)
+
+### `GOAL_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L154)
+
+### `OPTIONS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L155)
+
+### `INCLUDE_DESCRIPTIONS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L156)
+
+### `instance_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L157)
+
+### `bot_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L158)
+
+### `goal`
+
+**Type:** [`_bot_live_pb2.PathfindGoal`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindgoal).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L159)
+
+### `options`
+
+**Type:** [`_bot_live_pb2.PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L160)
+
+### `include_descriptions`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L161)
+
+### `__init__`
+
+```python
+def __init__(self, instance_id: _Optional[str]=..., bot_id: _Optional[str]=..., goal: _Optional[_Union[_bot_live_pb2.PathfindGoal, _Mapping]]=..., options: _Optional[_Union[_bot_live_pb2.PathfindOptions, _Mapping]]=..., include_descriptions: bool=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instance_id` | `_Optional[str]` | `...` | positional or keyword |
+| `bot_id` | `_Optional[str]` | `...` | positional or keyword |
+| `goal` | `_Optional[_Union[_bot_live_pb2.PathfindGoal, _Mapping]]` ([`_bot_live_pb2.PathfindGoal`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindgoal)) | `...` | positional or keyword |
+| `options` | `_Optional[_Union[_bot_live_pb2.PathfindOptions, _Mapping]]` ([`_bot_live_pb2.PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `...` | positional or keyword |
+| `include_descriptions` | `bool` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L162)
+
+## PlanPathResponse
+
+**Class** in `pathfinding_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L164).
+
+**Import from:** `soulfire.pathfinding_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class PlanPathResponse(_message.Message)
+```
+
+### `PLAN_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L166)
+
+### `plan`
+
+**Type:** [`PathPlan`](/docs/sdk/api/py/generated-pathfinding-pb2#pathplan).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L167)
+
+### `__init__`
+
+```python
+def __init__(self, plan: _Optional[_Union[PathPlan, _Mapping]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `plan` | `_Optional[_Union[PathPlan, _Mapping]]` ([`PathPlan`](/docs/sdk/api/py/generated-pathfinding-pb2#pathplan)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_pb2.pyi#L168)

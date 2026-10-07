@@ -1,0 +1,309 @@
+---
+title: "BotEventFilter"
+description: "TypeScript API signatures, fields, and source for BotEventFilter."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/bot_live_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L136).
+
+Options controlling which categories of events are delivered by
+WatchBotEvents. Each category is opt-in; a stream with no categories
+enabled still emits the initial snapshot and then stays silent.
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/bot_live_pb`.
+
+```ts
+type BotEventFilter = Message<"soulfire.v1.BotEventFilter"> & {
+  /**
+   * Deliver position / rotation / health / food / xp / dimension / game mode
+   * changes as BotStateDelta.
+   *
+   * @generated from field: bool include_state_deltas = 1;
+   */
+  includeStateDeltas: boolean;
+
+  /**
+   * Deliver incoming chat and system messages as BotChatEvent.
+   *
+   * @generated from field: bool include_chat = 2;
+   */
+  includeChat: boolean;
+
+  /**
+   * Deliver connect / disconnect / spawn / death / respawn events as
+   * BotLifecycleEvent.
+   *
+   * @generated from field: bool include_lifecycle = 3;
+   */
+  includeLifecycle: boolean;
+
+  /**
+   * Deliver entity spawn / update / despawn within entity_radius as
+   * BotEntityEvent. Setting this without a positive radius defaults to 32
+   * blocks to keep the stream manageable.
+   *
+   * @generated from field: bool include_entity_events = 4;
+   */
+  includeEntityEvents: boolean;
+
+  /**
+   * Maximum radius (blocks) for entity events. Ignored if
+   * include_entity_events is false. Server clamps to a sane upper bound.
+   *
+   * @generated from field: float entity_radius = 5;
+   */
+  entityRadius: number;
+
+  /**
+   * Deliver block change events within block_radius around the bot as
+   * BotBlockUpdateEvent. Setting this without a positive radius defaults to
+   * 16 blocks.
+   *
+   * @generated from field: bool include_block_updates = 6;
+   */
+  includeBlockUpdates: boolean;
+
+  /**
+   * Maximum radius (blocks) for block updates. Ignored if
+   * include_block_updates is false. Server clamps to a sane upper bound.
+   *
+   * @generated from field: float block_radius = 7;
+   */
+  blockRadius: number;
+
+  /**
+   * Deliver inventory and open-container snapshots when their state changes.
+   *
+   * @generated from field: bool include_inventory = 8;
+   */
+  includeInventory: boolean;
+
+  /**
+   * Deliver explicit damage events.
+   *
+   * @generated from field: bool include_damage = 9;
+   */
+  includeDamage: boolean;
+
+  /**
+   * Deliver world clock, weather, and other server game-state changes.
+   *
+   * @generated from field: bool include_environment = 10;
+   */
+  includeEnvironment: boolean;
+
+  /**
+   * Deliver tab-list additions, removals, and metadata updates.
+   *
+   * @generated from field: bool include_player_list = 11;
+   */
+  includePlayerList: boolean;
+
+  /**
+   * Deliver boss-bar lifecycle and property updates.
+   *
+   * @generated from field: bool include_boss_bars = 12;
+   */
+  includeBossBars: boolean;
+
+  /**
+   * Deliver sound playback and stop events.
+   *
+   * @generated from field: bool include_sounds = 13;
+   */
+  includeSounds: boolean;
+
+  /**
+   * Deliver particle spawn events.
+   *
+   * @generated from field: bool include_particles = 14;
+   */
+  includeParticles: boolean;
+
+  /**
+   * Deliver objectives, scores, display slots, and team updates.
+   *
+   * @generated from field: bool include_scoreboard = 15;
+   */
+  includeScoreboard: boolean;
+
+  /**
+   * Deliver server resource-pack offers and removals.
+   *
+   * @generated from field: bool include_resource_packs = 16;
+   */
+  includeResourcePacks: boolean;
+
+  /**
+   * Deliver title, subtitle, timing, clear, and reset events.
+   *
+   * @generated from field: bool include_titles = 17;
+   */
+  includeTitles: boolean;
+
+  /**
+   * Deliver chunk-column load and unload events. This can be a high-volume
+   * stream while the bot is moving, so it is not enabled by default.
+   *
+   * @generated from field: bool include_chunks = 18;
+   */
+  includeChunks: boolean;
+};
+```
+
+**Referenced types:** [`BotStateDelta`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#botstatedelta), [`BotChatEvent`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#botchatevent), [`BotLifecycleEvent`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#botlifecycleevent), [`BotEntityEvent`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#botentityevent), [`BotBlockUpdateEvent`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#botblockupdateevent).
+
+## `includeStateDeltas`
+
+Deliver position / rotation / health / food / xp / dimension / game mode
+changes as BotStateDelta.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L143)
+
+## `includeChat`
+
+Deliver incoming chat and system messages as BotChatEvent.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L150)
+
+## `includeLifecycle`
+
+Deliver connect / disconnect / spawn / death / respawn events as
+BotLifecycleEvent.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L158)
+
+## `includeEntityEvents`
+
+Deliver entity spawn / update / despawn within entity_radius as
+BotEntityEvent. Setting this without a positive radius defaults to 32
+blocks to keep the stream manageable.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L167)
+
+## `entityRadius`
+
+Maximum radius (blocks) for entity events. Ignored if
+include_entity_events is false. Server clamps to a sane upper bound.
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L175)
+
+## `includeBlockUpdates`
+
+Deliver block change events within block_radius around the bot as
+BotBlockUpdateEvent. Setting this without a positive radius defaults to
+16 blocks.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L184)
+
+## `blockRadius`
+
+Maximum radius (blocks) for block updates. Ignored if
+include_block_updates is false. Server clamps to a sane upper bound.
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L192)
+
+## `includeInventory`
+
+Deliver inventory and open-container snapshots when their state changes.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L199)
+
+## `includeDamage`
+
+Deliver explicit damage events.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L206)
+
+## `includeEnvironment`
+
+Deliver world clock, weather, and other server game-state changes.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L213)
+
+## `includePlayerList`
+
+Deliver tab-list additions, removals, and metadata updates.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L220)
+
+## `includeBossBars`
+
+Deliver boss-bar lifecycle and property updates.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L227)
+
+## `includeSounds`
+
+Deliver sound playback and stop events.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L234)
+
+## `includeParticles`
+
+Deliver particle spawn events.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L241)
+
+## `includeScoreboard`
+
+Deliver objectives, scores, display slots, and team updates.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L248)
+
+## `includeResourcePacks`
+
+Deliver server resource-pack offers and removals.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L255)
+
+## `includeTitles`
+
+Deliver title, subtitle, timing, clear, and reset events.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L262)
+
+## `includeChunks`
+
+Deliver chunk-column load and unload events. This can be a high-volume
+stream while the bot is moving, so it is not enabled by default.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L270)

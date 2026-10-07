@@ -1,0 +1,39 @@
+---
+title: "SleepTaskResult"
+description: "TypeScript API signatures, fields, and source for SleepTaskResult."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/task_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L1224).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/task_pb`.
+
+```ts
+type SleepTaskResult = Message<"soulfire.v1.SleepTaskResult"> & {
+  /**
+   * @generated from field: soulfire.v1.BlockPosition bed = 1;
+   */
+  bed?: BlockPosition | undefined;
+
+  /**
+   * @generated from field: soulfire.v1.SleepCompletionReason reason = 2;
+   */
+  reason: SleepCompletionReason;
+};
+```
+
+**Referenced types:** [`BlockPosition`](/docs/sdk/api/ts/block-position), [`SleepCompletionReason`](/docs/sdk/api/ts/generated-soulfire-task-pb#sleepcompletionreason).
+
+## `bed`
+
+**Type:** `BlockPosition | undefined` ([`BlockPosition`](/docs/sdk/api/ts/block-position)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L1228)
+
+## `reason`
+
+**Type:** [`SleepCompletionReason`](/docs/sdk/api/ts/generated-soulfire-task-pb#sleepcompletionreason).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L1233)

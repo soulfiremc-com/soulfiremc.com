@@ -1,0 +1,74 @@
+---
+title: "BotStatus"
+description: "TypeScript API signatures, fields, and source for BotStatus."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/bot_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L81).
+
+Durable intent and current controller state for one configured bot.
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/bot_pb`.
+
+```ts
+type BotStatus = Message<"soulfire.v1.BotStatus"> & {
+  /**
+   * @generated from field: string profile_id = 1;
+   */
+  profileId: string;
+
+  /**
+   * @generated from field: soulfire.v1.BotDesiredState desired_state = 2;
+   */
+  desiredState: BotDesiredState;
+
+  /**
+   * @generated from field: soulfire.v1.BotRuntimeState runtime_state = 3;
+   */
+  runtimeState: BotRuntimeState;
+
+  /**
+   * @generated from field: optional string last_error = 4;
+   */
+  lastError?: string | undefined;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp updated_at = 5;
+   */
+  updatedAt?: Timestamp | undefined;
+};
+```
+
+**Referenced types:** [`BotDesiredState`](/docs/sdk/api/ts/bot-desired-state), [`BotRuntimeState`](/docs/sdk/api/ts/bot-runtime-state).
+
+## `profileId`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L85)
+
+## `desiredState`
+
+**Type:** [`BotDesiredState`](/docs/sdk/api/ts/bot-desired-state).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L90)
+
+## `runtimeState`
+
+**Type:** [`BotRuntimeState`](/docs/sdk/api/ts/bot-runtime-state).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L95)
+
+## `lastError`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L100)
+
+## `updatedAt`
+
+**Type:** `Timestamp | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L105)

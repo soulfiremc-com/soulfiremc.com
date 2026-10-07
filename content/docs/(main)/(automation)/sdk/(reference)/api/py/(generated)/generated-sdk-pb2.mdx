@@ -1,0 +1,743 @@
+---
+title: "sdk_pb2 module"
+description: "Python API signatures, fields, and source for sdk_pb2 module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`DESCRIPTOR`](/docs/sdk/api/py/generated-sdk-pb2#descriptor) | constant |
+| [`RequiredPlugin`](/docs/sdk/api/py/generated-sdk-pb2#requiredplugin) | class |
+| [`SDK_TRANSPORT_GRPC`](/docs/sdk/api/py/generated-sdk-pb2#sdk_transport_grpc) | constant |
+| [`SDK_TRANSPORT_GRPC_WEB`](/docs/sdk/api/py/generated-sdk-pb2#sdk_transport_grpc_web) | constant |
+| [`SDK_TRANSPORT_HTTP_JSON_TRANSCODING`](/docs/sdk/api/py/generated-sdk-pb2#sdk_transport_http_json_transcoding) | constant |
+| [`SDK_TRANSPORT_UNFRAMED_JSON`](/docs/sdk/api/py/generated-sdk-pb2#sdk_transport_unframed_json) | constant |
+| [`SDK_TRANSPORT_UNSPECIFIED`](/docs/sdk/api/py/generated-sdk-pb2#sdk_transport_unspecified) | constant |
+| [`SdkApiVersion`](/docs/sdk/api/py/generated-sdk-pb2#sdkapiversion) | class |
+| [`SdkCapability`](/docs/sdk/api/py/generated-sdk-pb2#sdkcapability) | class |
+| [`SdkHandshakeRequest`](/docs/sdk/api/py/generated-sdk-pb2#sdkhandshakerequest) | class |
+| [`SdkHandshakeResponse`](/docs/sdk/api/py/generated-sdk-pb2#sdkhandshakeresponse) | class |
+| [`SdkIdentity`](/docs/sdk/api/py/generated-sdk-pb2#sdkidentity) | class |
+| [`SdkLimit`](/docs/sdk/api/py/generated-sdk-pb2#sdklimit) | class |
+| [`SdkTransport`](/docs/sdk/api/py/generated-sdk-pb2#sdktransport) | enum |
+
+## DESCRIPTOR
+
+**Constant** in `sdk_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L13).
+
+**Import from:** `soulfire.sdk_pb2`.
+
+```python
+DESCRIPTOR: _descriptor.FileDescriptor
+```
+
+## RequiredPlugin
+
+**Class** in `sdk_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L38).
+
+**Import from:** `soulfire.sdk_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class RequiredPlugin(_message.Message)
+```
+
+### `PLUGIN_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L40)
+
+### `VERSION_RANGE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L41)
+
+### `plugin_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L42)
+
+### `version_range`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L43)
+
+### `__init__`
+
+```python
+def __init__(self, plugin_id: _Optional[str]=..., version_range: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `plugin_id` | `_Optional[str]` | `...` | positional or keyword |
+| `version_range` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L44)
+
+## SDK_TRANSPORT_GRPC
+
+**Constant** in `sdk_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L23).
+
+**Import from:** `soulfire.sdk_pb2`.
+
+```python
+SDK_TRANSPORT_GRPC: SdkTransport
+```
+
+**Referenced types:** [`SdkTransport`](/docs/sdk/api/py/generated-sdk-pb2#sdktransport).
+
+## SDK_TRANSPORT_GRPC_WEB
+
+**Constant** in `sdk_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L24).
+
+**Import from:** `soulfire.sdk_pb2`.
+
+```python
+SDK_TRANSPORT_GRPC_WEB: SdkTransport
+```
+
+**Referenced types:** [`SdkTransport`](/docs/sdk/api/py/generated-sdk-pb2#sdktransport).
+
+## SDK_TRANSPORT_HTTP_JSON_TRANSCODING
+
+**Constant** in `sdk_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L26).
+
+**Import from:** `soulfire.sdk_pb2`.
+
+```python
+SDK_TRANSPORT_HTTP_JSON_TRANSCODING: SdkTransport
+```
+
+**Referenced types:** [`SdkTransport`](/docs/sdk/api/py/generated-sdk-pb2#sdktransport).
+
+## SDK_TRANSPORT_UNFRAMED_JSON
+
+**Constant** in `sdk_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L25).
+
+**Import from:** `soulfire.sdk_pb2`.
+
+```python
+SDK_TRANSPORT_UNFRAMED_JSON: SdkTransport
+```
+
+**Referenced types:** [`SdkTransport`](/docs/sdk/api/py/generated-sdk-pb2#sdktransport).
+
+## SDK_TRANSPORT_UNSPECIFIED
+
+**Constant** in `sdk_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L22).
+
+**Import from:** `soulfire.sdk_pb2`.
+
+```python
+SDK_TRANSPORT_UNSPECIFIED: SdkTransport
+```
+
+**Referenced types:** [`SdkTransport`](/docs/sdk/api/py/generated-sdk-pb2#sdktransport).
+
+## SdkApiVersion
+
+**Class** in `sdk_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L28).
+
+**Import from:** `soulfire.sdk_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class SdkApiVersion(_message.Message)
+```
+
+### `MAJOR_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L30)
+
+### `MINOR_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L31)
+
+### `PATCH_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L32)
+
+### `major`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L33)
+
+### `minor`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L34)
+
+### `patch`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L35)
+
+### `__init__`
+
+```python
+def __init__(self, major: _Optional[int]=..., minor: _Optional[int]=..., patch: _Optional[int]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `major` | `_Optional[int]` | `...` | positional or keyword |
+| `minor` | `_Optional[int]` | `...` | positional or keyword |
+| `patch` | `_Optional[int]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L36)
+
+## SdkCapability
+
+**Class** in `sdk_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L62).
+
+**Import from:** `soulfire.sdk_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class SdkCapability(_message.Message)
+```
+
+### `ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L64)
+
+### `REVISION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L65)
+
+### `id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L66)
+
+### `revision`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L67)
+
+### `__init__`
+
+```python
+def __init__(self, id: _Optional[str]=..., revision: _Optional[int]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `id` | `_Optional[str]` | `...` | positional or keyword |
+| `revision` | `_Optional[int]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L68)
+
+## SdkHandshakeRequest
+
+**Class** in `sdk_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L46).
+
+**Import from:** `soulfire.sdk_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class SdkHandshakeRequest(_message.Message)
+```
+
+### `SDK_NAME_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L48)
+
+### `SDK_VERSION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L49)
+
+### `MINIMUM_API_VERSION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L50)
+
+### `MAXIMUM_API_VERSION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L51)
+
+### `REQUIRED_CAPABILITIES_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L52)
+
+### `REQUIRED_PLUGINS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L53)
+
+### `sdk_name`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L54)
+
+### `sdk_version`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L55)
+
+### `minimum_api_version`
+
+**Type:** [`SdkApiVersion`](/docs/sdk/api/py/generated-sdk-pb2#sdkapiversion).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L56)
+
+### `maximum_api_version`
+
+**Type:** [`SdkApiVersion`](/docs/sdk/api/py/generated-sdk-pb2#sdkapiversion).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L57)
+
+### `required_capabilities`
+
+**Type:** `_containers.RepeatedScalarFieldContainer[str]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L58)
+
+### `required_plugins`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[RequiredPlugin]` ([`RequiredPlugin`](/docs/sdk/api/py/generated-sdk-pb2#requiredplugin)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L59)
+
+### `__init__`
+
+```python
+def __init__(self, sdk_name: _Optional[str]=..., sdk_version: _Optional[str]=..., minimum_api_version: _Optional[_Union[SdkApiVersion, _Mapping]]=..., maximum_api_version: _Optional[_Union[SdkApiVersion, _Mapping]]=..., required_capabilities: _Optional[_Iterable[str]]=..., required_plugins: _Optional[_Iterable[_Union[RequiredPlugin, _Mapping]]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `sdk_name` | `_Optional[str]` | `...` | positional or keyword |
+| `sdk_version` | `_Optional[str]` | `...` | positional or keyword |
+| `minimum_api_version` | `_Optional[_Union[SdkApiVersion, _Mapping]]` ([`SdkApiVersion`](/docs/sdk/api/py/generated-sdk-pb2#sdkapiversion)) | `...` | positional or keyword |
+| `maximum_api_version` | `_Optional[_Union[SdkApiVersion, _Mapping]]` ([`SdkApiVersion`](/docs/sdk/api/py/generated-sdk-pb2#sdkapiversion)) | `...` | positional or keyword |
+| `required_capabilities` | `_Optional[_Iterable[str]]` | `...` | positional or keyword |
+| `required_plugins` | `_Optional[_Iterable[_Union[RequiredPlugin, _Mapping]]]` ([`RequiredPlugin`](/docs/sdk/api/py/generated-sdk-pb2#requiredplugin)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L60)
+
+## SdkHandshakeResponse
+
+**Class** in `sdk_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L92).
+
+**Import from:** `soulfire.sdk_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class SdkHandshakeResponse(_message.Message)
+```
+
+### `SERVER_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L94)
+
+### `SOULFIRE_VERSION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L95)
+
+### `COMMIT_HASH_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L96)
+
+### `BRANCH_NAME_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L97)
+
+### `API_VERSION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L98)
+
+### `NATIVE_MINECRAFT_VERSION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L99)
+
+### `SUPPORTED_MINECRAFT_VERSIONS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L100)
+
+### `TRANSPORTS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L101)
+
+### `CAPABILITIES_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L102)
+
+### `PLUGINS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L103)
+
+### `LIMITS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L104)
+
+### `IDENTITY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L105)
+
+### `server_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L106)
+
+### `soulfire_version`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L107)
+
+### `commit_hash`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L108)
+
+### `branch_name`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L109)
+
+### `api_version`
+
+**Type:** [`SdkApiVersion`](/docs/sdk/api/py/generated-sdk-pb2#sdkapiversion).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L110)
+
+### `native_minecraft_version`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L111)
+
+### `supported_minecraft_versions`
+
+**Type:** `_containers.RepeatedScalarFieldContainer[str]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L112)
+
+### `transports`
+
+**Type:** `_containers.RepeatedScalarFieldContainer[SdkTransport]` ([`SdkTransport`](/docs/sdk/api/py/generated-sdk-pb2#sdktransport)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L113)
+
+### `capabilities`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[SdkCapability]` ([`SdkCapability`](/docs/sdk/api/py/generated-sdk-pb2#sdkcapability)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L114)
+
+### `plugins`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[_plugin_api_pb2.PluginApiDescriptor]` ([`_plugin_api_pb2.PluginApiDescriptor`](/docs/sdk/api/py/generated-plugin-api-pb2#pluginapidescriptor)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L115)
+
+### `limits`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[SdkLimit]` ([`SdkLimit`](/docs/sdk/api/py/generated-sdk-pb2#sdklimit)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L116)
+
+### `identity`
+
+**Type:** [`SdkIdentity`](/docs/sdk/api/py/generated-sdk-pb2#sdkidentity).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L117)
+
+### `__init__`
+
+```python
+def __init__(self, server_id: _Optional[str]=..., soulfire_version: _Optional[str]=..., commit_hash: _Optional[str]=..., branch_name: _Optional[str]=..., api_version: _Optional[_Union[SdkApiVersion, _Mapping]]=..., native_minecraft_version: _Optional[str]=..., supported_minecraft_versions: _Optional[_Iterable[str]]=..., transports: _Optional[_Iterable[_Union[SdkTransport, str]]]=..., capabilities: _Optional[_Iterable[_Union[SdkCapability, _Mapping]]]=..., plugins: _Optional[_Iterable[_Union[_plugin_api_pb2.PluginApiDescriptor, _Mapping]]]=..., limits: _Optional[_Iterable[_Union[SdkLimit, _Mapping]]]=..., identity: _Optional[_Union[SdkIdentity, _Mapping]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `server_id` | `_Optional[str]` | `...` | positional or keyword |
+| `soulfire_version` | `_Optional[str]` | `...` | positional or keyword |
+| `commit_hash` | `_Optional[str]` | `...` | positional or keyword |
+| `branch_name` | `_Optional[str]` | `...` | positional or keyword |
+| `api_version` | `_Optional[_Union[SdkApiVersion, _Mapping]]` ([`SdkApiVersion`](/docs/sdk/api/py/generated-sdk-pb2#sdkapiversion)) | `...` | positional or keyword |
+| `native_minecraft_version` | `_Optional[str]` | `...` | positional or keyword |
+| `supported_minecraft_versions` | `_Optional[_Iterable[str]]` | `...` | positional or keyword |
+| `transports` | `_Optional[_Iterable[_Union[SdkTransport, str]]]` ([`SdkTransport`](/docs/sdk/api/py/generated-sdk-pb2#sdktransport)) | `...` | positional or keyword |
+| `capabilities` | `_Optional[_Iterable[_Union[SdkCapability, _Mapping]]]` ([`SdkCapability`](/docs/sdk/api/py/generated-sdk-pb2#sdkcapability)) | `...` | positional or keyword |
+| `plugins` | `_Optional[_Iterable[_Union[_plugin_api_pb2.PluginApiDescriptor, _Mapping]]]` ([`_plugin_api_pb2.PluginApiDescriptor`](/docs/sdk/api/py/generated-plugin-api-pb2#pluginapidescriptor)) | `...` | positional or keyword |
+| `limits` | `_Optional[_Iterable[_Union[SdkLimit, _Mapping]]]` ([`SdkLimit`](/docs/sdk/api/py/generated-sdk-pb2#sdklimit)) | `...` | positional or keyword |
+| `identity` | `_Optional[_Union[SdkIdentity, _Mapping]]` ([`SdkIdentity`](/docs/sdk/api/py/generated-sdk-pb2#sdkidentity)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L118)
+
+## SdkIdentity
+
+**Class** in `sdk_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L78).
+
+**Import from:** `soulfire.sdk_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class SdkIdentity(_message.Message)
+```
+
+### `ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L80)
+
+### `USERNAME_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L81)
+
+### `EMAIL_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L82)
+
+### `ROLE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L83)
+
+### `GRANTED_GLOBAL_PERMISSIONS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L84)
+
+### `id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L85)
+
+### `username`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L86)
+
+### `email`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L87)
+
+### `role`
+
+**Type:** [`_common_pb2.UserRole`](/docs/sdk/api/py/generated-common-pb2#userrole).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L88)
+
+### `granted_global_permissions`
+
+**Type:** `_containers.RepeatedScalarFieldContainer[str]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L89)
+
+### `__init__`
+
+```python
+def __init__(self, id: _Optional[str]=..., username: _Optional[str]=..., email: _Optional[str]=..., role: _Optional[_Union[_common_pb2.UserRole, str]]=..., granted_global_permissions: _Optional[_Iterable[str]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `id` | `_Optional[str]` | `...` | positional or keyword |
+| `username` | `_Optional[str]` | `...` | positional or keyword |
+| `email` | `_Optional[str]` | `...` | positional or keyword |
+| `role` | `_Optional[_Union[_common_pb2.UserRole, str]]` ([`_common_pb2.UserRole`](/docs/sdk/api/py/generated-common-pb2#userrole)) | `...` | positional or keyword |
+| `granted_global_permissions` | `_Optional[_Iterable[str]]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L90)
+
+## SdkLimit
+
+**Class** in `sdk_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L70).
+
+**Import from:** `soulfire.sdk_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class SdkLimit(_message.Message)
+```
+
+### `ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L72)
+
+### `VALUE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L73)
+
+### `id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L74)
+
+### `value`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L75)
+
+### `__init__`
+
+```python
+def __init__(self, id: _Optional[str]=..., value: _Optional[int]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `id` | `_Optional[str]` | `...` | positional or keyword |
+| `value` | `_Optional[int]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L76)
+
+## SdkTransport
+
+**Enum** in `sdk_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L15).
+
+**Import from:** `soulfire.sdk_pb2`.
+
+**Bases:** `int`.
+
+```python
+class SdkTransport(int, metaclass=_enum_type_wrapper.EnumTypeWrapper)
+```
+
+### `SDK_TRANSPORT_UNSPECIFIED`
+
+**Type:** `_ClassVar[SdkTransport]` ([`SdkTransport`](/docs/sdk/api/py/generated-sdk-pb2#sdktransport)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L17)
+
+### `SDK_TRANSPORT_GRPC`
+
+**Type:** `_ClassVar[SdkTransport]` ([`SdkTransport`](/docs/sdk/api/py/generated-sdk-pb2#sdktransport)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L18)
+
+### `SDK_TRANSPORT_GRPC_WEB`
+
+**Type:** `_ClassVar[SdkTransport]` ([`SdkTransport`](/docs/sdk/api/py/generated-sdk-pb2#sdktransport)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L19)
+
+### `SDK_TRANSPORT_UNFRAMED_JSON`
+
+**Type:** `_ClassVar[SdkTransport]` ([`SdkTransport`](/docs/sdk/api/py/generated-sdk-pb2#sdktransport)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L20)
+
+### `SDK_TRANSPORT_HTTP_JSON_TRANSCODING`
+
+**Type:** `_ClassVar[SdkTransport]` ([`SdkTransport`](/docs/sdk/api/py/generated-sdk-pb2#sdktransport)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/sdk_pb2.pyi#L21)

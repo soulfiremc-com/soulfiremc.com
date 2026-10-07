@@ -1,0 +1,123 @@
+---
+title: "UserPluginPermissionGrant"
+description: "TypeScript API signatures, fields, and source for UserPluginPermissionGrant."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/user_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/user_pb.ts#L491).
+
+An explicit user-level override for a dynamically registered plugin
+permission. Records remain persisted when a plugin is absent so reinstalling
+a plugin cannot silently change the meaning of an existing grant.
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/user_pb`.
+
+```ts
+type UserPluginPermissionGrant = Message<"soulfire.v1.UserPluginPermissionGrant"> & {
+  /**
+   * @generated from field: string user_id = 1;
+   */
+  userId: string;
+
+  /**
+   * @generated from field: string permission_id = 2;
+   */
+  permissionId: string;
+
+  /**
+   * @generated from field: soulfire.v1.PluginPermissionScope scope = 3;
+   */
+  scope: PluginPermissionScope;
+
+  /**
+   * Empty only for global permissions. Instance, bot, and task permissions
+   * use the corresponding resource UUID.
+   *
+   * @generated from field: optional string resource_id = 4;
+   */
+  resourceId?: string | undefined;
+
+  /**
+   * True grants and false explicitly denies the permission.
+   *
+   * @generated from field: bool granted = 5;
+   */
+  granted: boolean;
+
+  /**
+   * False when the owning plugin is not currently installed.
+   *
+   * @generated from field: bool active = 6;
+   */
+  active: boolean;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp created_at = 7;
+   */
+  createdAt?: Timestamp | undefined;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp updated_at = 8;
+   */
+  updatedAt?: Timestamp | undefined;
+};
+```
+
+**Referenced types:** [`PluginPermissionScope`](/docs/sdk/api/ts/plugin-permission-scope).
+
+## `userId`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/user_pb.ts#L495)
+
+## `permissionId`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/user_pb.ts#L500)
+
+## `scope`
+
+**Type:** [`PluginPermissionScope`](/docs/sdk/api/ts/plugin-permission-scope).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/user_pb.ts#L505)
+
+## `resourceId`
+
+Empty only for global permissions. Instance, bot, and task permissions
+use the corresponding resource UUID.
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/user_pb.ts#L513)
+
+## `granted`
+
+True grants and false explicitly denies the permission.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/user_pb.ts#L520)
+
+## `active`
+
+False when the owning plugin is not currently installed.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/user_pb.ts#L527)
+
+## `createdAt`
+
+**Type:** `Timestamp | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/user_pb.ts#L532)
+
+## `updatedAt`
+
+**Type:** `Timestamp | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/user_pb.ts#L537)

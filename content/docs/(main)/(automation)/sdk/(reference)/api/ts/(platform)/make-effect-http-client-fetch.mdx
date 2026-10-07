@@ -1,0 +1,27 @@
+---
+title: "makeEffectHttpClientFetch"
+description: "TypeScript API signatures, fields, and source for makeEffectHttpClientFetch."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Function** in `platform`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/platform.ts#L11).
+
+Adapts an Effect Platform HTTP client to the Fetch contract used by
+ConnectRPC. This keeps SoulFire transports portable across any runtime with
+an `HttpClient` layer.
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/platform`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`.
+
+```ts
+makeEffectHttpClientFetch(client: HttpClient): { (input: RequestInfo | URL, init?: RequestInit | undefined): Promise<Response>; (input: string | Request | URL, init?: RequestInit | undefined): Promise<Response>; }
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `client` | `HttpClient` | Required |  |
+
+**Returns:** `{ (input: RequestInfo | URL, init?: RequestInit | undefined): Promise<Response>; (input: string | Request | URL, init?: RequestInit | undefined): Promise<Response>; }`.

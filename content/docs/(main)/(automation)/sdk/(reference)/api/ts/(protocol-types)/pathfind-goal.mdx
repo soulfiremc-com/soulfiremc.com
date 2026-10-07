@@ -1,0 +1,90 @@
+---
+title: "PathfindGoal"
+description: "TypeScript API signatures, fields, and source for PathfindGoal."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/bot_live_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L2882).
+
+A pathfinding destination. Exactly one variant must be set.
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/bot_live_pb`.
+
+```ts
+type PathfindGoal = Message<"soulfire.v1.PathfindGoal"> & {
+  /**
+   * @generated from oneof soulfire.v1.PathfindGoal.goal
+   */
+  goal: {
+    /**
+     * @generated from field: soulfire.v1.PathfindGoal.BlockGoal block = 1;
+     */
+    value: PathfindGoal_BlockGoal;
+    case: "block";
+  } | {
+    /**
+     * @generated from field: soulfire.v1.PathfindGoal.NearGoal near = 2;
+     */
+    value: PathfindGoal_NearGoal;
+    case: "near";
+  } | {
+    /**
+     * @generated from field: soulfire.v1.PathfindGoal.EntityGoal entity = 3;
+     */
+    value: PathfindGoal_EntityGoal;
+    case: "entity";
+  } | {
+    /**
+     * @generated from field: soulfire.v1.PathfindGoal.XZGoal xz = 4;
+     */
+    value: PathfindGoal_XZGoal;
+    case: "xz";
+  } | {
+    /**
+     * @generated from field: soulfire.v1.PathfindGoal.YGoal y = 5;
+     */
+    value: PathfindGoal_YGoal;
+    case: "y";
+  } | {
+    /**
+     * @generated from field: soulfire.v1.PathfindGoal.BreakBlockGoal break_block = 6;
+     */
+    value: PathfindGoal_BreakBlockGoal;
+    case: "breakBlock";
+  } | {
+    /**
+     * @generated from field: soulfire.v1.PathfindGoal.PlaceBlockGoal place_block = 7;
+     */
+    value: PathfindGoal_PlaceBlockGoal;
+    case: "placeBlock";
+  } | {
+    /**
+     * @generated from field: soulfire.v1.PathfindGoal.AwayFromPositionGoal away_from_position = 8;
+     */
+    value: PathfindGoal_AwayFromPositionGoal;
+    case: "awayFromPosition";
+  } | {
+    /**
+     * @generated from field: soulfire.v1.PathfindGoal.AwayFromEntityGoal away_from_entity = 9;
+     */
+    value: PathfindGoal_AwayFromEntityGoal;
+    case: "awayFromEntity";
+  } | {
+    /**
+     * @generated from field: soulfire.v1.PathfindGoal.AnyGoal any = 10;
+     */
+    value: PathfindGoal_AnyGoal;
+    case: "any";
+  } | { case: undefined; value?: undefined };
+};
+```
+
+**Referenced types:** [`PathfindGoal_BlockGoal`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#pathfindgoal_blockgoal), [`PathfindGoal_NearGoal`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#pathfindgoal_neargoal), [`PathfindGoal_EntityGoal`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#pathfindgoal_entitygoal), [`PathfindGoal_XZGoal`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#pathfindgoal_xzgoal), [`PathfindGoal_YGoal`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#pathfindgoal_ygoal), [`PathfindGoal_BreakBlockGoal`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#pathfindgoal_breakblockgoal), [`PathfindGoal_PlaceBlockGoal`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#pathfindgoal_placeblockgoal), [`PathfindGoal_AwayFromPositionGoal`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#pathfindgoal_awayfrompositiongoal), [`PathfindGoal_AwayFromEntityGoal`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#pathfindgoal_awayfromentitygoal), [`PathfindGoal_AnyGoal`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#pathfindgoal_anygoal).
+
+## `goal`
+
+**Type:** `{ value: PathfindGoal_BlockGoal; case: "block"; } | { value: PathfindGoal_NearGoal; case: "near"; } | { value: PathfindGoal_EntityGoal; case: "entity"; } | { value: PathfindGoal_XZGoal; case: "xz"; } | { value: PathfindGoal_YGoal; case: "y"; } | { value: PathfindGoal_BreakBlockGoal; case: "breakBlock"; } | { value: PathfindGoal_PlaceBlockGoal; case: "placeBlock"; } | { value: PathfindGoal_AwayFromPositionGoal; case: "awayFromPosition"; } | { value: PathfindGoal_AwayFromEntityGoal; case: "awayFromEntity"; } | { value: PathfindGoal_AnyGoal; case: "any"; } | { case: undefined; value?: undefined; }` ([`PathfindGoal_BlockGoal`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#pathfindgoal_blockgoal), [`PathfindGoal_NearGoal`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#pathfindgoal_neargoal), [`PathfindGoal_EntityGoal`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#pathfindgoal_entitygoal), [`PathfindGoal_XZGoal`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#pathfindgoal_xzgoal), [`PathfindGoal_YGoal`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#pathfindgoal_ygoal), [`PathfindGoal_BreakBlockGoal`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#pathfindgoal_breakblockgoal), [`PathfindGoal_PlaceBlockGoal`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#pathfindgoal_placeblockgoal), [`PathfindGoal_AwayFromPositionGoal`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#pathfindgoal_awayfrompositiongoal), [`PathfindGoal_AwayFromEntityGoal`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#pathfindgoal_awayfromentitygoal), [`PathfindGoal_AnyGoal`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#pathfindgoal_anygoal)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L2886)

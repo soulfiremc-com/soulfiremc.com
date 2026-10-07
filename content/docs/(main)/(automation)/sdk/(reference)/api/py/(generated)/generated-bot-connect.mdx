@@ -1,0 +1,1886 @@
+---
+title: "bot_connect module"
+description: "Python API signatures, fields, and source for bot_connect module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`BotService`](/docs/sdk/api/py/generated-bot-connect#botservice) | class |
+| [`BotServiceASGIApplication`](/docs/sdk/api/py/generated-bot-connect#botserviceasgiapplication) | class |
+| [`BotServiceClient`](/docs/sdk/api/py/generated-bot-connect#botserviceclient) | class |
+| [`BotServiceClientSync`](/docs/sdk/api/py/generated-bot-connect#botserviceclientsync) | class |
+| [`BotServiceSync`](/docs/sdk/api/py/generated-bot-connect#botservicesync) | class |
+| [`BotServiceWSGIApplication`](/docs/sdk/api/py/generated-bot-connect#botservicewsgiapplication) | class |
+
+## BotService
+
+**Class** in `bot_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L37).
+
+**Import from:** `soulfire.bot_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class BotService(Protocol)
+```
+
+### `set_bots_desired_state`
+
+```python
+async def set_bots_desired_state(self, request: SetBotsDesiredStateRequest, ctx: RequestContext[SetBotsDesiredStateRequest, SetBotsDesiredStateResponse]) -> SetBotsDesiredStateResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`SetBotsDesiredStateRequest`](/docs/sdk/api/py/generated-bot-pb2#setbotsdesiredstaterequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[SetBotsDesiredStateRequest, SetBotsDesiredStateResponse]` ([`SetBotsDesiredStateRequest`](/docs/sdk/api/py/generated-bot-pb2#setbotsdesiredstaterequest), [`SetBotsDesiredStateResponse`](/docs/sdk/api/py/generated-bot-pb2#setbotsdesiredstateresponse)) | Required | positional or keyword |
+
+**Returns:** [`SetBotsDesiredStateResponse`](/docs/sdk/api/py/generated-bot-pb2#setbotsdesiredstateresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L38)
+
+### `restart_bots`
+
+```python
+async def restart_bots(self, request: RestartBotsRequest, ctx: RequestContext[RestartBotsRequest, RestartBotsResponse]) -> RestartBotsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`RestartBotsRequest`](/docs/sdk/api/py/generated-bot-pb2#restartbotsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[RestartBotsRequest, RestartBotsResponse]` ([`RestartBotsRequest`](/docs/sdk/api/py/generated-bot-pb2#restartbotsrequest), [`RestartBotsResponse`](/docs/sdk/api/py/generated-bot-pb2#restartbotsresponse)) | Required | positional or keyword |
+
+**Returns:** [`RestartBotsResponse`](/docs/sdk/api/py/generated-bot-pb2#restartbotsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L41)
+
+### `watch_bot_statuses`
+
+```python
+def watch_bot_statuses(self, request: WatchBotStatusesRequest, ctx: RequestContext[WatchBotStatusesRequest, WatchBotStatusesResponse]) -> AsyncIterator[WatchBotStatusesResponse]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`WatchBotStatusesRequest`](/docs/sdk/api/py/generated-bot-pb2#watchbotstatusesrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[WatchBotStatusesRequest, WatchBotStatusesResponse]` ([`WatchBotStatusesRequest`](/docs/sdk/api/py/generated-bot-pb2#watchbotstatusesrequest), [`WatchBotStatusesResponse`](/docs/sdk/api/py/generated-bot-pb2#watchbotstatusesresponse)) | Required | positional or keyword |
+
+**Returns:** `AsyncIterator[WatchBotStatusesResponse]` ([`WatchBotStatusesResponse`](/docs/sdk/api/py/generated-bot-pb2#watchbotstatusesresponse)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L44)
+
+### `get_bot_list`
+
+```python
+async def get_bot_list(self, request: BotListRequest, ctx: RequestContext[BotListRequest, BotListResponse]) -> BotListResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotListRequest`](/docs/sdk/api/py/generated-bot-pb2#botlistrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotListRequest, BotListResponse]` ([`BotListRequest`](/docs/sdk/api/py/generated-bot-pb2#botlistrequest), [`BotListResponse`](/docs/sdk/api/py/generated-bot-pb2#botlistresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotListResponse`](/docs/sdk/api/py/generated-bot-pb2#botlistresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L47)
+
+### `get_bot_info`
+
+```python
+async def get_bot_info(self, request: BotInfoRequest, ctx: RequestContext[BotInfoRequest, BotInfoResponse]) -> BotInfoResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotInfoRequest`](/docs/sdk/api/py/generated-bot-pb2#botinforequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotInfoRequest, BotInfoResponse]` ([`BotInfoRequest`](/docs/sdk/api/py/generated-bot-pb2#botinforequest), [`BotInfoResponse`](/docs/sdk/api/py/generated-bot-pb2#botinforesponse)) | Required | positional or keyword |
+
+**Returns:** [`BotInfoResponse`](/docs/sdk/api/py/generated-bot-pb2#botinforesponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L50)
+
+### `update_bot_config_entry`
+
+```python
+async def update_bot_config_entry(self, request: BotUpdateConfigEntryRequest, ctx: RequestContext[BotUpdateConfigEntryRequest, BotUpdateConfigEntryResponse]) -> BotUpdateConfigEntryResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotUpdateConfigEntryRequest`](/docs/sdk/api/py/generated-bot-pb2#botupdateconfigentryrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotUpdateConfigEntryRequest, BotUpdateConfigEntryResponse]` ([`BotUpdateConfigEntryRequest`](/docs/sdk/api/py/generated-bot-pb2#botupdateconfigentryrequest), [`BotUpdateConfigEntryResponse`](/docs/sdk/api/py/generated-bot-pb2#botupdateconfigentryresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotUpdateConfigEntryResponse`](/docs/sdk/api/py/generated-bot-pb2#botupdateconfigentryresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L53)
+
+### `render_bot_pov`
+
+```python
+async def render_bot_pov(self, request: BotRenderPovRequest, ctx: RequestContext[BotRenderPovRequest, BotRenderPovResponse]) -> BotRenderPovResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotRenderPovRequest`](/docs/sdk/api/py/generated-bot-pb2#botrenderpovrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotRenderPovRequest, BotRenderPovResponse]` ([`BotRenderPovRequest`](/docs/sdk/api/py/generated-bot-pb2#botrenderpovrequest), [`BotRenderPovResponse`](/docs/sdk/api/py/generated-bot-pb2#botrenderpovresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotRenderPovResponse`](/docs/sdk/api/py/generated-bot-pb2#botrenderpovresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L56)
+
+### `watch_bot_pov`
+
+```python
+def watch_bot_pov(self, request: BotWatchPovRequest, ctx: RequestContext[BotWatchPovRequest, BotPovFrame]) -> AsyncIterator[BotPovFrame]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotWatchPovRequest`](/docs/sdk/api/py/generated-bot-pb2#botwatchpovrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotWatchPovRequest, BotPovFrame]` ([`BotWatchPovRequest`](/docs/sdk/api/py/generated-bot-pb2#botwatchpovrequest), [`BotPovFrame`](/docs/sdk/api/py/generated-bot-pb2#botpovframe)) | Required | positional or keyword |
+
+**Returns:** `AsyncIterator[BotPovFrame]` ([`BotPovFrame`](/docs/sdk/api/py/generated-bot-pb2#botpovframe)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L59)
+
+### `get_bot_world_map`
+
+```python
+async def get_bot_world_map(self, request: BotWorldMapRequest, ctx: RequestContext[BotWorldMapRequest, BotWorldMapResponse]) -> BotWorldMapResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotWorldMapRequest`](/docs/sdk/api/py/generated-bot-pb2#botworldmaprequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotWorldMapRequest, BotWorldMapResponse]` ([`BotWorldMapRequest`](/docs/sdk/api/py/generated-bot-pb2#botworldmaprequest), [`BotWorldMapResponse`](/docs/sdk/api/py/generated-bot-pb2#botworldmapresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotWorldMapResponse`](/docs/sdk/api/py/generated-bot-pb2#botworldmapresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L62)
+
+### `click_inventory_slot`
+
+```python
+async def click_inventory_slot(self, request: BotInventoryClickRequest, ctx: RequestContext[BotInventoryClickRequest, BotInventoryClickResponse]) -> BotInventoryClickResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotInventoryClickRequest`](/docs/sdk/api/py/generated-bot-pb2#botinventoryclickrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotInventoryClickRequest, BotInventoryClickResponse]` ([`BotInventoryClickRequest`](/docs/sdk/api/py/generated-bot-pb2#botinventoryclickrequest), [`BotInventoryClickResponse`](/docs/sdk/api/py/generated-bot-pb2#botinventoryclickresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotInventoryClickResponse`](/docs/sdk/api/py/generated-bot-pb2#botinventoryclickresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L65)
+
+### `get_inventory_state`
+
+```python
+async def get_inventory_state(self, request: BotInventoryStateRequest, ctx: RequestContext[BotInventoryStateRequest, BotInventoryStateResponse]) -> BotInventoryStateResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotInventoryStateRequest`](/docs/sdk/api/py/generated-bot-pb2#botinventorystaterequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotInventoryStateRequest, BotInventoryStateResponse]` ([`BotInventoryStateRequest`](/docs/sdk/api/py/generated-bot-pb2#botinventorystaterequest), [`BotInventoryStateResponse`](/docs/sdk/api/py/generated-bot-pb2#botinventorystateresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotInventoryStateResponse`](/docs/sdk/api/py/generated-bot-pb2#botinventorystateresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L68)
+
+### `close_container`
+
+```python
+async def close_container(self, request: BotCloseContainerRequest, ctx: RequestContext[BotCloseContainerRequest, BotCloseContainerResponse]) -> BotCloseContainerResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotCloseContainerRequest`](/docs/sdk/api/py/generated-bot-pb2#botclosecontainerrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotCloseContainerRequest, BotCloseContainerResponse]` ([`BotCloseContainerRequest`](/docs/sdk/api/py/generated-bot-pb2#botclosecontainerrequest), [`BotCloseContainerResponse`](/docs/sdk/api/py/generated-bot-pb2#botclosecontainerresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotCloseContainerResponse`](/docs/sdk/api/py/generated-bot-pb2#botclosecontainerresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L71)
+
+### `open_inventory`
+
+```python
+async def open_inventory(self, request: BotOpenInventoryRequest, ctx: RequestContext[BotOpenInventoryRequest, BotOpenInventoryResponse]) -> BotOpenInventoryResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotOpenInventoryRequest`](/docs/sdk/api/py/generated-bot-pb2#botopeninventoryrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotOpenInventoryRequest, BotOpenInventoryResponse]` ([`BotOpenInventoryRequest`](/docs/sdk/api/py/generated-bot-pb2#botopeninventoryrequest), [`BotOpenInventoryResponse`](/docs/sdk/api/py/generated-bot-pb2#botopeninventoryresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotOpenInventoryResponse`](/docs/sdk/api/py/generated-bot-pb2#botopeninventoryresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L74)
+
+### `mouse_click`
+
+```python
+async def mouse_click(self, request: BotMouseClickRequest, ctx: RequestContext[BotMouseClickRequest, BotMouseClickResponse]) -> BotMouseClickResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotMouseClickRequest`](/docs/sdk/api/py/generated-bot-pb2#botmouseclickrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotMouseClickRequest, BotMouseClickResponse]` ([`BotMouseClickRequest`](/docs/sdk/api/py/generated-bot-pb2#botmouseclickrequest), [`BotMouseClickResponse`](/docs/sdk/api/py/generated-bot-pb2#botmouseclickresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotMouseClickResponse`](/docs/sdk/api/py/generated-bot-pb2#botmouseclickresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L77)
+
+### `click_container_button`
+
+```python
+async def click_container_button(self, request: BotContainerButtonClickRequest, ctx: RequestContext[BotContainerButtonClickRequest, BotContainerButtonClickResponse]) -> BotContainerButtonClickResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotContainerButtonClickRequest`](/docs/sdk/api/py/generated-bot-pb2#botcontainerbuttonclickrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotContainerButtonClickRequest, BotContainerButtonClickResponse]` ([`BotContainerButtonClickRequest`](/docs/sdk/api/py/generated-bot-pb2#botcontainerbuttonclickrequest), [`BotContainerButtonClickResponse`](/docs/sdk/api/py/generated-bot-pb2#botcontainerbuttonclickresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotContainerButtonClickResponse`](/docs/sdk/api/py/generated-bot-pb2#botcontainerbuttonclickresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L80)
+
+### `set_container_text`
+
+```python
+async def set_container_text(self, request: BotSetContainerTextRequest, ctx: RequestContext[BotSetContainerTextRequest, BotSetContainerTextResponse]) -> BotSetContainerTextResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotSetContainerTextRequest`](/docs/sdk/api/py/generated-bot-pb2#botsetcontainertextrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotSetContainerTextRequest, BotSetContainerTextResponse]` ([`BotSetContainerTextRequest`](/docs/sdk/api/py/generated-bot-pb2#botsetcontainertextrequest), [`BotSetContainerTextResponse`](/docs/sdk/api/py/generated-bot-pb2#botsetcontainertextresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotSetContainerTextResponse`](/docs/sdk/api/py/generated-bot-pb2#botsetcontainertextresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L83)
+
+### `set_hotbar_slot`
+
+```python
+async def set_hotbar_slot(self, request: BotSetHotbarSlotRequest, ctx: RequestContext[BotSetHotbarSlotRequest, BotSetHotbarSlotResponse]) -> BotSetHotbarSlotResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotSetHotbarSlotRequest`](/docs/sdk/api/py/generated-bot-pb2#botsethotbarslotrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotSetHotbarSlotRequest, BotSetHotbarSlotResponse]` ([`BotSetHotbarSlotRequest`](/docs/sdk/api/py/generated-bot-pb2#botsethotbarslotrequest), [`BotSetHotbarSlotResponse`](/docs/sdk/api/py/generated-bot-pb2#botsethotbarslotresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotSetHotbarSlotResponse`](/docs/sdk/api/py/generated-bot-pb2#botsethotbarslotresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L86)
+
+### `set_movement_state`
+
+```python
+async def set_movement_state(self, request: BotSetMovementStateRequest, ctx: RequestContext[BotSetMovementStateRequest, BotSetMovementStateResponse]) -> BotSetMovementStateResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotSetMovementStateRequest`](/docs/sdk/api/py/generated-bot-pb2#botsetmovementstaterequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotSetMovementStateRequest, BotSetMovementStateResponse]` ([`BotSetMovementStateRequest`](/docs/sdk/api/py/generated-bot-pb2#botsetmovementstaterequest), [`BotSetMovementStateResponse`](/docs/sdk/api/py/generated-bot-pb2#botsetmovementstateresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotSetMovementStateResponse`](/docs/sdk/api/py/generated-bot-pb2#botsetmovementstateresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L89)
+
+### `reset_movement`
+
+```python
+async def reset_movement(self, request: BotResetMovementRequest, ctx: RequestContext[BotResetMovementRequest, BotResetMovementResponse]) -> BotResetMovementResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotResetMovementRequest`](/docs/sdk/api/py/generated-bot-pb2#botresetmovementrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotResetMovementRequest, BotResetMovementResponse]` ([`BotResetMovementRequest`](/docs/sdk/api/py/generated-bot-pb2#botresetmovementrequest), [`BotResetMovementResponse`](/docs/sdk/api/py/generated-bot-pb2#botresetmovementresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotResetMovementResponse`](/docs/sdk/api/py/generated-bot-pb2#botresetmovementresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L92)
+
+### `set_rotation`
+
+```python
+async def set_rotation(self, request: BotSetRotationRequest, ctx: RequestContext[BotSetRotationRequest, BotSetRotationResponse]) -> BotSetRotationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotSetRotationRequest`](/docs/sdk/api/py/generated-bot-pb2#botsetrotationrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotSetRotationRequest, BotSetRotationResponse]` ([`BotSetRotationRequest`](/docs/sdk/api/py/generated-bot-pb2#botsetrotationrequest), [`BotSetRotationResponse`](/docs/sdk/api/py/generated-bot-pb2#botsetrotationresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotSetRotationResponse`](/docs/sdk/api/py/generated-bot-pb2#botsetrotationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L95)
+
+### `get_dialog`
+
+```python
+async def get_dialog(self, request: BotGetDialogRequest, ctx: RequestContext[BotGetDialogRequest, BotGetDialogResponse]) -> BotGetDialogResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotGetDialogRequest`](/docs/sdk/api/py/generated-bot-pb2#botgetdialogrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotGetDialogRequest, BotGetDialogResponse]` ([`BotGetDialogRequest`](/docs/sdk/api/py/generated-bot-pb2#botgetdialogrequest), [`BotGetDialogResponse`](/docs/sdk/api/py/generated-bot-pb2#botgetdialogresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotGetDialogResponse`](/docs/sdk/api/py/generated-bot-pb2#botgetdialogresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L98)
+
+### `submit_dialog`
+
+```python
+async def submit_dialog(self, request: BotSubmitDialogRequest, ctx: RequestContext[BotSubmitDialogRequest, BotSubmitDialogResponse]) -> BotSubmitDialogResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotSubmitDialogRequest`](/docs/sdk/api/py/generated-bot-pb2#botsubmitdialogrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotSubmitDialogRequest, BotSubmitDialogResponse]` ([`BotSubmitDialogRequest`](/docs/sdk/api/py/generated-bot-pb2#botsubmitdialogrequest), [`BotSubmitDialogResponse`](/docs/sdk/api/py/generated-bot-pb2#botsubmitdialogresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotSubmitDialogResponse`](/docs/sdk/api/py/generated-bot-pb2#botsubmitdialogresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L101)
+
+### `click_dialog_button`
+
+```python
+async def click_dialog_button(self, request: BotClickDialogButtonRequest, ctx: RequestContext[BotClickDialogButtonRequest, BotClickDialogButtonResponse]) -> BotClickDialogButtonResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotClickDialogButtonRequest`](/docs/sdk/api/py/generated-bot-pb2#botclickdialogbuttonrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotClickDialogButtonRequest, BotClickDialogButtonResponse]` ([`BotClickDialogButtonRequest`](/docs/sdk/api/py/generated-bot-pb2#botclickdialogbuttonrequest), [`BotClickDialogButtonResponse`](/docs/sdk/api/py/generated-bot-pb2#botclickdialogbuttonresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotClickDialogButtonResponse`](/docs/sdk/api/py/generated-bot-pb2#botclickdialogbuttonresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L104)
+
+### `close_dialog`
+
+```python
+async def close_dialog(self, request: BotCloseDialogRequest, ctx: RequestContext[BotCloseDialogRequest, BotCloseDialogResponse]) -> BotCloseDialogResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotCloseDialogRequest`](/docs/sdk/api/py/generated-bot-pb2#botclosedialogrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotCloseDialogRequest, BotCloseDialogResponse]` ([`BotCloseDialogRequest`](/docs/sdk/api/py/generated-bot-pb2#botclosedialogrequest), [`BotCloseDialogResponse`](/docs/sdk/api/py/generated-bot-pb2#botclosedialogresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotCloseDialogResponse`](/docs/sdk/api/py/generated-bot-pb2#botclosedialogresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L107)
+
+## BotServiceASGIApplication
+
+**Class** in `bot_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L111).
+
+**Import from:** `soulfire.bot_connect`.
+
+**Bases:** `ConnectASGIApplication[BotService]` ([`BotService`](/docs/sdk/api/py/generated-bot-connect#botservice)).
+
+```python
+class BotServiceASGIApplication(ConnectASGIApplication[BotService])
+```
+
+**Referenced types:** [`BotService`](/docs/sdk/api/py/generated-bot-connect#botservice).
+
+### `__init__`
+
+```python
+def __init__(self, service: BotService | AsyncGenerator[BotService], *, interceptors: Iterable[Interceptor]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | `BotService \| AsyncGenerator[BotService]` ([`BotService`](/docs/sdk/api/py/generated-bot-connect#botservice)) | Required | positional or keyword |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `compressions` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L112)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L372)
+
+## BotServiceClient
+
+**Class** in `bot_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L377).
+
+**Import from:** `soulfire.bot_connect`.
+
+**Bases:** `ConnectClient`.
+
+```python
+class BotServiceClient(ConnectClient)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[Interceptor]=(), http_client: Client | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `http_client` | `Client \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L378)
+
+### `set_bots_desired_state`
+
+```python
+async def set_bots_desired_state(self, request: SetBotsDesiredStateRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> SetBotsDesiredStateResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`SetBotsDesiredStateRequest`](/docs/sdk/api/py/generated-bot-pb2#setbotsdesiredstaterequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`SetBotsDesiredStateResponse`](/docs/sdk/api/py/generated-bot-pb2#setbotsdesiredstateresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L402)
+
+### `restart_bots`
+
+```python
+async def restart_bots(self, request: RestartBotsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> RestartBotsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`RestartBotsRequest`](/docs/sdk/api/py/generated-bot-pb2#restartbotsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`RestartBotsResponse`](/docs/sdk/api/py/generated-bot-pb2#restartbotsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L422)
+
+### `watch_bot_statuses`
+
+```python
+def watch_bot_statuses(self, request: WatchBotStatusesRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> AsyncIterator[WatchBotStatusesResponse]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`WatchBotStatusesRequest`](/docs/sdk/api/py/generated-bot-pb2#watchbotstatusesrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `AsyncIterator[WatchBotStatusesResponse]` ([`WatchBotStatusesResponse`](/docs/sdk/api/py/generated-bot-pb2#watchbotstatusesresponse)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L442)
+
+### `get_bot_list`
+
+```python
+async def get_bot_list(self, request: BotListRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotListResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotListRequest`](/docs/sdk/api/py/generated-bot-pb2#botlistrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotListResponse`](/docs/sdk/api/py/generated-bot-pb2#botlistresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L462)
+
+### `get_bot_info`
+
+```python
+async def get_bot_info(self, request: BotInfoRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotInfoResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotInfoRequest`](/docs/sdk/api/py/generated-bot-pb2#botinforequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotInfoResponse`](/docs/sdk/api/py/generated-bot-pb2#botinforesponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L482)
+
+### `update_bot_config_entry`
+
+```python
+async def update_bot_config_entry(self, request: BotUpdateConfigEntryRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotUpdateConfigEntryResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotUpdateConfigEntryRequest`](/docs/sdk/api/py/generated-bot-pb2#botupdateconfigentryrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotUpdateConfigEntryResponse`](/docs/sdk/api/py/generated-bot-pb2#botupdateconfigentryresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L502)
+
+### `render_bot_pov`
+
+```python
+async def render_bot_pov(self, request: BotRenderPovRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotRenderPovResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotRenderPovRequest`](/docs/sdk/api/py/generated-bot-pb2#botrenderpovrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotRenderPovResponse`](/docs/sdk/api/py/generated-bot-pb2#botrenderpovresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L522)
+
+### `watch_bot_pov`
+
+```python
+def watch_bot_pov(self, request: BotWatchPovRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> AsyncIterator[BotPovFrame]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotWatchPovRequest`](/docs/sdk/api/py/generated-bot-pb2#botwatchpovrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `AsyncIterator[BotPovFrame]` ([`BotPovFrame`](/docs/sdk/api/py/generated-bot-pb2#botpovframe)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L542)
+
+### `get_bot_world_map`
+
+```python
+async def get_bot_world_map(self, request: BotWorldMapRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotWorldMapResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotWorldMapRequest`](/docs/sdk/api/py/generated-bot-pb2#botworldmaprequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotWorldMapResponse`](/docs/sdk/api/py/generated-bot-pb2#botworldmapresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L562)
+
+### `click_inventory_slot`
+
+```python
+async def click_inventory_slot(self, request: BotInventoryClickRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotInventoryClickResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotInventoryClickRequest`](/docs/sdk/api/py/generated-bot-pb2#botinventoryclickrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotInventoryClickResponse`](/docs/sdk/api/py/generated-bot-pb2#botinventoryclickresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L582)
+
+### `get_inventory_state`
+
+```python
+async def get_inventory_state(self, request: BotInventoryStateRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotInventoryStateResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotInventoryStateRequest`](/docs/sdk/api/py/generated-bot-pb2#botinventorystaterequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotInventoryStateResponse`](/docs/sdk/api/py/generated-bot-pb2#botinventorystateresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L602)
+
+### `close_container`
+
+```python
+async def close_container(self, request: BotCloseContainerRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotCloseContainerResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotCloseContainerRequest`](/docs/sdk/api/py/generated-bot-pb2#botclosecontainerrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotCloseContainerResponse`](/docs/sdk/api/py/generated-bot-pb2#botclosecontainerresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L622)
+
+### `open_inventory`
+
+```python
+async def open_inventory(self, request: BotOpenInventoryRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotOpenInventoryResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotOpenInventoryRequest`](/docs/sdk/api/py/generated-bot-pb2#botopeninventoryrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotOpenInventoryResponse`](/docs/sdk/api/py/generated-bot-pb2#botopeninventoryresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L642)
+
+### `mouse_click`
+
+```python
+async def mouse_click(self, request: BotMouseClickRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotMouseClickResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotMouseClickRequest`](/docs/sdk/api/py/generated-bot-pb2#botmouseclickrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotMouseClickResponse`](/docs/sdk/api/py/generated-bot-pb2#botmouseclickresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L662)
+
+### `click_container_button`
+
+```python
+async def click_container_button(self, request: BotContainerButtonClickRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotContainerButtonClickResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotContainerButtonClickRequest`](/docs/sdk/api/py/generated-bot-pb2#botcontainerbuttonclickrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotContainerButtonClickResponse`](/docs/sdk/api/py/generated-bot-pb2#botcontainerbuttonclickresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L682)
+
+### `set_container_text`
+
+```python
+async def set_container_text(self, request: BotSetContainerTextRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotSetContainerTextResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotSetContainerTextRequest`](/docs/sdk/api/py/generated-bot-pb2#botsetcontainertextrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotSetContainerTextResponse`](/docs/sdk/api/py/generated-bot-pb2#botsetcontainertextresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L702)
+
+### `set_hotbar_slot`
+
+```python
+async def set_hotbar_slot(self, request: BotSetHotbarSlotRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotSetHotbarSlotResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotSetHotbarSlotRequest`](/docs/sdk/api/py/generated-bot-pb2#botsethotbarslotrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotSetHotbarSlotResponse`](/docs/sdk/api/py/generated-bot-pb2#botsethotbarslotresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L722)
+
+### `set_movement_state`
+
+```python
+async def set_movement_state(self, request: BotSetMovementStateRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotSetMovementStateResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotSetMovementStateRequest`](/docs/sdk/api/py/generated-bot-pb2#botsetmovementstaterequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotSetMovementStateResponse`](/docs/sdk/api/py/generated-bot-pb2#botsetmovementstateresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L742)
+
+### `reset_movement`
+
+```python
+async def reset_movement(self, request: BotResetMovementRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotResetMovementResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotResetMovementRequest`](/docs/sdk/api/py/generated-bot-pb2#botresetmovementrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotResetMovementResponse`](/docs/sdk/api/py/generated-bot-pb2#botresetmovementresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L762)
+
+### `set_rotation`
+
+```python
+async def set_rotation(self, request: BotSetRotationRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotSetRotationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotSetRotationRequest`](/docs/sdk/api/py/generated-bot-pb2#botsetrotationrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotSetRotationResponse`](/docs/sdk/api/py/generated-bot-pb2#botsetrotationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L782)
+
+### `get_dialog`
+
+```python
+async def get_dialog(self, request: BotGetDialogRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotGetDialogResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotGetDialogRequest`](/docs/sdk/api/py/generated-bot-pb2#botgetdialogrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotGetDialogResponse`](/docs/sdk/api/py/generated-bot-pb2#botgetdialogresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L802)
+
+### `submit_dialog`
+
+```python
+async def submit_dialog(self, request: BotSubmitDialogRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotSubmitDialogResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotSubmitDialogRequest`](/docs/sdk/api/py/generated-bot-pb2#botsubmitdialogrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotSubmitDialogResponse`](/docs/sdk/api/py/generated-bot-pb2#botsubmitdialogresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L822)
+
+### `click_dialog_button`
+
+```python
+async def click_dialog_button(self, request: BotClickDialogButtonRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotClickDialogButtonResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotClickDialogButtonRequest`](/docs/sdk/api/py/generated-bot-pb2#botclickdialogbuttonrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotClickDialogButtonResponse`](/docs/sdk/api/py/generated-bot-pb2#botclickdialogbuttonresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L842)
+
+### `close_dialog`
+
+```python
+async def close_dialog(self, request: BotCloseDialogRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotCloseDialogResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotCloseDialogRequest`](/docs/sdk/api/py/generated-bot-pb2#botclosedialogrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotCloseDialogResponse`](/docs/sdk/api/py/generated-bot-pb2#botclosedialogresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L862)
+
+## BotServiceClientSync
+
+**Class** in `bot_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L1220).
+
+**Import from:** `soulfire.bot_connect`.
+
+**Bases:** `ConnectClientSync`.
+
+```python
+class BotServiceClientSync(ConnectClientSync)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[InterceptorSync]=(), http_client: SyncClient | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | keyword only |
+| `http_client` | `SyncClient \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L1221)
+
+### `set_bots_desired_state`
+
+```python
+def set_bots_desired_state(self, request: SetBotsDesiredStateRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> SetBotsDesiredStateResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`SetBotsDesiredStateRequest`](/docs/sdk/api/py/generated-bot-pb2#setbotsdesiredstaterequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`SetBotsDesiredStateResponse`](/docs/sdk/api/py/generated-bot-pb2#setbotsdesiredstateresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L1245)
+
+### `restart_bots`
+
+```python
+def restart_bots(self, request: RestartBotsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> RestartBotsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`RestartBotsRequest`](/docs/sdk/api/py/generated-bot-pb2#restartbotsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`RestartBotsResponse`](/docs/sdk/api/py/generated-bot-pb2#restartbotsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L1264)
+
+### `watch_bot_statuses`
+
+```python
+def watch_bot_statuses(self, request: WatchBotStatusesRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> Iterator[WatchBotStatusesResponse]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`WatchBotStatusesRequest`](/docs/sdk/api/py/generated-bot-pb2#watchbotstatusesrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Iterator[WatchBotStatusesResponse]` ([`WatchBotStatusesResponse`](/docs/sdk/api/py/generated-bot-pb2#watchbotstatusesresponse)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L1283)
+
+### `get_bot_list`
+
+```python
+def get_bot_list(self, request: BotListRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotListResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotListRequest`](/docs/sdk/api/py/generated-bot-pb2#botlistrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotListResponse`](/docs/sdk/api/py/generated-bot-pb2#botlistresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L1302)
+
+### `get_bot_info`
+
+```python
+def get_bot_info(self, request: BotInfoRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotInfoResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotInfoRequest`](/docs/sdk/api/py/generated-bot-pb2#botinforequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotInfoResponse`](/docs/sdk/api/py/generated-bot-pb2#botinforesponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L1321)
+
+### `update_bot_config_entry`
+
+```python
+def update_bot_config_entry(self, request: BotUpdateConfigEntryRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotUpdateConfigEntryResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotUpdateConfigEntryRequest`](/docs/sdk/api/py/generated-bot-pb2#botupdateconfigentryrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotUpdateConfigEntryResponse`](/docs/sdk/api/py/generated-bot-pb2#botupdateconfigentryresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L1340)
+
+### `render_bot_pov`
+
+```python
+def render_bot_pov(self, request: BotRenderPovRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotRenderPovResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotRenderPovRequest`](/docs/sdk/api/py/generated-bot-pb2#botrenderpovrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotRenderPovResponse`](/docs/sdk/api/py/generated-bot-pb2#botrenderpovresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L1359)
+
+### `watch_bot_pov`
+
+```python
+def watch_bot_pov(self, request: BotWatchPovRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> Iterator[BotPovFrame]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotWatchPovRequest`](/docs/sdk/api/py/generated-bot-pb2#botwatchpovrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Iterator[BotPovFrame]` ([`BotPovFrame`](/docs/sdk/api/py/generated-bot-pb2#botpovframe)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L1378)
+
+### `get_bot_world_map`
+
+```python
+def get_bot_world_map(self, request: BotWorldMapRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotWorldMapResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotWorldMapRequest`](/docs/sdk/api/py/generated-bot-pb2#botworldmaprequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotWorldMapResponse`](/docs/sdk/api/py/generated-bot-pb2#botworldmapresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L1397)
+
+### `click_inventory_slot`
+
+```python
+def click_inventory_slot(self, request: BotInventoryClickRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotInventoryClickResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotInventoryClickRequest`](/docs/sdk/api/py/generated-bot-pb2#botinventoryclickrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotInventoryClickResponse`](/docs/sdk/api/py/generated-bot-pb2#botinventoryclickresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L1416)
+
+### `get_inventory_state`
+
+```python
+def get_inventory_state(self, request: BotInventoryStateRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotInventoryStateResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotInventoryStateRequest`](/docs/sdk/api/py/generated-bot-pb2#botinventorystaterequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotInventoryStateResponse`](/docs/sdk/api/py/generated-bot-pb2#botinventorystateresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L1435)
+
+### `close_container`
+
+```python
+def close_container(self, request: BotCloseContainerRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotCloseContainerResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotCloseContainerRequest`](/docs/sdk/api/py/generated-bot-pb2#botclosecontainerrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotCloseContainerResponse`](/docs/sdk/api/py/generated-bot-pb2#botclosecontainerresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L1454)
+
+### `open_inventory`
+
+```python
+def open_inventory(self, request: BotOpenInventoryRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotOpenInventoryResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotOpenInventoryRequest`](/docs/sdk/api/py/generated-bot-pb2#botopeninventoryrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotOpenInventoryResponse`](/docs/sdk/api/py/generated-bot-pb2#botopeninventoryresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L1473)
+
+### `mouse_click`
+
+```python
+def mouse_click(self, request: BotMouseClickRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotMouseClickResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotMouseClickRequest`](/docs/sdk/api/py/generated-bot-pb2#botmouseclickrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotMouseClickResponse`](/docs/sdk/api/py/generated-bot-pb2#botmouseclickresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L1492)
+
+### `click_container_button`
+
+```python
+def click_container_button(self, request: BotContainerButtonClickRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotContainerButtonClickResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotContainerButtonClickRequest`](/docs/sdk/api/py/generated-bot-pb2#botcontainerbuttonclickrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotContainerButtonClickResponse`](/docs/sdk/api/py/generated-bot-pb2#botcontainerbuttonclickresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L1511)
+
+### `set_container_text`
+
+```python
+def set_container_text(self, request: BotSetContainerTextRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotSetContainerTextResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotSetContainerTextRequest`](/docs/sdk/api/py/generated-bot-pb2#botsetcontainertextrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotSetContainerTextResponse`](/docs/sdk/api/py/generated-bot-pb2#botsetcontainertextresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L1530)
+
+### `set_hotbar_slot`
+
+```python
+def set_hotbar_slot(self, request: BotSetHotbarSlotRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotSetHotbarSlotResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotSetHotbarSlotRequest`](/docs/sdk/api/py/generated-bot-pb2#botsethotbarslotrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotSetHotbarSlotResponse`](/docs/sdk/api/py/generated-bot-pb2#botsethotbarslotresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L1549)
+
+### `set_movement_state`
+
+```python
+def set_movement_state(self, request: BotSetMovementStateRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotSetMovementStateResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotSetMovementStateRequest`](/docs/sdk/api/py/generated-bot-pb2#botsetmovementstaterequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotSetMovementStateResponse`](/docs/sdk/api/py/generated-bot-pb2#botsetmovementstateresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L1568)
+
+### `reset_movement`
+
+```python
+def reset_movement(self, request: BotResetMovementRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotResetMovementResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotResetMovementRequest`](/docs/sdk/api/py/generated-bot-pb2#botresetmovementrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotResetMovementResponse`](/docs/sdk/api/py/generated-bot-pb2#botresetmovementresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L1587)
+
+### `set_rotation`
+
+```python
+def set_rotation(self, request: BotSetRotationRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotSetRotationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotSetRotationRequest`](/docs/sdk/api/py/generated-bot-pb2#botsetrotationrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotSetRotationResponse`](/docs/sdk/api/py/generated-bot-pb2#botsetrotationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L1606)
+
+### `get_dialog`
+
+```python
+def get_dialog(self, request: BotGetDialogRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotGetDialogResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotGetDialogRequest`](/docs/sdk/api/py/generated-bot-pb2#botgetdialogrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotGetDialogResponse`](/docs/sdk/api/py/generated-bot-pb2#botgetdialogresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L1625)
+
+### `submit_dialog`
+
+```python
+def submit_dialog(self, request: BotSubmitDialogRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotSubmitDialogResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotSubmitDialogRequest`](/docs/sdk/api/py/generated-bot-pb2#botsubmitdialogrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotSubmitDialogResponse`](/docs/sdk/api/py/generated-bot-pb2#botsubmitdialogresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L1644)
+
+### `click_dialog_button`
+
+```python
+def click_dialog_button(self, request: BotClickDialogButtonRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotClickDialogButtonResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotClickDialogButtonRequest`](/docs/sdk/api/py/generated-bot-pb2#botclickdialogbuttonrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotClickDialogButtonResponse`](/docs/sdk/api/py/generated-bot-pb2#botclickdialogbuttonresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L1663)
+
+### `close_dialog`
+
+```python
+def close_dialog(self, request: BotCloseDialogRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> BotCloseDialogResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotCloseDialogRequest`](/docs/sdk/api/py/generated-bot-pb2#botclosedialogrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`BotCloseDialogResponse`](/docs/sdk/api/py/generated-bot-pb2#botclosedialogresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L1682)
+
+## BotServiceSync
+
+**Class** in `bot_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L882).
+
+**Import from:** `soulfire.bot_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class BotServiceSync(Protocol)
+```
+
+### `set_bots_desired_state`
+
+```python
+def set_bots_desired_state(self, request: SetBotsDesiredStateRequest, ctx: RequestContext[SetBotsDesiredStateRequest, SetBotsDesiredStateResponse]) -> SetBotsDesiredStateResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`SetBotsDesiredStateRequest`](/docs/sdk/api/py/generated-bot-pb2#setbotsdesiredstaterequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[SetBotsDesiredStateRequest, SetBotsDesiredStateResponse]` ([`SetBotsDesiredStateRequest`](/docs/sdk/api/py/generated-bot-pb2#setbotsdesiredstaterequest), [`SetBotsDesiredStateResponse`](/docs/sdk/api/py/generated-bot-pb2#setbotsdesiredstateresponse)) | Required | positional or keyword |
+
+**Returns:** [`SetBotsDesiredStateResponse`](/docs/sdk/api/py/generated-bot-pb2#setbotsdesiredstateresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L883)
+
+### `restart_bots`
+
+```python
+def restart_bots(self, request: RestartBotsRequest, ctx: RequestContext[RestartBotsRequest, RestartBotsResponse]) -> RestartBotsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`RestartBotsRequest`](/docs/sdk/api/py/generated-bot-pb2#restartbotsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[RestartBotsRequest, RestartBotsResponse]` ([`RestartBotsRequest`](/docs/sdk/api/py/generated-bot-pb2#restartbotsrequest), [`RestartBotsResponse`](/docs/sdk/api/py/generated-bot-pb2#restartbotsresponse)) | Required | positional or keyword |
+
+**Returns:** [`RestartBotsResponse`](/docs/sdk/api/py/generated-bot-pb2#restartbotsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L886)
+
+### `watch_bot_statuses`
+
+```python
+def watch_bot_statuses(self, request: WatchBotStatusesRequest, ctx: RequestContext[WatchBotStatusesRequest, WatchBotStatusesResponse]) -> Iterator[WatchBotStatusesResponse]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`WatchBotStatusesRequest`](/docs/sdk/api/py/generated-bot-pb2#watchbotstatusesrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[WatchBotStatusesRequest, WatchBotStatusesResponse]` ([`WatchBotStatusesRequest`](/docs/sdk/api/py/generated-bot-pb2#watchbotstatusesrequest), [`WatchBotStatusesResponse`](/docs/sdk/api/py/generated-bot-pb2#watchbotstatusesresponse)) | Required | positional or keyword |
+
+**Returns:** `Iterator[WatchBotStatusesResponse]` ([`WatchBotStatusesResponse`](/docs/sdk/api/py/generated-bot-pb2#watchbotstatusesresponse)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L889)
+
+### `get_bot_list`
+
+```python
+def get_bot_list(self, request: BotListRequest, ctx: RequestContext[BotListRequest, BotListResponse]) -> BotListResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotListRequest`](/docs/sdk/api/py/generated-bot-pb2#botlistrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotListRequest, BotListResponse]` ([`BotListRequest`](/docs/sdk/api/py/generated-bot-pb2#botlistrequest), [`BotListResponse`](/docs/sdk/api/py/generated-bot-pb2#botlistresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotListResponse`](/docs/sdk/api/py/generated-bot-pb2#botlistresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L892)
+
+### `get_bot_info`
+
+```python
+def get_bot_info(self, request: BotInfoRequest, ctx: RequestContext[BotInfoRequest, BotInfoResponse]) -> BotInfoResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotInfoRequest`](/docs/sdk/api/py/generated-bot-pb2#botinforequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotInfoRequest, BotInfoResponse]` ([`BotInfoRequest`](/docs/sdk/api/py/generated-bot-pb2#botinforequest), [`BotInfoResponse`](/docs/sdk/api/py/generated-bot-pb2#botinforesponse)) | Required | positional or keyword |
+
+**Returns:** [`BotInfoResponse`](/docs/sdk/api/py/generated-bot-pb2#botinforesponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L895)
+
+### `update_bot_config_entry`
+
+```python
+def update_bot_config_entry(self, request: BotUpdateConfigEntryRequest, ctx: RequestContext[BotUpdateConfigEntryRequest, BotUpdateConfigEntryResponse]) -> BotUpdateConfigEntryResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotUpdateConfigEntryRequest`](/docs/sdk/api/py/generated-bot-pb2#botupdateconfigentryrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotUpdateConfigEntryRequest, BotUpdateConfigEntryResponse]` ([`BotUpdateConfigEntryRequest`](/docs/sdk/api/py/generated-bot-pb2#botupdateconfigentryrequest), [`BotUpdateConfigEntryResponse`](/docs/sdk/api/py/generated-bot-pb2#botupdateconfigentryresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotUpdateConfigEntryResponse`](/docs/sdk/api/py/generated-bot-pb2#botupdateconfigentryresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L898)
+
+### `render_bot_pov`
+
+```python
+def render_bot_pov(self, request: BotRenderPovRequest, ctx: RequestContext[BotRenderPovRequest, BotRenderPovResponse]) -> BotRenderPovResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotRenderPovRequest`](/docs/sdk/api/py/generated-bot-pb2#botrenderpovrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotRenderPovRequest, BotRenderPovResponse]` ([`BotRenderPovRequest`](/docs/sdk/api/py/generated-bot-pb2#botrenderpovrequest), [`BotRenderPovResponse`](/docs/sdk/api/py/generated-bot-pb2#botrenderpovresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotRenderPovResponse`](/docs/sdk/api/py/generated-bot-pb2#botrenderpovresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L901)
+
+### `watch_bot_pov`
+
+```python
+def watch_bot_pov(self, request: BotWatchPovRequest, ctx: RequestContext[BotWatchPovRequest, BotPovFrame]) -> Iterator[BotPovFrame]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotWatchPovRequest`](/docs/sdk/api/py/generated-bot-pb2#botwatchpovrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotWatchPovRequest, BotPovFrame]` ([`BotWatchPovRequest`](/docs/sdk/api/py/generated-bot-pb2#botwatchpovrequest), [`BotPovFrame`](/docs/sdk/api/py/generated-bot-pb2#botpovframe)) | Required | positional or keyword |
+
+**Returns:** `Iterator[BotPovFrame]` ([`BotPovFrame`](/docs/sdk/api/py/generated-bot-pb2#botpovframe)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L904)
+
+### `get_bot_world_map`
+
+```python
+def get_bot_world_map(self, request: BotWorldMapRequest, ctx: RequestContext[BotWorldMapRequest, BotWorldMapResponse]) -> BotWorldMapResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotWorldMapRequest`](/docs/sdk/api/py/generated-bot-pb2#botworldmaprequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotWorldMapRequest, BotWorldMapResponse]` ([`BotWorldMapRequest`](/docs/sdk/api/py/generated-bot-pb2#botworldmaprequest), [`BotWorldMapResponse`](/docs/sdk/api/py/generated-bot-pb2#botworldmapresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotWorldMapResponse`](/docs/sdk/api/py/generated-bot-pb2#botworldmapresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L907)
+
+### `click_inventory_slot`
+
+```python
+def click_inventory_slot(self, request: BotInventoryClickRequest, ctx: RequestContext[BotInventoryClickRequest, BotInventoryClickResponse]) -> BotInventoryClickResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotInventoryClickRequest`](/docs/sdk/api/py/generated-bot-pb2#botinventoryclickrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotInventoryClickRequest, BotInventoryClickResponse]` ([`BotInventoryClickRequest`](/docs/sdk/api/py/generated-bot-pb2#botinventoryclickrequest), [`BotInventoryClickResponse`](/docs/sdk/api/py/generated-bot-pb2#botinventoryclickresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotInventoryClickResponse`](/docs/sdk/api/py/generated-bot-pb2#botinventoryclickresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L910)
+
+### `get_inventory_state`
+
+```python
+def get_inventory_state(self, request: BotInventoryStateRequest, ctx: RequestContext[BotInventoryStateRequest, BotInventoryStateResponse]) -> BotInventoryStateResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotInventoryStateRequest`](/docs/sdk/api/py/generated-bot-pb2#botinventorystaterequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotInventoryStateRequest, BotInventoryStateResponse]` ([`BotInventoryStateRequest`](/docs/sdk/api/py/generated-bot-pb2#botinventorystaterequest), [`BotInventoryStateResponse`](/docs/sdk/api/py/generated-bot-pb2#botinventorystateresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotInventoryStateResponse`](/docs/sdk/api/py/generated-bot-pb2#botinventorystateresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L913)
+
+### `close_container`
+
+```python
+def close_container(self, request: BotCloseContainerRequest, ctx: RequestContext[BotCloseContainerRequest, BotCloseContainerResponse]) -> BotCloseContainerResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotCloseContainerRequest`](/docs/sdk/api/py/generated-bot-pb2#botclosecontainerrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotCloseContainerRequest, BotCloseContainerResponse]` ([`BotCloseContainerRequest`](/docs/sdk/api/py/generated-bot-pb2#botclosecontainerrequest), [`BotCloseContainerResponse`](/docs/sdk/api/py/generated-bot-pb2#botclosecontainerresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotCloseContainerResponse`](/docs/sdk/api/py/generated-bot-pb2#botclosecontainerresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L916)
+
+### `open_inventory`
+
+```python
+def open_inventory(self, request: BotOpenInventoryRequest, ctx: RequestContext[BotOpenInventoryRequest, BotOpenInventoryResponse]) -> BotOpenInventoryResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotOpenInventoryRequest`](/docs/sdk/api/py/generated-bot-pb2#botopeninventoryrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotOpenInventoryRequest, BotOpenInventoryResponse]` ([`BotOpenInventoryRequest`](/docs/sdk/api/py/generated-bot-pb2#botopeninventoryrequest), [`BotOpenInventoryResponse`](/docs/sdk/api/py/generated-bot-pb2#botopeninventoryresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotOpenInventoryResponse`](/docs/sdk/api/py/generated-bot-pb2#botopeninventoryresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L919)
+
+### `mouse_click`
+
+```python
+def mouse_click(self, request: BotMouseClickRequest, ctx: RequestContext[BotMouseClickRequest, BotMouseClickResponse]) -> BotMouseClickResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotMouseClickRequest`](/docs/sdk/api/py/generated-bot-pb2#botmouseclickrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotMouseClickRequest, BotMouseClickResponse]` ([`BotMouseClickRequest`](/docs/sdk/api/py/generated-bot-pb2#botmouseclickrequest), [`BotMouseClickResponse`](/docs/sdk/api/py/generated-bot-pb2#botmouseclickresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotMouseClickResponse`](/docs/sdk/api/py/generated-bot-pb2#botmouseclickresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L922)
+
+### `click_container_button`
+
+```python
+def click_container_button(self, request: BotContainerButtonClickRequest, ctx: RequestContext[BotContainerButtonClickRequest, BotContainerButtonClickResponse]) -> BotContainerButtonClickResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotContainerButtonClickRequest`](/docs/sdk/api/py/generated-bot-pb2#botcontainerbuttonclickrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotContainerButtonClickRequest, BotContainerButtonClickResponse]` ([`BotContainerButtonClickRequest`](/docs/sdk/api/py/generated-bot-pb2#botcontainerbuttonclickrequest), [`BotContainerButtonClickResponse`](/docs/sdk/api/py/generated-bot-pb2#botcontainerbuttonclickresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotContainerButtonClickResponse`](/docs/sdk/api/py/generated-bot-pb2#botcontainerbuttonclickresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L925)
+
+### `set_container_text`
+
+```python
+def set_container_text(self, request: BotSetContainerTextRequest, ctx: RequestContext[BotSetContainerTextRequest, BotSetContainerTextResponse]) -> BotSetContainerTextResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotSetContainerTextRequest`](/docs/sdk/api/py/generated-bot-pb2#botsetcontainertextrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotSetContainerTextRequest, BotSetContainerTextResponse]` ([`BotSetContainerTextRequest`](/docs/sdk/api/py/generated-bot-pb2#botsetcontainertextrequest), [`BotSetContainerTextResponse`](/docs/sdk/api/py/generated-bot-pb2#botsetcontainertextresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotSetContainerTextResponse`](/docs/sdk/api/py/generated-bot-pb2#botsetcontainertextresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L928)
+
+### `set_hotbar_slot`
+
+```python
+def set_hotbar_slot(self, request: BotSetHotbarSlotRequest, ctx: RequestContext[BotSetHotbarSlotRequest, BotSetHotbarSlotResponse]) -> BotSetHotbarSlotResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotSetHotbarSlotRequest`](/docs/sdk/api/py/generated-bot-pb2#botsethotbarslotrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotSetHotbarSlotRequest, BotSetHotbarSlotResponse]` ([`BotSetHotbarSlotRequest`](/docs/sdk/api/py/generated-bot-pb2#botsethotbarslotrequest), [`BotSetHotbarSlotResponse`](/docs/sdk/api/py/generated-bot-pb2#botsethotbarslotresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotSetHotbarSlotResponse`](/docs/sdk/api/py/generated-bot-pb2#botsethotbarslotresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L931)
+
+### `set_movement_state`
+
+```python
+def set_movement_state(self, request: BotSetMovementStateRequest, ctx: RequestContext[BotSetMovementStateRequest, BotSetMovementStateResponse]) -> BotSetMovementStateResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotSetMovementStateRequest`](/docs/sdk/api/py/generated-bot-pb2#botsetmovementstaterequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotSetMovementStateRequest, BotSetMovementStateResponse]` ([`BotSetMovementStateRequest`](/docs/sdk/api/py/generated-bot-pb2#botsetmovementstaterequest), [`BotSetMovementStateResponse`](/docs/sdk/api/py/generated-bot-pb2#botsetmovementstateresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotSetMovementStateResponse`](/docs/sdk/api/py/generated-bot-pb2#botsetmovementstateresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L934)
+
+### `reset_movement`
+
+```python
+def reset_movement(self, request: BotResetMovementRequest, ctx: RequestContext[BotResetMovementRequest, BotResetMovementResponse]) -> BotResetMovementResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotResetMovementRequest`](/docs/sdk/api/py/generated-bot-pb2#botresetmovementrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotResetMovementRequest, BotResetMovementResponse]` ([`BotResetMovementRequest`](/docs/sdk/api/py/generated-bot-pb2#botresetmovementrequest), [`BotResetMovementResponse`](/docs/sdk/api/py/generated-bot-pb2#botresetmovementresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotResetMovementResponse`](/docs/sdk/api/py/generated-bot-pb2#botresetmovementresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L937)
+
+### `set_rotation`
+
+```python
+def set_rotation(self, request: BotSetRotationRequest, ctx: RequestContext[BotSetRotationRequest, BotSetRotationResponse]) -> BotSetRotationResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotSetRotationRequest`](/docs/sdk/api/py/generated-bot-pb2#botsetrotationrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotSetRotationRequest, BotSetRotationResponse]` ([`BotSetRotationRequest`](/docs/sdk/api/py/generated-bot-pb2#botsetrotationrequest), [`BotSetRotationResponse`](/docs/sdk/api/py/generated-bot-pb2#botsetrotationresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotSetRotationResponse`](/docs/sdk/api/py/generated-bot-pb2#botsetrotationresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L940)
+
+### `get_dialog`
+
+```python
+def get_dialog(self, request: BotGetDialogRequest, ctx: RequestContext[BotGetDialogRequest, BotGetDialogResponse]) -> BotGetDialogResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotGetDialogRequest`](/docs/sdk/api/py/generated-bot-pb2#botgetdialogrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotGetDialogRequest, BotGetDialogResponse]` ([`BotGetDialogRequest`](/docs/sdk/api/py/generated-bot-pb2#botgetdialogrequest), [`BotGetDialogResponse`](/docs/sdk/api/py/generated-bot-pb2#botgetdialogresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotGetDialogResponse`](/docs/sdk/api/py/generated-bot-pb2#botgetdialogresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L943)
+
+### `submit_dialog`
+
+```python
+def submit_dialog(self, request: BotSubmitDialogRequest, ctx: RequestContext[BotSubmitDialogRequest, BotSubmitDialogResponse]) -> BotSubmitDialogResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotSubmitDialogRequest`](/docs/sdk/api/py/generated-bot-pb2#botsubmitdialogrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotSubmitDialogRequest, BotSubmitDialogResponse]` ([`BotSubmitDialogRequest`](/docs/sdk/api/py/generated-bot-pb2#botsubmitdialogrequest), [`BotSubmitDialogResponse`](/docs/sdk/api/py/generated-bot-pb2#botsubmitdialogresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotSubmitDialogResponse`](/docs/sdk/api/py/generated-bot-pb2#botsubmitdialogresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L946)
+
+### `click_dialog_button`
+
+```python
+def click_dialog_button(self, request: BotClickDialogButtonRequest, ctx: RequestContext[BotClickDialogButtonRequest, BotClickDialogButtonResponse]) -> BotClickDialogButtonResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotClickDialogButtonRequest`](/docs/sdk/api/py/generated-bot-pb2#botclickdialogbuttonrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotClickDialogButtonRequest, BotClickDialogButtonResponse]` ([`BotClickDialogButtonRequest`](/docs/sdk/api/py/generated-bot-pb2#botclickdialogbuttonrequest), [`BotClickDialogButtonResponse`](/docs/sdk/api/py/generated-bot-pb2#botclickdialogbuttonresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotClickDialogButtonResponse`](/docs/sdk/api/py/generated-bot-pb2#botclickdialogbuttonresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L949)
+
+### `close_dialog`
+
+```python
+def close_dialog(self, request: BotCloseDialogRequest, ctx: RequestContext[BotCloseDialogRequest, BotCloseDialogResponse]) -> BotCloseDialogResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`BotCloseDialogRequest`](/docs/sdk/api/py/generated-bot-pb2#botclosedialogrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[BotCloseDialogRequest, BotCloseDialogResponse]` ([`BotCloseDialogRequest`](/docs/sdk/api/py/generated-bot-pb2#botclosedialogrequest), [`BotCloseDialogResponse`](/docs/sdk/api/py/generated-bot-pb2#botclosedialogresponse)) | Required | positional or keyword |
+
+**Returns:** [`BotCloseDialogResponse`](/docs/sdk/api/py/generated-bot-pb2#botclosedialogresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L952)
+
+## BotServiceWSGIApplication
+
+**Class** in `bot_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L956).
+
+**Import from:** `soulfire.bot_connect`.
+
+**Bases:** `ConnectWSGIApplication`.
+
+```python
+class BotServiceWSGIApplication(ConnectWSGIApplication)
+```
+
+### `__init__`
+
+```python
+def __init__(self, service: BotServiceSync, interceptors: Iterable[InterceptorSync]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | [`BotServiceSync`](/docs/sdk/api/py/generated-bot-connect#botservicesync) | Required | positional or keyword |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | positional or keyword |
+| `read_max_bytes` | `int \| None` | `None` | positional or keyword |
+| `compressions` | `Iterable[Compression] \| None` | `None` | positional or keyword |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L957)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_connect.py#L1215)

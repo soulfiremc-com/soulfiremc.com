@@ -1,0 +1,184 @@
+---
+title: "Goals"
+description: "Python API signatures, fields, and source for Goals."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `pathfinding`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding.py#L218).
+
+**Import from:** `soulfire`, `soulfire.pathfinding`.
+
+```python
+class Goals
+```
+
+## `block`
+
+```python
+def block(self, position: BlockTargetLike, radius: float=0) -> PathfindGoal
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `position` | [`BlockTargetLike`](/docs/sdk/api/py/block-target-like) | Required | positional or keyword |
+| `radius` | `float` | `0` | positional or keyword |
+
+**Returns:** [`PathfindGoal`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindgoal).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding.py#L221)
+
+## `near`
+
+```python
+def near(self, position: WorldTargetLike, radius: float) -> PathfindGoal
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `position` | [`WorldTargetLike`](/docs/sdk/api/py/world-target-like) | Required | positional or keyword |
+| `radius` | `float` | Required | positional or keyword |
+
+**Returns:** [`PathfindGoal`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindgoal).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding.py#L226)
+
+## `entity`
+
+```python
+def entity(self, target: EntityTargetLike, radius: float) -> PathfindGoal
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `target` | [`EntityTargetLike`](/docs/sdk/api/py/entity-target-like) | Required | positional or keyword |
+| `radius` | `float` | Required | positional or keyword |
+
+**Returns:** [`PathfindGoal`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindgoal).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding.py#L231)
+
+## `xz`
+
+```python
+def xz(self, x: float, z: float, *, dimension: str='', radius: float=0) -> PathfindGoal
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `x` | `float` | Required | positional or keyword |
+| `z` | `float` | Required | positional or keyword |
+| `dimension` | `str` | `''` | keyword only |
+| `radius` | `float` | `0` | keyword only |
+
+**Returns:** [`PathfindGoal`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindgoal).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding.py#L239)
+
+## `y`
+
+```python
+def y(self, y: int, *, dimension: str='') -> PathfindGoal
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `y` | `int` | Required | positional or keyword |
+| `dimension` | `str` | `''` | keyword only |
+
+**Returns:** [`PathfindGoal`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindgoal).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding.py#L242)
+
+## `break_block`
+
+```python
+def break_block(self, position: BlockTargetLike) -> PathfindGoal
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `position` | [`BlockTargetLike`](/docs/sdk/api/py/block-target-like) | Required | positional or keyword |
+
+**Returns:** [`PathfindGoal`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindgoal).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding.py#L245)
+
+## `place_block`
+
+```python
+def place_block(self, position: BlockTargetLike) -> PathfindGoal
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `position` | [`BlockTargetLike`](/docs/sdk/api/py/block-target-like) | Required | positional or keyword |
+
+**Returns:** [`PathfindGoal`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindgoal).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding.py#L250)
+
+## `away_from_position`
+
+```python
+def away_from_position(self, position: WorldTargetLike, radius: float) -> PathfindGoal
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `position` | [`WorldTargetLike`](/docs/sdk/api/py/world-target-like) | Required | positional or keyword |
+| `radius` | `float` | Required | positional or keyword |
+
+**Returns:** [`PathfindGoal`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindgoal).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding.py#L255)
+
+## `away_from_entity`
+
+```python
+def away_from_entity(self, target: EntityTargetLike, radius: float) -> PathfindGoal
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `target` | [`EntityTargetLike`](/docs/sdk/api/py/entity-target-like) | Required | positional or keyword |
+| `radius` | `float` | Required | positional or keyword |
+
+**Returns:** [`PathfindGoal`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindgoal).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding.py#L262)
+
+## `any`
+
+```python
+def any(self, nested: Sequence[PathfindGoal]) -> PathfindGoal
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `nested` | `Sequence[PathfindGoal]` ([`PathfindGoal`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindgoal)) | Required | positional or keyword |
+
+**Returns:** [`PathfindGoal`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindgoal).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding.py#L270)

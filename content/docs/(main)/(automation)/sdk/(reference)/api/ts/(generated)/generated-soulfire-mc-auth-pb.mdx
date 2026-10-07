@@ -1,0 +1,683 @@
+---
+title: "generated/soulfire/mc-auth_pb module"
+description: "TypeScript API signatures, fields, and source for generated/soulfire/mc-auth_pb module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`CredentialsAuthEnd`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#credentialsauthend) | type |
+| [`CredentialsAuthEndSchema`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#credentialsauthendschema) | object |
+| [`CredentialsAuthOneFailure`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#credentialsauthonefailure) | type |
+| [`CredentialsAuthOneFailureSchema`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#credentialsauthonefailureschema) | object |
+| [`CredentialsAuthOneSuccess`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#credentialsauthonesuccess) | type |
+| [`CredentialsAuthOneSuccessSchema`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#credentialsauthonesuccessschema) | object |
+| [`CredentialsAuthRequest`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#credentialsauthrequest) | type |
+| [`CredentialsAuthRequestSchema`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#credentialsauthrequestschema) | object |
+| [`CredentialsAuthResponse`](/docs/sdk/api/ts/credentials-auth-response) | type |
+| [`CredentialsAuthResponseSchema`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#credentialsauthresponseschema) | object |
+| [`DeviceCode`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#devicecode) | type |
+| [`DeviceCodeAuthRequest`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#devicecodeauthrequest) | type |
+| [`DeviceCodeAuthRequestSchema`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#devicecodeauthrequestschema) | object |
+| [`DeviceCodeAuthResponse`](/docs/sdk/api/ts/device-code-auth-response) | type |
+| [`DeviceCodeAuthResponseSchema`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#devicecodeauthresponseschema) | object |
+| [`DeviceCodeSchema`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#devicecodeschema) | object |
+| [`file_soulfire_mc_auth`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#file_soulfire_mc_auth) | object |
+| [`MCAuthService`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#mcauthservice) | object |
+| [`RefreshRequest`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#refreshrequest) | type |
+| [`RefreshRequestSchema`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#refreshrequestschema) | object |
+| [`RefreshResponse`](/docs/sdk/api/ts/refresh-response) | type |
+| [`RefreshResponseSchema`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#refreshresponseschema) | object |
+
+## CredentialsAuthEnd
+
+**Type** in `generated/soulfire/mc-auth_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L112).
+
+Sentinel message indicating that all account authentications have completed.
+This is the final message sent in the response stream, signaling
+that no more result messages will follow.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/mc-auth_pb`.
+
+```ts
+type CredentialsAuthEnd = Message<"soulfire.v1.CredentialsAuthEnd"> & {
+};
+```
+
+## CredentialsAuthEndSchema
+
+**Object** in `generated/soulfire/mc-auth_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L119).
+
+Describes the message soulfire.v1.CredentialsAuthEnd.
+Use `create(CredentialsAuthEndSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/mc-auth_pb`.
+
+```ts
+CredentialsAuthEndSchema: GenMessage<Message<"soulfire.v1.CredentialsAuthEnd">>
+```
+
+## CredentialsAuthOneFailure
+
+**Type** in `generated/soulfire/mc-auth_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L95).
+
+Result sent when an individual account authentication fails.
+The failure is logged server-side with detailed error info.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/mc-auth_pb`.
+
+```ts
+type CredentialsAuthOneFailure = Message<"soulfire.v1.CredentialsAuthOneFailure"> & {
+};
+```
+
+## CredentialsAuthOneFailureSchema
+
+**Object** in `generated/soulfire/mc-auth_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L102).
+
+Describes the message soulfire.v1.CredentialsAuthOneFailure.
+Use `create(CredentialsAuthOneFailureSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/mc-auth_pb`.
+
+```ts
+CredentialsAuthOneFailureSchema: GenMessage<Message<"soulfire.v1.CredentialsAuthOneFailure">>
+```
+
+## CredentialsAuthOneSuccess
+
+**Type** in `generated/soulfire/mc-auth_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L73).
+
+Result of a single account authentication attempt.
+Includes the authenticated account data on success.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/mc-auth_pb`.
+
+```ts
+type CredentialsAuthOneSuccess = Message<"soulfire.v1.CredentialsAuthOneSuccess"> & {
+  /**
+   * The successfully authenticated Minecraft account.
+   *
+   * @generated from field: soulfire.v1.MinecraftAccountProto account = 1;
+   */
+  account?: MinecraftAccountProto | undefined;
+};
+```
+
+**Referenced types:** [`MinecraftAccountProto`](/docs/sdk/api/ts/minecraft-account-proto).
+
+### `account`
+
+The successfully authenticated Minecraft account.
+
+**Type:** `MinecraftAccountProto | undefined` ([`MinecraftAccountProto`](/docs/sdk/api/ts/minecraft-account-proto)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L79)
+
+## CredentialsAuthOneSuccessSchema
+
+**Object** in `generated/soulfire/mc-auth_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L86).
+
+Describes the message soulfire.v1.CredentialsAuthOneSuccess.
+Use `create(CredentialsAuthOneSuccessSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/mc-auth_pb`.
+
+```ts
+CredentialsAuthOneSuccessSchema: GenMessage<CredentialsAuthOneSuccess>
+```
+
+**Referenced types:** [`CredentialsAuthOneSuccess`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#credentialsauthonesuccess).
+
+## CredentialsAuthRequest
+
+**Type** in `generated/soulfire/mc-auth_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L26).
+
+Request message for credentials-based Minecraft account authentication.
+Supports bulk authentication of multiple accounts in a single request.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/mc-auth_pb`.
+
+```ts
+type CredentialsAuthRequest = Message<"soulfire.v1.CredentialsAuthRequest"> & {
+  /**
+   * The UUID of the SoulFire instance to authenticate accounts for.
+   * Must be a valid UUID string. The instance must exist and the caller
+   * must have AUTHENTICATE_MC_ACCOUNT permission for this instance.
+   *
+   * @generated from field: string instance_id = 1;
+   */
+  instanceId: string;
+
+  /**
+   * The authentication service type to use.
+   * Determines how the payload strings are interpreted:
+   * - MICROSOFT_JAVA_CREDENTIALS: Payload format is "email:password"
+   * - MICROSOFT_BEDROCK_CREDENTIALS: Payload format is "email:password"
+   * - OFFLINE: Payload is the username to use (no authentication performed)
+   * - MICROSOFT_JAVA_REFRESH_TOKEN: Payload is a Microsoft refresh token
+   * - THE_ALTENING: Payload is a TheAltening account token
+   *
+   * @generated from field: soulfire.v1.AccountTypeCredentials service = 2;
+   */
+  service: AccountTypeCredentials;
+
+  /**
+   * List of authentication credentials/data strings.
+   * Each string is processed according to the service type.
+   * Multiple payloads are authenticated concurrently (controlled by
+   * ACCOUNT_IMPORT_CONCURRENCY instance setting).
+   *
+   * @generated from field: repeated string payload = 3;
+   */
+  payload: string[];
+};
+```
+
+**Referenced types:** [`SoulFire`](/docs/sdk/api/ts/soul-fire), [`AccountTypeCredentials`](/docs/sdk/api/ts/account-type-credentials).
+
+### `instanceId`
+
+The UUID of the SoulFire instance to authenticate accounts for.
+Must be a valid UUID string. The instance must exist and the caller
+must have AUTHENTICATE_MC_ACCOUNT permission for this instance.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L34)
+
+### `service`
+
+The authentication service type to use.
+Determines how the payload strings are interpreted:
+- MICROSOFT_JAVA_CREDENTIALS: Payload format is "email:password"
+- MICROSOFT_BEDROCK_CREDENTIALS: Payload format is "email:password"
+- OFFLINE: Payload is the username to use (no authentication performed)
+- MICROSOFT_JAVA_REFRESH_TOKEN: Payload is a Microsoft refresh token
+- THE_ALTENING: Payload is a TheAltening account token
+
+**Type:** [`AccountTypeCredentials`](/docs/sdk/api/ts/account-type-credentials).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L47)
+
+### `payload`
+
+List of authentication credentials/data strings.
+Each string is processed according to the service type.
+Multiple payloads are authenticated concurrently (controlled by
+ACCOUNT_IMPORT_CONCURRENCY instance setting).
+
+**Type:** `string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L57)
+
+## CredentialsAuthRequestSchema
+
+**Object** in `generated/soulfire/mc-auth_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L64).
+
+Describes the message soulfire.v1.CredentialsAuthRequest.
+Use `create(CredentialsAuthRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/mc-auth_pb`.
+
+```ts
+CredentialsAuthRequestSchema: GenMessage<CredentialsAuthRequest>
+```
+
+**Referenced types:** [`CredentialsAuthRequest`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#credentialsauthrequest).
+
+## CredentialsAuthResponse
+
+**Type** in `generated/soulfire/mc-auth_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L128).
+
+Streaming response message for credentials-based authentication.
+Each message contains either a single authentication result or an end marker.
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/mc-auth_pb`.
+
+```ts
+type CredentialsAuthResponse = Message<"soulfire.v1.CredentialsAuthResponse"> & {
+  /**
+   * @generated from oneof soulfire.v1.CredentialsAuthResponse.data
+   */
+  data: {
+    /**
+     * A single successful authentication result. Multiple of these will be
+     * streamed as each account authentication completes, allowing the client
+     * to process results incrementally.
+     *
+     * @generated from field: soulfire.v1.CredentialsAuthOneSuccess one_success = 2;
+     */
+    value: CredentialsAuthOneSuccess;
+    case: "oneSuccess";
+  } | {
+    /**
+     * A single failed authentication result. Streamed as each failed
+     * authentication completes. Errors are logged server-side
+     * (e.g., invalid credentials, network issues).
+     *
+     * @generated from field: soulfire.v1.CredentialsAuthOneFailure one_failure = 3;
+     */
+    value: CredentialsAuthOneFailure;
+    case: "oneFailure";
+  } | {
+    /**
+     * End-of-stream marker indicating all authentications are complete.
+     * This is always the last message in the stream before it closes.
+     *
+     * @generated from field: soulfire.v1.CredentialsAuthEnd end = 4;
+     */
+    value: CredentialsAuthEnd;
+    case: "end";
+  } | { case: undefined; value?: undefined };
+};
+```
+
+**Referenced types:** [`CredentialsAuthOneSuccess`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#credentialsauthonesuccess), [`CredentialsAuthOneFailure`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#credentialsauthonefailure), [`CredentialsAuthEnd`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#credentialsauthend).
+
+### `data`
+
+**Type:** `{ value: CredentialsAuthOneSuccess; case: "oneSuccess"; } | { value: Message<"soulfire.v1.CredentialsAuthOneFailure">; case: "oneFailure"; } | { value: Message<"soulfire.v1.CredentialsAuthEnd">; case: "end"; } | { case: undefined; value?: undefined; }` ([`CredentialsAuthOneSuccess`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#credentialsauthonesuccess)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L132)
+
+## CredentialsAuthResponseSchema
+
+**Object** in `generated/soulfire/mc-auth_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L168).
+
+Describes the message soulfire.v1.CredentialsAuthResponse.
+Use `create(CredentialsAuthResponseSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/mc-auth_pb`.
+
+```ts
+CredentialsAuthResponseSchema: GenMessage<CredentialsAuthResponse>
+```
+
+**Referenced types:** [`CredentialsAuthResponse`](/docs/sdk/api/ts/credentials-auth-response).
+
+## DeviceCode
+
+**Type** in `generated/soulfire/mc-auth_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L211).
+
+Microsoft OAuth device code information for user authentication.
+The user must visit the verification URI and enter the user code
+to authorize the application.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/mc-auth_pb`.
+
+```ts
+type DeviceCode = Message<"soulfire.v1.DeviceCode"> & {
+  /**
+   * The device code used internally for polling authentication status.
+   * This is not shown to the user.
+   *
+   * @generated from field: string device_code = 1;
+   */
+  deviceCode: string;
+
+  /**
+   * The short alphanumeric code the user must enter at the verification URI.
+   * Typically displayed to the user for manual entry.
+   *
+   * @generated from field: string user_code = 2;
+   */
+  userCode: string;
+
+  /**
+   * The URL where the user must go to enter the user_code.
+   * Example: "https://microsoft.com/devicelogin"
+   *
+   * @generated from field: string verification_uri = 3;
+   */
+  verificationUri: string;
+
+  /**
+   * A URL that includes the user_code as a parameter for one-click verification.
+   * Users can visit this URL directly without manually entering the code.
+   * Example: "https://microsoft.com/devicelogin?otc=ABCD1234"
+   *
+   * @generated from field: string direct_verification_uri = 4;
+   */
+  directVerificationUri: string;
+};
+```
+
+### `deviceCode`
+
+The device code used internally for polling authentication status.
+This is not shown to the user.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L218)
+
+### `userCode`
+
+The short alphanumeric code the user must enter at the verification URI.
+Typically displayed to the user for manual entry.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L226)
+
+### `verificationUri`
+
+The URL where the user must go to enter the user_code.
+Example: "https://microsoft.com/devicelogin"
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L234)
+
+### `directVerificationUri`
+
+A URL that includes the user_code as a parameter for one-click verification.
+Users can visit this URL directly without manually entering the code.
+Example: "https://microsoft.com/devicelogin?otc=ABCD1234"
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L243)
+
+## DeviceCodeAuthRequest
+
+**Type** in `generated/soulfire/mc-auth_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L177).
+
+Request message for Microsoft OAuth device code authentication flow.
+This flow is interactive and requires user action in a web browser.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/mc-auth_pb`.
+
+```ts
+type DeviceCodeAuthRequest = Message<"soulfire.v1.DeviceCodeAuthRequest"> & {
+  /**
+   * The UUID of the SoulFire instance to authenticate the account for.
+   * Must be a valid UUID string. The instance must exist and the caller
+   * must have AUTHENTICATE_MC_ACCOUNT permission for this instance.
+   *
+   * @generated from field: string instance_id = 1;
+   */
+  instanceId: string;
+
+  /**
+   * The device code authentication service type to use:
+   * - MICROSOFT_JAVA_DEVICE_CODE: Microsoft Java Edition account
+   * - MICROSOFT_BEDROCK_DEVICE_CODE: Microsoft Bedrock Edition account
+   *
+   * @generated from field: soulfire.v1.AccountTypeDeviceCode service = 2;
+   */
+  service: AccountTypeDeviceCode;
+};
+```
+
+**Referenced types:** [`SoulFire`](/docs/sdk/api/ts/soul-fire), [`AccountTypeDeviceCode`](/docs/sdk/api/ts/account-type-device-code).
+
+### `instanceId`
+
+The UUID of the SoulFire instance to authenticate the account for.
+Must be a valid UUID string. The instance must exist and the caller
+must have AUTHENTICATE_MC_ACCOUNT permission for this instance.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L185)
+
+### `service`
+
+The device code authentication service type to use:
+- MICROSOFT_JAVA_DEVICE_CODE: Microsoft Java Edition account
+- MICROSOFT_BEDROCK_DEVICE_CODE: Microsoft Bedrock Edition account
+
+**Type:** [`AccountTypeDeviceCode`](/docs/sdk/api/ts/account-type-device-code).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L194)
+
+## DeviceCodeAuthRequestSchema
+
+**Object** in `generated/soulfire/mc-auth_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L201).
+
+Describes the message soulfire.v1.DeviceCodeAuthRequest.
+Use `create(DeviceCodeAuthRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/mc-auth_pb`.
+
+```ts
+DeviceCodeAuthRequestSchema: GenMessage<DeviceCodeAuthRequest>
+```
+
+**Referenced types:** [`DeviceCodeAuthRequest`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#devicecodeauthrequest).
+
+## DeviceCodeAuthResponse
+
+**Type** in `generated/soulfire/mc-auth_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L260).
+
+Streaming response message for device code authentication.
+First sends the device code for user interaction, then sends
+the authenticated account once the user completes authorization.
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/mc-auth_pb`.
+
+```ts
+type DeviceCodeAuthResponse = Message<"soulfire.v1.DeviceCodeAuthResponse"> & {
+  /**
+   * @generated from oneof soulfire.v1.DeviceCodeAuthResponse.data
+   */
+  data: {
+    /**
+     * The successfully authenticated Minecraft account.
+     * Sent after the user completes the device code authorization flow.
+     * This is the final message in the stream.
+     *
+     * @generated from field: soulfire.v1.MinecraftAccountProto account = 1;
+     */
+    value: MinecraftAccountProto;
+    case: "account";
+  } | {
+    /**
+     * The device code information for user authorization.
+     * Sent first in the stream. The client should display this to the user
+     * so they can complete authentication in their browser.
+     * The stream will wait (up to 15 minutes) for the user to authorize.
+     *
+     * @generated from field: soulfire.v1.DeviceCode device_code = 2;
+     */
+    value: DeviceCode;
+    case: "deviceCode";
+  } | { case: undefined; value?: undefined };
+};
+```
+
+**Referenced types:** [`MinecraftAccountProto`](/docs/sdk/api/ts/minecraft-account-proto), [`DeviceCode`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#devicecode).
+
+### `data`
+
+**Type:** `{ value: MinecraftAccountProto; case: "account"; } | { value: DeviceCode; case: "deviceCode"; } | { case: undefined; value?: undefined; }` ([`MinecraftAccountProto`](/docs/sdk/api/ts/minecraft-account-proto), [`DeviceCode`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#devicecode)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L264)
+
+## DeviceCodeAuthResponseSchema
+
+**Object** in `generated/soulfire/mc-auth_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L292).
+
+Describes the message soulfire.v1.DeviceCodeAuthResponse.
+Use `create(DeviceCodeAuthResponseSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/mc-auth_pb`.
+
+```ts
+DeviceCodeAuthResponseSchema: GenMessage<DeviceCodeAuthResponse>
+```
+
+**Referenced types:** [`DeviceCodeAuthResponse`](/docs/sdk/api/ts/device-code-auth-response).
+
+## DeviceCodeSchema
+
+**Object** in `generated/soulfire/mc-auth_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L250).
+
+Describes the message soulfire.v1.DeviceCode.
+Use `create(DeviceCodeSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/mc-auth_pb`.
+
+```ts
+DeviceCodeSchema: GenMessage<DeviceCode>
+```
+
+**Referenced types:** [`DeviceCode`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#devicecode).
+
+## file_soulfire_mc_auth
+
+**Object** in `generated/soulfire/mc-auth_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L17).
+
+Describes the file soulfire/mc-auth.proto.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/mc-auth_pb`.
+
+```ts
+file_soulfire_mc_auth: DescFile
+```
+
+## MCAuthService
+
+**Object** in `generated/soulfire/mc-auth_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L365).
+
+Service for authenticating Minecraft accounts for use with SoulFire bots.
+Supports multiple authentication methods including Microsoft OAuth (credentials
+and device code flows) and offline mode. All methods require the caller to
+have AUTHENTICATE_MC_ACCOUNT permission for the target instance.
+
+Authentication may optionally use proxies if configured in instance settings
+(USE_PROXIES_FOR_ACCOUNT_AUTH). All authentication operations have timeouts
+to prevent indefinite hangs (2 minutes for credentials/refresh, 15 minutes
+for device code flow).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/mc-auth_pb`.
+
+```ts
+MCAuthService: GenService<{ loginCredentials: { methodKind: "server_streaming"; input: GenMessage<CredentialsAuthRequest>; output: GenMessage<CredentialsAuthResponse>; }; loginDeviceCode: { methodKind: "server_streaming"; input: GenMessage<DeviceCodeAuthRequest>; output: GenMessage<DeviceCodeAuthResponse>; }; refresh: { methodKind: "unary"; input: GenMessage<RefreshRequest>; output: GenMessage<RefreshResponse>; }; }>
+```
+
+**Referenced types:** [`CredentialsAuthRequest`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#credentialsauthrequest), [`CredentialsAuthResponse`](/docs/sdk/api/ts/credentials-auth-response), [`DeviceCodeAuthRequest`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#devicecodeauthrequest), [`DeviceCodeAuthResponse`](/docs/sdk/api/ts/device-code-auth-response), [`RefreshRequest`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#refreshrequest), [`RefreshResponse`](/docs/sdk/api/ts/refresh-response).
+
+## RefreshRequest
+
+**Type** in `generated/soulfire/mc-auth_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L301).
+
+Request message for refreshing an existing Minecraft account's authentication tokens.
+Used to renew expired tokens without requiring the user to re-authenticate.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/mc-auth_pb`.
+
+```ts
+type RefreshRequest = Message<"soulfire.v1.RefreshRequest"> & {
+  /**
+   * The UUID of the SoulFire instance context for the refresh operation.
+   * Must be a valid UUID string. The instance must exist and the caller
+   * must have AUTHENTICATE_MC_ACCOUNT permission for this instance.
+   *
+   * @generated from field: string instance_id = 1;
+   */
+  instanceId: string;
+
+  /**
+   * The existing Minecraft account to refresh.
+   * Must include valid account data with refresh tokens.
+   * The account type determines which refresh mechanism is used.
+   * Offline accounts are returned unchanged (they never expire).
+   *
+   * @generated from field: soulfire.v1.MinecraftAccountProto account = 2;
+   */
+  account?: MinecraftAccountProto | undefined;
+};
+```
+
+**Referenced types:** [`SoulFire`](/docs/sdk/api/ts/soul-fire), [`MinecraftAccountProto`](/docs/sdk/api/ts/minecraft-account-proto).
+
+### `instanceId`
+
+The UUID of the SoulFire instance context for the refresh operation.
+Must be a valid UUID string. The instance must exist and the caller
+must have AUTHENTICATE_MC_ACCOUNT permission for this instance.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L309)
+
+### `account`
+
+The existing Minecraft account to refresh.
+Must include valid account data with refresh tokens.
+The account type determines which refresh mechanism is used.
+Offline accounts are returned unchanged (they never expire).
+
+**Type:** `MinecraftAccountProto | undefined` ([`MinecraftAccountProto`](/docs/sdk/api/ts/minecraft-account-proto)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L319)
+
+## RefreshRequestSchema
+
+**Object** in `generated/soulfire/mc-auth_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L326).
+
+Describes the message soulfire.v1.RefreshRequest.
+Use `create(RefreshRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/mc-auth_pb`.
+
+```ts
+RefreshRequestSchema: GenMessage<RefreshRequest>
+```
+
+**Referenced types:** [`RefreshRequest`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#refreshrequest).
+
+## RefreshResponse
+
+**Type** in `generated/soulfire/mc-auth_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L334).
+
+Response message containing the refreshed Minecraft account.
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/mc-auth_pb`.
+
+```ts
+type RefreshResponse = Message<"soulfire.v1.RefreshResponse"> & {
+  /**
+   * The refreshed Minecraft account with updated tokens.
+   * Contains new access tokens and updated expiration times.
+   * For offline accounts, returns the same account unchanged.
+   *
+   * @generated from field: soulfire.v1.MinecraftAccountProto account = 1;
+   */
+  account?: MinecraftAccountProto | undefined;
+};
+```
+
+**Referenced types:** [`MinecraftAccountProto`](/docs/sdk/api/ts/minecraft-account-proto).
+
+### `account`
+
+The refreshed Minecraft account with updated tokens.
+Contains new access tokens and updated expiration times.
+For offline accounts, returns the same account unchanged.
+
+**Type:** `MinecraftAccountProto | undefined` ([`MinecraftAccountProto`](/docs/sdk/api/ts/minecraft-account-proto)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L342)
+
+## RefreshResponseSchema
+
+**Object** in `generated/soulfire/mc-auth_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/mc-auth_pb.ts#L349).
+
+Describes the message soulfire.v1.RefreshResponse.
+Use `create(RefreshResponseSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/mc-auth_pb`.
+
+```ts
+RefreshResponseSchema: GenMessage<RefreshResponse>
+```
+
+**Referenced types:** [`RefreshResponse`](/docs/sdk/api/ts/refresh-response).

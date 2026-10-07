@@ -1,0 +1,27 @@
+---
+title: "conditional"
+description: "Python API signatures, fields, and source for conditional."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Function** in `behaviors`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/behaviors.py#L209).
+
+**Import from:** `soulfire`, `soulfire.behaviors`.
+
+```python
+def conditional[A2, E2 = Never, R2 = Never, EP = Never, RP = Never](predicate: Callable[[SoulFireBot], bool | Effect[bool, EP, RP]], when_true: BotBehavior[A2, E2, R2], when_false: BotBehavior[A2, E2, R2] | None=None) -> BotBehavior[A2 | None, E2 | EP, R2 | RP]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `predicate` | `Callable[[SoulFireBot], bool \| Effect[bool, EP, RP]]` ([`SoulFireBot`](/docs/sdk/api/py/soul-fire-bot)) | Required | positional or keyword |
+| `when_true` | `BotBehavior[A2, E2, R2]` ([`BotBehavior`](/docs/sdk/api/py/bot-behavior)) | Required | positional or keyword |
+| `when_false` | `BotBehavior[A2, E2, R2] \| None` ([`BotBehavior`](/docs/sdk/api/py/bot-behavior)) | `None` | positional or keyword |
+
+**Returns:** `BotBehavior[A2 | None, E2 | EP, R2 | RP]` ([`BotBehavior`](/docs/sdk/api/py/bot-behavior)).
+
+**Referenced types:** [`SoulFireBot`](/docs/sdk/api/py/soul-fire-bot), [`BotBehavior`](/docs/sdk/api/py/bot-behavior).

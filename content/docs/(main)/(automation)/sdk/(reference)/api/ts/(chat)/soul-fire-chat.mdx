@@ -1,0 +1,155 @@
+---
+title: "SoulFireChat"
+description: "TypeScript API signatures, fields, and source for SoulFireChat."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `chat`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/chat.ts#L56).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`.
+
+```ts
+class SoulFireChat
+```
+
+## `constructor`
+
+```ts
+new SoulFireChat(instanceId: string, botId: string, client: Client<GenService<{ sendPublicChat: { methodKind: "unary"; input: GenMessage<SendPublicChatRequest>; output: GenMessage<ChatActionResponse>; }; sendCommand: { methodKind: "unary"; input: GenMessage<SendCommandRequest>; output: GenMessage<ChatActionResponse>; }; sendWhisper: { methodKind: "unary"; input: GenMessage<SendWhisperRequest>; output: GenMessage<ChatActionResponse>; }; tabComplete: { methodKind: "unary"; input: GenMessage<TabCompleteRequest>; output: GenMessage<TabCompleteResponse>; }; }>>, actionOptions: (options?: CallOptions | undefined) => CallOptions | undefined, eventStream?: BotEventStream | undefined): SoulFireChat
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instanceId` | `string` | Required |  |
+| `botId` | `string` | Required |  |
+| `client` | `Client<GenService<{ sendPublicChat: { methodKind: "unary"; input: GenMessage<SendPublicChatRequest>; output: GenMessage<ChatActionResponse>; }; sendCommand: { methodKind: "unary"; input: GenMessage<SendCommandRequest>; output: GenMessage<ChatActionResponse>; }; sendWhisper: { methodKind: "unary"; input: GenMessage<SendWhisperRequest>; output: GenMessage<ChatActionResponse>; }; tabComplete: { methodKind: "unary"; input: GenMessage<TabCompleteRequest>; output: GenMessage<TabCompleteResponse>; }; }>>` ([`SendPublicChatRequest`](/docs/sdk/api/ts/generated-soulfire-chat-pb#sendpublicchatrequest), [`ChatActionResponse`](/docs/sdk/api/ts/generated-soulfire-chat-pb#chatactionresponse), [`SendCommandRequest`](/docs/sdk/api/ts/generated-soulfire-chat-pb#sendcommandrequest), [`SendWhisperRequest`](/docs/sdk/api/ts/generated-soulfire-chat-pb#sendwhisperrequest), [`TabCompleteRequest`](/docs/sdk/api/ts/generated-soulfire-chat-pb#tabcompleterequest), [`TabCompleteResponse`](/docs/sdk/api/ts/generated-soulfire-chat-pb#tabcompleteresponse)) | Required |  |
+| `actionOptions` | `(options?: CallOptions \| undefined) => CallOptions \| undefined` | Required |  |
+| `eventStream` | `BotEventStream \| undefined` ([`BotEventStream`](/docs/sdk/api/ts/bot-event-stream)) | Optional |  |
+
+**Returns:** [`SoulFireChat`](/docs/sdk/api/ts/soul-fire-chat).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/chat.ts#L57)
+
+## `send`
+
+To public chat. `message` can't be blank or longer than 256 characters.
+
+```ts
+send(message: string, options?: ChatMutationOptions): Effect<BotActionResult, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `message` | `string` | Required |  |
+| `options` | [`ChatMutationOptions`](/docs/sdk/api/ts/chat-mutation-options) | `{}` |  |
+
+**Returns:** `Effect<BotActionResult, SoulFireOperationError, never>` ([`BotActionResult`](/docs/sdk/api/ts/bot-action-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/chat.ts#L70)
+
+## `command`
+
+Runs a command; the leading `/` is optional.
+
+```ts
+command(command: string, options?: ChatMutationOptions): Effect<BotActionResult, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `command` | `string` | Required |  |
+| `options` | [`ChatMutationOptions`](/docs/sdk/api/ts/chat-mutation-options) | `{}` |  |
+
+**Returns:** `Effect<BotActionResult, SoulFireOperationError, never>` ([`BotActionResult`](/docs/sdk/api/ts/bot-action-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/chat.ts#L97)
+
+## `whisper`
+
+Sends `/msg <recipient> <message>`.
+
+```ts
+whisper(recipient: string, message: string, options?: ChatMutationOptions): Effect<BotActionResult, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `recipient` | `string` | Required |  |
+| `message` | `string` | Required |  |
+| `options` | [`ChatMutationOptions`](/docs/sdk/api/ts/chat-mutation-options) | `{}` |  |
+
+**Returns:** `Effect<BotActionResult, SoulFireOperationError, never>` ([`BotActionResult`](/docs/sdk/api/ts/bot-action-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/chat.ts#L124)
+
+## `complete`
+
+Tab-completion suggestions for `input` (a command if it starts with `/`) at
+`options.cursor`, which defaults to the end of `input`.
+
+```ts
+complete(input: string, options?: TabCompleteOptions): Effect<TabCompleteResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `input` | `string` | Required |  |
+| `options` | [`TabCompleteOptions`](/docs/sdk/api/ts/tab-complete-options) | `{}` |  |
+
+**Returns:** `Effect<TabCompleteResponse, SoulFireOperationError, never>` ([`TabCompleteResponse`](/docs/sdk/api/ts/generated-soulfire-chat-pb#tabcompleteresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/chat.ts#L154)
+
+## `watch`
+
+Chat events matching `matcher`, as they arrive, until the caller stops
+iterating. A string matches as a substring of the plain text; a RegExp's
+groups go in `captures` and `groups`. `options.sources` keeps only those
+sources.
+
+```ts
+watch(matcher: ChatMatcher, options?: WatchChatOptions): Stream<ChatMatch, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `matcher` | [`ChatMatcher`](/docs/sdk/api/ts/chat-matcher) | Required |  |
+| `options` | [`WatchChatOptions`](/docs/sdk/api/ts/watch-chat-options) | `{}` |  |
+
+**Returns:** `Stream<ChatMatch, SoulFireOperationError, never>` ([`ChatMatch`](/docs/sdk/api/ts/chat-match), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/chat.ts#L176)
+
+## `waitFor`
+
+The next chat event matching `matcher` (as in `watch`). No timeout unless
+`timeoutMs` is set.
+
+```ts
+waitFor(matcher: ChatMatcher, options?: WaitForChatOptions): Effect<ChatMatch, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `matcher` | [`ChatMatcher`](/docs/sdk/api/ts/chat-matcher) | Required |  |
+| `options` | [`WaitForChatOptions`](/docs/sdk/api/ts/wait-for-chat-options) | `{}` |  |
+
+**Returns:** `Effect<ChatMatch, SoulFireOperationError, never>` ([`ChatMatch`](/docs/sdk/api/ts/chat-match), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/chat.ts#L205)

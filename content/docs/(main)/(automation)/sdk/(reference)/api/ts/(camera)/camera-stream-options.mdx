@@ -1,0 +1,106 @@
+---
+title: "CameraStreamOptions"
+description: "TypeScript API signatures, fields, and source for CameraStreamOptions."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `camera`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/camera.ts#L24).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`.
+
+```ts
+type CameraStreamOptions = BotScoped<typeof BotWatchPovRequestSchema> & {
+  call?: CallOptions;
+};
+```
+
+**Referenced types:** [`BotScoped`](/docs/sdk/api/ts/bot-scoped), [`BotWatchPovRequestSchema`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botwatchpovrequestschema).
+
+## `width`
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L1282)
+
+## `height`
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L1287)
+
+## `maxDistance`
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L1292)
+
+## `fov`
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L1297)
+
+## `cameraX`
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L1302)
+
+## `cameraY`
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L1307)
+
+## `cameraZ`
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L1312)
+
+## `yRot`
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L1317)
+
+## `xRot`
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L1322)
+
+## `includeHud`
+
+**Type:** `boolean | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L1327)
+
+## `includeHands`
+
+**Type:** `boolean | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L1332)
+
+## `includeDebugTrace`
+
+**Type:** `boolean | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L1337)
+
+## `intervalMs`
+
+Target interval between frames. Defaults to 1000 ms and is clamped to
+100-60000 ms. Frames are dropped while the transport is not ready.
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L1345)
+
+## `call`
+
+**Type:** `CallOptions | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/camera.ts#L25)

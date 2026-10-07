@@ -1,0 +1,43 @@
+---
+title: "CraftTaskResult"
+description: "TypeScript API signatures, fields, and source for CraftTaskResult."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/recipe_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/recipe_pb.ts#L295).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/recipe_pb`.
+
+```ts
+type CraftTaskResult = Message<"soulfire.v1.CraftTaskResult"> & {
+  /**
+   * @generated from field: soulfire.v1.ItemStackSnapshot result = 1;
+   */
+  result?: ItemStackSnapshot | undefined;
+
+  /**
+   * Number of recipe operations completed.
+   *
+   * @generated from field: int32 crafted = 2;
+   */
+  crafted: number;
+};
+```
+
+**Referenced types:** [`ItemStackSnapshot`](/docs/sdk/api/ts/item-stack-snapshot).
+
+## `result`
+
+**Type:** `ItemStackSnapshot | undefined` ([`ItemStackSnapshot`](/docs/sdk/api/ts/item-stack-snapshot)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/recipe_pb.ts#L299)
+
+## `crafted`
+
+Number of recipe operations completed.
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/recipe_pb.ts#L306)

@@ -1,0 +1,72 @@
+---
+title: "ExploreTaskResult"
+description: "TypeScript API signatures, fields, and source for ExploreTaskResult."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/task_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L1622).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/task_pb`.
+
+```ts
+type ExploreTaskResult = Message<"soulfire.v1.ExploreTaskResult"> & {
+  /**
+   * @generated from field: soulfire.v1.ExploreCompletionReason reason = 1;
+   */
+  reason: ExploreCompletionReason;
+
+  /**
+   * @generated from field: uint32 waypoints_visited = 2;
+   */
+  waypointsVisited: number;
+
+  /**
+   * @generated from field: uint32 failed_routes = 3;
+   */
+  failedRoutes: number;
+
+  /**
+   * @generated from field: double horizontal_distance_traveled = 4;
+   */
+  horizontalDistanceTraveled: number;
+
+  /**
+   * @generated from field: soulfire.v1.WorldPosition final_position = 5;
+   */
+  finalPosition?: WorldPosition | undefined;
+};
+```
+
+**Referenced types:** [`ExploreCompletionReason`](/docs/sdk/api/ts/generated-soulfire-task-pb#explorecompletionreason), [`WorldPosition`](/docs/sdk/api/ts/world-position).
+
+## `reason`
+
+**Type:** [`ExploreCompletionReason`](/docs/sdk/api/ts/generated-soulfire-task-pb#explorecompletionreason).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L1626)
+
+## `waypointsVisited`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L1631)
+
+## `failedRoutes`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L1636)
+
+## `horizontalDistanceTraveled`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L1641)
+
+## `finalPosition`
+
+**Type:** `WorldPosition | undefined` ([`WorldPosition`](/docs/sdk/api/ts/world-position)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L1646)

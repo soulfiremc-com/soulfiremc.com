@@ -1,0 +1,58 @@
+---
+title: "QueryRegion"
+description: "Python API signatures, fields, and source for QueryRegion."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `world_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L110).
+
+**Import from:** `soulfire`, `soulfire.world_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class QueryRegion(_message.Message)
+```
+
+## `SPHERE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L112)
+
+## `BOX_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L113)
+
+## `sphere`
+
+**Type:** [`SphereRegion`](/docs/sdk/api/py/sphere-region).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L114)
+
+## `box`
+
+**Type:** [`BoxRegion`](/docs/sdk/api/py/box-region).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L115)
+
+## `__init__`
+
+```python
+def __init__(self, sphere: _Optional[_Union[SphereRegion, _Mapping]]=..., box: _Optional[_Union[BoxRegion, _Mapping]]=...) -> None
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `sphere` | `_Optional[_Union[SphereRegion, _Mapping]]` ([`SphereRegion`](/docs/sdk/api/py/sphere-region)) | `...` | positional or keyword |
+| `box` | `_Optional[_Union[BoxRegion, _Mapping]]` ([`BoxRegion`](/docs/sdk/api/py/box-region)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L116)

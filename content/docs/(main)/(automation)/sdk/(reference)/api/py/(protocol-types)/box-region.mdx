@@ -1,0 +1,58 @@
+---
+title: "BoxRegion"
+description: "Python API signatures, fields, and source for BoxRegion."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `world_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L126).
+
+**Import from:** `soulfire`, `soulfire.world_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class BoxRegion(_message.Message)
+```
+
+## `MINIMUM_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L128)
+
+## `MAXIMUM_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L129)
+
+## `minimum`
+
+**Type:** [`_common_pb2.BlockPosition`](/docs/sdk/api/py/block-position).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L130)
+
+## `maximum`
+
+**Type:** [`_common_pb2.BlockPosition`](/docs/sdk/api/py/block-position).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L131)
+
+## `__init__`
+
+```python
+def __init__(self, minimum: _Optional[_Union[_common_pb2.BlockPosition, _Mapping]]=..., maximum: _Optional[_Union[_common_pb2.BlockPosition, _Mapping]]=...) -> None
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `minimum` | `_Optional[_Union[_common_pb2.BlockPosition, _Mapping]]` ([`_common_pb2.BlockPosition`](/docs/sdk/api/py/block-position)) | `...` | positional or keyword |
+| `maximum` | `_Optional[_Union[_common_pb2.BlockPosition, _Mapping]]` ([`_common_pb2.BlockPosition`](/docs/sdk/api/py/block-position)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L132)

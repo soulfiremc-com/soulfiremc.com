@@ -1,0 +1,33 @@
+---
+title: "BotEventStreamFactory"
+description: "TypeScript API signatures, fields, and source for BotEventStreamFactory."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `session`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L149).
+
+This declaration appears in public signatures but is not exported as a package entry point.
+
+```ts
+type BotEventStreamFactory = (
+  request: StreamRequest,
+  options: CallOptions,
+) => Stream.Stream<BotEvent, SoulFireOperationError>;
+```
+
+```ts
+BotEventStreamFactory(request: StreamRequest, options: CallOptions): Stream<BotEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`StreamRequest`](/docs/sdk/api/ts/stream-request) | Required |  |
+| `options` | `CallOptions` | Required |  |
+
+**Returns:** `Stream<BotEvent, SoulFireOperationError, never>` ([`BotEvent`](/docs/sdk/api/ts/bot-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+**Referenced types:** [`StreamRequest`](/docs/sdk/api/ts/stream-request), [`BotEvent`](/docs/sdk/api/ts/bot-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error).

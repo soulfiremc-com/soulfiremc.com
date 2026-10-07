@@ -1,0 +1,346 @@
+---
+title: "login_connect module"
+description: "Python API signatures, fields, and source for login_connect module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`LoginService`](/docs/sdk/api/py/generated-login-connect#loginservice) | class |
+| [`LoginServiceASGIApplication`](/docs/sdk/api/py/generated-login-connect#loginserviceasgiapplication) | class |
+| [`LoginServiceClient`](/docs/sdk/api/py/generated-login-connect#loginserviceclient) | class |
+| [`LoginServiceClientSync`](/docs/sdk/api/py/generated-login-connect#loginserviceclientsync) | class |
+| [`LoginServiceSync`](/docs/sdk/api/py/generated-login-connect#loginservicesync) | class |
+| [`LoginServiceWSGIApplication`](/docs/sdk/api/py/generated-login-connect#loginservicewsgiapplication) | class |
+
+## LoginService
+
+**Class** in `login_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_connect.py#L37).
+
+**Import from:** `soulfire.login_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class LoginService(Protocol)
+```
+
+### `login`
+
+```python
+async def login(self, request: LoginRequest, ctx: RequestContext[LoginRequest, NextAuthFlowResponse]) -> NextAuthFlowResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`LoginRequest`](/docs/sdk/api/py/generated-login-pb2#loginrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[LoginRequest, NextAuthFlowResponse]` ([`LoginRequest`](/docs/sdk/api/py/generated-login-pb2#loginrequest), [`NextAuthFlowResponse`](/docs/sdk/api/py/generated-login-pb2#nextauthflowresponse)) | Required | positional or keyword |
+
+**Returns:** [`NextAuthFlowResponse`](/docs/sdk/api/py/generated-login-pb2#nextauthflowresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_connect.py#L38)
+
+### `email_code`
+
+```python
+async def email_code(self, request: EmailCodeRequest, ctx: RequestContext[EmailCodeRequest, NextAuthFlowResponse]) -> NextAuthFlowResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`EmailCodeRequest`](/docs/sdk/api/py/generated-login-pb2#emailcoderequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[EmailCodeRequest, NextAuthFlowResponse]` ([`EmailCodeRequest`](/docs/sdk/api/py/generated-login-pb2#emailcoderequest), [`NextAuthFlowResponse`](/docs/sdk/api/py/generated-login-pb2#nextauthflowresponse)) | Required | positional or keyword |
+
+**Returns:** [`NextAuthFlowResponse`](/docs/sdk/api/py/generated-login-pb2#nextauthflowresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_connect.py#L41)
+
+## LoginServiceASGIApplication
+
+**Class** in `login_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_connect.py#L45).
+
+**Import from:** `soulfire.login_connect`.
+
+**Bases:** `ConnectASGIApplication[LoginService]` ([`LoginService`](/docs/sdk/api/py/generated-login-connect#loginservice)).
+
+```python
+class LoginServiceASGIApplication(ConnectASGIApplication[LoginService])
+```
+
+**Referenced types:** [`LoginService`](/docs/sdk/api/py/generated-login-connect#loginservice).
+
+### `__init__`
+
+```python
+def __init__(self, service: LoginService | AsyncGenerator[LoginService], *, interceptors: Iterable[Interceptor]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | `LoginService \| AsyncGenerator[LoginService]` ([`LoginService`](/docs/sdk/api/py/generated-login-connect#loginservice)) | Required | positional or keyword |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `compressions` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_connect.py#L46)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_connect.py#L86)
+
+## LoginServiceClient
+
+**Class** in `login_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_connect.py#L91).
+
+**Import from:** `soulfire.login_connect`.
+
+**Bases:** `ConnectClient`.
+
+```python
+class LoginServiceClient(ConnectClient)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[Interceptor]=(), http_client: Client | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `http_client` | `Client \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_connect.py#L92)
+
+### `login`
+
+```python
+async def login(self, request: LoginRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> NextAuthFlowResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`LoginRequest`](/docs/sdk/api/py/generated-login-pb2#loginrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`NextAuthFlowResponse`](/docs/sdk/api/py/generated-login-pb2#nextauthflowresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_connect.py#L116)
+
+### `email_code`
+
+```python
+async def email_code(self, request: EmailCodeRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> NextAuthFlowResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`EmailCodeRequest`](/docs/sdk/api/py/generated-login-pb2#emailcoderequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`NextAuthFlowResponse`](/docs/sdk/api/py/generated-login-pb2#nextauthflowresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_connect.py#L136)
+
+## LoginServiceClientSync
+
+**Class** in `login_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_connect.py#L208).
+
+**Import from:** `soulfire.login_connect`.
+
+**Bases:** `ConnectClientSync`.
+
+```python
+class LoginServiceClientSync(ConnectClientSync)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[InterceptorSync]=(), http_client: SyncClient | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | keyword only |
+| `http_client` | `SyncClient \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_connect.py#L209)
+
+### `login`
+
+```python
+def login(self, request: LoginRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> NextAuthFlowResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`LoginRequest`](/docs/sdk/api/py/generated-login-pb2#loginrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`NextAuthFlowResponse`](/docs/sdk/api/py/generated-login-pb2#nextauthflowresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_connect.py#L233)
+
+### `email_code`
+
+```python
+def email_code(self, request: EmailCodeRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> NextAuthFlowResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`EmailCodeRequest`](/docs/sdk/api/py/generated-login-pb2#emailcoderequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`NextAuthFlowResponse`](/docs/sdk/api/py/generated-login-pb2#nextauthflowresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_connect.py#L252)
+
+## LoginServiceSync
+
+**Class** in `login_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_connect.py#L156).
+
+**Import from:** `soulfire.login_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class LoginServiceSync(Protocol)
+```
+
+### `login`
+
+```python
+def login(self, request: LoginRequest, ctx: RequestContext[LoginRequest, NextAuthFlowResponse]) -> NextAuthFlowResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`LoginRequest`](/docs/sdk/api/py/generated-login-pb2#loginrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[LoginRequest, NextAuthFlowResponse]` ([`LoginRequest`](/docs/sdk/api/py/generated-login-pb2#loginrequest), [`NextAuthFlowResponse`](/docs/sdk/api/py/generated-login-pb2#nextauthflowresponse)) | Required | positional or keyword |
+
+**Returns:** [`NextAuthFlowResponse`](/docs/sdk/api/py/generated-login-pb2#nextauthflowresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_connect.py#L157)
+
+### `email_code`
+
+```python
+def email_code(self, request: EmailCodeRequest, ctx: RequestContext[EmailCodeRequest, NextAuthFlowResponse]) -> NextAuthFlowResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`EmailCodeRequest`](/docs/sdk/api/py/generated-login-pb2#emailcoderequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[EmailCodeRequest, NextAuthFlowResponse]` ([`EmailCodeRequest`](/docs/sdk/api/py/generated-login-pb2#emailcoderequest), [`NextAuthFlowResponse`](/docs/sdk/api/py/generated-login-pb2#nextauthflowresponse)) | Required | positional or keyword |
+
+**Returns:** [`NextAuthFlowResponse`](/docs/sdk/api/py/generated-login-pb2#nextauthflowresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_connect.py#L160)
+
+## LoginServiceWSGIApplication
+
+**Class** in `login_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_connect.py#L164).
+
+**Import from:** `soulfire.login_connect`.
+
+**Bases:** `ConnectWSGIApplication`.
+
+```python
+class LoginServiceWSGIApplication(ConnectWSGIApplication)
+```
+
+### `__init__`
+
+```python
+def __init__(self, service: LoginServiceSync, interceptors: Iterable[InterceptorSync]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | [`LoginServiceSync`](/docs/sdk/api/py/generated-login-connect#loginservicesync) | Required | positional or keyword |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | positional or keyword |
+| `read_max_bytes` | `int \| None` | `None` | positional or keyword |
+| `compressions` | `Iterable[Compression] \| None` | `None` | positional or keyword |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_connect.py#L165)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_connect.py#L203)

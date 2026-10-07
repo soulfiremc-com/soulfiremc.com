@@ -1,0 +1,50 @@
+---
+title: "InventoryItemRecommendation"
+description: "TypeScript API signatures, fields, and source for InventoryItemRecommendation."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/inventory_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/inventory_pb.ts#L353).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/inventory_pb`.
+
+```ts
+type InventoryItemRecommendation = Message<"soulfire.v1.InventoryItemRecommendation"> & {
+  /**
+   * @generated from field: soulfire.v1.InventorySlotSnapshot slot = 1;
+   */
+  slot?: InventorySlotSnapshot | undefined;
+
+  /**
+   * @generated from field: double score = 2;
+   */
+  score: number;
+
+  /**
+   * @generated from field: repeated soulfire.v1.InventoryItemScoreFactor factors = 3;
+   */
+  factors: InventoryItemScoreFactor[];
+};
+```
+
+**Referenced types:** [`InventorySlotSnapshot`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#inventoryslotsnapshot), [`InventoryItemScoreFactor`](/docs/sdk/api/ts/inventory-item-score-factor).
+
+## `slot`
+
+**Type:** `InventorySlotSnapshot | undefined` ([`InventorySlotSnapshot`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#inventoryslotsnapshot)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/inventory_pb.ts#L357)
+
+## `score`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/inventory_pb.ts#L362)
+
+## `factors`
+
+**Type:** `InventoryItemScoreFactor[]` ([`InventoryItemScoreFactor`](/docs/sdk/api/ts/inventory-item-score-factor)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/inventory_pb.ts#L367)

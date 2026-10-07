@@ -1,0 +1,79 @@
+---
+title: "TaskStartOptions"
+description: "TypeScript API signatures, fields, and source for TaskStartOptions."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Interface** in `tasks`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L164).
+
+Options every task takes. Unset, the server uses `conflictPolicy` QUEUE,
+`priority` NORMAL, `reconnectPolicy` FAIL and `disconnectPolicy` CONTINUE
+(the `run*` methods default to CANCEL_WITH_CALL).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`.
+
+**Bases:** [`ScopedTaskStartRequest`](/docs/sdk/api/ts/scoped-task-start-request).
+
+```ts
+interface TaskStartOptions extends ScopedTaskStartRequest
+```
+
+**Referenced types:** [`ScopedTaskStartRequest`](/docs/sdk/api/ts/scoped-task-start-request).
+
+## `call`
+
+**Type:** `CallOptions | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L165)
+
+## `deadline`
+
+The task ends as TIMED_OUT at this time. Must be in the future.
+
+**Type:** `Date | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L169)
+
+## `conflictPolicy`
+
+**Type:** `BotTaskConflictPolicy | undefined` ([`BotTaskConflictPolicy`](/docs/sdk/api/ts/bot-task-conflict-policy)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L268)
+
+## `reconnectPolicy`
+
+**Type:** `BotTaskReconnectPolicy | undefined` ([`BotTaskReconnectPolicy`](/docs/sdk/api/ts/bot-task-reconnect-policy)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L273)
+
+## `disconnectPolicy`
+
+**Type:** `BotTaskDisconnectPolicy | undefined` ([`BotTaskDisconnectPolicy`](/docs/sdk/api/ts/bot-task-disconnect-policy)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L278)
+
+## `priority`
+
+**Type:** `BotTaskPriority | undefined` ([`BotTaskPriority`](/docs/sdk/api/ts/bot-task-priority)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L283)
+
+## `parentTaskId`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L293)
+
+## `causationId`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L298)
+
+## `idempotencyKey`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L303)

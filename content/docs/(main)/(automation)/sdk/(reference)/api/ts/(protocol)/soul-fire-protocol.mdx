@@ -1,0 +1,104 @@
+---
+title: "SoulFireProtocol"
+description: "TypeScript API signatures, fields, and source for SoulFireProtocol."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `protocol`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/protocol.ts#L38).
+
+Advanced access to SoulFire's native Minecraft packet codec.
+
+Encoded bytes use the native protocol reported by \{@link info\}, not the
+remote server protocol. SoulFire applies ViaVersion translation afterward.
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`.
+
+```ts
+class SoulFireProtocol
+```
+
+## `constructor`
+
+```ts
+new SoulFireProtocol(instanceId: string, botId: string, client: Client<GenService<{ getProtocolInfo: { methodKind: "unary"; input: GenMessage<BotProtocolRequest>; output: GenMessage<BotProtocolInfo>; }; listPacketSchemas: { methodKind: "unary"; input: GenMessage<ListPacketSchemasRequest>; output: GenMessage<ListPacketSchemasResponse>; }; watchPackets: { methodKind: "server_streaming"; input: GenMessage<WatchPacketsRequest>; output: GenMessage<RawPacketEvent>; }; sendRawPacket: { methodKind: "unary"; input: GenMessage<SendRawPacketRequest>; output: GenMessage<SendRawPacketResponse>; }; }>>): SoulFireProtocol
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instanceId` | `string` | Required |  |
+| `botId` | `string` | Required |  |
+| `client` | `Client<GenService<{ getProtocolInfo: { methodKind: "unary"; input: GenMessage<BotProtocolRequest>; output: GenMessage<BotProtocolInfo>; }; listPacketSchemas: { methodKind: "unary"; input: GenMessage<ListPacketSchemasRequest>; output: GenMessage<ListPacketSchemasResponse>; }; watchPackets: { methodKind: "server_streaming"; input: GenMessage<WatchPacketsRequest>; output: GenMessage<RawPacketEvent>; }; sendRawPacket: { methodKind: "unary"; input: GenMessage<SendRawPacketRequest>; output: GenMessage<SendRawPacketResponse>; }; }>>` ([`BotProtocolRequest`](/docs/sdk/api/ts/generated-soulfire-protocol-pb#botprotocolrequest), [`BotProtocolInfo`](/docs/sdk/api/ts/bot-protocol-info), [`ListPacketSchemasRequest`](/docs/sdk/api/ts/generated-soulfire-protocol-pb#listpacketschemasrequest), [`ListPacketSchemasResponse`](/docs/sdk/api/ts/generated-soulfire-protocol-pb#listpacketschemasresponse), [`WatchPacketsRequest`](/docs/sdk/api/ts/generated-soulfire-protocol-pb#watchpacketsrequest), [`RawPacketEvent`](/docs/sdk/api/ts/raw-packet-event), [`SendRawPacketRequest`](/docs/sdk/api/ts/generated-soulfire-protocol-pb#sendrawpacketrequest), [`SendRawPacketResponse`](/docs/sdk/api/ts/generated-soulfire-protocol-pb#sendrawpacketresponse)) | Required |  |
+
+**Returns:** [`SoulFireProtocol`](/docs/sdk/api/ts/soul-fire-protocol).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/protocol.ts#L39)
+
+## `info`
+
+```ts
+info(options?: CallOptions | undefined): Effect<BotProtocolInfo, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotProtocolInfo, SoulFireOperationError, never>` ([`BotProtocolInfo`](/docs/sdk/api/ts/bot-protocol-info), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/protocol.ts#L45)
+
+## `schemas`
+
+```ts
+schemas(direction: PacketDirection, options?: CallOptions | undefined): Effect<readonly PacketSchema[], SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `direction` | [`PacketDirection`](/docs/sdk/api/ts/packet-direction) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<readonly PacketSchema[], SoulFireOperationError, never>` ([`PacketSchema`](/docs/sdk/api/ts/packet-schema), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/protocol.ts#L53)
+
+## `packets`
+
+```ts
+packets(options?: WatchPacketsOptions): Stream<RawPacketEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`WatchPacketsOptions`](/docs/sdk/api/ts/watch-packets-options) | `{}` |  |
+
+**Returns:** `Stream<RawPacketEvent, SoulFireOperationError, never>` ([`RawPacketEvent`](/docs/sdk/api/ts/raw-packet-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/protocol.ts#L68)
+
+## `send`
+
+```ts
+send(encodedPacket: Uint8Array<ArrayBufferLike>, options?: SendRawPacketOptions): Effect<{ name: string; encodedBytes: number; }, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `encodedPacket` | `Uint8Array<ArrayBufferLike>` | Required |  |
+| `options` | [`SendRawPacketOptions`](/docs/sdk/api/ts/send-raw-packet-options) | `{}` |  |
+
+**Returns:** `Effect<{ name: string; encodedBytes: number; }, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/protocol.ts#L84)

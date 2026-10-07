@@ -1,0 +1,966 @@
+---
+title: "pov_pb2 module"
+description: "Python API signatures, fields, and source for pov_pb2 module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`DESCRIPTOR`](/docs/sdk/api/py/generated-pov-pb2#descriptor) | constant |
+| [`PovFrame`](/docs/sdk/api/py/generated-pov-pb2#povframe) | class |
+| [`PovFrame.CursorShape`](/docs/sdk/api/py/generated-pov-pb2#povframecursorshape) | enum |
+| [`PovInputEvent`](/docs/sdk/api/py/generated-pov-pb2#povinputevent) | class |
+| [`PovInputEvent.Kind`](/docs/sdk/api/py/generated-pov-pb2#povinputeventkind) | enum |
+| [`PovInputRequest`](/docs/sdk/api/py/generated-pov-pb2#povinputrequest) | class |
+| [`PovInputResponse`](/docs/sdk/api/py/generated-pov-pb2#povinputresponse) | class |
+| [`PovStreamFeedback`](/docs/sdk/api/py/generated-pov-pb2#povstreamfeedback) | class |
+| [`PovWatchRequest`](/docs/sdk/api/py/generated-pov-pb2#povwatchrequest) | class |
+
+## DESCRIPTOR
+
+**Constant** in `pov_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L8).
+
+**Import from:** `soulfire.pov_pb2`.
+
+```python
+DESCRIPTOR: _descriptor.FileDescriptor
+```
+
+## PovFrame
+
+**Class** in `pov_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L28).
+
+**Import from:** `soulfire.pov_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class PovFrame(_message.Message)
+```
+
+### `ARROW`
+
+**Type:** [`PovFrame.CursorShape`](/docs/sdk/api/py/generated-pov-pb2#povframecursorshape).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L40)
+
+### `TEXT`
+
+**Type:** [`PovFrame.CursorShape`](/docs/sdk/api/py/generated-pov-pb2#povframecursorshape).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L41)
+
+### `CROSSHAIR`
+
+**Type:** [`PovFrame.CursorShape`](/docs/sdk/api/py/generated-pov-pb2#povframecursorshape).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L42)
+
+### `POINTER`
+
+**Type:** [`PovFrame.CursorShape`](/docs/sdk/api/py/generated-pov-pb2#povframecursorshape).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L43)
+
+### `RESIZE_NS`
+
+**Type:** [`PovFrame.CursorShape`](/docs/sdk/api/py/generated-pov-pb2#povframecursorshape).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L44)
+
+### `RESIZE_EW`
+
+**Type:** [`PovFrame.CursorShape`](/docs/sdk/api/py/generated-pov-pb2#povframecursorshape).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L45)
+
+### `RESIZE_ALL`
+
+**Type:** [`PovFrame.CursorShape`](/docs/sdk/api/py/generated-pov-pb2#povframecursorshape).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L46)
+
+### `NOT_ALLOWED`
+
+**Type:** [`PovFrame.CursorShape`](/docs/sdk/api/py/generated-pov-pb2#povframecursorshape).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L47)
+
+### `SEQUENCE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L48)
+
+### `WIDTH_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L49)
+
+### `HEIGHT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L50)
+
+### `SCREEN_OPEN_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L51)
+
+### `DATA_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L52)
+
+### `TIMESTAMP_US_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L53)
+
+### `KEY_FRAME_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L54)
+
+### `CODEC_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L55)
+
+### `CURSOR_SHAPE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L56)
+
+### `TARGET_BITRATE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L57)
+
+### `INPUT_TOKEN_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L58)
+
+### `TARGET_FPS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L59)
+
+### `CLIPBOARD_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L60)
+
+### `CLIPBOARD_SEQUENCE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L61)
+
+### `OPEN_URL_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L62)
+
+### `sequence`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L63)
+
+### `width`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L64)
+
+### `height`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L65)
+
+### `screen_open`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L66)
+
+### `data`
+
+**Type:** `bytes`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L67)
+
+### `timestamp_us`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L68)
+
+### `key_frame`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L69)
+
+### `codec`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L70)
+
+### `cursor_shape`
+
+**Type:** [`PovFrame.CursorShape`](/docs/sdk/api/py/generated-pov-pb2#povframecursorshape).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L71)
+
+### `target_bitrate`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L72)
+
+### `input_token`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L73)
+
+### `target_fps`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L74)
+
+### `clipboard`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L75)
+
+### `clipboard_sequence`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L76)
+
+### `open_url`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L77)
+
+### `__init__`
+
+```python
+def __init__(self, sequence: _Optional[int]=..., width: _Optional[int]=..., height: _Optional[int]=..., screen_open: bool=..., data: _Optional[bytes]=..., timestamp_us: _Optional[int]=..., key_frame: bool=..., codec: _Optional[str]=..., cursor_shape: _Optional[_Union[PovFrame.CursorShape, str]]=..., target_bitrate: _Optional[int]=..., input_token: _Optional[str]=..., target_fps: _Optional[int]=..., clipboard: _Optional[str]=..., clipboard_sequence: _Optional[int]=..., open_url: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `sequence` | `_Optional[int]` | `...` | positional or keyword |
+| `width` | `_Optional[int]` | `...` | positional or keyword |
+| `height` | `_Optional[int]` | `...` | positional or keyword |
+| `screen_open` | `bool` | `...` | positional or keyword |
+| `data` | `_Optional[bytes]` | `...` | positional or keyword |
+| `timestamp_us` | `_Optional[int]` | `...` | positional or keyword |
+| `key_frame` | `bool` | `...` | positional or keyword |
+| `codec` | `_Optional[str]` | `...` | positional or keyword |
+| `cursor_shape` | `_Optional[_Union[PovFrame.CursorShape, str]]` ([`PovFrame.CursorShape`](/docs/sdk/api/py/generated-pov-pb2#povframecursorshape)) | `...` | positional or keyword |
+| `target_bitrate` | `_Optional[int]` | `...` | positional or keyword |
+| `input_token` | `_Optional[str]` | `...` | positional or keyword |
+| `target_fps` | `_Optional[int]` | `...` | positional or keyword |
+| `clipboard` | `_Optional[str]` | `...` | positional or keyword |
+| `clipboard_sequence` | `_Optional[int]` | `...` | positional or keyword |
+| `open_url` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L78)
+
+## PovFrame.CursorShape
+
+**Enum** in `pov_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L30).
+
+**Import from:** `soulfire.pov_pb2`.
+
+**Bases:** `int`.
+
+```python
+class PovFrame.CursorShape(int, metaclass=_enum_type_wrapper.EnumTypeWrapper)
+```
+
+### `ARROW`
+
+**Type:** `_ClassVar[PovFrame.CursorShape]` ([`PovFrame.CursorShape`](/docs/sdk/api/py/generated-pov-pb2#povframecursorshape)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L32)
+
+### `TEXT`
+
+**Type:** `_ClassVar[PovFrame.CursorShape]` ([`PovFrame.CursorShape`](/docs/sdk/api/py/generated-pov-pb2#povframecursorshape)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L33)
+
+### `CROSSHAIR`
+
+**Type:** `_ClassVar[PovFrame.CursorShape]` ([`PovFrame.CursorShape`](/docs/sdk/api/py/generated-pov-pb2#povframecursorshape)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L34)
+
+### `POINTER`
+
+**Type:** `_ClassVar[PovFrame.CursorShape]` ([`PovFrame.CursorShape`](/docs/sdk/api/py/generated-pov-pb2#povframecursorshape)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L35)
+
+### `RESIZE_NS`
+
+**Type:** `_ClassVar[PovFrame.CursorShape]` ([`PovFrame.CursorShape`](/docs/sdk/api/py/generated-pov-pb2#povframecursorshape)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L36)
+
+### `RESIZE_EW`
+
+**Type:** `_ClassVar[PovFrame.CursorShape]` ([`PovFrame.CursorShape`](/docs/sdk/api/py/generated-pov-pb2#povframecursorshape)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L37)
+
+### `RESIZE_ALL`
+
+**Type:** `_ClassVar[PovFrame.CursorShape]` ([`PovFrame.CursorShape`](/docs/sdk/api/py/generated-pov-pb2#povframecursorshape)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L38)
+
+### `NOT_ALLOWED`
+
+**Type:** `_ClassVar[PovFrame.CursorShape]` ([`PovFrame.CursorShape`](/docs/sdk/api/py/generated-pov-pb2#povframecursorshape)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L39)
+
+## PovInputEvent
+
+**Class** in `pov_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L126).
+
+**Import from:** `soulfire.pov_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class PovInputEvent(_message.Message)
+```
+
+### `KEY`
+
+**Type:** [`PovInputEvent.Kind`](/docs/sdk/api/py/generated-pov-pb2#povinputeventkind).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L135)
+
+### `CHARACTER`
+
+**Type:** [`PovInputEvent.Kind`](/docs/sdk/api/py/generated-pov-pb2#povinputeventkind).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L136)
+
+### `BUTTON`
+
+**Type:** [`PovInputEvent.Kind`](/docs/sdk/api/py/generated-pov-pb2#povinputeventkind).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L137)
+
+### `MOVE`
+
+**Type:** [`PovInputEvent.Kind`](/docs/sdk/api/py/generated-pov-pb2#povinputeventkind).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L138)
+
+### `SCROLL`
+
+**Type:** [`PovInputEvent.Kind`](/docs/sdk/api/py/generated-pov-pb2#povinputeventkind).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L139)
+
+### `KIND_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L140)
+
+### `CODE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L141)
+
+### `ACTION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L142)
+
+### `MODIFIERS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L143)
+
+### `X_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L144)
+
+### `Y_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L145)
+
+### `RELATIVE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L146)
+
+### `kind`
+
+**Type:** [`PovInputEvent.Kind`](/docs/sdk/api/py/generated-pov-pb2#povinputeventkind).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L147)
+
+### `code`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L148)
+
+### `action`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L149)
+
+### `modifiers`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L150)
+
+### `x`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L151)
+
+### `y`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L152)
+
+### `relative`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L153)
+
+### `__init__`
+
+```python
+def __init__(self, kind: _Optional[_Union[PovInputEvent.Kind, str]]=..., code: _Optional[int]=..., action: _Optional[int]=..., modifiers: _Optional[int]=..., x: _Optional[float]=..., y: _Optional[float]=..., relative: bool=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `kind` | `_Optional[_Union[PovInputEvent.Kind, str]]` ([`PovInputEvent.Kind`](/docs/sdk/api/py/generated-pov-pb2#povinputeventkind)) | `...` | positional or keyword |
+| `code` | `_Optional[int]` | `...` | positional or keyword |
+| `action` | `_Optional[int]` | `...` | positional or keyword |
+| `modifiers` | `_Optional[int]` | `...` | positional or keyword |
+| `x` | `_Optional[float]` | `...` | positional or keyword |
+| `y` | `_Optional[float]` | `...` | positional or keyword |
+| `relative` | `bool` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L154)
+
+## PovInputEvent.Kind
+
+**Enum** in `pov_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L128).
+
+**Import from:** `soulfire.pov_pb2`.
+
+**Bases:** `int`.
+
+```python
+class PovInputEvent.Kind(int, metaclass=_enum_type_wrapper.EnumTypeWrapper)
+```
+
+### `KEY`
+
+**Type:** `_ClassVar[PovInputEvent.Kind]` ([`PovInputEvent.Kind`](/docs/sdk/api/py/generated-pov-pb2#povinputeventkind)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L130)
+
+### `CHARACTER`
+
+**Type:** `_ClassVar[PovInputEvent.Kind]` ([`PovInputEvent.Kind`](/docs/sdk/api/py/generated-pov-pb2#povinputeventkind)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L131)
+
+### `BUTTON`
+
+**Type:** `_ClassVar[PovInputEvent.Kind]` ([`PovInputEvent.Kind`](/docs/sdk/api/py/generated-pov-pb2#povinputeventkind)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L132)
+
+### `MOVE`
+
+**Type:** `_ClassVar[PovInputEvent.Kind]` ([`PovInputEvent.Kind`](/docs/sdk/api/py/generated-pov-pb2#povinputeventkind)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L133)
+
+### `SCROLL`
+
+**Type:** `_ClassVar[PovInputEvent.Kind]` ([`PovInputEvent.Kind`](/docs/sdk/api/py/generated-pov-pb2#povinputeventkind)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L134)
+
+## PovInputRequest
+
+**Class** in `pov_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L80).
+
+**Import from:** `soulfire.pov_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class PovInputRequest(_message.Message)
+```
+
+### `SESSION_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L82)
+
+### `SEQUENCE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L83)
+
+### `CAPTURED_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L84)
+
+### `WIDTH_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L85)
+
+### `HEIGHT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L86)
+
+### `EVENTS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L87)
+
+### `ESCAPE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L88)
+
+### `REQUEST_KEY_FRAME_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L89)
+
+### `FEEDBACK_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L90)
+
+### `INPUT_TOKEN_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L91)
+
+### `CLIPBOARD_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L92)
+
+### `READ_CLIPBOARD_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L93)
+
+### `MAX_FPS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L94)
+
+### `session_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L95)
+
+### `sequence`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L96)
+
+### `captured`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L97)
+
+### `width`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L98)
+
+### `height`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L99)
+
+### `events`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[PovInputEvent]` ([`PovInputEvent`](/docs/sdk/api/py/generated-pov-pb2#povinputevent)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L100)
+
+### `escape`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L101)
+
+### `request_key_frame`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L102)
+
+### `feedback`
+
+**Type:** [`PovStreamFeedback`](/docs/sdk/api/py/generated-pov-pb2#povstreamfeedback).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L103)
+
+### `input_token`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L104)
+
+### `clipboard`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L105)
+
+### `read_clipboard`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L106)
+
+### `max_fps`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L107)
+
+### `__init__`
+
+```python
+def __init__(self, session_id: _Optional[str]=..., sequence: _Optional[int]=..., captured: bool=..., width: _Optional[int]=..., height: _Optional[int]=..., events: _Optional[_Iterable[_Union[PovInputEvent, _Mapping]]]=..., escape: bool=..., request_key_frame: bool=..., feedback: _Optional[_Union[PovStreamFeedback, _Mapping]]=..., input_token: _Optional[str]=..., clipboard: _Optional[str]=..., read_clipboard: bool=..., max_fps: _Optional[int]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `session_id` | `_Optional[str]` | `...` | positional or keyword |
+| `sequence` | `_Optional[int]` | `...` | positional or keyword |
+| `captured` | `bool` | `...` | positional or keyword |
+| `width` | `_Optional[int]` | `...` | positional or keyword |
+| `height` | `_Optional[int]` | `...` | positional or keyword |
+| `events` | `_Optional[_Iterable[_Union[PovInputEvent, _Mapping]]]` ([`PovInputEvent`](/docs/sdk/api/py/generated-pov-pb2#povinputevent)) | `...` | positional or keyword |
+| `escape` | `bool` | `...` | positional or keyword |
+| `request_key_frame` | `bool` | `...` | positional or keyword |
+| `feedback` | `_Optional[_Union[PovStreamFeedback, _Mapping]]` ([`PovStreamFeedback`](/docs/sdk/api/py/generated-pov-pb2#povstreamfeedback)) | `...` | positional or keyword |
+| `input_token` | `_Optional[str]` | `...` | positional or keyword |
+| `clipboard` | `_Optional[str]` | `...` | positional or keyword |
+| `read_clipboard` | `bool` | `...` | positional or keyword |
+| `max_fps` | `_Optional[int]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L108)
+
+## PovInputResponse
+
+**Class** in `pov_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L122).
+
+**Import from:** `soulfire.pov_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class PovInputResponse(_message.Message)
+```
+
+### `__init__`
+
+```python
+def __init__(self) -> None
+```
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L124)
+
+## PovStreamFeedback
+
+**Class** in `pov_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L110).
+
+**Import from:** `soulfire.pov_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class PovStreamFeedback(_message.Message)
+```
+
+### `RECEIVED_SEQUENCE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L112)
+
+### `DELIVERY_DELAY_MS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L113)
+
+### `DECODER_QUEUE_SIZE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L114)
+
+### `DECODER_RECOVERIES_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L115)
+
+### `received_sequence`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L116)
+
+### `delivery_delay_ms`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L117)
+
+### `decoder_queue_size`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L118)
+
+### `decoder_recoveries`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L119)
+
+### `__init__`
+
+```python
+def __init__(self, received_sequence: _Optional[int]=..., delivery_delay_ms: _Optional[float]=..., decoder_queue_size: _Optional[int]=..., decoder_recoveries: _Optional[int]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `received_sequence` | `_Optional[int]` | `...` | positional or keyword |
+| `delivery_delay_ms` | `_Optional[float]` | `...` | positional or keyword |
+| `decoder_queue_size` | `_Optional[int]` | `...` | positional or keyword |
+| `decoder_recoveries` | `_Optional[int]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L120)
+
+## PovWatchRequest
+
+**Class** in `pov_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L10).
+
+**Import from:** `soulfire.pov_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class PovWatchRequest(_message.Message)
+```
+
+### `INSTANCE_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L12)
+
+### `BOT_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L13)
+
+### `SESSION_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L14)
+
+### `WIDTH_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L15)
+
+### `HEIGHT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L16)
+
+### `MAX_FPS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L17)
+
+### `CODECS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L18)
+
+### `instance_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L19)
+
+### `bot_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L20)
+
+### `session_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L21)
+
+### `width`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L22)
+
+### `height`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L23)
+
+### `max_fps`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L24)
+
+### `codecs`
+
+**Type:** `_containers.RepeatedScalarFieldContainer[str]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L25)
+
+### `__init__`
+
+```python
+def __init__(self, instance_id: _Optional[str]=..., bot_id: _Optional[str]=..., session_id: _Optional[str]=..., width: _Optional[int]=..., height: _Optional[int]=..., max_fps: _Optional[int]=..., codecs: _Optional[_Iterable[str]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instance_id` | `_Optional[str]` | `...` | positional or keyword |
+| `bot_id` | `_Optional[str]` | `...` | positional or keyword |
+| `session_id` | `_Optional[str]` | `...` | positional or keyword |
+| `width` | `_Optional[int]` | `...` | positional or keyword |
+| `height` | `_Optional[int]` | `...` | positional or keyword |
+| `max_fps` | `_Optional[int]` | `...` | positional or keyword |
+| `codecs` | `_Optional[_Iterable[str]]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pov_pb2.pyi#L26)

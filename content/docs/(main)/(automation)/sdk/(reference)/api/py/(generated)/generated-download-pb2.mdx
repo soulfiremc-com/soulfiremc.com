@@ -1,0 +1,224 @@
+---
+title: "download_pb2 module"
+description: "Python API signatures, fields, and source for download_pb2 module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`DESCRIPTOR`](/docs/sdk/api/py/generated-download-pb2#descriptor) | constant |
+| [`DownloadRequest`](/docs/sdk/api/py/generated-download-pb2#downloadrequest) | class |
+| [`DownloadResponse`](/docs/sdk/api/py/generated-download-pb2#downloadresponse) | class |
+| [`HeaderPair`](/docs/sdk/api/py/generated-download-pb2#headerpair) | class |
+
+## DESCRIPTOR
+
+**Constant** in `download_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/download_pb2.pyi#L11).
+
+**Import from:** `soulfire.download_pb2`.
+
+```python
+DESCRIPTOR: _descriptor.FileDescriptor
+```
+
+## DownloadRequest
+
+**Class** in `download_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/download_pb2.pyi#L21).
+
+**Import from:** `soulfire.download_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class DownloadRequest(_message.Message)
+```
+
+### `INSTANCE_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/download_pb2.pyi#L23)
+
+### `URI_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/download_pb2.pyi#L24)
+
+### `HEADERS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/download_pb2.pyi#L25)
+
+### `PROXY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/download_pb2.pyi#L26)
+
+### `instance_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/download_pb2.pyi#L27)
+
+### `uri`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/download_pb2.pyi#L28)
+
+### `headers`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[HeaderPair]` ([`HeaderPair`](/docs/sdk/api/py/generated-download-pb2#headerpair)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/download_pb2.pyi#L29)
+
+### `proxy`
+
+**Type:** [`_common_pb2.ProxyProto`](/docs/sdk/api/py/generated-common-pb2#proxyproto).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/download_pb2.pyi#L30)
+
+### `__init__`
+
+```python
+def __init__(self, instance_id: _Optional[str]=..., uri: _Optional[str]=..., headers: _Optional[_Iterable[_Union[HeaderPair, _Mapping]]]=..., proxy: _Optional[_Union[_common_pb2.ProxyProto, _Mapping]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instance_id` | `_Optional[str]` | `...` | positional or keyword |
+| `uri` | `_Optional[str]` | `...` | positional or keyword |
+| `headers` | `_Optional[_Iterable[_Union[HeaderPair, _Mapping]]]` ([`HeaderPair`](/docs/sdk/api/py/generated-download-pb2#headerpair)) | `...` | positional or keyword |
+| `proxy` | `_Optional[_Union[_common_pb2.ProxyProto, _Mapping]]` ([`_common_pb2.ProxyProto`](/docs/sdk/api/py/generated-common-pb2#proxyproto)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/download_pb2.pyi#L31)
+
+## DownloadResponse
+
+**Class** in `download_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/download_pb2.pyi#L33).
+
+**Import from:** `soulfire.download_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class DownloadResponse(_message.Message)
+```
+
+### `DATA_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/download_pb2.pyi#L35)
+
+### `HEADERS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/download_pb2.pyi#L36)
+
+### `STATUS_CODE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/download_pb2.pyi#L37)
+
+### `data`
+
+**Type:** `bytes`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/download_pb2.pyi#L38)
+
+### `headers`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[HeaderPair]` ([`HeaderPair`](/docs/sdk/api/py/generated-download-pb2#headerpair)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/download_pb2.pyi#L39)
+
+### `status_code`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/download_pb2.pyi#L40)
+
+### `__init__`
+
+```python
+def __init__(self, data: _Optional[bytes]=..., headers: _Optional[_Iterable[_Union[HeaderPair, _Mapping]]]=..., status_code: _Optional[int]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `data` | `_Optional[bytes]` | `...` | positional or keyword |
+| `headers` | `_Optional[_Iterable[_Union[HeaderPair, _Mapping]]]` ([`HeaderPair`](/docs/sdk/api/py/generated-download-pb2#headerpair)) | `...` | positional or keyword |
+| `status_code` | `_Optional[int]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/download_pb2.pyi#L41)
+
+## HeaderPair
+
+**Class** in `download_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/download_pb2.pyi#L13).
+
+**Import from:** `soulfire.download_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class HeaderPair(_message.Message)
+```
+
+### `KEY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/download_pb2.pyi#L15)
+
+### `VALUE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/download_pb2.pyi#L16)
+
+### `key`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/download_pb2.pyi#L17)
+
+### `value`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/download_pb2.pyi#L18)
+
+### `__init__`
+
+```python
+def __init__(self, key: _Optional[str]=..., value: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `key` | `_Optional[str]` | `...` | positional or keyword |
+| `value` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/download_pb2.pyi#L19)

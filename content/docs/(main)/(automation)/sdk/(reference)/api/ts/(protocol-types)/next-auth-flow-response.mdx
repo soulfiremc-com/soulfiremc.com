@@ -1,0 +1,81 @@
+---
+title: "NextAuthFlowResponse"
+description: "TypeScript API signatures, fields, and source for NextAuthFlowResponse."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/login_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/login_pb.ts#L48).
+
+Response message representing the next step in the authentication flow.
+This is a polymorphic response that indicates what action should be taken next.
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/login_pb`.
+
+```ts
+type NextAuthFlowResponse = Message<"soulfire.v1.NextAuthFlowResponse"> & {
+  /**
+   * A unique token identifying this authentication flow session.
+   * This token must be included in subsequent requests (e.g., EmailCodeRequest) to continue the flow.
+   * The token is a UUID string and expires after 15 minutes of inactivity.
+   *
+   * @generated from field: string auth_flow_token = 1;
+   */
+  authFlowToken: string;
+
+  /**
+   * The next step in the authentication flow. Exactly one of these will be set.
+   *
+   * @generated from oneof soulfire.v1.NextAuthFlowResponse.next
+   */
+  next: {
+    /**
+     * Set when the client should prompt the user to enter the email verification code.
+     * This is the response after a successful Login RPC call.
+     *
+     * @generated from field: soulfire.v1.NextAuthFlowResponse.EmailCode email_code = 2;
+     */
+    value: NextAuthFlowResponse_EmailCode;
+    case: "emailCode";
+  } | {
+    /**
+     * Set when authentication is complete and successful.
+     * Contains the JWT token for authenticated API access.
+     *
+     * @generated from field: soulfire.v1.NextAuthFlowResponse.Success success = 3;
+     */
+    value: NextAuthFlowResponse_Success;
+    case: "success";
+  } | {
+    /**
+     * Set when authentication has failed.
+     * Contains the reason for the failure.
+     *
+     * @generated from field: soulfire.v1.NextAuthFlowResponse.Failure failure = 4;
+     */
+    value: NextAuthFlowResponse_Failure;
+    case: "failure";
+  } | { case: undefined; value?: undefined };
+};
+```
+
+**Referenced types:** [`EmailCodeRequest`](/docs/sdk/api/ts/generated-soulfire-login-pb#emailcoderequest), [`NextAuthFlowResponse_EmailCode`](/docs/sdk/api/ts/generated-soulfire-login-pb#nextauthflowresponse_emailcode), [`NextAuthFlowResponse_Success`](/docs/sdk/api/ts/generated-soulfire-login-pb#nextauthflowresponse_success), [`NextAuthFlowResponse_Failure`](/docs/sdk/api/ts/generated-soulfire-login-pb#nextauthflowresponse_failure).
+
+## `authFlowToken`
+
+A unique token identifying this authentication flow session.
+This token must be included in subsequent requests (e.g., EmailCodeRequest) to continue the flow.
+The token is a UUID string and expires after 15 minutes of inactivity.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/login_pb.ts#L56)
+
+## `next`
+
+The next step in the authentication flow. Exactly one of these will be set.
+
+**Type:** `{ value: Message<"soulfire.v1.NextAuthFlowResponse.EmailCode">; case: "emailCode"; } | { value: NextAuthFlowResponse_Success; case: "success"; } | { value: NextAuthFlowResponse_Failure; case: "failure"; } | { case: undefined; value?: undefined; }` ([`NextAuthFlowResponse_Success`](/docs/sdk/api/ts/generated-soulfire-login-pb#nextauthflowresponse_success), [`NextAuthFlowResponse_Failure`](/docs/sdk/api/ts/generated-soulfire-login-pb#nextauthflowresponse_failure)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/login_pb.ts#L63)

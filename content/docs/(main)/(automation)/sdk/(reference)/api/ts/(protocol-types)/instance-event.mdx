@@ -1,0 +1,86 @@
+---
+title: "InstanceEvent"
+description: "TypeScript API signatures, fields, and source for InstanceEvent."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/instance_live_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/instance_live_pb.ts#L97).
+
+A single event on the instance-wide stream, tagged with the bot that
+produced it.
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/instance_live_pb`.
+
+```ts
+type InstanceEvent = Message<"soulfire.v1.InstanceEvent"> & {
+  /**
+   * Profile UUID of the bot that observed / produced this event.
+   *
+   * @generated from field: string bot_profile_id = 1;
+   */
+  botProfileId: string;
+
+  /**
+   * Last known account name of that bot, for convenient display. May be empty.
+   *
+   * @generated from field: string bot_name = 2;
+   */
+  botName: string;
+
+  /**
+   * @generated from oneof soulfire.v1.InstanceEvent.event
+   */
+  event: {
+    /**
+     * A chat or system message observed by the bot.
+     *
+     * @generated from field: soulfire.v1.BotChatEvent chat = 3;
+     */
+    value: BotChatEvent;
+    case: "chat";
+  } | {
+    /**
+     * A connection lifecycle change for the bot.
+     *
+     * @generated from field: soulfire.v1.BotLifecycleEvent lifecycle = 4;
+     */
+    value: BotLifecycleEvent;
+    case: "lifecycle";
+  } | {
+    /**
+     * Any bot event not represented by the legacy fields above. Chat and
+     * lifecycle continue to use their original variants for wire compatibility.
+     *
+     * @generated from field: soulfire.v1.BotEvent bot_event = 5;
+     */
+    value: BotEvent;
+    case: "botEvent";
+  } | { case: undefined; value?: undefined };
+};
+```
+
+**Referenced types:** [`BotChatEvent`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#botchatevent), [`BotLifecycleEvent`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#botlifecycleevent), [`BotEvent`](/docs/sdk/api/ts/bot-event).
+
+## `botProfileId`
+
+Profile UUID of the bot that observed / produced this event.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/instance_live_pb.ts#L103)
+
+## `botName`
+
+Last known account name of that bot, for convenient display. May be empty.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/instance_live_pb.ts#L110)
+
+## `event`
+
+**Type:** `{ value: BotChatEvent; case: "chat"; } | { value: BotLifecycleEvent; case: "lifecycle"; } | { value: BotEvent; case: "botEvent"; } | { case: undefined; value?: undefined; }` ([`BotChatEvent`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#botchatevent), [`BotLifecycleEvent`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#botlifecycleevent), [`BotEvent`](/docs/sdk/api/ts/bot-event)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/instance_live_pb.ts#L115)

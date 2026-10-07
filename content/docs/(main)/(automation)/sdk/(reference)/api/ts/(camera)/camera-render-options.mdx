@@ -1,0 +1,131 @@
+---
+title: "CameraRenderOptions"
+description: "TypeScript API signatures, fields, and source for CameraRenderOptions."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `camera`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/camera.ts#L22).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`.
+
+```ts
+type CameraRenderOptions = BotScoped<typeof BotRenderPovRequestSchema>;
+```
+
+**Referenced types:** [`BotScoped`](/docs/sdk/api/ts/bot-scoped), [`BotRenderPovRequestSchema`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botrenderpovrequestschema).
+
+## `width`
+
+Desired image width in pixels.
+Default: 854 (if 0 or not provided).
+Maximum: 1920 (values above this are clamped).
+Minimum: 1 (values below this are clamped).
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L812)
+
+## `height`
+
+Desired image height in pixels.
+Default: 480 (if 0 or not provided).
+Maximum: 1080 (values above this are clamped).
+Minimum: 1 (values below this are clamped).
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L822)
+
+## `maxDistance`
+
+Maximum render distance in blocks.
+Default: the bot's current render distance setting.
+Maximum: 2048 (values above this are clamped).
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L831)
+
+## `fov`
+
+Vertical field of view in degrees.
+Default: the renderer default FOV.
+Valid range: 1.0 to 179.0.
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L840)
+
+## `cameraX`
+
+Optional camera X coordinate.
+Defaults to the bot's current eye position.
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L848)
+
+## `cameraY`
+
+Optional camera Y coordinate.
+Defaults to the bot's current eye position.
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L856)
+
+## `cameraZ`
+
+Optional camera Z coordinate.
+Defaults to the bot's current eye position.
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L864)
+
+## `yRot`
+
+Optional yaw in degrees.
+Defaults to the bot's current yaw.
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L872)
+
+## `xRot`
+
+Optional pitch in degrees.
+Defaults to the bot's current pitch.
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L880)
+
+## `includeHud`
+
+Whether to render the HUD overlay.
+Default: true.
+
+**Type:** `boolean | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L888)
+
+## `includeHands`
+
+Whether to render first-person hands and held items.
+Default: true.
+
+**Type:** `boolean | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L896)
+
+## `includeDebugTrace`
+
+Whether to include renderer debug counters in the response.
+Default: false.
+
+**Type:** `boolean | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L904)

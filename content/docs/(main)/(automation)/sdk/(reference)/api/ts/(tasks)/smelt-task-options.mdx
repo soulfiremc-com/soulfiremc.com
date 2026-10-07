@@ -1,0 +1,91 @@
+---
+title: "SmeltTaskOptions"
+description: "TypeScript API signatures, fields, and source for SmeltTaskOptions."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Interface** in `tasks`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L733).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`.
+
+**Bases:** [`TaskStartOptions`](/docs/sdk/api/ts/task-start-options).
+
+```ts
+interface SmeltTaskOptions extends TaskStartOptions
+```
+
+**Referenced types:** [`TaskStartOptions`](/docs/sdk/api/ts/task-start-options).
+
+## `fuel`
+
+Limits the fuel, which defaults to any valid fuel.
+
+**Type:** `MessageInit<ItemSelector> | undefined` ([`ItemSelector`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#itemselector)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L737)
+
+## `station`
+
+The furnace to use; needed unless a furnace menu is already open.
+
+**Type:** `MessageInit<BlockPosition> | undefined` ([`BlockPosition`](/docs/sdk/api/ts/block-position)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L741)
+
+## `call`
+
+**Type:** `CallOptions | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L165)
+
+## `deadline`
+
+The task ends as TIMED_OUT at this time. Must be in the future.
+
+**Type:** `Date | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L169)
+
+## `conflictPolicy`
+
+**Type:** `BotTaskConflictPolicy | undefined` ([`BotTaskConflictPolicy`](/docs/sdk/api/ts/bot-task-conflict-policy)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L268)
+
+## `reconnectPolicy`
+
+**Type:** `BotTaskReconnectPolicy | undefined` ([`BotTaskReconnectPolicy`](/docs/sdk/api/ts/bot-task-reconnect-policy)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L273)
+
+## `disconnectPolicy`
+
+**Type:** `BotTaskDisconnectPolicy | undefined` ([`BotTaskDisconnectPolicy`](/docs/sdk/api/ts/bot-task-disconnect-policy)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L278)
+
+## `priority`
+
+**Type:** `BotTaskPriority | undefined` ([`BotTaskPriority`](/docs/sdk/api/ts/bot-task-priority)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L283)
+
+## `parentTaskId`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L293)
+
+## `causationId`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L298)
+
+## `idempotencyKey`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L303)

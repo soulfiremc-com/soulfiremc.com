@@ -1,0 +1,77 @@
+---
+title: "TaskStartOptions"
+description: "Python API signatures, fields, and source for TaskStartOptions."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Data model** in `tasks`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L115).
+
+**Import from:** `soulfire.tasks`.
+
+**Bases:** `TypedDict`.
+
+```python
+class TaskStartOptions(TypedDict)
+```
+
+## `conflict_policy`
+
+**Type:** `NotRequired[BotTaskConflictPolicy]` ([`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L116)
+
+## `reconnect_policy`
+
+**Type:** `NotRequired[BotTaskReconnectPolicy]` ([`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L117)
+
+## `disconnect_policy`
+
+**Type:** `NotRequired[BotTaskDisconnectPolicy]` ([`BotTaskDisconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskdisconnectpolicy)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L118)
+
+## `priority`
+
+**Type:** `NotRequired[BotTaskPriority]` ([`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L119)
+
+## `deadline`
+
+**Type:** `NotRequired[datetime | None]` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L120)
+
+## `parent_task_id`
+
+**Type:** `NotRequired[str | None]` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L121)
+
+## `causation_id`
+
+**Type:** `NotRequired[str | None]` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L122)
+
+## `idempotency_key`
+
+**Type:** `NotRequired[str | None]` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L123)
+
+## `headers`
+
+**Type:** `NotRequired[dict[str, str] | None]` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L124)
+
+## `timeout_ms`
+
+**Type:** `NotRequired[int | None]` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L125)

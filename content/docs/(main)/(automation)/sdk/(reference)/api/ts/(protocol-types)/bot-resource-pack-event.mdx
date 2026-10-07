@@ -1,0 +1,83 @@
+---
+title: "BotResourcePackEvent"
+description: "TypeScript API signatures, fields, and source for BotResourcePackEvent."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/bot_live_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L1115).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/bot_live_pb`.
+
+```ts
+type BotResourcePackEvent = Message<"soulfire.v1.BotResourcePackEvent"> & {
+  /**
+   * @generated from field: soulfire.v1.ResourcePackEventKind kind = 1;
+   */
+  kind: ResourcePackEventKind;
+
+  /**
+   * @generated from field: optional string pack_id = 2;
+   */
+  packId?: string | undefined;
+
+  /**
+   * @generated from field: optional string url = 3;
+   */
+  url?: string | undefined;
+
+  /**
+   * @generated from field: optional string hash = 4;
+   */
+  hash?: string | undefined;
+
+  /**
+   * @generated from field: optional bool required = 5;
+   */
+  required?: boolean | undefined;
+
+  /**
+   * @generated from field: optional soulfire.v1.TextComponent prompt = 6;
+   */
+  prompt?: TextComponent | undefined;
+};
+```
+
+**Referenced types:** [`ResourcePackEventKind`](/docs/sdk/api/ts/resource-pack-event-kind), [`TextComponent`](/docs/sdk/api/ts/text-component).
+
+## `kind`
+
+**Type:** [`ResourcePackEventKind`](/docs/sdk/api/ts/resource-pack-event-kind).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L1119)
+
+## `packId`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L1124)
+
+## `url`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L1129)
+
+## `hash`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L1134)
+
+## `required`
+
+**Type:** `boolean | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L1139)
+
+## `prompt`
+
+**Type:** `TextComponent | undefined` ([`TextComponent`](/docs/sdk/api/ts/text-component)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L1144)

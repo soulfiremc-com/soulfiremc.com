@@ -1,0 +1,127 @@
+---
+title: "RawPacketEvent"
+description: "TypeScript API signatures, fields, and source for RawPacketEvent."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/protocol_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/protocol_pb.ts#L226).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/protocol_pb`.
+
+```ts
+type RawPacketEvent = Message<"soulfire.v1.RawPacketEvent"> & {
+  /**
+   * @generated from field: uint64 sequence = 1;
+   */
+  sequence: bigint;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp observed_at = 2;
+   */
+  observedAt?: Timestamp | undefined;
+
+  /**
+   * @generated from field: soulfire.v1.PacketDirection direction = 3;
+   */
+  direction: PacketDirection;
+
+  /**
+   * @generated from field: string name = 4;
+   */
+  name: string;
+
+  /**
+   * @generated from field: uint32 network_id = 5;
+   */
+  networkId: number;
+
+  /**
+   * @generated from field: string protocol_state = 6;
+   */
+  protocolState: string;
+
+  /**
+   * @generated from field: string java_class_name = 7;
+   */
+  javaClassName: string;
+
+  /**
+   * @generated from field: bytes encoded_packet = 8;
+   */
+  encodedPacket: Uint8Array;
+
+  /**
+   * @generated from field: bool encoded_packet_truncated = 9;
+   */
+  encodedPacketTruncated: boolean;
+
+  /**
+   * @generated from field: uint64 dropped_before = 10;
+   */
+  droppedBefore: bigint;
+};
+```
+
+**Referenced types:** [`PacketDirection`](/docs/sdk/api/ts/packet-direction).
+
+## `sequence`
+
+**Type:** `bigint`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/protocol_pb.ts#L230)
+
+## `observedAt`
+
+**Type:** `Timestamp | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/protocol_pb.ts#L235)
+
+## `direction`
+
+**Type:** [`PacketDirection`](/docs/sdk/api/ts/packet-direction).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/protocol_pb.ts#L240)
+
+## `name`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/protocol_pb.ts#L245)
+
+## `networkId`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/protocol_pb.ts#L250)
+
+## `protocolState`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/protocol_pb.ts#L255)
+
+## `javaClassName`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/protocol_pb.ts#L260)
+
+## `encodedPacket`
+
+**Type:** `Uint8Array<ArrayBufferLike>`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/protocol_pb.ts#L265)
+
+## `encodedPacketTruncated`
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/protocol_pb.ts#L270)
+
+## `droppedBefore`
+
+**Type:** `bigint`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/protocol_pb.ts#L275)

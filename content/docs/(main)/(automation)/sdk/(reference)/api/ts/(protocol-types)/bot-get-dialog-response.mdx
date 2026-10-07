@@ -1,0 +1,36 @@
+---
+title: "BotGetDialogResponse"
+description: "TypeScript API signatures, fields, and source for BotGetDialogResponse."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/bot_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L3645).
+
+Response containing the current dialog state.
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/bot_pb`.
+
+```ts
+type BotGetDialogResponse = Message<"soulfire.v1.BotGetDialogResponse"> & {
+  /**
+   * The currently displayed dialog.
+   * Absent if no dialog is being shown.
+   *
+   * @generated from field: optional soulfire.v1.ServerDialog dialog = 1;
+   */
+  dialog?: ServerDialog | undefined;
+};
+```
+
+**Referenced types:** [`ServerDialog`](/docs/sdk/api/ts/generated-soulfire-bot-pb#serverdialog).
+
+## `dialog`
+
+The currently displayed dialog.
+Absent if no dialog is being shown.
+
+**Type:** `ServerDialog | undefined` ([`ServerDialog`](/docs/sdk/api/ts/generated-soulfire-bot-pb#serverdialog)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L3652)

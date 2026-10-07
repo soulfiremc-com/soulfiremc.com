@@ -1,0 +1,1116 @@
+---
+title: "script_connect module"
+description: "Python API signatures, fields, and source for script_connect module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`ScriptService`](/docs/sdk/api/py/generated-script-connect#scriptservice) | class |
+| [`ScriptServiceASGIApplication`](/docs/sdk/api/py/generated-script-connect#scriptserviceasgiapplication) | class |
+| [`ScriptServiceClient`](/docs/sdk/api/py/generated-script-connect#scriptserviceclient) | class |
+| [`ScriptServiceClientSync`](/docs/sdk/api/py/generated-script-connect#scriptserviceclientsync) | class |
+| [`ScriptServiceSync`](/docs/sdk/api/py/generated-script-connect#scriptservicesync) | class |
+| [`ScriptServiceWSGIApplication`](/docs/sdk/api/py/generated-script-connect#scriptservicewsgiapplication) | class |
+
+## ScriptService
+
+**Class** in `script_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L37).
+
+**Import from:** `soulfire.script_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class ScriptService(Protocol)
+```
+
+### `create_script`
+
+```python
+async def create_script(self, request: CreateScriptRequest, ctx: RequestContext[CreateScriptRequest, CreateScriptResponse]) -> CreateScriptResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`CreateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#createscriptrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[CreateScriptRequest, CreateScriptResponse]` ([`CreateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#createscriptrequest), [`CreateScriptResponse`](/docs/sdk/api/py/generated-script-pb2#createscriptresponse)) | Required | positional or keyword |
+
+**Returns:** [`CreateScriptResponse`](/docs/sdk/api/py/generated-script-pb2#createscriptresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L38)
+
+### `get_script`
+
+```python
+async def get_script(self, request: GetScriptRequest, ctx: RequestContext[GetScriptRequest, GetScriptResponse]) -> GetScriptResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetScriptRequest`](/docs/sdk/api/py/generated-script-pb2#getscriptrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[GetScriptRequest, GetScriptResponse]` ([`GetScriptRequest`](/docs/sdk/api/py/generated-script-pb2#getscriptrequest), [`GetScriptResponse`](/docs/sdk/api/py/generated-script-pb2#getscriptresponse)) | Required | positional or keyword |
+
+**Returns:** [`GetScriptResponse`](/docs/sdk/api/py/generated-script-pb2#getscriptresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L41)
+
+### `update_script`
+
+```python
+async def update_script(self, request: UpdateScriptRequest, ctx: RequestContext[UpdateScriptRequest, UpdateScriptResponse]) -> UpdateScriptResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`UpdateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#updatescriptrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[UpdateScriptRequest, UpdateScriptResponse]` ([`UpdateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#updatescriptrequest), [`UpdateScriptResponse`](/docs/sdk/api/py/generated-script-pb2#updatescriptresponse)) | Required | positional or keyword |
+
+**Returns:** [`UpdateScriptResponse`](/docs/sdk/api/py/generated-script-pb2#updatescriptresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L44)
+
+### `delete_script`
+
+```python
+async def delete_script(self, request: DeleteScriptRequest, ctx: RequestContext[DeleteScriptRequest, DeleteScriptResponse]) -> DeleteScriptResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`DeleteScriptRequest`](/docs/sdk/api/py/generated-script-pb2#deletescriptrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[DeleteScriptRequest, DeleteScriptResponse]` ([`DeleteScriptRequest`](/docs/sdk/api/py/generated-script-pb2#deletescriptrequest), [`DeleteScriptResponse`](/docs/sdk/api/py/generated-script-pb2#deletescriptresponse)) | Required | positional or keyword |
+
+**Returns:** [`DeleteScriptResponse`](/docs/sdk/api/py/generated-script-pb2#deletescriptresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L47)
+
+### `list_scripts`
+
+```python
+async def list_scripts(self, request: ListScriptsRequest, ctx: RequestContext[ListScriptsRequest, ListScriptsResponse]) -> ListScriptsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ListScriptsRequest`](/docs/sdk/api/py/generated-script-pb2#listscriptsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[ListScriptsRequest, ListScriptsResponse]` ([`ListScriptsRequest`](/docs/sdk/api/py/generated-script-pb2#listscriptsrequest), [`ListScriptsResponse`](/docs/sdk/api/py/generated-script-pb2#listscriptsresponse)) | Required | positional or keyword |
+
+**Returns:** [`ListScriptsResponse`](/docs/sdk/api/py/generated-script-pb2#listscriptsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L50)
+
+### `activate_script`
+
+```python
+def activate_script(self, request: ActivateScriptRequest, ctx: RequestContext[ActivateScriptRequest, ScriptEvent]) -> AsyncIterator[ScriptEvent]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ActivateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#activatescriptrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[ActivateScriptRequest, ScriptEvent]` ([`ActivateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#activatescriptrequest), [`ScriptEvent`](/docs/sdk/api/py/generated-script-pb2#scriptevent)) | Required | positional or keyword |
+
+**Returns:** `AsyncIterator[ScriptEvent]` ([`ScriptEvent`](/docs/sdk/api/py/generated-script-pb2#scriptevent)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L53)
+
+### `deactivate_script`
+
+```python
+async def deactivate_script(self, request: DeactivateScriptRequest, ctx: RequestContext[DeactivateScriptRequest, DeactivateScriptResponse]) -> DeactivateScriptResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`DeactivateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#deactivatescriptrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[DeactivateScriptRequest, DeactivateScriptResponse]` ([`DeactivateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#deactivatescriptrequest), [`DeactivateScriptResponse`](/docs/sdk/api/py/generated-script-pb2#deactivatescriptresponse)) | Required | positional or keyword |
+
+**Returns:** [`DeactivateScriptResponse`](/docs/sdk/api/py/generated-script-pb2#deactivatescriptresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L56)
+
+### `get_script_status`
+
+```python
+async def get_script_status(self, request: GetScriptStatusRequest, ctx: RequestContext[GetScriptStatusRequest, GetScriptStatusResponse]) -> GetScriptStatusResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetScriptStatusRequest`](/docs/sdk/api/py/generated-script-pb2#getscriptstatusrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[GetScriptStatusRequest, GetScriptStatusResponse]` ([`GetScriptStatusRequest`](/docs/sdk/api/py/generated-script-pb2#getscriptstatusrequest), [`GetScriptStatusResponse`](/docs/sdk/api/py/generated-script-pb2#getscriptstatusresponse)) | Required | positional or keyword |
+
+**Returns:** [`GetScriptStatusResponse`](/docs/sdk/api/py/generated-script-pb2#getscriptstatusresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L59)
+
+### `subscribe_script_logs`
+
+```python
+def subscribe_script_logs(self, request: SubscribeScriptLogsRequest, ctx: RequestContext[SubscribeScriptLogsRequest, ScriptLogEntry]) -> AsyncIterator[ScriptLogEntry]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`SubscribeScriptLogsRequest`](/docs/sdk/api/py/generated-script-pb2#subscribescriptlogsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[SubscribeScriptLogsRequest, ScriptLogEntry]` ([`SubscribeScriptLogsRequest`](/docs/sdk/api/py/generated-script-pb2#subscribescriptlogsrequest), [`ScriptLogEntry`](/docs/sdk/api/py/generated-script-pb2#scriptlogentry)) | Required | positional or keyword |
+
+**Returns:** `AsyncIterator[ScriptLogEntry]` ([`ScriptLogEntry`](/docs/sdk/api/py/generated-script-pb2#scriptlogentry)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L62)
+
+### `get_node_types`
+
+```python
+async def get_node_types(self, request: GetNodeTypesRequest, ctx: RequestContext[GetNodeTypesRequest, GetNodeTypesResponse]) -> GetNodeTypesResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetNodeTypesRequest`](/docs/sdk/api/py/generated-script-pb2#getnodetypesrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[GetNodeTypesRequest, GetNodeTypesResponse]` ([`GetNodeTypesRequest`](/docs/sdk/api/py/generated-script-pb2#getnodetypesrequest), [`GetNodeTypesResponse`](/docs/sdk/api/py/generated-script-pb2#getnodetypesresponse)) | Required | positional or keyword |
+
+**Returns:** [`GetNodeTypesResponse`](/docs/sdk/api/py/generated-script-pb2#getnodetypesresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L65)
+
+### `get_registry_data`
+
+```python
+async def get_registry_data(self, request: GetRegistryDataRequest, ctx: RequestContext[GetRegistryDataRequest, GetRegistryDataResponse]) -> GetRegistryDataResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetRegistryDataRequest`](/docs/sdk/api/py/generated-script-pb2#getregistrydatarequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[GetRegistryDataRequest, GetRegistryDataResponse]` ([`GetRegistryDataRequest`](/docs/sdk/api/py/generated-script-pb2#getregistrydatarequest), [`GetRegistryDataResponse`](/docs/sdk/api/py/generated-script-pb2#getregistrydataresponse)) | Required | positional or keyword |
+
+**Returns:** [`GetRegistryDataResponse`](/docs/sdk/api/py/generated-script-pb2#getregistrydataresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L68)
+
+### `validate_script`
+
+```python
+async def validate_script(self, request: ValidateScriptRequest, ctx: RequestContext[ValidateScriptRequest, ValidateScriptResponse]) -> ValidateScriptResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ValidateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#validatescriptrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[ValidateScriptRequest, ValidateScriptResponse]` ([`ValidateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#validatescriptrequest), [`ValidateScriptResponse`](/docs/sdk/api/py/generated-script-pb2#validatescriptresponse)) | Required | positional or keyword |
+
+**Returns:** [`ValidateScriptResponse`](/docs/sdk/api/py/generated-script-pb2#validatescriptresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L71)
+
+### `dry_run_script`
+
+```python
+def dry_run_script(self, request: DryRunScriptRequest, ctx: RequestContext[DryRunScriptRequest, ScriptEvent]) -> AsyncIterator[ScriptEvent]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`DryRunScriptRequest`](/docs/sdk/api/py/generated-script-pb2#dryrunscriptrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[DryRunScriptRequest, ScriptEvent]` ([`DryRunScriptRequest`](/docs/sdk/api/py/generated-script-pb2#dryrunscriptrequest), [`ScriptEvent`](/docs/sdk/api/py/generated-script-pb2#scriptevent)) | Required | positional or keyword |
+
+**Returns:** `AsyncIterator[ScriptEvent]` ([`ScriptEvent`](/docs/sdk/api/py/generated-script-pb2#scriptevent)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L74)
+
+## ScriptServiceASGIApplication
+
+**Class** in `script_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L78).
+
+**Import from:** `soulfire.script_connect`.
+
+**Bases:** `ConnectASGIApplication[ScriptService]` ([`ScriptService`](/docs/sdk/api/py/generated-script-connect#scriptservice)).
+
+```python
+class ScriptServiceASGIApplication(ConnectASGIApplication[ScriptService])
+```
+
+**Referenced types:** [`ScriptService`](/docs/sdk/api/py/generated-script-connect#scriptservice).
+
+### `__init__`
+
+```python
+def __init__(self, service: ScriptService | AsyncGenerator[ScriptService], *, interceptors: Iterable[Interceptor]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | `ScriptService \| AsyncGenerator[ScriptService]` ([`ScriptService`](/docs/sdk/api/py/generated-script-connect#scriptservice)) | Required | positional or keyword |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `compressions` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L79)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L229)
+
+## ScriptServiceClient
+
+**Class** in `script_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L234).
+
+**Import from:** `soulfire.script_connect`.
+
+**Bases:** `ConnectClient`.
+
+```python
+class ScriptServiceClient(ConnectClient)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[Interceptor]=(), http_client: Client | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `http_client` | `Client \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L235)
+
+### `create_script`
+
+```python
+async def create_script(self, request: CreateScriptRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> CreateScriptResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`CreateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#createscriptrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`CreateScriptResponse`](/docs/sdk/api/py/generated-script-pb2#createscriptresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L259)
+
+### `get_script`
+
+```python
+async def get_script(self, request: GetScriptRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> GetScriptResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetScriptRequest`](/docs/sdk/api/py/generated-script-pb2#getscriptrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`GetScriptResponse`](/docs/sdk/api/py/generated-script-pb2#getscriptresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L279)
+
+### `update_script`
+
+```python
+async def update_script(self, request: UpdateScriptRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> UpdateScriptResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`UpdateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#updatescriptrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`UpdateScriptResponse`](/docs/sdk/api/py/generated-script-pb2#updatescriptresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L299)
+
+### `delete_script`
+
+```python
+async def delete_script(self, request: DeleteScriptRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> DeleteScriptResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`DeleteScriptRequest`](/docs/sdk/api/py/generated-script-pb2#deletescriptrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`DeleteScriptResponse`](/docs/sdk/api/py/generated-script-pb2#deletescriptresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L319)
+
+### `list_scripts`
+
+```python
+async def list_scripts(self, request: ListScriptsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> ListScriptsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ListScriptsRequest`](/docs/sdk/api/py/generated-script-pb2#listscriptsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`ListScriptsResponse`](/docs/sdk/api/py/generated-script-pb2#listscriptsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L339)
+
+### `activate_script`
+
+```python
+def activate_script(self, request: ActivateScriptRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> AsyncIterator[ScriptEvent]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ActivateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#activatescriptrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `AsyncIterator[ScriptEvent]` ([`ScriptEvent`](/docs/sdk/api/py/generated-script-pb2#scriptevent)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L359)
+
+### `deactivate_script`
+
+```python
+async def deactivate_script(self, request: DeactivateScriptRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> DeactivateScriptResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`DeactivateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#deactivatescriptrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`DeactivateScriptResponse`](/docs/sdk/api/py/generated-script-pb2#deactivatescriptresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L379)
+
+### `get_script_status`
+
+```python
+async def get_script_status(self, request: GetScriptStatusRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> GetScriptStatusResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetScriptStatusRequest`](/docs/sdk/api/py/generated-script-pb2#getscriptstatusrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`GetScriptStatusResponse`](/docs/sdk/api/py/generated-script-pb2#getscriptstatusresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L399)
+
+### `subscribe_script_logs`
+
+```python
+def subscribe_script_logs(self, request: SubscribeScriptLogsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> AsyncIterator[ScriptLogEntry]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`SubscribeScriptLogsRequest`](/docs/sdk/api/py/generated-script-pb2#subscribescriptlogsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `AsyncIterator[ScriptLogEntry]` ([`ScriptLogEntry`](/docs/sdk/api/py/generated-script-pb2#scriptlogentry)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L419)
+
+### `get_node_types`
+
+```python
+async def get_node_types(self, request: GetNodeTypesRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> GetNodeTypesResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetNodeTypesRequest`](/docs/sdk/api/py/generated-script-pb2#getnodetypesrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`GetNodeTypesResponse`](/docs/sdk/api/py/generated-script-pb2#getnodetypesresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L439)
+
+### `get_registry_data`
+
+```python
+async def get_registry_data(self, request: GetRegistryDataRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> GetRegistryDataResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetRegistryDataRequest`](/docs/sdk/api/py/generated-script-pb2#getregistrydatarequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`GetRegistryDataResponse`](/docs/sdk/api/py/generated-script-pb2#getregistrydataresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L459)
+
+### `validate_script`
+
+```python
+async def validate_script(self, request: ValidateScriptRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> ValidateScriptResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ValidateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#validatescriptrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`ValidateScriptResponse`](/docs/sdk/api/py/generated-script-pb2#validatescriptresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L479)
+
+### `dry_run_script`
+
+```python
+def dry_run_script(self, request: DryRunScriptRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> AsyncIterator[ScriptEvent]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`DryRunScriptRequest`](/docs/sdk/api/py/generated-script-pb2#dryrunscriptrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `AsyncIterator[ScriptEvent]` ([`ScriptEvent`](/docs/sdk/api/py/generated-script-pb2#scriptevent)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L499)
+
+## ScriptServiceClientSync
+
+**Class** in `script_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L714).
+
+**Import from:** `soulfire.script_connect`.
+
+**Bases:** `ConnectClientSync`.
+
+```python
+class ScriptServiceClientSync(ConnectClientSync)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[InterceptorSync]=(), http_client: SyncClient | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | keyword only |
+| `http_client` | `SyncClient \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L715)
+
+### `create_script`
+
+```python
+def create_script(self, request: CreateScriptRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> CreateScriptResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`CreateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#createscriptrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`CreateScriptResponse`](/docs/sdk/api/py/generated-script-pb2#createscriptresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L739)
+
+### `get_script`
+
+```python
+def get_script(self, request: GetScriptRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> GetScriptResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetScriptRequest`](/docs/sdk/api/py/generated-script-pb2#getscriptrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`GetScriptResponse`](/docs/sdk/api/py/generated-script-pb2#getscriptresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L758)
+
+### `update_script`
+
+```python
+def update_script(self, request: UpdateScriptRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> UpdateScriptResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`UpdateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#updatescriptrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`UpdateScriptResponse`](/docs/sdk/api/py/generated-script-pb2#updatescriptresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L777)
+
+### `delete_script`
+
+```python
+def delete_script(self, request: DeleteScriptRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> DeleteScriptResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`DeleteScriptRequest`](/docs/sdk/api/py/generated-script-pb2#deletescriptrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`DeleteScriptResponse`](/docs/sdk/api/py/generated-script-pb2#deletescriptresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L796)
+
+### `list_scripts`
+
+```python
+def list_scripts(self, request: ListScriptsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> ListScriptsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ListScriptsRequest`](/docs/sdk/api/py/generated-script-pb2#listscriptsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`ListScriptsResponse`](/docs/sdk/api/py/generated-script-pb2#listscriptsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L815)
+
+### `activate_script`
+
+```python
+def activate_script(self, request: ActivateScriptRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> Iterator[ScriptEvent]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ActivateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#activatescriptrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Iterator[ScriptEvent]` ([`ScriptEvent`](/docs/sdk/api/py/generated-script-pb2#scriptevent)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L834)
+
+### `deactivate_script`
+
+```python
+def deactivate_script(self, request: DeactivateScriptRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> DeactivateScriptResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`DeactivateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#deactivatescriptrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`DeactivateScriptResponse`](/docs/sdk/api/py/generated-script-pb2#deactivatescriptresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L853)
+
+### `get_script_status`
+
+```python
+def get_script_status(self, request: GetScriptStatusRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> GetScriptStatusResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetScriptStatusRequest`](/docs/sdk/api/py/generated-script-pb2#getscriptstatusrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`GetScriptStatusResponse`](/docs/sdk/api/py/generated-script-pb2#getscriptstatusresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L872)
+
+### `subscribe_script_logs`
+
+```python
+def subscribe_script_logs(self, request: SubscribeScriptLogsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> Iterator[ScriptLogEntry]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`SubscribeScriptLogsRequest`](/docs/sdk/api/py/generated-script-pb2#subscribescriptlogsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Iterator[ScriptLogEntry]` ([`ScriptLogEntry`](/docs/sdk/api/py/generated-script-pb2#scriptlogentry)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L891)
+
+### `get_node_types`
+
+```python
+def get_node_types(self, request: GetNodeTypesRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> GetNodeTypesResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetNodeTypesRequest`](/docs/sdk/api/py/generated-script-pb2#getnodetypesrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`GetNodeTypesResponse`](/docs/sdk/api/py/generated-script-pb2#getnodetypesresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L910)
+
+### `get_registry_data`
+
+```python
+def get_registry_data(self, request: GetRegistryDataRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> GetRegistryDataResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetRegistryDataRequest`](/docs/sdk/api/py/generated-script-pb2#getregistrydatarequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`GetRegistryDataResponse`](/docs/sdk/api/py/generated-script-pb2#getregistrydataresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L929)
+
+### `validate_script`
+
+```python
+def validate_script(self, request: ValidateScriptRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> ValidateScriptResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ValidateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#validatescriptrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`ValidateScriptResponse`](/docs/sdk/api/py/generated-script-pb2#validatescriptresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L948)
+
+### `dry_run_script`
+
+```python
+def dry_run_script(self, request: DryRunScriptRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> Iterator[ScriptEvent]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`DryRunScriptRequest`](/docs/sdk/api/py/generated-script-pb2#dryrunscriptrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Iterator[ScriptEvent]` ([`ScriptEvent`](/docs/sdk/api/py/generated-script-pb2#scriptevent)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L967)
+
+## ScriptServiceSync
+
+**Class** in `script_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L519).
+
+**Import from:** `soulfire.script_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class ScriptServiceSync(Protocol)
+```
+
+### `create_script`
+
+```python
+def create_script(self, request: CreateScriptRequest, ctx: RequestContext[CreateScriptRequest, CreateScriptResponse]) -> CreateScriptResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`CreateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#createscriptrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[CreateScriptRequest, CreateScriptResponse]` ([`CreateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#createscriptrequest), [`CreateScriptResponse`](/docs/sdk/api/py/generated-script-pb2#createscriptresponse)) | Required | positional or keyword |
+
+**Returns:** [`CreateScriptResponse`](/docs/sdk/api/py/generated-script-pb2#createscriptresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L520)
+
+### `get_script`
+
+```python
+def get_script(self, request: GetScriptRequest, ctx: RequestContext[GetScriptRequest, GetScriptResponse]) -> GetScriptResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetScriptRequest`](/docs/sdk/api/py/generated-script-pb2#getscriptrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[GetScriptRequest, GetScriptResponse]` ([`GetScriptRequest`](/docs/sdk/api/py/generated-script-pb2#getscriptrequest), [`GetScriptResponse`](/docs/sdk/api/py/generated-script-pb2#getscriptresponse)) | Required | positional or keyword |
+
+**Returns:** [`GetScriptResponse`](/docs/sdk/api/py/generated-script-pb2#getscriptresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L523)
+
+### `update_script`
+
+```python
+def update_script(self, request: UpdateScriptRequest, ctx: RequestContext[UpdateScriptRequest, UpdateScriptResponse]) -> UpdateScriptResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`UpdateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#updatescriptrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[UpdateScriptRequest, UpdateScriptResponse]` ([`UpdateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#updatescriptrequest), [`UpdateScriptResponse`](/docs/sdk/api/py/generated-script-pb2#updatescriptresponse)) | Required | positional or keyword |
+
+**Returns:** [`UpdateScriptResponse`](/docs/sdk/api/py/generated-script-pb2#updatescriptresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L526)
+
+### `delete_script`
+
+```python
+def delete_script(self, request: DeleteScriptRequest, ctx: RequestContext[DeleteScriptRequest, DeleteScriptResponse]) -> DeleteScriptResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`DeleteScriptRequest`](/docs/sdk/api/py/generated-script-pb2#deletescriptrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[DeleteScriptRequest, DeleteScriptResponse]` ([`DeleteScriptRequest`](/docs/sdk/api/py/generated-script-pb2#deletescriptrequest), [`DeleteScriptResponse`](/docs/sdk/api/py/generated-script-pb2#deletescriptresponse)) | Required | positional or keyword |
+
+**Returns:** [`DeleteScriptResponse`](/docs/sdk/api/py/generated-script-pb2#deletescriptresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L529)
+
+### `list_scripts`
+
+```python
+def list_scripts(self, request: ListScriptsRequest, ctx: RequestContext[ListScriptsRequest, ListScriptsResponse]) -> ListScriptsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ListScriptsRequest`](/docs/sdk/api/py/generated-script-pb2#listscriptsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[ListScriptsRequest, ListScriptsResponse]` ([`ListScriptsRequest`](/docs/sdk/api/py/generated-script-pb2#listscriptsrequest), [`ListScriptsResponse`](/docs/sdk/api/py/generated-script-pb2#listscriptsresponse)) | Required | positional or keyword |
+
+**Returns:** [`ListScriptsResponse`](/docs/sdk/api/py/generated-script-pb2#listscriptsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L532)
+
+### `activate_script`
+
+```python
+def activate_script(self, request: ActivateScriptRequest, ctx: RequestContext[ActivateScriptRequest, ScriptEvent]) -> Iterator[ScriptEvent]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ActivateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#activatescriptrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[ActivateScriptRequest, ScriptEvent]` ([`ActivateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#activatescriptrequest), [`ScriptEvent`](/docs/sdk/api/py/generated-script-pb2#scriptevent)) | Required | positional or keyword |
+
+**Returns:** `Iterator[ScriptEvent]` ([`ScriptEvent`](/docs/sdk/api/py/generated-script-pb2#scriptevent)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L535)
+
+### `deactivate_script`
+
+```python
+def deactivate_script(self, request: DeactivateScriptRequest, ctx: RequestContext[DeactivateScriptRequest, DeactivateScriptResponse]) -> DeactivateScriptResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`DeactivateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#deactivatescriptrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[DeactivateScriptRequest, DeactivateScriptResponse]` ([`DeactivateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#deactivatescriptrequest), [`DeactivateScriptResponse`](/docs/sdk/api/py/generated-script-pb2#deactivatescriptresponse)) | Required | positional or keyword |
+
+**Returns:** [`DeactivateScriptResponse`](/docs/sdk/api/py/generated-script-pb2#deactivatescriptresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L538)
+
+### `get_script_status`
+
+```python
+def get_script_status(self, request: GetScriptStatusRequest, ctx: RequestContext[GetScriptStatusRequest, GetScriptStatusResponse]) -> GetScriptStatusResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetScriptStatusRequest`](/docs/sdk/api/py/generated-script-pb2#getscriptstatusrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[GetScriptStatusRequest, GetScriptStatusResponse]` ([`GetScriptStatusRequest`](/docs/sdk/api/py/generated-script-pb2#getscriptstatusrequest), [`GetScriptStatusResponse`](/docs/sdk/api/py/generated-script-pb2#getscriptstatusresponse)) | Required | positional or keyword |
+
+**Returns:** [`GetScriptStatusResponse`](/docs/sdk/api/py/generated-script-pb2#getscriptstatusresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L541)
+
+### `subscribe_script_logs`
+
+```python
+def subscribe_script_logs(self, request: SubscribeScriptLogsRequest, ctx: RequestContext[SubscribeScriptLogsRequest, ScriptLogEntry]) -> Iterator[ScriptLogEntry]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`SubscribeScriptLogsRequest`](/docs/sdk/api/py/generated-script-pb2#subscribescriptlogsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[SubscribeScriptLogsRequest, ScriptLogEntry]` ([`SubscribeScriptLogsRequest`](/docs/sdk/api/py/generated-script-pb2#subscribescriptlogsrequest), [`ScriptLogEntry`](/docs/sdk/api/py/generated-script-pb2#scriptlogentry)) | Required | positional or keyword |
+
+**Returns:** `Iterator[ScriptLogEntry]` ([`ScriptLogEntry`](/docs/sdk/api/py/generated-script-pb2#scriptlogentry)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L544)
+
+### `get_node_types`
+
+```python
+def get_node_types(self, request: GetNodeTypesRequest, ctx: RequestContext[GetNodeTypesRequest, GetNodeTypesResponse]) -> GetNodeTypesResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetNodeTypesRequest`](/docs/sdk/api/py/generated-script-pb2#getnodetypesrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[GetNodeTypesRequest, GetNodeTypesResponse]` ([`GetNodeTypesRequest`](/docs/sdk/api/py/generated-script-pb2#getnodetypesrequest), [`GetNodeTypesResponse`](/docs/sdk/api/py/generated-script-pb2#getnodetypesresponse)) | Required | positional or keyword |
+
+**Returns:** [`GetNodeTypesResponse`](/docs/sdk/api/py/generated-script-pb2#getnodetypesresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L547)
+
+### `get_registry_data`
+
+```python
+def get_registry_data(self, request: GetRegistryDataRequest, ctx: RequestContext[GetRegistryDataRequest, GetRegistryDataResponse]) -> GetRegistryDataResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetRegistryDataRequest`](/docs/sdk/api/py/generated-script-pb2#getregistrydatarequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[GetRegistryDataRequest, GetRegistryDataResponse]` ([`GetRegistryDataRequest`](/docs/sdk/api/py/generated-script-pb2#getregistrydatarequest), [`GetRegistryDataResponse`](/docs/sdk/api/py/generated-script-pb2#getregistrydataresponse)) | Required | positional or keyword |
+
+**Returns:** [`GetRegistryDataResponse`](/docs/sdk/api/py/generated-script-pb2#getregistrydataresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L550)
+
+### `validate_script`
+
+```python
+def validate_script(self, request: ValidateScriptRequest, ctx: RequestContext[ValidateScriptRequest, ValidateScriptResponse]) -> ValidateScriptResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ValidateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#validatescriptrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[ValidateScriptRequest, ValidateScriptResponse]` ([`ValidateScriptRequest`](/docs/sdk/api/py/generated-script-pb2#validatescriptrequest), [`ValidateScriptResponse`](/docs/sdk/api/py/generated-script-pb2#validatescriptresponse)) | Required | positional or keyword |
+
+**Returns:** [`ValidateScriptResponse`](/docs/sdk/api/py/generated-script-pb2#validatescriptresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L553)
+
+### `dry_run_script`
+
+```python
+def dry_run_script(self, request: DryRunScriptRequest, ctx: RequestContext[DryRunScriptRequest, ScriptEvent]) -> Iterator[ScriptEvent]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`DryRunScriptRequest`](/docs/sdk/api/py/generated-script-pb2#dryrunscriptrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[DryRunScriptRequest, ScriptEvent]` ([`DryRunScriptRequest`](/docs/sdk/api/py/generated-script-pb2#dryrunscriptrequest), [`ScriptEvent`](/docs/sdk/api/py/generated-script-pb2#scriptevent)) | Required | positional or keyword |
+
+**Returns:** `Iterator[ScriptEvent]` ([`ScriptEvent`](/docs/sdk/api/py/generated-script-pb2#scriptevent)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L556)
+
+## ScriptServiceWSGIApplication
+
+**Class** in `script_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L560).
+
+**Import from:** `soulfire.script_connect`.
+
+**Bases:** `ConnectWSGIApplication`.
+
+```python
+class ScriptServiceWSGIApplication(ConnectWSGIApplication)
+```
+
+### `__init__`
+
+```python
+def __init__(self, service: ScriptServiceSync, interceptors: Iterable[InterceptorSync]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | [`ScriptServiceSync`](/docs/sdk/api/py/generated-script-connect#scriptservicesync) | Required | positional or keyword |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | positional or keyword |
+| `read_max_bytes` | `int \| None` | `None` | positional or keyword |
+| `compressions` | `Iterable[Compression] \| None` | `None` | positional or keyword |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L561)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/script_connect.py#L709)

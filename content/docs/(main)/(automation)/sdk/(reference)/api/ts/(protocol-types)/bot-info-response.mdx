@@ -1,0 +1,70 @@
+---
+title: "BotInfoResponse"
+description: "TypeScript API signatures, fields, and source for BotInfoResponse."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/bot_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L681).
+
+Response containing detailed information about a specific bot.
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/bot_pb`.
+
+```ts
+type BotInfoResponse = Message<"soulfire.v1.BotInfoResponse"> & {
+  /**
+   * Live state of the bot including full inventory data.
+   * Will be absent if the bot is offline or player data is not available.
+   * When present, includes complete inventory slot information.
+   *
+   * @generated from field: optional soulfire.v1.BotLiveState live_state = 2;
+   */
+  liveState?: BotLiveState | undefined;
+
+  /**
+   * Persistent desired state and current controller state.
+   *
+   * @generated from field: soulfire.v1.BotStatus status = 3;
+   */
+  status?: BotStatus | undefined;
+
+  /**
+   * Actual connection metadata, including during login before player data is available.
+   * Absent when there is no active connection, or when returned by an older server.
+   *
+   * @generated from field: optional soulfire.v1.BotConnectionInfo connection = 4;
+   */
+  connection?: BotConnectionInfo | undefined;
+};
+```
+
+**Referenced types:** [`BotLiveState`](/docs/sdk/api/ts/bot-live-state), [`BotStatus`](/docs/sdk/api/ts/bot-status), [`BotConnectionInfo`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botconnectioninfo).
+
+## `liveState`
+
+Live state of the bot including full inventory data.
+Will be absent if the bot is offline or player data is not available.
+When present, includes complete inventory slot information.
+
+**Type:** `BotLiveState | undefined` ([`BotLiveState`](/docs/sdk/api/ts/bot-live-state)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L689)
+
+## `status`
+
+Persistent desired state and current controller state.
+
+**Type:** `BotStatus | undefined` ([`BotStatus`](/docs/sdk/api/ts/bot-status)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L696)
+
+## `connection`
+
+Actual connection metadata, including during login before player data is available.
+Absent when there is no active connection, or when returned by an older server.
+
+**Type:** `BotConnectionInfo | undefined` ([`BotConnectionInfo`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botconnectioninfo)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_pb.ts#L704)

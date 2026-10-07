@@ -1,0 +1,78 @@
+---
+title: "BlockPosition"
+description: "TypeScript API signatures, fields, and source for BlockPosition."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/common_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/common_pb.ts#L30).
+
+A block position in a specific dimension. Coordinates are Minecraft block
+integers, not chunk-relative.
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/common_pb`.
+
+```ts
+type BlockPosition = Message<"soulfire.v1.BlockPosition"> & {
+  /**
+   * Block X coordinate. East is positive.
+   *
+   * @generated from field: int32 x = 1;
+   */
+  x: number;
+
+  /**
+   * Block Y coordinate. Vertical axis.
+   *
+   * @generated from field: int32 y = 2;
+   */
+  y: number;
+
+  /**
+   * Block Z coordinate. South is positive.
+   *
+   * @generated from field: int32 z = 3;
+   */
+  z: number;
+
+  /**
+   * Namespaced dimension id. If empty, APIs use the bot's current dimension.
+   *
+   * @generated from field: string dimension = 4;
+   */
+  dimension: string;
+};
+```
+
+## `x`
+
+Block X coordinate. East is positive.
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/common_pb.ts#L36)
+
+## `y`
+
+Block Y coordinate. Vertical axis.
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/common_pb.ts#L43)
+
+## `z`
+
+Block Z coordinate. South is positive.
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/common_pb.ts#L50)
+
+## `dimension`
+
+Namespaced dimension id. If empty, APIs use the bot's current dimension.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/common_pb.ts#L57)

@@ -1,0 +1,97 @@
+---
+title: "BotTitleEvent"
+description: "Python API signatures, fields, and source for BotTitleEvent."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `bot_live_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L637).
+
+**Import from:** `soulfire`, `soulfire.bot_live_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class BotTitleEvent(_message.Message)
+```
+
+## `KIND_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L639)
+
+## `TEXT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L640)
+
+## `FADE_IN_TICKS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L641)
+
+## `STAY_TICKS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L642)
+
+## `FADE_OUT_TICKS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L643)
+
+## `kind`
+
+**Type:** [`TitleEventKind`](/docs/sdk/api/py/title-event-kind).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L644)
+
+## `text`
+
+**Type:** [`_domain_pb2.TextComponent`](/docs/sdk/api/py/text-component).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L645)
+
+## `fade_in_ticks`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L646)
+
+## `stay_ticks`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L647)
+
+## `fade_out_ticks`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L648)
+
+## `__init__`
+
+```python
+def __init__(self, kind: _Optional[_Union[TitleEventKind, str]]=..., text: _Optional[_Union[_domain_pb2.TextComponent, _Mapping]]=..., fade_in_ticks: _Optional[int]=..., stay_ticks: _Optional[int]=..., fade_out_ticks: _Optional[int]=...) -> None
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `kind` | `_Optional[_Union[TitleEventKind, str]]` ([`TitleEventKind`](/docs/sdk/api/py/title-event-kind)) | `...` | positional or keyword |
+| `text` | `_Optional[_Union[_domain_pb2.TextComponent, _Mapping]]` ([`_domain_pb2.TextComponent`](/docs/sdk/api/py/text-component)) | `...` | positional or keyword |
+| `fade_in_ticks` | `_Optional[int]` | `...` | positional or keyword |
+| `stay_ticks` | `_Optional[int]` | `...` | positional or keyword |
+| `fade_out_ticks` | `_Optional[int]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L649)

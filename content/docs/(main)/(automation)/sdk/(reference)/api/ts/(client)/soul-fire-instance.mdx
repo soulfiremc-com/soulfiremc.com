@@ -1,0 +1,399 @@
+---
+title: "SoulFireInstance"
+description: "TypeScript API signatures, fields, and source for SoulFireInstance."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `client`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L608).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`.
+
+```ts
+class SoulFireInstance
+```
+
+## `constructor`
+
+```ts
+new SoulFireInstance(id: string, botClient: Client<GenService<{ setBotsDesiredState: { methodKind: "unary"; input: GenMessage<SetBotsDesiredStateRequest>; output: GenMessage<SetBotsDesiredStateResponse>; }; restartBots: { methodKind: "unary"; input: GenMessage<RestartBotsRequest>; output: GenMessage<RestartBotsResponse>; }; watchBotStatuses: { methodKind: "server_streaming"; input: GenMessage<WatchBotStatusesRequest>; output: GenMessage<WatchBotStatusesResponse>; }; getBotList: { methodKind: "unary"; input: GenMessage<BotListRequest>; output: GenMessage<BotListResponse>; }; getBotInfo: { methodKind: "unary"; input: GenMessage<BotInfoRequest>; output: GenMessage<BotInfoResponse>; }; updateBotConfigEntry: { methodKind: "unary"; input: GenMessage<BotUpdateConfigEntryRequest>; output: GenMessage<Message<"soulfire.v1.BotUpdateConfigEntryResponse">>; }; renderBotPov: { methodKind: "unary"; input: GenMessage<BotRenderPovRequest>; output: GenMessage<BotRenderPovResponse>; }; watchBotPov: { methodKind: "server_streaming"; input: GenMessage<BotWatchPovRequest>; output: GenMessage<BotPovFrame>; }; getBotWorldMap: { methodKind: "unary"; input: GenMessage<BotWorldMapRequest>; output: GenMessage<BotWorldMapResponse>; }; clickInventorySlot: { methodKind: "unary"; input: GenMessage<BotInventoryClickRequest>; output: GenMessage<BotInventoryClickResponse>; }; getInventoryState: { methodKind: "unary"; input: GenMessage<BotInventoryStateRequest>; output: GenMessage<BotInventoryStateResponse>; }; closeContainer: { methodKind: "unary"; input: GenMessage<BotCloseContainerRequest>; output: GenMessage<BotCloseContainerResponse>; }; openInventory: { methodKind: "unary"; input: GenMessage<BotOpenInventoryRequest>; output: GenMessage<BotOpenInventoryResponse>; }; mouseClick: { methodKind: "unary"; input: GenMessage<BotMouseClickRequest>; output: GenMessage<BotMouseClickResponse>; }; clickContainerButton: { methodKind: "unary"; input: GenMessage<BotContainerButtonClickRequest>; output: GenMessage<BotContainerButtonClickResponse>; }; setContainerText: { methodKind: "unary"; input: GenMessage<BotSetContainerTextRequest>; output: GenMessage<BotSetContainerTextResponse>; }; setHotbarSlot: { methodKind: "unary"; input: GenMessage<BotSetHotbarSlotRequest>; output: GenMessage<BotSetHotbarSlotResponse>; }; setMovementState: { methodKind: "unary"; input: GenMessage<BotSetMovementStateRequest>; output: GenMessage<BotSetMovementStateResponse>; }; resetMovement: { methodKind: "unary"; input: GenMessage<BotResetMovementRequest>; output: GenMessage<BotResetMovementResponse>; }; setRotation: { methodKind: "unary"; input: GenMessage<BotSetRotationRequest>; output: GenMessage<BotSetRotationResponse>; }; getDialog: { methodKind: "unary"; input: GenMessage<BotGetDialogRequest>; output: GenMessage<BotGetDialogResponse>; }; submitDialog: { methodKind: "unary"; input: GenMessage<BotSubmitDialogRequest>; output: GenMessage<BotSubmitDialogResponse>; }; clickDialogButton: { methodKind: "unary"; input: GenMessage<BotClickDialogButtonRequest>; output: GenMessage<BotClickDialogButtonResponse>; }; closeDialog: { methodKind: "unary"; input: GenMessage<BotCloseDialogRequest>; output: GenMessage<BotCloseDialogResponse>; }; }>>, botLiveClient: Client<GenService<{ watchBotEvents: { methodKind: "server_streaming"; input: GenMessage<WatchBotEventsRequest>; output: GenMessage<BotEvent>; }; sendChat: { methodKind: "unary"; input: GenMessage<SendChatRequest>; output: GenMessage<SendChatResponse>; }; getBlock: { methodKind: "unary"; input: GenMessage<GetBlockRequest>; output: GenMessage<GetBlockResponse>; }; findBlocks: { methodKind: "unary"; input: GenMessage<FindBlocksRequest>; output: GenMessage<FindBlocksResponse>; }; listNearbyEntities: { methodKind: "unary"; input: GenMessage<ListNearbyEntitiesRequest>; output: GenMessage<ListNearbyEntitiesResponse>; }; digBlock: { methodKind: "unary"; input: GenMessage<DigBlockRequest>; output: GenMessage<DigBlockResponse>; }; placeBlock: { methodKind: "unary"; input: GenMessage<PlaceBlockRequest>; output: GenMessage<PlaceBlockResponse>; }; interactBlock: { methodKind: "unary"; input: GenMessage<InteractBlockRequest>; output: GenMessage<InteractBlockResponse>; }; useItem: { methodKind: "unary"; input: GenMessage<UseItemRequest>; output: GenMessage<UseItemResponse>; }; releaseItem: { methodKind: "unary"; input: GenMessage<ReleaseItemRequest>; output: GenMessage<ReleaseItemResponse>; }; attackEntity: { methodKind: "unary"; input: GenMessage<AttackEntityRequest>; output: GenMessage<AttackEntityResponse>; }; interactEntity: { methodKind: "unary"; input: GenMessage<InteractEntityRequest>; output: GenMessage<InteractEntityResponse>; }; swingArm: { methodKind: "unary"; input: GenMessage<SwingArmRequest>; output: GenMessage<SwingArmResponse>; }; respawn: { methodKind: "unary"; input: GenMessage<RespawnRequest>; output: GenMessage<RespawnResponse>; }; sleep: { methodKind: "unary"; input: GenMessage<SleepRequest>; output: GenMessage<SleepResponse>; }; wake: { methodKind: "unary"; input: GenMessage<WakeRequest>; output: GenMessage<WakeResponse>; }; mountEntity: { methodKind: "unary"; input: GenMessage<MountEntityRequest>; output: GenMessage<MountEntityResponse>; }; dismount: { methodKind: "unary"; input: GenMessage<DismountRequest>; output: GenMessage<DismountResponse>; }; setVehicleControl: { methodKind: "unary"; input: GenMessage<SetVehicleControlRequest>; output: GenMessage<SetVehicleControlResponse>; }; updateSign: { methodKind: "unary"; input: GenMessage<UpdateSignRequest>; output: GenMessage<UpdateSignResponse>; }; writeBook: { methodKind: "unary"; input: GenMessage<WriteBookRequest>; output: GenMessage<WriteBookResponse>; }; respondResourcePack: { methodKind: "unary"; input: GenMessage<RespondResourcePackRequest>; output: GenMessage<RespondResourcePackResponse>; }; setFlying: { methodKind: "unary"; input: GenMessage<SetFlyingRequest>; output: GenMessage<SetFlyingResponse>; }; startElytraFlight: { methodKind: "unary"; input: GenMessage<StartElytraFlightRequest>; output: GenMessage<StartElytraFlightResponse>; }; setCreativeSlot: { methodKind: "unary"; input: GenMessage<SetCreativeSlotRequest>; output: GenMessage<SetCreativeSlotResponse>; }; waitForChunks: { methodKind: "unary"; input: GenMessage<WaitForChunksRequest>; output: GenMessage<WaitForChunksResponse>; }; goTo: { methodKind: "server_streaming"; input: GenMessage<GoToRequest>; output: GenMessage<PathfindProgress>; }; stopPathfinding: { methodKind: "unary"; input: GenMessage<StopPathfindingRequest>; output: GenMessage<Message<"soulfire.v1.StopPathfindingResponse">>; }; acquireBotControl: { methodKind: "unary"; input: GenMessage<AcquireBotControlRequest>; output: GenMessage<AcquireBotControlResponse>; }; renewBotControl: { methodKind: "unary"; input: GenMessage<RenewBotControlRequest>; output: GenMessage<RenewBotControlResponse>; }; releaseBotControl: { methodKind: "unary"; input: GenMessage<ReleaseBotControlRequest>; output: GenMessage<Message<"soulfire.v1.ReleaseBotControlResponse">>; }; }>>, instanceClient: Client<GenService<{ getOrCreateInstance: { methodKind: "unary"; input: GenMessage<InstanceGetOrCreateRequest>; output: GenMessage<InstanceGetOrCreateResponse>; }; getOrCreateBot: { methodKind: "unary"; input: GenMessage<InstanceGetOrCreateBotRequest>; output: GenMessage<InstanceGetOrCreateBotResponse>; }; createInstance: { methodKind: "unary"; input: GenMessage<InstanceCreateRequest>; output: GenMessage<InstanceCreateResponse>; }; deleteInstance: { methodKind: "unary"; input: GenMessage<InstanceDeleteRequest>; output: GenMessage<Message<"soulfire.v1.InstanceDeleteResponse">>; }; listInstances: { methodKind: "unary"; input: GenMessage<Message<"soulfire.v1.InstanceListRequest">>; output: GenMessage<InstanceListResponse>; }; getInstanceInfo: { methodKind: "unary"; input: GenMessage<InstanceInfoRequest>; output: GenMessage<InstanceInfoResponse>; }; updateInstanceMeta: { methodKind: "unary"; input: GenMessage<InstanceUpdateMetaRequest>; output: GenMessage<Message<"soulfire.v1.InstanceUpdateMetaResponse">>; }; updateInstanceConfig: { methodKind: "unary"; input: GenMessage<InstanceUpdateConfigRequest>; output: GenMessage<Message<"soulfire.v1.InstanceUpdateConfigResponse">>; }; updateInstanceConfigEntry: { methodKind: "unary"; input: GenMessage<InstanceUpdateConfigEntryRequest>; output: GenMessage<Message<"soulfire.v1.InstanceUpdateConfigEntryResponse">>; }; addInstanceAccount: { methodKind: "unary"; input: GenMessage<InstanceAddAccountRequest>; output: GenMessage<Message<"soulfire.v1.InstanceAddAccountResponse">>; }; removeInstanceAccount: { methodKind: "unary"; input: GenMessage<InstanceRemoveAccountRequest>; output: GenMessage<Message<"soulfire.v1.InstanceRemoveAccountResponse">>; }; updateInstanceAccount: { methodKind: "unary"; input: GenMessage<InstanceUpdateAccountRequest>; output: GenMessage<Message<"soulfire.v1.InstanceUpdateAccountResponse">>; }; addInstanceAccountsBatch: { methodKind: "unary"; input: GenMessage<InstanceAddAccountsBatchRequest>; output: GenMessage<Message<"soulfire.v1.InstanceAddAccountsBatchResponse">>; }; removeInstanceAccountsBatch: { methodKind: "unary"; input: GenMessage<InstanceRemoveAccountsBatchRequest>; output: GenMessage<Message<"soulfire.v1.InstanceRemoveAccountsBatchResponse">>; }; addInstanceProxy: { methodKind: "unary"; input: GenMessage<InstanceAddProxyRequest>; output: GenMessage<Message<"soulfire.v1.InstanceAddProxyResponse">>; }; removeInstanceProxy: { methodKind: "unary"; input: GenMessage<InstanceRemoveProxyRequest>; output: GenMessage<Message<"soulfire.v1.InstanceRemoveProxyResponse">>; }; updateInstanceProxy: { methodKind: "unary"; input: GenMessage<InstanceUpdateProxyRequest>; output: GenMessage<Message<"soulfire.v1.InstanceUpdateProxyResponse">>; }; addInstanceProxiesBatch: { methodKind: "unary"; input: GenMessage<InstanceAddProxiesBatchRequest>; output: GenMessage<Message<"soulfire.v1.InstanceAddProxiesBatchResponse">>; }; removeInstanceProxiesBatch: { methodKind: "unary"; input: GenMessage<InstanceRemoveProxiesBatchRequest>; output: GenMessage<Message<"soulfire.v1.InstanceRemoveProxiesBatchResponse">>; }; getAuditLog: { methodKind: "unary"; input: GenMessage<InstanceAuditLogRequest>; output: GenMessage<InstanceAuditLogResponse>; }; getAccountMetadata: { methodKind: "unary"; input: GenMessage<GetAccountMetadataRequest>; output: GenMessage<GetAccountMetadataResponse>; }; setAccountMetadataEntry: { methodKind: "unary"; input: GenMessage<SetAccountMetadataEntryRequest>; output: GenMessage<Message<"soulfire.v1.SetAccountMetadataEntryResponse">>; }; deleteAccountMetadataEntry: { methodKind: "unary"; input: GenMessage<DeleteAccountMetadataEntryRequest>; output: GenMessage<Message<"soulfire.v1.DeleteAccountMetadataEntryResponse">>; }; getInstanceMetadata: { methodKind: "unary"; input: GenMessage<GetInstanceMetadataRequest>; output: GenMessage<GetInstanceMetadataResponse>; }; setInstanceMetadataEntry: { methodKind: "unary"; input: GenMessage<SetInstanceMetadataEntryRequest>; output: GenMessage<Message<"soulfire.v1.SetInstanceMetadataEntryResponse">>; }; deleteInstanceMetadataEntry: { methodKind: "unary"; input: GenMessage<DeleteInstanceMetadataEntryRequest>; output: GenMessage<Message<"soulfire.v1.DeleteInstanceMetadataEntryResponse">>; }; }>>, mcAuthClient?: Client<GenService<{ loginCredentials: { methodKind: "server_streaming"; input: GenMessage<CredentialsAuthRequest>; output: GenMessage<CredentialsAuthResponse>; }; loginDeviceCode: { methodKind: "server_streaming"; input: GenMessage<DeviceCodeAuthRequest>; output: GenMessage<DeviceCodeAuthResponse>; }; refresh: { methodKind: "unary"; input: GenMessage<RefreshRequest>; output: GenMessage<RefreshResponse>; }; }>> | undefined, taskClient?: Client<GenService<{ startBotTask: { methodKind: "unary"; input: GenMessage<StartBotTaskRequest>; output: GenMessage<BotTask>; }; runBotTask: { methodKind: "server_streaming"; input: GenMessage<StartBotTaskRequest>; output: GenMessage<BotTaskEvent>; }; getBotTask: { methodKind: "unary"; input: GenMessage<GetBotTaskRequest>; output: GenMessage<BotTask>; }; listBotTasks: { methodKind: "unary"; input: GenMessage<ListBotTasksRequest>; output: GenMessage<ListBotTasksResponse>; }; watchBotTask: { methodKind: "server_streaming"; input: GenMessage<WatchBotTaskRequest>; output: GenMessage<BotTaskEvent>; }; watchBotTasks: { methodKind: "server_streaming"; input: GenMessage<WatchBotTasksRequest>; output: GenMessage<BotTaskEvent>; }; cancelBotTask: { methodKind: "unary"; input: GenMessage<CancelBotTaskRequest>; output: GenMessage<BotTask>; }; }>> | undefined, pathfinderClient?: Client<GenService<{ planPath: { methodKind: "unary"; input: GenMessage<PlanPathRequest>; output: GenMessage<PlanPathResponse>; }; }>> | undefined, chatClient?: Client<GenService<{ sendPublicChat: { methodKind: "unary"; input: GenMessage<SendPublicChatRequest>; output: GenMessage<ChatActionResponse>; }; sendCommand: { methodKind: "unary"; input: GenMessage<SendCommandRequest>; output: GenMessage<ChatActionResponse>; }; sendWhisper: { methodKind: "unary"; input: GenMessage<SendWhisperRequest>; output: GenMessage<ChatActionResponse>; }; tabComplete: { methodKind: "unary"; input: GenMessage<TabCompleteRequest>; output: GenMessage<TabCompleteResponse>; }; }>> | undefined, inventoryClient?: Client<GenService<{ getContainerSnapshot: { methodKind: "unary"; input: GenMessage<GetContainerSnapshotRequest>; output: GenMessage<GetContainerSnapshotResponse>; }; countItems: { methodKind: "unary"; input: GenMessage<CountItemsRequest>; output: GenMessage<CountItemsResponse>; }; findInventorySlots: { methodKind: "unary"; input: GenMessage<FindInventorySlotsRequest>; output: GenMessage<FindInventorySlotsResponse>; }; rankInventoryItems: { methodKind: "unary"; input: GenMessage<RankInventoryItemsRequest>; output: GenMessage<RankInventoryItemsResponse>; }; moveInventoryItem: { methodKind: "unary"; input: GenMessage<MoveInventoryItemRequest>; output: GenMessage<InventoryMutationResponse>; }; transferItems: { methodKind: "unary"; input: GenMessage<TransferItemsRequest>; output: GenMessage<InventoryMutationResponse>; }; tossItems: { methodKind: "unary"; input: GenMessage<TossItemsRequest>; output: GenMessage<InventoryMutationResponse>; }; selectHotbarItem: { methodKind: "unary"; input: GenMessage<SelectHotbarItemRequest>; output: GenMessage<InventoryMutationResponse>; }; equipItem: { methodKind: "unary"; input: GenMessage<EquipItemRequest>; output: GenMessage<InventoryMutationResponse>; }; unequipItem: { methodKind: "unary"; input: GenMessage<UnequipItemRequest>; output: GenMessage<InventoryMutationResponse>; }; openBlockContainer: { methodKind: "unary"; input: GenMessage<OpenBlockContainerRequest>; output: GenMessage<InventoryMutationResponse>; }; closeSemanticContainer: { methodKind: "unary"; input: GenMessage<CloseSemanticContainerRequest>; output: GenMessage<InventoryMutationResponse>; }; }>> | undefined, recipeClient?: Client<GenService<{ listRecipes: { methodKind: "unary"; input: GenMessage<ListRecipesRequest>; output: GenMessage<ListRecipesResponse>; }; canCraft: { methodKind: "unary"; input: GenMessage<CanCraftRequest>; output: GenMessage<CanCraftResponse>; }; listVillagerTrades: { methodKind: "unary"; input: GenMessage<ListVillagerTradesRequest>; output: GenMessage<ListVillagerTradesResponse>; }; }>> | undefined, registryClient?: Client<GenService<{ getRegistryIdentity: { methodKind: "unary"; input: GenMessage<GetRegistryIdentityRequest>; output: GenMessage<GetRegistryIdentityResponse>; }; listRegistryEntries: { methodKind: "unary"; input: GenMessage<ListRegistryEntriesRequest>; output: GenMessage<ListRegistryEntriesResponse>; }; getRegistryEntry: { methodKind: "unary"; input: GenMessage<GetRegistryEntryRequest>; output: GenMessage<GetRegistryEntryResponse>; }; listRegistryTags: { methodKind: "unary"; input: GenMessage<ListRegistryTagsRequest>; output: GenMessage<ListRegistryTagsResponse>; }; }>> | undefined, worldClient?: Client<GenService<{ getPlayerSnapshot: { methodKind: "unary"; input: GenMessage<GetPlayerSnapshotRequest>; output: GenMessage<GetPlayerSnapshotResponse>; }; getWorldBlock: { methodKind: "unary"; input: GenMessage<GetWorldBlockRequest>; output: GenMessage<GetWorldBlockResponse>; }; queryBlocks: { methodKind: "unary"; input: GenMessage<QueryBlocksRequest>; output: GenMessage<QueryBlocksResponse>; }; getWorldEntity: { methodKind: "unary"; input: GenMessage<GetWorldEntityRequest>; output: GenMessage<GetWorldEntityResponse>; }; queryEntities: { methodKind: "unary"; input: GenMessage<QueryEntitiesRequest>; output: GenMessage<QueryEntitiesResponse>; }; raycast: { methodKind: "unary"; input: GenMessage<RaycastRequest>; output: GenMessage<RaycastResponse>; }; canSeeBlock: { methodKind: "unary"; input: GenMessage<CanSeeBlockRequest>; output: GenMessage<CanSeeBlockResponse>; }; estimateDigTime: { methodKind: "unary"; input: GenMessage<EstimateDigTimeRequest>; output: GenMessage<EstimateDigTimeResponse>; }; estimateExplosionDamage: { methodKind: "unary"; input: GenMessage<EstimateExplosionDamageRequest>; output: GenMessage<EstimateExplosionDamageResponse>; }; }>> | undefined, protocolClient?: Client<GenService<{ getProtocolInfo: { methodKind: "unary"; input: GenMessage<BotProtocolRequest>; output: GenMessage<BotProtocolInfo>; }; listPacketSchemas: { methodKind: "unary"; input: GenMessage<ListPacketSchemasRequest>; output: GenMessage<ListPacketSchemasResponse>; }; watchPackets: { methodKind: "server_streaming"; input: GenMessage<WatchPacketsRequest>; output: GenMessage<RawPacketEvent>; }; sendRawPacket: { methodKind: "unary"; input: GenMessage<SendRawPacketRequest>; output: GenMessage<SendRawPacketResponse>; }; }>> | undefined, capabilities?: CapabilitySet | undefined, instanceLiveClient?: Client<GenService<{ watchInstanceEvents: { methodKind: "server_streaming"; input: GenMessage<WatchInstanceEventsRequest>; output: GenMessage<InstanceEvent>; }; }>> | undefined): SoulFireInstance
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `id` | `string` | Required |  |
+| `botClient` | `Client<GenService<{ setBotsDesiredState: { methodKind: "unary"; input: GenMessage<SetBotsDesiredStateRequest>; output: GenMessage<SetBotsDesiredStateResponse>; }; restartBots: { methodKind: "unary"; input: GenMessage<RestartBotsRequest>; output: GenMessage<RestartBotsResponse>; }; watchBotStatuses: { methodKind: "server_streaming"; input: GenMessage<WatchBotStatusesRequest>; output: GenMessage<WatchBotStatusesResponse>; }; getBotList: { methodKind: "unary"; input: GenMessage<BotListRequest>; output: GenMessage<BotListResponse>; }; getBotInfo: { methodKind: "unary"; input: GenMessage<BotInfoRequest>; output: GenMessage<BotInfoResponse>; }; updateBotConfigEntry: { methodKind: "unary"; input: GenMessage<BotUpdateConfigEntryRequest>; output: GenMessage<Message<"soulfire.v1.BotUpdateConfigEntryResponse">>; }; renderBotPov: { methodKind: "unary"; input: GenMessage<BotRenderPovRequest>; output: GenMessage<BotRenderPovResponse>; }; watchBotPov: { methodKind: "server_streaming"; input: GenMessage<BotWatchPovRequest>; output: GenMessage<BotPovFrame>; }; getBotWorldMap: { methodKind: "unary"; input: GenMessage<BotWorldMapRequest>; output: GenMessage<BotWorldMapResponse>; }; clickInventorySlot: { methodKind: "unary"; input: GenMessage<BotInventoryClickRequest>; output: GenMessage<BotInventoryClickResponse>; }; getInventoryState: { methodKind: "unary"; input: GenMessage<BotInventoryStateRequest>; output: GenMessage<BotInventoryStateResponse>; }; closeContainer: { methodKind: "unary"; input: GenMessage<BotCloseContainerRequest>; output: GenMessage<BotCloseContainerResponse>; }; openInventory: { methodKind: "unary"; input: GenMessage<BotOpenInventoryRequest>; output: GenMessage<BotOpenInventoryResponse>; }; mouseClick: { methodKind: "unary"; input: GenMessage<BotMouseClickRequest>; output: GenMessage<BotMouseClickResponse>; }; clickContainerButton: { methodKind: "unary"; input: GenMessage<BotContainerButtonClickRequest>; output: GenMessage<BotContainerButtonClickResponse>; }; setContainerText: { methodKind: "unary"; input: GenMessage<BotSetContainerTextRequest>; output: GenMessage<BotSetContainerTextResponse>; }; setHotbarSlot: { methodKind: "unary"; input: GenMessage<BotSetHotbarSlotRequest>; output: GenMessage<BotSetHotbarSlotResponse>; }; setMovementState: { methodKind: "unary"; input: GenMessage<BotSetMovementStateRequest>; output: GenMessage<BotSetMovementStateResponse>; }; resetMovement: { methodKind: "unary"; input: GenMessage<BotResetMovementRequest>; output: GenMessage<BotResetMovementResponse>; }; setRotation: { methodKind: "unary"; input: GenMessage<BotSetRotationRequest>; output: GenMessage<BotSetRotationResponse>; }; getDialog: { methodKind: "unary"; input: GenMessage<BotGetDialogRequest>; output: GenMessage<BotGetDialogResponse>; }; submitDialog: { methodKind: "unary"; input: GenMessage<BotSubmitDialogRequest>; output: GenMessage<BotSubmitDialogResponse>; }; clickDialogButton: { methodKind: "unary"; input: GenMessage<BotClickDialogButtonRequest>; output: GenMessage<BotClickDialogButtonResponse>; }; closeDialog: { methodKind: "unary"; input: GenMessage<BotCloseDialogRequest>; output: GenMessage<BotCloseDialogResponse>; }; }>>` ([`SetBotsDesiredStateRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#setbotsdesiredstaterequest), [`SetBotsDesiredStateResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#setbotsdesiredstateresponse), [`RestartBotsRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#restartbotsrequest), [`RestartBotsResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#restartbotsresponse), [`WatchBotStatusesRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#watchbotstatusesrequest), [`WatchBotStatusesResponse`](/docs/sdk/api/ts/watch-bot-statuses-response), [`BotListRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botlistrequest), [`BotListResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botlistresponse), [`BotInfoRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botinforequest), [`BotInfoResponse`](/docs/sdk/api/ts/bot-info-response), [`BotUpdateConfigEntryRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botupdateconfigentryrequest), [`BotRenderPovRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botrenderpovrequest), [`BotRenderPovResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botrenderpovresponse), [`BotWatchPovRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botwatchpovrequest), [`BotPovFrame`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botpovframe), [`BotWorldMapRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botworldmaprequest), [`BotWorldMapResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botworldmapresponse), [`BotInventoryClickRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botinventoryclickrequest), [`BotInventoryClickResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botinventoryclickresponse), [`BotInventoryStateRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botinventorystaterequest), [`BotInventoryStateResponse`](/docs/sdk/api/ts/bot-inventory-state-response), [`BotCloseContainerRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botclosecontainerrequest), [`BotCloseContainerResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botclosecontainerresponse), [`BotOpenInventoryRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botopeninventoryrequest), [`BotOpenInventoryResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botopeninventoryresponse), [`BotMouseClickRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botmouseclickrequest), [`BotMouseClickResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botmouseclickresponse), [`BotContainerButtonClickRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botcontainerbuttonclickrequest), [`BotContainerButtonClickResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botcontainerbuttonclickresponse), [`BotSetContainerTextRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botsetcontainertextrequest), [`BotSetContainerTextResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botsetcontainertextresponse), [`BotSetHotbarSlotRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botsethotbarslotrequest), [`BotSetHotbarSlotResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botsethotbarslotresponse), [`BotSetMovementStateRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botsetmovementstaterequest), [`BotSetMovementStateResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botsetmovementstateresponse), [`BotResetMovementRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botresetmovementrequest), [`BotResetMovementResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botresetmovementresponse), [`BotSetRotationRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botsetrotationrequest), [`BotSetRotationResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botsetrotationresponse), [`BotGetDialogRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botgetdialogrequest), [`BotGetDialogResponse`](/docs/sdk/api/ts/bot-get-dialog-response), [`BotSubmitDialogRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botsubmitdialogrequest), [`BotSubmitDialogResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botsubmitdialogresponse), [`BotClickDialogButtonRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botclickdialogbuttonrequest), [`BotClickDialogButtonResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botclickdialogbuttonresponse), [`BotCloseDialogRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botclosedialogrequest), [`BotCloseDialogResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botclosedialogresponse)) | Required |  |
+| `botLiveClient` | `Client<GenService<{ watchBotEvents: { methodKind: "server_streaming"; input: GenMessage<WatchBotEventsRequest>; output: GenMessage<BotEvent>; }; sendChat: { methodKind: "unary"; input: GenMessage<SendChatRequest>; output: GenMessage<SendChatResponse>; }; getBlock: { methodKind: "unary"; input: GenMessage<GetBlockRequest>; output: GenMessage<GetBlockResponse>; }; findBlocks: { methodKind: "unary"; input: GenMessage<FindBlocksRequest>; output: GenMessage<FindBlocksResponse>; }; listNearbyEntities: { methodKind: "unary"; input: GenMessage<ListNearbyEntitiesRequest>; output: GenMessage<ListNearbyEntitiesResponse>; }; digBlock: { methodKind: "unary"; input: GenMessage<DigBlockRequest>; output: GenMessage<DigBlockResponse>; }; placeBlock: { methodKind: "unary"; input: GenMessage<PlaceBlockRequest>; output: GenMessage<PlaceBlockResponse>; }; interactBlock: { methodKind: "unary"; input: GenMessage<InteractBlockRequest>; output: GenMessage<InteractBlockResponse>; }; useItem: { methodKind: "unary"; input: GenMessage<UseItemRequest>; output: GenMessage<UseItemResponse>; }; releaseItem: { methodKind: "unary"; input: GenMessage<ReleaseItemRequest>; output: GenMessage<ReleaseItemResponse>; }; attackEntity: { methodKind: "unary"; input: GenMessage<AttackEntityRequest>; output: GenMessage<AttackEntityResponse>; }; interactEntity: { methodKind: "unary"; input: GenMessage<InteractEntityRequest>; output: GenMessage<InteractEntityResponse>; }; swingArm: { methodKind: "unary"; input: GenMessage<SwingArmRequest>; output: GenMessage<SwingArmResponse>; }; respawn: { methodKind: "unary"; input: GenMessage<RespawnRequest>; output: GenMessage<RespawnResponse>; }; sleep: { methodKind: "unary"; input: GenMessage<SleepRequest>; output: GenMessage<SleepResponse>; }; wake: { methodKind: "unary"; input: GenMessage<WakeRequest>; output: GenMessage<WakeResponse>; }; mountEntity: { methodKind: "unary"; input: GenMessage<MountEntityRequest>; output: GenMessage<MountEntityResponse>; }; dismount: { methodKind: "unary"; input: GenMessage<DismountRequest>; output: GenMessage<DismountResponse>; }; setVehicleControl: { methodKind: "unary"; input: GenMessage<SetVehicleControlRequest>; output: GenMessage<SetVehicleControlResponse>; }; updateSign: { methodKind: "unary"; input: GenMessage<UpdateSignRequest>; output: GenMessage<UpdateSignResponse>; }; writeBook: { methodKind: "unary"; input: GenMessage<WriteBookRequest>; output: GenMessage<WriteBookResponse>; }; respondResourcePack: { methodKind: "unary"; input: GenMessage<RespondResourcePackRequest>; output: GenMessage<RespondResourcePackResponse>; }; setFlying: { methodKind: "unary"; input: GenMessage<SetFlyingRequest>; output: GenMessage<SetFlyingResponse>; }; startElytraFlight: { methodKind: "unary"; input: GenMessage<StartElytraFlightRequest>; output: GenMessage<StartElytraFlightResponse>; }; setCreativeSlot: { methodKind: "unary"; input: GenMessage<SetCreativeSlotRequest>; output: GenMessage<SetCreativeSlotResponse>; }; waitForChunks: { methodKind: "unary"; input: GenMessage<WaitForChunksRequest>; output: GenMessage<WaitForChunksResponse>; }; goTo: { methodKind: "server_streaming"; input: GenMessage<GoToRequest>; output: GenMessage<PathfindProgress>; }; stopPathfinding: { methodKind: "unary"; input: GenMessage<StopPathfindingRequest>; output: GenMessage<Message<"soulfire.v1.StopPathfindingResponse">>; }; acquireBotControl: { methodKind: "unary"; input: GenMessage<AcquireBotControlRequest>; output: GenMessage<AcquireBotControlResponse>; }; renewBotControl: { methodKind: "unary"; input: GenMessage<RenewBotControlRequest>; output: GenMessage<RenewBotControlResponse>; }; releaseBotControl: { methodKind: "unary"; input: GenMessage<ReleaseBotControlRequest>; output: GenMessage<Message<"soulfire.v1.ReleaseBotControlResponse">>; }; }>>` ([`WatchBotEventsRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#watchboteventsrequest), [`BotEvent`](/docs/sdk/api/ts/bot-event), [`SendChatRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#sendchatrequest), [`SendChatResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#sendchatresponse), [`GetBlockRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#getblockrequest), [`GetBlockResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#getblockresponse), [`FindBlocksRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#findblocksrequest), [`FindBlocksResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#findblocksresponse), [`ListNearbyEntitiesRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#listnearbyentitiesrequest), [`ListNearbyEntitiesResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#listnearbyentitiesresponse), [`DigBlockRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#digblockrequest), [`DigBlockResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#digblockresponse), [`PlaceBlockRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#placeblockrequest), [`PlaceBlockResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#placeblockresponse), [`InteractBlockRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#interactblockrequest), [`InteractBlockResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#interactblockresponse), [`UseItemRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#useitemrequest), [`UseItemResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#useitemresponse), [`ReleaseItemRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#releaseitemrequest), [`ReleaseItemResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#releaseitemresponse), [`AttackEntityRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#attackentityrequest), [`AttackEntityResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#attackentityresponse), [`InteractEntityRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#interactentityrequest), [`InteractEntityResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#interactentityresponse), [`SwingArmRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#swingarmrequest), [`SwingArmResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#swingarmresponse), [`RespawnRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#respawnrequest), [`RespawnResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#respawnresponse), [`SleepRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#sleeprequest), [`SleepResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#sleepresponse), [`WakeRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#wakerequest), [`WakeResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#wakeresponse), [`MountEntityRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#mountentityrequest), [`MountEntityResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#mountentityresponse), [`DismountRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#dismountrequest), [`DismountResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#dismountresponse), [`SetVehicleControlRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#setvehiclecontrolrequest), [`SetVehicleControlResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#setvehiclecontrolresponse), [`UpdateSignRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#updatesignrequest), [`UpdateSignResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#updatesignresponse), [`WriteBookRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#writebookrequest), [`WriteBookResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#writebookresponse), [`RespondResourcePackRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#respondresourcepackrequest), [`RespondResourcePackResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#respondresourcepackresponse), [`SetFlyingRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#setflyingrequest), [`SetFlyingResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#setflyingresponse), [`StartElytraFlightRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#startelytraflightrequest), [`StartElytraFlightResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#startelytraflightresponse), [`SetCreativeSlotRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#setcreativeslotrequest), [`SetCreativeSlotResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#setcreativeslotresponse), [`WaitForChunksRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#waitforchunksrequest), [`WaitForChunksResponse`](/docs/sdk/api/ts/wait-for-chunks-response), [`GoToRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#gotorequest), [`PathfindProgress`](/docs/sdk/api/ts/pathfind-progress), [`StopPathfindingRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#stoppathfindingrequest), [`AcquireBotControlRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#acquirebotcontrolrequest), [`AcquireBotControlResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#acquirebotcontrolresponse), [`RenewBotControlRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#renewbotcontrolrequest), [`RenewBotControlResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#renewbotcontrolresponse), [`ReleaseBotControlRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#releasebotcontrolrequest)) | Required |  |
+| `instanceClient` | `Client<GenService<{ getOrCreateInstance: { methodKind: "unary"; input: GenMessage<InstanceGetOrCreateRequest>; output: GenMessage<InstanceGetOrCreateResponse>; }; getOrCreateBot: { methodKind: "unary"; input: GenMessage<InstanceGetOrCreateBotRequest>; output: GenMessage<InstanceGetOrCreateBotResponse>; }; createInstance: { methodKind: "unary"; input: GenMessage<InstanceCreateRequest>; output: GenMessage<InstanceCreateResponse>; }; deleteInstance: { methodKind: "unary"; input: GenMessage<InstanceDeleteRequest>; output: GenMessage<Message<"soulfire.v1.InstanceDeleteResponse">>; }; listInstances: { methodKind: "unary"; input: GenMessage<Message<"soulfire.v1.InstanceListRequest">>; output: GenMessage<InstanceListResponse>; }; getInstanceInfo: { methodKind: "unary"; input: GenMessage<InstanceInfoRequest>; output: GenMessage<InstanceInfoResponse>; }; updateInstanceMeta: { methodKind: "unary"; input: GenMessage<InstanceUpdateMetaRequest>; output: GenMessage<Message<"soulfire.v1.InstanceUpdateMetaResponse">>; }; updateInstanceConfig: { methodKind: "unary"; input: GenMessage<InstanceUpdateConfigRequest>; output: GenMessage<Message<"soulfire.v1.InstanceUpdateConfigResponse">>; }; updateInstanceConfigEntry: { methodKind: "unary"; input: GenMessage<InstanceUpdateConfigEntryRequest>; output: GenMessage<Message<"soulfire.v1.InstanceUpdateConfigEntryResponse">>; }; addInstanceAccount: { methodKind: "unary"; input: GenMessage<InstanceAddAccountRequest>; output: GenMessage<Message<"soulfire.v1.InstanceAddAccountResponse">>; }; removeInstanceAccount: { methodKind: "unary"; input: GenMessage<InstanceRemoveAccountRequest>; output: GenMessage<Message<"soulfire.v1.InstanceRemoveAccountResponse">>; }; updateInstanceAccount: { methodKind: "unary"; input: GenMessage<InstanceUpdateAccountRequest>; output: GenMessage<Message<"soulfire.v1.InstanceUpdateAccountResponse">>; }; addInstanceAccountsBatch: { methodKind: "unary"; input: GenMessage<InstanceAddAccountsBatchRequest>; output: GenMessage<Message<"soulfire.v1.InstanceAddAccountsBatchResponse">>; }; removeInstanceAccountsBatch: { methodKind: "unary"; input: GenMessage<InstanceRemoveAccountsBatchRequest>; output: GenMessage<Message<"soulfire.v1.InstanceRemoveAccountsBatchResponse">>; }; addInstanceProxy: { methodKind: "unary"; input: GenMessage<InstanceAddProxyRequest>; output: GenMessage<Message<"soulfire.v1.InstanceAddProxyResponse">>; }; removeInstanceProxy: { methodKind: "unary"; input: GenMessage<InstanceRemoveProxyRequest>; output: GenMessage<Message<"soulfire.v1.InstanceRemoveProxyResponse">>; }; updateInstanceProxy: { methodKind: "unary"; input: GenMessage<InstanceUpdateProxyRequest>; output: GenMessage<Message<"soulfire.v1.InstanceUpdateProxyResponse">>; }; addInstanceProxiesBatch: { methodKind: "unary"; input: GenMessage<InstanceAddProxiesBatchRequest>; output: GenMessage<Message<"soulfire.v1.InstanceAddProxiesBatchResponse">>; }; removeInstanceProxiesBatch: { methodKind: "unary"; input: GenMessage<InstanceRemoveProxiesBatchRequest>; output: GenMessage<Message<"soulfire.v1.InstanceRemoveProxiesBatchResponse">>; }; getAuditLog: { methodKind: "unary"; input: GenMessage<InstanceAuditLogRequest>; output: GenMessage<InstanceAuditLogResponse>; }; getAccountMetadata: { methodKind: "unary"; input: GenMessage<GetAccountMetadataRequest>; output: GenMessage<GetAccountMetadataResponse>; }; setAccountMetadataEntry: { methodKind: "unary"; input: GenMessage<SetAccountMetadataEntryRequest>; output: GenMessage<Message<"soulfire.v1.SetAccountMetadataEntryResponse">>; }; deleteAccountMetadataEntry: { methodKind: "unary"; input: GenMessage<DeleteAccountMetadataEntryRequest>; output: GenMessage<Message<"soulfire.v1.DeleteAccountMetadataEntryResponse">>; }; getInstanceMetadata: { methodKind: "unary"; input: GenMessage<GetInstanceMetadataRequest>; output: GenMessage<GetInstanceMetadataResponse>; }; setInstanceMetadataEntry: { methodKind: "unary"; input: GenMessage<SetInstanceMetadataEntryRequest>; output: GenMessage<Message<"soulfire.v1.SetInstanceMetadataEntryResponse">>; }; deleteInstanceMetadataEntry: { methodKind: "unary"; input: GenMessage<DeleteInstanceMetadataEntryRequest>; output: GenMessage<Message<"soulfire.v1.DeleteInstanceMetadataEntryResponse">>; }; }>>` ([`InstanceGetOrCreateRequest`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instancegetorcreaterequest), [`InstanceGetOrCreateResponse`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instancegetorcreateresponse), [`InstanceGetOrCreateBotRequest`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instancegetorcreatebotrequest), [`InstanceGetOrCreateBotResponse`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instancegetorcreatebotresponse), [`InstanceCreateRequest`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instancecreaterequest), [`InstanceCreateResponse`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instancecreateresponse), [`InstanceDeleteRequest`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instancedeleterequest), [`InstanceListResponse`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instancelistresponse), [`InstanceInfoRequest`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instanceinforequest), [`InstanceInfoResponse`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instanceinforesponse), [`InstanceUpdateMetaRequest`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instanceupdatemetarequest), [`InstanceUpdateConfigRequest`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instanceupdateconfigrequest), [`InstanceUpdateConfigEntryRequest`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instanceupdateconfigentryrequest), [`InstanceAddAccountRequest`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instanceaddaccountrequest), [`InstanceRemoveAccountRequest`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instanceremoveaccountrequest), [`InstanceUpdateAccountRequest`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instanceupdateaccountrequest), [`InstanceAddAccountsBatchRequest`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instanceaddaccountsbatchrequest), [`InstanceRemoveAccountsBatchRequest`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instanceremoveaccountsbatchrequest), [`InstanceAddProxyRequest`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instanceaddproxyrequest), [`InstanceRemoveProxyRequest`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instanceremoveproxyrequest), [`InstanceUpdateProxyRequest`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instanceupdateproxyrequest), [`InstanceAddProxiesBatchRequest`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instanceaddproxiesbatchrequest), [`InstanceRemoveProxiesBatchRequest`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instanceremoveproxiesbatchrequest), [`InstanceAuditLogRequest`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instanceauditlogrequest), [`InstanceAuditLogResponse`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instanceauditlogresponse), [`GetAccountMetadataRequest`](/docs/sdk/api/ts/generated-soulfire-instance-pb#getaccountmetadatarequest), [`GetAccountMetadataResponse`](/docs/sdk/api/ts/generated-soulfire-instance-pb#getaccountmetadataresponse), [`SetAccountMetadataEntryRequest`](/docs/sdk/api/ts/generated-soulfire-instance-pb#setaccountmetadataentryrequest), [`DeleteAccountMetadataEntryRequest`](/docs/sdk/api/ts/generated-soulfire-instance-pb#deleteaccountmetadataentryrequest), [`GetInstanceMetadataRequest`](/docs/sdk/api/ts/generated-soulfire-instance-pb#getinstancemetadatarequest), [`GetInstanceMetadataResponse`](/docs/sdk/api/ts/generated-soulfire-instance-pb#getinstancemetadataresponse), [`SetInstanceMetadataEntryRequest`](/docs/sdk/api/ts/generated-soulfire-instance-pb#setinstancemetadataentryrequest), [`DeleteInstanceMetadataEntryRequest`](/docs/sdk/api/ts/generated-soulfire-instance-pb#deleteinstancemetadataentryrequest)) | Required |  |
+| `mcAuthClient` | `Client<GenService<{ loginCredentials: { methodKind: "server_streaming"; input: GenMessage<CredentialsAuthRequest>; output: GenMessage<CredentialsAuthResponse>; }; loginDeviceCode: { methodKind: "server_streaming"; input: GenMessage<DeviceCodeAuthRequest>; output: GenMessage<DeviceCodeAuthResponse>; }; refresh: { methodKind: "unary"; input: GenMessage<RefreshRequest>; output: GenMessage<RefreshResponse>; }; }>> \| undefined` ([`CredentialsAuthRequest`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#credentialsauthrequest), [`CredentialsAuthResponse`](/docs/sdk/api/ts/credentials-auth-response), [`DeviceCodeAuthRequest`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#devicecodeauthrequest), [`DeviceCodeAuthResponse`](/docs/sdk/api/ts/device-code-auth-response), [`RefreshRequest`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#refreshrequest), [`RefreshResponse`](/docs/sdk/api/ts/refresh-response)) | Optional |  |
+| `taskClient` | `Client<GenService<{ startBotTask: { methodKind: "unary"; input: GenMessage<StartBotTaskRequest>; output: GenMessage<BotTask>; }; runBotTask: { methodKind: "server_streaming"; input: GenMessage<StartBotTaskRequest>; output: GenMessage<BotTaskEvent>; }; getBotTask: { methodKind: "unary"; input: GenMessage<GetBotTaskRequest>; output: GenMessage<BotTask>; }; listBotTasks: { methodKind: "unary"; input: GenMessage<ListBotTasksRequest>; output: GenMessage<ListBotTasksResponse>; }; watchBotTask: { methodKind: "server_streaming"; input: GenMessage<WatchBotTaskRequest>; output: GenMessage<BotTaskEvent>; }; watchBotTasks: { methodKind: "server_streaming"; input: GenMessage<WatchBotTasksRequest>; output: GenMessage<BotTaskEvent>; }; cancelBotTask: { methodKind: "unary"; input: GenMessage<CancelBotTaskRequest>; output: GenMessage<BotTask>; }; }>> \| undefined` ([`StartBotTaskRequest`](/docs/sdk/api/ts/generated-soulfire-task-pb#startbottaskrequest), [`BotTask`](/docs/sdk/api/ts/bot-task), [`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`GetBotTaskRequest`](/docs/sdk/api/ts/generated-soulfire-task-pb#getbottaskrequest), [`ListBotTasksRequest`](/docs/sdk/api/ts/generated-soulfire-task-pb#listbottasksrequest), [`ListBotTasksResponse`](/docs/sdk/api/ts/generated-soulfire-task-pb#listbottasksresponse), [`WatchBotTaskRequest`](/docs/sdk/api/ts/generated-soulfire-task-pb#watchbottaskrequest), [`WatchBotTasksRequest`](/docs/sdk/api/ts/generated-soulfire-task-pb#watchbottasksrequest), [`CancelBotTaskRequest`](/docs/sdk/api/ts/generated-soulfire-task-pb#cancelbottaskrequest)) | Optional |  |
+| `pathfinderClient` | `Client<GenService<{ planPath: { methodKind: "unary"; input: GenMessage<PlanPathRequest>; output: GenMessage<PlanPathResponse>; }; }>> \| undefined` ([`PlanPathRequest`](/docs/sdk/api/ts/generated-soulfire-pathfinding-pb#planpathrequest), [`PlanPathResponse`](/docs/sdk/api/ts/generated-soulfire-pathfinding-pb#planpathresponse)) | Optional |  |
+| `chatClient` | `Client<GenService<{ sendPublicChat: { methodKind: "unary"; input: GenMessage<SendPublicChatRequest>; output: GenMessage<ChatActionResponse>; }; sendCommand: { methodKind: "unary"; input: GenMessage<SendCommandRequest>; output: GenMessage<ChatActionResponse>; }; sendWhisper: { methodKind: "unary"; input: GenMessage<SendWhisperRequest>; output: GenMessage<ChatActionResponse>; }; tabComplete: { methodKind: "unary"; input: GenMessage<TabCompleteRequest>; output: GenMessage<TabCompleteResponse>; }; }>> \| undefined` ([`SendPublicChatRequest`](/docs/sdk/api/ts/generated-soulfire-chat-pb#sendpublicchatrequest), [`ChatActionResponse`](/docs/sdk/api/ts/generated-soulfire-chat-pb#chatactionresponse), [`SendCommandRequest`](/docs/sdk/api/ts/generated-soulfire-chat-pb#sendcommandrequest), [`SendWhisperRequest`](/docs/sdk/api/ts/generated-soulfire-chat-pb#sendwhisperrequest), [`TabCompleteRequest`](/docs/sdk/api/ts/generated-soulfire-chat-pb#tabcompleterequest), [`TabCompleteResponse`](/docs/sdk/api/ts/generated-soulfire-chat-pb#tabcompleteresponse)) | Optional |  |
+| `inventoryClient` | `Client<GenService<{ getContainerSnapshot: { methodKind: "unary"; input: GenMessage<GetContainerSnapshotRequest>; output: GenMessage<GetContainerSnapshotResponse>; }; countItems: { methodKind: "unary"; input: GenMessage<CountItemsRequest>; output: GenMessage<CountItemsResponse>; }; findInventorySlots: { methodKind: "unary"; input: GenMessage<FindInventorySlotsRequest>; output: GenMessage<FindInventorySlotsResponse>; }; rankInventoryItems: { methodKind: "unary"; input: GenMessage<RankInventoryItemsRequest>; output: GenMessage<RankInventoryItemsResponse>; }; moveInventoryItem: { methodKind: "unary"; input: GenMessage<MoveInventoryItemRequest>; output: GenMessage<InventoryMutationResponse>; }; transferItems: { methodKind: "unary"; input: GenMessage<TransferItemsRequest>; output: GenMessage<InventoryMutationResponse>; }; tossItems: { methodKind: "unary"; input: GenMessage<TossItemsRequest>; output: GenMessage<InventoryMutationResponse>; }; selectHotbarItem: { methodKind: "unary"; input: GenMessage<SelectHotbarItemRequest>; output: GenMessage<InventoryMutationResponse>; }; equipItem: { methodKind: "unary"; input: GenMessage<EquipItemRequest>; output: GenMessage<InventoryMutationResponse>; }; unequipItem: { methodKind: "unary"; input: GenMessage<UnequipItemRequest>; output: GenMessage<InventoryMutationResponse>; }; openBlockContainer: { methodKind: "unary"; input: GenMessage<OpenBlockContainerRequest>; output: GenMessage<InventoryMutationResponse>; }; closeSemanticContainer: { methodKind: "unary"; input: GenMessage<CloseSemanticContainerRequest>; output: GenMessage<InventoryMutationResponse>; }; }>> \| undefined` ([`GetContainerSnapshotRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#getcontainersnapshotrequest), [`GetContainerSnapshotResponse`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#getcontainersnapshotresponse), [`CountItemsRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#countitemsrequest), [`CountItemsResponse`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#countitemsresponse), [`FindInventorySlotsRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#findinventoryslotsrequest), [`FindInventorySlotsResponse`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#findinventoryslotsresponse), [`RankInventoryItemsRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#rankinventoryitemsrequest), [`RankInventoryItemsResponse`](/docs/sdk/api/ts/rank-inventory-items-response), [`MoveInventoryItemRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#moveinventoryitemrequest), [`InventoryMutationResponse`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#inventorymutationresponse), [`TransferItemsRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#transferitemsrequest), [`TossItemsRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#tossitemsrequest), [`SelectHotbarItemRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#selecthotbaritemrequest), [`EquipItemRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#equipitemrequest), [`UnequipItemRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#unequipitemrequest), [`OpenBlockContainerRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#openblockcontainerrequest), [`CloseSemanticContainerRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#closesemanticcontainerrequest)) | Optional |  |
+| `recipeClient` | `Client<GenService<{ listRecipes: { methodKind: "unary"; input: GenMessage<ListRecipesRequest>; output: GenMessage<ListRecipesResponse>; }; canCraft: { methodKind: "unary"; input: GenMessage<CanCraftRequest>; output: GenMessage<CanCraftResponse>; }; listVillagerTrades: { methodKind: "unary"; input: GenMessage<ListVillagerTradesRequest>; output: GenMessage<ListVillagerTradesResponse>; }; }>> \| undefined` ([`ListRecipesRequest`](/docs/sdk/api/ts/generated-soulfire-recipe-pb#listrecipesrequest), [`ListRecipesResponse`](/docs/sdk/api/ts/generated-soulfire-recipe-pb#listrecipesresponse), [`CanCraftRequest`](/docs/sdk/api/ts/generated-soulfire-recipe-pb#cancraftrequest), [`CanCraftResponse`](/docs/sdk/api/ts/generated-soulfire-recipe-pb#cancraftresponse), [`ListVillagerTradesRequest`](/docs/sdk/api/ts/generated-soulfire-recipe-pb#listvillagertradesrequest), [`ListVillagerTradesResponse`](/docs/sdk/api/ts/generated-soulfire-recipe-pb#listvillagertradesresponse)) | Optional |  |
+| `registryClient` | `Client<GenService<{ getRegistryIdentity: { methodKind: "unary"; input: GenMessage<GetRegistryIdentityRequest>; output: GenMessage<GetRegistryIdentityResponse>; }; listRegistryEntries: { methodKind: "unary"; input: GenMessage<ListRegistryEntriesRequest>; output: GenMessage<ListRegistryEntriesResponse>; }; getRegistryEntry: { methodKind: "unary"; input: GenMessage<GetRegistryEntryRequest>; output: GenMessage<GetRegistryEntryResponse>; }; listRegistryTags: { methodKind: "unary"; input: GenMessage<ListRegistryTagsRequest>; output: GenMessage<ListRegistryTagsResponse>; }; }>> \| undefined` ([`GetRegistryIdentityRequest`](/docs/sdk/api/ts/generated-soulfire-registry-pb#getregistryidentityrequest), [`GetRegistryIdentityResponse`](/docs/sdk/api/ts/generated-soulfire-registry-pb#getregistryidentityresponse), [`ListRegistryEntriesRequest`](/docs/sdk/api/ts/generated-soulfire-registry-pb#listregistryentriesrequest), [`ListRegistryEntriesResponse`](/docs/sdk/api/ts/generated-soulfire-registry-pb#listregistryentriesresponse), [`GetRegistryEntryRequest`](/docs/sdk/api/ts/generated-soulfire-registry-pb#getregistryentryrequest), [`GetRegistryEntryResponse`](/docs/sdk/api/ts/generated-soulfire-registry-pb#getregistryentryresponse), [`ListRegistryTagsRequest`](/docs/sdk/api/ts/generated-soulfire-registry-pb#listregistrytagsrequest), [`ListRegistryTagsResponse`](/docs/sdk/api/ts/generated-soulfire-registry-pb#listregistrytagsresponse)) | Optional |  |
+| `worldClient` | `Client<GenService<{ getPlayerSnapshot: { methodKind: "unary"; input: GenMessage<GetPlayerSnapshotRequest>; output: GenMessage<GetPlayerSnapshotResponse>; }; getWorldBlock: { methodKind: "unary"; input: GenMessage<GetWorldBlockRequest>; output: GenMessage<GetWorldBlockResponse>; }; queryBlocks: { methodKind: "unary"; input: GenMessage<QueryBlocksRequest>; output: GenMessage<QueryBlocksResponse>; }; getWorldEntity: { methodKind: "unary"; input: GenMessage<GetWorldEntityRequest>; output: GenMessage<GetWorldEntityResponse>; }; queryEntities: { methodKind: "unary"; input: GenMessage<QueryEntitiesRequest>; output: GenMessage<QueryEntitiesResponse>; }; raycast: { methodKind: "unary"; input: GenMessage<RaycastRequest>; output: GenMessage<RaycastResponse>; }; canSeeBlock: { methodKind: "unary"; input: GenMessage<CanSeeBlockRequest>; output: GenMessage<CanSeeBlockResponse>; }; estimateDigTime: { methodKind: "unary"; input: GenMessage<EstimateDigTimeRequest>; output: GenMessage<EstimateDigTimeResponse>; }; estimateExplosionDamage: { methodKind: "unary"; input: GenMessage<EstimateExplosionDamageRequest>; output: GenMessage<EstimateExplosionDamageResponse>; }; }>> \| undefined` ([`GetPlayerSnapshotRequest`](/docs/sdk/api/ts/generated-soulfire-world-pb#getplayersnapshotrequest), [`GetPlayerSnapshotResponse`](/docs/sdk/api/ts/generated-soulfire-world-pb#getplayersnapshotresponse), [`GetWorldBlockRequest`](/docs/sdk/api/ts/generated-soulfire-world-pb#getworldblockrequest), [`GetWorldBlockResponse`](/docs/sdk/api/ts/get-world-block-response), [`QueryBlocksRequest`](/docs/sdk/api/ts/generated-soulfire-world-pb#queryblocksrequest), [`QueryBlocksResponse`](/docs/sdk/api/ts/query-blocks-response), [`GetWorldEntityRequest`](/docs/sdk/api/ts/generated-soulfire-world-pb#getworldentityrequest), [`GetWorldEntityResponse`](/docs/sdk/api/ts/get-world-entity-response), [`QueryEntitiesRequest`](/docs/sdk/api/ts/generated-soulfire-world-pb#queryentitiesrequest), [`QueryEntitiesResponse`](/docs/sdk/api/ts/query-entities-response), [`RaycastRequest`](/docs/sdk/api/ts/generated-soulfire-world-pb#raycastrequest), [`RaycastResponse`](/docs/sdk/api/ts/raycast-response), [`CanSeeBlockRequest`](/docs/sdk/api/ts/generated-soulfire-world-pb#canseeblockrequest), [`CanSeeBlockResponse`](/docs/sdk/api/ts/can-see-block-response), [`EstimateDigTimeRequest`](/docs/sdk/api/ts/generated-soulfire-world-pb#estimatedigtimerequest), [`EstimateDigTimeResponse`](/docs/sdk/api/ts/estimate-dig-time-response), [`EstimateExplosionDamageRequest`](/docs/sdk/api/ts/generated-soulfire-world-pb#estimateexplosiondamagerequest), [`EstimateExplosionDamageResponse`](/docs/sdk/api/ts/estimate-explosion-damage-response)) | Optional |  |
+| `protocolClient` | `Client<GenService<{ getProtocolInfo: { methodKind: "unary"; input: GenMessage<BotProtocolRequest>; output: GenMessage<BotProtocolInfo>; }; listPacketSchemas: { methodKind: "unary"; input: GenMessage<ListPacketSchemasRequest>; output: GenMessage<ListPacketSchemasResponse>; }; watchPackets: { methodKind: "server_streaming"; input: GenMessage<WatchPacketsRequest>; output: GenMessage<RawPacketEvent>; }; sendRawPacket: { methodKind: "unary"; input: GenMessage<SendRawPacketRequest>; output: GenMessage<SendRawPacketResponse>; }; }>> \| undefined` ([`BotProtocolRequest`](/docs/sdk/api/ts/generated-soulfire-protocol-pb#botprotocolrequest), [`BotProtocolInfo`](/docs/sdk/api/ts/bot-protocol-info), [`ListPacketSchemasRequest`](/docs/sdk/api/ts/generated-soulfire-protocol-pb#listpacketschemasrequest), [`ListPacketSchemasResponse`](/docs/sdk/api/ts/generated-soulfire-protocol-pb#listpacketschemasresponse), [`WatchPacketsRequest`](/docs/sdk/api/ts/generated-soulfire-protocol-pb#watchpacketsrequest), [`RawPacketEvent`](/docs/sdk/api/ts/raw-packet-event), [`SendRawPacketRequest`](/docs/sdk/api/ts/generated-soulfire-protocol-pb#sendrawpacketrequest), [`SendRawPacketResponse`](/docs/sdk/api/ts/generated-soulfire-protocol-pb#sendrawpacketresponse)) | Optional |  |
+| `capabilities` | `CapabilitySet \| undefined` ([`CapabilitySet`](/docs/sdk/api/ts/capability-set)) | Optional |  |
+| `instanceLiveClient` | `Client<GenService<{ watchInstanceEvents: { methodKind: "server_streaming"; input: GenMessage<WatchInstanceEventsRequest>; output: GenMessage<InstanceEvent>; }; }>> \| undefined` ([`WatchInstanceEventsRequest`](/docs/sdk/api/ts/generated-soulfire-instance-live-pb#watchinstanceeventsrequest), [`InstanceEvent`](/docs/sdk/api/ts/instance-event)) | Optional |  |
+
+**Returns:** [`SoulFireInstance`](/docs/sdk/api/ts/soul-fire-instance).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L624)
+
+## `id`
+
+**Modifiers:** `readonly`.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L625)
+
+## `fleet`
+
+**Type:** [`SoulFireFleet`](/docs/sdk/api/ts/soul-fire-fleet).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L657)
+
+## `bot`
+
+```ts
+bot(botId: string): SoulFireBot
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `botId` | `string` | Required |  |
+
+**Returns:** [`SoulFireBot`](/docs/sdk/api/ts/soul-fire-bot).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L661)
+
+## `getOrCreateBot`
+
+Creates an offline account by default and returns a ready, observed bot.
+
+```ts
+getOrCreateBot(name: string, options?: GetOrCreateBotOptions): Effect<SoulFireBot, SoulFireOperationError, Scope>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `name` | `string` | Required |  |
+| `options` | [`GetOrCreateBotOptions`](/docs/sdk/api/ts/get-or-create-bot-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireBot, SoulFireOperationError, Scope>` ([`SoulFireBot`](/docs/sdk/api/ts/soul-fire-bot), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L679)
+
+## `info`
+
+```ts
+info(options?: CallOptions | undefined): Effect<InstanceInfo, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<InstanceInfo, SoulFireOperationError, never>` ([`InstanceInfo`](/docs/sdk/api/ts/instance-info), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L749)
+
+## `delete`
+
+Deletes the instance and its data for good. Its bots are stopped first.
+
+```ts
+delete(options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L777)
+
+## `updateMetadata`
+
+```ts
+updateMetadata(request: InstanceScopedRequest<GenMessage<InstanceUpdateMetaRequest>>, options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `InstanceScopedRequest<GenMessage<InstanceUpdateMetaRequest>>` ([`InstanceScopedRequest`](/docs/sdk/api/ts/instance-scoped-request), [`InstanceUpdateMetaRequest`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instanceupdatemetarequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L791)
+
+## `setConfigEntry`
+
+```ts
+setConfigEntry(request: InstanceScopedRequest<GenMessage<InstanceUpdateConfigEntryRequest>>, options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `InstanceScopedRequest<GenMessage<InstanceUpdateConfigEntryRequest>>` ([`InstanceScopedRequest`](/docs/sdk/api/ts/instance-scoped-request), [`InstanceUpdateConfigEntryRequest`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instanceupdateconfigentryrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L806)
+
+## `addAccounts`
+
+```ts
+addAccounts(accounts: readonly MinecraftAccountProto[], options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `accounts` | `readonly MinecraftAccountProto[]` ([`MinecraftAccountProto`](/docs/sdk/api/ts/minecraft-account-proto)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L823)
+
+## `removeAccounts`
+
+```ts
+removeAccounts(profileIds: readonly string[], options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `profileIds` | `readonly string[]` | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L838)
+
+## `addProxies`
+
+```ts
+addProxies(proxies: readonly ProxyProto[], options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `proxies` | `readonly ProxyProto[]` ([`ProxyProto`](/docs/sdk/api/ts/proxy-proto)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L853)
+
+## `removeProxies`
+
+```ts
+removeProxies(addresses: readonly string[], options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `addresses` | `readonly string[]` | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L868)
+
+## `loginCredentials`
+
+```ts
+loginCredentials(request: InstanceScopedRequest<GenMessage<CredentialsAuthRequest>>, options?: CallOptions | undefined): Stream<CredentialsAuthResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `InstanceScopedRequest<GenMessage<CredentialsAuthRequest>>` ([`InstanceScopedRequest`](/docs/sdk/api/ts/instance-scoped-request), [`CredentialsAuthRequest`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#credentialsauthrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Stream<CredentialsAuthResponse, SoulFireOperationError, never>` ([`CredentialsAuthResponse`](/docs/sdk/api/ts/credentials-auth-response), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L883)
+
+## `loginDeviceCode`
+
+```ts
+loginDeviceCode(request: InstanceScopedRequest<GenMessage<DeviceCodeAuthRequest>>, options?: CallOptions | undefined): Stream<DeviceCodeAuthResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `InstanceScopedRequest<GenMessage<DeviceCodeAuthRequest>>` ([`InstanceScopedRequest`](/docs/sdk/api/ts/instance-scoped-request), [`DeviceCodeAuthRequest`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#devicecodeauthrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Stream<DeviceCodeAuthResponse, SoulFireOperationError, never>` ([`DeviceCodeAuthResponse`](/docs/sdk/api/ts/device-code-auth-response), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L899)
+
+## `refreshAccount`
+
+```ts
+refreshAccount(request: InstanceScopedRequest<GenMessage<RefreshRequest>>, options?: CallOptions | undefined): Effect<RefreshResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `InstanceScopedRequest<GenMessage<RefreshRequest>>` ([`InstanceScopedRequest`](/docs/sdk/api/ts/instance-scoped-request), [`RefreshRequest`](/docs/sdk/api/ts/generated-soulfire-mc-auth-pb#refreshrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<RefreshResponse, SoulFireOperationError, never>` ([`RefreshResponse`](/docs/sdk/api/ts/refresh-response), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L915)
+
+## `bots`
+
+Every bot of the instance, online or not. Online ones come with their live
+state, without the inventory.
+
+```ts
+bots(options?: CallOptions | undefined): Effect<BotListEntry[], SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotListEntry[], SoulFireOperationError, never>` ([`BotListEntry`](/docs/sdk/api/ts/bot-list-entry), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L931)
+
+## `watchBotStatuses`
+
+A snapshot of every bot's desired and runtime state, then each change.
+
+```ts
+watchBotStatuses(options?: CallOptions | undefined): Stream<WatchBotStatusesResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Stream<WatchBotStatusesResponse, SoulFireOperationError, never>` ([`WatchBotStatusesResponse`](/docs/sdk/api/ts/watch-bot-statuses-response), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L948)
+
+## `events`
+
+Watches one multiplexed event stream for the selected bots in this
+instance. The default filter includes every stateful event category while
+leaving high-volume sounds and particles opt-in.
+
+```ts
+events(filter?: MessageInit<InstanceEventFilter>, options?: CallOptions | undefined): Stream<InstanceEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `filter` | `MessageInit<InstanceEventFilter>` ([`InstanceEventFilter`](/docs/sdk/api/ts/instance-event-filter)) | `DEFAULT_INSTANCE_EVENT_FILTER` |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Stream<InstanceEvent, SoulFireOperationError, never>` ([`InstanceEvent`](/docs/sdk/api/ts/instance-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L968)
+
+## `start`
+
+Marks bots to run; they connect in the background. `selection` defaults to
+every bot not marked to run.
+
+```ts
+start(selection?: BotSelection | undefined, options?: CallOptions | undefined): Effect<BotStatus[], SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `selection` | `BotSelection \| undefined` ([`BotSelection`](/docs/sdk/api/ts/bot-selection)) | Optional |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotStatus[], SoulFireOperationError, never>` ([`BotStatus`](/docs/sdk/api/ts/bot-status), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1002)
+
+## `stop`
+
+Marks bots as stopped; they disconnect in the background. `selection`
+defaults to every bot marked to run.
+
+```ts
+stop(selection?: BotSelection | undefined, options?: CallOptions | undefined): Effect<BotStatus[], SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `selection` | `BotSelection \| undefined` ([`BotSelection`](/docs/sdk/api/ts/bot-selection)) | Optional |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotStatus[], SoulFireOperationError, never>` ([`BotStatus`](/docs/sdk/api/ts/bot-status), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1033)
+
+## `restart`
+
+Gives bots a fresh connection. `selection` defaults to every bot marked to
+run.
+
+```ts
+restart(selection?: BotSelection | undefined, options?: CallOptions | undefined): Effect<BotStatus[], SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `selection` | `BotSelection \| undefined` ([`BotSelection`](/docs/sdk/api/ts/bot-selection)) | Optional |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotStatus[], SoulFireOperationError, never>` ([`BotStatus`](/docs/sdk/api/ts/bot-status), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1064)

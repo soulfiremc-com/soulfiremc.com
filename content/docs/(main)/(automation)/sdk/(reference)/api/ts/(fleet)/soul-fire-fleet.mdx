@@ -1,0 +1,138 @@
+---
+title: "SoulFireFleet"
+description: "TypeScript API signatures, fields, and source for SoulFireFleet."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `fleet`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/fleet.ts#L275).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`.
+
+```ts
+class SoulFireFleet
+```
+
+## `constructor`
+
+```ts
+new SoulFireFleet(instance: SoulFireInstance, capabilities?: CapabilitySet | undefined): SoulFireFleet
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instance` | [`SoulFireInstance`](/docs/sdk/api/ts/soul-fire-instance) | Required |  |
+| `capabilities` | `CapabilitySet \| undefined` ([`CapabilitySet`](/docs/sdk/api/ts/capability-set)) | Optional |  |
+
+**Returns:** [`SoulFireFleet`](/docs/sdk/api/ts/soul-fire-fleet).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/fleet.ts#L276)
+
+## `select`
+
+```ts
+select(selector?: FleetSelector, options?: CallOptions | undefined): Effect<readonly FleetBot[], SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `selector` | [`FleetSelector`](/docs/sdk/api/ts/fleet-selector) | `{}` |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<readonly FleetBot[], SoulFireOperationError, never>` ([`FleetBot`](/docs/sdk/api/ts/fleet-bot), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/fleet.ts#L281)
+
+## `start`
+
+```ts
+start(selector?: FleetSelector, options?: CallOptions | undefined): Effect<BotStatus[], SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `selector` | [`FleetSelector`](/docs/sdk/api/ts/fleet-selector) | `{}` |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotStatus[], SoulFireOperationError, never>` ([`BotStatus`](/docs/sdk/api/ts/bot-status), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/fleet.ts#L347)
+
+## `stop`
+
+```ts
+stop(selector?: FleetSelector, options?: CallOptions | undefined): Effect<BotStatus[], SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `selector` | [`FleetSelector`](/docs/sdk/api/ts/fleet-selector) | `{}` |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotStatus[], SoulFireOperationError, never>` ([`BotStatus`](/docs/sdk/api/ts/bot-status), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/fleet.ts#L357)
+
+## `restart`
+
+```ts
+restart(selector?: FleetSelector, options?: CallOptions | undefined): Effect<BotStatus[], SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `selector` | [`FleetSelector`](/docs/sdk/api/ts/fleet-selector) | `{}` |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotStatus[], SoulFireOperationError, never>` ([`BotStatus`](/docs/sdk/api/ts/bot-status), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/fleet.ts#L367)
+
+## `startTasks`
+
+```ts
+startTasks<Input extends DescMessage, Result extends DescMessage | undefined = undefined>(selector: FleetSelector, inputSchema: Input, input: MessageInitShape<Input> | ((bot: FleetBot, index: number, total: number) => MessageInitShape<Input> | Effect<MessageInitShape<Input>, SoulFireOperationError, never>), resultSchema?: Result | undefined, options?: FleetTaskStartOptions): Effect<SoulFireFleetTaskGroup<Result>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `selector` | [`FleetSelector`](/docs/sdk/api/ts/fleet-selector) | Required |  |
+| `inputSchema` | `Input` | Required |  |
+| `input` | `MessageInitShape<Input> \| ((bot: FleetBot, index: number, total: number) => MessageInitShape<Input> \| Effect<MessageInitShape<Input>, SoulFireOperationError, never>)` ([`FleetBot`](/docs/sdk/api/ts/fleet-bot), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)) | Required |  |
+| `resultSchema` | `Result \| undefined` | Optional |  |
+| `options` | [`FleetTaskStartOptions`](/docs/sdk/api/ts/fleet-task-start-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireFleetTaskGroup<Result>, SoulFireOperationError, never>` ([`SoulFireFleetTaskGroup`](/docs/sdk/api/ts/soul-fire-fleet-task-group), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/fleet.ts#L378)
+
+## `distribute`
+
+```ts
+distribute<Item>(items: readonly Item[], selector?: FleetSelector, options?: FleetDistributionOptions): Effect<readonly FleetAssignment<Item>[], SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `items` | `readonly Item[]` | Required |  |
+| `selector` | [`FleetSelector`](/docs/sdk/api/ts/fleet-selector) | `{}` |  |
+| `options` | [`FleetDistributionOptions`](/docs/sdk/api/ts/fleet-distribution-options) | `{}` |  |
+
+**Returns:** `Effect<readonly FleetAssignment<Item>[], SoulFireOperationError, never>` ([`FleetAssignment`](/docs/sdk/api/ts/fleet-assignment), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/fleet.ts#L448)

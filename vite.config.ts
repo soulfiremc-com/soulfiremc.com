@@ -92,6 +92,7 @@ export default defineConfig(() => ({
             path.startsWith("//") ||
             (path !== "/" && path.endsWith("/")) ||
             path.includes("://") ||
+            path.includes("#") ||
             path === "/discord" ||
             path === "/github" ||
             path === "/donate" ||

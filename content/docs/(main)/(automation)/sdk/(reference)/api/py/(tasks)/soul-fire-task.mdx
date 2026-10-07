@@ -1,0 +1,162 @@
+---
+title: "SoulFireTask"
+description: "Python API signatures, fields, and source for SoulFireTask."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `tasks`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L173).
+
+**Import from:** `soulfire`, `soulfire.tasks`.
+
+```python
+class SoulFireTask[ResultT: Message]
+```
+
+## `__init__`
+
+```python
+def __init__(self, client: BotTaskServiceClient, snapshot: BotTask, result_type: type[ResultT], header_factory: HeaderFactory) -> None
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `client` | [`BotTaskServiceClient`](/docs/sdk/api/py/generated-task-connect#bottaskserviceclient) | Required | positional or keyword |
+| `snapshot` | [`BotTask`](/docs/sdk/api/py/generated-task-pb2#bottask) | Required | positional or keyword |
+| `result_type` | `type[ResultT]` | Required | positional or keyword |
+| `header_factory` | [`HeaderFactory`](/docs/sdk/api/py/header-factory) | Required | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L174)
+
+## `id`
+
+```python
+@property
+def id(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L187)
+
+## `snapshot`
+
+```python
+@property
+def snapshot(self) -> BotTask
+```
+
+**Returns:** [`BotTask`](/docs/sdk/api/py/generated-task-pb2#bottask).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L191)
+
+## `terminal`
+
+```python
+@property
+def terminal(self) -> bool
+```
+
+**Returns:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L195)
+
+## `refresh`
+
+```python
+def refresh(self, *, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[BotTask, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[BotTask, SoulFireOperationError]` ([`BotTask`](/docs/sdk/api/py/generated-task-pb2#bottask), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L199)
+
+## `events`
+
+```python
+def events(self, *, after_revision: int | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `after_revision` | `int \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L210)
+
+## `wait`
+
+```python
+def wait(self, *, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[BotTask, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[BotTask, SoulFireOperationError]` ([`BotTask`](/docs/sdk/api/py/generated-task-pb2#bottask), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L233)
+
+## `cancel`
+
+```python
+def cancel(self, reason: str='', *, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[BotTask, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `reason` | `str` | `''` | positional or keyword |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[BotTask, SoulFireOperationError]` ([`BotTask`](/docs/sdk/api/py/generated-task-pb2#bottask), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L251)
+
+## `result`
+
+```python
+def result(self, *, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[ResultT, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[ResultT, SoulFireOperationError]` ([`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L269)

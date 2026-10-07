@@ -1,0 +1,308 @@
+---
+title: "SoulFireClient"
+description: "TypeScript API signatures, fields, and source for SoulFireClient."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `client`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L274).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`.
+
+```ts
+class SoulFireClient
+```
+
+## `setToken`
+
+```ts
+setToken(token: string | TokenProvider | undefined): void
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `token` | `string \| TokenProvider \| undefined` ([`TokenProvider`](/docs/sdk/api/ts/token-provider)) | Required |  |
+
+**Returns:** `void`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L370)
+
+## `localServer`
+
+**Type:** `LocalSoulFireServer | undefined` ([`LocalSoulFireServer`](/docs/sdk/api/ts/local-soul-fire-server)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L374)
+
+## `server`
+
+**Type:** [`ServerMetadata`](/docs/sdk/api/ts/server-metadata).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L378)
+
+## `identity`
+
+**Type:** `Readonly<SdkIdentity>` ([`SdkIdentity`](/docs/sdk/api/ts/generated-soulfire-sdk-pb#sdkidentity)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L382)
+
+## `capabilities`
+
+**Type:** [`CapabilitySet`](/docs/sdk/api/ts/capability-set).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L386)
+
+## `limits`
+
+**Type:** `ReadonlyMap<string, bigint>`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L390)
+
+## `plugins`
+
+**Type:** [`PluginCatalog`](/docs/sdk/api/ts/plugin-catalog).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L394)
+
+## `admin`
+
+**Type:** [`SoulFireAdmin`](/docs/sdk/api/ts/soul-fire-admin).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L403)
+
+## `localServerLogs`
+
+**Type:** `readonly string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L407)
+
+## `isLocalServerRunning`
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L411)
+
+## `restartLocalServer`
+
+```ts
+restartLocalServer(): Effect<void, SoulFireOperationError, never>
+```
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L415)
+
+## `stopLocalServer`
+
+```ts
+stopLocalServer(): Effect<void, SoulFireOperationError, never>
+```
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L422)
+
+## `service`
+
+```ts
+service<T extends DescService>(service: T): Client<T>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | `T` | Required |  |
+
+**Returns:** `Client<T>`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L429)
+
+## `instance`
+
+A handle for `instanceId`, without a request.
+
+```ts
+instance(instanceId: string): SoulFireInstance
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instanceId` | `string` | Required |  |
+
+**Returns:** [`SoulFireInstance`](/docs/sdk/api/ts/soul-fire-instance).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L436)
+
+## `instances`
+
+```ts
+instances(options?: CallOptions | undefined): Effect<InstanceListResponse_Instance[], SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<InstanceListResponse_Instance[], SoulFireOperationError, never>` ([`InstanceListResponse_Instance`](/docs/sdk/api/ts/instance-list-response-instance), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L456)
+
+## `createInstance`
+
+```ts
+createInstance(friendlyName: string, options?: CallOptions | undefined): Effect<SoulFireInstance, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `friendlyName` | `string` | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<SoulFireInstance, SoulFireOperationError, never>` ([`SoulFireInstance`](/docs/sdk/api/ts/soul-fire-instance), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L467)
+
+## `getOrCreateInstance`
+
+Gets an instance owned by this user, or creates it with its server address.
+
+```ts
+getOrCreateInstance(name: string, options?: GetOrCreateInstanceOptions): Effect<SoulFireInstance, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `name` | `string` | Required |  |
+| `options` | [`GetOrCreateInstanceOptions`](/docs/sdk/api/ts/get-or-create-instance-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireInstance, SoulFireOperationError, never>` ([`SoulFireInstance`](/docs/sdk/api/ts/soul-fire-instance), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L483)
+
+## `createBot`
+
+Creates or reuses a ready bot without exposing instance or account IDs.
+
+```ts
+createBot(options: CreateBotOptions): Effect<SoulFireBot, SoulFireOperationError, Scope>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`CreateBotOptions`](/docs/sdk/api/ts/create-bot-options) | Required |  |
+
+**Returns:** `Effect<SoulFireBot, SoulFireOperationError, Scope>` ([`SoulFireBot`](/docs/sdk/api/ts/soul-fire-bot), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L503)
+
+## `beginLogin`
+
+```ts
+beginLogin(email: string, options?: CallOptions | undefined): Effect<NextAuthFlowResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `email` | `string` | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<NextAuthFlowResponse, SoulFireOperationError, never>` ([`NextAuthFlowResponse`](/docs/sdk/api/ts/next-auth-flow-response), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L518)
+
+## `completeLogin`
+
+```ts
+completeLogin(authFlowToken: string, code: string, options?: CallOptions | undefined): Effect<NextAuthFlowResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `authFlowToken` | `string` | Required |  |
+| `code` | `string` | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<NextAuthFlowResponse, SoulFireOperationError, never>` ([`NextAuthFlowResponse`](/docs/sdk/api/ts/next-auth-flow-response), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L527)
+
+## `close`
+
+```ts
+close(): Effect<void, never, never>
+```
+
+**Returns:** `Effect<void, never, never>`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L550)
+
+## `connect`
+
+Connects and checks the server is compatible: its SDK API version,
+`requiredCapabilities` and `requiredPlugins`.
+
+```ts
+static connect(options: SoulFireOptions): Effect<SoulFireClient, SoulFireConnectionError, Scope>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options) | Required |  |
+
+**Returns:** `Effect<SoulFireClient, SoulFireConnectionError, Scope>` ([`SoulFireClient`](/docs/sdk/api/ts/soul-fire-client), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L328)
+
+## `unauthenticated`
+
+A client that skips that check, for example to log in first.
+
+```ts
+static unauthenticated(options: SoulFireOptions): Effect<SoulFireClient, SoulFireConnectionError, Scope>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options) | Required |  |
+
+**Returns:** `Effect<SoulFireClient, SoulFireConnectionError, Scope>` ([`SoulFireClient`](/docs/sdk/api/ts/soul-fire-client), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L342)
+
+## `connectManaged`
+
+```ts
+static connectManaged(options: SoulFireOptions, localServer: LocalServerController): Effect<SoulFireClient, SoulFireConnectionError, Scope>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SoulFireOptions`](/docs/sdk/api/ts/soul-fire-options) | Required |  |
+| `localServer` | [`LocalServerController`](/docs/sdk/api/ts/local-server-controller) | Required |  |
+
+**Returns:** `Effect<SoulFireClient, SoulFireConnectionError, Scope>` ([`SoulFireClient`](/docs/sdk/api/ts/soul-fire-client), [`SoulFireConnectionError`](/docs/sdk/api/ts/soul-fire-connection-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L354)

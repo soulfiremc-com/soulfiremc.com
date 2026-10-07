@@ -1,0 +1,40 @@
+---
+title: "QueryRegion"
+description: "TypeScript API signatures, fields, and source for QueryRegion."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/world_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L225).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/world_pb`.
+
+```ts
+type QueryRegion = Message<"soulfire.v1.QueryRegion"> & {
+  /**
+   * @generated from oneof soulfire.v1.QueryRegion.region
+   */
+  region: {
+    /**
+     * @generated from field: soulfire.v1.SphereRegion sphere = 1;
+     */
+    value: SphereRegion;
+    case: "sphere";
+  } | {
+    /**
+     * @generated from field: soulfire.v1.BoxRegion box = 2;
+     */
+    value: BoxRegion;
+    case: "box";
+  } | { case: undefined; value?: undefined };
+};
+```
+
+**Referenced types:** [`SphereRegion`](/docs/sdk/api/ts/sphere-region), [`BoxRegion`](/docs/sdk/api/ts/box-region).
+
+## `region`
+
+**Type:** `{ value: SphereRegion; case: "sphere"; } | { value: BoxRegion; case: "box"; } | { case: undefined; value?: undefined; }` ([`SphereRegion`](/docs/sdk/api/ts/sphere-region), [`BoxRegion`](/docs/sdk/api/ts/box-region)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L229)

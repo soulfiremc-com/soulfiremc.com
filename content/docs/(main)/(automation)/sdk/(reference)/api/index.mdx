@@ -1,15 +1,32 @@
 ---
 title: SDK API reference
-description: Method signatures and option types for the TypeScript and Python SDKs.
+description: Public exports, functions, classes, types, and protocol declarations for both SDKs.
 icon: BookOpen
 ---
 
 The reference uses the [documented SDK baseline](/docs/sdk/compatibility).
-Generated signatures and option tables use one pinned source revision.
+Both language references use one pinned source revision.
+Parameter and return types link to their definitions.
 
-- [TypeScript methods](/docs/sdk/api/typescript) cover the `SoulFire` entry point, public client classes, methods, and properties.
-- [Python methods](/docs/sdk/api/python) cover public classes and their effect-py operations.
-- [TypeScript option tables](/docs/sdk/api/types) are generated from the pinned source declarations.
+- [TypeScript reference](/docs/sdk/api/typescript) covers every package entry point, including runtime facades, functions, classes, interfaces, aliases, enums, and generated protocol modules.
+- [Python reference](/docs/sdk/api/python) covers package exports, public SDK modules, functions, classes, data models, aliases, and generated protocol modules.
+- [TypeScript types](/docs/sdk/api/types) lists the options, interfaces, aliases, and enums available from the main package.
 - [Server RPC reference](/docs/openapi) covers unary HTTP/JSON endpoints. Streaming and native gRPC contracts are outside that schema.
 
 Start with a [recipe](/docs/sdk/recipes) if you want a complete program.
+
+## Read a declaration
+
+Each page includes its import paths and source links.
+Callable declarations include parameter types, defaults, and return types.
+Classes include constructors and members declared by the SDK, including inherited SDK members.
+External bases remain visible in the class declaration.
+
+TypeScript runtime facades share the `SoulFire` page. Each runtime has its own contract.
+Python callables decorated with `@fn` show their returned `Effect` type.
+Their source implementations use `EffectGen` for the generator body.
+Protocol fields and Python protocol constructors come from the packaged declarations.
+
+Descriptions come from source comments and docstrings.
+If a declaration has no description, its source link supplies the implementation context.
+An optional parameter does not imply a particular default.

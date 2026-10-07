@@ -1,0 +1,123 @@
+---
+title: "EstimateDigTimeResponse"
+description: "Python API signatures, fields, and source for EstimateDigTimeResponse."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `world_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L304).
+
+**Import from:** `soulfire`, `soulfire.world_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class EstimateDigTimeResponse(_message.Message)
+```
+
+## `DIGGABLE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L306)
+
+## `INSTANT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L307)
+
+## `TICKS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L308)
+
+## `DURATION_MS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L309)
+
+## `PROGRESS_PER_TICK_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L310)
+
+## `CORRECT_TOOL_FOR_DROPS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L311)
+
+## `BLOCK_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L312)
+
+## `diggable`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L313)
+
+## `instant`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L314)
+
+## `ticks`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L315)
+
+## `duration_ms`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L316)
+
+## `progress_per_tick`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L317)
+
+## `correct_tool_for_drops`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L318)
+
+## `block`
+
+**Type:** [`_domain_pb2.BlockSnapshot`](/docs/sdk/api/py/block-snapshot).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L319)
+
+## `__init__`
+
+```python
+def __init__(self, diggable: bool=..., instant: bool=..., ticks: _Optional[int]=..., duration_ms: _Optional[int]=..., progress_per_tick: _Optional[float]=..., correct_tool_for_drops: bool=..., block: _Optional[_Union[_domain_pb2.BlockSnapshot, _Mapping]]=...) -> None
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `diggable` | `bool` | `...` | positional or keyword |
+| `instant` | `bool` | `...` | positional or keyword |
+| `ticks` | `_Optional[int]` | `...` | positional or keyword |
+| `duration_ms` | `_Optional[int]` | `...` | positional or keyword |
+| `progress_per_tick` | `_Optional[float]` | `...` | positional or keyword |
+| `correct_tool_for_drops` | `bool` | `...` | positional or keyword |
+| `block` | `_Optional[_Union[_domain_pb2.BlockSnapshot, _Mapping]]` ([`_domain_pb2.BlockSnapshot`](/docs/sdk/api/py/block-snapshot)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L320)

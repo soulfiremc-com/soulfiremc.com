@@ -1,0 +1,276 @@
+---
+title: "plugin_stats_connect module"
+description: "Python API signatures, fields, and source for plugin_stats_connect module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`PluginStatsService`](/docs/sdk/api/py/generated-plugin-stats-connect#pluginstatsservice) | class |
+| [`PluginStatsServiceASGIApplication`](/docs/sdk/api/py/generated-plugin-stats-connect#pluginstatsserviceasgiapplication) | class |
+| [`PluginStatsServiceClient`](/docs/sdk/api/py/generated-plugin-stats-connect#pluginstatsserviceclient) | class |
+| [`PluginStatsServiceClientSync`](/docs/sdk/api/py/generated-plugin-stats-connect#pluginstatsserviceclientsync) | class |
+| [`PluginStatsServiceSync`](/docs/sdk/api/py/generated-plugin-stats-connect#pluginstatsservicesync) | class |
+| [`PluginStatsServiceWSGIApplication`](/docs/sdk/api/py/generated-plugin-stats-connect#pluginstatsservicewsgiapplication) | class |
+
+## PluginStatsService
+
+**Class** in `plugin_stats_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_stats_connect.py#L37).
+
+**Import from:** `soulfire.plugin_stats_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class PluginStatsService(Protocol)
+```
+
+### `get_instance_plugin_stats`
+
+```python
+async def get_instance_plugin_stats(self, request: GetInstancePluginStatsRequest, ctx: RequestContext[GetInstancePluginStatsRequest, GetInstancePluginStatsResponse]) -> GetInstancePluginStatsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetInstancePluginStatsRequest`](/docs/sdk/api/py/generated-plugin-stats-pb2#getinstancepluginstatsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[GetInstancePluginStatsRequest, GetInstancePluginStatsResponse]` ([`GetInstancePluginStatsRequest`](/docs/sdk/api/py/generated-plugin-stats-pb2#getinstancepluginstatsrequest), [`GetInstancePluginStatsResponse`](/docs/sdk/api/py/generated-plugin-stats-pb2#getinstancepluginstatsresponse)) | Required | positional or keyword |
+
+**Returns:** [`GetInstancePluginStatsResponse`](/docs/sdk/api/py/generated-plugin-stats-pb2#getinstancepluginstatsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_stats_connect.py#L38)
+
+## PluginStatsServiceASGIApplication
+
+**Class** in `plugin_stats_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_stats_connect.py#L42).
+
+**Import from:** `soulfire.plugin_stats_connect`.
+
+**Bases:** `ConnectASGIApplication[PluginStatsService]` ([`PluginStatsService`](/docs/sdk/api/py/generated-plugin-stats-connect#pluginstatsservice)).
+
+```python
+class PluginStatsServiceASGIApplication(ConnectASGIApplication[PluginStatsService])
+```
+
+**Referenced types:** [`PluginStatsService`](/docs/sdk/api/py/generated-plugin-stats-connect#pluginstatsservice).
+
+### `__init__`
+
+```python
+def __init__(self, service: PluginStatsService | AsyncGenerator[PluginStatsService], *, interceptors: Iterable[Interceptor]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | `PluginStatsService \| AsyncGenerator[PluginStatsService]` ([`PluginStatsService`](/docs/sdk/api/py/generated-plugin-stats-connect#pluginstatsservice)) | Required | positional or keyword |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `compressions` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_stats_connect.py#L43)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_stats_connect.py#L73)
+
+## PluginStatsServiceClient
+
+**Class** in `plugin_stats_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_stats_connect.py#L78).
+
+**Import from:** `soulfire.plugin_stats_connect`.
+
+**Bases:** `ConnectClient`.
+
+```python
+class PluginStatsServiceClient(ConnectClient)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[Interceptor]=(), http_client: Client | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `http_client` | `Client \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_stats_connect.py#L79)
+
+### `get_instance_plugin_stats`
+
+```python
+async def get_instance_plugin_stats(self, request: GetInstancePluginStatsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> GetInstancePluginStatsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetInstancePluginStatsRequest`](/docs/sdk/api/py/generated-plugin-stats-pb2#getinstancepluginstatsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`GetInstancePluginStatsResponse`](/docs/sdk/api/py/generated-plugin-stats-pb2#getinstancepluginstatsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_stats_connect.py#L103)
+
+## PluginStatsServiceClientSync
+
+**Class** in `plugin_stats_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_stats_connect.py#L162).
+
+**Import from:** `soulfire.plugin_stats_connect`.
+
+**Bases:** `ConnectClientSync`.
+
+```python
+class PluginStatsServiceClientSync(ConnectClientSync)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[InterceptorSync]=(), http_client: SyncClient | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | keyword only |
+| `http_client` | `SyncClient \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_stats_connect.py#L163)
+
+### `get_instance_plugin_stats`
+
+```python
+def get_instance_plugin_stats(self, request: GetInstancePluginStatsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> GetInstancePluginStatsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetInstancePluginStatsRequest`](/docs/sdk/api/py/generated-plugin-stats-pb2#getinstancepluginstatsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`GetInstancePluginStatsResponse`](/docs/sdk/api/py/generated-plugin-stats-pb2#getinstancepluginstatsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_stats_connect.py#L187)
+
+## PluginStatsServiceSync
+
+**Class** in `plugin_stats_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_stats_connect.py#L123).
+
+**Import from:** `soulfire.plugin_stats_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class PluginStatsServiceSync(Protocol)
+```
+
+### `get_instance_plugin_stats`
+
+```python
+def get_instance_plugin_stats(self, request: GetInstancePluginStatsRequest, ctx: RequestContext[GetInstancePluginStatsRequest, GetInstancePluginStatsResponse]) -> GetInstancePluginStatsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetInstancePluginStatsRequest`](/docs/sdk/api/py/generated-plugin-stats-pb2#getinstancepluginstatsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[GetInstancePluginStatsRequest, GetInstancePluginStatsResponse]` ([`GetInstancePluginStatsRequest`](/docs/sdk/api/py/generated-plugin-stats-pb2#getinstancepluginstatsrequest), [`GetInstancePluginStatsResponse`](/docs/sdk/api/py/generated-plugin-stats-pb2#getinstancepluginstatsresponse)) | Required | positional or keyword |
+
+**Returns:** [`GetInstancePluginStatsResponse`](/docs/sdk/api/py/generated-plugin-stats-pb2#getinstancepluginstatsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_stats_connect.py#L124)
+
+## PluginStatsServiceWSGIApplication
+
+**Class** in `plugin_stats_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_stats_connect.py#L128).
+
+**Import from:** `soulfire.plugin_stats_connect`.
+
+**Bases:** `ConnectWSGIApplication`.
+
+```python
+class PluginStatsServiceWSGIApplication(ConnectWSGIApplication)
+```
+
+### `__init__`
+
+```python
+def __init__(self, service: PluginStatsServiceSync, interceptors: Iterable[InterceptorSync]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | [`PluginStatsServiceSync`](/docs/sdk/api/py/generated-plugin-stats-connect#pluginstatsservicesync) | Required | positional or keyword |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | positional or keyword |
+| `read_max_bytes` | `int \| None` | `None` | positional or keyword |
+| `compressions` | `Iterable[Compression] \| None` | `None` | positional or keyword |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_stats_connect.py#L129)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_stats_connect.py#L157)

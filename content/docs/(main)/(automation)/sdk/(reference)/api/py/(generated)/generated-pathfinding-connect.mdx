@@ -1,0 +1,276 @@
+---
+title: "pathfinding_connect module"
+description: "Python API signatures, fields, and source for pathfinding_connect module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`PathfinderService`](/docs/sdk/api/py/generated-pathfinding-connect#pathfinderservice) | class |
+| [`PathfinderServiceASGIApplication`](/docs/sdk/api/py/generated-pathfinding-connect#pathfinderserviceasgiapplication) | class |
+| [`PathfinderServiceClient`](/docs/sdk/api/py/generated-pathfinding-connect#pathfinderserviceclient) | class |
+| [`PathfinderServiceClientSync`](/docs/sdk/api/py/generated-pathfinding-connect#pathfinderserviceclientsync) | class |
+| [`PathfinderServiceSync`](/docs/sdk/api/py/generated-pathfinding-connect#pathfinderservicesync) | class |
+| [`PathfinderServiceWSGIApplication`](/docs/sdk/api/py/generated-pathfinding-connect#pathfinderservicewsgiapplication) | class |
+
+## PathfinderService
+
+**Class** in `pathfinding_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_connect.py#L37).
+
+**Import from:** `soulfire.pathfinding_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class PathfinderService(Protocol)
+```
+
+### `plan_path`
+
+```python
+async def plan_path(self, request: PlanPathRequest, ctx: RequestContext[PlanPathRequest, PlanPathResponse]) -> PlanPathResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`PlanPathRequest`](/docs/sdk/api/py/generated-pathfinding-pb2#planpathrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[PlanPathRequest, PlanPathResponse]` ([`PlanPathRequest`](/docs/sdk/api/py/generated-pathfinding-pb2#planpathrequest), [`PlanPathResponse`](/docs/sdk/api/py/generated-pathfinding-pb2#planpathresponse)) | Required | positional or keyword |
+
+**Returns:** [`PlanPathResponse`](/docs/sdk/api/py/generated-pathfinding-pb2#planpathresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_connect.py#L38)
+
+## PathfinderServiceASGIApplication
+
+**Class** in `pathfinding_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_connect.py#L42).
+
+**Import from:** `soulfire.pathfinding_connect`.
+
+**Bases:** `ConnectASGIApplication[PathfinderService]` ([`PathfinderService`](/docs/sdk/api/py/generated-pathfinding-connect#pathfinderservice)).
+
+```python
+class PathfinderServiceASGIApplication(ConnectASGIApplication[PathfinderService])
+```
+
+**Referenced types:** [`PathfinderService`](/docs/sdk/api/py/generated-pathfinding-connect#pathfinderservice).
+
+### `__init__`
+
+```python
+def __init__(self, service: PathfinderService | AsyncGenerator[PathfinderService], *, interceptors: Iterable[Interceptor]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | `PathfinderService \| AsyncGenerator[PathfinderService]` ([`PathfinderService`](/docs/sdk/api/py/generated-pathfinding-connect#pathfinderservice)) | Required | positional or keyword |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `compressions` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_connect.py#L43)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_connect.py#L73)
+
+## PathfinderServiceClient
+
+**Class** in `pathfinding_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_connect.py#L78).
+
+**Import from:** `soulfire.pathfinding_connect`.
+
+**Bases:** `ConnectClient`.
+
+```python
+class PathfinderServiceClient(ConnectClient)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[Interceptor]=(), http_client: Client | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `http_client` | `Client \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_connect.py#L79)
+
+### `plan_path`
+
+```python
+async def plan_path(self, request: PlanPathRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> PlanPathResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`PlanPathRequest`](/docs/sdk/api/py/generated-pathfinding-pb2#planpathrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`PlanPathResponse`](/docs/sdk/api/py/generated-pathfinding-pb2#planpathresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_connect.py#L103)
+
+## PathfinderServiceClientSync
+
+**Class** in `pathfinding_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_connect.py#L162).
+
+**Import from:** `soulfire.pathfinding_connect`.
+
+**Bases:** `ConnectClientSync`.
+
+```python
+class PathfinderServiceClientSync(ConnectClientSync)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[InterceptorSync]=(), http_client: SyncClient | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | keyword only |
+| `http_client` | `SyncClient \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_connect.py#L163)
+
+### `plan_path`
+
+```python
+def plan_path(self, request: PlanPathRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> PlanPathResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`PlanPathRequest`](/docs/sdk/api/py/generated-pathfinding-pb2#planpathrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`PlanPathResponse`](/docs/sdk/api/py/generated-pathfinding-pb2#planpathresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_connect.py#L187)
+
+## PathfinderServiceSync
+
+**Class** in `pathfinding_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_connect.py#L123).
+
+**Import from:** `soulfire.pathfinding_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class PathfinderServiceSync(Protocol)
+```
+
+### `plan_path`
+
+```python
+def plan_path(self, request: PlanPathRequest, ctx: RequestContext[PlanPathRequest, PlanPathResponse]) -> PlanPathResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`PlanPathRequest`](/docs/sdk/api/py/generated-pathfinding-pb2#planpathrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[PlanPathRequest, PlanPathResponse]` ([`PlanPathRequest`](/docs/sdk/api/py/generated-pathfinding-pb2#planpathrequest), [`PlanPathResponse`](/docs/sdk/api/py/generated-pathfinding-pb2#planpathresponse)) | Required | positional or keyword |
+
+**Returns:** [`PlanPathResponse`](/docs/sdk/api/py/generated-pathfinding-pb2#planpathresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_connect.py#L124)
+
+## PathfinderServiceWSGIApplication
+
+**Class** in `pathfinding_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_connect.py#L128).
+
+**Import from:** `soulfire.pathfinding_connect`.
+
+**Bases:** `ConnectWSGIApplication`.
+
+```python
+class PathfinderServiceWSGIApplication(ConnectWSGIApplication)
+```
+
+### `__init__`
+
+```python
+def __init__(self, service: PathfinderServiceSync, interceptors: Iterable[InterceptorSync]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | [`PathfinderServiceSync`](/docs/sdk/api/py/generated-pathfinding-connect#pathfinderservicesync) | Required | positional or keyword |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | positional or keyword |
+| `read_max_bytes` | `int \| None` | `None` | positional or keyword |
+| `compressions` | `Iterable[Compression] \| None` | `None` | positional or keyword |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_connect.py#L129)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/pathfinding_connect.py#L157)

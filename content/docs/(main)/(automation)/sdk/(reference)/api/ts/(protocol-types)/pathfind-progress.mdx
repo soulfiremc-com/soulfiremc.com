@@ -1,0 +1,84 @@
+---
+title: "PathfindProgress"
+description: "TypeScript API signatures, fields, and source for PathfindProgress."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/bot_live_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L3392).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/bot_live_pb`.
+
+```ts
+type PathfindProgress = Message<"soulfire.v1.PathfindProgress"> & {
+  /**
+   * @generated from field: soulfire.v1.PathfindStatus status = 1;
+   */
+  status: PathfindStatus;
+
+  /**
+   * Remaining straight-line distance to the goal in blocks, if known.
+   *
+   * @generated from field: optional float distance_remaining = 2;
+   */
+  distanceRemaining?: number | undefined;
+
+  /**
+   * Current bot position, populated on MOVING updates.
+   *
+   * @generated from field: optional soulfire.v1.WorldPosition position = 3;
+   */
+  position?: WorldPosition | undefined;
+
+  /**
+   * Present when status is FAILED. Human-readable failure reason.
+   *
+   * @generated from field: optional string error = 4;
+   */
+  error?: string | undefined;
+
+  /**
+   * @generated from field: string action_id = 5;
+   */
+  actionId: string;
+};
+```
+
+**Referenced types:** [`PathfindStatus`](/docs/sdk/api/ts/pathfind-status), [`WorldPosition`](/docs/sdk/api/ts/world-position).
+
+## `status`
+
+**Type:** [`PathfindStatus`](/docs/sdk/api/ts/pathfind-status).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L3396)
+
+## `distanceRemaining`
+
+Remaining straight-line distance to the goal in blocks, if known.
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L3403)
+
+## `position`
+
+Current bot position, populated on MOVING updates.
+
+**Type:** `WorldPosition | undefined` ([`WorldPosition`](/docs/sdk/api/ts/world-position)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L3410)
+
+## `error`
+
+Present when status is FAILED. Human-readable failure reason.
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L3417)
+
+## `actionId`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L3422)

@@ -1,0 +1,740 @@
+---
+title: "SoulFireAdmin"
+description: "TypeScript API signatures, fields, and source for SoulFireAdmin."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `admin`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L97).
+
+High-level access to SoulFire's administrative control plane.
+
+Generated service clients remain available through `soulfire.service()` for
+new or uncommon fields.
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`.
+
+```ts
+class SoulFireAdmin
+```
+
+## `constructor`
+
+```ts
+new SoulFireAdmin(transport: Transport): SoulFireAdmin
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `transport` | `Transport` | Required |  |
+
+**Returns:** [`SoulFireAdmin`](/docs/sdk/api/ts/soul-fire-admin).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L109)
+
+## `clientData`
+
+```ts
+clientData(options?: CallOptions | undefined): Effect<ClientDataResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<ClientDataResponse, SoulFireOperationError, never>` ([`ClientDataResponse`](/docs/sdk/api/ts/generated-soulfire-client-pb#clientdataresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L122)
+
+## `generateWebDavToken`
+
+```ts
+generateWebDavToken(options?: CallOptions | undefined): Effect<string, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<string, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L130)
+
+## `generateApiToken`
+
+```ts
+generateApiToken(options?: CallOptions | undefined): Effect<string, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<string, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L140)
+
+## `updateUsername`
+
+```ts
+updateUsername(username: string, options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `username` | `string` | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L150)
+
+## `updateEmail`
+
+```ts
+updateEmail(email: string, options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `email` | `string` | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L165)
+
+## `invalidateOwnSessions`
+
+```ts
+invalidateOwnSessions(options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L177)
+
+## `serverInfo`
+
+```ts
+serverInfo(options?: CallOptions | undefined): Effect<ServerInfoResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<ServerInfoResponse, SoulFireOperationError, never>` ([`ServerInfoResponse`](/docs/sdk/api/ts/generated-soulfire-server-pb#serverinforesponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L188)
+
+## `updateServerConfig`
+
+```ts
+updateServerConfig(config: ServerConfig, options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `config` | [`ServerConfig`](/docs/sdk/api/ts/generated-soulfire-server-pb#serverconfig) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L196)
+
+## `setServerConfigEntry`
+
+```ts
+setServerConfigEntry(request: Input<GenMessage<ServerUpdateConfigEntryRequest>>, options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `Input<GenMessage<ServerUpdateConfigEntryRequest>>` ([`Input`](/docs/sdk/api/ts/input), [`ServerUpdateConfigEntryRequest`](/docs/sdk/api/ts/generated-soulfire-server-pb#serverupdateconfigentryrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L211)
+
+## `users`
+
+```ts
+users(options?: CallOptions | undefined): Effect<UserListResponse_User[], SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<UserListResponse_User[], SoulFireOperationError, never>` ([`UserListResponse_User`](/docs/sdk/api/ts/generated-soulfire-user-pb#userlistresponse_user), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L226)
+
+## `user`
+
+```ts
+user(userId: string, options?: CallOptions | undefined): Effect<UserInfoResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `userId` | `string` | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<UserInfoResponse, SoulFireOperationError, never>` ([`UserInfoResponse`](/docs/sdk/api/ts/generated-soulfire-user-pb#userinforesponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L236)
+
+## `createUser`
+
+```ts
+createUser(request: Input<GenMessage<UserCreateRequest>>, options?: CallOptions | undefined): Effect<string, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `Input<GenMessage<UserCreateRequest>>` ([`Input`](/docs/sdk/api/ts/input), [`UserCreateRequest`](/docs/sdk/api/ts/generated-soulfire-user-pb#usercreaterequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<string, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L245)
+
+## `deleteUser`
+
+```ts
+deleteUser(userId: string, options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `userId` | `string` | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L256)
+
+## `updateUser`
+
+```ts
+updateUser(request: Input<GenMessage<UpdateUserRequest>>, options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `Input<GenMessage<UpdateUserRequest>>` ([`Input`](/docs/sdk/api/ts/input), [`UpdateUserRequest`](/docs/sdk/api/ts/generated-soulfire-user-pb#updateuserrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L268)
+
+## `invalidateUserSessions`
+
+```ts
+invalidateUserSessions(userId: string, options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `userId` | `string` | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L280)
+
+## `generateUserApiToken`
+
+```ts
+generateUserApiToken(userId: string, options?: CallOptions | undefined): Effect<string, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `userId` | `string` | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<string, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L295)
+
+## `userPluginPermissionGrants`
+
+```ts
+userPluginPermissionGrants(userId: string, options?: CallOptions | undefined): Effect<UserPluginPermissionGrant[], SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `userId` | `string` | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<UserPluginPermissionGrant[], SoulFireOperationError, never>` ([`UserPluginPermissionGrant`](/docs/sdk/api/ts/user-plugin-permission-grant), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L309)
+
+## `setUserPluginPermissionGrant`
+
+```ts
+setUserPluginPermissionGrant(userId: string, request: UserInput<GenMessage<SetUserPluginPermissionGrantRequest>>, options?: CallOptions | undefined): Effect<UserPluginPermissionGrant, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `userId` | `string` | Required |  |
+| `request` | `UserInput<GenMessage<SetUserPluginPermissionGrantRequest>>` ([`UserInput`](/docs/sdk/api/ts/user-input), [`SetUserPluginPermissionGrantRequest`](/docs/sdk/api/ts/generated-soulfire-user-pb#setuserpluginpermissiongrantrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<UserPluginPermissionGrant, SoulFireOperationError, never>` ([`UserPluginPermissionGrant`](/docs/sdk/api/ts/user-plugin-permission-grant), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L323)
+
+## `deleteUserPluginPermissionGrant`
+
+```ts
+deleteUserPluginPermissionGrant(userId: string, request: UserInput<GenMessage<DeleteUserPluginPermissionGrantRequest>>, options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `userId` | `string` | Required |  |
+| `request` | `UserInput<GenMessage<DeleteUserPluginPermissionGrantRequest>>` ([`UserInput`](/docs/sdk/api/ts/user-input), [`DeleteUserPluginPermissionGrantRequest`](/docs/sdk/api/ts/generated-soulfire-user-pb#deleteuserpluginpermissiongrantrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L336)
+
+## `previousLogs`
+
+```ts
+previousLogs(request: Input<GenMessage<PreviousLogRequest>>, options?: CallOptions | undefined): Effect<LogString[], SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `Input<GenMessage<PreviousLogRequest>>` ([`Input`](/docs/sdk/api/ts/input), [`PreviousLogRequest`](/docs/sdk/api/ts/generated-soulfire-logs-pb#previouslogrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<LogString[], SoulFireOperationError, never>` ([`LogString`](/docs/sdk/api/ts/generated-soulfire-logs-pb#logstring), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L352)
+
+## `logs`
+
+```ts
+logs(request: Input<GenMessage<LogRequest>>, options?: CallOptions | undefined): Stream<LogResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `Input<GenMessage<LogRequest>>` ([`Input`](/docs/sdk/api/ts/input), [`LogRequest`](/docs/sdk/api/ts/generated-soulfire-logs-pb#logrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Stream<LogResponse, SoulFireOperationError, never>` ([`LogResponse`](/docs/sdk/api/ts/generated-soulfire-logs-pb#logresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L363)
+
+## `serverMetrics`
+
+```ts
+serverMetrics(since?: Timestamp | undefined, options?: CallOptions | undefined): Effect<GetServerMetricsResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `since` | `Timestamp \| undefined` | Optional |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<GetServerMetricsResponse, SoulFireOperationError, never>` ([`GetServerMetricsResponse`](/docs/sdk/api/ts/generated-soulfire-metrics-pb#getservermetricsresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L376)
+
+## `instanceMetrics`
+
+```ts
+instanceMetrics(instanceId: string, since?: Timestamp | undefined, options?: CallOptions | undefined): Effect<GetInstanceMetricsResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instanceId` | `string` | Required |  |
+| `since` | `Timestamp \| undefined` | Optional |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<GetInstanceMetricsResponse, SoulFireOperationError, never>` ([`GetInstanceMetricsResponse`](/docs/sdk/api/ts/generated-soulfire-metrics-pb#getinstancemetricsresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L388)
+
+## `executeCommand`
+
+```ts
+executeCommand(request: Input<GenMessage<CommandRequest>>, options?: CallOptions | undefined): Effect<CommandResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `Input<GenMessage<CommandRequest>>` ([`Input`](/docs/sdk/api/ts/input), [`CommandRequest`](/docs/sdk/api/ts/generated-soulfire-command-pb#commandrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<CommandResponse, SoulFireOperationError, never>` ([`CommandResponse`](/docs/sdk/api/ts/generated-soulfire-command-pb#commandresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L401)
+
+## `completeCommand`
+
+```ts
+completeCommand(request: Input<GenMessage<CommandCompletionRequest>>, options?: CallOptions | undefined): Effect<CommandCompletionResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `Input<GenMessage<CommandCompletionRequest>>` ([`Input`](/docs/sdk/api/ts/input), [`CommandCompletionRequest`](/docs/sdk/api/ts/generated-soulfire-command-pb#commandcompletionrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<CommandCompletionResponse, SoulFireOperationError, never>` ([`CommandCompletionResponse`](/docs/sdk/api/ts/generated-soulfire-command-pb#commandcompletionresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L410)
+
+## `download`
+
+```ts
+download(request: Input<GenMessage<DownloadRequest>>, options?: CallOptions | undefined): Effect<DownloadResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `Input<GenMessage<DownloadRequest>>` ([`Input`](/docs/sdk/api/ts/input), [`DownloadRequest`](/docs/sdk/api/ts/generated-soulfire-download-pb#downloadrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<DownloadResponse, SoulFireOperationError, never>` ([`DownloadResponse`](/docs/sdk/api/ts/generated-soulfire-download-pb#downloadresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L419)
+
+## `pluginStats`
+
+```ts
+pluginStats(instanceId: string, options?: CallOptions | undefined): Effect<PluginRuntimeStat[], SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instanceId` | `string` | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<PluginRuntimeStat[], SoulFireOperationError, never>` ([`PluginRuntimeStat`](/docs/sdk/api/ts/generated-soulfire-plugin-stats-pb#pluginruntimestat), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L428)
+
+## `auditLog`
+
+```ts
+auditLog(instanceId: string, options?: CallOptions | undefined): Effect<InstanceAuditLogResponse_AuditLogEntry[], SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instanceId` | `string` | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<InstanceAuditLogResponse_AuditLogEntry[], SoulFireOperationError, never>` ([`InstanceAuditLogResponse_AuditLogEntry`](/docs/sdk/api/ts/generated-soulfire-instance-pb#instanceauditlogresponse_auditlogentry), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L442)
+
+## `scripts`
+
+```ts
+scripts(instanceId: string, options?: CallOptions | undefined): Effect<ScriptInfo[], SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instanceId` | `string` | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<ScriptInfo[], SoulFireOperationError, never>` ([`ScriptInfo`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptinfo), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L459)
+
+## `script`
+
+```ts
+script(instanceId: string, scriptId: string, options?: CallOptions | undefined): Effect<GetScriptResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instanceId` | `string` | Required |  |
+| `scriptId` | `string` | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<GetScriptResponse, SoulFireOperationError, never>` ([`GetScriptResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#getscriptresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L470)
+
+## `createScript`
+
+```ts
+createScript(instanceId: string, request: InstanceInput<GenMessage<CreateScriptRequest>>, options?: CallOptions | undefined): Effect<CreateScriptResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instanceId` | `string` | Required |  |
+| `request` | `InstanceInput<GenMessage<CreateScriptRequest>>` ([`InstanceInput`](/docs/sdk/api/ts/instance-input), [`CreateScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#createscriptrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<CreateScriptResponse, SoulFireOperationError, never>` ([`CreateScriptResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#createscriptresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L483)
+
+## `updateScript`
+
+```ts
+updateScript(instanceId: string, request: InstanceInput<GenMessage<UpdateScriptRequest>>, options?: CallOptions | undefined): Effect<UpdateScriptResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instanceId` | `string` | Required |  |
+| `request` | `InstanceInput<GenMessage<UpdateScriptRequest>>` ([`InstanceInput`](/docs/sdk/api/ts/instance-input), [`UpdateScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#updatescriptrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<UpdateScriptResponse, SoulFireOperationError, never>` ([`UpdateScriptResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#updatescriptresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L496)
+
+## `deleteScript`
+
+```ts
+deleteScript(instanceId: string, scriptId: string, options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instanceId` | `string` | Required |  |
+| `scriptId` | `string` | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L509)
+
+## `activateScript`
+
+```ts
+activateScript(instanceId: string, request: InstanceInput<GenMessage<ActivateScriptRequest>>, options?: CallOptions | undefined): Stream<ScriptEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instanceId` | `string` | Required |  |
+| `request` | `InstanceInput<GenMessage<ActivateScriptRequest>>` ([`InstanceInput`](/docs/sdk/api/ts/instance-input), [`ActivateScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#activatescriptrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Stream<ScriptEvent, SoulFireOperationError, never>` ([`ScriptEvent`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptevent), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L525)
+
+## `deactivateScript`
+
+```ts
+deactivateScript(instanceId: string, scriptId: string, options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instanceId` | `string` | Required |  |
+| `scriptId` | `string` | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L542)
+
+## `scriptStatus`
+
+```ts
+scriptStatus(instanceId: string, scriptId: string, options?: CallOptions | undefined): Effect<GetScriptStatusResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instanceId` | `string` | Required |  |
+| `scriptId` | `string` | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<GetScriptStatusResponse, SoulFireOperationError, never>` ([`GetScriptStatusResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#getscriptstatusresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L558)
+
+## `scriptLogs`
+
+```ts
+scriptLogs(instanceId: string, request: InstanceInput<GenMessage<SubscribeScriptLogsRequest>>, options?: CallOptions | undefined): Stream<ScriptLogEntry, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instanceId` | `string` | Required |  |
+| `request` | `InstanceInput<GenMessage<SubscribeScriptLogsRequest>>` ([`InstanceInput`](/docs/sdk/api/ts/instance-input), [`SubscribeScriptLogsRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#subscribescriptlogsrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Stream<ScriptLogEntry, SoulFireOperationError, never>` ([`ScriptLogEntry`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptlogentry), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L571)
+
+## `nodeTypes`
+
+```ts
+nodeTypes(request?: Input<GenMessage<GetNodeTypesRequest>>, options?: CallOptions | undefined): Effect<GetNodeTypesResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `Input<GenMessage<GetNodeTypesRequest>>` ([`Input`](/docs/sdk/api/ts/input), [`GetNodeTypesRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#getnodetypesrequest)) | `{}` |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<GetNodeTypesResponse, SoulFireOperationError, never>` ([`GetNodeTypesResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#getnodetypesresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L588)
+
+## `scriptRegistryData`
+
+```ts
+scriptRegistryData(request?: Input<GenMessage<GetRegistryDataRequest>>, options?: CallOptions | undefined): Effect<GetRegistryDataResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `Input<GenMessage<GetRegistryDataRequest>>` ([`Input`](/docs/sdk/api/ts/input), [`GetRegistryDataRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#getregistrydatarequest)) | `{}` |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<GetRegistryDataResponse, SoulFireOperationError, never>` ([`GetRegistryDataResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#getregistrydataresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L597)
+
+## `validateScript`
+
+```ts
+validateScript(instanceId: string, request: InstanceInput<GenMessage<ValidateScriptRequest>>, options?: CallOptions | undefined): Effect<ValidateScriptResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instanceId` | `string` | Required |  |
+| `request` | `InstanceInput<GenMessage<ValidateScriptRequest>>` ([`InstanceInput`](/docs/sdk/api/ts/instance-input), [`ValidateScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#validatescriptrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<ValidateScriptResponse, SoulFireOperationError, never>` ([`ValidateScriptResponse`](/docs/sdk/api/ts/generated-soulfire-script-pb#validatescriptresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L606)
+
+## `dryRunScript`
+
+```ts
+dryRunScript(instanceId: string, request: InstanceInput<GenMessage<DryRunScriptRequest>>, options?: CallOptions | undefined): Stream<ScriptEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instanceId` | `string` | Required |  |
+| `request` | `InstanceInput<GenMessage<DryRunScriptRequest>>` ([`InstanceInput`](/docs/sdk/api/ts/instance-input), [`DryRunScriptRequest`](/docs/sdk/api/ts/generated-soulfire-script-pb#dryrunscriptrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Stream<ScriptEvent, SoulFireOperationError, never>` ([`ScriptEvent`](/docs/sdk/api/ts/generated-soulfire-script-pb#scriptevent), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/admin.ts#L619)

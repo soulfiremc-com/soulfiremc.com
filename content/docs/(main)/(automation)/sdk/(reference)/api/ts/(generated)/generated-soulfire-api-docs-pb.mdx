@@ -1,0 +1,236 @@
+---
+title: "generated/soulfire/api_docs_pb module"
+description: "TypeScript API signatures, fields, and source for generated/soulfire/api_docs_pb module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`api_field`](/docs/sdk/api/ts/generated-soulfire-api-docs-pb#api_field) | object |
+| [`api_method`](/docs/sdk/api/ts/generated-soulfire-api-docs-pb#api_method) | object |
+| [`ApiFieldDocs`](/docs/sdk/api/ts/generated-soulfire-api-docs-pb#apifielddocs) | type |
+| [`ApiFieldDocsSchema`](/docs/sdk/api/ts/generated-soulfire-api-docs-pb#apifielddocsschema) | object |
+| [`ApiMethodDocs`](/docs/sdk/api/ts/generated-soulfire-api-docs-pb#apimethoddocs) | type |
+| [`ApiMethodDocsSchema`](/docs/sdk/api/ts/generated-soulfire-api-docs-pb#apimethoddocsschema) | object |
+| [`file_soulfire_api_docs`](/docs/sdk/api/ts/generated-soulfire-api-docs-pb#file_soulfire_api_docs) | object |
+
+## api_field
+
+**Object** in `generated/soulfire/api_docs_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/api_docs_pb.ts#L110).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/api_docs_pb`.
+
+```ts
+api_field: GenExtension<FieldOptions, ApiFieldDocs>
+```
+
+**Referenced types:** [`ApiFieldDocs`](/docs/sdk/api/ts/generated-soulfire-api-docs-pb#apifielddocs).
+
+## api_method
+
+**Object** in `generated/soulfire/api_docs_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/api_docs_pb.ts#L104).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/api_docs_pb`.
+
+```ts
+api_method: GenExtension<MethodOptions, ApiMethodDocs>
+```
+
+**Referenced types:** [`ApiMethodDocs`](/docs/sdk/api/ts/generated-soulfire-api-docs-pb#apimethoddocs).
+
+## ApiFieldDocs
+
+**Type** in `generated/soulfire/api_docs_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/api_docs_pb.ts#L82).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/api_docs_pb`.
+
+```ts
+type ApiFieldDocs = Message<"soulfire.v1.ApiFieldDocs"> & {
+  /**
+   * @generated from field: string format = 1;
+   */
+  format: string;
+
+  /**
+   * @generated from field: string example = 2;
+   */
+  example: string;
+};
+```
+
+### `format`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/api_docs_pb.ts#L86)
+
+### `example`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/api_docs_pb.ts#L91)
+
+## ApiFieldDocsSchema
+
+**Object** in `generated/soulfire/api_docs_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/api_docs_pb.ts#L98).
+
+Describes the message soulfire.v1.ApiFieldDocs.
+Use `create(ApiFieldDocsSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/api_docs_pb`.
+
+```ts
+ApiFieldDocsSchema: GenMessage<ApiFieldDocs>
+```
+
+**Referenced types:** [`ApiFieldDocs`](/docs/sdk/api/ts/generated-soulfire-api-docs-pb#apifielddocs).
+
+## ApiMethodDocs
+
+**Type** in `generated/soulfire/api_docs_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/api_docs_pb.ts#L20).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/api_docs_pb`.
+
+```ts
+type ApiMethodDocs = Message<"soulfire.v1.ApiMethodDocs"> & {
+  /**
+   * @generated from field: string display_name = 1;
+   */
+  displayName: string;
+
+  /**
+   * @generated from field: string description = 2;
+   */
+  description: string;
+
+  /**
+   * @generated from field: repeated string permissions = 3;
+   */
+  permissions: string[];
+
+  /**
+   * @generated from field: string scope = 4;
+   */
+  scope: string;
+
+  /**
+   * @generated from field: repeated string preconditions = 5;
+   */
+  preconditions: string[];
+
+  /**
+   * @generated from field: string execution = 6;
+   */
+  execution: string;
+
+  /**
+   * @generated from field: repeated string side_effects = 7;
+   */
+  sideEffects: string[];
+
+  /**
+   * Explicitly publishes a unary method as an MCP tool.
+   *
+   * @generated from field: bool expose_to_mcp = 8;
+   */
+  exposeToMcp: boolean;
+
+  /**
+   * Requires the MCP caller to pass confirm=true. Mandatory for exposed
+   * mutation and destructive methods.
+   *
+   * @generated from field: bool mcp_requires_confirmation = 9;
+   */
+  mcpRequiresConfirmation: boolean;
+};
+```
+
+### `displayName`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/api_docs_pb.ts#L24)
+
+### `description`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/api_docs_pb.ts#L29)
+
+### `permissions`
+
+**Type:** `string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/api_docs_pb.ts#L34)
+
+### `scope`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/api_docs_pb.ts#L39)
+
+### `preconditions`
+
+**Type:** `string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/api_docs_pb.ts#L44)
+
+### `execution`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/api_docs_pb.ts#L49)
+
+### `sideEffects`
+
+**Type:** `string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/api_docs_pb.ts#L54)
+
+### `exposeToMcp`
+
+Explicitly publishes a unary method as an MCP tool.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/api_docs_pb.ts#L61)
+
+### `mcpRequiresConfirmation`
+
+Requires the MCP caller to pass confirm=true. Mandatory for exposed
+mutation and destructive methods.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/api_docs_pb.ts#L69)
+
+## ApiMethodDocsSchema
+
+**Object** in `generated/soulfire/api_docs_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/api_docs_pb.ts#L76).
+
+Describes the message soulfire.v1.ApiMethodDocs.
+Use `create(ApiMethodDocsSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/api_docs_pb`.
+
+```ts
+ApiMethodDocsSchema: GenMessage<ApiMethodDocs>
+```
+
+**Referenced types:** [`ApiMethodDocs`](/docs/sdk/api/ts/generated-soulfire-api-docs-pb#apimethoddocs).
+
+## file_soulfire_api_docs
+
+**Object** in `generated/soulfire/api_docs_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/api_docs_pb.ts#L14).
+
+Describes the file soulfire/api_docs.proto.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/api_docs_pb`.
+
+```ts
+file_soulfire_api_docs: DescFile
+```

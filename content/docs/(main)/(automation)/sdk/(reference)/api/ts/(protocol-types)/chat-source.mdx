@@ -1,0 +1,76 @@
+---
+title: "ChatSource"
+description: "TypeScript API signatures, fields, and source for ChatSource."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Enum** in `generated/soulfire/bot_live_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L3711).
+
+Source of a chat message.
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/bot_live_pb`.
+
+```ts
+enum ChatSource
+```
+
+## `UNSPECIFIED`
+
+**Type:** `ChatSource.UNSPECIFIED`.
+
+**Value:** `0`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L3715)
+
+## `PLAYER`
+
+Sent by another player (player chat).
+
+**Type:** `ChatSource.PLAYER`.
+
+**Value:** `1`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L3722)
+
+## `SYSTEM`
+
+Server-wide broadcast or system announcement.
+
+**Type:** `ChatSource.SYSTEM`.
+
+**Value:** `2`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L3729)
+
+## `ACTION_BAR`
+
+Action bar overlay (the thin strip above the hotbar).
+
+**Type:** `ChatSource.ACTION_BAR`.
+
+**Value:** `3`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L3736)
+
+## `WHISPER`
+
+Whisper directed at this bot.
+
+**Type:** `ChatSource.WHISPER`.
+
+**Value:** `4`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L3743)
+
+## `UNKNOWN`
+
+The client received a message but Minecraft did not expose reliable
+source metadata for it.
+
+**Type:** `ChatSource.UNKNOWN`.
+
+**Value:** `5`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/bot_live_pb.ts#L3751)

@@ -1,0 +1,497 @@
+---
+title: "generated/soulfire/chat_pb module"
+description: "TypeScript API signatures, fields, and source for generated/soulfire/chat_pb module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`ChatActionResponse`](/docs/sdk/api/ts/generated-soulfire-chat-pb#chatactionresponse) | type |
+| [`ChatActionResponseSchema`](/docs/sdk/api/ts/generated-soulfire-chat-pb#chatactionresponseschema) | object |
+| [`ChatScope`](/docs/sdk/api/ts/generated-soulfire-chat-pb#chatscope) | type |
+| [`ChatScopeSchema`](/docs/sdk/api/ts/generated-soulfire-chat-pb#chatscopeschema) | object |
+| [`ChatService`](/docs/sdk/api/ts/generated-soulfire-chat-pb#chatservice) | object |
+| [`file_soulfire_chat`](/docs/sdk/api/ts/generated-soulfire-chat-pb#file_soulfire_chat) | object |
+| [`SendCommandRequest`](/docs/sdk/api/ts/generated-soulfire-chat-pb#sendcommandrequest) | type |
+| [`SendCommandRequestSchema`](/docs/sdk/api/ts/generated-soulfire-chat-pb#sendcommandrequestschema) | object |
+| [`SendPublicChatRequest`](/docs/sdk/api/ts/generated-soulfire-chat-pb#sendpublicchatrequest) | type |
+| [`SendPublicChatRequestSchema`](/docs/sdk/api/ts/generated-soulfire-chat-pb#sendpublicchatrequestschema) | object |
+| [`SendWhisperRequest`](/docs/sdk/api/ts/generated-soulfire-chat-pb#sendwhisperrequest) | type |
+| [`SendWhisperRequestSchema`](/docs/sdk/api/ts/generated-soulfire-chat-pb#sendwhisperrequestschema) | object |
+| [`TabCompleteRequest`](/docs/sdk/api/ts/generated-soulfire-chat-pb#tabcompleterequest) | type |
+| [`TabCompleteRequestSchema`](/docs/sdk/api/ts/generated-soulfire-chat-pb#tabcompleterequestschema) | object |
+| [`TabCompleteResponse`](/docs/sdk/api/ts/generated-soulfire-chat-pb#tabcompleteresponse) | type |
+| [`TabCompleteResponseSchema`](/docs/sdk/api/ts/generated-soulfire-chat-pb#tabcompleteresponseschema) | object |
+| [`TabSuggestion`](/docs/sdk/api/ts/generated-soulfire-chat-pb#tabsuggestion) | type |
+| [`TabSuggestionSchema`](/docs/sdk/api/ts/generated-soulfire-chat-pb#tabsuggestionschema) | object |
+
+## ChatActionResponse
+
+**Type** in `generated/soulfire/chat_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L131).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/chat_pb`.
+
+```ts
+type ChatActionResponse = Message<"soulfire.v1.ChatActionResponse"> & {
+  /**
+   * @generated from field: soulfire.v1.BotActionResult result = 1;
+   */
+  result?: BotActionResult | undefined;
+};
+```
+
+**Referenced types:** [`BotActionResult`](/docs/sdk/api/ts/bot-action-result).
+
+### `result`
+
+**Type:** `BotActionResult | undefined` ([`BotActionResult`](/docs/sdk/api/ts/bot-action-result)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L135)
+
+## ChatActionResponseSchema
+
+**Object** in `generated/soulfire/chat_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L142).
+
+Describes the message soulfire.v1.ChatActionResponse.
+Use `create(ChatActionResponseSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/chat_pb`.
+
+```ts
+ChatActionResponseSchema: GenMessage<ChatActionResponse>
+```
+
+**Referenced types:** [`ChatActionResponse`](/docs/sdk/api/ts/generated-soulfire-chat-pb#chatactionresponse).
+
+## ChatScope
+
+**Type** in `generated/soulfire/chat_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L23).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/chat_pb`.
+
+```ts
+type ChatScope = Message<"soulfire.v1.ChatScope"> & {
+  /**
+   * @generated from field: string instance_id = 1;
+   */
+  instanceId: string;
+
+  /**
+   * @generated from field: string bot_id = 2;
+   */
+  botId: string;
+};
+```
+
+### `instanceId`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L27)
+
+### `botId`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L32)
+
+## ChatScopeSchema
+
+**Object** in `generated/soulfire/chat_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L39).
+
+Describes the message soulfire.v1.ChatScope.
+Use `create(ChatScopeSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/chat_pb`.
+
+```ts
+ChatScopeSchema: GenMessage<ChatScope>
+```
+
+**Referenced types:** [`ChatScope`](/docs/sdk/api/ts/generated-soulfire-chat-pb#chatscope).
+
+## ChatService
+
+**Object** in `generated/soulfire/chat_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L224).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/chat_pb`.
+
+```ts
+ChatService: GenService<{ sendPublicChat: { methodKind: "unary"; input: GenMessage<SendPublicChatRequest>; output: GenMessage<ChatActionResponse>; }; sendCommand: { methodKind: "unary"; input: GenMessage<SendCommandRequest>; output: GenMessage<ChatActionResponse>; }; sendWhisper: { methodKind: "unary"; input: GenMessage<SendWhisperRequest>; output: GenMessage<ChatActionResponse>; }; tabComplete: { methodKind: "unary"; input: GenMessage<TabCompleteRequest>; output: GenMessage<TabCompleteResponse>; }; }>
+```
+
+**Referenced types:** [`SendPublicChatRequest`](/docs/sdk/api/ts/generated-soulfire-chat-pb#sendpublicchatrequest), [`ChatActionResponse`](/docs/sdk/api/ts/generated-soulfire-chat-pb#chatactionresponse), [`SendCommandRequest`](/docs/sdk/api/ts/generated-soulfire-chat-pb#sendcommandrequest), [`SendWhisperRequest`](/docs/sdk/api/ts/generated-soulfire-chat-pb#sendwhisperrequest), [`TabCompleteRequest`](/docs/sdk/api/ts/generated-soulfire-chat-pb#tabcompleterequest), [`TabCompleteResponse`](/docs/sdk/api/ts/generated-soulfire-chat-pb#tabcompleteresponse).
+
+## file_soulfire_chat
+
+**Object** in `generated/soulfire/chat_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L17).
+
+Describes the file soulfire/chat.proto.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/chat_pb`.
+
+```ts
+file_soulfire_chat: DescFile
+```
+
+## SendCommandRequest
+
+**Type** in `generated/soulfire/chat_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L72).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/chat_pb`.
+
+```ts
+type SendCommandRequest = Message<"soulfire.v1.SendCommandRequest"> & {
+  /**
+   * @generated from field: soulfire.v1.ChatScope scope = 1;
+   */
+  scope?: ChatScope | undefined;
+
+  /**
+   * @generated from field: string command = 2;
+   */
+  command: string;
+
+  /**
+   * @generated from field: optional string idempotency_key = 3;
+   */
+  idempotencyKey?: string | undefined;
+};
+```
+
+**Referenced types:** [`ChatScope`](/docs/sdk/api/ts/generated-soulfire-chat-pb#chatscope).
+
+### `scope`
+
+**Type:** `ChatScope | undefined` ([`ChatScope`](/docs/sdk/api/ts/generated-soulfire-chat-pb#chatscope)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L76)
+
+### `command`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L81)
+
+### `idempotencyKey`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L86)
+
+## SendCommandRequestSchema
+
+**Object** in `generated/soulfire/chat_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L93).
+
+Describes the message soulfire.v1.SendCommandRequest.
+Use `create(SendCommandRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/chat_pb`.
+
+```ts
+SendCommandRequestSchema: GenMessage<SendCommandRequest>
+```
+
+**Referenced types:** [`SendCommandRequest`](/docs/sdk/api/ts/generated-soulfire-chat-pb#sendcommandrequest).
+
+## SendPublicChatRequest
+
+**Type** in `generated/soulfire/chat_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L45).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/chat_pb`.
+
+```ts
+type SendPublicChatRequest = Message<"soulfire.v1.SendPublicChatRequest"> & {
+  /**
+   * @generated from field: soulfire.v1.ChatScope scope = 1;
+   */
+  scope?: ChatScope | undefined;
+
+  /**
+   * @generated from field: string message = 2;
+   */
+  message: string;
+
+  /**
+   * @generated from field: optional string idempotency_key = 3;
+   */
+  idempotencyKey?: string | undefined;
+};
+```
+
+**Referenced types:** [`ChatScope`](/docs/sdk/api/ts/generated-soulfire-chat-pb#chatscope).
+
+### `scope`
+
+**Type:** `ChatScope | undefined` ([`ChatScope`](/docs/sdk/api/ts/generated-soulfire-chat-pb#chatscope)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L49)
+
+### `message`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L54)
+
+### `idempotencyKey`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L59)
+
+## SendPublicChatRequestSchema
+
+**Object** in `generated/soulfire/chat_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L66).
+
+Describes the message soulfire.v1.SendPublicChatRequest.
+Use `create(SendPublicChatRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/chat_pb`.
+
+```ts
+SendPublicChatRequestSchema: GenMessage<SendPublicChatRequest>
+```
+
+**Referenced types:** [`SendPublicChatRequest`](/docs/sdk/api/ts/generated-soulfire-chat-pb#sendpublicchatrequest).
+
+## SendWhisperRequest
+
+**Type** in `generated/soulfire/chat_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L99).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/chat_pb`.
+
+```ts
+type SendWhisperRequest = Message<"soulfire.v1.SendWhisperRequest"> & {
+  /**
+   * @generated from field: soulfire.v1.ChatScope scope = 1;
+   */
+  scope?: ChatScope | undefined;
+
+  /**
+   * @generated from field: string recipient = 2;
+   */
+  recipient: string;
+
+  /**
+   * @generated from field: string message = 3;
+   */
+  message: string;
+
+  /**
+   * @generated from field: optional string idempotency_key = 4;
+   */
+  idempotencyKey?: string | undefined;
+};
+```
+
+**Referenced types:** [`ChatScope`](/docs/sdk/api/ts/generated-soulfire-chat-pb#chatscope).
+
+### `scope`
+
+**Type:** `ChatScope | undefined` ([`ChatScope`](/docs/sdk/api/ts/generated-soulfire-chat-pb#chatscope)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L103)
+
+### `recipient`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L108)
+
+### `message`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L113)
+
+### `idempotencyKey`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L118)
+
+## SendWhisperRequestSchema
+
+**Object** in `generated/soulfire/chat_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L125).
+
+Describes the message soulfire.v1.SendWhisperRequest.
+Use `create(SendWhisperRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/chat_pb`.
+
+```ts
+SendWhisperRequestSchema: GenMessage<SendWhisperRequest>
+```
+
+**Referenced types:** [`SendWhisperRequest`](/docs/sdk/api/ts/generated-soulfire-chat-pb#sendwhisperrequest).
+
+## TabCompleteRequest
+
+**Type** in `generated/soulfire/chat_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L148).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/chat_pb`.
+
+```ts
+type TabCompleteRequest = Message<"soulfire.v1.TabCompleteRequest"> & {
+  /**
+   * @generated from field: soulfire.v1.ChatScope scope = 1;
+   */
+  scope?: ChatScope | undefined;
+
+  /**
+   * @generated from field: string input = 2;
+   */
+  input: string;
+
+  /**
+   * @generated from field: optional int32 cursor = 3;
+   */
+  cursor?: number | undefined;
+};
+```
+
+**Referenced types:** [`ChatScope`](/docs/sdk/api/ts/generated-soulfire-chat-pb#chatscope).
+
+### `scope`
+
+**Type:** `ChatScope | undefined` ([`ChatScope`](/docs/sdk/api/ts/generated-soulfire-chat-pb#chatscope)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L152)
+
+### `input`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L157)
+
+### `cursor`
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L162)
+
+## TabCompleteRequestSchema
+
+**Object** in `generated/soulfire/chat_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L169).
+
+Describes the message soulfire.v1.TabCompleteRequest.
+Use `create(TabCompleteRequestSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/chat_pb`.
+
+```ts
+TabCompleteRequestSchema: GenMessage<TabCompleteRequest>
+```
+
+**Referenced types:** [`TabCompleteRequest`](/docs/sdk/api/ts/generated-soulfire-chat-pb#tabcompleterequest).
+
+## TabCompleteResponse
+
+**Type** in `generated/soulfire/chat_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L197).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/chat_pb`.
+
+```ts
+type TabCompleteResponse = Message<"soulfire.v1.TabCompleteResponse"> & {
+  /**
+   * @generated from field: int32 start = 1;
+   */
+  start: number;
+
+  /**
+   * @generated from field: int32 length = 2;
+   */
+  length: number;
+
+  /**
+   * @generated from field: repeated soulfire.v1.TabSuggestion suggestions = 3;
+   */
+  suggestions: TabSuggestion[];
+};
+```
+
+**Referenced types:** [`TabSuggestion`](/docs/sdk/api/ts/generated-soulfire-chat-pb#tabsuggestion).
+
+### `start`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L201)
+
+### `length`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L206)
+
+### `suggestions`
+
+**Type:** `TabSuggestion[]` ([`TabSuggestion`](/docs/sdk/api/ts/generated-soulfire-chat-pb#tabsuggestion)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L211)
+
+## TabCompleteResponseSchema
+
+**Object** in `generated/soulfire/chat_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L218).
+
+Describes the message soulfire.v1.TabCompleteResponse.
+Use `create(TabCompleteResponseSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/chat_pb`.
+
+```ts
+TabCompleteResponseSchema: GenMessage<TabCompleteResponse>
+```
+
+**Referenced types:** [`TabCompleteResponse`](/docs/sdk/api/ts/generated-soulfire-chat-pb#tabcompleteresponse).
+
+## TabSuggestion
+
+**Type** in `generated/soulfire/chat_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L175).
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/chat_pb`.
+
+```ts
+type TabSuggestion = Message<"soulfire.v1.TabSuggestion"> & {
+  /**
+   * @generated from field: string text = 1;
+   */
+  text: string;
+
+  /**
+   * @generated from field: optional string tooltip_json = 2;
+   */
+  tooltipJson?: string | undefined;
+};
+```
+
+### `text`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L179)
+
+### `tooltipJson`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L184)
+
+## TabSuggestionSchema
+
+**Object** in `generated/soulfire/chat_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/chat_pb.ts#L191).
+
+Describes the message soulfire.v1.TabSuggestion.
+Use `create(TabSuggestionSchema)` to create a new message.
+
+**Import from:** `@soulfiremc/sdk/generated/soulfire/chat_pb`.
+
+```ts
+TabSuggestionSchema: GenMessage<TabSuggestion>
+```
+
+**Referenced types:** [`TabSuggestion`](/docs/sdk/api/ts/generated-soulfire-chat-pb#tabsuggestion).

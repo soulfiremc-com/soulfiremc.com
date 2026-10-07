@@ -1,0 +1,91 @@
+---
+title: "CapabilitySet"
+description: "TypeScript API signatures, fields, and source for CapabilitySet."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `connection`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/connection.ts#L49).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`.
+
+```ts
+class CapabilitySet
+```
+
+## `constructor`
+
+```ts
+new CapabilitySet(handshake: SdkHandshakeResponse): CapabilitySet
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `handshake` | [`SdkHandshakeResponse`](/docs/sdk/api/ts/generated-soulfire-sdk-pb#sdkhandshakeresponse) | Required |  |
+
+**Returns:** [`CapabilitySet`](/docs/sdk/api/ts/capability-set).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/connection.ts#L52)
+
+## `supports`
+
+```ts
+supports(capability: string, minimumRevision?: number): boolean
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `capability` | `string` | Required |  |
+| `minimumRevision` | `number` | `1` |  |
+
+**Returns:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/connection.ts#L58)
+
+## `require`
+
+```ts
+require(capability: string, minimumRevision?: number): void
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `capability` | `string` | Required |  |
+| `minimumRevision` | `number` | `1` |  |
+
+**Returns:** `void`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/connection.ts#L62)
+
+## `revision`
+
+```ts
+revision(capability: string): number | undefined
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `capability` | `string` | Required |  |
+
+**Returns:** `number | undefined`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/connection.ts#L68)
+
+## `entries`
+
+```ts
+entries(): ReadonlyMap<string, number>
+```
+
+**Returns:** `ReadonlyMap<string, number>`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/connection.ts#L72)

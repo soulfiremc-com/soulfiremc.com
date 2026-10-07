@@ -1,0 +1,439 @@
+---
+title: "SoulFireInstance"
+description: "Python API signatures, fields, and source for SoulFireInstance."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `client`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L589).
+
+**Import from:** `soulfire`, `soulfire.client`.
+
+```python
+class SoulFireInstance
+```
+
+## `__init__`
+
+```python
+def __init__(self, instance_id: str, bot_service: BotServiceClient, bot_live: BotLiveServiceClient, instance_service: InstanceServiceClient, mc_auth_service: MCAuthServiceClient | None=None, bot_tasks: BotTaskServiceClient | None=None, pathfinder_service: PathfinderServiceClient | None=None, chat_service: ChatServiceClient | None=None, inventory_service: InventoryServiceClient | None=None, recipe_service: RecipeServiceClient | None=None, registry_service: RegistryServiceClient | None=None, world_service: WorldServiceClient | None=None, protocol_service: BotProtocolServiceClient | None=None, capabilities: CapabilitySet | None=None, instance_live: InstanceLiveServiceClient | None=None) -> None
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instance_id` | `str` | Required | positional or keyword |
+| `bot_service` | [`BotServiceClient`](/docs/sdk/api/py/generated-bot-connect#botserviceclient) | Required | positional or keyword |
+| `bot_live` | [`BotLiveServiceClient`](/docs/sdk/api/py/generated-bot-live-connect#botliveserviceclient) | Required | positional or keyword |
+| `instance_service` | [`InstanceServiceClient`](/docs/sdk/api/py/generated-instance-connect#instanceserviceclient) | Required | positional or keyword |
+| `mc_auth_service` | `MCAuthServiceClient \| None` ([`MCAuthServiceClient`](/docs/sdk/api/py/generated-mc-auth-connect#mcauthserviceclient)) | `None` | positional or keyword |
+| `bot_tasks` | `BotTaskServiceClient \| None` ([`BotTaskServiceClient`](/docs/sdk/api/py/generated-task-connect#bottaskserviceclient)) | `None` | positional or keyword |
+| `pathfinder_service` | `PathfinderServiceClient \| None` ([`PathfinderServiceClient`](/docs/sdk/api/py/generated-pathfinding-connect#pathfinderserviceclient)) | `None` | positional or keyword |
+| `chat_service` | `ChatServiceClient \| None` ([`ChatServiceClient`](/docs/sdk/api/py/generated-chat-connect#chatserviceclient)) | `None` | positional or keyword |
+| `inventory_service` | `InventoryServiceClient \| None` ([`InventoryServiceClient`](/docs/sdk/api/py/generated-inventory-connect#inventoryserviceclient)) | `None` | positional or keyword |
+| `recipe_service` | `RecipeServiceClient \| None` ([`RecipeServiceClient`](/docs/sdk/api/py/generated-recipe-connect#recipeserviceclient)) | `None` | positional or keyword |
+| `registry_service` | `RegistryServiceClient \| None` ([`RegistryServiceClient`](/docs/sdk/api/py/generated-registry-connect#registryserviceclient)) | `None` | positional or keyword |
+| `world_service` | `WorldServiceClient \| None` ([`WorldServiceClient`](/docs/sdk/api/py/generated-world-connect#worldserviceclient)) | `None` | positional or keyword |
+| `protocol_service` | `BotProtocolServiceClient \| None` ([`BotProtocolServiceClient`](/docs/sdk/api/py/generated-protocol-connect#botprotocolserviceclient)) | `None` | positional or keyword |
+| `capabilities` | `CapabilitySet \| None` ([`CapabilitySet`](/docs/sdk/api/py/capability-set)) | `None` | positional or keyword |
+| `instance_live` | `InstanceLiveServiceClient \| None` ([`InstanceLiveServiceClient`](/docs/sdk/api/py/generated-instance-live-connect#instanceliveserviceclient)) | `None` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L590)
+
+## `id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L608)
+
+## `fleet`
+
+```python
+@property
+def fleet(self) -> SoulFireFleet
+```
+
+**Returns:** [`SoulFireFleet`](/docs/sdk/api/py/soul-fire-fleet).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L625)
+
+## `get_or_create_bot`
+
+```python
+def get_or_create_bot(self, name: str, *, auth: Literal['offline', 'microsoft']='offline', username: str | None=None, start: bool=True, ready_timeout: float=30.0, on_device_code: Callable[[DeviceCode], Effect[None, SoulFireOperationError]] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireBot, SoulFireOperationError, Scope]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `name` | `str` | Required | positional or keyword |
+| `auth` | `Literal['offline', 'microsoft']` | `'offline'` | keyword only |
+| `username` | `str \| None` | `None` | keyword only |
+| `start` | `bool` | `True` | keyword only |
+| `ready_timeout` | `float` | `30.0` | keyword only |
+| `on_device_code` | `Callable[[DeviceCode], Effect[None, SoulFireOperationError]] \| None` ([`DeviceCode`](/docs/sdk/api/py/generated-mc-auth-pb2#devicecode), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)) | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireBot, SoulFireOperationError, Scope]` ([`SoulFireBot`](/docs/sdk/api/py/soul-fire-bot), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L629)
+
+## `bot`
+
+```python
+def bot(self, bot_id: str) -> SoulFireBot
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `bot_id` | `str` | Required | positional or keyword |
+
+**Returns:** [`SoulFireBot`](/docs/sdk/api/py/soul-fire-bot).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L705)
+
+## `info`
+
+```python
+def info(self, *, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[InstanceInfo, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[InstanceInfo, SoulFireOperationError]` ([`InstanceInfo`](/docs/sdk/api/py/generated-instance-pb2#instanceinfo), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L722)
+
+## `delete`
+
+```python
+def delete(self, *, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[None, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[None, SoulFireOperationError]` ([`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L743)
+
+## `update_name`
+
+```python
+def update_name(self, friendly_name: str, *, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[None, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `friendly_name` | `str` | Required | positional or keyword |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[None, SoulFireOperationError]` ([`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L754)
+
+## `set_config_entry`
+
+```python
+def set_config_entry(self, namespace: str, key: str, value: Any, *, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[None, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `namespace` | `str` | Required | positional or keyword |
+| `key` | `str` | Required | positional or keyword |
+| `value` | `Any` | Required | positional or keyword |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[None, SoulFireOperationError]` ([`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L771)
+
+## `add_accounts`
+
+```python
+def add_accounts(self, accounts: Iterable[MinecraftAccountProto], *, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[None, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `accounts` | `Iterable[MinecraftAccountProto]` ([`MinecraftAccountProto`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountproto)) | Required | positional or keyword |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[None, SoulFireOperationError]` ([`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L792)
+
+## `remove_accounts`
+
+```python
+def remove_accounts(self, profile_ids: Iterable[str], *, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[None, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `profile_ids` | `Iterable[str]` | Required | positional or keyword |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[None, SoulFireOperationError]` ([`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L809)
+
+## `add_proxies`
+
+```python
+def add_proxies(self, proxies: Iterable[ProxyProto], *, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[None, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `proxies` | `Iterable[ProxyProto]` ([`ProxyProto`](/docs/sdk/api/py/generated-common-pb2#proxyproto)) | Required | positional or keyword |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[None, SoulFireOperationError]` ([`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L828)
+
+## `remove_proxies`
+
+```python
+def remove_proxies(self, addresses: Iterable[str], *, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[None, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `addresses` | `Iterable[str]` | Required | positional or keyword |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[None, SoulFireOperationError]` ([`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L845)
+
+## `login_credentials`
+
+```python
+def login_credentials(self, service: AccountTypeCredentials, payload: Iterable[str], *, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[CredentialsAuthResponse, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | [`AccountTypeCredentials`](/docs/sdk/api/py/generated-common-pb2#accounttypecredentials) | Required | positional or keyword |
+| `payload` | `Iterable[str]` | Required | positional or keyword |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[CredentialsAuthResponse, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`CredentialsAuthResponse`](/docs/sdk/api/py/generated-mc-auth-pb2#credentialsauthresponse), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L861)
+
+## `login_device_code`
+
+```python
+def login_device_code(self, service: AccountTypeDeviceCode, *, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[DeviceCodeAuthResponse, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | [`AccountTypeDeviceCode`](/docs/sdk/api/py/generated-common-pb2#accounttypedevicecode) | Required | positional or keyword |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[DeviceCodeAuthResponse, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`DeviceCodeAuthResponse`](/docs/sdk/api/py/generated-mc-auth-pb2#devicecodeauthresponse), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L878)
+
+## `refresh_account`
+
+```python
+def refresh_account(self, account: MinecraftAccountProto, *, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[RefreshResponse, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `account` | [`MinecraftAccountProto`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountproto) | Required | positional or keyword |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[RefreshResponse, SoulFireOperationError]` ([`RefreshResponse`](/docs/sdk/api/py/generated-mc-auth-pb2#refreshresponse), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L895)
+
+## `bots`
+
+```python
+def bots(self, *, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[list[BotListEntry], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[list[BotListEntry], SoulFireOperationError]` ([`BotListEntry`](/docs/sdk/api/py/generated-bot-pb2#botlistentry), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L919)
+
+## `watch_bot_statuses`
+
+```python
+def watch_bot_statuses(self, *, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[WatchBotStatusesResponse, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[WatchBotStatusesResponse, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`WatchBotStatusesResponse`](/docs/sdk/api/py/generated-bot-pb2#watchbotstatusesresponse), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L930)
+
+## `events`
+
+Watch one multiplexed event stream for bots in this instance.
+
+```python
+def events(self, filter: InstanceEventFilter | None=None, *, bot_ids: Iterable[str]=(), headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[InstanceEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `filter` | `InstanceEventFilter \| None` ([`InstanceEventFilter`](/docs/sdk/api/py/instance-event-filter)) | `None` | positional or keyword |
+| `bot_ids` | `Iterable[str]` | `()` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[InstanceEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`InstanceEvent`](/docs/sdk/api/py/instance-event), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L940)
+
+## `start`
+
+```python
+def start(self, *, bot_ids: Iterable[str] | None=None, count: int | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[list[BotStatus], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `bot_ids` | `Iterable[str] \| None` | `None` | keyword only |
+| `count` | `int \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[list[BotStatus], SoulFireOperationError]` ([`BotStatus`](/docs/sdk/api/py/generated-bot-pb2#botstatus), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L967)
+
+## `stop`
+
+```python
+def stop(self, *, bot_ids: Iterable[str] | None=None, count: int | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[list[BotStatus], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `bot_ids` | `Iterable[str] \| None` | `None` | keyword only |
+| `count` | `int \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[list[BotStatus], SoulFireOperationError]` ([`BotStatus`](/docs/sdk/api/py/generated-bot-pb2#botstatus), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L997)
+
+## `restart`
+
+```python
+def restart(self, *, bot_ids: Iterable[str] | None=None, count: int | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[list[BotStatus], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `bot_ids` | `Iterable[str] \| None` | `None` | keyword only |
+| `count` | `int \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[list[BotStatus], SoulFireOperationError]` ([`BotStatus`](/docs/sdk/api/py/generated-bot-pb2#botstatus), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L1027)

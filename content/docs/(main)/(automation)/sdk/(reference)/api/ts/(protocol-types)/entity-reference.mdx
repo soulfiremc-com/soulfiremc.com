@@ -1,0 +1,50 @@
+---
+title: "EntityReference"
+description: "TypeScript API signatures, fields, and source for EntityReference."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/domain_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L457).
+
+Network IDs are scoped to a connection epoch and must not be cached alone.
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/domain_pb`.
+
+```ts
+type EntityReference = Message<"soulfire.v1.EntityReference"> & {
+  /**
+   * @generated from field: string connection_epoch = 1;
+   */
+  connectionEpoch: string;
+
+  /**
+   * @generated from field: int32 network_id = 2;
+   */
+  networkId: number;
+
+  /**
+   * @generated from field: optional string uuid = 3;
+   */
+  uuid?: string | undefined;
+};
+```
+
+## `connectionEpoch`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L461)
+
+## `networkId`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L466)
+
+## `uuid`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L471)

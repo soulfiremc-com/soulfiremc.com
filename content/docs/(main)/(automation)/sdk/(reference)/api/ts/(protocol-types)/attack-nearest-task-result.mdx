@@ -1,0 +1,61 @@
+---
+title: "AttackNearestTaskResult"
+description: "TypeScript API signatures, fields, and source for AttackNearestTaskResult."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/task_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L800).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/task_pb`.
+
+```ts
+type AttackNearestTaskResult = Message<"soulfire.v1.AttackNearestTaskResult"> & {
+  /**
+   * @generated from field: soulfire.v1.WorldPosition final_position = 1;
+   */
+  finalPosition?: WorldPosition | undefined;
+
+  /**
+   * @generated from field: soulfire.v1.AttackNearestCompletionReason reason = 2;
+   */
+  reason: AttackNearestCompletionReason;
+
+  /**
+   * @generated from field: uint32 attacks = 3;
+   */
+  attacks: number;
+
+  /**
+   * @generated from field: uint32 targets_defeated = 4;
+   */
+  targetsDefeated: number;
+};
+```
+
+**Referenced types:** [`WorldPosition`](/docs/sdk/api/ts/world-position), [`AttackNearestCompletionReason`](/docs/sdk/api/ts/generated-soulfire-task-pb#attacknearestcompletionreason).
+
+## `finalPosition`
+
+**Type:** `WorldPosition | undefined` ([`WorldPosition`](/docs/sdk/api/ts/world-position)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L804)
+
+## `reason`
+
+**Type:** [`AttackNearestCompletionReason`](/docs/sdk/api/ts/generated-soulfire-task-pb#attacknearestcompletionreason).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L809)
+
+## `attacks`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L814)
+
+## `targetsDefeated`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L819)

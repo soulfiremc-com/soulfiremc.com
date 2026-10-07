@@ -1,0 +1,160 @@
+---
+title: "EntitySelector"
+description: "TypeScript API signatures, fields, and source for EntitySelector."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/world_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L148).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/world_pb`.
+
+```ts
+type EntitySelector = Message<"soulfire.v1.EntitySelector"> & {
+  /**
+   * @generated from field: repeated string entity_types = 1;
+   */
+  entityTypes: string[];
+
+  /**
+   * @generated from field: repeated string tags = 2;
+   */
+  tags: string[];
+
+  /**
+   * @generated from field: repeated soulfire.v1.EntityCategory categories = 3;
+   */
+  categories: EntityCategory[];
+
+  /**
+   * @generated from field: optional string uuid = 4;
+   */
+  uuid?: string | undefined;
+
+  /**
+   * @generated from field: optional int32 network_id = 5;
+   */
+  networkId?: number | undefined;
+
+  /**
+   * @generated from field: optional string player_name = 6;
+   */
+  playerName?: string | undefined;
+
+  /**
+   * @generated from field: optional bool alive = 7;
+   */
+  alive?: boolean | undefined;
+
+  /**
+   * @generated from field: optional soulfire.v1.FloatRange health = 8;
+   */
+  health?: FloatRange | undefined;
+
+  /**
+   * @generated from field: optional string custom_name = 9;
+   */
+  customName?: string | undefined;
+
+  /**
+   * @generated from field: repeated string equipped_item_ids = 10;
+   */
+  equippedItemIds: string[];
+
+  /**
+   * @generated from field: repeated string effect_ids = 11;
+   */
+  effectIds: string[];
+
+  /**
+   * @generated from field: optional string owner_uuid = 12;
+   */
+  ownerUuid?: string | undefined;
+
+  /**
+   * @generated from field: bool require_line_of_sight = 13;
+   */
+  requireLineOfSight: boolean;
+};
+```
+
+**Referenced types:** [`EntityCategory`](/docs/sdk/api/ts/generated-soulfire-domain-pb#entitycategory), [`FloatRange`](/docs/sdk/api/ts/generated-soulfire-world-pb#floatrange).
+
+## `entityTypes`
+
+**Type:** `string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L152)
+
+## `tags`
+
+**Type:** `string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L157)
+
+## `categories`
+
+**Type:** `EntityCategory[]` ([`EntityCategory`](/docs/sdk/api/ts/generated-soulfire-domain-pb#entitycategory)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L162)
+
+## `uuid`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L167)
+
+## `networkId`
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L172)
+
+## `playerName`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L177)
+
+## `alive`
+
+**Type:** `boolean | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L182)
+
+## `health`
+
+**Type:** `FloatRange | undefined` ([`FloatRange`](/docs/sdk/api/ts/generated-soulfire-world-pb#floatrange)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L187)
+
+## `customName`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L192)
+
+## `equippedItemIds`
+
+**Type:** `string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L197)
+
+## `effectIds`
+
+**Type:** `string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L202)
+
+## `ownerUuid`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L207)
+
+## `requireLineOfSight`
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L212)

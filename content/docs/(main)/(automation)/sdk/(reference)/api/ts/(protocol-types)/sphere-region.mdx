@@ -1,0 +1,39 @@
+---
+title: "SphereRegion"
+description: "TypeScript API signatures, fields, and source for SphereRegion."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/world_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L254).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/world_pb`.
+
+```ts
+type SphereRegion = Message<"soulfire.v1.SphereRegion"> & {
+  /**
+   * @generated from field: soulfire.v1.WorldPosition center = 1;
+   */
+  center?: WorldPosition | undefined;
+
+  /**
+   * @generated from field: float radius = 2;
+   */
+  radius: number;
+};
+```
+
+**Referenced types:** [`WorldPosition`](/docs/sdk/api/ts/world-position).
+
+## `center`
+
+**Type:** `WorldPosition | undefined` ([`WorldPosition`](/docs/sdk/api/ts/world-position)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L258)
+
+## `radius`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L263)

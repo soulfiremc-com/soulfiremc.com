@@ -1,0 +1,80 @@
+---
+title: "SoulFireBotControlLease"
+description: "Python API signatures, fields, and source for SoulFireBotControlLease."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `bot`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L1298).
+
+**Import from:** `soulfire`, `soulfire.bot`.
+
+```python
+class SoulFireBotControlLease
+```
+
+## `__init__`
+
+```python
+def __init__(self, bot: SoulFireBot, lease: BotControlLease) -> None
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `bot` | [`SoulFireBot`](/docs/sdk/api/py/soul-fire-bot) | Required | positional or keyword |
+| `lease` | [`BotControlLease`](/docs/sdk/api/py/generated-bot-live-pb2#botcontrollease) | Required | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L1299)
+
+## `value`
+
+```python
+@property
+def value(self) -> BotControlLease
+```
+
+**Returns:** [`BotControlLease`](/docs/sdk/api/py/generated-bot-live-pb2#botcontrollease).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L1304)
+
+## `renew`
+
+```python
+def renew(self, *, ttl_seconds: int=30, timeout_ms: int | None=None) -> Effect[BotControlLease, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `ttl_seconds` | `int` | `30` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[BotControlLease, SoulFireOperationError]` ([`BotControlLease`](/docs/sdk/api/py/generated-bot-live-pb2#botcontrollease), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L1310)
+
+## `release`
+
+```python
+def release(self, *, timeout_ms: int | None=None) -> Effect[None, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[None, SoulFireOperationError]` ([`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot.py#L1319)

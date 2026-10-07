@@ -1,0 +1,204 @@
+---
+title: "BlockSnapshot"
+description: "TypeScript API signatures, fields, and source for BlockSnapshot."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/domain_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L677).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/domain_pb`.
+
+```ts
+type BlockSnapshot = Message<"soulfire.v1.BlockSnapshot"> & {
+  /**
+   * @generated from field: soulfire.v1.BlockPosition position = 1;
+   */
+  position?: BlockPosition | undefined;
+
+  /**
+   * @generated from field: string block_id = 2;
+   */
+  blockId: string;
+
+  /**
+   * @generated from field: map<string, string> properties = 3;
+   */
+  properties: { [key: string]: string };
+
+  /**
+   * @generated from field: optional google.protobuf.Struct block_entity = 4;
+   */
+  blockEntity?: JsonObject | undefined;
+
+  /**
+   * @generated from field: optional string biome_id = 5;
+   */
+  biomeId?: string | undefined;
+
+  /**
+   * @generated from field: optional int32 sky_light = 6;
+   */
+  skyLight?: number | undefined;
+
+  /**
+   * @generated from field: optional int32 block_light = 7;
+   */
+  blockLight?: number | undefined;
+
+  /**
+   * @generated from field: float hardness = 8;
+   */
+  hardness: number;
+
+  /**
+   * @generated from field: bool diggable = 9;
+   */
+  diggable: boolean;
+
+  /**
+   * @generated from field: bool replaceable = 10;
+   */
+  replaceable: boolean;
+
+  /**
+   * @generated from field: bool solid = 11;
+   */
+  solid: boolean;
+
+  /**
+   * @generated from field: bool interactive = 12;
+   */
+  interactive: boolean;
+
+  /**
+   * @generated from field: repeated string effective_tool_tags = 13;
+   */
+  effectiveToolTags: string[];
+
+  /**
+   * @generated from field: optional soulfire.v1.FluidSnapshot fluid = 14;
+   */
+  fluid?: FluidSnapshot | undefined;
+
+  /**
+   * @generated from field: optional soulfire.v1.VoxelShape collision_shape = 15;
+   */
+  collisionShape?: VoxelShape | undefined;
+
+  /**
+   * @generated from field: optional soulfire.v1.VoxelShape interaction_shape = 16;
+   */
+  interactionShape?: VoxelShape | undefined;
+
+  /**
+   * @generated from field: uint64 chunk_revision = 17;
+   */
+  chunkRevision: bigint;
+};
+```
+
+**Referenced types:** [`BlockPosition`](/docs/sdk/api/ts/block-position), [`FluidSnapshot`](/docs/sdk/api/ts/generated-soulfire-domain-pb#fluidsnapshot), [`VoxelShape`](/docs/sdk/api/ts/generated-soulfire-domain-pb#voxelshape).
+
+## `position`
+
+**Type:** `BlockPosition | undefined` ([`BlockPosition`](/docs/sdk/api/ts/block-position)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L681)
+
+## `blockId`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L686)
+
+## `properties`
+
+**Type:** `{ [key: string]: string; }`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L691)
+
+## `blockEntity`
+
+**Type:** `JsonObject | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L696)
+
+## `biomeId`
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L701)
+
+## `skyLight`
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L706)
+
+## `blockLight`
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L711)
+
+## `hardness`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L716)
+
+## `diggable`
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L721)
+
+## `replaceable`
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L726)
+
+## `solid`
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L731)
+
+## `interactive`
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L736)
+
+## `effectiveToolTags`
+
+**Type:** `string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L741)
+
+## `fluid`
+
+**Type:** `FluidSnapshot | undefined` ([`FluidSnapshot`](/docs/sdk/api/ts/generated-soulfire-domain-pb#fluidsnapshot)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L746)
+
+## `collisionShape`
+
+**Type:** `VoxelShape | undefined` ([`VoxelShape`](/docs/sdk/api/ts/generated-soulfire-domain-pb#voxelshape)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L751)
+
+## `interactionShape`
+
+**Type:** `VoxelShape | undefined` ([`VoxelShape`](/docs/sdk/api/ts/generated-soulfire-domain-pb#voxelshape)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L756)
+
+## `chunkRevision`
+
+**Type:** `bigint`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L761)

@@ -1,0 +1,358 @@
+---
+title: "PlayerSnapshot"
+description: "TypeScript API signatures, fields, and source for PlayerSnapshot."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/domain_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L843).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/domain_pb`.
+
+```ts
+type PlayerSnapshot = Message<"soulfire.v1.PlayerSnapshot"> & {
+  /**
+   * @generated from field: soulfire.v1.WorldPosition position = 1;
+   */
+  position?: WorldPosition | undefined;
+
+  /**
+   * @generated from field: soulfire.v1.Vec3 velocity = 2;
+   */
+  velocity?: Vec3 | undefined;
+
+  /**
+   * @generated from field: soulfire.v1.Rotation rotation = 3;
+   */
+  rotation?: Rotation | undefined;
+
+  /**
+   * @generated from field: bool on_ground = 4;
+   */
+  onGround: boolean;
+
+  /**
+   * @generated from field: string pose = 5;
+   */
+  pose: string;
+
+  /**
+   * @generated from field: float health = 6;
+   */
+  health: number;
+
+  /**
+   * @generated from field: float max_health = 7;
+   */
+  maxHealth: number;
+
+  /**
+   * @generated from field: int32 food = 8;
+   */
+  food: number;
+
+  /**
+   * @generated from field: float saturation = 9;
+   */
+  saturation: number;
+
+  /**
+   * @generated from field: float exhaustion = 10;
+   */
+  exhaustion: number;
+
+  /**
+   * @generated from field: int32 air = 11;
+   */
+  air: number;
+
+  /**
+   * @generated from field: int32 max_air = 12;
+   */
+  maxAir: number;
+
+  /**
+   * @generated from field: int32 fire_ticks = 13;
+   */
+  fireTicks: number;
+
+  /**
+   * @generated from field: int32 freezing_ticks = 14;
+   */
+  freezingTicks: number;
+
+  /**
+   * @generated from field: soulfire.v1.ExperienceSnapshot experience = 15;
+   */
+  experience?: ExperienceSnapshot | undefined;
+
+  /**
+   * @generated from field: soulfire.v1.GameMode game_mode = 16;
+   */
+  gameMode: GameMode;
+
+  /**
+   * @generated from field: soulfire.v1.PlayerAbilitiesSnapshot abilities = 17;
+   */
+  abilities?: PlayerAbilitiesSnapshot | undefined;
+
+  /**
+   * @generated from field: int32 selected_hotbar_slot = 18;
+   */
+  selectedHotbarSlot: number;
+
+  /**
+   * @generated from field: optional soulfire.v1.ItemStackSnapshot main_hand = 19;
+   */
+  mainHand?: ItemStackSnapshot | undefined;
+
+  /**
+   * @generated from field: optional soulfire.v1.ItemStackSnapshot off_hand = 20;
+   */
+  offHand?: ItemStackSnapshot | undefined;
+
+  /**
+   * @generated from field: map<string, soulfire.v1.ItemStackSnapshot> equipment = 21;
+   */
+  equipment: { [key: string]: ItemStackSnapshot };
+
+  /**
+   * @generated from field: repeated soulfire.v1.EffectSnapshot effects = 22;
+   */
+  effects: EffectSnapshot[];
+
+  /**
+   * @generated from field: repeated soulfire.v1.AttributeSnapshot attributes = 23;
+   */
+  attributes: AttributeSnapshot[];
+
+  /**
+   * @generated from field: bool sleeping = 24;
+   */
+  sleeping: boolean;
+
+  /**
+   * @generated from field: bool using_item = 25;
+   */
+  usingItem: boolean;
+
+  /**
+   * @generated from field: optional soulfire.v1.EntityReference vehicle = 26;
+   */
+  vehicle?: EntityReference | undefined;
+
+  /**
+   * @generated from field: optional soulfire.v1.BlockPosition spawn_point = 27;
+   */
+  spawnPoint?: BlockPosition | undefined;
+
+  /**
+   * @generated from field: bool dead = 28;
+   */
+  dead: boolean;
+
+  /**
+   * @generated from field: optional float last_damage = 29;
+   */
+  lastDamage?: number | undefined;
+
+  /**
+   * @generated from field: string connection_epoch = 30;
+   */
+  connectionEpoch: string;
+
+  /**
+   * @generated from field: uint64 revision = 31;
+   */
+  revision: bigint;
+};
+```
+
+**Referenced types:** [`WorldPosition`](/docs/sdk/api/ts/world-position), [`Vec3`](/docs/sdk/api/ts/vec3), [`Rotation`](/docs/sdk/api/ts/generated-soulfire-domain-pb#rotation), [`ExperienceSnapshot`](/docs/sdk/api/ts/generated-soulfire-domain-pb#experiencesnapshot), [`GameMode`](/docs/sdk/api/ts/generated-soulfire-bot-pb#gamemode), [`PlayerAbilitiesSnapshot`](/docs/sdk/api/ts/generated-soulfire-domain-pb#playerabilitiessnapshot), [`ItemStackSnapshot`](/docs/sdk/api/ts/item-stack-snapshot), [`EffectSnapshot`](/docs/sdk/api/ts/generated-soulfire-domain-pb#effectsnapshot), [`AttributeSnapshot`](/docs/sdk/api/ts/generated-soulfire-domain-pb#attributesnapshot), [`EntityReference`](/docs/sdk/api/ts/entity-reference), [`BlockPosition`](/docs/sdk/api/ts/block-position).
+
+## `position`
+
+**Type:** `WorldPosition | undefined` ([`WorldPosition`](/docs/sdk/api/ts/world-position)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L847)
+
+## `velocity`
+
+**Type:** `Vec3 | undefined` ([`Vec3`](/docs/sdk/api/ts/vec3)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L852)
+
+## `rotation`
+
+**Type:** `Rotation | undefined` ([`Rotation`](/docs/sdk/api/ts/generated-soulfire-domain-pb#rotation)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L857)
+
+## `onGround`
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L862)
+
+## `pose`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L867)
+
+## `health`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L872)
+
+## `maxHealth`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L877)
+
+## `food`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L882)
+
+## `saturation`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L887)
+
+## `exhaustion`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L892)
+
+## `air`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L897)
+
+## `maxAir`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L902)
+
+## `fireTicks`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L907)
+
+## `freezingTicks`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L912)
+
+## `experience`
+
+**Type:** `ExperienceSnapshot | undefined` ([`ExperienceSnapshot`](/docs/sdk/api/ts/generated-soulfire-domain-pb#experiencesnapshot)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L917)
+
+## `gameMode`
+
+**Type:** [`GameMode`](/docs/sdk/api/ts/generated-soulfire-bot-pb#gamemode).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L922)
+
+## `abilities`
+
+**Type:** `PlayerAbilitiesSnapshot | undefined` ([`PlayerAbilitiesSnapshot`](/docs/sdk/api/ts/generated-soulfire-domain-pb#playerabilitiessnapshot)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L927)
+
+## `selectedHotbarSlot`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L932)
+
+## `mainHand`
+
+**Type:** `ItemStackSnapshot | undefined` ([`ItemStackSnapshot`](/docs/sdk/api/ts/item-stack-snapshot)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L937)
+
+## `offHand`
+
+**Type:** `ItemStackSnapshot | undefined` ([`ItemStackSnapshot`](/docs/sdk/api/ts/item-stack-snapshot)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L942)
+
+## `equipment`
+
+**Type:** `{ [key: string]: ItemStackSnapshot; }` ([`ItemStackSnapshot`](/docs/sdk/api/ts/item-stack-snapshot)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L947)
+
+## `effects`
+
+**Type:** `EffectSnapshot[]` ([`EffectSnapshot`](/docs/sdk/api/ts/generated-soulfire-domain-pb#effectsnapshot)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L952)
+
+## `attributes`
+
+**Type:** `AttributeSnapshot[]` ([`AttributeSnapshot`](/docs/sdk/api/ts/generated-soulfire-domain-pb#attributesnapshot)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L957)
+
+## `sleeping`
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L962)
+
+## `usingItem`
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L967)
+
+## `vehicle`
+
+**Type:** `EntityReference | undefined` ([`EntityReference`](/docs/sdk/api/ts/entity-reference)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L972)
+
+## `spawnPoint`
+
+**Type:** `BlockPosition | undefined` ([`BlockPosition`](/docs/sdk/api/ts/block-position)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L977)
+
+## `dead`
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L982)
+
+## `lastDamage`
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L987)
+
+## `connectionEpoch`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L992)
+
+## `revision`
+
+**Type:** `bigint`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/domain_pb.ts#L997)

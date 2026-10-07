@@ -1,0 +1,116 @@
+---
+title: "SoulFireRegistry"
+description: "Python API signatures, fields, and source for SoulFireRegistry."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `semantic`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L1245).
+
+**Import from:** `soulfire`, `soulfire.semantic`.
+
+```python
+class SoulFireRegistry
+```
+
+## `__init__`
+
+```python
+def __init__(self, instance_id: str, bot_id: str, client: RegistryServiceClient) -> None
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instance_id` | `str` | Required | positional or keyword |
+| `bot_id` | `str` | Required | positional or keyword |
+| `client` | [`RegistryServiceClient`](/docs/sdk/api/py/generated-registry-connect#registryserviceclient) | Required | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L1246)
+
+## `identity`
+
+```python
+def identity(self, *, timeout_ms: int | None=None) -> Effect[GetRegistryIdentityResponse, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[GetRegistryIdentityResponse, SoulFireOperationError]` ([`GetRegistryIdentityResponse`](/docs/sdk/api/py/generated-registry-pb2#getregistryidentityresponse), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L1252)
+
+## `entries`
+
+```python
+def entries(self, kind: RegistryKind, *, id_prefix: str='', tags: Iterable[str]=(), page_size: int=0, page_token: str='', timeout_ms: int | None=None) -> Effect[ListRegistryEntriesResponse, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `kind` | [`RegistryKind`](/docs/sdk/api/py/generated-registry-pb2#registrykind) | Required | positional or keyword |
+| `id_prefix` | `str` | `''` | keyword only |
+| `tags` | `Iterable[str]` | `()` | keyword only |
+| `page_size` | `int` | `0` | keyword only |
+| `page_token` | `str` | `''` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[ListRegistryEntriesResponse, SoulFireOperationError]` ([`ListRegistryEntriesResponse`](/docs/sdk/api/py/generated-registry-pb2#listregistryentriesresponse), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L1266)
+
+## `entry`
+
+```python
+def entry(self, kind: RegistryKind, item_id: str, *, timeout_ms: int | None=None) -> Effect[GetRegistryEntryResponse, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `kind` | [`RegistryKind`](/docs/sdk/api/py/generated-registry-pb2#registrykind) | Required | positional or keyword |
+| `item_id` | `str` | Required | positional or keyword |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[GetRegistryEntryResponse, SoulFireOperationError]` ([`GetRegistryEntryResponse`](/docs/sdk/api/py/generated-registry-pb2#getregistryentryresponse), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L1295)
+
+## `tags`
+
+```python
+def tags(self, kind: RegistryKind, *, prefix: str='', page_size: int=0, page_token: str='', timeout_ms: int | None=None) -> Effect[ListRegistryTagsResponse, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `kind` | [`RegistryKind`](/docs/sdk/api/py/generated-registry-pb2#registrykind) | Required | positional or keyword |
+| `prefix` | `str` | `''` | keyword only |
+| `page_size` | `int` | `0` | keyword only |
+| `page_token` | `str` | `''` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[ListRegistryTagsResponse, SoulFireOperationError]` ([`ListRegistryTagsResponse`](/docs/sdk/api/py/generated-registry-pb2#listregistrytagsresponse), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L1311)

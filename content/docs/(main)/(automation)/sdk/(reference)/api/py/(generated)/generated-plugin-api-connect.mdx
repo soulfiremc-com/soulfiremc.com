@@ -1,0 +1,556 @@
+---
+title: "plugin_api_connect module"
+description: "Python API signatures, fields, and source for plugin_api_connect module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`PluginApiService`](/docs/sdk/api/py/generated-plugin-api-connect#pluginapiservice) | class |
+| [`PluginApiServiceASGIApplication`](/docs/sdk/api/py/generated-plugin-api-connect#pluginapiserviceasgiapplication) | class |
+| [`PluginApiServiceClient`](/docs/sdk/api/py/generated-plugin-api-connect#pluginapiserviceclient) | class |
+| [`PluginApiServiceClientSync`](/docs/sdk/api/py/generated-plugin-api-connect#pluginapiserviceclientsync) | class |
+| [`PluginApiServiceSync`](/docs/sdk/api/py/generated-plugin-api-connect#pluginapiservicesync) | class |
+| [`PluginApiServiceWSGIApplication`](/docs/sdk/api/py/generated-plugin-api-connect#pluginapiservicewsgiapplication) | class |
+
+## PluginApiService
+
+**Class** in `plugin_api_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L37).
+
+**Import from:** `soulfire.plugin_api_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class PluginApiService(Protocol)
+```
+
+### `list_plugin_apis`
+
+```python
+async def list_plugin_apis(self, request: ListPluginApisRequest, ctx: RequestContext[ListPluginApisRequest, ListPluginApisResponse]) -> ListPluginApisResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ListPluginApisRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#listpluginapisrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[ListPluginApisRequest, ListPluginApisResponse]` ([`ListPluginApisRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#listpluginapisrequest), [`ListPluginApisResponse`](/docs/sdk/api/py/generated-plugin-api-pb2#listpluginapisresponse)) | Required | positional or keyword |
+
+**Returns:** [`ListPluginApisResponse`](/docs/sdk/api/py/generated-plugin-api-pb2#listpluginapisresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L38)
+
+### `get_plugin_api`
+
+```python
+async def get_plugin_api(self, request: GetPluginApiRequest, ctx: RequestContext[GetPluginApiRequest, GetPluginApiResponse]) -> GetPluginApiResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetPluginApiRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#getpluginapirequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[GetPluginApiRequest, GetPluginApiResponse]` ([`GetPluginApiRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#getpluginapirequest), [`GetPluginApiResponse`](/docs/sdk/api/py/generated-plugin-api-pb2#getpluginapiresponse)) | Required | positional or keyword |
+
+**Returns:** [`GetPluginApiResponse`](/docs/sdk/api/py/generated-plugin-api-pb2#getpluginapiresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L41)
+
+### `get_plugin_descriptor_set`
+
+```python
+async def get_plugin_descriptor_set(self, request: GetPluginDescriptorSetRequest, ctx: RequestContext[GetPluginDescriptorSetRequest, GetPluginDescriptorSetResponse]) -> GetPluginDescriptorSetResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetPluginDescriptorSetRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#getplugindescriptorsetrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[GetPluginDescriptorSetRequest, GetPluginDescriptorSetResponse]` ([`GetPluginDescriptorSetRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#getplugindescriptorsetrequest), [`GetPluginDescriptorSetResponse`](/docs/sdk/api/py/generated-plugin-api-pb2#getplugindescriptorsetresponse)) | Required | positional or keyword |
+
+**Returns:** [`GetPluginDescriptorSetResponse`](/docs/sdk/api/py/generated-plugin-api-pb2#getplugindescriptorsetresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L44)
+
+### `watch_plugin_apis`
+
+```python
+def watch_plugin_apis(self, request: WatchPluginApisRequest, ctx: RequestContext[WatchPluginApisRequest, PluginApiEvent]) -> AsyncIterator[PluginApiEvent]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`WatchPluginApisRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#watchpluginapisrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[WatchPluginApisRequest, PluginApiEvent]` ([`WatchPluginApisRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#watchpluginapisrequest), [`PluginApiEvent`](/docs/sdk/api/py/generated-plugin-api-pb2#pluginapievent)) | Required | positional or keyword |
+
+**Returns:** `AsyncIterator[PluginApiEvent]` ([`PluginApiEvent`](/docs/sdk/api/py/generated-plugin-api-pb2#pluginapievent)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L47)
+
+### `watch_plugin_events`
+
+```python
+def watch_plugin_events(self, request: WatchPluginEventsRequest, ctx: RequestContext[WatchPluginEventsRequest, PluginEvent]) -> AsyncIterator[PluginEvent]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`WatchPluginEventsRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#watchplugineventsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[WatchPluginEventsRequest, PluginEvent]` ([`WatchPluginEventsRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#watchplugineventsrequest), [`PluginEvent`](/docs/sdk/api/py/generated-plugin-api-pb2#pluginevent)) | Required | positional or keyword |
+
+**Returns:** `AsyncIterator[PluginEvent]` ([`PluginEvent`](/docs/sdk/api/py/generated-plugin-api-pb2#pluginevent)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L50)
+
+## PluginApiServiceASGIApplication
+
+**Class** in `plugin_api_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L54).
+
+**Import from:** `soulfire.plugin_api_connect`.
+
+**Bases:** `ConnectASGIApplication[PluginApiService]` ([`PluginApiService`](/docs/sdk/api/py/generated-plugin-api-connect#pluginapiservice)).
+
+```python
+class PluginApiServiceASGIApplication(ConnectASGIApplication[PluginApiService])
+```
+
+**Referenced types:** [`PluginApiService`](/docs/sdk/api/py/generated-plugin-api-connect#pluginapiservice).
+
+### `__init__`
+
+```python
+def __init__(self, service: PluginApiService | AsyncGenerator[PluginApiService], *, interceptors: Iterable[Interceptor]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | `PluginApiService \| AsyncGenerator[PluginApiService]` ([`PluginApiService`](/docs/sdk/api/py/generated-plugin-api-connect#pluginapiservice)) | Required | positional or keyword |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `compressions` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L55)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L125)
+
+## PluginApiServiceClient
+
+**Class** in `plugin_api_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L130).
+
+**Import from:** `soulfire.plugin_api_connect`.
+
+**Bases:** `ConnectClient`.
+
+```python
+class PluginApiServiceClient(ConnectClient)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[Interceptor]=(), http_client: Client | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `http_client` | `Client \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L131)
+
+### `list_plugin_apis`
+
+```python
+async def list_plugin_apis(self, request: ListPluginApisRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> ListPluginApisResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ListPluginApisRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#listpluginapisrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`ListPluginApisResponse`](/docs/sdk/api/py/generated-plugin-api-pb2#listpluginapisresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L155)
+
+### `get_plugin_api`
+
+```python
+async def get_plugin_api(self, request: GetPluginApiRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> GetPluginApiResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetPluginApiRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#getpluginapirequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`GetPluginApiResponse`](/docs/sdk/api/py/generated-plugin-api-pb2#getpluginapiresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L175)
+
+### `get_plugin_descriptor_set`
+
+```python
+async def get_plugin_descriptor_set(self, request: GetPluginDescriptorSetRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> GetPluginDescriptorSetResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetPluginDescriptorSetRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#getplugindescriptorsetrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`GetPluginDescriptorSetResponse`](/docs/sdk/api/py/generated-plugin-api-pb2#getplugindescriptorsetresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L195)
+
+### `watch_plugin_apis`
+
+```python
+def watch_plugin_apis(self, request: WatchPluginApisRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> AsyncIterator[PluginApiEvent]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`WatchPluginApisRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#watchpluginapisrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `AsyncIterator[PluginApiEvent]` ([`PluginApiEvent`](/docs/sdk/api/py/generated-plugin-api-pb2#pluginapievent)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L215)
+
+### `watch_plugin_events`
+
+```python
+def watch_plugin_events(self, request: WatchPluginEventsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> AsyncIterator[PluginEvent]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`WatchPluginEventsRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#watchplugineventsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `AsyncIterator[PluginEvent]` ([`PluginEvent`](/docs/sdk/api/py/generated-plugin-api-pb2#pluginevent)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L235)
+
+## PluginApiServiceClientSync
+
+**Class** in `plugin_api_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L346).
+
+**Import from:** `soulfire.plugin_api_connect`.
+
+**Bases:** `ConnectClientSync`.
+
+```python
+class PluginApiServiceClientSync(ConnectClientSync)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[InterceptorSync]=(), http_client: SyncClient | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | keyword only |
+| `http_client` | `SyncClient \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L347)
+
+### `list_plugin_apis`
+
+```python
+def list_plugin_apis(self, request: ListPluginApisRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> ListPluginApisResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ListPluginApisRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#listpluginapisrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`ListPluginApisResponse`](/docs/sdk/api/py/generated-plugin-api-pb2#listpluginapisresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L371)
+
+### `get_plugin_api`
+
+```python
+def get_plugin_api(self, request: GetPluginApiRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> GetPluginApiResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetPluginApiRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#getpluginapirequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`GetPluginApiResponse`](/docs/sdk/api/py/generated-plugin-api-pb2#getpluginapiresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L390)
+
+### `get_plugin_descriptor_set`
+
+```python
+def get_plugin_descriptor_set(self, request: GetPluginDescriptorSetRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> GetPluginDescriptorSetResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetPluginDescriptorSetRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#getplugindescriptorsetrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`GetPluginDescriptorSetResponse`](/docs/sdk/api/py/generated-plugin-api-pb2#getplugindescriptorsetresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L409)
+
+### `watch_plugin_apis`
+
+```python
+def watch_plugin_apis(self, request: WatchPluginApisRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> Iterator[PluginApiEvent]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`WatchPluginApisRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#watchpluginapisrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Iterator[PluginApiEvent]` ([`PluginApiEvent`](/docs/sdk/api/py/generated-plugin-api-pb2#pluginapievent)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L428)
+
+### `watch_plugin_events`
+
+```python
+def watch_plugin_events(self, request: WatchPluginEventsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> Iterator[PluginEvent]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`WatchPluginEventsRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#watchplugineventsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Iterator[PluginEvent]` ([`PluginEvent`](/docs/sdk/api/py/generated-plugin-api-pb2#pluginevent)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L447)
+
+## PluginApiServiceSync
+
+**Class** in `plugin_api_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L255).
+
+**Import from:** `soulfire.plugin_api_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class PluginApiServiceSync(Protocol)
+```
+
+### `list_plugin_apis`
+
+```python
+def list_plugin_apis(self, request: ListPluginApisRequest, ctx: RequestContext[ListPluginApisRequest, ListPluginApisResponse]) -> ListPluginApisResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ListPluginApisRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#listpluginapisrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[ListPluginApisRequest, ListPluginApisResponse]` ([`ListPluginApisRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#listpluginapisrequest), [`ListPluginApisResponse`](/docs/sdk/api/py/generated-plugin-api-pb2#listpluginapisresponse)) | Required | positional or keyword |
+
+**Returns:** [`ListPluginApisResponse`](/docs/sdk/api/py/generated-plugin-api-pb2#listpluginapisresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L256)
+
+### `get_plugin_api`
+
+```python
+def get_plugin_api(self, request: GetPluginApiRequest, ctx: RequestContext[GetPluginApiRequest, GetPluginApiResponse]) -> GetPluginApiResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetPluginApiRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#getpluginapirequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[GetPluginApiRequest, GetPluginApiResponse]` ([`GetPluginApiRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#getpluginapirequest), [`GetPluginApiResponse`](/docs/sdk/api/py/generated-plugin-api-pb2#getpluginapiresponse)) | Required | positional or keyword |
+
+**Returns:** [`GetPluginApiResponse`](/docs/sdk/api/py/generated-plugin-api-pb2#getpluginapiresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L259)
+
+### `get_plugin_descriptor_set`
+
+```python
+def get_plugin_descriptor_set(self, request: GetPluginDescriptorSetRequest, ctx: RequestContext[GetPluginDescriptorSetRequest, GetPluginDescriptorSetResponse]) -> GetPluginDescriptorSetResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetPluginDescriptorSetRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#getplugindescriptorsetrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[GetPluginDescriptorSetRequest, GetPluginDescriptorSetResponse]` ([`GetPluginDescriptorSetRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#getplugindescriptorsetrequest), [`GetPluginDescriptorSetResponse`](/docs/sdk/api/py/generated-plugin-api-pb2#getplugindescriptorsetresponse)) | Required | positional or keyword |
+
+**Returns:** [`GetPluginDescriptorSetResponse`](/docs/sdk/api/py/generated-plugin-api-pb2#getplugindescriptorsetresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L262)
+
+### `watch_plugin_apis`
+
+```python
+def watch_plugin_apis(self, request: WatchPluginApisRequest, ctx: RequestContext[WatchPluginApisRequest, PluginApiEvent]) -> Iterator[PluginApiEvent]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`WatchPluginApisRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#watchpluginapisrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[WatchPluginApisRequest, PluginApiEvent]` ([`WatchPluginApisRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#watchpluginapisrequest), [`PluginApiEvent`](/docs/sdk/api/py/generated-plugin-api-pb2#pluginapievent)) | Required | positional or keyword |
+
+**Returns:** `Iterator[PluginApiEvent]` ([`PluginApiEvent`](/docs/sdk/api/py/generated-plugin-api-pb2#pluginapievent)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L265)
+
+### `watch_plugin_events`
+
+```python
+def watch_plugin_events(self, request: WatchPluginEventsRequest, ctx: RequestContext[WatchPluginEventsRequest, PluginEvent]) -> Iterator[PluginEvent]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`WatchPluginEventsRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#watchplugineventsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[WatchPluginEventsRequest, PluginEvent]` ([`WatchPluginEventsRequest`](/docs/sdk/api/py/generated-plugin-api-pb2#watchplugineventsrequest), [`PluginEvent`](/docs/sdk/api/py/generated-plugin-api-pb2#pluginevent)) | Required | positional or keyword |
+
+**Returns:** `Iterator[PluginEvent]` ([`PluginEvent`](/docs/sdk/api/py/generated-plugin-api-pb2#pluginevent)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L268)
+
+## PluginApiServiceWSGIApplication
+
+**Class** in `plugin_api_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L272).
+
+**Import from:** `soulfire.plugin_api_connect`.
+
+**Bases:** `ConnectWSGIApplication`.
+
+```python
+class PluginApiServiceWSGIApplication(ConnectWSGIApplication)
+```
+
+### `__init__`
+
+```python
+def __init__(self, service: PluginApiServiceSync, interceptors: Iterable[InterceptorSync]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | [`PluginApiServiceSync`](/docs/sdk/api/py/generated-plugin-api-connect#pluginapiservicesync) | Required | positional or keyword |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | positional or keyword |
+| `read_max_bytes` | `int \| None` | `None` | positional or keyword |
+| `compressions` | `Iterable[Compression] \| None` | `None` | positional or keyword |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L273)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_connect.py#L341)

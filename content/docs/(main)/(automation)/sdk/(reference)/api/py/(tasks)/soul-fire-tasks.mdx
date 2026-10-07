@@ -1,0 +1,1739 @@
+---
+title: "SoulFireTasks"
+description: "Python API signatures, fields, and source for SoulFireTasks."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `tasks`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L290).
+
+**Import from:** `soulfire`, `soulfire.tasks`.
+
+```python
+class SoulFireTasks
+```
+
+## `__init__`
+
+```python
+def __init__(self, instance_id: str, bot_id: str, client: BotTaskServiceClient, header_factory: HeaderFactory) -> None
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instance_id` | `str` | Required | positional or keyword |
+| `bot_id` | `str` | Required | positional or keyword |
+| `client` | [`BotTaskServiceClient`](/docs/sdk/api/py/generated-task-connect#bottaskserviceclient) | Required | positional or keyword |
+| `header_factory` | [`HeaderFactory`](/docs/sdk/api/py/header-factory) | Required | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L291)
+
+## `start`
+
+```python
+def start[ResultT: Message](self, task_input: Message, result_type: type[ResultT], *, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, disconnect_policy: BotTaskDisconnectPolicy=BOT_TASK_DISCONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, parent_task_id: str | None=None, causation_id: str | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[ResultT], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `task_input` | `Message` | Required | positional or keyword |
+| `result_type` | `type[ResultT]` | Required | positional or keyword |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `disconnect_policy` | [`BotTaskDisconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskdisconnectpolicy) | `BOT_TASK_DISCONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `parent_task_id` | `str \| None` | `None` | keyword only |
+| `causation_id` | `str \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[ResultT], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L304)
+
+## `run`
+
+```python
+def run(self, task_input: Message, *, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, disconnect_policy: BotTaskDisconnectPolicy=BOT_TASK_DISCONNECT_POLICY_CANCEL_WITH_CALL, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, parent_task_id: str | None=None, causation_id: str | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `task_input` | `Message` | Required | positional or keyword |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `disconnect_policy` | [`BotTaskDisconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskdisconnectpolicy) | `BOT_TASK_DISCONNECT_POLICY_CANCEL_WITH_CALL` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `parent_task_id` | `str \| None` | `None` | keyword only |
+| `causation_id` | `str \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L345)
+
+## `run_go_to`
+
+```python
+def run_go_to(self, goal: PathfindGoal, *, options: PathfindOptions | None=None, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `goal` | [`PathfindGoal`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindgoal) | Required | positional or keyword |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L383)
+
+## `go_to`
+
+```python
+def go_to(self, goal: PathfindGoal, *, options: PathfindOptions | None=None, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[GoToTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `goal` | [`PathfindGoal`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindgoal) | Required | positional or keyword |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[GoToTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`GoToTaskResult`](/docs/sdk/api/py/generated-task-pb2#gototaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L404)
+
+## `run_follow_entity`
+
+```python
+def run_follow_entity(self, target: FollowEntityTarget, *, distance: float=3, options: PathfindOptions | None=None, target_unavailable_timeout_seconds: int=0, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `target` | [`FollowEntityTarget`](/docs/sdk/api/py/follow-entity-target) | Required | positional or keyword |
+| `distance` | `float` | `3` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `target_unavailable_timeout_seconds` | `int` | `0` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L431)
+
+## `follow_entity`
+
+```python
+def follow_entity(self, target: FollowEntityTarget, *, distance: float=3, options: PathfindOptions | None=None, target_unavailable_timeout_seconds: int=0, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[FollowEntityTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `target` | [`FollowEntityTarget`](/docs/sdk/api/py/follow-entity-target) | Required | positional or keyword |
+| `distance` | `float` | `3` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `target_unavailable_timeout_seconds` | `int` | `0` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[FollowEntityTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`FollowEntityTaskResult`](/docs/sdk/api/py/generated-task-pb2#followentitytaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L454)
+
+## `run_attack_entity`
+
+```python
+def run_attack_entity(self, target: AttackEntityTarget, *, attack_range: float=3, sprinting: bool=False, maximum_attacks: int=0, options: PathfindOptions | None=None, target_unavailable_timeout_seconds: int=0, select_best_weapon: bool=True, weapon: ItemSelector | None=None, restore_selected_slot: bool=True, use_offhand_shield: bool=False, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `target` | [`AttackEntityTarget`](/docs/sdk/api/py/attack-entity-target) | Required | positional or keyword |
+| `attack_range` | `float` | `3` | keyword only |
+| `sprinting` | `bool` | `False` | keyword only |
+| `maximum_attacks` | `int` | `0` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `target_unavailable_timeout_seconds` | `int` | `0` | keyword only |
+| `select_best_weapon` | `bool` | `True` | keyword only |
+| `weapon` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `restore_selected_slot` | `bool` | `True` | keyword only |
+| `use_offhand_shield` | `bool` | `False` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L489)
+
+## `attack_entity`
+
+```python
+def attack_entity(self, target: AttackEntityTarget, *, attack_range: float=3, sprinting: bool=False, maximum_attacks: int=0, options: PathfindOptions | None=None, target_unavailable_timeout_seconds: int=0, select_best_weapon: bool=True, weapon: ItemSelector | None=None, restore_selected_slot: bool=True, use_offhand_shield: bool=False, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[AttackEntityTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `target` | [`AttackEntityTarget`](/docs/sdk/api/py/attack-entity-target) | Required | positional or keyword |
+| `attack_range` | `float` | `3` | keyword only |
+| `sprinting` | `bool` | `False` | keyword only |
+| `maximum_attacks` | `int` | `0` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `target_unavailable_timeout_seconds` | `int` | `0` | keyword only |
+| `select_best_weapon` | `bool` | `True` | keyword only |
+| `weapon` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `restore_selected_slot` | `bool` | `True` | keyword only |
+| `use_offhand_shield` | `bool` | `False` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[AttackEntityTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`AttackEntityTaskResult`](/docs/sdk/api/py/generated-task-pb2#attackentitytaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L529)
+
+## `run_attack_nearest`
+
+```python
+def run_attack_nearest(self, selector: EntitySelector, *, radius: float=32, attack_range: float=3, sprinting: bool=False, maximum_attacks: int=0, maximum_targets: int=0, no_target_timeout_seconds: int=0, complete_when_no_target: bool=False, select_best_weapon: bool=True, weapon: ItemSelector | None=None, restore_selected_slot: bool=True, options: PathfindOptions | None=None, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `selector` | [`EntitySelector`](/docs/sdk/api/py/entity-selector) | Required | positional or keyword |
+| `radius` | `float` | `32` | keyword only |
+| `attack_range` | `float` | `3` | keyword only |
+| `sprinting` | `bool` | `False` | keyword only |
+| `maximum_attacks` | `int` | `0` | keyword only |
+| `maximum_targets` | `int` | `0` | keyword only |
+| `no_target_timeout_seconds` | `int` | `0` | keyword only |
+| `complete_when_no_target` | `bool` | `False` | keyword only |
+| `select_best_weapon` | `bool` | `True` | keyword only |
+| `weapon` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `restore_selected_slot` | `bool` | `True` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L579)
+
+## `attack_nearest`
+
+```python
+def attack_nearest(self, selector: EntitySelector, *, radius: float=32, attack_range: float=3, sprinting: bool=False, maximum_attacks: int=0, maximum_targets: int=1, no_target_timeout_seconds: int=0, complete_when_no_target: bool=True, select_best_weapon: bool=True, weapon: ItemSelector | None=None, restore_selected_slot: bool=True, options: PathfindOptions | None=None, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[AttackNearestTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `selector` | [`EntitySelector`](/docs/sdk/api/py/entity-selector) | Required | positional or keyword |
+| `radius` | `float` | `32` | keyword only |
+| `attack_range` | `float` | `3` | keyword only |
+| `sprinting` | `bool` | `False` | keyword only |
+| `maximum_attacks` | `int` | `0` | keyword only |
+| `maximum_targets` | `int` | `1` | keyword only |
+| `no_target_timeout_seconds` | `int` | `0` | keyword only |
+| `complete_when_no_target` | `bool` | `True` | keyword only |
+| `select_best_weapon` | `bool` | `True` | keyword only |
+| `weapon` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `restore_selected_slot` | `bool` | `True` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[AttackNearestTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`AttackNearestTaskResult`](/docs/sdk/api/py/generated-task-pb2#attacknearesttaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L623)
+
+## `run_ranged_attack`
+
+```python
+def run_ranged_attack(self, target: AttackEntityTarget, *, minimum_range: float=8, maximum_range: float=24, maximum_shots: int=0, target_unavailable_timeout_seconds: int=10, weapon: ItemSelector | None=None, bow_draw_ticks: int=20, lead_target: bool=True, compensate_gravity: bool=True, strafe: bool=True, restore_selected_slot: bool=True, options: PathfindOptions | None=None, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `target` | [`AttackEntityTarget`](/docs/sdk/api/py/attack-entity-target) | Required | positional or keyword |
+| `minimum_range` | `float` | `8` | keyword only |
+| `maximum_range` | `float` | `24` | keyword only |
+| `maximum_shots` | `int` | `0` | keyword only |
+| `target_unavailable_timeout_seconds` | `int` | `10` | keyword only |
+| `weapon` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `bow_draw_ticks` | `int` | `20` | keyword only |
+| `lead_target` | `bool` | `True` | keyword only |
+| `compensate_gravity` | `bool` | `True` | keyword only |
+| `strafe` | `bool` | `True` | keyword only |
+| `restore_selected_slot` | `bool` | `True` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L677)
+
+## `ranged_attack`
+
+```python
+def ranged_attack(self, target: AttackEntityTarget, *, minimum_range: float=8, maximum_range: float=24, maximum_shots: int=0, target_unavailable_timeout_seconds: int=10, weapon: ItemSelector | None=None, bow_draw_ticks: int=20, lead_target: bool=True, compensate_gravity: bool=True, strafe: bool=True, restore_selected_slot: bool=True, options: PathfindOptions | None=None, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[RangedAttackTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `target` | [`AttackEntityTarget`](/docs/sdk/api/py/attack-entity-target) | Required | positional or keyword |
+| `minimum_range` | `float` | `8` | keyword only |
+| `maximum_range` | `float` | `24` | keyword only |
+| `maximum_shots` | `int` | `0` | keyword only |
+| `target_unavailable_timeout_seconds` | `int` | `10` | keyword only |
+| `weapon` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `bow_draw_ticks` | `int` | `20` | keyword only |
+| `lead_target` | `bool` | `True` | keyword only |
+| `compensate_gravity` | `bool` | `True` | keyword only |
+| `strafe` | `bool` | `True` | keyword only |
+| `restore_selected_slot` | `bool` | `True` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[RangedAttackTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`RangedAttackTaskResult`](/docs/sdk/api/py/generated-task-pb2#rangedattacktaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L721)
+
+## `run_flee`
+
+```python
+def run_flee(self, threats: EntitySelector, *, trigger_radius: float=8, safe_distance: float=16, safe_seconds: int=2, complete_when_safe: bool=False, maximum_escapes: int=0, options: PathfindOptions | None=None, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `threats` | [`EntitySelector`](/docs/sdk/api/py/entity-selector) | Required | positional or keyword |
+| `trigger_radius` | `float` | `8` | keyword only |
+| `safe_distance` | `float` | `16` | keyword only |
+| `safe_seconds` | `int` | `2` | keyword only |
+| `complete_when_safe` | `bool` | `False` | keyword only |
+| `maximum_escapes` | `int` | `0` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L775)
+
+## `flee`
+
+```python
+def flee(self, threats: EntitySelector, *, trigger_radius: float=8, safe_distance: float=16, safe_seconds: int=2, complete_when_safe: bool=True, maximum_escapes: int=0, options: PathfindOptions | None=None, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[FleeTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `threats` | [`EntitySelector`](/docs/sdk/api/py/entity-selector) | Required | positional or keyword |
+| `trigger_radius` | `float` | `8` | keyword only |
+| `safe_distance` | `float` | `16` | keyword only |
+| `safe_seconds` | `int` | `2` | keyword only |
+| `complete_when_safe` | `bool` | `True` | keyword only |
+| `maximum_escapes` | `int` | `0` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[FleeTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`FleeTaskResult`](/docs/sdk/api/py/generated-task-pb2#fleetaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L809)
+
+## `run_guard`
+
+```python
+def run_guard(self, position: BlockPosition, threats: EntitySelector, *, guard_radius: float=16, maximum_pursuit_distance: float=24, return_radius: float=3, attack_range: float=3, sprinting: bool=False, maximum_attacks: int=0, maximum_targets: int=0, complete_when_clear: bool=False, clear_seconds: int=3, select_best_weapon: bool=True, weapon: ItemSelector | None=None, restore_selected_slot: bool=True, options: PathfindOptions | None=None, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `position` | [`BlockPosition`](/docs/sdk/api/py/block-position) | Required | positional or keyword |
+| `threats` | [`EntitySelector`](/docs/sdk/api/py/entity-selector) | Required | positional or keyword |
+| `guard_radius` | `float` | `16` | keyword only |
+| `maximum_pursuit_distance` | `float` | `24` | keyword only |
+| `return_radius` | `float` | `3` | keyword only |
+| `attack_range` | `float` | `3` | keyword only |
+| `sprinting` | `bool` | `False` | keyword only |
+| `maximum_attacks` | `int` | `0` | keyword only |
+| `maximum_targets` | `int` | `0` | keyword only |
+| `complete_when_clear` | `bool` | `False` | keyword only |
+| `clear_seconds` | `int` | `3` | keyword only |
+| `select_best_weapon` | `bool` | `True` | keyword only |
+| `weapon` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `restore_selected_slot` | `bool` | `True` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L853)
+
+## `guard`
+
+```python
+def guard(self, position: BlockPosition, threats: EntitySelector, *, guard_radius: float=16, maximum_pursuit_distance: float=24, return_radius: float=3, attack_range: float=3, sprinting: bool=False, maximum_attacks: int=0, maximum_targets: int=0, complete_when_clear: bool=True, clear_seconds: int=3, select_best_weapon: bool=True, weapon: ItemSelector | None=None, restore_selected_slot: bool=True, options: PathfindOptions | None=None, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[GuardTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `position` | [`BlockPosition`](/docs/sdk/api/py/block-position) | Required | positional or keyword |
+| `threats` | [`EntitySelector`](/docs/sdk/api/py/entity-selector) | Required | positional or keyword |
+| `guard_radius` | `float` | `16` | keyword only |
+| `maximum_pursuit_distance` | `float` | `24` | keyword only |
+| `return_radius` | `float` | `3` | keyword only |
+| `attack_range` | `float` | `3` | keyword only |
+| `sprinting` | `bool` | `False` | keyword only |
+| `maximum_attacks` | `int` | `0` | keyword only |
+| `maximum_targets` | `int` | `0` | keyword only |
+| `complete_when_clear` | `bool` | `True` | keyword only |
+| `clear_seconds` | `int` | `3` | keyword only |
+| `select_best_weapon` | `bool` | `True` | keyword only |
+| `weapon` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `restore_selected_slot` | `bool` | `True` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[GuardTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`GuardTaskResult`](/docs/sdk/api/py/generated-task-pb2#guardtaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L904)
+
+## `run_protect`
+
+```python
+def run_protect(self, entity: AttackEntityTarget, threats: EntitySelector, *, guard_radius: float=16, maximum_pursuit_distance: float=24, return_radius: float=3, attack_range: float=3, sprinting: bool=False, maximum_attacks: int=0, maximum_targets: int=0, complete_when_clear: bool=False, clear_seconds: int=3, select_best_weapon: bool=True, weapon: ItemSelector | None=None, restore_selected_slot: bool=True, options: PathfindOptions | None=None, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `entity` | [`AttackEntityTarget`](/docs/sdk/api/py/attack-entity-target) | Required | positional or keyword |
+| `threats` | [`EntitySelector`](/docs/sdk/api/py/entity-selector) | Required | positional or keyword |
+| `guard_radius` | `float` | `16` | keyword only |
+| `maximum_pursuit_distance` | `float` | `24` | keyword only |
+| `return_radius` | `float` | `3` | keyword only |
+| `attack_range` | `float` | `3` | keyword only |
+| `sprinting` | `bool` | `False` | keyword only |
+| `maximum_attacks` | `int` | `0` | keyword only |
+| `maximum_targets` | `int` | `0` | keyword only |
+| `complete_when_clear` | `bool` | `False` | keyword only |
+| `clear_seconds` | `int` | `3` | keyword only |
+| `select_best_weapon` | `bool` | `True` | keyword only |
+| `weapon` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `restore_selected_slot` | `bool` | `True` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L965)
+
+## `protect`
+
+```python
+def protect(self, entity: AttackEntityTarget, threats: EntitySelector, *, guard_radius: float=16, maximum_pursuit_distance: float=24, return_radius: float=3, attack_range: float=3, sprinting: bool=False, maximum_attacks: int=0, maximum_targets: int=0, complete_when_clear: bool=True, clear_seconds: int=3, select_best_weapon: bool=True, weapon: ItemSelector | None=None, restore_selected_slot: bool=True, options: PathfindOptions | None=None, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[GuardTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `entity` | [`AttackEntityTarget`](/docs/sdk/api/py/attack-entity-target) | Required | positional or keyword |
+| `threats` | [`EntitySelector`](/docs/sdk/api/py/entity-selector) | Required | positional or keyword |
+| `guard_radius` | `float` | `16` | keyword only |
+| `maximum_pursuit_distance` | `float` | `24` | keyword only |
+| `return_radius` | `float` | `3` | keyword only |
+| `attack_range` | `float` | `3` | keyword only |
+| `sprinting` | `bool` | `False` | keyword only |
+| `maximum_attacks` | `int` | `0` | keyword only |
+| `maximum_targets` | `int` | `0` | keyword only |
+| `complete_when_clear` | `bool` | `True` | keyword only |
+| `clear_seconds` | `int` | `3` | keyword only |
+| `select_best_weapon` | `bool` | `True` | keyword only |
+| `weapon` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `restore_selected_slot` | `bool` | `True` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[GuardTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`GuardTaskResult`](/docs/sdk/api/py/generated-task-pb2#guardtaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1016)
+
+## `run_sleep`
+
+```python
+def run_sleep(self, bed: BlockPosition | None=None, *, search_radius: int=24, wait_until_possible: bool=True, retry_interval_ticks: int=20, options: PathfindOptions | None=None, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `bed` | `BlockPosition \| None` ([`BlockPosition`](/docs/sdk/api/py/block-position)) | `None` | positional or keyword |
+| `search_radius` | `int` | `24` | keyword only |
+| `wait_until_possible` | `bool` | `True` | keyword only |
+| `retry_interval_ticks` | `int` | `20` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1077)
+
+## `sleep`
+
+```python
+def sleep(self, bed: BlockPosition | None=None, *, search_radius: int=24, wait_until_possible: bool=False, retry_interval_ticks: int=20, options: PathfindOptions | None=None, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[SleepTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `bed` | `BlockPosition \| None` ([`BlockPosition`](/docs/sdk/api/py/block-position)) | `None` | positional or keyword |
+| `search_radius` | `int` | `24` | keyword only |
+| `wait_until_possible` | `bool` | `False` | keyword only |
+| `retry_interval_ticks` | `int` | `20` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[SleepTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`SleepTaskResult`](/docs/sdk/api/py/generated-task-pb2#sleeptaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1101)
+
+## `run_fish`
+
+```python
+def run_fish(self, *, maximum_catches: int=0, maximum_failed_casts: int=0, rod: ItemSelector | None=None, cast_timeout_ticks: int=100, bite_timeout_ticks: int=12000, complete_when_no_rod: bool=False, restore_selected_slot: bool=True, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `maximum_catches` | `int` | `0` | keyword only |
+| `maximum_failed_casts` | `int` | `0` | keyword only |
+| `rod` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `cast_timeout_ticks` | `int` | `100` | keyword only |
+| `bite_timeout_ticks` | `int` | `12000` | keyword only |
+| `complete_when_no_rod` | `bool` | `False` | keyword only |
+| `restore_selected_slot` | `bool` | `True` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1137)
+
+## `fish`
+
+```python
+def fish(self, *, maximum_catches: int=1, maximum_failed_casts: int=0, rod: ItemSelector | None=None, cast_timeout_ticks: int=100, bite_timeout_ticks: int=12000, complete_when_no_rod: bool=True, restore_selected_slot: bool=True, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[FishTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `maximum_catches` | `int` | `1` | keyword only |
+| `maximum_failed_casts` | `int` | `0` | keyword only |
+| `rod` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `cast_timeout_ticks` | `int` | `100` | keyword only |
+| `bite_timeout_ticks` | `int` | `12000` | keyword only |
+| `complete_when_no_rod` | `bool` | `True` | keyword only |
+| `restore_selected_slot` | `bool` | `True` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[FishTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`FishTaskResult`](/docs/sdk/api/py/generated-task-pb2#fishtaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1171)
+
+## `run_farm`
+
+```python
+def run_farm(self, crop_ids: Iterable[str]=(), *, center: BlockPosition | None=None, radius: int=24, maximum_harvests: int=0, replant: bool=True, complete_when_no_mature_crops: bool=False, options: PathfindOptions | None=None, rescan_interval_ticks: int=100, restore_selected_slot: bool=True, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `crop_ids` | `Iterable[str]` | `()` | positional or keyword |
+| `center` | `BlockPosition \| None` ([`BlockPosition`](/docs/sdk/api/py/block-position)) | `None` | keyword only |
+| `radius` | `int` | `24` | keyword only |
+| `maximum_harvests` | `int` | `0` | keyword only |
+| `replant` | `bool` | `True` | keyword only |
+| `complete_when_no_mature_crops` | `bool` | `False` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `rescan_interval_ticks` | `int` | `100` | keyword only |
+| `restore_selected_slot` | `bool` | `True` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1215)
+
+## `farm`
+
+```python
+def farm(self, crop_ids: Iterable[str]=(), *, center: BlockPosition | None=None, radius: int=24, maximum_harvests: int=1, replant: bool=True, complete_when_no_mature_crops: bool=True, options: PathfindOptions | None=None, rescan_interval_ticks: int=100, restore_selected_slot: bool=True, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[FarmTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `crop_ids` | `Iterable[str]` | `()` | positional or keyword |
+| `center` | `BlockPosition \| None` ([`BlockPosition`](/docs/sdk/api/py/block-position)) | `None` | keyword only |
+| `radius` | `int` | `24` | keyword only |
+| `maximum_harvests` | `int` | `1` | keyword only |
+| `replant` | `bool` | `True` | keyword only |
+| `complete_when_no_mature_crops` | `bool` | `True` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `rescan_interval_ticks` | `int` | `100` | keyword only |
+| `restore_selected_slot` | `bool` | `True` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[FarmTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`FarmTaskResult`](/docs/sdk/api/py/generated-task-pb2#farmtaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1253)
+
+## `run_breed`
+
+```python
+def run_breed(self, animals: EntitySelector | None=None, *, food: ItemSelector | None=None, center: BlockPosition | None=None, radius: int=24, maximum_pairs: int=0, complete_when_no_pair: bool=False, complete_when_no_food: bool=False, options: PathfindOptions | None=None, rescan_interval_ticks: int=100, breeding_timeout_ticks: int=100, restore_selected_slot: bool=True, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `animals` | `EntitySelector \| None` ([`EntitySelector`](/docs/sdk/api/py/entity-selector)) | `None` | positional or keyword |
+| `food` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `center` | `BlockPosition \| None` ([`BlockPosition`](/docs/sdk/api/py/block-position)) | `None` | keyword only |
+| `radius` | `int` | `24` | keyword only |
+| `maximum_pairs` | `int` | `0` | keyword only |
+| `complete_when_no_pair` | `bool` | `False` | keyword only |
+| `complete_when_no_food` | `bool` | `False` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `rescan_interval_ticks` | `int` | `100` | keyword only |
+| `breeding_timeout_ticks` | `int` | `100` | keyword only |
+| `restore_selected_slot` | `bool` | `True` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1301)
+
+## `breed`
+
+```python
+def breed(self, animals: EntitySelector | None=None, *, food: ItemSelector | None=None, center: BlockPosition | None=None, radius: int=24, maximum_pairs: int=1, complete_when_no_pair: bool=True, complete_when_no_food: bool=True, options: PathfindOptions | None=None, rescan_interval_ticks: int=100, breeding_timeout_ticks: int=100, restore_selected_slot: bool=True, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[BreedTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `animals` | `EntitySelector \| None` ([`EntitySelector`](/docs/sdk/api/py/entity-selector)) | `None` | positional or keyword |
+| `food` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `center` | `BlockPosition \| None` ([`BlockPosition`](/docs/sdk/api/py/block-position)) | `None` | keyword only |
+| `radius` | `int` | `24` | keyword only |
+| `maximum_pairs` | `int` | `1` | keyword only |
+| `complete_when_no_pair` | `bool` | `True` | keyword only |
+| `complete_when_no_food` | `bool` | `True` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `rescan_interval_ticks` | `int` | `100` | keyword only |
+| `breeding_timeout_ticks` | `int` | `100` | keyword only |
+| `restore_selected_slot` | `bool` | `True` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[BreedTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`BreedTaskResult`](/docs/sdk/api/py/generated-task-pb2#breedtaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1343)
+
+## `run_explore`
+
+```python
+def run_explore(self, *, origin: BlockPosition | None=None, radius: int=256, waypoint_spacing: int=64, maximum_waypoints: int=0, options: PathfindOptions | None=None, return_to_origin: bool=False, purpose: str='sdk-explore', reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `origin` | `BlockPosition \| None` ([`BlockPosition`](/docs/sdk/api/py/block-position)) | `None` | keyword only |
+| `radius` | `int` | `256` | keyword only |
+| `waypoint_spacing` | `int` | `64` | keyword only |
+| `maximum_waypoints` | `int` | `0` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `return_to_origin` | `bool` | `False` | keyword only |
+| `purpose` | `str` | `'sdk-explore'` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1395)
+
+## `explore`
+
+```python
+def explore(self, *, origin: BlockPosition | None=None, radius: int=256, waypoint_spacing: int=64, maximum_waypoints: int=1, options: PathfindOptions | None=None, return_to_origin: bool=False, purpose: str='sdk-explore', conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[ExploreTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `origin` | `BlockPosition \| None` ([`BlockPosition`](/docs/sdk/api/py/block-position)) | `None` | keyword only |
+| `radius` | `int` | `256` | keyword only |
+| `waypoint_spacing` | `int` | `64` | keyword only |
+| `maximum_waypoints` | `int` | `1` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `return_to_origin` | `bool` | `False` | keyword only |
+| `purpose` | `str` | `'sdk-explore'` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[ExploreTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`ExploreTaskResult`](/docs/sdk/api/py/generated-task-pb2#exploretaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1429)
+
+## `run_stash`
+
+```python
+def run_stash(self, container: BlockPosition, operations: Iterable[ContainerTransferSpec | ContainerTransferOperation], *, options: PathfindOptions | None=None, close_container: bool=True, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `container` | [`BlockPosition`](/docs/sdk/api/py/block-position) | Required | positional or keyword |
+| `operations` | `Iterable[ContainerTransferSpec \| ContainerTransferOperation]` ([`ContainerTransferSpec`](/docs/sdk/api/py/container-transfer-spec), [`ContainerTransferOperation`](/docs/sdk/api/py/generated-task-pb2#containertransferoperation)) | Required | positional or keyword |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `close_container` | `bool` | `True` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1473)
+
+## `stash`
+
+```python
+def stash(self, container: BlockPosition, operations: Iterable[ContainerTransferSpec | ContainerTransferOperation], *, options: PathfindOptions | None=None, close_container: bool=True, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[ContainerTransferTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `container` | [`BlockPosition`](/docs/sdk/api/py/block-position) | Required | positional or keyword |
+| `operations` | `Iterable[ContainerTransferSpec \| ContainerTransferOperation]` ([`ContainerTransferSpec`](/docs/sdk/api/py/container-transfer-spec), [`ContainerTransferOperation`](/docs/sdk/api/py/generated-task-pb2#containertransferoperation)) | Required | positional or keyword |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `close_container` | `bool` | `True` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[ContainerTransferTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`ContainerTransferTaskResult`](/docs/sdk/api/py/generated-task-pb2#containertransfertaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1502)
+
+## `run_withdraw`
+
+```python
+def run_withdraw(self, container: BlockPosition, operations: Iterable[ContainerTransferSpec | ContainerTransferOperation], *, options: PathfindOptions | None=None, close_container: bool=True, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `container` | [`BlockPosition`](/docs/sdk/api/py/block-position) | Required | positional or keyword |
+| `operations` | `Iterable[ContainerTransferSpec \| ContainerTransferOperation]` ([`ContainerTransferSpec`](/docs/sdk/api/py/container-transfer-spec), [`ContainerTransferOperation`](/docs/sdk/api/py/generated-task-pb2#containertransferoperation)) | Required | positional or keyword |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `close_container` | `bool` | `True` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1541)
+
+## `withdraw`
+
+```python
+def withdraw(self, container: BlockPosition, operations: Iterable[ContainerTransferSpec | ContainerTransferOperation], *, options: PathfindOptions | None=None, close_container: bool=True, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[ContainerTransferTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `container` | [`BlockPosition`](/docs/sdk/api/py/block-position) | Required | positional or keyword |
+| `operations` | `Iterable[ContainerTransferSpec \| ContainerTransferOperation]` ([`ContainerTransferSpec`](/docs/sdk/api/py/container-transfer-spec), [`ContainerTransferOperation`](/docs/sdk/api/py/generated-task-pb2#containertransferoperation)) | Required | positional or keyword |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `close_container` | `bool` | `True` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[ContainerTransferTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`ContainerTransferTaskResult`](/docs/sdk/api/py/generated-task-pb2#containertransfertaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1570)
+
+## `run_maintain_loadout`
+
+```python
+def run_maintain_loadout(self, container: BlockPosition, requirements: Iterable[LoadoutRequirementSpec | LoadoutRequirement], *, options: PathfindOptions | None=None, check_interval_ticks: int=100, maximum_rebalances: int=0, complete_when_satisfied: bool=False, close_container: bool=True, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `container` | [`BlockPosition`](/docs/sdk/api/py/block-position) | Required | positional or keyword |
+| `requirements` | `Iterable[LoadoutRequirementSpec \| LoadoutRequirement]` ([`LoadoutRequirementSpec`](/docs/sdk/api/py/loadout-requirement-spec), [`LoadoutRequirement`](/docs/sdk/api/py/generated-task-pb2#loadoutrequirement)) | Required | positional or keyword |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `check_interval_ticks` | `int` | `100` | keyword only |
+| `maximum_rebalances` | `int` | `0` | keyword only |
+| `complete_when_satisfied` | `bool` | `False` | keyword only |
+| `close_container` | `bool` | `True` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1609)
+
+## `maintain_loadout`
+
+```python
+def maintain_loadout(self, container: BlockPosition, requirements: Iterable[LoadoutRequirementSpec | LoadoutRequirement], *, options: PathfindOptions | None=None, check_interval_ticks: int=100, maximum_rebalances: int=0, complete_when_satisfied: bool=False, close_container: bool=True, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[MaintainLoadoutTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `container` | [`BlockPosition`](/docs/sdk/api/py/block-position) | Required | positional or keyword |
+| `requirements` | `Iterable[LoadoutRequirementSpec \| LoadoutRequirement]` ([`LoadoutRequirementSpec`](/docs/sdk/api/py/loadout-requirement-spec), [`LoadoutRequirement`](/docs/sdk/api/py/generated-task-pb2#loadoutrequirement)) | Required | positional or keyword |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `check_interval_ticks` | `int` | `100` | keyword only |
+| `maximum_rebalances` | `int` | `0` | keyword only |
+| `complete_when_satisfied` | `bool` | `False` | keyword only |
+| `close_container` | `bool` | `True` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[MaintainLoadoutTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`MaintainLoadoutTaskResult`](/docs/sdk/api/py/generated-task-pb2#maintainloadouttaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1643)
+
+## `balance_loadout`
+
+```python
+def balance_loadout(self, container: BlockPosition, requirements: Iterable[LoadoutRequirementSpec | LoadoutRequirement], *, options: PathfindOptions | None=None, check_interval_ticks: int=100, close_container: bool=True, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[MaintainLoadoutTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `container` | [`BlockPosition`](/docs/sdk/api/py/block-position) | Required | positional or keyword |
+| `requirements` | `Iterable[LoadoutRequirementSpec \| LoadoutRequirement]` ([`LoadoutRequirementSpec`](/docs/sdk/api/py/loadout-requirement-spec), [`LoadoutRequirement`](/docs/sdk/api/py/generated-task-pb2#loadoutrequirement)) | Required | positional or keyword |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `check_interval_ticks` | `int` | `100` | keyword only |
+| `close_container` | `bool` | `True` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[MaintainLoadoutTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`MaintainLoadoutTaskResult`](/docs/sdk/api/py/generated-task-pb2#maintainloadouttaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1688)
+
+## `run_auto_eat`
+
+```python
+def run_auto_eat(self, food_item_ids: Iterable[str]=(), *, food_level: int=14, check_interval_ticks: int=20, maximum_meals: int=0, complete_when_no_food: bool=False, restore_selected_slot: bool=True, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `food_item_ids` | `Iterable[str]` | `()` | positional or keyword |
+| `food_level` | `int` | `14` | keyword only |
+| `check_interval_ticks` | `int` | `20` | keyword only |
+| `maximum_meals` | `int` | `0` | keyword only |
+| `complete_when_no_food` | `bool` | `False` | keyword only |
+| `restore_selected_slot` | `bool` | `True` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1723)
+
+## `auto_eat`
+
+```python
+def auto_eat(self, food_item_ids: Iterable[str]=(), *, food_level: int=14, check_interval_ticks: int=20, maximum_meals: int=0, complete_when_no_food: bool=False, restore_selected_slot: bool=True, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[AutoEatTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `food_item_ids` | `Iterable[str]` | `()` | positional or keyword |
+| `food_level` | `int` | `14` | keyword only |
+| `check_interval_ticks` | `int` | `20` | keyword only |
+| `maximum_meals` | `int` | `0` | keyword only |
+| `complete_when_no_food` | `bool` | `False` | keyword only |
+| `restore_selected_slot` | `bool` | `True` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[AutoEatTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`AutoEatTaskResult`](/docs/sdk/api/py/generated-task-pb2#autoeattaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1755)
+
+## `run_auto_respawn`
+
+```python
+def run_auto_respawn(self, *, respawn_delay_ticks: int=0, maximum_respawns: int=0, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `respawn_delay_ticks` | `int` | `0` | keyword only |
+| `maximum_respawns` | `int` | `0` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1797)
+
+## `auto_respawn`
+
+```python
+def auto_respawn(self, *, respawn_delay_ticks: int=0, maximum_respawns: int=0, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[AutoRespawnTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `respawn_delay_ticks` | `int` | `0` | keyword only |
+| `maximum_respawns` | `int` | `0` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[AutoRespawnTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`AutoRespawnTaskResult`](/docs/sdk/api/py/generated-task-pb2#autorespawntaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1818)
+
+## `run_auto_totem`
+
+```python
+def run_auto_totem(self, *, check_interval_ticks: int=20, maximum_equips: int=0, complete_when_no_totem: bool=False, replace_occupied_offhand: bool=False, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `check_interval_ticks` | `int` | `20` | keyword only |
+| `maximum_equips` | `int` | `0` | keyword only |
+| `complete_when_no_totem` | `bool` | `False` | keyword only |
+| `replace_occupied_offhand` | `bool` | `False` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1849)
+
+## `auto_totem`
+
+```python
+def auto_totem(self, *, check_interval_ticks: int=20, maximum_equips: int=0, complete_when_no_totem: bool=False, replace_occupied_offhand: bool=False, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[AutoTotemTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `check_interval_ticks` | `int` | `20` | keyword only |
+| `maximum_equips` | `int` | `0` | keyword only |
+| `complete_when_no_totem` | `bool` | `False` | keyword only |
+| `replace_occupied_offhand` | `bool` | `False` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[AutoTotemTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`AutoTotemTaskResult`](/docs/sdk/api/py/generated-task-pb2#autototemtaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1877)
+
+## `run_auto_armor`
+
+```python
+def run_auto_armor(self, *, check_interval_ticks: int=20, maximum_equips: int=0, complete_when_no_upgrade: bool=False, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `check_interval_ticks` | `int` | `20` | keyword only |
+| `maximum_equips` | `int` | `0` | keyword only |
+| `complete_when_no_upgrade` | `bool` | `False` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1915)
+
+## `auto_armor`
+
+```python
+def auto_armor(self, *, check_interval_ticks: int=20, maximum_equips: int=0, complete_when_no_upgrade: bool=False, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[AutoArmorTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `check_interval_ticks` | `int` | `20` | keyword only |
+| `maximum_equips` | `int` | `0` | keyword only |
+| `complete_when_no_upgrade` | `bool` | `False` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[AutoArmorTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`AutoArmorTaskResult`](/docs/sdk/api/py/generated-task-pb2#autoarmortaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1937)
+
+## `run_collect_blocks`
+
+```python
+def run_collect_blocks(self, block_ids: str | Iterable[str]=(), *, tags: Iterable[str]=(), count: int=1, search_radius: int=32, avoid_submerged_targets: bool=False, require_line_of_sight: bool=False, target_y_range: IntRange | None=None, options: PathfindOptions | None=None, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `block_ids` | `str \| Iterable[str]` | `()` | positional or keyword |
+| `tags` | `Iterable[str]` | `()` | keyword only |
+| `count` | `int` | `1` | keyword only |
+| `search_radius` | `int` | `32` | keyword only |
+| `avoid_submerged_targets` | `bool` | `False` | keyword only |
+| `require_line_of_sight` | `bool` | `False` | keyword only |
+| `target_y_range` | `IntRange \| None` ([`IntRange`](/docs/sdk/api/py/generated-world-pb2#intrange)) | `None` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L1971)
+
+## `collect_blocks`
+
+```python
+def collect_blocks(self, block_ids: str | Iterable[str]=(), *, tags: Iterable[str]=(), count: int=1, search_radius: int=32, avoid_submerged_targets: bool=False, require_line_of_sight: bool=False, target_y_range: IntRange | None=None, options: PathfindOptions | None=None, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[CollectBlocksTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `block_ids` | `str \| Iterable[str]` | `()` | positional or keyword |
+| `tags` | `Iterable[str]` | `()` | keyword only |
+| `count` | `int` | `1` | keyword only |
+| `search_radius` | `int` | `32` | keyword only |
+| `avoid_submerged_targets` | `bool` | `False` | keyword only |
+| `require_line_of_sight` | `bool` | `False` | keyword only |
+| `target_y_range` | `IntRange \| None` ([`IntRange`](/docs/sdk/api/py/generated-world-pb2#intrange)) | `None` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[CollectBlocksTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`CollectBlocksTaskResult`](/docs/sdk/api/py/generated-task-pb2#collectblockstaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2007)
+
+## `run_excavate`
+
+```python
+def run_excavate(self, from_position: BlockPosition, to_position: BlockPosition, *, options: PathfindOptions | None=None, maximum_blocks: int=0, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `from_position` | [`BlockPosition`](/docs/sdk/api/py/block-position) | Required | positional or keyword |
+| `to_position` | [`BlockPosition`](/docs/sdk/api/py/block-position) | Required | positional or keyword |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `maximum_blocks` | `int` | `0` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2053)
+
+## `excavate`
+
+```python
+def excavate(self, from_position: BlockPosition, to_position: BlockPosition, *, options: PathfindOptions | None=None, maximum_blocks: int=0, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[ExcavateTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `from_position` | [`BlockPosition`](/docs/sdk/api/py/block-position) | Required | positional or keyword |
+| `to_position` | [`BlockPosition`](/docs/sdk/api/py/block-position) | Required | positional or keyword |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `maximum_blocks` | `int` | `0` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[ExcavateTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`ExcavateTaskResult`](/docs/sdk/api/py/generated-task-pb2#excavatetaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2076)
+
+## `run_build`
+
+```python
+def run_build(self, origin: BlockPosition, blocks: Iterable[SchematicBlock], *, rotation: BuildRotation=BUILD_ROTATION_NONE, mirror: BuildMirror=BUILD_MIRROR_NONE, substitutions: Mapping[str, Iterable[str]] | None=None, options: PathfindOptions | None=None, break_incorrect_blocks: bool=True, restore_selected_slot: bool=True, partition_index: int=0, partition_count: int=1, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `origin` | [`BlockPosition`](/docs/sdk/api/py/block-position) | Required | positional or keyword |
+| `blocks` | `Iterable[SchematicBlock]` ([`SchematicBlock`](/docs/sdk/api/py/schematic-block)) | Required | positional or keyword |
+| `rotation` | [`BuildRotation`](/docs/sdk/api/py/generated-task-pb2#buildrotation) | `BUILD_ROTATION_NONE` | keyword only |
+| `mirror` | [`BuildMirror`](/docs/sdk/api/py/generated-task-pb2#buildmirror) | `BUILD_MIRROR_NONE` | keyword only |
+| `substitutions` | `Mapping[str, Iterable[str]] \| None` | `None` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `break_incorrect_blocks` | `bool` | `True` | keyword only |
+| `restore_selected_slot` | `bool` | `True` | keyword only |
+| `partition_index` | `int` | `0` | keyword only |
+| `partition_count` | `int` | `1` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2109)
+
+## `build`
+
+```python
+def build(self, origin: BlockPosition, blocks: Iterable[SchematicBlock], *, rotation: BuildRotation=BUILD_ROTATION_NONE, mirror: BuildMirror=BUILD_MIRROR_NONE, substitutions: Mapping[str, Iterable[str]] | None=None, options: PathfindOptions | None=None, break_incorrect_blocks: bool=True, restore_selected_slot: bool=True, partition_index: int=0, partition_count: int=1, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[BuildTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `origin` | [`BlockPosition`](/docs/sdk/api/py/block-position) | Required | positional or keyword |
+| `blocks` | `Iterable[SchematicBlock]` ([`SchematicBlock`](/docs/sdk/api/py/schematic-block)) | Required | positional or keyword |
+| `rotation` | [`BuildRotation`](/docs/sdk/api/py/generated-task-pb2#buildrotation) | `BUILD_ROTATION_NONE` | keyword only |
+| `mirror` | [`BuildMirror`](/docs/sdk/api/py/generated-task-pb2#buildmirror) | `BUILD_MIRROR_NONE` | keyword only |
+| `substitutions` | `Mapping[str, Iterable[str]] \| None` | `None` | keyword only |
+| `options` | `PathfindOptions \| None` ([`PathfindOptions`](/docs/sdk/api/py/generated-bot-live-pb2#pathfindoptions)) | `None` | keyword only |
+| `break_incorrect_blocks` | `bool` | `True` | keyword only |
+| `restore_selected_slot` | `bool` | `True` | keyword only |
+| `partition_index` | `int` | `0` | keyword only |
+| `partition_count` | `int` | `1` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[BuildTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`BuildTaskResult`](/docs/sdk/api/py/generated-task-pb2#buildtaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2149)
+
+## `run_craft`
+
+```python
+def run_craft(self, recipe_id: str, *, count: int=1, station: BlockPosition | None=None, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `recipe_id` | `str` | Required | positional or keyword |
+| `count` | `int` | `1` | keyword only |
+| `station` | `BlockPosition \| None` ([`BlockPosition`](/docs/sdk/api/py/block-position)) | `None` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2199)
+
+## `craft`
+
+```python
+def craft(self, recipe_id: str, *, count: int=1, station: BlockPosition | None=None, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[CraftTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `recipe_id` | `str` | Required | positional or keyword |
+| `count` | `int` | `1` | keyword only |
+| `station` | `BlockPosition \| None` ([`BlockPosition`](/docs/sdk/api/py/block-position)) | `None` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[CraftTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`CraftTaskResult`](/docs/sdk/api/py/generated-recipe-pb2#crafttaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2221)
+
+## `run_smelt`
+
+```python
+def run_smelt(self, input: ItemSelector, *, count: int=1, fuel: ItemSelector | None=None, station: BlockPosition | None=None, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `input` | [`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector) | Required | positional or keyword |
+| `count` | `int` | `1` | keyword only |
+| `fuel` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `station` | `BlockPosition \| None` ([`BlockPosition`](/docs/sdk/api/py/block-position)) | `None` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2249)
+
+## `smelt`
+
+```python
+def smelt(self, input: ItemSelector, *, count: int=1, fuel: ItemSelector | None=None, station: BlockPosition | None=None, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[SmeltTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `input` | [`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector) | Required | positional or keyword |
+| `count` | `int` | `1` | keyword only |
+| `fuel` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `station` | `BlockPosition \| None` ([`BlockPosition`](/docs/sdk/api/py/block-position)) | `None` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[SmeltTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`SmeltTaskResult`](/docs/sdk/api/py/generated-recipe-pb2#smelttaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2272)
+
+## `run_brew`
+
+```python
+def run_brew(self, input: ItemSelector, ingredient: ItemSelector, *, count: int=1, fuel: ItemSelector | None=None, station: BlockPosition | None=None, expected_result: ItemSelector | None=None, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `input` | [`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector) | Required | positional or keyword |
+| `ingredient` | [`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector) | Required | positional or keyword |
+| `count` | `int` | `1` | keyword only |
+| `fuel` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `station` | `BlockPosition \| None` ([`BlockPosition`](/docs/sdk/api/py/block-position)) | `None` | keyword only |
+| `expected_result` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2301)
+
+## `brew`
+
+```python
+def brew(self, input: ItemSelector, ingredient: ItemSelector, *, count: int=1, fuel: ItemSelector | None=None, station: BlockPosition | None=None, expected_result: ItemSelector | None=None, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[BrewTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `input` | [`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector) | Required | positional or keyword |
+| `ingredient` | [`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector) | Required | positional or keyword |
+| `count` | `int` | `1` | keyword only |
+| `fuel` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `station` | `BlockPosition \| None` ([`BlockPosition`](/docs/sdk/api/py/block-position)) | `None` | keyword only |
+| `expected_result` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[BrewTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`BrewTaskResult`](/docs/sdk/api/py/generated-recipe-pb2#brewtaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2326)
+
+## `run_villager_trade`
+
+```python
+def run_villager_trade(self, offer_index: int, *, count: int=1, expected_result: ItemSelector | None=None, close_when_done: bool=False, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `offer_index` | `int` | Required | positional or keyword |
+| `count` | `int` | `1` | keyword only |
+| `expected_result` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `close_when_done` | `bool` | `False` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2361)
+
+## `villager_trade`
+
+```python
+def villager_trade(self, offer_index: int, *, count: int=1, expected_result: ItemSelector | None=None, close_when_done: bool=False, conflict_policy: BotTaskConflictPolicy=BOT_TASK_CONFLICT_POLICY_UNSPECIFIED, reconnect_policy: BotTaskReconnectPolicy=BOT_TASK_RECONNECT_POLICY_UNSPECIFIED, priority: BotTaskPriority=BOT_TASK_PRIORITY_UNSPECIFIED, deadline: datetime | None=None, idempotency_key: str | None=None, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[VillagerTradeTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `offer_index` | `int` | Required | positional or keyword |
+| `count` | `int` | `1` | keyword only |
+| `expected_result` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `close_when_done` | `bool` | `False` | keyword only |
+| `conflict_policy` | [`BotTaskConflictPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskconflictpolicy) | `BOT_TASK_CONFLICT_POLICY_UNSPECIFIED` | keyword only |
+| `reconnect_policy` | [`BotTaskReconnectPolicy`](/docs/sdk/api/py/generated-task-pb2#bottaskreconnectpolicy) | `BOT_TASK_RECONNECT_POLICY_UNSPECIFIED` | keyword only |
+| `priority` | [`BotTaskPriority`](/docs/sdk/api/py/generated-task-pb2#bottaskpriority) | `BOT_TASK_PRIORITY_UNSPECIFIED` | keyword only |
+| `deadline` | `datetime \| None` | `None` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[VillagerTradeTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`VillagerTradeTaskResult`](/docs/sdk/api/py/generated-recipe-pb2#villagertradetaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2384)
+
+## `get`
+
+```python
+def get[ResultT: Message](self, task_id: str, result_type: type[ResultT], *, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[ResultT], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `task_id` | `str` | Required | positional or keyword |
+| `result_type` | `type[ResultT]` | Required | positional or keyword |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[ResultT], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2420)
+
+## `list`
+
+```python
+def list(self, *, statuses: Iterable[BotTaskStatus]=(), include_terminal: bool=False, page_size: int=100, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[list[BotTask], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `statuses` | `Iterable[BotTaskStatus]` ([`BotTaskStatus`](/docs/sdk/api/py/generated-task-pb2#bottaskstatus)) | `()` | keyword only |
+| `include_terminal` | `bool` | `False` | keyword only |
+| `page_size` | `int` | `100` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[list[BotTask], SoulFireOperationError]` ([`BotTask`](/docs/sdk/api/py/generated-task-pb2#bottask), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2438)
+
+## `watch`
+
+```python
+def watch(self, *, statuses: Iterable[BotTaskStatus]=(), after_sequence: int=0, include_snapshot: bool=True, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Stream[BotTaskEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `statuses` | `Iterable[BotTaskStatus]` ([`BotTaskStatus`](/docs/sdk/api/py/generated-task-pb2#bottaskstatus)) | `()` | keyword only |
+| `after_sequence` | `int` | `0` | keyword only |
+| `include_snapshot` | `bool` | `True` | keyword only |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[BotTaskEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotTaskEvent`](/docs/sdk/api/py/generated-task-pb2#bottaskevent), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/tasks.py#L2471)

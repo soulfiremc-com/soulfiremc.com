@@ -1,0 +1,50 @@
+---
+title: "CanSeeBlockResponse"
+description: "TypeScript API signatures, fields, and source for CanSeeBlockResponse."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/world_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L703).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/world_pb`.
+
+```ts
+type CanSeeBlockResponse = Message<"soulfire.v1.CanSeeBlockResponse"> & {
+  /**
+   * @generated from field: bool visible = 1;
+   */
+  visible: boolean;
+
+  /**
+   * @generated from field: float distance = 2;
+   */
+  distance: number;
+
+  /**
+   * @generated from field: soulfire.v1.BlockSnapshot block = 3;
+   */
+  block?: BlockSnapshot | undefined;
+};
+```
+
+**Referenced types:** [`BlockSnapshot`](/docs/sdk/api/ts/block-snapshot).
+
+## `visible`
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L707)
+
+## `distance`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L712)
+
+## `block`
+
+**Type:** `BlockSnapshot | undefined` ([`BlockSnapshot`](/docs/sdk/api/ts/block-snapshot)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L717)

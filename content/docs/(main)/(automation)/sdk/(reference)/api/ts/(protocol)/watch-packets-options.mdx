@@ -1,0 +1,53 @@
+---
+title: "WatchPacketsOptions"
+description: "TypeScript API signatures, fields, and source for WatchPacketsOptions."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `protocol`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/protocol.ts#L21).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`.
+
+```ts
+type WatchPacketsOptions = BotScoped<
+  typeof WatchPacketsRequestSchema
+> & {
+  call?: CallOptions;
+};
+```
+
+**Referenced types:** [`BotScoped`](/docs/sdk/api/ts/bot-scoped-protocol), [`WatchPacketsRequestSchema`](/docs/sdk/api/ts/generated-soulfire-protocol-pb#watchpacketsrequestschema).
+
+## `directions`
+
+**Type:** `PacketDirection[] | PacketDirection[] | undefined` ([`PacketDirection`](/docs/sdk/api/ts/packet-direction)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/protocol_pb.ts#L196)
+
+## `names`
+
+**Type:** `string[] | string[] | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/protocol_pb.ts#L201)
+
+## `includeEncodedPacket`
+
+**Type:** `boolean | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/protocol_pb.ts#L206)
+
+## `maximumEncodedBytes`
+
+Zero selects the server maximum.
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/protocol_pb.ts#L213)
+
+## `call`
+
+**Type:** `CallOptions | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/protocol.ts#L24)

@@ -1,0 +1,91 @@
+---
+title: "ProxyProto"
+description: "TypeScript API signatures, fields, and source for ProxyProto."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/common_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/common_pb.ts#L109).
+
+Represents a network proxy configuration used for routing bot connections.
+Proxies can be used to mask the origin of bot traffic or to distribute connections
+across multiple IP addresses. Used in instance configuration and proxy checking services.
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/common_pb`.
+
+```ts
+type ProxyProto = Message<"soulfire.v1.ProxyProto"> & {
+  /**
+   * The proxy protocol type. Determines how the connection is established.
+   *
+   * @generated from field: soulfire.v1.ProxyProto.Type type = 1;
+   */
+  type: ProxyProto_Type;
+
+  /**
+   * The proxy server address in "host:port" format (e.g., "proxy.example.com:8080").
+   * The address must be resolvable and the port must be valid (1-65535).
+   *
+   * @generated from field: string address = 2;
+   */
+  address: string;
+
+  /**
+   * Optional username for proxy authentication.
+   * Required if the proxy server requires authentication.
+   * If password is set, username must also be set.
+   *
+   * @generated from field: optional string username = 3;
+   */
+  username?: string | undefined;
+
+  /**
+   * Optional password for proxy authentication.
+   * Used with username for SOCKS5 or HTTP proxy authentication.
+   * Not supported for SOCKS4 proxies (will cause an error if set).
+   *
+   * @generated from field: optional string password = 4;
+   */
+  password?: string | undefined;
+};
+```
+
+**Referenced types:** [`ProxyProto_Type`](/docs/sdk/api/ts/generated-soulfire-common-pb#proxyproto_type).
+
+## `type`
+
+The proxy protocol type. Determines how the connection is established.
+
+**Type:** [`ProxyProto_Type`](/docs/sdk/api/ts/generated-soulfire-common-pb#proxyproto_type).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/common_pb.ts#L115)
+
+## `address`
+
+The proxy server address in "host:port" format (e.g., "proxy.example.com:8080").
+The address must be resolvable and the port must be valid (1-65535).
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/common_pb.ts#L123)
+
+## `username`
+
+Optional username for proxy authentication.
+Required if the proxy server requires authentication.
+If password is set, username must also be set.
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/common_pb.ts#L132)
+
+## `password`
+
+Optional password for proxy authentication.
+Used with username for SOCKS5 or HTTP proxy authentication.
+Not supported for SOCKS4 proxies (will cause an error if set).
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/common_pb.ts#L141)

@@ -1,0 +1,321 @@
+---
+title: "server_pb2 module"
+description: "Python API signatures, fields, and source for server_pb2 module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`DESCRIPTOR`](/docs/sdk/api/py/generated-server-pb2#descriptor) | constant |
+| [`ServerConfig`](/docs/sdk/api/py/generated-server-pb2#serverconfig) | class |
+| [`ServerInfoRequest`](/docs/sdk/api/py/generated-server-pb2#serverinforequest) | class |
+| [`ServerInfoResponse`](/docs/sdk/api/py/generated-server-pb2#serverinforesponse) | class |
+| [`ServerUpdateConfigEntryRequest`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigentryrequest) | class |
+| [`ServerUpdateConfigEntryResponse`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigentryresponse) | class |
+| [`ServerUpdateConfigRequest`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigrequest) | class |
+| [`ServerUpdateConfigResponse`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigresponse) | class |
+
+## DESCRIPTOR
+
+**Constant** in `server_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L12).
+
+**Import from:** `soulfire.server_pb2`.
+
+```python
+DESCRIPTOR: _descriptor.FileDescriptor
+```
+
+## ServerConfig
+
+**Class** in `server_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L14).
+
+**Import from:** `soulfire.server_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class ServerConfig(_message.Message)
+```
+
+### `SETTINGS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L16)
+
+### `settings`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[_common_pb2.SettingsNamespace]` ([`_common_pb2.SettingsNamespace`](/docs/sdk/api/py/generated-common-pb2#settingsnamespace)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L17)
+
+### `__init__`
+
+```python
+def __init__(self, settings: _Optional[_Iterable[_Union[_common_pb2.SettingsNamespace, _Mapping]]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `settings` | `_Optional[_Iterable[_Union[_common_pb2.SettingsNamespace, _Mapping]]]` ([`_common_pb2.SettingsNamespace`](/docs/sdk/api/py/generated-common-pb2#settingsnamespace)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L18)
+
+## ServerInfoRequest
+
+**Class** in `server_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L20).
+
+**Import from:** `soulfire.server_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class ServerInfoRequest(_message.Message)
+```
+
+### `__init__`
+
+```python
+def __init__(self) -> None
+```
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L22)
+
+## ServerInfoResponse
+
+**Class** in `server_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L24).
+
+**Import from:** `soulfire.server_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class ServerInfoResponse(_message.Message)
+```
+
+### `CONFIG_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L26)
+
+### `SETTINGS_DEFINITIONS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L27)
+
+### `SERVER_SETTINGS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L28)
+
+### `PLUGINS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L29)
+
+### `config`
+
+**Type:** [`ServerConfig`](/docs/sdk/api/py/generated-server-pb2#serverconfig).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L30)
+
+### `settings_definitions`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[_common_pb2.SettingsDefinition]` ([`_common_pb2.SettingsDefinition`](/docs/sdk/api/py/generated-common-pb2#settingsdefinition)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L31)
+
+### `server_settings`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[_common_pb2.SettingsPage]` ([`_common_pb2.SettingsPage`](/docs/sdk/api/py/generated-common-pb2#settingspage)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L32)
+
+### `plugins`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[_common_pb2.ServerPlugin]` ([`_common_pb2.ServerPlugin`](/docs/sdk/api/py/generated-common-pb2#serverplugin)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L33)
+
+### `__init__`
+
+```python
+def __init__(self, config: _Optional[_Union[ServerConfig, _Mapping]]=..., settings_definitions: _Optional[_Iterable[_Union[_common_pb2.SettingsDefinition, _Mapping]]]=..., server_settings: _Optional[_Iterable[_Union[_common_pb2.SettingsPage, _Mapping]]]=..., plugins: _Optional[_Iterable[_Union[_common_pb2.ServerPlugin, _Mapping]]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `config` | `_Optional[_Union[ServerConfig, _Mapping]]` ([`ServerConfig`](/docs/sdk/api/py/generated-server-pb2#serverconfig)) | `...` | positional or keyword |
+| `settings_definitions` | `_Optional[_Iterable[_Union[_common_pb2.SettingsDefinition, _Mapping]]]` ([`_common_pb2.SettingsDefinition`](/docs/sdk/api/py/generated-common-pb2#settingsdefinition)) | `...` | positional or keyword |
+| `server_settings` | `_Optional[_Iterable[_Union[_common_pb2.SettingsPage, _Mapping]]]` ([`_common_pb2.SettingsPage`](/docs/sdk/api/py/generated-common-pb2#settingspage)) | `...` | positional or keyword |
+| `plugins` | `_Optional[_Iterable[_Union[_common_pb2.ServerPlugin, _Mapping]]]` ([`_common_pb2.ServerPlugin`](/docs/sdk/api/py/generated-common-pb2#serverplugin)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L34)
+
+## ServerUpdateConfigEntryRequest
+
+**Class** in `server_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L46).
+
+**Import from:** `soulfire.server_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class ServerUpdateConfigEntryRequest(_message.Message)
+```
+
+### `NAMESPACE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L48)
+
+### `KEY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L49)
+
+### `VALUE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L50)
+
+### `namespace`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L51)
+
+### `key`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L52)
+
+### `value`
+
+**Type:** `_struct_pb2.Value`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L53)
+
+### `__init__`
+
+```python
+def __init__(self, namespace: _Optional[str]=..., key: _Optional[str]=..., value: _Optional[_Union[_struct_pb2.Value, _Mapping]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `namespace` | `_Optional[str]` | `...` | positional or keyword |
+| `key` | `_Optional[str]` | `...` | positional or keyword |
+| `value` | `_Optional[_Union[_struct_pb2.Value, _Mapping]]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L54)
+
+## ServerUpdateConfigEntryResponse
+
+**Class** in `server_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L56).
+
+**Import from:** `soulfire.server_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class ServerUpdateConfigEntryResponse(_message.Message)
+```
+
+### `__init__`
+
+```python
+def __init__(self) -> None
+```
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L58)
+
+## ServerUpdateConfigRequest
+
+**Class** in `server_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L36).
+
+**Import from:** `soulfire.server_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class ServerUpdateConfigRequest(_message.Message)
+```
+
+### `CONFIG_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L38)
+
+### `config`
+
+**Type:** [`ServerConfig`](/docs/sdk/api/py/generated-server-pb2#serverconfig).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L39)
+
+### `__init__`
+
+```python
+def __init__(self, config: _Optional[_Union[ServerConfig, _Mapping]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `config` | `_Optional[_Union[ServerConfig, _Mapping]]` ([`ServerConfig`](/docs/sdk/api/py/generated-server-pb2#serverconfig)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L40)
+
+## ServerUpdateConfigResponse
+
+**Class** in `server_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L42).
+
+**Import from:** `soulfire.server_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class ServerUpdateConfigResponse(_message.Message)
+```
+
+### `__init__`
+
+```python
+def __init__(self) -> None
+```
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_pb2.pyi#L44)

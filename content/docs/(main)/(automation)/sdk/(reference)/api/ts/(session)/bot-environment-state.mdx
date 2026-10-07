@@ -1,0 +1,63 @@
+---
+title: "BotEnvironmentState"
+description: "TypeScript API signatures, fields, and source for BotEnvironmentState."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Interface** in `session`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L80).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`.
+
+```ts
+interface BotEnvironmentState
+```
+
+## `clocks`
+
+**Modifiers:** `readonly`.
+
+**Type:** `ReadonlyMap<string, ClockSnapshot>` ([`ClockSnapshot`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#clocksnapshot)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L81)
+
+## `gameTime`
+
+**Modifiers:** `readonly`.
+
+**Type:** `bigint | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L82)
+
+## `lastGameEvent`
+
+**Modifiers:** `readonly`.
+
+**Type:** `BotGameEvent | undefined` ([`BotGameEvent`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#botgameevent)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L83)
+
+## `rainLevel`
+
+**Modifiers:** `readonly`.
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L84)
+
+## `raining`
+
+**Modifiers:** `readonly`.
+
+**Type:** `boolean | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L85)
+
+## `thunderLevel`
+
+**Modifiers:** `readonly`.
+
+**Type:** `number | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L86)

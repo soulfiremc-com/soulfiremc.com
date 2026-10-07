@@ -1,0 +1,110 @@
+---
+title: "BotResourcePackEvent"
+description: "Python API signatures, fields, and source for BotResourcePackEvent."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `bot_live_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L621).
+
+**Import from:** `soulfire`, `soulfire.bot_live_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class BotResourcePackEvent(_message.Message)
+```
+
+## `KIND_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L623)
+
+## `PACK_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L624)
+
+## `URL_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L625)
+
+## `HASH_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L626)
+
+## `REQUIRED_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L627)
+
+## `PROMPT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L628)
+
+## `kind`
+
+**Type:** [`ResourcePackEventKind`](/docs/sdk/api/py/resource-pack-event-kind).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L629)
+
+## `pack_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L630)
+
+## `url`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L631)
+
+## `hash`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L632)
+
+## `required`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L633)
+
+## `prompt`
+
+**Type:** [`_domain_pb2.TextComponent`](/docs/sdk/api/py/text-component).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L634)
+
+## `__init__`
+
+```python
+def __init__(self, kind: _Optional[_Union[ResourcePackEventKind, str]]=..., pack_id: _Optional[str]=..., url: _Optional[str]=..., hash: _Optional[str]=..., required: bool=..., prompt: _Optional[_Union[_domain_pb2.TextComponent, _Mapping]]=...) -> None
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `kind` | `_Optional[_Union[ResourcePackEventKind, str]]` ([`ResourcePackEventKind`](/docs/sdk/api/py/resource-pack-event-kind)) | `...` | positional or keyword |
+| `pack_id` | `_Optional[str]` | `...` | positional or keyword |
+| `url` | `_Optional[str]` | `...` | positional or keyword |
+| `hash` | `_Optional[str]` | `...` | positional or keyword |
+| `required` | `bool` | `...` | positional or keyword |
+| `prompt` | `_Optional[_Union[_domain_pb2.TextComponent, _Mapping]]` ([`_domain_pb2.TextComponent`](/docs/sdk/api/py/text-component)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/bot_live_pb2.pyi#L635)

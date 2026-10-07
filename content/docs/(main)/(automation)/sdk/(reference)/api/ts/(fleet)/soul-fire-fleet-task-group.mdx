@@ -1,0 +1,141 @@
+---
+title: "SoulFireFleetTaskGroup"
+description: "TypeScript API signatures, fields, and source for SoulFireFleetTaskGroup."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `fleet`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/fleet.ts#L150).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`.
+
+```ts
+class SoulFireFleetTaskGroup<
+  Result extends DescMessage | undefined = undefined,
+>
+```
+
+## `constructor`
+
+```ts
+new SoulFireFleetTaskGroup<Result extends DescMessage | undefined = undefined>(members: readonly FleetTaskMember<Result>[], startFailures: readonly FleetTaskStartFailure[]): SoulFireFleetTaskGroup<Result>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `members` | `readonly FleetTaskMember<Result>[]` ([`FleetTaskMember`](/docs/sdk/api/ts/fleet-task-member)) | Required |  |
+| `startFailures` | `readonly FleetTaskStartFailure[]` ([`FleetTaskStartFailure`](/docs/sdk/api/ts/fleet-task-start-failure)) | Required |  |
+
+**Returns:** `SoulFireFleetTaskGroup<Result>` ([`SoulFireFleetTaskGroup`](/docs/sdk/api/ts/soul-fire-fleet-task-group)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/fleet.ts#L153)
+
+## `startFailures`
+
+**Modifiers:** `readonly`.
+
+**Type:** `readonly FleetTaskStartFailure[]` ([`FleetTaskStartFailure`](/docs/sdk/api/ts/fleet-task-start-failure)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/fleet.ts#L155)
+
+## `size`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/fleet.ts#L158)
+
+## `botIds`
+
+**Type:** `readonly string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/fleet.ts#L161)
+
+## `taskIds`
+
+**Type:** `readonly string[]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/fleet.ts#L164)
+
+## `task`
+
+```ts
+task(botId: string): SoulFireTask<Result> | undefined
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `botId` | `string` | Required |  |
+
+**Returns:** `SoulFireTask<Result> | undefined` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/fleet.ts#L167)
+
+## `events`
+
+```ts
+events(options?: { afterRevision?: bigint | undefined; call?: CallOptions | undefined; } | undefined): Stream<FleetTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `{ afterRevision?: bigint \| undefined; call?: CallOptions \| undefined; } \| undefined` | Optional |  |
+
+**Returns:** `Stream<FleetTaskEvent, SoulFireOperationError, never>` ([`FleetTaskEvent`](/docs/sdk/api/ts/fleet-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/fleet.ts#L171)
+
+## `results`
+
+```ts
+results(options?: { call?: CallOptions | undefined; } | undefined): Effect<FleetTaskReport<Result>, never, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `{ call?: CallOptions \| undefined; } \| undefined` | Optional |  |
+
+**Returns:** `Effect<FleetTaskReport<Result>, never, never>` ([`FleetTaskReport`](/docs/sdk/api/ts/fleet-task-report)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/fleet.ts#L183)
+
+## `requireResults`
+
+```ts
+requireResults(options?: { call?: CallOptions | undefined; } | undefined): Effect<readonly { readonly status: "fulfilled"; readonly bot: FleetBot; readonly value: FleetTaskResultValue<Result>; }[], FleetTaskGroupError<Result>, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `{ call?: CallOptions \| undefined; } \| undefined` | Optional |  |
+
+**Returns:** `Effect<readonly { readonly status: "fulfilled"; readonly bot: FleetBot; readonly value: FleetTaskResultValue<Result>; }[], FleetTaskGroupError<Result>, never>` ([`FleetBot`](/docs/sdk/api/ts/fleet-bot), [`FleetTaskResultValue`](/docs/sdk/api/ts/fleet-task-result-value), [`FleetTaskGroupError`](/docs/sdk/api/ts/fleet-task-group-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/fleet.ts#L220)
+
+## `cancel`
+
+```ts
+cancel(reason?: string, options?: { call?: CallOptions | undefined; concurrency?: number | undefined; } | undefined): Effect<FleetTaskReport<undefined>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `reason` | `string` | `""` |  |
+| `options` | `{ call?: CallOptions \| undefined; concurrency?: number \| undefined; } \| undefined` | Optional |  |
+
+**Returns:** `Effect<FleetTaskReport<undefined>, SoulFireOperationError, never>` ([`FleetTaskReport`](/docs/sdk/api/ts/fleet-task-report), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/fleet.ts#L235)

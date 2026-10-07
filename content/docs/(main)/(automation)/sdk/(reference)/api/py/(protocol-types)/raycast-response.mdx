@@ -1,0 +1,97 @@
+---
+title: "RaycastResponse"
+description: "Python API signatures, fields, and source for RaycastResponse."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `world_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L260).
+
+**Import from:** `soulfire`, `soulfire.world_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class RaycastResponse(_message.Message)
+```
+
+## `BLOCK_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L262)
+
+## `ENTITY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L263)
+
+## `HIT_POSITION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L264)
+
+## `BLOCK_FACE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L265)
+
+## `DISTANCE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L266)
+
+## `block`
+
+**Type:** [`_domain_pb2.BlockSnapshot`](/docs/sdk/api/py/block-snapshot).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L267)
+
+## `entity`
+
+**Type:** [`_domain_pb2.EntitySnapshot`](/docs/sdk/api/py/entity-snapshot).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L268)
+
+## `hit_position`
+
+**Type:** [`_common_pb2.WorldPosition`](/docs/sdk/api/py/world-position).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L269)
+
+## `block_face`
+
+**Type:** [`_bot_live_pb2.BlockFace`](/docs/sdk/api/py/generated-bot-live-pb2#blockface).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L270)
+
+## `distance`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L271)
+
+## `__init__`
+
+```python
+def __init__(self, block: _Optional[_Union[_domain_pb2.BlockSnapshot, _Mapping]]=..., entity: _Optional[_Union[_domain_pb2.EntitySnapshot, _Mapping]]=..., hit_position: _Optional[_Union[_common_pb2.WorldPosition, _Mapping]]=..., block_face: _Optional[_Union[_bot_live_pb2.BlockFace, str]]=..., distance: _Optional[float]=...) -> None
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `block` | `_Optional[_Union[_domain_pb2.BlockSnapshot, _Mapping]]` ([`_domain_pb2.BlockSnapshot`](/docs/sdk/api/py/block-snapshot)) | `...` | positional or keyword |
+| `entity` | `_Optional[_Union[_domain_pb2.EntitySnapshot, _Mapping]]` ([`_domain_pb2.EntitySnapshot`](/docs/sdk/api/py/entity-snapshot)) | `...` | positional or keyword |
+| `hit_position` | `_Optional[_Union[_common_pb2.WorldPosition, _Mapping]]` ([`_common_pb2.WorldPosition`](/docs/sdk/api/py/world-position)) | `...` | positional or keyword |
+| `block_face` | `_Optional[_Union[_bot_live_pb2.BlockFace, str]]` ([`_bot_live_pb2.BlockFace`](/docs/sdk/api/py/generated-bot-live-pb2#blockface)) | `...` | positional or keyword |
+| `distance` | `_Optional[float]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_pb2.pyi#L272)

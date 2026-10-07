@@ -1,0 +1,20 @@
+---
+title: "AttackEntityTarget"
+description: "TypeScript API signatures, fields, and source for AttackEntityTarget."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `tasks`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L774).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`.
+
+```ts
+type AttackEntityTarget =
+  | (Pick<EntityReference, "networkId"> &
+      Partial<Pick<EntityReference, "connectionEpoch" | "uuid">>)
+  | number;
+```
+
+**Referenced types:** [`EntityReference`](/docs/sdk/api/ts/entity-reference).

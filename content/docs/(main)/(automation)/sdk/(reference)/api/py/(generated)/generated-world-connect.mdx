@@ -1,0 +1,836 @@
+---
+title: "world_connect module"
+description: "Python API signatures, fields, and source for world_connect module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`WorldService`](/docs/sdk/api/py/generated-world-connect#worldservice) | class |
+| [`WorldServiceASGIApplication`](/docs/sdk/api/py/generated-world-connect#worldserviceasgiapplication) | class |
+| [`WorldServiceClient`](/docs/sdk/api/py/generated-world-connect#worldserviceclient) | class |
+| [`WorldServiceClientSync`](/docs/sdk/api/py/generated-world-connect#worldserviceclientsync) | class |
+| [`WorldServiceSync`](/docs/sdk/api/py/generated-world-connect#worldservicesync) | class |
+| [`WorldServiceWSGIApplication`](/docs/sdk/api/py/generated-world-connect#worldservicewsgiapplication) | class |
+
+## WorldService
+
+**Class** in `world_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L37).
+
+**Import from:** `soulfire.world_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class WorldService(Protocol)
+```
+
+### `get_player_snapshot`
+
+```python
+async def get_player_snapshot(self, request: GetPlayerSnapshotRequest, ctx: RequestContext[GetPlayerSnapshotRequest, GetPlayerSnapshotResponse]) -> GetPlayerSnapshotResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetPlayerSnapshotRequest`](/docs/sdk/api/py/generated-world-pb2#getplayersnapshotrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[GetPlayerSnapshotRequest, GetPlayerSnapshotResponse]` ([`GetPlayerSnapshotRequest`](/docs/sdk/api/py/generated-world-pb2#getplayersnapshotrequest), [`GetPlayerSnapshotResponse`](/docs/sdk/api/py/generated-world-pb2#getplayersnapshotresponse)) | Required | positional or keyword |
+
+**Returns:** [`GetPlayerSnapshotResponse`](/docs/sdk/api/py/generated-world-pb2#getplayersnapshotresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L38)
+
+### `get_world_block`
+
+```python
+async def get_world_block(self, request: GetWorldBlockRequest, ctx: RequestContext[GetWorldBlockRequest, GetWorldBlockResponse]) -> GetWorldBlockResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetWorldBlockRequest`](/docs/sdk/api/py/generated-world-pb2#getworldblockrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[GetWorldBlockRequest, GetWorldBlockResponse]` ([`GetWorldBlockRequest`](/docs/sdk/api/py/generated-world-pb2#getworldblockrequest), [`GetWorldBlockResponse`](/docs/sdk/api/py/get-world-block-response)) | Required | positional or keyword |
+
+**Returns:** [`GetWorldBlockResponse`](/docs/sdk/api/py/get-world-block-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L41)
+
+### `query_blocks`
+
+```python
+async def query_blocks(self, request: QueryBlocksRequest, ctx: RequestContext[QueryBlocksRequest, QueryBlocksResponse]) -> QueryBlocksResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`QueryBlocksRequest`](/docs/sdk/api/py/generated-world-pb2#queryblocksrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[QueryBlocksRequest, QueryBlocksResponse]` ([`QueryBlocksRequest`](/docs/sdk/api/py/generated-world-pb2#queryblocksrequest), [`QueryBlocksResponse`](/docs/sdk/api/py/query-blocks-response)) | Required | positional or keyword |
+
+**Returns:** [`QueryBlocksResponse`](/docs/sdk/api/py/query-blocks-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L44)
+
+### `get_world_entity`
+
+```python
+async def get_world_entity(self, request: GetWorldEntityRequest, ctx: RequestContext[GetWorldEntityRequest, GetWorldEntityResponse]) -> GetWorldEntityResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetWorldEntityRequest`](/docs/sdk/api/py/generated-world-pb2#getworldentityrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[GetWorldEntityRequest, GetWorldEntityResponse]` ([`GetWorldEntityRequest`](/docs/sdk/api/py/generated-world-pb2#getworldentityrequest), [`GetWorldEntityResponse`](/docs/sdk/api/py/get-world-entity-response)) | Required | positional or keyword |
+
+**Returns:** [`GetWorldEntityResponse`](/docs/sdk/api/py/get-world-entity-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L47)
+
+### `query_entities`
+
+```python
+async def query_entities(self, request: QueryEntitiesRequest, ctx: RequestContext[QueryEntitiesRequest, QueryEntitiesResponse]) -> QueryEntitiesResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`QueryEntitiesRequest`](/docs/sdk/api/py/generated-world-pb2#queryentitiesrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[QueryEntitiesRequest, QueryEntitiesResponse]` ([`QueryEntitiesRequest`](/docs/sdk/api/py/generated-world-pb2#queryentitiesrequest), [`QueryEntitiesResponse`](/docs/sdk/api/py/query-entities-response)) | Required | positional or keyword |
+
+**Returns:** [`QueryEntitiesResponse`](/docs/sdk/api/py/query-entities-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L50)
+
+### `raycast`
+
+```python
+async def raycast(self, request: RaycastRequest, ctx: RequestContext[RaycastRequest, RaycastResponse]) -> RaycastResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`RaycastRequest`](/docs/sdk/api/py/generated-world-pb2#raycastrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[RaycastRequest, RaycastResponse]` ([`RaycastRequest`](/docs/sdk/api/py/generated-world-pb2#raycastrequest), [`RaycastResponse`](/docs/sdk/api/py/raycast-response)) | Required | positional or keyword |
+
+**Returns:** [`RaycastResponse`](/docs/sdk/api/py/raycast-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L53)
+
+### `can_see_block`
+
+```python
+async def can_see_block(self, request: CanSeeBlockRequest, ctx: RequestContext[CanSeeBlockRequest, CanSeeBlockResponse]) -> CanSeeBlockResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`CanSeeBlockRequest`](/docs/sdk/api/py/generated-world-pb2#canseeblockrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[CanSeeBlockRequest, CanSeeBlockResponse]` ([`CanSeeBlockRequest`](/docs/sdk/api/py/generated-world-pb2#canseeblockrequest), [`CanSeeBlockResponse`](/docs/sdk/api/py/can-see-block-response)) | Required | positional or keyword |
+
+**Returns:** [`CanSeeBlockResponse`](/docs/sdk/api/py/can-see-block-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L56)
+
+### `estimate_dig_time`
+
+```python
+async def estimate_dig_time(self, request: EstimateDigTimeRequest, ctx: RequestContext[EstimateDigTimeRequest, EstimateDigTimeResponse]) -> EstimateDigTimeResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`EstimateDigTimeRequest`](/docs/sdk/api/py/generated-world-pb2#estimatedigtimerequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[EstimateDigTimeRequest, EstimateDigTimeResponse]` ([`EstimateDigTimeRequest`](/docs/sdk/api/py/generated-world-pb2#estimatedigtimerequest), [`EstimateDigTimeResponse`](/docs/sdk/api/py/estimate-dig-time-response)) | Required | positional or keyword |
+
+**Returns:** [`EstimateDigTimeResponse`](/docs/sdk/api/py/estimate-dig-time-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L59)
+
+### `estimate_explosion_damage`
+
+```python
+async def estimate_explosion_damage(self, request: EstimateExplosionDamageRequest, ctx: RequestContext[EstimateExplosionDamageRequest, EstimateExplosionDamageResponse]) -> EstimateExplosionDamageResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`EstimateExplosionDamageRequest`](/docs/sdk/api/py/generated-world-pb2#estimateexplosiondamagerequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[EstimateExplosionDamageRequest, EstimateExplosionDamageResponse]` ([`EstimateExplosionDamageRequest`](/docs/sdk/api/py/generated-world-pb2#estimateexplosiondamagerequest), [`EstimateExplosionDamageResponse`](/docs/sdk/api/py/estimate-explosion-damage-response)) | Required | positional or keyword |
+
+**Returns:** [`EstimateExplosionDamageResponse`](/docs/sdk/api/py/estimate-explosion-damage-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L62)
+
+## WorldServiceASGIApplication
+
+**Class** in `world_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L66).
+
+**Import from:** `soulfire.world_connect`.
+
+**Bases:** `ConnectASGIApplication[WorldService]` ([`WorldService`](/docs/sdk/api/py/generated-world-connect#worldservice)).
+
+```python
+class WorldServiceASGIApplication(ConnectASGIApplication[WorldService])
+```
+
+**Referenced types:** [`WorldService`](/docs/sdk/api/py/generated-world-connect#worldservice).
+
+### `__init__`
+
+```python
+def __init__(self, service: WorldService | AsyncGenerator[WorldService], *, interceptors: Iterable[Interceptor]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | `WorldService \| AsyncGenerator[WorldService]` ([`WorldService`](/docs/sdk/api/py/generated-world-connect#worldservice)) | Required | positional or keyword |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `compressions` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L67)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L177)
+
+## WorldServiceClient
+
+**Class** in `world_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L182).
+
+**Import from:** `soulfire.world_connect`.
+
+**Bases:** `ConnectClient`.
+
+```python
+class WorldServiceClient(ConnectClient)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[Interceptor]=(), http_client: Client | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `http_client` | `Client \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L183)
+
+### `get_player_snapshot`
+
+```python
+async def get_player_snapshot(self, request: GetPlayerSnapshotRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> GetPlayerSnapshotResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetPlayerSnapshotRequest`](/docs/sdk/api/py/generated-world-pb2#getplayersnapshotrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`GetPlayerSnapshotResponse`](/docs/sdk/api/py/generated-world-pb2#getplayersnapshotresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L207)
+
+### `get_world_block`
+
+```python
+async def get_world_block(self, request: GetWorldBlockRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> GetWorldBlockResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetWorldBlockRequest`](/docs/sdk/api/py/generated-world-pb2#getworldblockrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`GetWorldBlockResponse`](/docs/sdk/api/py/get-world-block-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L227)
+
+### `query_blocks`
+
+```python
+async def query_blocks(self, request: QueryBlocksRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> QueryBlocksResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`QueryBlocksRequest`](/docs/sdk/api/py/generated-world-pb2#queryblocksrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`QueryBlocksResponse`](/docs/sdk/api/py/query-blocks-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L247)
+
+### `get_world_entity`
+
+```python
+async def get_world_entity(self, request: GetWorldEntityRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> GetWorldEntityResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetWorldEntityRequest`](/docs/sdk/api/py/generated-world-pb2#getworldentityrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`GetWorldEntityResponse`](/docs/sdk/api/py/get-world-entity-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L267)
+
+### `query_entities`
+
+```python
+async def query_entities(self, request: QueryEntitiesRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> QueryEntitiesResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`QueryEntitiesRequest`](/docs/sdk/api/py/generated-world-pb2#queryentitiesrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`QueryEntitiesResponse`](/docs/sdk/api/py/query-entities-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L287)
+
+### `raycast`
+
+```python
+async def raycast(self, request: RaycastRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> RaycastResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`RaycastRequest`](/docs/sdk/api/py/generated-world-pb2#raycastrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`RaycastResponse`](/docs/sdk/api/py/raycast-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L307)
+
+### `can_see_block`
+
+```python
+async def can_see_block(self, request: CanSeeBlockRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> CanSeeBlockResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`CanSeeBlockRequest`](/docs/sdk/api/py/generated-world-pb2#canseeblockrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`CanSeeBlockResponse`](/docs/sdk/api/py/can-see-block-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L327)
+
+### `estimate_dig_time`
+
+```python
+async def estimate_dig_time(self, request: EstimateDigTimeRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> EstimateDigTimeResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`EstimateDigTimeRequest`](/docs/sdk/api/py/generated-world-pb2#estimatedigtimerequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`EstimateDigTimeResponse`](/docs/sdk/api/py/estimate-dig-time-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L347)
+
+### `estimate_explosion_damage`
+
+```python
+async def estimate_explosion_damage(self, request: EstimateExplosionDamageRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> EstimateExplosionDamageResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`EstimateExplosionDamageRequest`](/docs/sdk/api/py/generated-world-pb2#estimateexplosiondamagerequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`EstimateExplosionDamageResponse`](/docs/sdk/api/py/estimate-explosion-damage-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L367)
+
+## WorldServiceClientSync
+
+**Class** in `world_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L530).
+
+**Import from:** `soulfire.world_connect`.
+
+**Bases:** `ConnectClientSync`.
+
+```python
+class WorldServiceClientSync(ConnectClientSync)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[InterceptorSync]=(), http_client: SyncClient | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | keyword only |
+| `http_client` | `SyncClient \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L531)
+
+### `get_player_snapshot`
+
+```python
+def get_player_snapshot(self, request: GetPlayerSnapshotRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> GetPlayerSnapshotResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetPlayerSnapshotRequest`](/docs/sdk/api/py/generated-world-pb2#getplayersnapshotrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`GetPlayerSnapshotResponse`](/docs/sdk/api/py/generated-world-pb2#getplayersnapshotresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L555)
+
+### `get_world_block`
+
+```python
+def get_world_block(self, request: GetWorldBlockRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> GetWorldBlockResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetWorldBlockRequest`](/docs/sdk/api/py/generated-world-pb2#getworldblockrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`GetWorldBlockResponse`](/docs/sdk/api/py/get-world-block-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L574)
+
+### `query_blocks`
+
+```python
+def query_blocks(self, request: QueryBlocksRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> QueryBlocksResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`QueryBlocksRequest`](/docs/sdk/api/py/generated-world-pb2#queryblocksrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`QueryBlocksResponse`](/docs/sdk/api/py/query-blocks-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L593)
+
+### `get_world_entity`
+
+```python
+def get_world_entity(self, request: GetWorldEntityRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> GetWorldEntityResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetWorldEntityRequest`](/docs/sdk/api/py/generated-world-pb2#getworldentityrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`GetWorldEntityResponse`](/docs/sdk/api/py/get-world-entity-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L612)
+
+### `query_entities`
+
+```python
+def query_entities(self, request: QueryEntitiesRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> QueryEntitiesResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`QueryEntitiesRequest`](/docs/sdk/api/py/generated-world-pb2#queryentitiesrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`QueryEntitiesResponse`](/docs/sdk/api/py/query-entities-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L631)
+
+### `raycast`
+
+```python
+def raycast(self, request: RaycastRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> RaycastResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`RaycastRequest`](/docs/sdk/api/py/generated-world-pb2#raycastrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`RaycastResponse`](/docs/sdk/api/py/raycast-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L650)
+
+### `can_see_block`
+
+```python
+def can_see_block(self, request: CanSeeBlockRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> CanSeeBlockResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`CanSeeBlockRequest`](/docs/sdk/api/py/generated-world-pb2#canseeblockrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`CanSeeBlockResponse`](/docs/sdk/api/py/can-see-block-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L669)
+
+### `estimate_dig_time`
+
+```python
+def estimate_dig_time(self, request: EstimateDigTimeRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> EstimateDigTimeResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`EstimateDigTimeRequest`](/docs/sdk/api/py/generated-world-pb2#estimatedigtimerequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`EstimateDigTimeResponse`](/docs/sdk/api/py/estimate-dig-time-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L688)
+
+### `estimate_explosion_damage`
+
+```python
+def estimate_explosion_damage(self, request: EstimateExplosionDamageRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> EstimateExplosionDamageResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`EstimateExplosionDamageRequest`](/docs/sdk/api/py/generated-world-pb2#estimateexplosiondamagerequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`EstimateExplosionDamageResponse`](/docs/sdk/api/py/estimate-explosion-damage-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L707)
+
+## WorldServiceSync
+
+**Class** in `world_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L387).
+
+**Import from:** `soulfire.world_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class WorldServiceSync(Protocol)
+```
+
+### `get_player_snapshot`
+
+```python
+def get_player_snapshot(self, request: GetPlayerSnapshotRequest, ctx: RequestContext[GetPlayerSnapshotRequest, GetPlayerSnapshotResponse]) -> GetPlayerSnapshotResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetPlayerSnapshotRequest`](/docs/sdk/api/py/generated-world-pb2#getplayersnapshotrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[GetPlayerSnapshotRequest, GetPlayerSnapshotResponse]` ([`GetPlayerSnapshotRequest`](/docs/sdk/api/py/generated-world-pb2#getplayersnapshotrequest), [`GetPlayerSnapshotResponse`](/docs/sdk/api/py/generated-world-pb2#getplayersnapshotresponse)) | Required | positional or keyword |
+
+**Returns:** [`GetPlayerSnapshotResponse`](/docs/sdk/api/py/generated-world-pb2#getplayersnapshotresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L388)
+
+### `get_world_block`
+
+```python
+def get_world_block(self, request: GetWorldBlockRequest, ctx: RequestContext[GetWorldBlockRequest, GetWorldBlockResponse]) -> GetWorldBlockResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetWorldBlockRequest`](/docs/sdk/api/py/generated-world-pb2#getworldblockrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[GetWorldBlockRequest, GetWorldBlockResponse]` ([`GetWorldBlockRequest`](/docs/sdk/api/py/generated-world-pb2#getworldblockrequest), [`GetWorldBlockResponse`](/docs/sdk/api/py/get-world-block-response)) | Required | positional or keyword |
+
+**Returns:** [`GetWorldBlockResponse`](/docs/sdk/api/py/get-world-block-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L391)
+
+### `query_blocks`
+
+```python
+def query_blocks(self, request: QueryBlocksRequest, ctx: RequestContext[QueryBlocksRequest, QueryBlocksResponse]) -> QueryBlocksResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`QueryBlocksRequest`](/docs/sdk/api/py/generated-world-pb2#queryblocksrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[QueryBlocksRequest, QueryBlocksResponse]` ([`QueryBlocksRequest`](/docs/sdk/api/py/generated-world-pb2#queryblocksrequest), [`QueryBlocksResponse`](/docs/sdk/api/py/query-blocks-response)) | Required | positional or keyword |
+
+**Returns:** [`QueryBlocksResponse`](/docs/sdk/api/py/query-blocks-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L394)
+
+### `get_world_entity`
+
+```python
+def get_world_entity(self, request: GetWorldEntityRequest, ctx: RequestContext[GetWorldEntityRequest, GetWorldEntityResponse]) -> GetWorldEntityResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetWorldEntityRequest`](/docs/sdk/api/py/generated-world-pb2#getworldentityrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[GetWorldEntityRequest, GetWorldEntityResponse]` ([`GetWorldEntityRequest`](/docs/sdk/api/py/generated-world-pb2#getworldentityrequest), [`GetWorldEntityResponse`](/docs/sdk/api/py/get-world-entity-response)) | Required | positional or keyword |
+
+**Returns:** [`GetWorldEntityResponse`](/docs/sdk/api/py/get-world-entity-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L397)
+
+### `query_entities`
+
+```python
+def query_entities(self, request: QueryEntitiesRequest, ctx: RequestContext[QueryEntitiesRequest, QueryEntitiesResponse]) -> QueryEntitiesResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`QueryEntitiesRequest`](/docs/sdk/api/py/generated-world-pb2#queryentitiesrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[QueryEntitiesRequest, QueryEntitiesResponse]` ([`QueryEntitiesRequest`](/docs/sdk/api/py/generated-world-pb2#queryentitiesrequest), [`QueryEntitiesResponse`](/docs/sdk/api/py/query-entities-response)) | Required | positional or keyword |
+
+**Returns:** [`QueryEntitiesResponse`](/docs/sdk/api/py/query-entities-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L400)
+
+### `raycast`
+
+```python
+def raycast(self, request: RaycastRequest, ctx: RequestContext[RaycastRequest, RaycastResponse]) -> RaycastResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`RaycastRequest`](/docs/sdk/api/py/generated-world-pb2#raycastrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[RaycastRequest, RaycastResponse]` ([`RaycastRequest`](/docs/sdk/api/py/generated-world-pb2#raycastrequest), [`RaycastResponse`](/docs/sdk/api/py/raycast-response)) | Required | positional or keyword |
+
+**Returns:** [`RaycastResponse`](/docs/sdk/api/py/raycast-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L403)
+
+### `can_see_block`
+
+```python
+def can_see_block(self, request: CanSeeBlockRequest, ctx: RequestContext[CanSeeBlockRequest, CanSeeBlockResponse]) -> CanSeeBlockResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`CanSeeBlockRequest`](/docs/sdk/api/py/generated-world-pb2#canseeblockrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[CanSeeBlockRequest, CanSeeBlockResponse]` ([`CanSeeBlockRequest`](/docs/sdk/api/py/generated-world-pb2#canseeblockrequest), [`CanSeeBlockResponse`](/docs/sdk/api/py/can-see-block-response)) | Required | positional or keyword |
+
+**Returns:** [`CanSeeBlockResponse`](/docs/sdk/api/py/can-see-block-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L406)
+
+### `estimate_dig_time`
+
+```python
+def estimate_dig_time(self, request: EstimateDigTimeRequest, ctx: RequestContext[EstimateDigTimeRequest, EstimateDigTimeResponse]) -> EstimateDigTimeResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`EstimateDigTimeRequest`](/docs/sdk/api/py/generated-world-pb2#estimatedigtimerequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[EstimateDigTimeRequest, EstimateDigTimeResponse]` ([`EstimateDigTimeRequest`](/docs/sdk/api/py/generated-world-pb2#estimatedigtimerequest), [`EstimateDigTimeResponse`](/docs/sdk/api/py/estimate-dig-time-response)) | Required | positional or keyword |
+
+**Returns:** [`EstimateDigTimeResponse`](/docs/sdk/api/py/estimate-dig-time-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L409)
+
+### `estimate_explosion_damage`
+
+```python
+def estimate_explosion_damage(self, request: EstimateExplosionDamageRequest, ctx: RequestContext[EstimateExplosionDamageRequest, EstimateExplosionDamageResponse]) -> EstimateExplosionDamageResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`EstimateExplosionDamageRequest`](/docs/sdk/api/py/generated-world-pb2#estimateexplosiondamagerequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[EstimateExplosionDamageRequest, EstimateExplosionDamageResponse]` ([`EstimateExplosionDamageRequest`](/docs/sdk/api/py/generated-world-pb2#estimateexplosiondamagerequest), [`EstimateExplosionDamageResponse`](/docs/sdk/api/py/estimate-explosion-damage-response)) | Required | positional or keyword |
+
+**Returns:** [`EstimateExplosionDamageResponse`](/docs/sdk/api/py/estimate-explosion-damage-response).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L412)
+
+## WorldServiceWSGIApplication
+
+**Class** in `world_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L416).
+
+**Import from:** `soulfire.world_connect`.
+
+**Bases:** `ConnectWSGIApplication`.
+
+```python
+class WorldServiceWSGIApplication(ConnectWSGIApplication)
+```
+
+### `__init__`
+
+```python
+def __init__(self, service: WorldServiceSync, interceptors: Iterable[InterceptorSync]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | [`WorldServiceSync`](/docs/sdk/api/py/generated-world-connect#worldservicesync) | Required | positional or keyword |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | positional or keyword |
+| `read_max_bytes` | `int \| None` | `None` | positional or keyword |
+| `compressions` | `Iterable[Compression] \| None` | `None` | positional or keyword |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L417)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/world_connect.py#L525)

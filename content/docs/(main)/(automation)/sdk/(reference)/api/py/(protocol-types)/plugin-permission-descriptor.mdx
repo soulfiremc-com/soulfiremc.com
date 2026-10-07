@@ -1,0 +1,123 @@
+---
+title: "PluginPermissionDescriptor"
+description: "Python API signatures, fields, and source for PluginPermissionDescriptor."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `plugin_api_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_pb2.pyi#L89).
+
+**Import from:** `soulfire`, `soulfire.plugin_api_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class PluginPermissionDescriptor(_message.Message)
+```
+
+## `ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_pb2.pyi#L91)
+
+## `PLUGIN_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_pb2.pyi#L92)
+
+## `SCOPE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_pb2.pyi#L93)
+
+## `RISK_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_pb2.pyi#L94)
+
+## `DISPLAY_NAME_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_pb2.pyi#L95)
+
+## `DESCRIPTION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_pb2.pyi#L96)
+
+## `DEFAULT_GRANT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_pb2.pyi#L97)
+
+## `id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_pb2.pyi#L98)
+
+## `plugin_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_pb2.pyi#L99)
+
+## `scope`
+
+**Type:** [`PluginPermissionScope`](/docs/sdk/api/py/plugin-permission-scope).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_pb2.pyi#L100)
+
+## `risk`
+
+**Type:** [`PluginPermissionRisk`](/docs/sdk/api/py/plugin-permission-risk).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_pb2.pyi#L101)
+
+## `display_name`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_pb2.pyi#L102)
+
+## `description`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_pb2.pyi#L103)
+
+## `default_grant`
+
+**Type:** [`PluginPermissionDefault`](/docs/sdk/api/py/plugin-permission-default).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_pb2.pyi#L104)
+
+## `__init__`
+
+```python
+def __init__(self, id: _Optional[str]=..., plugin_id: _Optional[str]=..., scope: _Optional[_Union[PluginPermissionScope, str]]=..., risk: _Optional[_Union[PluginPermissionRisk, str]]=..., display_name: _Optional[str]=..., description: _Optional[str]=..., default_grant: _Optional[_Union[PluginPermissionDefault, str]]=...) -> None
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `id` | `_Optional[str]` | `...` | positional or keyword |
+| `plugin_id` | `_Optional[str]` | `...` | positional or keyword |
+| `scope` | `_Optional[_Union[PluginPermissionScope, str]]` ([`PluginPermissionScope`](/docs/sdk/api/py/plugin-permission-scope)) | `...` | positional or keyword |
+| `risk` | `_Optional[_Union[PluginPermissionRisk, str]]` ([`PluginPermissionRisk`](/docs/sdk/api/py/plugin-permission-risk)) | `...` | positional or keyword |
+| `display_name` | `_Optional[str]` | `...` | positional or keyword |
+| `description` | `_Optional[str]` | `...` | positional or keyword |
+| `default_grant` | `_Optional[_Union[PluginPermissionDefault, str]]` ([`PluginPermissionDefault`](/docs/sdk/api/py/plugin-permission-default)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/plugin_api_pb2.pyi#L105)

@@ -1,0 +1,50 @@
+---
+title: "BotTaskEvent"
+description: "TypeScript API signatures, fields, and source for BotTaskEvent."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/task_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L461).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/task_pb`.
+
+```ts
+type BotTaskEvent = Message<"soulfire.v1.BotTaskEvent"> & {
+  /**
+   * @generated from field: uint64 sequence = 1;
+   */
+  sequence: bigint;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp observed_at = 2;
+   */
+  observedAt?: Timestamp | undefined;
+
+  /**
+   * @generated from field: soulfire.v1.BotTask task = 3;
+   */
+  task?: BotTask | undefined;
+};
+```
+
+**Referenced types:** [`BotTask`](/docs/sdk/api/ts/bot-task).
+
+## `sequence`
+
+**Type:** `bigint`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L465)
+
+## `observedAt`
+
+**Type:** `Timestamp | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L470)
+
+## `task`
+
+**Type:** `BotTask | undefined` ([`BotTask`](/docs/sdk/api/ts/bot-task)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/task_pb.ts#L475)

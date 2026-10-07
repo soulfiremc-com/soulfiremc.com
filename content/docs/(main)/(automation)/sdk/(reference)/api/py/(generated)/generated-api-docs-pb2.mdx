@@ -1,0 +1,266 @@
+---
+title: "api_docs_pb2 module"
+description: "Python API signatures, fields, and source for api_docs_pb2 module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`API_FIELD_FIELD_NUMBER`](/docs/sdk/api/py/generated-api-docs-pb2#api_field_field_number) | constant |
+| [`API_METHOD_FIELD_NUMBER`](/docs/sdk/api/py/generated-api-docs-pb2#api_method_field_number) | constant |
+| [`ApiFieldDocs`](/docs/sdk/api/py/generated-api-docs-pb2#apifielddocs) | class |
+| [`ApiMethodDocs`](/docs/sdk/api/py/generated-api-docs-pb2#apimethoddocs) | class |
+| [`DESCRIPTOR`](/docs/sdk/api/py/generated-api-docs-pb2#descriptor) | constant |
+| [`api_field`](/docs/sdk/api/py/generated-api-docs-pb2#api_field) | constant |
+| [`api_method`](/docs/sdk/api/py/generated-api-docs-pb2#api_method) | constant |
+
+## API_FIELD_FIELD_NUMBER
+
+**Constant** in `api_docs_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L11).
+
+**Import from:** `soulfire.api_docs_pb2`.
+
+```python
+API_FIELD_FIELD_NUMBER: _ClassVar[int]
+```
+
+## API_METHOD_FIELD_NUMBER
+
+**Constant** in `api_docs_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L9).
+
+**Import from:** `soulfire.api_docs_pb2`.
+
+```python
+API_METHOD_FIELD_NUMBER: _ClassVar[int]
+```
+
+## ApiFieldDocs
+
+**Class** in `api_docs_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L36).
+
+**Import from:** `soulfire.api_docs_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class ApiFieldDocs(_message.Message)
+```
+
+### `FORMAT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L38)
+
+### `EXAMPLE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L39)
+
+### `format`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L40)
+
+### `example`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L41)
+
+### `__init__`
+
+```python
+def __init__(self, format: _Optional[str]=..., example: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `format` | `_Optional[str]` | `...` | positional or keyword |
+| `example` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L42)
+
+## ApiMethodDocs
+
+**Class** in `api_docs_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L14).
+
+**Import from:** `soulfire.api_docs_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class ApiMethodDocs(_message.Message)
+```
+
+### `DISPLAY_NAME_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L16)
+
+### `DESCRIPTION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L17)
+
+### `PERMISSIONS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L18)
+
+### `SCOPE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L19)
+
+### `PRECONDITIONS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L20)
+
+### `EXECUTION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L21)
+
+### `SIDE_EFFECTS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L22)
+
+### `EXPOSE_TO_MCP_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L23)
+
+### `MCP_REQUIRES_CONFIRMATION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L24)
+
+### `display_name`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L25)
+
+### `description`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L26)
+
+### `permissions`
+
+**Type:** `_containers.RepeatedScalarFieldContainer[str]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L27)
+
+### `scope`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L28)
+
+### `preconditions`
+
+**Type:** `_containers.RepeatedScalarFieldContainer[str]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L29)
+
+### `execution`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L30)
+
+### `side_effects`
+
+**Type:** `_containers.RepeatedScalarFieldContainer[str]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L31)
+
+### `expose_to_mcp`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L32)
+
+### `mcp_requires_confirmation`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L33)
+
+### `__init__`
+
+```python
+def __init__(self, display_name: _Optional[str]=..., description: _Optional[str]=..., permissions: _Optional[_Iterable[str]]=..., scope: _Optional[str]=..., preconditions: _Optional[_Iterable[str]]=..., execution: _Optional[str]=..., side_effects: _Optional[_Iterable[str]]=..., expose_to_mcp: bool=..., mcp_requires_confirmation: bool=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `display_name` | `_Optional[str]` | `...` | positional or keyword |
+| `description` | `_Optional[str]` | `...` | positional or keyword |
+| `permissions` | `_Optional[_Iterable[str]]` | `...` | positional or keyword |
+| `scope` | `_Optional[str]` | `...` | positional or keyword |
+| `preconditions` | `_Optional[_Iterable[str]]` | `...` | positional or keyword |
+| `execution` | `_Optional[str]` | `...` | positional or keyword |
+| `side_effects` | `_Optional[_Iterable[str]]` | `...` | positional or keyword |
+| `expose_to_mcp` | `bool` | `...` | positional or keyword |
+| `mcp_requires_confirmation` | `bool` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L34)
+
+## DESCRIPTOR
+
+**Constant** in `api_docs_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L8).
+
+**Import from:** `soulfire.api_docs_pb2`.
+
+```python
+DESCRIPTOR: _descriptor.FileDescriptor
+```
+
+## api_field
+
+**Constant** in `api_docs_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L12).
+
+**Import from:** `soulfire.api_docs_pb2`.
+
+```python
+api_field: _descriptor.FieldDescriptor
+```
+
+## api_method
+
+**Constant** in `api_docs_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/api_docs_pb2.pyi#L10).
+
+**Import from:** `soulfire.api_docs_pb2`.
+
+```python
+api_method: _descriptor.FieldDescriptor
+```

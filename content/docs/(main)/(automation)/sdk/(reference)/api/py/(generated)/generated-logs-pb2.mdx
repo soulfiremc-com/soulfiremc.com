@@ -1,0 +1,653 @@
+---
+title: "logs_pb2 module"
+description: "Python API signatures, fields, and source for logs_pb2 module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`BotLogScope`](/docs/sdk/api/py/generated-logs-pb2#botlogscope) | class |
+| [`DESCRIPTOR`](/docs/sdk/api/py/generated-logs-pb2#descriptor) | constant |
+| [`GlobalLogScope`](/docs/sdk/api/py/generated-logs-pb2#globallogscope) | class |
+| [`InstanceLogScope`](/docs/sdk/api/py/generated-logs-pb2#instancelogscope) | class |
+| [`InstanceScriptLogScope`](/docs/sdk/api/py/generated-logs-pb2#instancescriptlogscope) | class |
+| [`LogRequest`](/docs/sdk/api/py/generated-logs-pb2#logrequest) | class |
+| [`LogResponse`](/docs/sdk/api/py/generated-logs-pb2#logresponse) | class |
+| [`LogScope`](/docs/sdk/api/py/generated-logs-pb2#logscope) | class |
+| [`LogString`](/docs/sdk/api/py/generated-logs-pb2#logstring) | class |
+| [`PersonalLogScope`](/docs/sdk/api/py/generated-logs-pb2#personallogscope) | class |
+| [`PreviousLogRequest`](/docs/sdk/api/py/generated-logs-pb2#previouslogrequest) | class |
+| [`PreviousLogResponse`](/docs/sdk/api/py/generated-logs-pb2#previouslogresponse) | class |
+
+## BotLogScope
+
+**Class** in `logs_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L51).
+
+**Import from:** `soulfire.logs_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class BotLogScope(_message.Message)
+```
+
+### `INSTANCE_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L53)
+
+### `BOT_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L54)
+
+### `instance_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L55)
+
+### `bot_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L56)
+
+### `__init__`
+
+```python
+def __init__(self, instance_id: _Optional[str]=..., bot_id: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instance_id` | `_Optional[str]` | `...` | positional or keyword |
+| `bot_id` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L57)
+
+## DESCRIPTOR
+
+**Constant** in `logs_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L13).
+
+**Import from:** `soulfire.logs_pb2`.
+
+```python
+DESCRIPTOR: _descriptor.FileDescriptor
+```
+
+## GlobalLogScope
+
+**Class** in `logs_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L41).
+
+**Import from:** `soulfire.logs_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class GlobalLogScope(_message.Message)
+```
+
+### `__init__`
+
+```python
+def __init__(self) -> None
+```
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L43)
+
+## InstanceLogScope
+
+**Class** in `logs_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L45).
+
+**Import from:** `soulfire.logs_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class InstanceLogScope(_message.Message)
+```
+
+### `INSTANCE_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L47)
+
+### `instance_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L48)
+
+### `__init__`
+
+```python
+def __init__(self, instance_id: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instance_id` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L49)
+
+## InstanceScriptLogScope
+
+**Class** in `logs_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L59).
+
+**Import from:** `soulfire.logs_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class InstanceScriptLogScope(_message.Message)
+```
+
+### `INSTANCE_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L61)
+
+### `SCRIPT_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L62)
+
+### `instance_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L63)
+
+### `script_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L64)
+
+### `__init__`
+
+```python
+def __init__(self, instance_id: _Optional[str]=..., script_id: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instance_id` | `_Optional[str]` | `...` | positional or keyword |
+| `script_id` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L65)
+
+## LogRequest
+
+**Class** in `logs_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L98).
+
+**Import from:** `soulfire.logs_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class LogRequest(_message.Message)
+```
+
+### `SCOPE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L100)
+
+### `scope`
+
+**Type:** [`LogScope`](/docs/sdk/api/py/generated-logs-pb2#logscope).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L101)
+
+### `__init__`
+
+```python
+def __init__(self, scope: _Optional[_Union[LogScope, _Mapping]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `scope` | `_Optional[_Union[LogScope, _Mapping]]` ([`LogScope`](/docs/sdk/api/py/generated-logs-pb2#logscope)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L102)
+
+## LogResponse
+
+**Class** in `logs_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L104).
+
+**Import from:** `soulfire.logs_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class LogResponse(_message.Message)
+```
+
+### `MESSAGE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L106)
+
+### `message`
+
+**Type:** [`LogString`](/docs/sdk/api/py/generated-logs-pb2#logstring).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L107)
+
+### `__init__`
+
+```python
+def __init__(self, message: _Optional[_Union[LogString, _Mapping]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `message` | `_Optional[_Union[LogString, _Mapping]]` ([`LogString`](/docs/sdk/api/py/generated-logs-pb2#logstring)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L108)
+
+## LogScope
+
+**Class** in `logs_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L71).
+
+**Import from:** `soulfire.logs_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class LogScope(_message.Message)
+```
+
+### `GLOBAL_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L73)
+
+### `INSTANCE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L74)
+
+### `BOT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L75)
+
+### `INSTANCE_SCRIPT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L76)
+
+### `PERSONAL_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L77)
+
+### `instance`
+
+**Type:** [`InstanceLogScope`](/docs/sdk/api/py/generated-logs-pb2#instancelogscope).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L78)
+
+### `bot`
+
+**Type:** [`BotLogScope`](/docs/sdk/api/py/generated-logs-pb2#botlogscope).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L79)
+
+### `instance_script`
+
+**Type:** [`InstanceScriptLogScope`](/docs/sdk/api/py/generated-logs-pb2#instancescriptlogscope).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L80)
+
+### `personal`
+
+**Type:** [`PersonalLogScope`](/docs/sdk/api/py/generated-logs-pb2#personallogscope).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L81)
+
+### `__init__`
+
+```python
+def __init__(self, instance: _Optional[_Union[InstanceLogScope, _Mapping]]=..., bot: _Optional[_Union[BotLogScope, _Mapping]]=..., instance_script: _Optional[_Union[InstanceScriptLogScope, _Mapping]]=..., personal: _Optional[_Union[PersonalLogScope, _Mapping]]=..., **kwargs) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instance` | `_Optional[_Union[InstanceLogScope, _Mapping]]` ([`InstanceLogScope`](/docs/sdk/api/py/generated-logs-pb2#instancelogscope)) | `...` | positional or keyword |
+| `bot` | `_Optional[_Union[BotLogScope, _Mapping]]` ([`BotLogScope`](/docs/sdk/api/py/generated-logs-pb2#botlogscope)) | `...` | positional or keyword |
+| `instance_script` | `_Optional[_Union[InstanceScriptLogScope, _Mapping]]` ([`InstanceScriptLogScope`](/docs/sdk/api/py/generated-logs-pb2#instancescriptlogscope)) | `...` | positional or keyword |
+| `personal` | `_Optional[_Union[PersonalLogScope, _Mapping]]` ([`PersonalLogScope`](/docs/sdk/api/py/generated-logs-pb2#personallogscope)) | `...` | positional or keyword |
+| `**kwargs` | No type annotation | Optional | variadic keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L82)
+
+## LogString
+
+**Class** in `logs_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L15).
+
+**Import from:** `soulfire.logs_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class LogString(_message.Message)
+```
+
+### `ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L17)
+
+### `MESSAGE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L18)
+
+### `INSTANCE_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L19)
+
+### `BOT_ACCOUNT_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L20)
+
+### `SCRIPT_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L21)
+
+### `PERSONAL_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L22)
+
+### `INSTANCE_NAME_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L23)
+
+### `BOT_ACCOUNT_NAME_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L24)
+
+### `TIMESTAMP_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L25)
+
+### `LOGGER_NAME_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L26)
+
+### `LEVEL_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L27)
+
+### `id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L28)
+
+### `message`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L29)
+
+### `instance_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L30)
+
+### `bot_account_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L31)
+
+### `script_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L32)
+
+### `personal`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L33)
+
+### `instance_name`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L34)
+
+### `bot_account_name`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L35)
+
+### `timestamp`
+
+**Type:** `_timestamp_pb2.Timestamp`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L36)
+
+### `logger_name`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L37)
+
+### `level`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L38)
+
+### `__init__`
+
+```python
+def __init__(self, id: _Optional[str]=..., message: _Optional[str]=..., instance_id: _Optional[str]=..., bot_account_id: _Optional[str]=..., script_id: _Optional[str]=..., personal: bool=..., instance_name: _Optional[str]=..., bot_account_name: _Optional[str]=..., timestamp: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]]=..., logger_name: _Optional[str]=..., level: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `id` | `_Optional[str]` | `...` | positional or keyword |
+| `message` | `_Optional[str]` | `...` | positional or keyword |
+| `instance_id` | `_Optional[str]` | `...` | positional or keyword |
+| `bot_account_id` | `_Optional[str]` | `...` | positional or keyword |
+| `script_id` | `_Optional[str]` | `...` | positional or keyword |
+| `personal` | `bool` | `...` | positional or keyword |
+| `instance_name` | `_Optional[str]` | `...` | positional or keyword |
+| `bot_account_name` | `_Optional[str]` | `...` | positional or keyword |
+| `timestamp` | `_Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]]` | `...` | positional or keyword |
+| `logger_name` | `_Optional[str]` | `...` | positional or keyword |
+| `level` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L39)
+
+## PersonalLogScope
+
+**Class** in `logs_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L67).
+
+**Import from:** `soulfire.logs_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class PersonalLogScope(_message.Message)
+```
+
+### `__init__`
+
+```python
+def __init__(self) -> None
+```
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L69)
+
+## PreviousLogRequest
+
+**Class** in `logs_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L84).
+
+**Import from:** `soulfire.logs_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class PreviousLogRequest(_message.Message)
+```
+
+### `SCOPE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L86)
+
+### `COUNT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L87)
+
+### `scope`
+
+**Type:** [`LogScope`](/docs/sdk/api/py/generated-logs-pb2#logscope).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L88)
+
+### `count`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L89)
+
+### `__init__`
+
+```python
+def __init__(self, scope: _Optional[_Union[LogScope, _Mapping]]=..., count: _Optional[int]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `scope` | `_Optional[_Union[LogScope, _Mapping]]` ([`LogScope`](/docs/sdk/api/py/generated-logs-pb2#logscope)) | `...` | positional or keyword |
+| `count` | `_Optional[int]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L90)
+
+## PreviousLogResponse
+
+**Class** in `logs_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L92).
+
+**Import from:** `soulfire.logs_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class PreviousLogResponse(_message.Message)
+```
+
+### `MESSAGES_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L94)
+
+### `messages`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[LogString]` ([`LogString`](/docs/sdk/api/py/generated-logs-pb2#logstring)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L95)
+
+### `__init__`
+
+```python
+def __init__(self, messages: _Optional[_Iterable[_Union[LogString, _Mapping]]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `messages` | `_Optional[_Iterable[_Union[LogString, _Mapping]]]` ([`LogString`](/docs/sdk/api/py/generated-logs-pb2#logstring)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_pb2.pyi#L96)

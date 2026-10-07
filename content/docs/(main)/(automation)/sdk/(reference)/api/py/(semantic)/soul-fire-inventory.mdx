@@ -1,0 +1,367 @@
+---
+title: "SoulFireInventory"
+description: "Python API signatures, fields, and source for SoulFireInventory."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `semantic`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L747).
+
+**Import from:** `soulfire`, `soulfire.semantic`.
+
+**Bases:** `_InventoryBase`.
+
+```python
+class SoulFireInventory(_InventoryBase)
+```
+
+## `__init__`
+
+```python
+def __init__(self, instance_id: str, bot_id: str, client: InventoryServiceClient, headers: HeaderProvider) -> None
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instance_id` | `str` | Required | positional or keyword |
+| `bot_id` | `str` | Required | positional or keyword |
+| `client` | [`InventoryServiceClient`](/docs/sdk/api/py/generated-inventory-connect#inventoryserviceclient) | Required | positional or keyword |
+| `headers` | [`HeaderProvider`](/docs/sdk/api/py/header-provider) | Required | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L748)
+
+## `snapshot`
+
+```python
+def snapshot(self, *, timeout_ms: int | None=None) -> Effect[ContainerSnapshot, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[ContainerSnapshot, SoulFireOperationError]` ([`ContainerSnapshot`](/docs/sdk/api/py/generated-inventory-pb2#containersnapshot), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L755)
+
+## `count`
+
+```python
+def count(self, selector: str | ItemSelector, *, areas: Iterable[InventoryArea]=(), timeout_ms: int | None=None) -> Effect[int, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `selector` | `str \| ItemSelector` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | Required | positional or keyword |
+| `areas` | `Iterable[InventoryArea]` ([`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea)) | `()` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[int, SoulFireOperationError]` ([`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L767)
+
+## `find`
+
+```python
+def find(self, selector: ItemSelector, *, areas: Iterable[InventoryArea]=(), timeout_ms: int | None=None) -> Effect[FindInventorySlotsResponse, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `selector` | [`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector) | Required | positional or keyword |
+| `areas` | `Iterable[InventoryArea]` ([`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea)) | `()` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[FindInventorySlotsResponse, SoulFireOperationError]` ([`FindInventorySlotsResponse`](/docs/sdk/api/py/generated-inventory-pb2#findinventoryslotsresponse), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L785)
+
+## `rank`
+
+```python
+def rank(self, kind: InventoryRecommendationKind, *, selector: ItemSelector | None=None, areas: Iterable[InventoryArea]=(), target_block: BlockPosition | None=None, equipment_slot: str | None=None, limit: int=10, prefer_hotbar: bool=False, preferred_enchantment_ids: Iterable[str]=(), excluded_enchantment_ids: Iterable[str]=(), prefer_high_durability: bool=False, timeout_ms: int | None=None) -> Effect[RankInventoryItemsResponse, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `kind` | [`InventoryRecommendationKind`](/docs/sdk/api/py/generated-inventory-pb2#inventoryrecommendationkind) | Required | positional or keyword |
+| `selector` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `areas` | `Iterable[InventoryArea]` ([`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea)) | `()` | keyword only |
+| `target_block` | `BlockPosition \| None` ([`BlockPosition`](/docs/sdk/api/py/block-position)) | `None` | keyword only |
+| `equipment_slot` | `str \| None` | `None` | keyword only |
+| `limit` | `int` | `10` | keyword only |
+| `prefer_hotbar` | `bool` | `False` | keyword only |
+| `preferred_enchantment_ids` | `Iterable[str]` | `()` | keyword only |
+| `excluded_enchantment_ids` | `Iterable[str]` | `()` | keyword only |
+| `prefer_high_durability` | `bool` | `False` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[RankInventoryItemsResponse, SoulFireOperationError]` ([`RankInventoryItemsResponse`](/docs/sdk/api/py/generated-inventory-pb2#rankinventoryitemsresponse), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L803)
+
+## `best_tool`
+
+```python
+def best_tool(self, target_block: BlockPosition, **options: Unpack[InventoryRankingOptions]) -> Effect[InventoryItemRecommendation | None, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `target_block` | [`BlockPosition`](/docs/sdk/api/py/block-position) | Required | positional or keyword |
+| `**options` | `Unpack[InventoryRankingOptions]` ([`InventoryRankingOptions`](/docs/sdk/api/py/inventory-ranking-options)) | Optional | variadic keyword |
+
+**Returns:** `Effect[InventoryItemRecommendation | None, SoulFireOperationError]` ([`InventoryItemRecommendation`](/docs/sdk/api/py/generated-inventory-pb2#inventoryitemrecommendation), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L841)
+
+## `best_weapon`
+
+```python
+def best_weapon(self, **options: Unpack[InventoryRankingOptions]) -> Effect[InventoryItemRecommendation | None, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `**options` | `Unpack[InventoryRankingOptions]` ([`InventoryRankingOptions`](/docs/sdk/api/py/inventory-ranking-options)) | Optional | variadic keyword |
+
+**Returns:** `Effect[InventoryItemRecommendation | None, SoulFireOperationError]` ([`InventoryItemRecommendation`](/docs/sdk/api/py/generated-inventory-pb2#inventoryitemrecommendation), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L856)
+
+## `best_armor`
+
+```python
+def best_armor(self, equipment_slot: str, **options: Unpack[InventoryRankingOptions]) -> Effect[InventoryItemRecommendation | None, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `equipment_slot` | `str` | Required | positional or keyword |
+| `**options` | `Unpack[InventoryRankingOptions]` ([`InventoryRankingOptions`](/docs/sdk/api/py/inventory-ranking-options)) | Optional | variadic keyword |
+
+**Returns:** `Effect[InventoryItemRecommendation | None, SoulFireOperationError]` ([`InventoryItemRecommendation`](/docs/sdk/api/py/generated-inventory-pb2#inventoryitemrecommendation), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L864)
+
+## `best_food`
+
+```python
+def best_food(self, **options: Unpack[InventoryRankingOptions]) -> Effect[InventoryItemRecommendation | None, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `**options` | `Unpack[InventoryRankingOptions]` ([`InventoryRankingOptions`](/docs/sdk/api/py/inventory-ranking-options)) | Optional | variadic keyword |
+
+**Returns:** `Effect[InventoryItemRecommendation | None, SoulFireOperationError]` ([`InventoryItemRecommendation`](/docs/sdk/api/py/generated-inventory-pb2#inventoryitemrecommendation), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L879)
+
+## `best_scaffold`
+
+```python
+def best_scaffold(self, **options: Unpack[InventoryRankingOptions]) -> Effect[InventoryItemRecommendation | None, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `**options` | `Unpack[InventoryRankingOptions]` ([`InventoryRankingOptions`](/docs/sdk/api/py/inventory-ranking-options)) | Optional | variadic keyword |
+
+**Returns:** `Effect[InventoryItemRecommendation | None, SoulFireOperationError]` ([`InventoryItemRecommendation`](/docs/sdk/api/py/generated-inventory-pb2#inventoryitemrecommendation), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L887)
+
+## `move`
+
+```python
+def move(self, source_slot: int, destination_slot: int, *, count: int | None=None, expected_revision: int=0, idempotency_key: str | None=None, timeout_ms: int | None=None) -> Effect[InventoryMutationResponse, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `source_slot` | `int` | Required | positional or keyword |
+| `destination_slot` | `int` | Required | positional or keyword |
+| `count` | `int \| None` | `None` | keyword only |
+| `expected_revision` | `int` | `0` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[InventoryMutationResponse, SoulFireOperationError]` ([`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L895)
+
+## `transfer`
+
+```python
+def transfer(self, selector: ItemSelector, count: int, *, from_area: InventoryArea, to_area: InventoryArea, expected_revision: int=0, idempotency_key: str | None=None, timeout_ms: int | None=None) -> Effect[InventoryMutationResponse, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `selector` | [`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector) | Required | positional or keyword |
+| `count` | `int` | Required | positional or keyword |
+| `from_area` | [`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea) | Required | keyword only |
+| `to_area` | [`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea) | Required | keyword only |
+| `expected_revision` | `int` | `0` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[InventoryMutationResponse, SoulFireOperationError]` ([`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L924)
+
+## `toss`
+
+```python
+def toss(self, selector: ItemSelector, count: int, *, expected_revision: int=0, idempotency_key: str | None=None, timeout_ms: int | None=None) -> Effect[InventoryMutationResponse, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `selector` | [`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector) | Required | positional or keyword |
+| `count` | `int` | Required | positional or keyword |
+| `expected_revision` | `int` | `0` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[InventoryMutationResponse, SoulFireOperationError]` ([`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L955)
+
+## `select_hotbar`
+
+```python
+def select_hotbar(self, *, slot: int | None=None, selector: ItemSelector | None=None, expected_revision: int=0, idempotency_key: str | None=None, timeout_ms: int | None=None) -> Effect[InventoryMutationResponse, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `slot` | `int \| None` | `None` | keyword only |
+| `selector` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `expected_revision` | `int` | `0` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[InventoryMutationResponse, SoulFireOperationError]` ([`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L982)
+
+## `equip`
+
+```python
+def equip(self, selector: ItemSelector, equipment_slot: str, *, expected_revision: int=0, idempotency_key: str | None=None, timeout_ms: int | None=None) -> Effect[InventoryMutationResponse, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `selector` | [`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector) | Required | positional or keyword |
+| `equipment_slot` | `str` | Required | positional or keyword |
+| `expected_revision` | `int` | `0` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[InventoryMutationResponse, SoulFireOperationError]` ([`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L1018)
+
+## `unequip`
+
+```python
+def unequip(self, equipment_slot: str, *, destination_area: InventoryArea | None=None, expected_revision: int=0, idempotency_key: str | None=None, timeout_ms: int | None=None) -> Effect[InventoryMutationResponse, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `equipment_slot` | `str` | Required | positional or keyword |
+| `destination_area` | `InventoryArea \| None` ([`InventoryArea`](/docs/sdk/api/py/generated-inventory-pb2#inventoryarea)) | `None` | keyword only |
+| `expected_revision` | `int` | `0` | keyword only |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[InventoryMutationResponse, SoulFireOperationError]` ([`InventoryMutationResponse`](/docs/sdk/api/py/generated-inventory-pb2#inventorymutationresponse), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L1045)
+
+## `open`
+
+```python
+def open(self, position: BlockPosition, *, idempotency_key: str | None=None, timeout_ms: int | None=None) -> Effect[SoulFireContainer, SoulFireOperationError, Scope]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `position` | [`BlockPosition`](/docs/sdk/api/py/block-position) | Required | positional or keyword |
+| `idempotency_key` | `str \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireContainer, SoulFireOperationError, Scope]` ([`SoulFireContainer`](/docs/sdk/api/py/soul-fire-container), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L1071)

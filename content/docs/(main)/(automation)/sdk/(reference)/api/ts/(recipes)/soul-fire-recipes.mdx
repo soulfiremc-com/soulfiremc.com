@@ -1,0 +1,261 @@
+---
+title: "SoulFireRecipes"
+description: "TypeScript API signatures, fields, and source for SoulFireRecipes."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `recipes`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/recipes.ts#L37).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`.
+
+```ts
+class SoulFireRecipes
+```
+
+## `constructor`
+
+```ts
+new SoulFireRecipes(instanceId: string, botId: string, client: Client<GenService<{ listRecipes: { methodKind: "unary"; input: GenMessage<ListRecipesRequest>; output: GenMessage<ListRecipesResponse>; }; canCraft: { methodKind: "unary"; input: GenMessage<CanCraftRequest>; output: GenMessage<CanCraftResponse>; }; listVillagerTrades: { methodKind: "unary"; input: GenMessage<ListVillagerTradesRequest>; output: GenMessage<ListVillagerTradesResponse>; }; }>>, tasks: SoulFireTasks): SoulFireRecipes
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instanceId` | `string` | Required |  |
+| `botId` | `string` | Required |  |
+| `client` | `Client<GenService<{ listRecipes: { methodKind: "unary"; input: GenMessage<ListRecipesRequest>; output: GenMessage<ListRecipesResponse>; }; canCraft: { methodKind: "unary"; input: GenMessage<CanCraftRequest>; output: GenMessage<CanCraftResponse>; }; listVillagerTrades: { methodKind: "unary"; input: GenMessage<ListVillagerTradesRequest>; output: GenMessage<ListVillagerTradesResponse>; }; }>>` ([`ListRecipesRequest`](/docs/sdk/api/ts/generated-soulfire-recipe-pb#listrecipesrequest), [`ListRecipesResponse`](/docs/sdk/api/ts/generated-soulfire-recipe-pb#listrecipesresponse), [`CanCraftRequest`](/docs/sdk/api/ts/generated-soulfire-recipe-pb#cancraftrequest), [`CanCraftResponse`](/docs/sdk/api/ts/generated-soulfire-recipe-pb#cancraftresponse), [`ListVillagerTradesRequest`](/docs/sdk/api/ts/generated-soulfire-recipe-pb#listvillagertradesrequest), [`ListVillagerTradesResponse`](/docs/sdk/api/ts/generated-soulfire-recipe-pb#listvillagertradesresponse)) | Required |  |
+| `tasks` | [`SoulFireTasks`](/docs/sdk/api/ts/soul-fire-tasks) | Required |  |
+
+**Returns:** [`SoulFireRecipes`](/docs/sdk/api/ts/soul-fire-recipes).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/recipes.ts#L38)
+
+## `list`
+
+Recipes in the bot's recipe book (the ones it has unlocked), sorted by id.
+`pageSize` defaults to 100, at most 1000; pass `nextPageToken` back as
+`pageToken` for the next page.
+
+```ts
+list(request?: RecipeRequest<GenMessage<ListRecipesRequest>>, options?: CallOptions | undefined): Effect<ListRecipesResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `RecipeRequest<GenMessage<ListRecipesRequest>>` ([`RecipeRequest`](/docs/sdk/api/ts/recipe-request), [`ListRecipesRequest`](/docs/sdk/api/ts/generated-soulfire-recipe-pb#listrecipesrequest)) | `{}` |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<ListRecipesResponse, SoulFireOperationError, never>` ([`ListRecipesResponse`](/docs/sdk/api/ts/generated-soulfire-recipe-pb#listrecipesresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/recipes.ts#L50)
+
+## `canCraft`
+
+Whether the player inventory holds the ingredients for `count` crafts of
+`recipeId`, what is missing, and the station the recipe needs. `count`
+defaults to 1.
+
+```ts
+canCraft(request: RecipeRequest<GenMessage<CanCraftRequest>>, options?: CallOptions | undefined): Effect<CanCraftResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `RecipeRequest<GenMessage<CanCraftRequest>>` ([`RecipeRequest`](/docs/sdk/api/ts/recipe-request), [`CanCraftRequest`](/docs/sdk/api/ts/generated-soulfire-recipe-pb#cancraftrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<CanCraftResponse, SoulFireOperationError, never>` ([`CanCraftResponse`](/docs/sdk/api/ts/generated-soulfire-recipe-pb#cancraftresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/recipes.ts#L67)
+
+## `listVillagerTrades`
+
+Offers of the merchant menu the bot has open.
+
+```ts
+listVillagerTrades(options?: CallOptions | undefined): Effect<ListVillagerTradesResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<ListVillagerTradesResponse, SoulFireOperationError, never>` ([`ListVillagerTradesResponse`](/docs/sdk/api/ts/generated-soulfire-recipe-pb#listvillagertradesresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/recipes.ts#L82)
+
+## `craft`
+
+Same as `tasks.craft`: `count` is recipe operations, not output items, and
+defaults to 1.
+
+```ts
+craft(recipeId: string, count?: number, options?: CraftTaskOptions): Effect<SoulFireTask<GenMessage<CraftTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `recipeId` | `string` | Required |  |
+| `count` | `number` | `1` |  |
+| `options` | [`CraftTaskOptions`](/docs/sdk/api/ts/craft-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<CraftTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`CraftTaskResult`](/docs/sdk/api/ts/craft-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/recipes.ts#L97)
+
+## `runCraft`
+
+Same as `tasks.runCraft`: `count` is recipe operations, not output items,
+and defaults to 1.
+
+```ts
+runCraft(recipeId: string, count?: number, options?: CraftTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `recipeId` | `string` | Required |  |
+| `count` | `number` | `1` |  |
+| `options` | [`CraftTaskOptions`](/docs/sdk/api/ts/craft-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/recipes.ts#L112)
+
+## `smelt`
+
+Same as `tasks.smelt`: `count` is input items to cook, and defaults to 1.
+
+```ts
+smelt(input: MessageInit<ItemSelector>, count?: number, options?: SmeltTaskOptions): Effect<SoulFireTask<GenMessage<SmeltTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `input` | `MessageInit<ItemSelector>` ([`ItemSelector`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#itemselector)) | Required |  |
+| `count` | `number` | `1` |  |
+| `options` | [`SmeltTaskOptions`](/docs/sdk/api/ts/smelt-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<SmeltTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`SmeltTaskResult`](/docs/sdk/api/ts/smelt-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/recipes.ts#L127)
+
+## `runSmelt`
+
+Same as `tasks.runSmelt`: `count` is input items to cook, and defaults to
+1.
+
+```ts
+runSmelt(input: MessageInit<ItemSelector>, count?: number, options?: SmeltTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `input` | `MessageInit<ItemSelector>` ([`ItemSelector`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#itemselector)) | Required |  |
+| `count` | `number` | `1` |  |
+| `options` | [`SmeltTaskOptions`](/docs/sdk/api/ts/smelt-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/recipes.ts#L142)
+
+## `brew`
+
+Same as `tasks.brew`: `count` is bottles to brew, and defaults to 1.
+
+```ts
+brew(input: MessageInit<ItemSelector>, ingredient: MessageInit<ItemSelector>, count?: number, options?: BrewTaskOptions): Effect<SoulFireTask<GenMessage<BrewTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `input` | `MessageInit<ItemSelector>` ([`ItemSelector`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#itemselector)) | Required |  |
+| `ingredient` | `MessageInit<ItemSelector>` ([`ItemSelector`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#itemselector)) | Required |  |
+| `count` | `number` | `1` |  |
+| `options` | [`BrewTaskOptions`](/docs/sdk/api/ts/brew-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<BrewTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`BrewTaskResult`](/docs/sdk/api/ts/brew-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/recipes.ts#L157)
+
+## `runBrew`
+
+Same as `tasks.runBrew`: `count` is bottles to brew, and defaults to 1.
+
+```ts
+runBrew(input: MessageInit<ItemSelector>, ingredient: MessageInit<ItemSelector>, count?: number, options?: BrewTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `input` | `MessageInit<ItemSelector>` ([`ItemSelector`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#itemselector)) | Required |  |
+| `ingredient` | `MessageInit<ItemSelector>` ([`ItemSelector`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#itemselector)) | Required |  |
+| `count` | `number` | `1` |  |
+| `options` | [`BrewTaskOptions`](/docs/sdk/api/ts/brew-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/recipes.ts#L172)
+
+## `villagerTrade`
+
+Same as `tasks.villagerTrade`: `offerIndex` is the zero-based index from
+`listVillagerTrades`, and `count` defaults to 1.
+
+```ts
+villagerTrade(offerIndex: number, count?: number, options?: VillagerTradeTaskOptions): Effect<SoulFireTask<GenMessage<VillagerTradeTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `offerIndex` | `number` | Required |  |
+| `count` | `number` | `1` |  |
+| `options` | [`VillagerTradeTaskOptions`](/docs/sdk/api/ts/villager-trade-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<VillagerTradeTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`VillagerTradeTaskResult`](/docs/sdk/api/ts/villager-trade-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/recipes.ts#L189)
+
+## `runVillagerTrade`
+
+Same as `tasks.runVillagerTrade`: `offerIndex` is the zero-based index from
+`listVillagerTrades`, and `count` defaults to 1.
+
+```ts
+runVillagerTrade(offerIndex: number, count?: number, options?: VillagerTradeTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `offerIndex` | `number` | Required |  |
+| `count` | `number` | `1` |  |
+| `options` | [`VillagerTradeTaskOptions`](/docs/sdk/api/ts/villager-trade-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/recipes.ts#L204)

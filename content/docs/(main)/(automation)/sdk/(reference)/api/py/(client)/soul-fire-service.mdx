@@ -1,0 +1,130 @@
+---
+title: "SoulFireService"
+description: "Python API signatures, fields, and source for SoulFireService."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `client`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L1142).
+
+**Import from:** `soulfire`, `soulfire.client`.
+
+**Bases:** `Protocol`.
+
+```python
+class SoulFireService(Protocol)
+```
+
+## `admin`
+
+```python
+@property
+def admin(self) -> SoulFireAdmin
+```
+
+**Returns:** [`SoulFireAdmin`](/docs/sdk/api/py/soul-fire-admin).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L1144)
+
+## `plugins`
+
+```python
+@property
+def plugins(self) -> PluginCatalog
+```
+
+**Returns:** [`PluginCatalog`](/docs/sdk/api/py/plugin-catalog).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L1147)
+
+## `server`
+
+```python
+@property
+def server(self) -> ServerMetadata
+```
+
+**Returns:** [`ServerMetadata`](/docs/sdk/api/py/server-metadata).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L1150)
+
+## `capabilities`
+
+```python
+@property
+def capabilities(self) -> CapabilitySet
+```
+
+**Returns:** [`CapabilitySet`](/docs/sdk/api/py/capability-set).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L1153)
+
+## `instances`
+
+```python
+def instances(self, *, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[list[InstanceListResponse.Instance], SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[list[InstanceListResponse.Instance], SoulFireOperationError]` ([`InstanceListResponse.Instance`](/docs/sdk/api/py/generated-instance-pb2#instancelistresponseinstance), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L1155)
+
+## `create_instance`
+
+```python
+def create_instance(self, friendly_name: str, *, headers: dict[str, str] | None=None, timeout_ms: int | None=None) -> Effect[SoulFireInstance, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `friendly_name` | `str` | Required | positional or keyword |
+| `headers` | `dict[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireInstance, SoulFireOperationError]` ([`SoulFireInstance`](/docs/sdk/api/py/soul-fire-instance), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L1159)
+
+## `instance`
+
+```python
+def instance(self, instance_id: str) -> SoulFireInstance
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instance_id` | `str` | Required | positional or keyword |
+
+**Returns:** [`SoulFireInstance`](/docs/sdk/api/py/soul-fire-instance).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L1167)
+
+## `get_or_create_instance`
+
+```python
+def get_or_create_instance(self, name: str, *, server: str | None=None, timeout_ms: int | None=None) -> Effect[SoulFireInstance, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `name` | `str` | Required | positional or keyword |
+| `server` | `str \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireInstance, SoulFireOperationError]` ([`SoulFireInstance`](/docs/sdk/api/py/soul-fire-instance), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/client.py#L1169)

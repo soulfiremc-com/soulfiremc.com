@@ -1,0 +1,328 @@
+---
+title: "login_pb2 module"
+description: "Python API signatures, fields, and source for login_pb2 module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`DESCRIPTOR`](/docs/sdk/api/py/generated-login-pb2#descriptor) | constant |
+| [`EmailCodeRequest`](/docs/sdk/api/py/generated-login-pb2#emailcoderequest) | class |
+| [`LoginRequest`](/docs/sdk/api/py/generated-login-pb2#loginrequest) | class |
+| [`NextAuthFlowResponse`](/docs/sdk/api/py/generated-login-pb2#nextauthflowresponse) | class |
+| [`NextAuthFlowResponse.EmailCode`](/docs/sdk/api/py/generated-login-pb2#nextauthflowresponseemailcode) | class |
+| [`NextAuthFlowResponse.Failure`](/docs/sdk/api/py/generated-login-pb2#nextauthflowresponsefailure) | class |
+| [`NextAuthFlowResponse.Failure.Reason`](/docs/sdk/api/py/generated-login-pb2#nextauthflowresponsefailurereason) | enum |
+| [`NextAuthFlowResponse.Success`](/docs/sdk/api/py/generated-login-pb2#nextauthflowresponsesuccess) | class |
+
+## DESCRIPTOR
+
+**Constant** in `login_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L10).
+
+**Import from:** `soulfire.login_pb2`.
+
+```python
+DESCRIPTOR: _descriptor.FileDescriptor
+```
+
+## EmailCodeRequest
+
+**Class** in `login_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L47).
+
+**Import from:** `soulfire.login_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class EmailCodeRequest(_message.Message)
+```
+
+### `AUTH_FLOW_TOKEN_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L49)
+
+### `CODE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L50)
+
+### `auth_flow_token`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L51)
+
+### `code`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L52)
+
+### `__init__`
+
+```python
+def __init__(self, auth_flow_token: _Optional[str]=..., code: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `auth_flow_token` | `_Optional[str]` | `...` | positional or keyword |
+| `code` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L53)
+
+## LoginRequest
+
+**Class** in `login_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L12).
+
+**Import from:** `soulfire.login_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class LoginRequest(_message.Message)
+```
+
+### `EMAIL_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L14)
+
+### `email`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L15)
+
+### `__init__`
+
+```python
+def __init__(self, email: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `email` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L16)
+
+## NextAuthFlowResponse
+
+**Class** in `login_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L18).
+
+**Import from:** `soulfire.login_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class NextAuthFlowResponse(_message.Message)
+```
+
+### `AUTH_FLOW_TOKEN_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L37)
+
+### `EMAIL_CODE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L38)
+
+### `SUCCESS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L39)
+
+### `FAILURE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L40)
+
+### `auth_flow_token`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L41)
+
+### `email_code`
+
+**Type:** [`NextAuthFlowResponse.EmailCode`](/docs/sdk/api/py/generated-login-pb2#nextauthflowresponseemailcode).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L42)
+
+### `success`
+
+**Type:** [`NextAuthFlowResponse.Success`](/docs/sdk/api/py/generated-login-pb2#nextauthflowresponsesuccess).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L43)
+
+### `failure`
+
+**Type:** [`NextAuthFlowResponse.Failure`](/docs/sdk/api/py/generated-login-pb2#nextauthflowresponsefailure).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L44)
+
+### `__init__`
+
+```python
+def __init__(self, auth_flow_token: _Optional[str]=..., email_code: _Optional[_Union[NextAuthFlowResponse.EmailCode, _Mapping]]=..., success: _Optional[_Union[NextAuthFlowResponse.Success, _Mapping]]=..., failure: _Optional[_Union[NextAuthFlowResponse.Failure, _Mapping]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `auth_flow_token` | `_Optional[str]` | `...` | positional or keyword |
+| `email_code` | `_Optional[_Union[NextAuthFlowResponse.EmailCode, _Mapping]]` ([`NextAuthFlowResponse.EmailCode`](/docs/sdk/api/py/generated-login-pb2#nextauthflowresponseemailcode)) | `...` | positional or keyword |
+| `success` | `_Optional[_Union[NextAuthFlowResponse.Success, _Mapping]]` ([`NextAuthFlowResponse.Success`](/docs/sdk/api/py/generated-login-pb2#nextauthflowresponsesuccess)) | `...` | positional or keyword |
+| `failure` | `_Optional[_Union[NextAuthFlowResponse.Failure, _Mapping]]` ([`NextAuthFlowResponse.Failure`](/docs/sdk/api/py/generated-login-pb2#nextauthflowresponsefailure)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L45)
+
+## NextAuthFlowResponse.EmailCode
+
+**Class** in `login_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L20).
+
+**Import from:** `soulfire.login_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class NextAuthFlowResponse.EmailCode(_message.Message)
+```
+
+### `__init__`
+
+```python
+def __init__(self) -> None
+```
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L22)
+
+## NextAuthFlowResponse.Failure
+
+**Class** in `login_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L28).
+
+**Import from:** `soulfire.login_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class NextAuthFlowResponse.Failure(_message.Message)
+```
+
+### `INVALID_CODE`
+
+**Type:** [`NextAuthFlowResponse.Failure.Reason`](/docs/sdk/api/py/generated-login-pb2#nextauthflowresponsefailurereason).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L33)
+
+### `REASON_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L34)
+
+### `reason`
+
+**Type:** [`NextAuthFlowResponse.Failure.Reason`](/docs/sdk/api/py/generated-login-pb2#nextauthflowresponsefailurereason).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L35)
+
+### `__init__`
+
+```python
+def __init__(self, reason: _Optional[_Union[NextAuthFlowResponse.Failure.Reason, str]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `reason` | `_Optional[_Union[NextAuthFlowResponse.Failure.Reason, str]]` ([`NextAuthFlowResponse.Failure.Reason`](/docs/sdk/api/py/generated-login-pb2#nextauthflowresponsefailurereason)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L36)
+
+## NextAuthFlowResponse.Failure.Reason
+
+**Enum** in `login_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L30).
+
+**Import from:** `soulfire.login_pb2`.
+
+**Bases:** `int`.
+
+```python
+class NextAuthFlowResponse.Failure.Reason(int, metaclass=_enum_type_wrapper.EnumTypeWrapper)
+```
+
+### `INVALID_CODE`
+
+**Type:** `_ClassVar[NextAuthFlowResponse.Failure.Reason]` ([`NextAuthFlowResponse.Failure.Reason`](/docs/sdk/api/py/generated-login-pb2#nextauthflowresponsefailurereason)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L32)
+
+## NextAuthFlowResponse.Success
+
+**Class** in `login_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L23).
+
+**Import from:** `soulfire.login_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class NextAuthFlowResponse.Success(_message.Message)
+```
+
+### `TOKEN_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L25)
+
+### `token`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L26)
+
+### `__init__`
+
+```python
+def __init__(self, token: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `token` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/login_pb2.pyi#L27)

@@ -1,0 +1,33 @@
+---
+title: "BotEventStreamFactory"
+description: "Python API signatures, fields, and source for BotEventStreamFactory."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `session`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/session.py#L556).
+
+**Import from:** `soulfire.session`.
+
+**Bases:** `Protocol`.
+
+```python
+class BotEventStreamFactory(Protocol)
+```
+
+## `__call__`
+
+```python
+def __call__(self, request: WatchBotEventsRequest) -> Stream[BotEvent, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`WatchBotEventsRequest`](/docs/sdk/api/py/generated-bot-live-pb2#watchboteventsrequest) | Required | positional or keyword |
+
+**Returns:** `Stream[BotEvent, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`BotEvent`](/docs/sdk/api/py/bot-event), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/session.py#L557)

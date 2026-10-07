@@ -1,0 +1,276 @@
+---
+title: "instance_live_connect module"
+description: "Python API signatures, fields, and source for instance_live_connect module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`InstanceLiveService`](/docs/sdk/api/py/generated-instance-live-connect#instanceliveservice) | class |
+| [`InstanceLiveServiceASGIApplication`](/docs/sdk/api/py/generated-instance-live-connect#instanceliveserviceasgiapplication) | class |
+| [`InstanceLiveServiceClient`](/docs/sdk/api/py/generated-instance-live-connect#instanceliveserviceclient) | class |
+| [`InstanceLiveServiceClientSync`](/docs/sdk/api/py/generated-instance-live-connect#instanceliveserviceclientsync) | class |
+| [`InstanceLiveServiceSync`](/docs/sdk/api/py/generated-instance-live-connect#instanceliveservicesync) | class |
+| [`InstanceLiveServiceWSGIApplication`](/docs/sdk/api/py/generated-instance-live-connect#instanceliveservicewsgiapplication) | class |
+
+## InstanceLiveService
+
+**Class** in `instance_live_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/instance_live_connect.py#L37).
+
+**Import from:** `soulfire.instance_live_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class InstanceLiveService(Protocol)
+```
+
+### `watch_instance_events`
+
+```python
+def watch_instance_events(self, request: WatchInstanceEventsRequest, ctx: RequestContext[WatchInstanceEventsRequest, InstanceEvent]) -> AsyncIterator[InstanceEvent]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`WatchInstanceEventsRequest`](/docs/sdk/api/py/generated-instance-live-pb2#watchinstanceeventsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[WatchInstanceEventsRequest, InstanceEvent]` ([`WatchInstanceEventsRequest`](/docs/sdk/api/py/generated-instance-live-pb2#watchinstanceeventsrequest), [`InstanceEvent`](/docs/sdk/api/py/instance-event)) | Required | positional or keyword |
+
+**Returns:** `AsyncIterator[InstanceEvent]` ([`InstanceEvent`](/docs/sdk/api/py/instance-event)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/instance_live_connect.py#L38)
+
+## InstanceLiveServiceASGIApplication
+
+**Class** in `instance_live_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/instance_live_connect.py#L42).
+
+**Import from:** `soulfire.instance_live_connect`.
+
+**Bases:** `ConnectASGIApplication[InstanceLiveService]` ([`InstanceLiveService`](/docs/sdk/api/py/generated-instance-live-connect#instanceliveservice)).
+
+```python
+class InstanceLiveServiceASGIApplication(ConnectASGIApplication[InstanceLiveService])
+```
+
+**Referenced types:** [`InstanceLiveService`](/docs/sdk/api/py/generated-instance-live-connect#instanceliveservice).
+
+### `__init__`
+
+```python
+def __init__(self, service: InstanceLiveService | AsyncGenerator[InstanceLiveService], *, interceptors: Iterable[Interceptor]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | `InstanceLiveService \| AsyncGenerator[InstanceLiveService]` ([`InstanceLiveService`](/docs/sdk/api/py/generated-instance-live-connect#instanceliveservice)) | Required | positional or keyword |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `compressions` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/instance_live_connect.py#L43)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/instance_live_connect.py#L73)
+
+## InstanceLiveServiceClient
+
+**Class** in `instance_live_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/instance_live_connect.py#L78).
+
+**Import from:** `soulfire.instance_live_connect`.
+
+**Bases:** `ConnectClient`.
+
+```python
+class InstanceLiveServiceClient(ConnectClient)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[Interceptor]=(), http_client: Client | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `http_client` | `Client \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/instance_live_connect.py#L79)
+
+### `watch_instance_events`
+
+```python
+def watch_instance_events(self, request: WatchInstanceEventsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> AsyncIterator[InstanceEvent]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`WatchInstanceEventsRequest`](/docs/sdk/api/py/generated-instance-live-pb2#watchinstanceeventsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `AsyncIterator[InstanceEvent]` ([`InstanceEvent`](/docs/sdk/api/py/instance-event)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/instance_live_connect.py#L103)
+
+## InstanceLiveServiceClientSync
+
+**Class** in `instance_live_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/instance_live_connect.py#L162).
+
+**Import from:** `soulfire.instance_live_connect`.
+
+**Bases:** `ConnectClientSync`.
+
+```python
+class InstanceLiveServiceClientSync(ConnectClientSync)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[InterceptorSync]=(), http_client: SyncClient | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | keyword only |
+| `http_client` | `SyncClient \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/instance_live_connect.py#L163)
+
+### `watch_instance_events`
+
+```python
+def watch_instance_events(self, request: WatchInstanceEventsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> Iterator[InstanceEvent]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`WatchInstanceEventsRequest`](/docs/sdk/api/py/generated-instance-live-pb2#watchinstanceeventsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Iterator[InstanceEvent]` ([`InstanceEvent`](/docs/sdk/api/py/instance-event)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/instance_live_connect.py#L187)
+
+## InstanceLiveServiceSync
+
+**Class** in `instance_live_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/instance_live_connect.py#L123).
+
+**Import from:** `soulfire.instance_live_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class InstanceLiveServiceSync(Protocol)
+```
+
+### `watch_instance_events`
+
+```python
+def watch_instance_events(self, request: WatchInstanceEventsRequest, ctx: RequestContext[WatchInstanceEventsRequest, InstanceEvent]) -> Iterator[InstanceEvent]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`WatchInstanceEventsRequest`](/docs/sdk/api/py/generated-instance-live-pb2#watchinstanceeventsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[WatchInstanceEventsRequest, InstanceEvent]` ([`WatchInstanceEventsRequest`](/docs/sdk/api/py/generated-instance-live-pb2#watchinstanceeventsrequest), [`InstanceEvent`](/docs/sdk/api/py/instance-event)) | Required | positional or keyword |
+
+**Returns:** `Iterator[InstanceEvent]` ([`InstanceEvent`](/docs/sdk/api/py/instance-event)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/instance_live_connect.py#L124)
+
+## InstanceLiveServiceWSGIApplication
+
+**Class** in `instance_live_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/instance_live_connect.py#L128).
+
+**Import from:** `soulfire.instance_live_connect`.
+
+**Bases:** `ConnectWSGIApplication`.
+
+```python
+class InstanceLiveServiceWSGIApplication(ConnectWSGIApplication)
+```
+
+### `__init__`
+
+```python
+def __init__(self, service: InstanceLiveServiceSync, interceptors: Iterable[InterceptorSync]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | [`InstanceLiveServiceSync`](/docs/sdk/api/py/generated-instance-live-connect#instanceliveservicesync) | Required | positional or keyword |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | positional or keyword |
+| `read_max_bytes` | `int \| None` | `None` | positional or keyword |
+| `compressions` | `Iterable[Compression] \| None` | `None` | positional or keyword |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/instance_live_connect.py#L129)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/instance_live_connect.py#L157)

@@ -1,0 +1,147 @@
+---
+title: "SoulFireTask"
+description: "TypeScript API signatures, fields, and source for SoulFireTask."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `tasks`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L792).
+
+A task the bot runs on the server. It keeps running whatever the caller does,
+until it ends.
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`.
+
+```ts
+class SoulFireTask<Result extends DescMessage | undefined = undefined>
+```
+
+## `constructor`
+
+```ts
+new SoulFireTask<Result extends DescMessage | undefined = undefined>(client: Client<GenService<{ startBotTask: { methodKind: "unary"; input: GenMessage<StartBotTaskRequest>; output: GenMessage<BotTask>; }; runBotTask: { methodKind: "server_streaming"; input: GenMessage<StartBotTaskRequest>; output: GenMessage<BotTaskEvent>; }; getBotTask: { methodKind: "unary"; input: GenMessage<GetBotTaskRequest>; output: GenMessage<BotTask>; }; listBotTasks: { methodKind: "unary"; input: GenMessage<ListBotTasksRequest>; output: GenMessage<ListBotTasksResponse>; }; watchBotTask: { methodKind: "server_streaming"; input: GenMessage<WatchBotTaskRequest>; output: GenMessage<BotTaskEvent>; }; watchBotTasks: { methodKind: "server_streaming"; input: GenMessage<WatchBotTasksRequest>; output: GenMessage<BotTaskEvent>; }; cancelBotTask: { methodKind: "unary"; input: GenMessage<CancelBotTaskRequest>; output: GenMessage<BotTask>; }; }>>, snapshot: BotTask, resultSchema: Result, callOptions: (options?: CallOptions | undefined) => CallOptions | undefined): SoulFireTask<Result>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `client` | `Client<GenService<{ startBotTask: { methodKind: "unary"; input: GenMessage<StartBotTaskRequest>; output: GenMessage<BotTask>; }; runBotTask: { methodKind: "server_streaming"; input: GenMessage<StartBotTaskRequest>; output: GenMessage<BotTaskEvent>; }; getBotTask: { methodKind: "unary"; input: GenMessage<GetBotTaskRequest>; output: GenMessage<BotTask>; }; listBotTasks: { methodKind: "unary"; input: GenMessage<ListBotTasksRequest>; output: GenMessage<ListBotTasksResponse>; }; watchBotTask: { methodKind: "server_streaming"; input: GenMessage<WatchBotTaskRequest>; output: GenMessage<BotTaskEvent>; }; watchBotTasks: { methodKind: "server_streaming"; input: GenMessage<WatchBotTasksRequest>; output: GenMessage<BotTaskEvent>; }; cancelBotTask: { methodKind: "unary"; input: GenMessage<CancelBotTaskRequest>; output: GenMessage<BotTask>; }; }>>` ([`StartBotTaskRequest`](/docs/sdk/api/ts/generated-soulfire-task-pb#startbottaskrequest), [`BotTask`](/docs/sdk/api/ts/bot-task), [`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`GetBotTaskRequest`](/docs/sdk/api/ts/generated-soulfire-task-pb#getbottaskrequest), [`ListBotTasksRequest`](/docs/sdk/api/ts/generated-soulfire-task-pb#listbottasksrequest), [`ListBotTasksResponse`](/docs/sdk/api/ts/generated-soulfire-task-pb#listbottasksresponse), [`WatchBotTaskRequest`](/docs/sdk/api/ts/generated-soulfire-task-pb#watchbottaskrequest), [`WatchBotTasksRequest`](/docs/sdk/api/ts/generated-soulfire-task-pb#watchbottasksrequest), [`CancelBotTaskRequest`](/docs/sdk/api/ts/generated-soulfire-task-pb#cancelbottaskrequest)) | Required |  |
+| `snapshot` | [`BotTask`](/docs/sdk/api/ts/bot-task) | Required |  |
+| `resultSchema` | `Result` | Required |  |
+| `callOptions` | `(options?: CallOptions \| undefined) => CallOptions \| undefined` | Required |  |
+
+**Returns:** `SoulFireTask<Result>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L795)
+
+## `id`
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L806)
+
+## `snapshot`
+
+The task as last fetched: `refresh`, `wait` and `cancel` update it.
+
+**Type:** `Readonly<BotTask>` ([`BotTask`](/docs/sdk/api/ts/bot-task)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L813)
+
+## `terminal`
+
+Completed, cancelled, failed or timed out.
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L820)
+
+## `refresh`
+
+```ts
+refresh(options?: CallOptions | undefined): Effect<BotTask, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotTask, SoulFireOperationError, never>` ([`BotTask`](/docs/sdk/api/ts/bot-task), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L824)
+
+## `events`
+
+The task's events after `afterRevision`, until it ends. `afterRevision`
+defaults to the snapshot's.
+
+```ts
+events(options?: { afterRevision?: bigint | undefined; call?: CallOptions | undefined; } | undefined): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `{ afterRevision?: bigint \| undefined; call?: CallOptions \| undefined; } \| undefined` | Optional |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L843)
+
+## `wait`
+
+Resolves when the task ends, however it ends.
+
+```ts
+wait(options?: { call?: CallOptions | undefined; } | undefined): Effect<BotTask, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `{ call?: CallOptions \| undefined; } \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotTask, SoulFireOperationError, never>` ([`BotTask`](/docs/sdk/api/ts/bot-task), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L866)
+
+## `cancel`
+
+```ts
+cancel(reason?: string, options?: CallOptions | undefined): Effect<BotTask, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `reason` | `string` | `""` |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotTask, SoulFireOperationError, never>` ([`BotTask`](/docs/sdk/api/ts/bot-task), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L883)
+
+## `result`
+
+Waits for the result. Fails with `SoulFireTaskFailed` unless it completed.
+
+```ts
+result(options?: { call?: CallOptions | undefined; } | undefined): Effect<Result extends DescMessage ? MessageShape<Result> : BotTask, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `{ call?: CallOptions \| undefined; } \| undefined` | Optional |  |
+
+**Returns:** `Effect<Result extends DescMessage ? MessageShape<Result> : BotTask, SoulFireOperationError, never>` ([`BotTask`](/docs/sdk/api/ts/bot-task), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L905)

@@ -1,0 +1,346 @@
+---
+title: "logs_connect module"
+description: "Python API signatures, fields, and source for logs_connect module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`LogsService`](/docs/sdk/api/py/generated-logs-connect#logsservice) | class |
+| [`LogsServiceASGIApplication`](/docs/sdk/api/py/generated-logs-connect#logsserviceasgiapplication) | class |
+| [`LogsServiceClient`](/docs/sdk/api/py/generated-logs-connect#logsserviceclient) | class |
+| [`LogsServiceClientSync`](/docs/sdk/api/py/generated-logs-connect#logsserviceclientsync) | class |
+| [`LogsServiceSync`](/docs/sdk/api/py/generated-logs-connect#logsservicesync) | class |
+| [`LogsServiceWSGIApplication`](/docs/sdk/api/py/generated-logs-connect#logsservicewsgiapplication) | class |
+
+## LogsService
+
+**Class** in `logs_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_connect.py#L37).
+
+**Import from:** `soulfire.logs_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class LogsService(Protocol)
+```
+
+### `get_previous`
+
+```python
+async def get_previous(self, request: PreviousLogRequest, ctx: RequestContext[PreviousLogRequest, PreviousLogResponse]) -> PreviousLogResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`PreviousLogRequest`](/docs/sdk/api/py/generated-logs-pb2#previouslogrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[PreviousLogRequest, PreviousLogResponse]` ([`PreviousLogRequest`](/docs/sdk/api/py/generated-logs-pb2#previouslogrequest), [`PreviousLogResponse`](/docs/sdk/api/py/generated-logs-pb2#previouslogresponse)) | Required | positional or keyword |
+
+**Returns:** [`PreviousLogResponse`](/docs/sdk/api/py/generated-logs-pb2#previouslogresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_connect.py#L38)
+
+### `subscribe`
+
+```python
+def subscribe(self, request: LogRequest, ctx: RequestContext[LogRequest, LogResponse]) -> AsyncIterator[LogResponse]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`LogRequest`](/docs/sdk/api/py/generated-logs-pb2#logrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[LogRequest, LogResponse]` ([`LogRequest`](/docs/sdk/api/py/generated-logs-pb2#logrequest), [`LogResponse`](/docs/sdk/api/py/generated-logs-pb2#logresponse)) | Required | positional or keyword |
+
+**Returns:** `AsyncIterator[LogResponse]` ([`LogResponse`](/docs/sdk/api/py/generated-logs-pb2#logresponse)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_connect.py#L41)
+
+## LogsServiceASGIApplication
+
+**Class** in `logs_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_connect.py#L45).
+
+**Import from:** `soulfire.logs_connect`.
+
+**Bases:** `ConnectASGIApplication[LogsService]` ([`LogsService`](/docs/sdk/api/py/generated-logs-connect#logsservice)).
+
+```python
+class LogsServiceASGIApplication(ConnectASGIApplication[LogsService])
+```
+
+**Referenced types:** [`LogsService`](/docs/sdk/api/py/generated-logs-connect#logsservice).
+
+### `__init__`
+
+```python
+def __init__(self, service: LogsService | AsyncGenerator[LogsService], *, interceptors: Iterable[Interceptor]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | `LogsService \| AsyncGenerator[LogsService]` ([`LogsService`](/docs/sdk/api/py/generated-logs-connect#logsservice)) | Required | positional or keyword |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `compressions` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_connect.py#L46)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_connect.py#L86)
+
+## LogsServiceClient
+
+**Class** in `logs_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_connect.py#L91).
+
+**Import from:** `soulfire.logs_connect`.
+
+**Bases:** `ConnectClient`.
+
+```python
+class LogsServiceClient(ConnectClient)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[Interceptor]=(), http_client: Client | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `http_client` | `Client \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_connect.py#L92)
+
+### `get_previous`
+
+```python
+async def get_previous(self, request: PreviousLogRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> PreviousLogResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`PreviousLogRequest`](/docs/sdk/api/py/generated-logs-pb2#previouslogrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`PreviousLogResponse`](/docs/sdk/api/py/generated-logs-pb2#previouslogresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_connect.py#L116)
+
+### `subscribe`
+
+```python
+def subscribe(self, request: LogRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> AsyncIterator[LogResponse]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`LogRequest`](/docs/sdk/api/py/generated-logs-pb2#logrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `AsyncIterator[LogResponse]` ([`LogResponse`](/docs/sdk/api/py/generated-logs-pb2#logresponse)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_connect.py#L136)
+
+## LogsServiceClientSync
+
+**Class** in `logs_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_connect.py#L208).
+
+**Import from:** `soulfire.logs_connect`.
+
+**Bases:** `ConnectClientSync`.
+
+```python
+class LogsServiceClientSync(ConnectClientSync)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[InterceptorSync]=(), http_client: SyncClient | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | keyword only |
+| `http_client` | `SyncClient \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_connect.py#L209)
+
+### `get_previous`
+
+```python
+def get_previous(self, request: PreviousLogRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> PreviousLogResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`PreviousLogRequest`](/docs/sdk/api/py/generated-logs-pb2#previouslogrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`PreviousLogResponse`](/docs/sdk/api/py/generated-logs-pb2#previouslogresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_connect.py#L233)
+
+### `subscribe`
+
+```python
+def subscribe(self, request: LogRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> Iterator[LogResponse]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`LogRequest`](/docs/sdk/api/py/generated-logs-pb2#logrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Iterator[LogResponse]` ([`LogResponse`](/docs/sdk/api/py/generated-logs-pb2#logresponse)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_connect.py#L252)
+
+## LogsServiceSync
+
+**Class** in `logs_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_connect.py#L156).
+
+**Import from:** `soulfire.logs_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class LogsServiceSync(Protocol)
+```
+
+### `get_previous`
+
+```python
+def get_previous(self, request: PreviousLogRequest, ctx: RequestContext[PreviousLogRequest, PreviousLogResponse]) -> PreviousLogResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`PreviousLogRequest`](/docs/sdk/api/py/generated-logs-pb2#previouslogrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[PreviousLogRequest, PreviousLogResponse]` ([`PreviousLogRequest`](/docs/sdk/api/py/generated-logs-pb2#previouslogrequest), [`PreviousLogResponse`](/docs/sdk/api/py/generated-logs-pb2#previouslogresponse)) | Required | positional or keyword |
+
+**Returns:** [`PreviousLogResponse`](/docs/sdk/api/py/generated-logs-pb2#previouslogresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_connect.py#L157)
+
+### `subscribe`
+
+```python
+def subscribe(self, request: LogRequest, ctx: RequestContext[LogRequest, LogResponse]) -> Iterator[LogResponse]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`LogRequest`](/docs/sdk/api/py/generated-logs-pb2#logrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[LogRequest, LogResponse]` ([`LogRequest`](/docs/sdk/api/py/generated-logs-pb2#logrequest), [`LogResponse`](/docs/sdk/api/py/generated-logs-pb2#logresponse)) | Required | positional or keyword |
+
+**Returns:** `Iterator[LogResponse]` ([`LogResponse`](/docs/sdk/api/py/generated-logs-pb2#logresponse)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_connect.py#L160)
+
+## LogsServiceWSGIApplication
+
+**Class** in `logs_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_connect.py#L164).
+
+**Import from:** `soulfire.logs_connect`.
+
+**Bases:** `ConnectWSGIApplication`.
+
+```python
+class LogsServiceWSGIApplication(ConnectWSGIApplication)
+```
+
+### `__init__`
+
+```python
+def __init__(self, service: LogsServiceSync, interceptors: Iterable[InterceptorSync]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | [`LogsServiceSync`](/docs/sdk/api/py/generated-logs-connect#logsservicesync) | Required | positional or keyword |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | positional or keyword |
+| `read_max_bytes` | `int \| None` | `None` | positional or keyword |
+| `compressions` | `Iterable[Compression] \| None` | `None` | positional or keyword |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_connect.py#L165)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/logs_connect.py#L203)

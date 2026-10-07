@@ -1,0 +1,1189 @@
+---
+title: "SoulFireBot"
+description: "TypeScript API signatures, fields, and source for SoulFireBot."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `client`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1160).
+
+One bot. Methods that resolve to a `BotActionResult` throw
+`SoulFireActionError` unless the action completed.
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`.
+
+```ts
+class SoulFireBot
+```
+
+## `constructor`
+
+```ts
+new SoulFireBot(instanceId: string, id: string, botClient: Client<GenService<{ setBotsDesiredState: { methodKind: "unary"; input: GenMessage<SetBotsDesiredStateRequest>; output: GenMessage<SetBotsDesiredStateResponse>; }; restartBots: { methodKind: "unary"; input: GenMessage<RestartBotsRequest>; output: GenMessage<RestartBotsResponse>; }; watchBotStatuses: { methodKind: "server_streaming"; input: GenMessage<WatchBotStatusesRequest>; output: GenMessage<WatchBotStatusesResponse>; }; getBotList: { methodKind: "unary"; input: GenMessage<BotListRequest>; output: GenMessage<BotListResponse>; }; getBotInfo: { methodKind: "unary"; input: GenMessage<BotInfoRequest>; output: GenMessage<BotInfoResponse>; }; updateBotConfigEntry: { methodKind: "unary"; input: GenMessage<BotUpdateConfigEntryRequest>; output: GenMessage<Message<"soulfire.v1.BotUpdateConfigEntryResponse">>; }; renderBotPov: { methodKind: "unary"; input: GenMessage<BotRenderPovRequest>; output: GenMessage<BotRenderPovResponse>; }; watchBotPov: { methodKind: "server_streaming"; input: GenMessage<BotWatchPovRequest>; output: GenMessage<BotPovFrame>; }; getBotWorldMap: { methodKind: "unary"; input: GenMessage<BotWorldMapRequest>; output: GenMessage<BotWorldMapResponse>; }; clickInventorySlot: { methodKind: "unary"; input: GenMessage<BotInventoryClickRequest>; output: GenMessage<BotInventoryClickResponse>; }; getInventoryState: { methodKind: "unary"; input: GenMessage<BotInventoryStateRequest>; output: GenMessage<BotInventoryStateResponse>; }; closeContainer: { methodKind: "unary"; input: GenMessage<BotCloseContainerRequest>; output: GenMessage<BotCloseContainerResponse>; }; openInventory: { methodKind: "unary"; input: GenMessage<BotOpenInventoryRequest>; output: GenMessage<BotOpenInventoryResponse>; }; mouseClick: { methodKind: "unary"; input: GenMessage<BotMouseClickRequest>; output: GenMessage<BotMouseClickResponse>; }; clickContainerButton: { methodKind: "unary"; input: GenMessage<BotContainerButtonClickRequest>; output: GenMessage<BotContainerButtonClickResponse>; }; setContainerText: { methodKind: "unary"; input: GenMessage<BotSetContainerTextRequest>; output: GenMessage<BotSetContainerTextResponse>; }; setHotbarSlot: { methodKind: "unary"; input: GenMessage<BotSetHotbarSlotRequest>; output: GenMessage<BotSetHotbarSlotResponse>; }; setMovementState: { methodKind: "unary"; input: GenMessage<BotSetMovementStateRequest>; output: GenMessage<BotSetMovementStateResponse>; }; resetMovement: { methodKind: "unary"; input: GenMessage<BotResetMovementRequest>; output: GenMessage<BotResetMovementResponse>; }; setRotation: { methodKind: "unary"; input: GenMessage<BotSetRotationRequest>; output: GenMessage<BotSetRotationResponse>; }; getDialog: { methodKind: "unary"; input: GenMessage<BotGetDialogRequest>; output: GenMessage<BotGetDialogResponse>; }; submitDialog: { methodKind: "unary"; input: GenMessage<BotSubmitDialogRequest>; output: GenMessage<BotSubmitDialogResponse>; }; clickDialogButton: { methodKind: "unary"; input: GenMessage<BotClickDialogButtonRequest>; output: GenMessage<BotClickDialogButtonResponse>; }; closeDialog: { methodKind: "unary"; input: GenMessage<BotCloseDialogRequest>; output: GenMessage<BotCloseDialogResponse>; }; }>>, liveClient: Client<GenService<{ watchBotEvents: { methodKind: "server_streaming"; input: GenMessage<WatchBotEventsRequest>; output: GenMessage<BotEvent>; }; sendChat: { methodKind: "unary"; input: GenMessage<SendChatRequest>; output: GenMessage<SendChatResponse>; }; getBlock: { methodKind: "unary"; input: GenMessage<GetBlockRequest>; output: GenMessage<GetBlockResponse>; }; findBlocks: { methodKind: "unary"; input: GenMessage<FindBlocksRequest>; output: GenMessage<FindBlocksResponse>; }; listNearbyEntities: { methodKind: "unary"; input: GenMessage<ListNearbyEntitiesRequest>; output: GenMessage<ListNearbyEntitiesResponse>; }; digBlock: { methodKind: "unary"; input: GenMessage<DigBlockRequest>; output: GenMessage<DigBlockResponse>; }; placeBlock: { methodKind: "unary"; input: GenMessage<PlaceBlockRequest>; output: GenMessage<PlaceBlockResponse>; }; interactBlock: { methodKind: "unary"; input: GenMessage<InteractBlockRequest>; output: GenMessage<InteractBlockResponse>; }; useItem: { methodKind: "unary"; input: GenMessage<UseItemRequest>; output: GenMessage<UseItemResponse>; }; releaseItem: { methodKind: "unary"; input: GenMessage<ReleaseItemRequest>; output: GenMessage<ReleaseItemResponse>; }; attackEntity: { methodKind: "unary"; input: GenMessage<AttackEntityRequest>; output: GenMessage<AttackEntityResponse>; }; interactEntity: { methodKind: "unary"; input: GenMessage<InteractEntityRequest>; output: GenMessage<InteractEntityResponse>; }; swingArm: { methodKind: "unary"; input: GenMessage<SwingArmRequest>; output: GenMessage<SwingArmResponse>; }; respawn: { methodKind: "unary"; input: GenMessage<RespawnRequest>; output: GenMessage<RespawnResponse>; }; sleep: { methodKind: "unary"; input: GenMessage<SleepRequest>; output: GenMessage<SleepResponse>; }; wake: { methodKind: "unary"; input: GenMessage<WakeRequest>; output: GenMessage<WakeResponse>; }; mountEntity: { methodKind: "unary"; input: GenMessage<MountEntityRequest>; output: GenMessage<MountEntityResponse>; }; dismount: { methodKind: "unary"; input: GenMessage<DismountRequest>; output: GenMessage<DismountResponse>; }; setVehicleControl: { methodKind: "unary"; input: GenMessage<SetVehicleControlRequest>; output: GenMessage<SetVehicleControlResponse>; }; updateSign: { methodKind: "unary"; input: GenMessage<UpdateSignRequest>; output: GenMessage<UpdateSignResponse>; }; writeBook: { methodKind: "unary"; input: GenMessage<WriteBookRequest>; output: GenMessage<WriteBookResponse>; }; respondResourcePack: { methodKind: "unary"; input: GenMessage<RespondResourcePackRequest>; output: GenMessage<RespondResourcePackResponse>; }; setFlying: { methodKind: "unary"; input: GenMessage<SetFlyingRequest>; output: GenMessage<SetFlyingResponse>; }; startElytraFlight: { methodKind: "unary"; input: GenMessage<StartElytraFlightRequest>; output: GenMessage<StartElytraFlightResponse>; }; setCreativeSlot: { methodKind: "unary"; input: GenMessage<SetCreativeSlotRequest>; output: GenMessage<SetCreativeSlotResponse>; }; waitForChunks: { methodKind: "unary"; input: GenMessage<WaitForChunksRequest>; output: GenMessage<WaitForChunksResponse>; }; goTo: { methodKind: "server_streaming"; input: GenMessage<GoToRequest>; output: GenMessage<PathfindProgress>; }; stopPathfinding: { methodKind: "unary"; input: GenMessage<StopPathfindingRequest>; output: GenMessage<Message<"soulfire.v1.StopPathfindingResponse">>; }; acquireBotControl: { methodKind: "unary"; input: GenMessage<AcquireBotControlRequest>; output: GenMessage<AcquireBotControlResponse>; }; renewBotControl: { methodKind: "unary"; input: GenMessage<RenewBotControlRequest>; output: GenMessage<RenewBotControlResponse>; }; releaseBotControl: { methodKind: "unary"; input: GenMessage<ReleaseBotControlRequest>; output: GenMessage<Message<"soulfire.v1.ReleaseBotControlResponse">>; }; }>>, taskClient?: Client<GenService<{ startBotTask: { methodKind: "unary"; input: GenMessage<StartBotTaskRequest>; output: GenMessage<BotTask>; }; runBotTask: { methodKind: "server_streaming"; input: GenMessage<StartBotTaskRequest>; output: GenMessage<BotTaskEvent>; }; getBotTask: { methodKind: "unary"; input: GenMessage<GetBotTaskRequest>; output: GenMessage<BotTask>; }; listBotTasks: { methodKind: "unary"; input: GenMessage<ListBotTasksRequest>; output: GenMessage<ListBotTasksResponse>; }; watchBotTask: { methodKind: "server_streaming"; input: GenMessage<WatchBotTaskRequest>; output: GenMessage<BotTaskEvent>; }; watchBotTasks: { methodKind: "server_streaming"; input: GenMessage<WatchBotTasksRequest>; output: GenMessage<BotTaskEvent>; }; cancelBotTask: { methodKind: "unary"; input: GenMessage<CancelBotTaskRequest>; output: GenMessage<BotTask>; }; }>> | undefined, pathfinderClient?: Client<GenService<{ planPath: { methodKind: "unary"; input: GenMessage<PlanPathRequest>; output: GenMessage<PlanPathResponse>; }; }>> | undefined, chatClient?: Client<GenService<{ sendPublicChat: { methodKind: "unary"; input: GenMessage<SendPublicChatRequest>; output: GenMessage<ChatActionResponse>; }; sendCommand: { methodKind: "unary"; input: GenMessage<SendCommandRequest>; output: GenMessage<ChatActionResponse>; }; sendWhisper: { methodKind: "unary"; input: GenMessage<SendWhisperRequest>; output: GenMessage<ChatActionResponse>; }; tabComplete: { methodKind: "unary"; input: GenMessage<TabCompleteRequest>; output: GenMessage<TabCompleteResponse>; }; }>> | undefined, inventoryClient?: Client<GenService<{ getContainerSnapshot: { methodKind: "unary"; input: GenMessage<GetContainerSnapshotRequest>; output: GenMessage<GetContainerSnapshotResponse>; }; countItems: { methodKind: "unary"; input: GenMessage<CountItemsRequest>; output: GenMessage<CountItemsResponse>; }; findInventorySlots: { methodKind: "unary"; input: GenMessage<FindInventorySlotsRequest>; output: GenMessage<FindInventorySlotsResponse>; }; rankInventoryItems: { methodKind: "unary"; input: GenMessage<RankInventoryItemsRequest>; output: GenMessage<RankInventoryItemsResponse>; }; moveInventoryItem: { methodKind: "unary"; input: GenMessage<MoveInventoryItemRequest>; output: GenMessage<InventoryMutationResponse>; }; transferItems: { methodKind: "unary"; input: GenMessage<TransferItemsRequest>; output: GenMessage<InventoryMutationResponse>; }; tossItems: { methodKind: "unary"; input: GenMessage<TossItemsRequest>; output: GenMessage<InventoryMutationResponse>; }; selectHotbarItem: { methodKind: "unary"; input: GenMessage<SelectHotbarItemRequest>; output: GenMessage<InventoryMutationResponse>; }; equipItem: { methodKind: "unary"; input: GenMessage<EquipItemRequest>; output: GenMessage<InventoryMutationResponse>; }; unequipItem: { methodKind: "unary"; input: GenMessage<UnequipItemRequest>; output: GenMessage<InventoryMutationResponse>; }; openBlockContainer: { methodKind: "unary"; input: GenMessage<OpenBlockContainerRequest>; output: GenMessage<InventoryMutationResponse>; }; closeSemanticContainer: { methodKind: "unary"; input: GenMessage<CloseSemanticContainerRequest>; output: GenMessage<InventoryMutationResponse>; }; }>> | undefined, recipeClient?: Client<GenService<{ listRecipes: { methodKind: "unary"; input: GenMessage<ListRecipesRequest>; output: GenMessage<ListRecipesResponse>; }; canCraft: { methodKind: "unary"; input: GenMessage<CanCraftRequest>; output: GenMessage<CanCraftResponse>; }; listVillagerTrades: { methodKind: "unary"; input: GenMessage<ListVillagerTradesRequest>; output: GenMessage<ListVillagerTradesResponse>; }; }>> | undefined, registryClient?: Client<GenService<{ getRegistryIdentity: { methodKind: "unary"; input: GenMessage<GetRegistryIdentityRequest>; output: GenMessage<GetRegistryIdentityResponse>; }; listRegistryEntries: { methodKind: "unary"; input: GenMessage<ListRegistryEntriesRequest>; output: GenMessage<ListRegistryEntriesResponse>; }; getRegistryEntry: { methodKind: "unary"; input: GenMessage<GetRegistryEntryRequest>; output: GenMessage<GetRegistryEntryResponse>; }; listRegistryTags: { methodKind: "unary"; input: GenMessage<ListRegistryTagsRequest>; output: GenMessage<ListRegistryTagsResponse>; }; }>> | undefined, worldClient?: Client<GenService<{ getPlayerSnapshot: { methodKind: "unary"; input: GenMessage<GetPlayerSnapshotRequest>; output: GenMessage<GetPlayerSnapshotResponse>; }; getWorldBlock: { methodKind: "unary"; input: GenMessage<GetWorldBlockRequest>; output: GenMessage<GetWorldBlockResponse>; }; queryBlocks: { methodKind: "unary"; input: GenMessage<QueryBlocksRequest>; output: GenMessage<QueryBlocksResponse>; }; getWorldEntity: { methodKind: "unary"; input: GenMessage<GetWorldEntityRequest>; output: GenMessage<GetWorldEntityResponse>; }; queryEntities: { methodKind: "unary"; input: GenMessage<QueryEntitiesRequest>; output: GenMessage<QueryEntitiesResponse>; }; raycast: { methodKind: "unary"; input: GenMessage<RaycastRequest>; output: GenMessage<RaycastResponse>; }; canSeeBlock: { methodKind: "unary"; input: GenMessage<CanSeeBlockRequest>; output: GenMessage<CanSeeBlockResponse>; }; estimateDigTime: { methodKind: "unary"; input: GenMessage<EstimateDigTimeRequest>; output: GenMessage<EstimateDigTimeResponse>; }; estimateExplosionDamage: { methodKind: "unary"; input: GenMessage<EstimateExplosionDamageRequest>; output: GenMessage<EstimateExplosionDamageResponse>; }; }>> | undefined, protocolClient?: Client<GenService<{ getProtocolInfo: { methodKind: "unary"; input: GenMessage<BotProtocolRequest>; output: GenMessage<BotProtocolInfo>; }; listPacketSchemas: { methodKind: "unary"; input: GenMessage<ListPacketSchemasRequest>; output: GenMessage<ListPacketSchemasResponse>; }; watchPackets: { methodKind: "server_streaming"; input: GenMessage<WatchPacketsRequest>; output: GenMessage<RawPacketEvent>; }; sendRawPacket: { methodKind: "unary"; input: GenMessage<SendRawPacketRequest>; output: GenMessage<SendRawPacketResponse>; }; }>> | undefined): SoulFireBot
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instanceId` | `string` | Required |  |
+| `id` | `string` | Required |  |
+| `botClient` | `Client<GenService<{ setBotsDesiredState: { methodKind: "unary"; input: GenMessage<SetBotsDesiredStateRequest>; output: GenMessage<SetBotsDesiredStateResponse>; }; restartBots: { methodKind: "unary"; input: GenMessage<RestartBotsRequest>; output: GenMessage<RestartBotsResponse>; }; watchBotStatuses: { methodKind: "server_streaming"; input: GenMessage<WatchBotStatusesRequest>; output: GenMessage<WatchBotStatusesResponse>; }; getBotList: { methodKind: "unary"; input: GenMessage<BotListRequest>; output: GenMessage<BotListResponse>; }; getBotInfo: { methodKind: "unary"; input: GenMessage<BotInfoRequest>; output: GenMessage<BotInfoResponse>; }; updateBotConfigEntry: { methodKind: "unary"; input: GenMessage<BotUpdateConfigEntryRequest>; output: GenMessage<Message<"soulfire.v1.BotUpdateConfigEntryResponse">>; }; renderBotPov: { methodKind: "unary"; input: GenMessage<BotRenderPovRequest>; output: GenMessage<BotRenderPovResponse>; }; watchBotPov: { methodKind: "server_streaming"; input: GenMessage<BotWatchPovRequest>; output: GenMessage<BotPovFrame>; }; getBotWorldMap: { methodKind: "unary"; input: GenMessage<BotWorldMapRequest>; output: GenMessage<BotWorldMapResponse>; }; clickInventorySlot: { methodKind: "unary"; input: GenMessage<BotInventoryClickRequest>; output: GenMessage<BotInventoryClickResponse>; }; getInventoryState: { methodKind: "unary"; input: GenMessage<BotInventoryStateRequest>; output: GenMessage<BotInventoryStateResponse>; }; closeContainer: { methodKind: "unary"; input: GenMessage<BotCloseContainerRequest>; output: GenMessage<BotCloseContainerResponse>; }; openInventory: { methodKind: "unary"; input: GenMessage<BotOpenInventoryRequest>; output: GenMessage<BotOpenInventoryResponse>; }; mouseClick: { methodKind: "unary"; input: GenMessage<BotMouseClickRequest>; output: GenMessage<BotMouseClickResponse>; }; clickContainerButton: { methodKind: "unary"; input: GenMessage<BotContainerButtonClickRequest>; output: GenMessage<BotContainerButtonClickResponse>; }; setContainerText: { methodKind: "unary"; input: GenMessage<BotSetContainerTextRequest>; output: GenMessage<BotSetContainerTextResponse>; }; setHotbarSlot: { methodKind: "unary"; input: GenMessage<BotSetHotbarSlotRequest>; output: GenMessage<BotSetHotbarSlotResponse>; }; setMovementState: { methodKind: "unary"; input: GenMessage<BotSetMovementStateRequest>; output: GenMessage<BotSetMovementStateResponse>; }; resetMovement: { methodKind: "unary"; input: GenMessage<BotResetMovementRequest>; output: GenMessage<BotResetMovementResponse>; }; setRotation: { methodKind: "unary"; input: GenMessage<BotSetRotationRequest>; output: GenMessage<BotSetRotationResponse>; }; getDialog: { methodKind: "unary"; input: GenMessage<BotGetDialogRequest>; output: GenMessage<BotGetDialogResponse>; }; submitDialog: { methodKind: "unary"; input: GenMessage<BotSubmitDialogRequest>; output: GenMessage<BotSubmitDialogResponse>; }; clickDialogButton: { methodKind: "unary"; input: GenMessage<BotClickDialogButtonRequest>; output: GenMessage<BotClickDialogButtonResponse>; }; closeDialog: { methodKind: "unary"; input: GenMessage<BotCloseDialogRequest>; output: GenMessage<BotCloseDialogResponse>; }; }>>` ([`SetBotsDesiredStateRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#setbotsdesiredstaterequest), [`SetBotsDesiredStateResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#setbotsdesiredstateresponse), [`RestartBotsRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#restartbotsrequest), [`RestartBotsResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#restartbotsresponse), [`WatchBotStatusesRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#watchbotstatusesrequest), [`WatchBotStatusesResponse`](/docs/sdk/api/ts/watch-bot-statuses-response), [`BotListRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botlistrequest), [`BotListResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botlistresponse), [`BotInfoRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botinforequest), [`BotInfoResponse`](/docs/sdk/api/ts/bot-info-response), [`BotUpdateConfigEntryRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botupdateconfigentryrequest), [`BotRenderPovRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botrenderpovrequest), [`BotRenderPovResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botrenderpovresponse), [`BotWatchPovRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botwatchpovrequest), [`BotPovFrame`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botpovframe), [`BotWorldMapRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botworldmaprequest), [`BotWorldMapResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botworldmapresponse), [`BotInventoryClickRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botinventoryclickrequest), [`BotInventoryClickResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botinventoryclickresponse), [`BotInventoryStateRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botinventorystaterequest), [`BotInventoryStateResponse`](/docs/sdk/api/ts/bot-inventory-state-response), [`BotCloseContainerRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botclosecontainerrequest), [`BotCloseContainerResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botclosecontainerresponse), [`BotOpenInventoryRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botopeninventoryrequest), [`BotOpenInventoryResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botopeninventoryresponse), [`BotMouseClickRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botmouseclickrequest), [`BotMouseClickResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botmouseclickresponse), [`BotContainerButtonClickRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botcontainerbuttonclickrequest), [`BotContainerButtonClickResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botcontainerbuttonclickresponse), [`BotSetContainerTextRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botsetcontainertextrequest), [`BotSetContainerTextResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botsetcontainertextresponse), [`BotSetHotbarSlotRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botsethotbarslotrequest), [`BotSetHotbarSlotResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botsethotbarslotresponse), [`BotSetMovementStateRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botsetmovementstaterequest), [`BotSetMovementStateResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botsetmovementstateresponse), [`BotResetMovementRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botresetmovementrequest), [`BotResetMovementResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botresetmovementresponse), [`BotSetRotationRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botsetrotationrequest), [`BotSetRotationResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botsetrotationresponse), [`BotGetDialogRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botgetdialogrequest), [`BotGetDialogResponse`](/docs/sdk/api/ts/bot-get-dialog-response), [`BotSubmitDialogRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botsubmitdialogrequest), [`BotSubmitDialogResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botsubmitdialogresponse), [`BotClickDialogButtonRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botclickdialogbuttonrequest), [`BotClickDialogButtonResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botclickdialogbuttonresponse), [`BotCloseDialogRequest`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botclosedialogrequest), [`BotCloseDialogResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botclosedialogresponse)) | Required |  |
+| `liveClient` | `Client<GenService<{ watchBotEvents: { methodKind: "server_streaming"; input: GenMessage<WatchBotEventsRequest>; output: GenMessage<BotEvent>; }; sendChat: { methodKind: "unary"; input: GenMessage<SendChatRequest>; output: GenMessage<SendChatResponse>; }; getBlock: { methodKind: "unary"; input: GenMessage<GetBlockRequest>; output: GenMessage<GetBlockResponse>; }; findBlocks: { methodKind: "unary"; input: GenMessage<FindBlocksRequest>; output: GenMessage<FindBlocksResponse>; }; listNearbyEntities: { methodKind: "unary"; input: GenMessage<ListNearbyEntitiesRequest>; output: GenMessage<ListNearbyEntitiesResponse>; }; digBlock: { methodKind: "unary"; input: GenMessage<DigBlockRequest>; output: GenMessage<DigBlockResponse>; }; placeBlock: { methodKind: "unary"; input: GenMessage<PlaceBlockRequest>; output: GenMessage<PlaceBlockResponse>; }; interactBlock: { methodKind: "unary"; input: GenMessage<InteractBlockRequest>; output: GenMessage<InteractBlockResponse>; }; useItem: { methodKind: "unary"; input: GenMessage<UseItemRequest>; output: GenMessage<UseItemResponse>; }; releaseItem: { methodKind: "unary"; input: GenMessage<ReleaseItemRequest>; output: GenMessage<ReleaseItemResponse>; }; attackEntity: { methodKind: "unary"; input: GenMessage<AttackEntityRequest>; output: GenMessage<AttackEntityResponse>; }; interactEntity: { methodKind: "unary"; input: GenMessage<InteractEntityRequest>; output: GenMessage<InteractEntityResponse>; }; swingArm: { methodKind: "unary"; input: GenMessage<SwingArmRequest>; output: GenMessage<SwingArmResponse>; }; respawn: { methodKind: "unary"; input: GenMessage<RespawnRequest>; output: GenMessage<RespawnResponse>; }; sleep: { methodKind: "unary"; input: GenMessage<SleepRequest>; output: GenMessage<SleepResponse>; }; wake: { methodKind: "unary"; input: GenMessage<WakeRequest>; output: GenMessage<WakeResponse>; }; mountEntity: { methodKind: "unary"; input: GenMessage<MountEntityRequest>; output: GenMessage<MountEntityResponse>; }; dismount: { methodKind: "unary"; input: GenMessage<DismountRequest>; output: GenMessage<DismountResponse>; }; setVehicleControl: { methodKind: "unary"; input: GenMessage<SetVehicleControlRequest>; output: GenMessage<SetVehicleControlResponse>; }; updateSign: { methodKind: "unary"; input: GenMessage<UpdateSignRequest>; output: GenMessage<UpdateSignResponse>; }; writeBook: { methodKind: "unary"; input: GenMessage<WriteBookRequest>; output: GenMessage<WriteBookResponse>; }; respondResourcePack: { methodKind: "unary"; input: GenMessage<RespondResourcePackRequest>; output: GenMessage<RespondResourcePackResponse>; }; setFlying: { methodKind: "unary"; input: GenMessage<SetFlyingRequest>; output: GenMessage<SetFlyingResponse>; }; startElytraFlight: { methodKind: "unary"; input: GenMessage<StartElytraFlightRequest>; output: GenMessage<StartElytraFlightResponse>; }; setCreativeSlot: { methodKind: "unary"; input: GenMessage<SetCreativeSlotRequest>; output: GenMessage<SetCreativeSlotResponse>; }; waitForChunks: { methodKind: "unary"; input: GenMessage<WaitForChunksRequest>; output: GenMessage<WaitForChunksResponse>; }; goTo: { methodKind: "server_streaming"; input: GenMessage<GoToRequest>; output: GenMessage<PathfindProgress>; }; stopPathfinding: { methodKind: "unary"; input: GenMessage<StopPathfindingRequest>; output: GenMessage<Message<"soulfire.v1.StopPathfindingResponse">>; }; acquireBotControl: { methodKind: "unary"; input: GenMessage<AcquireBotControlRequest>; output: GenMessage<AcquireBotControlResponse>; }; renewBotControl: { methodKind: "unary"; input: GenMessage<RenewBotControlRequest>; output: GenMessage<RenewBotControlResponse>; }; releaseBotControl: { methodKind: "unary"; input: GenMessage<ReleaseBotControlRequest>; output: GenMessage<Message<"soulfire.v1.ReleaseBotControlResponse">>; }; }>>` ([`WatchBotEventsRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#watchboteventsrequest), [`BotEvent`](/docs/sdk/api/ts/bot-event), [`SendChatRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#sendchatrequest), [`SendChatResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#sendchatresponse), [`GetBlockRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#getblockrequest), [`GetBlockResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#getblockresponse), [`FindBlocksRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#findblocksrequest), [`FindBlocksResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#findblocksresponse), [`ListNearbyEntitiesRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#listnearbyentitiesrequest), [`ListNearbyEntitiesResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#listnearbyentitiesresponse), [`DigBlockRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#digblockrequest), [`DigBlockResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#digblockresponse), [`PlaceBlockRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#placeblockrequest), [`PlaceBlockResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#placeblockresponse), [`InteractBlockRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#interactblockrequest), [`InteractBlockResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#interactblockresponse), [`UseItemRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#useitemrequest), [`UseItemResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#useitemresponse), [`ReleaseItemRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#releaseitemrequest), [`ReleaseItemResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#releaseitemresponse), [`AttackEntityRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#attackentityrequest), [`AttackEntityResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#attackentityresponse), [`InteractEntityRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#interactentityrequest), [`InteractEntityResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#interactentityresponse), [`SwingArmRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#swingarmrequest), [`SwingArmResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#swingarmresponse), [`RespawnRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#respawnrequest), [`RespawnResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#respawnresponse), [`SleepRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#sleeprequest), [`SleepResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#sleepresponse), [`WakeRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#wakerequest), [`WakeResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#wakeresponse), [`MountEntityRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#mountentityrequest), [`MountEntityResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#mountentityresponse), [`DismountRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#dismountrequest), [`DismountResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#dismountresponse), [`SetVehicleControlRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#setvehiclecontrolrequest), [`SetVehicleControlResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#setvehiclecontrolresponse), [`UpdateSignRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#updatesignrequest), [`UpdateSignResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#updatesignresponse), [`WriteBookRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#writebookrequest), [`WriteBookResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#writebookresponse), [`RespondResourcePackRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#respondresourcepackrequest), [`RespondResourcePackResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#respondresourcepackresponse), [`SetFlyingRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#setflyingrequest), [`SetFlyingResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#setflyingresponse), [`StartElytraFlightRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#startelytraflightrequest), [`StartElytraFlightResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#startelytraflightresponse), [`SetCreativeSlotRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#setcreativeslotrequest), [`SetCreativeSlotResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#setcreativeslotresponse), [`WaitForChunksRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#waitforchunksrequest), [`WaitForChunksResponse`](/docs/sdk/api/ts/wait-for-chunks-response), [`GoToRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#gotorequest), [`PathfindProgress`](/docs/sdk/api/ts/pathfind-progress), [`StopPathfindingRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#stoppathfindingrequest), [`AcquireBotControlRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#acquirebotcontrolrequest), [`AcquireBotControlResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#acquirebotcontrolresponse), [`RenewBotControlRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#renewbotcontrolrequest), [`RenewBotControlResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#renewbotcontrolresponse), [`ReleaseBotControlRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#releasebotcontrolrequest)) | Required |  |
+| `taskClient` | `Client<GenService<{ startBotTask: { methodKind: "unary"; input: GenMessage<StartBotTaskRequest>; output: GenMessage<BotTask>; }; runBotTask: { methodKind: "server_streaming"; input: GenMessage<StartBotTaskRequest>; output: GenMessage<BotTaskEvent>; }; getBotTask: { methodKind: "unary"; input: GenMessage<GetBotTaskRequest>; output: GenMessage<BotTask>; }; listBotTasks: { methodKind: "unary"; input: GenMessage<ListBotTasksRequest>; output: GenMessage<ListBotTasksResponse>; }; watchBotTask: { methodKind: "server_streaming"; input: GenMessage<WatchBotTaskRequest>; output: GenMessage<BotTaskEvent>; }; watchBotTasks: { methodKind: "server_streaming"; input: GenMessage<WatchBotTasksRequest>; output: GenMessage<BotTaskEvent>; }; cancelBotTask: { methodKind: "unary"; input: GenMessage<CancelBotTaskRequest>; output: GenMessage<BotTask>; }; }>> \| undefined` ([`StartBotTaskRequest`](/docs/sdk/api/ts/generated-soulfire-task-pb#startbottaskrequest), [`BotTask`](/docs/sdk/api/ts/bot-task), [`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`GetBotTaskRequest`](/docs/sdk/api/ts/generated-soulfire-task-pb#getbottaskrequest), [`ListBotTasksRequest`](/docs/sdk/api/ts/generated-soulfire-task-pb#listbottasksrequest), [`ListBotTasksResponse`](/docs/sdk/api/ts/generated-soulfire-task-pb#listbottasksresponse), [`WatchBotTaskRequest`](/docs/sdk/api/ts/generated-soulfire-task-pb#watchbottaskrequest), [`WatchBotTasksRequest`](/docs/sdk/api/ts/generated-soulfire-task-pb#watchbottasksrequest), [`CancelBotTaskRequest`](/docs/sdk/api/ts/generated-soulfire-task-pb#cancelbottaskrequest)) | Optional |  |
+| `pathfinderClient` | `Client<GenService<{ planPath: { methodKind: "unary"; input: GenMessage<PlanPathRequest>; output: GenMessage<PlanPathResponse>; }; }>> \| undefined` ([`PlanPathRequest`](/docs/sdk/api/ts/generated-soulfire-pathfinding-pb#planpathrequest), [`PlanPathResponse`](/docs/sdk/api/ts/generated-soulfire-pathfinding-pb#planpathresponse)) | Optional |  |
+| `chatClient` | `Client<GenService<{ sendPublicChat: { methodKind: "unary"; input: GenMessage<SendPublicChatRequest>; output: GenMessage<ChatActionResponse>; }; sendCommand: { methodKind: "unary"; input: GenMessage<SendCommandRequest>; output: GenMessage<ChatActionResponse>; }; sendWhisper: { methodKind: "unary"; input: GenMessage<SendWhisperRequest>; output: GenMessage<ChatActionResponse>; }; tabComplete: { methodKind: "unary"; input: GenMessage<TabCompleteRequest>; output: GenMessage<TabCompleteResponse>; }; }>> \| undefined` ([`SendPublicChatRequest`](/docs/sdk/api/ts/generated-soulfire-chat-pb#sendpublicchatrequest), [`ChatActionResponse`](/docs/sdk/api/ts/generated-soulfire-chat-pb#chatactionresponse), [`SendCommandRequest`](/docs/sdk/api/ts/generated-soulfire-chat-pb#sendcommandrequest), [`SendWhisperRequest`](/docs/sdk/api/ts/generated-soulfire-chat-pb#sendwhisperrequest), [`TabCompleteRequest`](/docs/sdk/api/ts/generated-soulfire-chat-pb#tabcompleterequest), [`TabCompleteResponse`](/docs/sdk/api/ts/generated-soulfire-chat-pb#tabcompleteresponse)) | Optional |  |
+| `inventoryClient` | `Client<GenService<{ getContainerSnapshot: { methodKind: "unary"; input: GenMessage<GetContainerSnapshotRequest>; output: GenMessage<GetContainerSnapshotResponse>; }; countItems: { methodKind: "unary"; input: GenMessage<CountItemsRequest>; output: GenMessage<CountItemsResponse>; }; findInventorySlots: { methodKind: "unary"; input: GenMessage<FindInventorySlotsRequest>; output: GenMessage<FindInventorySlotsResponse>; }; rankInventoryItems: { methodKind: "unary"; input: GenMessage<RankInventoryItemsRequest>; output: GenMessage<RankInventoryItemsResponse>; }; moveInventoryItem: { methodKind: "unary"; input: GenMessage<MoveInventoryItemRequest>; output: GenMessage<InventoryMutationResponse>; }; transferItems: { methodKind: "unary"; input: GenMessage<TransferItemsRequest>; output: GenMessage<InventoryMutationResponse>; }; tossItems: { methodKind: "unary"; input: GenMessage<TossItemsRequest>; output: GenMessage<InventoryMutationResponse>; }; selectHotbarItem: { methodKind: "unary"; input: GenMessage<SelectHotbarItemRequest>; output: GenMessage<InventoryMutationResponse>; }; equipItem: { methodKind: "unary"; input: GenMessage<EquipItemRequest>; output: GenMessage<InventoryMutationResponse>; }; unequipItem: { methodKind: "unary"; input: GenMessage<UnequipItemRequest>; output: GenMessage<InventoryMutationResponse>; }; openBlockContainer: { methodKind: "unary"; input: GenMessage<OpenBlockContainerRequest>; output: GenMessage<InventoryMutationResponse>; }; closeSemanticContainer: { methodKind: "unary"; input: GenMessage<CloseSemanticContainerRequest>; output: GenMessage<InventoryMutationResponse>; }; }>> \| undefined` ([`GetContainerSnapshotRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#getcontainersnapshotrequest), [`GetContainerSnapshotResponse`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#getcontainersnapshotresponse), [`CountItemsRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#countitemsrequest), [`CountItemsResponse`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#countitemsresponse), [`FindInventorySlotsRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#findinventoryslotsrequest), [`FindInventorySlotsResponse`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#findinventoryslotsresponse), [`RankInventoryItemsRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#rankinventoryitemsrequest), [`RankInventoryItemsResponse`](/docs/sdk/api/ts/rank-inventory-items-response), [`MoveInventoryItemRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#moveinventoryitemrequest), [`InventoryMutationResponse`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#inventorymutationresponse), [`TransferItemsRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#transferitemsrequest), [`TossItemsRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#tossitemsrequest), [`SelectHotbarItemRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#selecthotbaritemrequest), [`EquipItemRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#equipitemrequest), [`UnequipItemRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#unequipitemrequest), [`OpenBlockContainerRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#openblockcontainerrequest), [`CloseSemanticContainerRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#closesemanticcontainerrequest)) | Optional |  |
+| `recipeClient` | `Client<GenService<{ listRecipes: { methodKind: "unary"; input: GenMessage<ListRecipesRequest>; output: GenMessage<ListRecipesResponse>; }; canCraft: { methodKind: "unary"; input: GenMessage<CanCraftRequest>; output: GenMessage<CanCraftResponse>; }; listVillagerTrades: { methodKind: "unary"; input: GenMessage<ListVillagerTradesRequest>; output: GenMessage<ListVillagerTradesResponse>; }; }>> \| undefined` ([`ListRecipesRequest`](/docs/sdk/api/ts/generated-soulfire-recipe-pb#listrecipesrequest), [`ListRecipesResponse`](/docs/sdk/api/ts/generated-soulfire-recipe-pb#listrecipesresponse), [`CanCraftRequest`](/docs/sdk/api/ts/generated-soulfire-recipe-pb#cancraftrequest), [`CanCraftResponse`](/docs/sdk/api/ts/generated-soulfire-recipe-pb#cancraftresponse), [`ListVillagerTradesRequest`](/docs/sdk/api/ts/generated-soulfire-recipe-pb#listvillagertradesrequest), [`ListVillagerTradesResponse`](/docs/sdk/api/ts/generated-soulfire-recipe-pb#listvillagertradesresponse)) | Optional |  |
+| `registryClient` | `Client<GenService<{ getRegistryIdentity: { methodKind: "unary"; input: GenMessage<GetRegistryIdentityRequest>; output: GenMessage<GetRegistryIdentityResponse>; }; listRegistryEntries: { methodKind: "unary"; input: GenMessage<ListRegistryEntriesRequest>; output: GenMessage<ListRegistryEntriesResponse>; }; getRegistryEntry: { methodKind: "unary"; input: GenMessage<GetRegistryEntryRequest>; output: GenMessage<GetRegistryEntryResponse>; }; listRegistryTags: { methodKind: "unary"; input: GenMessage<ListRegistryTagsRequest>; output: GenMessage<ListRegistryTagsResponse>; }; }>> \| undefined` ([`GetRegistryIdentityRequest`](/docs/sdk/api/ts/generated-soulfire-registry-pb#getregistryidentityrequest), [`GetRegistryIdentityResponse`](/docs/sdk/api/ts/generated-soulfire-registry-pb#getregistryidentityresponse), [`ListRegistryEntriesRequest`](/docs/sdk/api/ts/generated-soulfire-registry-pb#listregistryentriesrequest), [`ListRegistryEntriesResponse`](/docs/sdk/api/ts/generated-soulfire-registry-pb#listregistryentriesresponse), [`GetRegistryEntryRequest`](/docs/sdk/api/ts/generated-soulfire-registry-pb#getregistryentryrequest), [`GetRegistryEntryResponse`](/docs/sdk/api/ts/generated-soulfire-registry-pb#getregistryentryresponse), [`ListRegistryTagsRequest`](/docs/sdk/api/ts/generated-soulfire-registry-pb#listregistrytagsrequest), [`ListRegistryTagsResponse`](/docs/sdk/api/ts/generated-soulfire-registry-pb#listregistrytagsresponse)) | Optional |  |
+| `worldClient` | `Client<GenService<{ getPlayerSnapshot: { methodKind: "unary"; input: GenMessage<GetPlayerSnapshotRequest>; output: GenMessage<GetPlayerSnapshotResponse>; }; getWorldBlock: { methodKind: "unary"; input: GenMessage<GetWorldBlockRequest>; output: GenMessage<GetWorldBlockResponse>; }; queryBlocks: { methodKind: "unary"; input: GenMessage<QueryBlocksRequest>; output: GenMessage<QueryBlocksResponse>; }; getWorldEntity: { methodKind: "unary"; input: GenMessage<GetWorldEntityRequest>; output: GenMessage<GetWorldEntityResponse>; }; queryEntities: { methodKind: "unary"; input: GenMessage<QueryEntitiesRequest>; output: GenMessage<QueryEntitiesResponse>; }; raycast: { methodKind: "unary"; input: GenMessage<RaycastRequest>; output: GenMessage<RaycastResponse>; }; canSeeBlock: { methodKind: "unary"; input: GenMessage<CanSeeBlockRequest>; output: GenMessage<CanSeeBlockResponse>; }; estimateDigTime: { methodKind: "unary"; input: GenMessage<EstimateDigTimeRequest>; output: GenMessage<EstimateDigTimeResponse>; }; estimateExplosionDamage: { methodKind: "unary"; input: GenMessage<EstimateExplosionDamageRequest>; output: GenMessage<EstimateExplosionDamageResponse>; }; }>> \| undefined` ([`GetPlayerSnapshotRequest`](/docs/sdk/api/ts/generated-soulfire-world-pb#getplayersnapshotrequest), [`GetPlayerSnapshotResponse`](/docs/sdk/api/ts/generated-soulfire-world-pb#getplayersnapshotresponse), [`GetWorldBlockRequest`](/docs/sdk/api/ts/generated-soulfire-world-pb#getworldblockrequest), [`GetWorldBlockResponse`](/docs/sdk/api/ts/get-world-block-response), [`QueryBlocksRequest`](/docs/sdk/api/ts/generated-soulfire-world-pb#queryblocksrequest), [`QueryBlocksResponse`](/docs/sdk/api/ts/query-blocks-response), [`GetWorldEntityRequest`](/docs/sdk/api/ts/generated-soulfire-world-pb#getworldentityrequest), [`GetWorldEntityResponse`](/docs/sdk/api/ts/get-world-entity-response), [`QueryEntitiesRequest`](/docs/sdk/api/ts/generated-soulfire-world-pb#queryentitiesrequest), [`QueryEntitiesResponse`](/docs/sdk/api/ts/query-entities-response), [`RaycastRequest`](/docs/sdk/api/ts/generated-soulfire-world-pb#raycastrequest), [`RaycastResponse`](/docs/sdk/api/ts/raycast-response), [`CanSeeBlockRequest`](/docs/sdk/api/ts/generated-soulfire-world-pb#canseeblockrequest), [`CanSeeBlockResponse`](/docs/sdk/api/ts/can-see-block-response), [`EstimateDigTimeRequest`](/docs/sdk/api/ts/generated-soulfire-world-pb#estimatedigtimerequest), [`EstimateDigTimeResponse`](/docs/sdk/api/ts/estimate-dig-time-response), [`EstimateExplosionDamageRequest`](/docs/sdk/api/ts/generated-soulfire-world-pb#estimateexplosiondamagerequest), [`EstimateExplosionDamageResponse`](/docs/sdk/api/ts/estimate-explosion-damage-response)) | Optional |  |
+| `protocolClient` | `Client<GenService<{ getProtocolInfo: { methodKind: "unary"; input: GenMessage<BotProtocolRequest>; output: GenMessage<BotProtocolInfo>; }; listPacketSchemas: { methodKind: "unary"; input: GenMessage<ListPacketSchemasRequest>; output: GenMessage<ListPacketSchemasResponse>; }; watchPackets: { methodKind: "server_streaming"; input: GenMessage<WatchPacketsRequest>; output: GenMessage<RawPacketEvent>; }; sendRawPacket: { methodKind: "unary"; input: GenMessage<SendRawPacketRequest>; output: GenMessage<SendRawPacketResponse>; }; }>> \| undefined` ([`BotProtocolRequest`](/docs/sdk/api/ts/generated-soulfire-protocol-pb#botprotocolrequest), [`BotProtocolInfo`](/docs/sdk/api/ts/bot-protocol-info), [`ListPacketSchemasRequest`](/docs/sdk/api/ts/generated-soulfire-protocol-pb#listpacketschemasrequest), [`ListPacketSchemasResponse`](/docs/sdk/api/ts/generated-soulfire-protocol-pb#listpacketschemasresponse), [`WatchPacketsRequest`](/docs/sdk/api/ts/generated-soulfire-protocol-pb#watchpacketsrequest), [`RawPacketEvent`](/docs/sdk/api/ts/raw-packet-event), [`SendRawPacketRequest`](/docs/sdk/api/ts/generated-soulfire-protocol-pb#sendrawpacketrequest), [`SendRawPacketResponse`](/docs/sdk/api/ts/generated-soulfire-protocol-pb#sendrawpacketresponse)) | Optional |  |
+
+**Returns:** [`SoulFireBot`](/docs/sdk/api/ts/soul-fire-bot).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1208)
+
+## `state`
+
+Latest received state. Empty until a connection has an initial snapshot.
+
+**Type:** [`BotSessionState`](/docs/sdk/api/ts/bot-session-state).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1165)
+
+## `connect`
+
+Starts the bot if necessary. The scope owns observation and any start.
+
+```ts
+connect(options?: Pick<GetOrCreateBotOptions, "call" | "readyTimeoutMs">): Effect<void, SoulFireOperationError, Scope>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `Pick<GetOrCreateBotOptions, "call" \| "readyTimeoutMs">` ([`GetOrCreateBotOptions`](/docs/sdk/api/ts/get-or-create-bot-options)) | `{}` |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, Scope>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1170)
+
+## `instanceId`
+
+**Modifiers:** `readonly`.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1209)
+
+## `id`
+
+**Modifiers:** `readonly`.
+
+**Type:** `string`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1210)
+
+## `tasks`
+
+**Type:** [`SoulFireTasks`](/docs/sdk/api/ts/soul-fire-tasks).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1223)
+
+## `collect`
+
+Collects blocks to completion. Interruption cancels unfinished server work.
+
+```ts
+collect(target: string | readonly string[], options?: CollectBlocksTaskOptions): Effect<CollectBlocksTaskResult, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `target` | `string \| readonly string[]` | Required |  |
+| `options` | [`CollectBlocksTaskOptions`](/docs/sdk/api/ts/collect-blocks-task-options) | `{}` |  |
+
+**Returns:** `Effect<CollectBlocksTaskResult, SoulFireOperationError, never>` ([`CollectBlocksTaskResult`](/docs/sdk/api/ts/collect-blocks-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1236)
+
+## `pathfinder`
+
+**Type:** [`SoulFirePathfinder`](/docs/sdk/api/ts/soul-fire-pathfinder).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1246)
+
+## `chat`
+
+**Type:** [`SoulFireChat`](/docs/sdk/api/ts/soul-fire-chat).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1255)
+
+## `inventory`
+
+**Type:** [`SoulFireInventory`](/docs/sdk/api/ts/soul-fire-inventory).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1266)
+
+## `recipes`
+
+**Type:** [`SoulFireRecipes`](/docs/sdk/api/ts/soul-fire-recipes).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1275)
+
+## `registry`
+
+**Type:** [`SoulFireRegistry`](/docs/sdk/api/ts/soul-fire-registry).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1284)
+
+## `world`
+
+**Type:** [`SoulFireWorld`](/docs/sdk/api/ts/soul-fire-world).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1292)
+
+## `camera`
+
+**Type:** [`SoulFireCamera`](/docs/sdk/api/ts/soul-fire-camera).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1300)
+
+## `protocol`
+
+**Type:** [`SoulFireProtocol`](/docs/sdk/api/ts/soul-fire-protocol).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1304)
+
+## `start`
+
+Marks the bot to run; it connects in the background (see `waitForOnline`).
+
+```ts
+start(options?: CallOptions | undefined): Effect<BotStatus, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotStatus, SoulFireOperationError, never>` ([`BotStatus`](/docs/sdk/api/ts/bot-status), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1318)
+
+## `stop`
+
+Marks the bot as stopped; it disconnects in the background.
+
+```ts
+stop(options?: CallOptions | undefined): Effect<BotStatus, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotStatus, SoulFireOperationError, never>` ([`BotStatus`](/docs/sdk/api/ts/bot-status), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1342)
+
+## `restart`
+
+Gives the bot a fresh connection.
+
+```ts
+restart(options?: CallOptions | undefined): Effect<BotStatus, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotStatus, SoulFireOperationError, never>` ([`BotStatus`](/docs/sdk/api/ts/bot-status), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1366)
+
+## `status`
+
+```ts
+status(options?: CallOptions | undefined): Effect<BotStatus, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotStatus, SoulFireOperationError, never>` ([`BotStatus`](/docs/sdk/api/ts/bot-status), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1383)
+
+## `info`
+
+Status, and while online the live state with the full inventory.
+
+```ts
+info(options?: CallOptions | undefined): Effect<BotInfoResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotInfoResponse, SoulFireOperationError, never>` ([`BotInfoResponse`](/docs/sdk/api/ts/bot-info-response), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1403)
+
+## `liveState`
+
+Throws if the bot is offline.
+
+```ts
+liveState(options?: CallOptions | undefined): Effect<BotLiveState, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotLiveState, SoulFireOperationError, never>` ([`BotLiveState`](/docs/sdk/api/ts/bot-live-state), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1417)
+
+## `waitForOnline`
+
+Resolves once the bot is online, at once if it already is.
+
+```ts
+waitForOnline(options?: { call?: CallOptions | undefined; } | undefined): Effect<BotStatus, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `{ call?: CallOptions \| undefined; } \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotStatus, SoulFireOperationError, never>` ([`BotStatus`](/docs/sdk/api/ts/bot-status), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1437)
+
+## `events`
+
+The bot's live events. The first is its status; the stream stays open while
+the bot is stopped and follows it across reconnects. The default filter
+takes state changes, chat, lifecycle, inventory, damage, resource packs and
+titles.
+
+```ts
+events(filter?: MessageInit<BotEventFilter>, options?: CallOptions | undefined): Stream<BotEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `filter` | `MessageInit<BotEventFilter>` ([`BotEventFilter`](/docs/sdk/api/ts/bot-event-filter)) | `DEFAULT_EVENT_FILTER` |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Stream<BotEvent, SoulFireOperationError, never>` ([`BotEvent`](/docs/sdk/api/ts/bot-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1483)
+
+## `observe`
+
+Opens a `BotSession`: the event stream and the state it adds up to.
+
+```ts
+observe(options?: BotSessionOptions | undefined): Effect<BotSession, SoulFireOperationError, Scope>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `BotSessionOptions \| undefined` ([`BotSessionOptions`](/docs/sdk/api/ts/bot-session-options)) | Optional |  |
+
+**Returns:** `Effect<BotSession, SoulFireOperationError, Scope>` ([`BotSession`](/docs/sdk/api/ts/bot-session), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1509)
+
+## `sendChat`
+
+A chat message, or a command if it starts with `/`.
+
+```ts
+sendChat(message: string, options?: CallOptions | undefined): Effect<BotActionResult, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `message` | `string` | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotActionResult, SoulFireOperationError, never>` ([`BotActionResult`](/docs/sdk/api/ts/bot-action-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1531)
+
+## `getBlock`
+
+The block at `position`, if its chunk is loaded.
+
+```ts
+getBlock(request: ScopedRequest<GenMessage<GetBlockRequest>>, options?: CallOptions | undefined): Effect<GetBlockResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `ScopedRequest<GenMessage<GetBlockRequest>>` ([`ScopedRequest`](/docs/sdk/api/ts/scoped-request), [`GetBlockRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#getblockrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<GetBlockResponse, SoulFireOperationError, never>` ([`GetBlockResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#getblockresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1556)
+
+## `findBlocks`
+
+Blocks with one of `blockIds`, nearest first: `maxCount` of them (at most
+256) within `maxDistance` of the bot (at most 128).
+
+```ts
+findBlocks(request: ScopedRequest<GenMessage<FindBlocksRequest>>, options?: CallOptions | undefined): Effect<FindBlocksResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `ScopedRequest<GenMessage<FindBlocksRequest>>` ([`ScopedRequest`](/docs/sdk/api/ts/scoped-request), [`FindBlocksRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#findblocksrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<FindBlocksResponse, SoulFireOperationError, never>` ([`FindBlocksResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#findblocksresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1576)
+
+## `listNearbyEntities`
+
+Entities within `radius` of the bot (at most 128), only of `entityTypes` if
+given. Players only with `includePlayers: true`.
+
+```ts
+listNearbyEntities(request: ScopedRequest<GenMessage<ListNearbyEntitiesRequest>>, options?: CallOptions | undefined): Effect<ListNearbyEntitiesResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `ScopedRequest<GenMessage<ListNearbyEntitiesRequest>>` ([`ScopedRequest`](/docs/sdk/api/ts/scoped-request), [`ListNearbyEntitiesRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#listnearbyentitiesrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<ListNearbyEntitiesResponse, SoulFireOperationError, never>` ([`ListNearbyEntitiesResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#listnearbyentitiesresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1596)
+
+## `digBlock`
+
+Breaks the block at `position` with what the main hand holds, and resolves
+once it's broken. `cancel: true` stops a dig in progress instead. Needs the
+block within reach; times out after a minute.
+
+```ts
+digBlock(request: ScopedRequest<GenMessage<DigBlockRequest>>, options?: CallOptions | undefined): Effect<BotActionResult, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `ScopedRequest<GenMessage<DigBlockRequest>>` ([`ScopedRequest`](/docs/sdk/api/ts/scoped-request), [`DigBlockRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#digblockrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotActionResult, SoulFireOperationError, never>` ([`BotActionResult`](/docs/sdk/api/ts/bot-action-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1617)
+
+## `placeBlock`
+
+Places the held block against the `face` of `against`, like a right click
+on it: the new block goes on that side.
+
+```ts
+placeBlock(request: ScopedRequest<GenMessage<PlaceBlockRequest>>, options?: CallOptions | undefined): Effect<BotActionResult, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `ScopedRequest<GenMessage<PlaceBlockRequest>>` ([`ScopedRequest`](/docs/sdk/api/ts/scoped-request), [`PlaceBlockRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#placeblockrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotActionResult, SoulFireOperationError, never>` ([`BotActionResult`](/docs/sdk/api/ts/bot-action-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1644)
+
+## `interactBlock`
+
+Right-clicks a block face: doors, buttons, beds, levers. `sneaking` sneaks
+for this click, so the held item's own use doesn't take over.
+
+```ts
+interactBlock(request: ScopedRequest<GenMessage<InteractBlockRequest>>, options?: CallOptions | undefined): Effect<BotActionResult, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `ScopedRequest<GenMessage<InteractBlockRequest>>` ([`ScopedRequest`](/docs/sdk/api/ts/scoped-request), [`InteractBlockRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#interactblockrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotActionResult, SoulFireOperationError, never>` ([`BotActionResult`](/docs/sdk/api/ts/bot-action-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1671)
+
+## `useItem`
+
+Uses the item in `hand`: eat, drink, throw, draw a bow. `releaseItem` ends
+it.
+
+```ts
+useItem(request: ScopedRequest<GenMessage<UseItemRequest>>, options?: CallOptions | undefined): Effect<BotActionResult, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `ScopedRequest<GenMessage<UseItemRequest>>` ([`ScopedRequest`](/docs/sdk/api/ts/scoped-request), [`UseItemRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#useitemrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotActionResult, SoulFireOperationError, never>` ([`BotActionResult`](/docs/sdk/api/ts/bot-action-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1698)
+
+## `releaseItem`
+
+Lets go of an item in use: fires a drawn bow, stops eating.
+
+```ts
+releaseItem(request?: ScopedRequest<GenMessage<ReleaseItemRequest>>, options?: CallOptions | undefined): Effect<BotActionResult, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `ScopedRequest<GenMessage<ReleaseItemRequest>>` ([`ScopedRequest`](/docs/sdk/api/ts/scoped-request), [`ReleaseItemRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#releaseitemrequest)) | `{}` |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotActionResult, SoulFireOperationError, never>` ([`BotActionResult`](/docs/sdk/api/ts/bot-action-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1724)
+
+## `attackEntity`
+
+Hits an entity within reach once, by network id.
+
+```ts
+attackEntity(request: ScopedRequest<GenMessage<AttackEntityRequest>>, options?: CallOptions | undefined): Effect<BotActionResult, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `ScopedRequest<GenMessage<AttackEntityRequest>>` ([`ScopedRequest`](/docs/sdk/api/ts/scoped-request), [`AttackEntityRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#attackentityrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotActionResult, SoulFireOperationError, never>` ([`BotActionResult`](/docs/sdk/api/ts/bot-action-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1750)
+
+## `interactEntity`
+
+Right-clicks an entity within reach: trading, mounting.
+
+```ts
+interactEntity(request: ScopedRequest<GenMessage<InteractEntityRequest>>, options?: CallOptions | undefined): Effect<BotActionResult, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `ScopedRequest<GenMessage<InteractEntityRequest>>` ([`ScopedRequest`](/docs/sdk/api/ts/scoped-request), [`InteractEntityRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#interactentityrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotActionResult, SoulFireOperationError, never>` ([`BotActionResult`](/docs/sdk/api/ts/bot-action-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1776)
+
+## `swingArm`
+
+Only the animation.
+
+```ts
+swingArm(request: ScopedRequest<GenMessage<SwingArmRequest>>, options?: CallOptions | undefined): Effect<BotActionResult, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `ScopedRequest<GenMessage<SwingArmRequest>>` ([`ScopedRequest`](/docs/sdk/api/ts/scoped-request), [`SwingArmRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#swingarmrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotActionResult, SoulFireOperationError, never>` ([`BotActionResult`](/docs/sdk/api/ts/bot-action-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1802)
+
+## `respawn`
+
+Respawns a dead bot, or leaves the End credits.
+
+```ts
+respawn(request?: ScopedRequest<GenMessage<RespawnRequest>>, options?: CallOptions | undefined): Effect<BotActionResult, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `ScopedRequest<GenMessage<RespawnRequest>>` ([`ScopedRequest`](/docs/sdk/api/ts/scoped-request), [`RespawnRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#respawnrequest)) | `{}` |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotActionResult, SoulFireOperationError, never>` ([`BotActionResult`](/docs/sdk/api/ts/bot-action-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1828)
+
+## `sleep`
+
+Uses a bed within reach and resolves once the server confirms the bot is
+sleeping.
+
+```ts
+sleep(request: ScopedRequest<GenMessage<SleepRequest>>, options?: CallOptions | undefined): Effect<BotActionResult, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `ScopedRequest<GenMessage<SleepRequest>>` ([`ScopedRequest`](/docs/sdk/api/ts/scoped-request), [`SleepRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#sleeprequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotActionResult, SoulFireOperationError, never>` ([`BotActionResult`](/docs/sdk/api/ts/bot-action-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1855)
+
+## `wake`
+
+```ts
+wake(options?: CallOptions | undefined): Effect<BotActionResult, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotActionResult, SoulFireOperationError, never>` ([`BotActionResult`](/docs/sdk/api/ts/bot-action-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1878)
+
+## `mount`
+
+Rides an entity and resolves once the server confirms it.
+
+```ts
+mount(request: ScopedRequest<GenMessage<MountEntityRequest>>, options?: CallOptions | undefined): Effect<MountEntityResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `ScopedRequest<GenMessage<MountEntityRequest>>` ([`ScopedRequest`](/docs/sdk/api/ts/scoped-request), [`MountEntityRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#mountentityrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<MountEntityResponse, SoulFireOperationError, never>` ([`MountEntityResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#mountentityresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1902)
+
+## `dismount`
+
+```ts
+dismount(request?: ScopedRequest<GenMessage<DismountRequest>>, options?: CallOptions | undefined): Effect<BotActionResult, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `ScopedRequest<GenMessage<DismountRequest>>` ([`ScopedRequest`](/docs/sdk/api/ts/scoped-request), [`DismountRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#dismountrequest)) | `{}` |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotActionResult, SoulFireOperationError, never>` ([`BotActionResult`](/docs/sdk/api/ts/bot-action-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1925)
+
+## `setVehicleControl`
+
+Movement input while controlling a vehicle. It stays until changed; unset
+fields keep theirs.
+
+```ts
+setVehicleControl(request: ScopedRequest<GenMessage<SetVehicleControlRequest>>, options?: CallOptions | undefined): Effect<SetVehicleControlResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `ScopedRequest<GenMessage<SetVehicleControlRequest>>` ([`ScopedRequest`](/docs/sdk/api/ts/scoped-request), [`SetVehicleControlRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#setvehiclecontrolrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<SetVehicleControlResponse, SoulFireOperationError, never>` ([`SetVehicleControlResponse`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#setvehiclecontrolresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1952)
+
+## `updateSign`
+
+Writes a sign: exactly four `lines` (an empty string clears one), on the
+front if `frontText`.
+
+```ts
+updateSign(request: ScopedRequest<GenMessage<UpdateSignRequest>>, options?: CallOptions | undefined): Effect<BotActionResult, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `ScopedRequest<GenMessage<UpdateSignRequest>>` ([`ScopedRequest`](/docs/sdk/api/ts/scoped-request), [`UpdateSignRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#updatesignrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotActionResult, SoulFireOperationError, never>` ([`BotActionResult`](/docs/sdk/api/ts/bot-action-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L1980)
+
+## `writeBook`
+
+Writes the writable book in hotbar slot `inventorySlot` (0-8). A `title`
+signs it.
+
+```ts
+writeBook(request: ScopedRequest<GenMessage<WriteBookRequest>>, options?: CallOptions | undefined): Effect<BotActionResult, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `ScopedRequest<GenMessage<WriteBookRequest>>` ([`ScopedRequest`](/docs/sdk/api/ts/scoped-request), [`WriteBookRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#writebookrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotActionResult, SoulFireOperationError, never>` ([`BotActionResult`](/docs/sdk/api/ts/bot-action-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2007)
+
+## `respondResourcePack`
+
+```ts
+respondResourcePack(request: ScopedRequest<GenMessage<RespondResourcePackRequest>>, options?: CallOptions | undefined): Effect<BotActionResult, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `ScopedRequest<GenMessage<RespondResourcePackRequest>>` ([`ScopedRequest`](/docs/sdk/api/ts/scoped-request), [`RespondResourcePackRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#respondresourcepackrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotActionResult, SoulFireOperationError, never>` ([`BotActionResult`](/docs/sdk/api/ts/bot-action-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2030)
+
+## `setFlying`
+
+```ts
+setFlying(request: ScopedRequest<GenMessage<SetFlyingRequest>>, options?: CallOptions | undefined): Effect<BotActionResult, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `ScopedRequest<GenMessage<SetFlyingRequest>>` ([`ScopedRequest`](/docs/sdk/api/ts/scoped-request), [`SetFlyingRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#setflyingrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotActionResult, SoulFireOperationError, never>` ([`BotActionResult`](/docs/sdk/api/ts/bot-action-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2054)
+
+## `startElytraFlight`
+
+Starts gliding. The bot must be falling with a usable elytra.
+
+```ts
+startElytraFlight(options?: CallOptions | undefined): Effect<BotActionResult, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotActionResult, SoulFireOperationError, never>` ([`BotActionResult`](/docs/sdk/api/ts/bot-action-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2080)
+
+## `setCreativeSlot`
+
+Sets slot 0-45 of the inventory menu; no `item` clears it.
+
+```ts
+setCreativeSlot(request: ScopedRequest<GenMessage<SetCreativeSlotRequest>>, options?: CallOptions | undefined): Effect<BotActionResult, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `ScopedRequest<GenMessage<SetCreativeSlotRequest>>` ([`ScopedRequest`](/docs/sdk/api/ts/scoped-request), [`SetCreativeSlotRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#setcreativeslotrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotActionResult, SoulFireOperationError, never>` ([`BotActionResult`](/docs/sdk/api/ts/bot-action-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2105)
+
+## `waitForChunks`
+
+Waits until every chunk within `radiusChunks` of the bot's chunk is loaded:
+0 (the default) means its own chunk, and it's at most 16. Times out after
+`timeoutMs`, which defaults to 30 s, at most 5 min.
+
+```ts
+waitForChunks(request?: ScopedRequest<GenMessage<WaitForChunksRequest>>, options?: CallOptions | undefined): Effect<WaitForChunksResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `ScopedRequest<GenMessage<WaitForChunksRequest>>` ([`ScopedRequest`](/docs/sdk/api/ts/scoped-request), [`WaitForChunksRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#waitforchunksrequest)) | `{}` |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<WaitForChunksResponse, SoulFireOperationError, never>` ([`WaitForChunksResponse`](/docs/sdk/api/ts/wait-for-chunks-response), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2134)
+
+## `goTo`
+
+Pathfinds to `goal`, streaming progress until COMPLETED, FAILED or
+CANCELLED. A new `goTo` cancels this one. Times out after
+`options.timeoutSeconds`, which defaults to 5 min, at most 1 h.
+
+```ts
+goTo(request: ScopedRequest<GenMessage<GoToRequest>>, options?: CallOptions | undefined): Stream<PathfindProgress, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `ScopedRequest<GenMessage<GoToRequest>>` ([`ScopedRequest`](/docs/sdk/api/ts/scoped-request), [`GoToRequest`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#gotorequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Stream<PathfindProgress, SoulFireOperationError, never>` ([`PathfindProgress`](/docs/sdk/api/ts/pathfind-progress), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2155)
+
+## `stopPathfinding`
+
+Cancels the `goTo` in progress.
+
+```ts
+stopPathfinding(options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2178)
+
+## `inventoryState`
+
+The open menu, or the player's inventory: layout, slots and the carried
+item.
+
+```ts
+inventoryState(options?: CallOptions | undefined): Effect<BotInventoryStateResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotInventoryStateResponse, SoulFireOperationError, never>` ([`BotInventoryStateResponse`](/docs/sdk/api/ts/bot-inventory-state-response), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2199)
+
+## `clickInventory`
+
+Clicks `slot` of the open menu like a mouse; -999 clicks outside it,
+dropping what the cursor holds. `clickType` defaults to LEFT_CLICK.
+`hotbarSlot` (0-8) is the slot SWAP_HOTBAR swaps with, and defaults to 0.
+
+```ts
+clickInventory(slot: number, clickType?: ClickType, hotbarSlot?: number, options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `slot` | `number` | Required |  |
+| `clickType` | [`ClickType`](/docs/sdk/api/ts/click-type) | `ClickType.LEFT_CLICK` |  |
+| `hotbarSlot` | `number` | `0` |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2215)
+
+## `transferInventorySlot`
+
+Shift-clicks `slot`: its stack moves to the other part of the menu.
+
+```ts
+transferInventorySlot(slot: number, options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `slot` | `number` | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2244)
+
+## `dropInventorySlot`
+
+Drops the stack in `slot`, or only one item when `all` is false. `all`
+defaults to true.
+
+```ts
+dropInventorySlot(slot: number, all?: boolean, options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `slot` | `number` | Required |  |
+| `all` | `boolean` | `true` |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2255)
+
+## `moveInventoryStack`
+
+Picks up the stack in `fromSlot` and puts it in `toSlot`; what stays on the
+cursor goes back.
+
+```ts
+moveInventoryStack(fromSlot: number, toSlot: number, options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `fromSlot` | `number` | Required |  |
+| `toSlot` | `number` | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2272)
+
+## `selectHotbar`
+
+Selects hotbar slot `slot`, from 0 to 8.
+
+```ts
+selectHotbar(slot: number, options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `slot` | `number` | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2290)
+
+## `setMovement`
+
+Presses or releases movement keys. Keys left out keep their state, and a
+pressed key stays pressed until changed or `resetMovement`. Sprinting needs
+`forward` and a food level of 6 or more.
+
+```ts
+setMovement(movement: BotMovement, options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `movement` | [`BotMovement`](/docs/sdk/api/ts/bot-movement) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2313)
+
+## `resetMovement`
+
+Releases every movement key.
+
+```ts
+resetMovement(options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2338)
+
+## `look`
+
+Turns the bot. `yaw` is in degrees: 0 south, 90 west, -90 east, 180 north.
+`pitch` too: -90 up, 0 level, 90 down.
+
+```ts
+look(yaw: number, pitch: number, options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `yaw` | `number` | Required |  |
+| `pitch` | `number` | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2359)
+
+## `openInventory`
+
+```ts
+openInventory(options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2378)
+
+## `closeContainer`
+
+```ts
+closeContainer(options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2395)
+
+## `clickContainerButton`
+
+Clicks a button of the open container: a stonecutter recipe or a loom
+pattern (its position in the menu's list), an enchanting option (0-2), or
+a lectern's previous page (1), next page (2) or take book (3). Villagers,
+beacons, crafters and other containers don't react to it on a vanilla
+server. Doesn't wait for the server, which may refuse the click (too few
+levels, no such recipe) without an error.
+
+```ts
+clickContainerButton(buttonId: number, options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `buttonId` | `number` | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2420)
+
+## `dialog`
+
+The server dialog on screen (Minecraft 1.21.6+), if any.
+
+```ts
+dialog(options?: CallOptions | undefined): Effect<BotGetDialogResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotGetDialogResponse, SoulFireOperationError, never>` ([`BotGetDialogResponse`](/docs/sdk/api/ts/bot-get-dialog-response), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2445)
+
+## `renderPov`
+
+Same as `camera.capture`.
+
+```ts
+renderPov(request?: { width?: number | undefined; height?: number | undefined; maxDistance?: number | undefined; fov?: number | undefined; cameraX?: number | undefined; cameraY?: number | undefined; cameraZ?: number | undefined; yRot?: number | undefined; xRot?: number | undefined; includeHud?: boolean | undefined; includeHands?: boolean | undefined; includeDebugTrace?: boolean | undefined; }, options?: CallOptions | undefined): Effect<BotRenderPovResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `{ width?: number \| undefined; height?: number \| undefined; maxDistance?: number \| undefined; fov?: number \| undefined; cameraX?: number \| undefined; cameraY?: number \| undefined; cameraZ?: number \| undefined; yRot?: number \| undefined; xRot?: number \| undefined; includeHud?: boolean \| undefined; includeHands?: boolean \| undefined; includeDebugTrace?: boolean \| undefined; }` | `{}` |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotRenderPovResponse, SoulFireOperationError, never>` ([`BotRenderPovResponse`](/docs/sdk/api/ts/generated-soulfire-bot-pb#botrenderpovresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2459)
+
+## `acquireControl`
+
+Takes exclusive control: until the lease ends, only this client can act on
+the bot. Renew it before it runs out. `ttlSeconds` defaults to 30, from 5
+to 300.
+
+```ts
+acquireControl(ttlSeconds?: number, options?: CallOptions | undefined): Effect<SoulFireBotControlLease, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `ttlSeconds` | `number` | `30` |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<SoulFireBotControlLease, SoulFireOperationError, never>` ([`SoulFireBotControlLease`](/docs/sdk/api/ts/soul-fire-bot-control-lease), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2516)
+
+## `acquireControlScoped`
+
+```ts
+acquireControlScoped(ttlSeconds?: number, options?: CallOptions | undefined): Effect<SoulFireBotControlLease, SoulFireOperationError, Scope>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `ttlSeconds` | `number` | `30` |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<SoulFireBotControlLease, SoulFireOperationError, Scope>` ([`SoulFireBotControlLease`](/docs/sdk/api/ts/soul-fire-bot-control-lease), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2554)
+
+## `renewControl`
+
+```ts
+renewControl(lease: BotControlLease, ttlSeconds: number, options?: CallOptions | undefined): Effect<BotControlLease, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `lease` | [`BotControlLease`](/docs/sdk/api/ts/bot-control-lease) | Required |  |
+| `ttlSeconds` | `number` | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<BotControlLease, SoulFireOperationError, never>` ([`BotControlLease`](/docs/sdk/api/ts/bot-control-lease), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2568)
+
+## `releaseControl`
+
+```ts
+releaseControl(lease: BotControlLease, options?: CallOptions | undefined): Effect<void, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `lease` | [`BotControlLease`](/docs/sdk/api/ts/bot-control-lease) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<void, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/client.ts#L2598)

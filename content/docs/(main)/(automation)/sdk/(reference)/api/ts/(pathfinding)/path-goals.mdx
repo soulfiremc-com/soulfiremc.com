@@ -1,0 +1,208 @@
+---
+title: "PathGoals"
+description: "TypeScript API signatures, fields, and source for PathGoals."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Interface** in `pathfinding`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/pathfinding.ts#L152).
+
+Builders for `PathfindGoal`. A goal's `dimension` defaults to the bot's
+current one; another dimension is refused.
+
+This declaration appears in public signatures but is not exported as a package entry point.
+
+```ts
+interface PathGoals
+```
+
+## `block`
+
+Within `radius` blocks (euclidean) of the block. `radius` defaults to 0:
+stand on it.
+
+```ts
+block(position: MessageInit<BlockPosition>, radius?: number | undefined): PathfindGoal
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `position` | `MessageInit<BlockPosition>` ([`BlockPosition`](/docs/sdk/api/ts/block-position)) | Required |  |
+| `radius` | `number \| undefined` | Optional |  |
+
+**Returns:** [`PathfindGoal`](/docs/sdk/api/ts/pathfind-goal).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/pathfinding.ts#L157)
+
+## `near`
+
+Within `radius` blocks of a world position; 0 means that exact block.
+
+```ts
+near(position: MessageInit<WorldPosition>, radius: number): PathfindGoal
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `position` | `MessageInit<WorldPosition>` ([`WorldPosition`](/docs/sdk/api/ts/world-position)) | Required |  |
+| `radius` | `number` | Required |  |
+
+**Returns:** [`PathfindGoal`](/docs/sdk/api/ts/pathfind-goal).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/pathfinding.ts#L161)
+
+## `entity`
+
+Within `radius` blocks of an entity, updated as it moves.
+
+```ts
+entity(target: EntityTarget, radius: number): PathfindGoal
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `target` | [`EntityTarget`](/docs/sdk/api/ts/entity-target) | Required |  |
+| `radius` | `number` | Required |  |
+
+**Returns:** [`PathfindGoal`](/docs/sdk/api/ts/pathfind-goal).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/pathfinding.ts#L165)
+
+## `xz`
+
+An X/Z column at any height. `radius` defaults to 0: that exact column.
+
+```ts
+xz(x: number, z: number, options?: { dimension?: string | undefined; radius?: number | undefined; } | undefined): PathfindGoal
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `x` | `number` | Required |  |
+| `z` | `number` | Required |  |
+| `options` | `{ dimension?: string \| undefined; radius?: number \| undefined; } \| undefined` | Optional |  |
+
+**Returns:** [`PathfindGoal`](/docs/sdk/api/ts/pathfind-goal).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/pathfinding.ts#L169)
+
+## `y`
+
+A Y level, anywhere in X and Z.
+
+```ts
+y(y: number, dimension?: string | undefined): PathfindGoal
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `y` | `number` | Required |  |
+| `dimension` | `string \| undefined` | Optional |  |
+
+**Returns:** [`PathfindGoal`](/docs/sdk/api/ts/pathfind-goal).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/pathfinding.ts#L177)
+
+## `breakBlock`
+
+Reaches the block and breaks it.
+
+```ts
+breakBlock(position: MessageInit<BlockPosition>): PathfindGoal
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `position` | `MessageInit<BlockPosition>` ([`BlockPosition`](/docs/sdk/api/ts/block-position)) | Required |  |
+
+**Returns:** [`PathfindGoal`](/docs/sdk/api/ts/pathfind-goal).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/pathfinding.ts#L181)
+
+## `placeBlock`
+
+Reaches `position` and places the selected block there.
+
+```ts
+placeBlock(position: MessageInit<BlockPosition>): PathfindGoal
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `position` | `MessageInit<BlockPosition>` ([`BlockPosition`](/docs/sdk/api/ts/block-position)) | Required |  |
+
+**Returns:** [`PathfindGoal`](/docs/sdk/api/ts/pathfind-goal).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/pathfinding.ts#L185)
+
+## `awayFromPosition`
+
+At least `radius` blocks away from a position.
+
+```ts
+awayFromPosition(position: MessageInit<WorldPosition>, radius: number): PathfindGoal
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `position` | `MessageInit<WorldPosition>` ([`WorldPosition`](/docs/sdk/api/ts/world-position)) | Required |  |
+| `radius` | `number` | Required |  |
+
+**Returns:** [`PathfindGoal`](/docs/sdk/api/ts/pathfind-goal).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/pathfinding.ts#L189)
+
+## `awayFromEntity`
+
+At least `radius` blocks away from an entity.
+
+```ts
+awayFromEntity(target: EntityTarget, radius: number): PathfindGoal
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `target` | [`EntityTarget`](/docs/sdk/api/ts/entity-target) | Required |  |
+| `radius` | `number` | Required |  |
+
+**Returns:** [`PathfindGoal`](/docs/sdk/api/ts/pathfind-goal).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/pathfinding.ts#L193)
+
+## `any`
+
+Reached when any of `nested` is. At least one goal; nested at most 16
+levels deep.
+
+```ts
+any(nested: readonly PathfindGoal[]): PathfindGoal
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `nested` | `readonly PathfindGoal[]` ([`PathfindGoal`](/docs/sdk/api/ts/pathfind-goal)) | Required |  |
+
+**Returns:** [`PathfindGoal`](/docs/sdk/api/ts/pathfind-goal).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/pathfinding.ts#L198)

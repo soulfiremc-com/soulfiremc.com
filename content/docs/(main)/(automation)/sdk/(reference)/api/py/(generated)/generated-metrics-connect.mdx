@@ -1,0 +1,346 @@
+---
+title: "metrics_connect module"
+description: "Python API signatures, fields, and source for metrics_connect module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`MetricsService`](/docs/sdk/api/py/generated-metrics-connect#metricsservice) | class |
+| [`MetricsServiceASGIApplication`](/docs/sdk/api/py/generated-metrics-connect#metricsserviceasgiapplication) | class |
+| [`MetricsServiceClient`](/docs/sdk/api/py/generated-metrics-connect#metricsserviceclient) | class |
+| [`MetricsServiceClientSync`](/docs/sdk/api/py/generated-metrics-connect#metricsserviceclientsync) | class |
+| [`MetricsServiceSync`](/docs/sdk/api/py/generated-metrics-connect#metricsservicesync) | class |
+| [`MetricsServiceWSGIApplication`](/docs/sdk/api/py/generated-metrics-connect#metricsservicewsgiapplication) | class |
+
+## MetricsService
+
+**Class** in `metrics_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_connect.py#L37).
+
+**Import from:** `soulfire.metrics_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class MetricsService(Protocol)
+```
+
+### `get_instance_metrics`
+
+```python
+async def get_instance_metrics(self, request: GetInstanceMetricsRequest, ctx: RequestContext[GetInstanceMetricsRequest, GetInstanceMetricsResponse]) -> GetInstanceMetricsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetInstanceMetricsRequest`](/docs/sdk/api/py/generated-metrics-pb2#getinstancemetricsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[GetInstanceMetricsRequest, GetInstanceMetricsResponse]` ([`GetInstanceMetricsRequest`](/docs/sdk/api/py/generated-metrics-pb2#getinstancemetricsrequest), [`GetInstanceMetricsResponse`](/docs/sdk/api/py/generated-metrics-pb2#getinstancemetricsresponse)) | Required | positional or keyword |
+
+**Returns:** [`GetInstanceMetricsResponse`](/docs/sdk/api/py/generated-metrics-pb2#getinstancemetricsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_connect.py#L38)
+
+### `get_server_metrics`
+
+```python
+async def get_server_metrics(self, request: GetServerMetricsRequest, ctx: RequestContext[GetServerMetricsRequest, GetServerMetricsResponse]) -> GetServerMetricsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetServerMetricsRequest`](/docs/sdk/api/py/generated-metrics-pb2#getservermetricsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[GetServerMetricsRequest, GetServerMetricsResponse]` ([`GetServerMetricsRequest`](/docs/sdk/api/py/generated-metrics-pb2#getservermetricsrequest), [`GetServerMetricsResponse`](/docs/sdk/api/py/generated-metrics-pb2#getservermetricsresponse)) | Required | positional or keyword |
+
+**Returns:** [`GetServerMetricsResponse`](/docs/sdk/api/py/generated-metrics-pb2#getservermetricsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_connect.py#L41)
+
+## MetricsServiceASGIApplication
+
+**Class** in `metrics_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_connect.py#L45).
+
+**Import from:** `soulfire.metrics_connect`.
+
+**Bases:** `ConnectASGIApplication[MetricsService]` ([`MetricsService`](/docs/sdk/api/py/generated-metrics-connect#metricsservice)).
+
+```python
+class MetricsServiceASGIApplication(ConnectASGIApplication[MetricsService])
+```
+
+**Referenced types:** [`MetricsService`](/docs/sdk/api/py/generated-metrics-connect#metricsservice).
+
+### `__init__`
+
+```python
+def __init__(self, service: MetricsService | AsyncGenerator[MetricsService], *, interceptors: Iterable[Interceptor]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | `MetricsService \| AsyncGenerator[MetricsService]` ([`MetricsService`](/docs/sdk/api/py/generated-metrics-connect#metricsservice)) | Required | positional or keyword |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `compressions` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_connect.py#L46)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_connect.py#L86)
+
+## MetricsServiceClient
+
+**Class** in `metrics_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_connect.py#L91).
+
+**Import from:** `soulfire.metrics_connect`.
+
+**Bases:** `ConnectClient`.
+
+```python
+class MetricsServiceClient(ConnectClient)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[Interceptor]=(), http_client: Client | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `http_client` | `Client \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_connect.py#L92)
+
+### `get_instance_metrics`
+
+```python
+async def get_instance_metrics(self, request: GetInstanceMetricsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> GetInstanceMetricsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetInstanceMetricsRequest`](/docs/sdk/api/py/generated-metrics-pb2#getinstancemetricsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`GetInstanceMetricsResponse`](/docs/sdk/api/py/generated-metrics-pb2#getinstancemetricsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_connect.py#L116)
+
+### `get_server_metrics`
+
+```python
+async def get_server_metrics(self, request: GetServerMetricsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> GetServerMetricsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetServerMetricsRequest`](/docs/sdk/api/py/generated-metrics-pb2#getservermetricsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`GetServerMetricsResponse`](/docs/sdk/api/py/generated-metrics-pb2#getservermetricsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_connect.py#L136)
+
+## MetricsServiceClientSync
+
+**Class** in `metrics_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_connect.py#L208).
+
+**Import from:** `soulfire.metrics_connect`.
+
+**Bases:** `ConnectClientSync`.
+
+```python
+class MetricsServiceClientSync(ConnectClientSync)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[InterceptorSync]=(), http_client: SyncClient | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | keyword only |
+| `http_client` | `SyncClient \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_connect.py#L209)
+
+### `get_instance_metrics`
+
+```python
+def get_instance_metrics(self, request: GetInstanceMetricsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> GetInstanceMetricsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetInstanceMetricsRequest`](/docs/sdk/api/py/generated-metrics-pb2#getinstancemetricsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`GetInstanceMetricsResponse`](/docs/sdk/api/py/generated-metrics-pb2#getinstancemetricsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_connect.py#L233)
+
+### `get_server_metrics`
+
+```python
+def get_server_metrics(self, request: GetServerMetricsRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> GetServerMetricsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetServerMetricsRequest`](/docs/sdk/api/py/generated-metrics-pb2#getservermetricsrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`GetServerMetricsResponse`](/docs/sdk/api/py/generated-metrics-pb2#getservermetricsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_connect.py#L252)
+
+## MetricsServiceSync
+
+**Class** in `metrics_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_connect.py#L156).
+
+**Import from:** `soulfire.metrics_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class MetricsServiceSync(Protocol)
+```
+
+### `get_instance_metrics`
+
+```python
+def get_instance_metrics(self, request: GetInstanceMetricsRequest, ctx: RequestContext[GetInstanceMetricsRequest, GetInstanceMetricsResponse]) -> GetInstanceMetricsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetInstanceMetricsRequest`](/docs/sdk/api/py/generated-metrics-pb2#getinstancemetricsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[GetInstanceMetricsRequest, GetInstanceMetricsResponse]` ([`GetInstanceMetricsRequest`](/docs/sdk/api/py/generated-metrics-pb2#getinstancemetricsrequest), [`GetInstanceMetricsResponse`](/docs/sdk/api/py/generated-metrics-pb2#getinstancemetricsresponse)) | Required | positional or keyword |
+
+**Returns:** [`GetInstanceMetricsResponse`](/docs/sdk/api/py/generated-metrics-pb2#getinstancemetricsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_connect.py#L157)
+
+### `get_server_metrics`
+
+```python
+def get_server_metrics(self, request: GetServerMetricsRequest, ctx: RequestContext[GetServerMetricsRequest, GetServerMetricsResponse]) -> GetServerMetricsResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`GetServerMetricsRequest`](/docs/sdk/api/py/generated-metrics-pb2#getservermetricsrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[GetServerMetricsRequest, GetServerMetricsResponse]` ([`GetServerMetricsRequest`](/docs/sdk/api/py/generated-metrics-pb2#getservermetricsrequest), [`GetServerMetricsResponse`](/docs/sdk/api/py/generated-metrics-pb2#getservermetricsresponse)) | Required | positional or keyword |
+
+**Returns:** [`GetServerMetricsResponse`](/docs/sdk/api/py/generated-metrics-pb2#getservermetricsresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_connect.py#L160)
+
+## MetricsServiceWSGIApplication
+
+**Class** in `metrics_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_connect.py#L164).
+
+**Import from:** `soulfire.metrics_connect`.
+
+**Bases:** `ConnectWSGIApplication`.
+
+```python
+class MetricsServiceWSGIApplication(ConnectWSGIApplication)
+```
+
+### `__init__`
+
+```python
+def __init__(self, service: MetricsServiceSync, interceptors: Iterable[InterceptorSync]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | [`MetricsServiceSync`](/docs/sdk/api/py/generated-metrics-connect#metricsservicesync) | Required | positional or keyword |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | positional or keyword |
+| `read_max_bytes` | `int \| None` | `None` | positional or keyword |
+| `compressions` | `Iterable[Compression] \| None` | `None` | positional or keyword |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_connect.py#L165)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/metrics_connect.py#L203)

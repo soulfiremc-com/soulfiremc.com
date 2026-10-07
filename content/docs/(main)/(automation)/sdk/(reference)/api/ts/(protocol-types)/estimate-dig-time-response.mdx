@@ -1,0 +1,94 @@
+---
+title: "EstimateDigTimeResponse"
+description: "TypeScript API signatures, fields, and source for EstimateDigTimeResponse."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Type** in `generated/soulfire/world_pb`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L757).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`, `@soulfiremc/sdk/generated/soulfire/world_pb`.
+
+```ts
+type EstimateDigTimeResponse = Message<"soulfire.v1.EstimateDigTimeResponse"> & {
+  /**
+   * @generated from field: bool diggable = 1;
+   */
+  diggable: boolean;
+
+  /**
+   * @generated from field: bool instant = 2;
+   */
+  instant: boolean;
+
+  /**
+   * @generated from field: uint32 ticks = 3;
+   */
+  ticks: number;
+
+  /**
+   * @generated from field: uint64 duration_ms = 4;
+   */
+  durationMs: bigint;
+
+  /**
+   * @generated from field: float progress_per_tick = 5;
+   */
+  progressPerTick: number;
+
+  /**
+   * @generated from field: bool correct_tool_for_drops = 6;
+   */
+  correctToolForDrops: boolean;
+
+  /**
+   * @generated from field: soulfire.v1.BlockSnapshot block = 7;
+   */
+  block?: BlockSnapshot | undefined;
+};
+```
+
+**Referenced types:** [`BlockSnapshot`](/docs/sdk/api/ts/block-snapshot).
+
+## `diggable`
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L761)
+
+## `instant`
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L766)
+
+## `ticks`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L771)
+
+## `durationMs`
+
+**Type:** `bigint`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L776)
+
+## `progressPerTick`
+
+**Type:** `number`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L781)
+
+## `correctToolForDrops`
+
+**Type:** `boolean`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L786)
+
+## `block`
+
+**Type:** `BlockSnapshot | undefined` ([`BlockSnapshot`](/docs/sdk/api/ts/block-snapshot)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/generated/soulfire/world_pb.ts#L791)

@@ -1,0 +1,2810 @@
+---
+title: "domain_pb2 module"
+description: "Python API signatures, fields, and source for domain_pb2 module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`ArmorProperties`](/docs/sdk/api/py/generated-domain-pb2#armorproperties) | class |
+| [`AttributeModifierSnapshot`](/docs/sdk/api/py/generated-domain-pb2#attributemodifiersnapshot) | class |
+| [`AttributeSnapshot`](/docs/sdk/api/py/generated-domain-pb2#attributesnapshot) | class |
+| [`BlockSnapshot`](/docs/sdk/api/py/block-snapshot) | class |
+| [`BlockSnapshot.PropertiesEntry`](/docs/sdk/api/py/generated-domain-pb2#blocksnapshotpropertiesentry) | class |
+| [`BoundingBox`](/docs/sdk/api/py/generated-domain-pb2#boundingbox) | class |
+| [`DESCRIPTOR`](/docs/sdk/api/py/generated-domain-pb2#descriptor) | constant |
+| [`ENTITY_CATEGORY_DROPPED_ITEM`](/docs/sdk/api/py/generated-domain-pb2#entity_category_dropped_item) | constant |
+| [`ENTITY_CATEGORY_HOSTILE`](/docs/sdk/api/py/generated-domain-pb2#entity_category_hostile) | constant |
+| [`ENTITY_CATEGORY_OTHER`](/docs/sdk/api/py/generated-domain-pb2#entity_category_other) | constant |
+| [`ENTITY_CATEGORY_PASSIVE`](/docs/sdk/api/py/generated-domain-pb2#entity_category_passive) | constant |
+| [`ENTITY_CATEGORY_PLAYER`](/docs/sdk/api/py/generated-domain-pb2#entity_category_player) | constant |
+| [`ENTITY_CATEGORY_PROJECTILE`](/docs/sdk/api/py/generated-domain-pb2#entity_category_projectile) | constant |
+| [`ENTITY_CATEGORY_UNSPECIFIED`](/docs/sdk/api/py/generated-domain-pb2#entity_category_unspecified) | constant |
+| [`ENTITY_CATEGORY_VEHICLE`](/docs/sdk/api/py/generated-domain-pb2#entity_category_vehicle) | constant |
+| [`EffectSnapshot`](/docs/sdk/api/py/generated-domain-pb2#effectsnapshot) | class |
+| [`EnchantmentSnapshot`](/docs/sdk/api/py/generated-domain-pb2#enchantmentsnapshot) | class |
+| [`EntityCategory`](/docs/sdk/api/py/generated-domain-pb2#entitycategory) | enum |
+| [`EntityReference`](/docs/sdk/api/py/entity-reference) | class |
+| [`EntitySnapshot`](/docs/sdk/api/py/entity-snapshot) | class |
+| [`EntitySnapshot.EquipmentEntry`](/docs/sdk/api/py/generated-domain-pb2#entitysnapshotequipmententry) | class |
+| [`ExperienceSnapshot`](/docs/sdk/api/py/generated-domain-pb2#experiencesnapshot) | class |
+| [`FluidSnapshot`](/docs/sdk/api/py/generated-domain-pb2#fluidsnapshot) | class |
+| [`FoodProperties`](/docs/sdk/api/py/generated-domain-pb2#foodproperties) | class |
+| [`ItemStackSnapshot`](/docs/sdk/api/py/item-stack-snapshot) | class |
+| [`PlayerAbilitiesSnapshot`](/docs/sdk/api/py/generated-domain-pb2#playerabilitiessnapshot) | class |
+| [`PlayerSnapshot`](/docs/sdk/api/py/player-snapshot) | class |
+| [`PlayerSnapshot.EquipmentEntry`](/docs/sdk/api/py/generated-domain-pb2#playersnapshotequipmententry) | class |
+| [`PotionProperties`](/docs/sdk/api/py/generated-domain-pb2#potionproperties) | class |
+| [`Rotation`](/docs/sdk/api/py/generated-domain-pb2#rotation) | class |
+| [`TextComponent`](/docs/sdk/api/py/text-component) | class |
+| [`ToolProperties`](/docs/sdk/api/py/generated-domain-pb2#toolproperties) | class |
+| [`Vec3`](/docs/sdk/api/py/vec3) | class |
+| [`VoxelShape`](/docs/sdk/api/py/generated-domain-pb2#voxelshape) | class |
+
+## ArmorProperties
+
+**Class** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L136).
+
+**Import from:** `soulfire.domain_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class ArmorProperties(_message.Message)
+```
+
+### `EQUIPMENT_SLOT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L138)
+
+### `DEFENSE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L139)
+
+### `TOUGHNESS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L140)
+
+### `KNOCKBACK_RESISTANCE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L141)
+
+### `equipment_slot`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L142)
+
+### `defense`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L143)
+
+### `toughness`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L144)
+
+### `knockback_resistance`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L145)
+
+### `__init__`
+
+```python
+def __init__(self, equipment_slot: _Optional[str]=..., defense: _Optional[int]=..., toughness: _Optional[float]=..., knockback_resistance: _Optional[float]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `equipment_slot` | `_Optional[str]` | `...` | positional or keyword |
+| `defense` | `_Optional[int]` | `...` | positional or keyword |
+| `toughness` | `_Optional[float]` | `...` | positional or keyword |
+| `knockback_resistance` | `_Optional[float]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L146)
+
+## AttributeModifierSnapshot
+
+**Class** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L92).
+
+**Import from:** `soulfire.domain_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class AttributeModifierSnapshot(_message.Message)
+```
+
+### `ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L94)
+
+### `AMOUNT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L95)
+
+### `OPERATION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L96)
+
+### `id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L97)
+
+### `amount`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L98)
+
+### `operation`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L99)
+
+### `__init__`
+
+```python
+def __init__(self, id: _Optional[str]=..., amount: _Optional[float]=..., operation: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `id` | `_Optional[str]` | `...` | positional or keyword |
+| `amount` | `_Optional[float]` | `...` | positional or keyword |
+| `operation` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L100)
+
+## AttributeSnapshot
+
+**Class** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L102).
+
+**Import from:** `soulfire.domain_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class AttributeSnapshot(_message.Message)
+```
+
+### `ATTRIBUTE_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L104)
+
+### `BASE_VALUE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L105)
+
+### `VALUE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L106)
+
+### `MODIFIERS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L107)
+
+### `attribute_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L108)
+
+### `base_value`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L109)
+
+### `value`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L110)
+
+### `modifiers`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[AttributeModifierSnapshot]` ([`AttributeModifierSnapshot`](/docs/sdk/api/py/generated-domain-pb2#attributemodifiersnapshot)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L111)
+
+### `__init__`
+
+```python
+def __init__(self, attribute_id: _Optional[str]=..., base_value: _Optional[float]=..., value: _Optional[float]=..., modifiers: _Optional[_Iterable[_Union[AttributeModifierSnapshot, _Mapping]]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `attribute_id` | `_Optional[str]` | `...` | positional or keyword |
+| `base_value` | `_Optional[float]` | `...` | positional or keyword |
+| `value` | `_Optional[float]` | `...` | positional or keyword |
+| `modifiers` | `_Optional[_Iterable[_Union[AttributeModifierSnapshot, _Mapping]]]` ([`AttributeModifierSnapshot`](/docs/sdk/api/py/generated-domain-pb2#attributemodifiersnapshot)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L112)
+
+## BlockSnapshot
+
+**Class** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L281).
+
+**Import from:** `soulfire`, `soulfire.domain_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class BlockSnapshot(_message.Message)
+```
+
+### `POSITION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L290)
+
+### `BLOCK_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L291)
+
+### `PROPERTIES_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L292)
+
+### `BLOCK_ENTITY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L293)
+
+### `BIOME_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L294)
+
+### `SKY_LIGHT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L295)
+
+### `BLOCK_LIGHT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L296)
+
+### `HARDNESS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L297)
+
+### `DIGGABLE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L298)
+
+### `REPLACEABLE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L299)
+
+### `SOLID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L300)
+
+### `INTERACTIVE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L301)
+
+### `EFFECTIVE_TOOL_TAGS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L302)
+
+### `FLUID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L303)
+
+### `COLLISION_SHAPE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L304)
+
+### `INTERACTION_SHAPE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L305)
+
+### `CHUNK_REVISION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L306)
+
+### `position`
+
+**Type:** [`_common_pb2.BlockPosition`](/docs/sdk/api/py/block-position).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L307)
+
+### `block_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L308)
+
+### `properties`
+
+**Type:** `_containers.ScalarMap[str, str]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L309)
+
+### `block_entity`
+
+**Type:** `_struct_pb2.Struct`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L310)
+
+### `biome_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L311)
+
+### `sky_light`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L312)
+
+### `block_light`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L313)
+
+### `hardness`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L314)
+
+### `diggable`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L315)
+
+### `replaceable`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L316)
+
+### `solid`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L317)
+
+### `interactive`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L318)
+
+### `effective_tool_tags`
+
+**Type:** `_containers.RepeatedScalarFieldContainer[str]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L319)
+
+### `fluid`
+
+**Type:** [`FluidSnapshot`](/docs/sdk/api/py/generated-domain-pb2#fluidsnapshot).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L320)
+
+### `collision_shape`
+
+**Type:** [`VoxelShape`](/docs/sdk/api/py/generated-domain-pb2#voxelshape).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L321)
+
+### `interaction_shape`
+
+**Type:** [`VoxelShape`](/docs/sdk/api/py/generated-domain-pb2#voxelshape).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L322)
+
+### `chunk_revision`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L323)
+
+### `__init__`
+
+```python
+def __init__(self, position: _Optional[_Union[_common_pb2.BlockPosition, _Mapping]]=..., block_id: _Optional[str]=..., properties: _Optional[_Mapping[str, str]]=..., block_entity: _Optional[_Union[_struct_pb2.Struct, _Mapping]]=..., biome_id: _Optional[str]=..., sky_light: _Optional[int]=..., block_light: _Optional[int]=..., hardness: _Optional[float]=..., diggable: bool=..., replaceable: bool=..., solid: bool=..., interactive: bool=..., effective_tool_tags: _Optional[_Iterable[str]]=..., fluid: _Optional[_Union[FluidSnapshot, _Mapping]]=..., collision_shape: _Optional[_Union[VoxelShape, _Mapping]]=..., interaction_shape: _Optional[_Union[VoxelShape, _Mapping]]=..., chunk_revision: _Optional[int]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `position` | `_Optional[_Union[_common_pb2.BlockPosition, _Mapping]]` ([`_common_pb2.BlockPosition`](/docs/sdk/api/py/block-position)) | `...` | positional or keyword |
+| `block_id` | `_Optional[str]` | `...` | positional or keyword |
+| `properties` | `_Optional[_Mapping[str, str]]` | `...` | positional or keyword |
+| `block_entity` | `_Optional[_Union[_struct_pb2.Struct, _Mapping]]` | `...` | positional or keyword |
+| `biome_id` | `_Optional[str]` | `...` | positional or keyword |
+| `sky_light` | `_Optional[int]` | `...` | positional or keyword |
+| `block_light` | `_Optional[int]` | `...` | positional or keyword |
+| `hardness` | `_Optional[float]` | `...` | positional or keyword |
+| `diggable` | `bool` | `...` | positional or keyword |
+| `replaceable` | `bool` | `...` | positional or keyword |
+| `solid` | `bool` | `...` | positional or keyword |
+| `interactive` | `bool` | `...` | positional or keyword |
+| `effective_tool_tags` | `_Optional[_Iterable[str]]` | `...` | positional or keyword |
+| `fluid` | `_Optional[_Union[FluidSnapshot, _Mapping]]` ([`FluidSnapshot`](/docs/sdk/api/py/generated-domain-pb2#fluidsnapshot)) | `...` | positional or keyword |
+| `collision_shape` | `_Optional[_Union[VoxelShape, _Mapping]]` ([`VoxelShape`](/docs/sdk/api/py/generated-domain-pb2#voxelshape)) | `...` | positional or keyword |
+| `interaction_shape` | `_Optional[_Union[VoxelShape, _Mapping]]` ([`VoxelShape`](/docs/sdk/api/py/generated-domain-pb2#voxelshape)) | `...` | positional or keyword |
+| `chunk_revision` | `_Optional[int]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L324)
+
+## BlockSnapshot.PropertiesEntry
+
+**Class** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L283).
+
+**Import from:** `soulfire.domain_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class BlockSnapshot.PropertiesEntry(_message.Message)
+```
+
+### `KEY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L285)
+
+### `VALUE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L286)
+
+### `key`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L287)
+
+### `value`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L288)
+
+### `__init__`
+
+```python
+def __init__(self, key: _Optional[str]=..., value: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `key` | `_Optional[str]` | `...` | positional or keyword |
+| `value` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L289)
+
+## BoundingBox
+
+**Class** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L52).
+
+**Import from:** `soulfire.domain_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class BoundingBox(_message.Message)
+```
+
+### `MINIMUM_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L54)
+
+### `MAXIMUM_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L55)
+
+### `minimum`
+
+**Type:** [`Vec3`](/docs/sdk/api/py/vec3).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L56)
+
+### `maximum`
+
+**Type:** [`Vec3`](/docs/sdk/api/py/vec3).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L57)
+
+### `__init__`
+
+```python
+def __init__(self, minimum: _Optional[_Union[Vec3, _Mapping]]=..., maximum: _Optional[_Union[Vec3, _Mapping]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `minimum` | `_Optional[_Union[Vec3, _Mapping]]` ([`Vec3`](/docs/sdk/api/py/vec3)) | `...` | positional or keyword |
+| `maximum` | `_Optional[_Union[Vec3, _Mapping]]` ([`Vec3`](/docs/sdk/api/py/vec3)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L58)
+
+## DESCRIPTOR
+
+**Constant** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L11).
+
+**Import from:** `soulfire.domain_pb2`.
+
+```python
+DESCRIPTOR: _descriptor.FileDescriptor
+```
+
+## ENTITY_CATEGORY_DROPPED_ITEM
+
+**Constant** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L29).
+
+**Import from:** `soulfire.domain_pb2`.
+
+```python
+ENTITY_CATEGORY_DROPPED_ITEM: EntityCategory
+```
+
+**Referenced types:** [`EntityCategory`](/docs/sdk/api/py/generated-domain-pb2#entitycategory).
+
+## ENTITY_CATEGORY_HOSTILE
+
+**Constant** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L25).
+
+**Import from:** `soulfire.domain_pb2`.
+
+```python
+ENTITY_CATEGORY_HOSTILE: EntityCategory
+```
+
+**Referenced types:** [`EntityCategory`](/docs/sdk/api/py/generated-domain-pb2#entitycategory).
+
+## ENTITY_CATEGORY_OTHER
+
+**Constant** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L30).
+
+**Import from:** `soulfire.domain_pb2`.
+
+```python
+ENTITY_CATEGORY_OTHER: EntityCategory
+```
+
+**Referenced types:** [`EntityCategory`](/docs/sdk/api/py/generated-domain-pb2#entitycategory).
+
+## ENTITY_CATEGORY_PASSIVE
+
+**Constant** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L26).
+
+**Import from:** `soulfire.domain_pb2`.
+
+```python
+ENTITY_CATEGORY_PASSIVE: EntityCategory
+```
+
+**Referenced types:** [`EntityCategory`](/docs/sdk/api/py/generated-domain-pb2#entitycategory).
+
+## ENTITY_CATEGORY_PLAYER
+
+**Constant** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L24).
+
+**Import from:** `soulfire.domain_pb2`.
+
+```python
+ENTITY_CATEGORY_PLAYER: EntityCategory
+```
+
+**Referenced types:** [`EntityCategory`](/docs/sdk/api/py/generated-domain-pb2#entitycategory).
+
+## ENTITY_CATEGORY_PROJECTILE
+
+**Constant** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L27).
+
+**Import from:** `soulfire.domain_pb2`.
+
+```python
+ENTITY_CATEGORY_PROJECTILE: EntityCategory
+```
+
+**Referenced types:** [`EntityCategory`](/docs/sdk/api/py/generated-domain-pb2#entitycategory).
+
+## ENTITY_CATEGORY_UNSPECIFIED
+
+**Constant** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L23).
+
+**Import from:** `soulfire.domain_pb2`.
+
+```python
+ENTITY_CATEGORY_UNSPECIFIED: EntityCategory
+```
+
+**Referenced types:** [`EntityCategory`](/docs/sdk/api/py/generated-domain-pb2#entitycategory).
+
+## ENTITY_CATEGORY_VEHICLE
+
+**Constant** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L28).
+
+**Import from:** `soulfire.domain_pb2`.
+
+```python
+ENTITY_CATEGORY_VEHICLE: EntityCategory
+```
+
+**Referenced types:** [`EntityCategory`](/docs/sdk/api/py/generated-domain-pb2#entitycategory).
+
+## EffectSnapshot
+
+**Class** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L76).
+
+**Import from:** `soulfire.domain_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class EffectSnapshot(_message.Message)
+```
+
+### `EFFECT_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L78)
+
+### `AMPLIFIER_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L79)
+
+### `DURATION_TICKS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L80)
+
+### `AMBIENT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L81)
+
+### `VISIBLE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L82)
+
+### `SHOW_ICON_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L83)
+
+### `effect_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L84)
+
+### `amplifier`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L85)
+
+### `duration_ticks`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L86)
+
+### `ambient`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L87)
+
+### `visible`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L88)
+
+### `show_icon`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L89)
+
+### `__init__`
+
+```python
+def __init__(self, effect_id: _Optional[str]=..., amplifier: _Optional[int]=..., duration_ticks: _Optional[int]=..., ambient: bool=..., visible: bool=..., show_icon: bool=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `effect_id` | `_Optional[str]` | `...` | positional or keyword |
+| `amplifier` | `_Optional[int]` | `...` | positional or keyword |
+| `duration_ticks` | `_Optional[int]` | `...` | positional or keyword |
+| `ambient` | `bool` | `...` | positional or keyword |
+| `visible` | `bool` | `...` | positional or keyword |
+| `show_icon` | `bool` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L90)
+
+## EnchantmentSnapshot
+
+**Class** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L68).
+
+**Import from:** `soulfire.domain_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class EnchantmentSnapshot(_message.Message)
+```
+
+### `ENCHANTMENT_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L70)
+
+### `LEVEL_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L71)
+
+### `enchantment_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L72)
+
+### `level`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L73)
+
+### `__init__`
+
+```python
+def __init__(self, enchantment_id: _Optional[str]=..., level: _Optional[int]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `enchantment_id` | `_Optional[str]` | `...` | positional or keyword |
+| `level` | `_Optional[int]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L74)
+
+## EntityCategory
+
+**Enum** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L13).
+
+**Import from:** `soulfire.domain_pb2`.
+
+**Bases:** `int`.
+
+```python
+class EntityCategory(int, metaclass=_enum_type_wrapper.EnumTypeWrapper)
+```
+
+### `ENTITY_CATEGORY_UNSPECIFIED`
+
+**Type:** `_ClassVar[EntityCategory]` ([`EntityCategory`](/docs/sdk/api/py/generated-domain-pb2#entitycategory)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L15)
+
+### `ENTITY_CATEGORY_PLAYER`
+
+**Type:** `_ClassVar[EntityCategory]` ([`EntityCategory`](/docs/sdk/api/py/generated-domain-pb2#entitycategory)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L16)
+
+### `ENTITY_CATEGORY_HOSTILE`
+
+**Type:** `_ClassVar[EntityCategory]` ([`EntityCategory`](/docs/sdk/api/py/generated-domain-pb2#entitycategory)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L17)
+
+### `ENTITY_CATEGORY_PASSIVE`
+
+**Type:** `_ClassVar[EntityCategory]` ([`EntityCategory`](/docs/sdk/api/py/generated-domain-pb2#entitycategory)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L18)
+
+### `ENTITY_CATEGORY_PROJECTILE`
+
+**Type:** `_ClassVar[EntityCategory]` ([`EntityCategory`](/docs/sdk/api/py/generated-domain-pb2#entitycategory)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L19)
+
+### `ENTITY_CATEGORY_VEHICLE`
+
+**Type:** `_ClassVar[EntityCategory]` ([`EntityCategory`](/docs/sdk/api/py/generated-domain-pb2#entitycategory)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L20)
+
+### `ENTITY_CATEGORY_DROPPED_ITEM`
+
+**Type:** `_ClassVar[EntityCategory]` ([`EntityCategory`](/docs/sdk/api/py/generated-domain-pb2#entitycategory)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L21)
+
+### `ENTITY_CATEGORY_OTHER`
+
+**Type:** `_ClassVar[EntityCategory]` ([`EntityCategory`](/docs/sdk/api/py/generated-domain-pb2#entitycategory)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L22)
+
+## EntityReference
+
+**Class** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L192).
+
+**Import from:** `soulfire`, `soulfire.domain_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class EntityReference(_message.Message)
+```
+
+### `CONNECTION_EPOCH_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L194)
+
+### `NETWORK_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L195)
+
+### `UUID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L196)
+
+### `connection_epoch`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L197)
+
+### `network_id`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L198)
+
+### `uuid`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L199)
+
+### `__init__`
+
+```python
+def __init__(self, connection_epoch: _Optional[str]=..., network_id: _Optional[int]=..., uuid: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `connection_epoch` | `_Optional[str]` | `...` | positional or keyword |
+| `network_id` | `_Optional[int]` | `...` | positional or keyword |
+| `uuid` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L200)
+
+## EntitySnapshot
+
+**Class** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L202).
+
+**Import from:** `soulfire`, `soulfire.domain_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class EntitySnapshot(_message.Message)
+```
+
+### `REFERENCE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L211)
+
+### `ENTITY_TYPE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L212)
+
+### `CATEGORY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L213)
+
+### `POSITION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L214)
+
+### `VELOCITY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L215)
+
+### `ROTATION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L216)
+
+### `BOUNDING_BOX_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L217)
+
+### `POSE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L218)
+
+### `ON_GROUND_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L219)
+
+### `DISPLAY_NAME_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L220)
+
+### `PLAYER_NAME_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L221)
+
+### `HEALTH_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L222)
+
+### `MAX_HEALTH_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L223)
+
+### `EQUIPMENT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L224)
+
+### `EFFECTS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L225)
+
+### `ATTRIBUTES_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L226)
+
+### `VEHICLE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L227)
+
+### `PASSENGERS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L228)
+
+### `OWNER_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L229)
+
+### `TARGET_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L230)
+
+### `ITEM_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L231)
+
+### `ALIVE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L232)
+
+### `METADATA_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L233)
+
+### `AGE_TICKS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L234)
+
+### `TAMED_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L235)
+
+### `AGGRESSIVE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L236)
+
+### `reference`
+
+**Type:** [`EntityReference`](/docs/sdk/api/py/entity-reference).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L237)
+
+### `entity_type`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L238)
+
+### `category`
+
+**Type:** [`EntityCategory`](/docs/sdk/api/py/generated-domain-pb2#entitycategory).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L239)
+
+### `position`
+
+**Type:** [`_common_pb2.WorldPosition`](/docs/sdk/api/py/world-position).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L240)
+
+### `velocity`
+
+**Type:** [`Vec3`](/docs/sdk/api/py/vec3).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L241)
+
+### `rotation`
+
+**Type:** [`Rotation`](/docs/sdk/api/py/generated-domain-pb2#rotation).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L242)
+
+### `bounding_box`
+
+**Type:** [`BoundingBox`](/docs/sdk/api/py/generated-domain-pb2#boundingbox).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L243)
+
+### `pose`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L244)
+
+### `on_ground`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L245)
+
+### `display_name`
+
+**Type:** [`TextComponent`](/docs/sdk/api/py/text-component).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L246)
+
+### `player_name`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L247)
+
+### `health`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L248)
+
+### `max_health`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L249)
+
+### `equipment`
+
+**Type:** `_containers.MessageMap[str, ItemStackSnapshot]` ([`ItemStackSnapshot`](/docs/sdk/api/py/item-stack-snapshot)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L250)
+
+### `effects`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[EffectSnapshot]` ([`EffectSnapshot`](/docs/sdk/api/py/generated-domain-pb2#effectsnapshot)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L251)
+
+### `attributes`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[AttributeSnapshot]` ([`AttributeSnapshot`](/docs/sdk/api/py/generated-domain-pb2#attributesnapshot)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L252)
+
+### `vehicle`
+
+**Type:** [`EntityReference`](/docs/sdk/api/py/entity-reference).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L253)
+
+### `passengers`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[EntityReference]` ([`EntityReference`](/docs/sdk/api/py/entity-reference)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L254)
+
+### `owner`
+
+**Type:** [`EntityReference`](/docs/sdk/api/py/entity-reference).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L255)
+
+### `target`
+
+**Type:** [`EntityReference`](/docs/sdk/api/py/entity-reference).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L256)
+
+### `item`
+
+**Type:** [`ItemStackSnapshot`](/docs/sdk/api/py/item-stack-snapshot).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L257)
+
+### `alive`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L258)
+
+### `metadata`
+
+**Type:** `_struct_pb2.Struct`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L259)
+
+### `age_ticks`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L260)
+
+### `tamed`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L261)
+
+### `aggressive`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L262)
+
+### `__init__`
+
+```python
+def __init__(self, reference: _Optional[_Union[EntityReference, _Mapping]]=..., entity_type: _Optional[str]=..., category: _Optional[_Union[EntityCategory, str]]=..., position: _Optional[_Union[_common_pb2.WorldPosition, _Mapping]]=..., velocity: _Optional[_Union[Vec3, _Mapping]]=..., rotation: _Optional[_Union[Rotation, _Mapping]]=..., bounding_box: _Optional[_Union[BoundingBox, _Mapping]]=..., pose: _Optional[str]=..., on_ground: bool=..., display_name: _Optional[_Union[TextComponent, _Mapping]]=..., player_name: _Optional[str]=..., health: _Optional[float]=..., max_health: _Optional[float]=..., equipment: _Optional[_Mapping[str, ItemStackSnapshot]]=..., effects: _Optional[_Iterable[_Union[EffectSnapshot, _Mapping]]]=..., attributes: _Optional[_Iterable[_Union[AttributeSnapshot, _Mapping]]]=..., vehicle: _Optional[_Union[EntityReference, _Mapping]]=..., passengers: _Optional[_Iterable[_Union[EntityReference, _Mapping]]]=..., owner: _Optional[_Union[EntityReference, _Mapping]]=..., target: _Optional[_Union[EntityReference, _Mapping]]=..., item: _Optional[_Union[ItemStackSnapshot, _Mapping]]=..., alive: bool=..., metadata: _Optional[_Union[_struct_pb2.Struct, _Mapping]]=..., age_ticks: _Optional[int]=..., tamed: bool=..., aggressive: bool=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `reference` | `_Optional[_Union[EntityReference, _Mapping]]` ([`EntityReference`](/docs/sdk/api/py/entity-reference)) | `...` | positional or keyword |
+| `entity_type` | `_Optional[str]` | `...` | positional or keyword |
+| `category` | `_Optional[_Union[EntityCategory, str]]` ([`EntityCategory`](/docs/sdk/api/py/generated-domain-pb2#entitycategory)) | `...` | positional or keyword |
+| `position` | `_Optional[_Union[_common_pb2.WorldPosition, _Mapping]]` ([`_common_pb2.WorldPosition`](/docs/sdk/api/py/world-position)) | `...` | positional or keyword |
+| `velocity` | `_Optional[_Union[Vec3, _Mapping]]` ([`Vec3`](/docs/sdk/api/py/vec3)) | `...` | positional or keyword |
+| `rotation` | `_Optional[_Union[Rotation, _Mapping]]` ([`Rotation`](/docs/sdk/api/py/generated-domain-pb2#rotation)) | `...` | positional or keyword |
+| `bounding_box` | `_Optional[_Union[BoundingBox, _Mapping]]` ([`BoundingBox`](/docs/sdk/api/py/generated-domain-pb2#boundingbox)) | `...` | positional or keyword |
+| `pose` | `_Optional[str]` | `...` | positional or keyword |
+| `on_ground` | `bool` | `...` | positional or keyword |
+| `display_name` | `_Optional[_Union[TextComponent, _Mapping]]` ([`TextComponent`](/docs/sdk/api/py/text-component)) | `...` | positional or keyword |
+| `player_name` | `_Optional[str]` | `...` | positional or keyword |
+| `health` | `_Optional[float]` | `...` | positional or keyword |
+| `max_health` | `_Optional[float]` | `...` | positional or keyword |
+| `equipment` | `_Optional[_Mapping[str, ItemStackSnapshot]]` ([`ItemStackSnapshot`](/docs/sdk/api/py/item-stack-snapshot)) | `...` | positional or keyword |
+| `effects` | `_Optional[_Iterable[_Union[EffectSnapshot, _Mapping]]]` ([`EffectSnapshot`](/docs/sdk/api/py/generated-domain-pb2#effectsnapshot)) | `...` | positional or keyword |
+| `attributes` | `_Optional[_Iterable[_Union[AttributeSnapshot, _Mapping]]]` ([`AttributeSnapshot`](/docs/sdk/api/py/generated-domain-pb2#attributesnapshot)) | `...` | positional or keyword |
+| `vehicle` | `_Optional[_Union[EntityReference, _Mapping]]` ([`EntityReference`](/docs/sdk/api/py/entity-reference)) | `...` | positional or keyword |
+| `passengers` | `_Optional[_Iterable[_Union[EntityReference, _Mapping]]]` ([`EntityReference`](/docs/sdk/api/py/entity-reference)) | `...` | positional or keyword |
+| `owner` | `_Optional[_Union[EntityReference, _Mapping]]` ([`EntityReference`](/docs/sdk/api/py/entity-reference)) | `...` | positional or keyword |
+| `target` | `_Optional[_Union[EntityReference, _Mapping]]` ([`EntityReference`](/docs/sdk/api/py/entity-reference)) | `...` | positional or keyword |
+| `item` | `_Optional[_Union[ItemStackSnapshot, _Mapping]]` ([`ItemStackSnapshot`](/docs/sdk/api/py/item-stack-snapshot)) | `...` | positional or keyword |
+| `alive` | `bool` | `...` | positional or keyword |
+| `metadata` | `_Optional[_Union[_struct_pb2.Struct, _Mapping]]` | `...` | positional or keyword |
+| `age_ticks` | `_Optional[int]` | `...` | positional or keyword |
+| `tamed` | `bool` | `...` | positional or keyword |
+| `aggressive` | `bool` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L263)
+
+## EntitySnapshot.EquipmentEntry
+
+**Class** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L204).
+
+**Import from:** `soulfire.domain_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class EntitySnapshot.EquipmentEntry(_message.Message)
+```
+
+### `KEY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L206)
+
+### `VALUE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L207)
+
+### `key`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L208)
+
+### `value`
+
+**Type:** [`ItemStackSnapshot`](/docs/sdk/api/py/item-stack-snapshot).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L209)
+
+### `__init__`
+
+```python
+def __init__(self, key: _Optional[str]=..., value: _Optional[_Union[ItemStackSnapshot, _Mapping]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `key` | `_Optional[str]` | `...` | positional or keyword |
+| `value` | `_Optional[_Union[ItemStackSnapshot, _Mapping]]` ([`ItemStackSnapshot`](/docs/sdk/api/py/item-stack-snapshot)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L210)
+
+## ExperienceSnapshot
+
+**Class** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L342).
+
+**Import from:** `soulfire.domain_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class ExperienceSnapshot(_message.Message)
+```
+
+### `LEVEL_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L344)
+
+### `PROGRESS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L345)
+
+### `TOTAL_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L346)
+
+### `level`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L347)
+
+### `progress`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L348)
+
+### `total`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L349)
+
+### `__init__`
+
+```python
+def __init__(self, level: _Optional[int]=..., progress: _Optional[float]=..., total: _Optional[int]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `level` | `_Optional[int]` | `...` | positional or keyword |
+| `progress` | `_Optional[float]` | `...` | positional or keyword |
+| `total` | `_Optional[int]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L350)
+
+## FluidSnapshot
+
+**Class** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L265).
+
+**Import from:** `soulfire.domain_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class FluidSnapshot(_message.Message)
+```
+
+### `FLUID_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L267)
+
+### `SOURCE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L268)
+
+### `HEIGHT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L269)
+
+### `fluid_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L270)
+
+### `source`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L271)
+
+### `height`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L272)
+
+### `__init__`
+
+```python
+def __init__(self, fluid_id: _Optional[str]=..., source: bool=..., height: _Optional[float]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `fluid_id` | `_Optional[str]` | `...` | positional or keyword |
+| `source` | `bool` | `...` | positional or keyword |
+| `height` | `_Optional[float]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L273)
+
+## FoodProperties
+
+**Class** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L114).
+
+**Import from:** `soulfire.domain_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class FoodProperties(_message.Message)
+```
+
+### `NUTRITION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L116)
+
+### `SATURATION_MODIFIER_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L117)
+
+### `CAN_ALWAYS_EAT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L118)
+
+### `EAT_SECONDS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L119)
+
+### `nutrition`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L120)
+
+### `saturation_modifier`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L121)
+
+### `can_always_eat`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L122)
+
+### `eat_seconds`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L123)
+
+### `__init__`
+
+```python
+def __init__(self, nutrition: _Optional[int]=..., saturation_modifier: _Optional[float]=..., can_always_eat: bool=..., eat_seconds: _Optional[float]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `nutrition` | `_Optional[int]` | `...` | positional or keyword |
+| `saturation_modifier` | `_Optional[float]` | `...` | positional or keyword |
+| `can_always_eat` | `bool` | `...` | positional or keyword |
+| `eat_seconds` | `_Optional[float]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L124)
+
+## ItemStackSnapshot
+
+**Class** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L158).
+
+**Import from:** `soulfire`, `soulfire.domain_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class ItemStackSnapshot(_message.Message)
+```
+
+### `ITEM_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L160)
+
+### `COUNT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L161)
+
+### `MAX_STACK_SIZE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L162)
+
+### `DAMAGE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L163)
+
+### `MAX_DAMAGE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L164)
+
+### `CUSTOM_NAME_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L165)
+
+### `LORE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L166)
+
+### `ENCHANTMENTS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L167)
+
+### `FOOD_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L168)
+
+### `TOOL_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L169)
+
+### `ARMOR_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L170)
+
+### `COMPONENTS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L171)
+
+### `CUSTOM_DATA_NBT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L172)
+
+### `FINGERPRINT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L173)
+
+### `POTION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L174)
+
+### `item_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L175)
+
+### `count`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L176)
+
+### `max_stack_size`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L177)
+
+### `damage`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L178)
+
+### `max_damage`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L179)
+
+### `custom_name`
+
+**Type:** [`TextComponent`](/docs/sdk/api/py/text-component).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L180)
+
+### `lore`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[TextComponent]` ([`TextComponent`](/docs/sdk/api/py/text-component)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L181)
+
+### `enchantments`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[EnchantmentSnapshot]` ([`EnchantmentSnapshot`](/docs/sdk/api/py/generated-domain-pb2#enchantmentsnapshot)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L182)
+
+### `food`
+
+**Type:** [`FoodProperties`](/docs/sdk/api/py/generated-domain-pb2#foodproperties).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L183)
+
+### `tool`
+
+**Type:** [`ToolProperties`](/docs/sdk/api/py/generated-domain-pb2#toolproperties).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L184)
+
+### `armor`
+
+**Type:** [`ArmorProperties`](/docs/sdk/api/py/generated-domain-pb2#armorproperties).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L185)
+
+### `components`
+
+**Type:** `_struct_pb2.Struct`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L186)
+
+### `custom_data_nbt`
+
+**Type:** `bytes`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L187)
+
+### `fingerprint`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L188)
+
+### `potion`
+
+**Type:** [`PotionProperties`](/docs/sdk/api/py/generated-domain-pb2#potionproperties).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L189)
+
+### `__init__`
+
+```python
+def __init__(self, item_id: _Optional[str]=..., count: _Optional[int]=..., max_stack_size: _Optional[int]=..., damage: _Optional[int]=..., max_damage: _Optional[int]=..., custom_name: _Optional[_Union[TextComponent, _Mapping]]=..., lore: _Optional[_Iterable[_Union[TextComponent, _Mapping]]]=..., enchantments: _Optional[_Iterable[_Union[EnchantmentSnapshot, _Mapping]]]=..., food: _Optional[_Union[FoodProperties, _Mapping]]=..., tool: _Optional[_Union[ToolProperties, _Mapping]]=..., armor: _Optional[_Union[ArmorProperties, _Mapping]]=..., components: _Optional[_Union[_struct_pb2.Struct, _Mapping]]=..., custom_data_nbt: _Optional[bytes]=..., fingerprint: _Optional[str]=..., potion: _Optional[_Union[PotionProperties, _Mapping]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `item_id` | `_Optional[str]` | `...` | positional or keyword |
+| `count` | `_Optional[int]` | `...` | positional or keyword |
+| `max_stack_size` | `_Optional[int]` | `...` | positional or keyword |
+| `damage` | `_Optional[int]` | `...` | positional or keyword |
+| `max_damage` | `_Optional[int]` | `...` | positional or keyword |
+| `custom_name` | `_Optional[_Union[TextComponent, _Mapping]]` ([`TextComponent`](/docs/sdk/api/py/text-component)) | `...` | positional or keyword |
+| `lore` | `_Optional[_Iterable[_Union[TextComponent, _Mapping]]]` ([`TextComponent`](/docs/sdk/api/py/text-component)) | `...` | positional or keyword |
+| `enchantments` | `_Optional[_Iterable[_Union[EnchantmentSnapshot, _Mapping]]]` ([`EnchantmentSnapshot`](/docs/sdk/api/py/generated-domain-pb2#enchantmentsnapshot)) | `...` | positional or keyword |
+| `food` | `_Optional[_Union[FoodProperties, _Mapping]]` ([`FoodProperties`](/docs/sdk/api/py/generated-domain-pb2#foodproperties)) | `...` | positional or keyword |
+| `tool` | `_Optional[_Union[ToolProperties, _Mapping]]` ([`ToolProperties`](/docs/sdk/api/py/generated-domain-pb2#toolproperties)) | `...` | positional or keyword |
+| `armor` | `_Optional[_Union[ArmorProperties, _Mapping]]` ([`ArmorProperties`](/docs/sdk/api/py/generated-domain-pb2#armorproperties)) | `...` | positional or keyword |
+| `components` | `_Optional[_Union[_struct_pb2.Struct, _Mapping]]` | `...` | positional or keyword |
+| `custom_data_nbt` | `_Optional[bytes]` | `...` | positional or keyword |
+| `fingerprint` | `_Optional[str]` | `...` | positional or keyword |
+| `potion` | `_Optional[_Union[PotionProperties, _Mapping]]` ([`PotionProperties`](/docs/sdk/api/py/generated-domain-pb2#potionproperties)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L190)
+
+## PlayerAbilitiesSnapshot
+
+**Class** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L326).
+
+**Import from:** `soulfire.domain_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class PlayerAbilitiesSnapshot(_message.Message)
+```
+
+### `INVULNERABLE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L328)
+
+### `FLYING_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L329)
+
+### `MAY_FLY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L330)
+
+### `INSTANT_BUILD_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L331)
+
+### `FLYING_SPEED_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L332)
+
+### `WALKING_SPEED_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L333)
+
+### `invulnerable`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L334)
+
+### `flying`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L335)
+
+### `may_fly`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L336)
+
+### `instant_build`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L337)
+
+### `flying_speed`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L338)
+
+### `walking_speed`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L339)
+
+### `__init__`
+
+```python
+def __init__(self, invulnerable: bool=..., flying: bool=..., may_fly: bool=..., instant_build: bool=..., flying_speed: _Optional[float]=..., walking_speed: _Optional[float]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `invulnerable` | `bool` | `...` | positional or keyword |
+| `flying` | `bool` | `...` | positional or keyword |
+| `may_fly` | `bool` | `...` | positional or keyword |
+| `instant_build` | `bool` | `...` | positional or keyword |
+| `flying_speed` | `_Optional[float]` | `...` | positional or keyword |
+| `walking_speed` | `_Optional[float]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L340)
+
+## PlayerSnapshot
+
+**Class** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L352).
+
+**Import from:** `soulfire`, `soulfire.domain_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class PlayerSnapshot(_message.Message)
+```
+
+### `POSITION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L361)
+
+### `VELOCITY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L362)
+
+### `ROTATION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L363)
+
+### `ON_GROUND_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L364)
+
+### `POSE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L365)
+
+### `HEALTH_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L366)
+
+### `MAX_HEALTH_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L367)
+
+### `FOOD_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L368)
+
+### `SATURATION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L369)
+
+### `EXHAUSTION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L370)
+
+### `AIR_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L371)
+
+### `MAX_AIR_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L372)
+
+### `FIRE_TICKS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L373)
+
+### `FREEZING_TICKS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L374)
+
+### `EXPERIENCE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L375)
+
+### `GAME_MODE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L376)
+
+### `ABILITIES_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L377)
+
+### `SELECTED_HOTBAR_SLOT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L378)
+
+### `MAIN_HAND_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L379)
+
+### `OFF_HAND_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L380)
+
+### `EQUIPMENT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L381)
+
+### `EFFECTS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L382)
+
+### `ATTRIBUTES_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L383)
+
+### `SLEEPING_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L384)
+
+### `USING_ITEM_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L385)
+
+### `VEHICLE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L386)
+
+### `SPAWN_POINT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L387)
+
+### `DEAD_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L388)
+
+### `LAST_DAMAGE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L389)
+
+### `CONNECTION_EPOCH_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L390)
+
+### `REVISION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L391)
+
+### `position`
+
+**Type:** [`_common_pb2.WorldPosition`](/docs/sdk/api/py/world-position).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L392)
+
+### `velocity`
+
+**Type:** [`Vec3`](/docs/sdk/api/py/vec3).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L393)
+
+### `rotation`
+
+**Type:** [`Rotation`](/docs/sdk/api/py/generated-domain-pb2#rotation).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L394)
+
+### `on_ground`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L395)
+
+### `pose`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L396)
+
+### `health`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L397)
+
+### `max_health`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L398)
+
+### `food`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L399)
+
+### `saturation`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L400)
+
+### `exhaustion`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L401)
+
+### `air`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L402)
+
+### `max_air`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L403)
+
+### `fire_ticks`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L404)
+
+### `freezing_ticks`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L405)
+
+### `experience`
+
+**Type:** [`ExperienceSnapshot`](/docs/sdk/api/py/generated-domain-pb2#experiencesnapshot).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L406)
+
+### `game_mode`
+
+**Type:** [`_bot_pb2.GameMode`](/docs/sdk/api/py/generated-bot-pb2#gamemode).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L407)
+
+### `abilities`
+
+**Type:** [`PlayerAbilitiesSnapshot`](/docs/sdk/api/py/generated-domain-pb2#playerabilitiessnapshot).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L408)
+
+### `selected_hotbar_slot`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L409)
+
+### `main_hand`
+
+**Type:** [`ItemStackSnapshot`](/docs/sdk/api/py/item-stack-snapshot).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L410)
+
+### `off_hand`
+
+**Type:** [`ItemStackSnapshot`](/docs/sdk/api/py/item-stack-snapshot).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L411)
+
+### `equipment`
+
+**Type:** `_containers.MessageMap[str, ItemStackSnapshot]` ([`ItemStackSnapshot`](/docs/sdk/api/py/item-stack-snapshot)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L412)
+
+### `effects`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[EffectSnapshot]` ([`EffectSnapshot`](/docs/sdk/api/py/generated-domain-pb2#effectsnapshot)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L413)
+
+### `attributes`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[AttributeSnapshot]` ([`AttributeSnapshot`](/docs/sdk/api/py/generated-domain-pb2#attributesnapshot)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L414)
+
+### `sleeping`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L415)
+
+### `using_item`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L416)
+
+### `vehicle`
+
+**Type:** [`EntityReference`](/docs/sdk/api/py/entity-reference).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L417)
+
+### `spawn_point`
+
+**Type:** [`_common_pb2.BlockPosition`](/docs/sdk/api/py/block-position).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L418)
+
+### `dead`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L419)
+
+### `last_damage`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L420)
+
+### `connection_epoch`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L421)
+
+### `revision`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L422)
+
+### `__init__`
+
+```python
+def __init__(self, position: _Optional[_Union[_common_pb2.WorldPosition, _Mapping]]=..., velocity: _Optional[_Union[Vec3, _Mapping]]=..., rotation: _Optional[_Union[Rotation, _Mapping]]=..., on_ground: bool=..., pose: _Optional[str]=..., health: _Optional[float]=..., max_health: _Optional[float]=..., food: _Optional[int]=..., saturation: _Optional[float]=..., exhaustion: _Optional[float]=..., air: _Optional[int]=..., max_air: _Optional[int]=..., fire_ticks: _Optional[int]=..., freezing_ticks: _Optional[int]=..., experience: _Optional[_Union[ExperienceSnapshot, _Mapping]]=..., game_mode: _Optional[_Union[_bot_pb2.GameMode, str]]=..., abilities: _Optional[_Union[PlayerAbilitiesSnapshot, _Mapping]]=..., selected_hotbar_slot: _Optional[int]=..., main_hand: _Optional[_Union[ItemStackSnapshot, _Mapping]]=..., off_hand: _Optional[_Union[ItemStackSnapshot, _Mapping]]=..., equipment: _Optional[_Mapping[str, ItemStackSnapshot]]=..., effects: _Optional[_Iterable[_Union[EffectSnapshot, _Mapping]]]=..., attributes: _Optional[_Iterable[_Union[AttributeSnapshot, _Mapping]]]=..., sleeping: bool=..., using_item: bool=..., vehicle: _Optional[_Union[EntityReference, _Mapping]]=..., spawn_point: _Optional[_Union[_common_pb2.BlockPosition, _Mapping]]=..., dead: bool=..., last_damage: _Optional[float]=..., connection_epoch: _Optional[str]=..., revision: _Optional[int]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `position` | `_Optional[_Union[_common_pb2.WorldPosition, _Mapping]]` ([`_common_pb2.WorldPosition`](/docs/sdk/api/py/world-position)) | `...` | positional or keyword |
+| `velocity` | `_Optional[_Union[Vec3, _Mapping]]` ([`Vec3`](/docs/sdk/api/py/vec3)) | `...` | positional or keyword |
+| `rotation` | `_Optional[_Union[Rotation, _Mapping]]` ([`Rotation`](/docs/sdk/api/py/generated-domain-pb2#rotation)) | `...` | positional or keyword |
+| `on_ground` | `bool` | `...` | positional or keyword |
+| `pose` | `_Optional[str]` | `...` | positional or keyword |
+| `health` | `_Optional[float]` | `...` | positional or keyword |
+| `max_health` | `_Optional[float]` | `...` | positional or keyword |
+| `food` | `_Optional[int]` | `...` | positional or keyword |
+| `saturation` | `_Optional[float]` | `...` | positional or keyword |
+| `exhaustion` | `_Optional[float]` | `...` | positional or keyword |
+| `air` | `_Optional[int]` | `...` | positional or keyword |
+| `max_air` | `_Optional[int]` | `...` | positional or keyword |
+| `fire_ticks` | `_Optional[int]` | `...` | positional or keyword |
+| `freezing_ticks` | `_Optional[int]` | `...` | positional or keyword |
+| `experience` | `_Optional[_Union[ExperienceSnapshot, _Mapping]]` ([`ExperienceSnapshot`](/docs/sdk/api/py/generated-domain-pb2#experiencesnapshot)) | `...` | positional or keyword |
+| `game_mode` | `_Optional[_Union[_bot_pb2.GameMode, str]]` ([`_bot_pb2.GameMode`](/docs/sdk/api/py/generated-bot-pb2#gamemode)) | `...` | positional or keyword |
+| `abilities` | `_Optional[_Union[PlayerAbilitiesSnapshot, _Mapping]]` ([`PlayerAbilitiesSnapshot`](/docs/sdk/api/py/generated-domain-pb2#playerabilitiessnapshot)) | `...` | positional or keyword |
+| `selected_hotbar_slot` | `_Optional[int]` | `...` | positional or keyword |
+| `main_hand` | `_Optional[_Union[ItemStackSnapshot, _Mapping]]` ([`ItemStackSnapshot`](/docs/sdk/api/py/item-stack-snapshot)) | `...` | positional or keyword |
+| `off_hand` | `_Optional[_Union[ItemStackSnapshot, _Mapping]]` ([`ItemStackSnapshot`](/docs/sdk/api/py/item-stack-snapshot)) | `...` | positional or keyword |
+| `equipment` | `_Optional[_Mapping[str, ItemStackSnapshot]]` ([`ItemStackSnapshot`](/docs/sdk/api/py/item-stack-snapshot)) | `...` | positional or keyword |
+| `effects` | `_Optional[_Iterable[_Union[EffectSnapshot, _Mapping]]]` ([`EffectSnapshot`](/docs/sdk/api/py/generated-domain-pb2#effectsnapshot)) | `...` | positional or keyword |
+| `attributes` | `_Optional[_Iterable[_Union[AttributeSnapshot, _Mapping]]]` ([`AttributeSnapshot`](/docs/sdk/api/py/generated-domain-pb2#attributesnapshot)) | `...` | positional or keyword |
+| `sleeping` | `bool` | `...` | positional or keyword |
+| `using_item` | `bool` | `...` | positional or keyword |
+| `vehicle` | `_Optional[_Union[EntityReference, _Mapping]]` ([`EntityReference`](/docs/sdk/api/py/entity-reference)) | `...` | positional or keyword |
+| `spawn_point` | `_Optional[_Union[_common_pb2.BlockPosition, _Mapping]]` ([`_common_pb2.BlockPosition`](/docs/sdk/api/py/block-position)) | `...` | positional or keyword |
+| `dead` | `bool` | `...` | positional or keyword |
+| `last_damage` | `_Optional[float]` | `...` | positional or keyword |
+| `connection_epoch` | `_Optional[str]` | `...` | positional or keyword |
+| `revision` | `_Optional[int]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L423)
+
+## PlayerSnapshot.EquipmentEntry
+
+**Class** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L354).
+
+**Import from:** `soulfire.domain_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class PlayerSnapshot.EquipmentEntry(_message.Message)
+```
+
+### `KEY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L356)
+
+### `VALUE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L357)
+
+### `key`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L358)
+
+### `value`
+
+**Type:** [`ItemStackSnapshot`](/docs/sdk/api/py/item-stack-snapshot).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L359)
+
+### `__init__`
+
+```python
+def __init__(self, key: _Optional[str]=..., value: _Optional[_Union[ItemStackSnapshot, _Mapping]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `key` | `_Optional[str]` | `...` | positional or keyword |
+| `value` | `_Optional[_Union[ItemStackSnapshot, _Mapping]]` ([`ItemStackSnapshot`](/docs/sdk/api/py/item-stack-snapshot)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L360)
+
+## PotionProperties
+
+**Class** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L148).
+
+**Import from:** `soulfire.domain_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class PotionProperties(_message.Message)
+```
+
+### `POTION_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L150)
+
+### `EFFECTS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L151)
+
+### `COLOR_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L152)
+
+### `potion_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L153)
+
+### `effects`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[EffectSnapshot]` ([`EffectSnapshot`](/docs/sdk/api/py/generated-domain-pb2#effectsnapshot)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L154)
+
+### `color`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L155)
+
+### `__init__`
+
+```python
+def __init__(self, potion_id: _Optional[str]=..., effects: _Optional[_Iterable[_Union[EffectSnapshot, _Mapping]]]=..., color: _Optional[int]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `potion_id` | `_Optional[str]` | `...` | positional or keyword |
+| `effects` | `_Optional[_Iterable[_Union[EffectSnapshot, _Mapping]]]` ([`EffectSnapshot`](/docs/sdk/api/py/generated-domain-pb2#effectsnapshot)) | `...` | positional or keyword |
+| `color` | `_Optional[int]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L156)
+
+## Rotation
+
+**Class** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L42).
+
+**Import from:** `soulfire.domain_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class Rotation(_message.Message)
+```
+
+### `YAW_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L44)
+
+### `PITCH_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L45)
+
+### `HEAD_YAW_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L46)
+
+### `yaw`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L47)
+
+### `pitch`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L48)
+
+### `head_yaw`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L49)
+
+### `__init__`
+
+```python
+def __init__(self, yaw: _Optional[float]=..., pitch: _Optional[float]=..., head_yaw: _Optional[float]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `yaw` | `_Optional[float]` | `...` | positional or keyword |
+| `pitch` | `_Optional[float]` | `...` | positional or keyword |
+| `head_yaw` | `_Optional[float]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L50)
+
+## TextComponent
+
+**Class** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L60).
+
+**Import from:** `soulfire`, `soulfire.domain_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class TextComponent(_message.Message)
+```
+
+### `PLAIN_TEXT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L62)
+
+### `JSON_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L63)
+
+### `plain_text`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L64)
+
+### `json`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L65)
+
+### `__init__`
+
+```python
+def __init__(self, plain_text: _Optional[str]=..., json: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `plain_text` | `_Optional[str]` | `...` | positional or keyword |
+| `json` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L66)
+
+## ToolProperties
+
+**Class** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L126).
+
+**Import from:** `soulfire.domain_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class ToolProperties(_message.Message)
+```
+
+### `TOOL_TAGS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L128)
+
+### `DEFAULT_MINING_SPEED_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L129)
+
+### `HARVEST_LEVEL_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L130)
+
+### `tool_tags`
+
+**Type:** `_containers.RepeatedScalarFieldContainer[str]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L131)
+
+### `default_mining_speed`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L132)
+
+### `harvest_level`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L133)
+
+### `__init__`
+
+```python
+def __init__(self, tool_tags: _Optional[_Iterable[str]]=..., default_mining_speed: _Optional[float]=..., harvest_level: _Optional[int]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `tool_tags` | `_Optional[_Iterable[str]]` | `...` | positional or keyword |
+| `default_mining_speed` | `_Optional[float]` | `...` | positional or keyword |
+| `harvest_level` | `_Optional[int]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L134)
+
+## Vec3
+
+**Class** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L32).
+
+**Import from:** `soulfire`, `soulfire.domain_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class Vec3(_message.Message)
+```
+
+### `X_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L34)
+
+### `Y_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L35)
+
+### `Z_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L36)
+
+### `x`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L37)
+
+### `y`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L38)
+
+### `z`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L39)
+
+### `__init__`
+
+```python
+def __init__(self, x: _Optional[float]=..., y: _Optional[float]=..., z: _Optional[float]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `x` | `_Optional[float]` | `...` | positional or keyword |
+| `y` | `_Optional[float]` | `...` | positional or keyword |
+| `z` | `_Optional[float]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L40)
+
+## VoxelShape
+
+**Class** in `domain_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L275).
+
+**Import from:** `soulfire.domain_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class VoxelShape(_message.Message)
+```
+
+### `BOXES_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L277)
+
+### `boxes`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[BoundingBox]` ([`BoundingBox`](/docs/sdk/api/py/generated-domain-pb2#boundingbox)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L278)
+
+### `__init__`
+
+```python
+def __init__(self, boxes: _Optional[_Iterable[_Union[BoundingBox, _Mapping]]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `boxes` | `_Optional[_Iterable[_Union[BoundingBox, _Mapping]]]` ([`BoundingBox`](/docs/sdk/api/py/generated-domain-pb2#boundingbox)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/domain_pb2.pyi#L279)

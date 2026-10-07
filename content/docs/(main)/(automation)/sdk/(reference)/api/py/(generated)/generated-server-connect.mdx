@@ -1,0 +1,416 @@
+---
+title: "server_connect module"
+description: "Python API signatures, fields, and source for server_connect module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`ServerService`](/docs/sdk/api/py/generated-server-connect#serverservice) | class |
+| [`ServerServiceASGIApplication`](/docs/sdk/api/py/generated-server-connect#serverserviceasgiapplication) | class |
+| [`ServerServiceClient`](/docs/sdk/api/py/generated-server-connect#serverserviceclient) | class |
+| [`ServerServiceClientSync`](/docs/sdk/api/py/generated-server-connect#serverserviceclientsync) | class |
+| [`ServerServiceSync`](/docs/sdk/api/py/generated-server-connect#serverservicesync) | class |
+| [`ServerServiceWSGIApplication`](/docs/sdk/api/py/generated-server-connect#serverservicewsgiapplication) | class |
+
+## ServerService
+
+**Class** in `server_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_connect.py#L37).
+
+**Import from:** `soulfire.server_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class ServerService(Protocol)
+```
+
+### `get_server_info`
+
+```python
+async def get_server_info(self, request: ServerInfoRequest, ctx: RequestContext[ServerInfoRequest, ServerInfoResponse]) -> ServerInfoResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ServerInfoRequest`](/docs/sdk/api/py/generated-server-pb2#serverinforequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[ServerInfoRequest, ServerInfoResponse]` ([`ServerInfoRequest`](/docs/sdk/api/py/generated-server-pb2#serverinforequest), [`ServerInfoResponse`](/docs/sdk/api/py/generated-server-pb2#serverinforesponse)) | Required | positional or keyword |
+
+**Returns:** [`ServerInfoResponse`](/docs/sdk/api/py/generated-server-pb2#serverinforesponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_connect.py#L38)
+
+### `update_server_config`
+
+```python
+async def update_server_config(self, request: ServerUpdateConfigRequest, ctx: RequestContext[ServerUpdateConfigRequest, ServerUpdateConfigResponse]) -> ServerUpdateConfigResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ServerUpdateConfigRequest`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[ServerUpdateConfigRequest, ServerUpdateConfigResponse]` ([`ServerUpdateConfigRequest`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigrequest), [`ServerUpdateConfigResponse`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigresponse)) | Required | positional or keyword |
+
+**Returns:** [`ServerUpdateConfigResponse`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_connect.py#L41)
+
+### `update_server_config_entry`
+
+```python
+async def update_server_config_entry(self, request: ServerUpdateConfigEntryRequest, ctx: RequestContext[ServerUpdateConfigEntryRequest, ServerUpdateConfigEntryResponse]) -> ServerUpdateConfigEntryResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ServerUpdateConfigEntryRequest`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigentryrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[ServerUpdateConfigEntryRequest, ServerUpdateConfigEntryResponse]` ([`ServerUpdateConfigEntryRequest`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigentryrequest), [`ServerUpdateConfigEntryResponse`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigentryresponse)) | Required | positional or keyword |
+
+**Returns:** [`ServerUpdateConfigEntryResponse`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigentryresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_connect.py#L44)
+
+## ServerServiceASGIApplication
+
+**Class** in `server_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_connect.py#L48).
+
+**Import from:** `soulfire.server_connect`.
+
+**Bases:** `ConnectASGIApplication[ServerService]` ([`ServerService`](/docs/sdk/api/py/generated-server-connect#serverservice)).
+
+```python
+class ServerServiceASGIApplication(ConnectASGIApplication[ServerService])
+```
+
+**Referenced types:** [`ServerService`](/docs/sdk/api/py/generated-server-connect#serverservice).
+
+### `__init__`
+
+```python
+def __init__(self, service: ServerService | AsyncGenerator[ServerService], *, interceptors: Iterable[Interceptor]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | `ServerService \| AsyncGenerator[ServerService]` ([`ServerService`](/docs/sdk/api/py/generated-server-connect#serverservice)) | Required | positional or keyword |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `compressions` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_connect.py#L49)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_connect.py#L99)
+
+## ServerServiceClient
+
+**Class** in `server_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_connect.py#L104).
+
+**Import from:** `soulfire.server_connect`.
+
+**Bases:** `ConnectClient`.
+
+```python
+class ServerServiceClient(ConnectClient)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[Interceptor]=(), http_client: Client | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `http_client` | `Client \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_connect.py#L105)
+
+### `get_server_info`
+
+```python
+async def get_server_info(self, request: ServerInfoRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> ServerInfoResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ServerInfoRequest`](/docs/sdk/api/py/generated-server-pb2#serverinforequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`ServerInfoResponse`](/docs/sdk/api/py/generated-server-pb2#serverinforesponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_connect.py#L129)
+
+### `update_server_config`
+
+```python
+async def update_server_config(self, request: ServerUpdateConfigRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> ServerUpdateConfigResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ServerUpdateConfigRequest`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`ServerUpdateConfigResponse`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_connect.py#L149)
+
+### `update_server_config_entry`
+
+```python
+async def update_server_config_entry(self, request: ServerUpdateConfigEntryRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> ServerUpdateConfigEntryResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ServerUpdateConfigEntryRequest`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigentryrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`ServerUpdateConfigEntryResponse`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigentryresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_connect.py#L169)
+
+## ServerServiceClientSync
+
+**Class** in `server_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_connect.py#L254).
+
+**Import from:** `soulfire.server_connect`.
+
+**Bases:** `ConnectClientSync`.
+
+```python
+class ServerServiceClientSync(ConnectClientSync)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[InterceptorSync]=(), http_client: SyncClient | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | keyword only |
+| `http_client` | `SyncClient \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_connect.py#L255)
+
+### `get_server_info`
+
+```python
+def get_server_info(self, request: ServerInfoRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> ServerInfoResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ServerInfoRequest`](/docs/sdk/api/py/generated-server-pb2#serverinforequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`ServerInfoResponse`](/docs/sdk/api/py/generated-server-pb2#serverinforesponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_connect.py#L279)
+
+### `update_server_config`
+
+```python
+def update_server_config(self, request: ServerUpdateConfigRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> ServerUpdateConfigResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ServerUpdateConfigRequest`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`ServerUpdateConfigResponse`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_connect.py#L298)
+
+### `update_server_config_entry`
+
+```python
+def update_server_config_entry(self, request: ServerUpdateConfigEntryRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> ServerUpdateConfigEntryResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ServerUpdateConfigEntryRequest`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigentryrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`ServerUpdateConfigEntryResponse`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigentryresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_connect.py#L317)
+
+## ServerServiceSync
+
+**Class** in `server_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_connect.py#L189).
+
+**Import from:** `soulfire.server_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class ServerServiceSync(Protocol)
+```
+
+### `get_server_info`
+
+```python
+def get_server_info(self, request: ServerInfoRequest, ctx: RequestContext[ServerInfoRequest, ServerInfoResponse]) -> ServerInfoResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ServerInfoRequest`](/docs/sdk/api/py/generated-server-pb2#serverinforequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[ServerInfoRequest, ServerInfoResponse]` ([`ServerInfoRequest`](/docs/sdk/api/py/generated-server-pb2#serverinforequest), [`ServerInfoResponse`](/docs/sdk/api/py/generated-server-pb2#serverinforesponse)) | Required | positional or keyword |
+
+**Returns:** [`ServerInfoResponse`](/docs/sdk/api/py/generated-server-pb2#serverinforesponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_connect.py#L190)
+
+### `update_server_config`
+
+```python
+def update_server_config(self, request: ServerUpdateConfigRequest, ctx: RequestContext[ServerUpdateConfigRequest, ServerUpdateConfigResponse]) -> ServerUpdateConfigResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ServerUpdateConfigRequest`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[ServerUpdateConfigRequest, ServerUpdateConfigResponse]` ([`ServerUpdateConfigRequest`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigrequest), [`ServerUpdateConfigResponse`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigresponse)) | Required | positional or keyword |
+
+**Returns:** [`ServerUpdateConfigResponse`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_connect.py#L193)
+
+### `update_server_config_entry`
+
+```python
+def update_server_config_entry(self, request: ServerUpdateConfigEntryRequest, ctx: RequestContext[ServerUpdateConfigEntryRequest, ServerUpdateConfigEntryResponse]) -> ServerUpdateConfigEntryResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`ServerUpdateConfigEntryRequest`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigentryrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[ServerUpdateConfigEntryRequest, ServerUpdateConfigEntryResponse]` ([`ServerUpdateConfigEntryRequest`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigentryrequest), [`ServerUpdateConfigEntryResponse`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigentryresponse)) | Required | positional or keyword |
+
+**Returns:** [`ServerUpdateConfigEntryResponse`](/docs/sdk/api/py/generated-server-pb2#serverupdateconfigentryresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_connect.py#L196)
+
+## ServerServiceWSGIApplication
+
+**Class** in `server_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_connect.py#L200).
+
+**Import from:** `soulfire.server_connect`.
+
+**Bases:** `ConnectWSGIApplication`.
+
+```python
+class ServerServiceWSGIApplication(ConnectWSGIApplication)
+```
+
+### `__init__`
+
+```python
+def __init__(self, service: ServerServiceSync, interceptors: Iterable[InterceptorSync]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | [`ServerServiceSync`](/docs/sdk/api/py/generated-server-connect#serverservicesync) | Required | positional or keyword |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | positional or keyword |
+| `read_max_bytes` | `int \| None` | `None` | positional or keyword |
+| `compressions` | `Iterable[Compression] \| None` | `None` | positional or keyword |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_connect.py#L201)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/server_connect.py#L249)

@@ -1,0 +1,183 @@
+---
+title: "SoulFireRecipes"
+description: "Python API signatures, fields, and source for SoulFireRecipes."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `semantic`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L1106).
+
+**Import from:** `soulfire`, `soulfire.semantic`.
+
+```python
+class SoulFireRecipes
+```
+
+## `__init__`
+
+```python
+def __init__(self, scope: InventoryScope, client: RecipeServiceClient, tasks: SoulFireTasks) -> None
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `scope` | [`InventoryScope`](/docs/sdk/api/py/generated-inventory-pb2#inventoryscope) | Required | positional or keyword |
+| `client` | [`RecipeServiceClient`](/docs/sdk/api/py/generated-recipe-connect#recipeserviceclient) | Required | positional or keyword |
+| `tasks` | [`SoulFireTasks`](/docs/sdk/api/py/soul-fire-tasks) | Required | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L1107)
+
+## `list`
+
+```python
+def list(self, *, result_item_id: str | None=None, ingredient: ItemSelector | None=None, recipe_types: Iterable[str]=(), page_size: int=0, page_token: str='', timeout_ms: int | None=None) -> Effect[ListRecipesResponse, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `result_item_id` | `str \| None` | `None` | keyword only |
+| `ingredient` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `recipe_types` | `Iterable[str]` | `()` | keyword only |
+| `page_size` | `int` | `0` | keyword only |
+| `page_token` | `str` | `''` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[ListRecipesResponse, SoulFireOperationError]` ([`ListRecipesResponse`](/docs/sdk/api/py/generated-recipe-pb2#listrecipesresponse), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L1115)
+
+## `can_craft`
+
+```python
+def can_craft(self, recipe_id: str, *, count: int=1, timeout_ms: int | None=None) -> Effect[CanCraftResponse, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `recipe_id` | `str` | Required | positional or keyword |
+| `count` | `int` | `1` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[CanCraftResponse, SoulFireOperationError]` ([`CanCraftResponse`](/docs/sdk/api/py/generated-recipe-pb2#cancraftresponse), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L1143)
+
+## `list_villager_trades`
+
+```python
+def list_villager_trades(self, *, timeout_ms: int | None=None) -> Effect[ListVillagerTradesResponse, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[ListVillagerTradesResponse, SoulFireOperationError]` ([`ListVillagerTradesResponse`](/docs/sdk/api/py/generated-recipe-pb2#listvillagertradesresponse), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L1157)
+
+## `craft`
+
+```python
+def craft(self, recipe_id: str, *, count: int=1, station: BlockPosition | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[CraftTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `recipe_id` | `str` | Required | positional or keyword |
+| `count` | `int` | `1` | keyword only |
+| `station` | `BlockPosition \| None` ([`BlockPosition`](/docs/sdk/api/py/block-position)) | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[CraftTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`CraftTaskResult`](/docs/sdk/api/py/generated-recipe-pb2#crafttaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L1170)
+
+## `smelt`
+
+```python
+def smelt(self, input: ItemSelector, *, count: int=1, fuel: ItemSelector | None=None, station: BlockPosition | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[SmeltTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `input` | [`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector) | Required | positional or keyword |
+| `count` | `int` | `1` | keyword only |
+| `fuel` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `station` | `BlockPosition \| None` ([`BlockPosition`](/docs/sdk/api/py/block-position)) | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[SmeltTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`SmeltTaskResult`](/docs/sdk/api/py/generated-recipe-pb2#smelttaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L1185)
+
+## `brew`
+
+```python
+def brew(self, input: ItemSelector, ingredient: ItemSelector, *, count: int=1, fuel: ItemSelector | None=None, station: BlockPosition | None=None, expected_result: ItemSelector | None=None, timeout_ms: int | None=None) -> Effect[SoulFireTask[BrewTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `input` | [`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector) | Required | positional or keyword |
+| `ingredient` | [`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector) | Required | positional or keyword |
+| `count` | `int` | `1` | keyword only |
+| `fuel` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `station` | `BlockPosition \| None` ([`BlockPosition`](/docs/sdk/api/py/block-position)) | `None` | keyword only |
+| `expected_result` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[BrewTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`BrewTaskResult`](/docs/sdk/api/py/generated-recipe-pb2#brewtaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L1201)
+
+## `villager_trade`
+
+```python
+def villager_trade(self, offer_index: int, *, count: int=1, expected_result: ItemSelector | None=None, close_when_done: bool=False, timeout_ms: int | None=None) -> Effect[SoulFireTask[VillagerTradeTaskResult], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `offer_index` | `int` | Required | positional or keyword |
+| `count` | `int` | `1` | keyword only |
+| `expected_result` | `ItemSelector \| None` ([`ItemSelector`](/docs/sdk/api/py/generated-inventory-pb2#itemselector)) | `None` | keyword only |
+| `close_when_done` | `bool` | `False` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireTask[VillagerTradeTaskResult], SoulFireOperationError]` ([`SoulFireTask`](/docs/sdk/api/py/soul-fire-task), [`VillagerTradeTaskResult`](/docs/sdk/api/py/generated-recipe-pb2#villagertradetaskresult), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/semantic.py#L1225)

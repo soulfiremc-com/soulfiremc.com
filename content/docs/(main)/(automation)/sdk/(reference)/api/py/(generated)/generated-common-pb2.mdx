@@ -1,0 +1,3361 @@
+---
+title: "common_pb2 module"
+description: "Python API signatures, fields, and source for common_pb2 module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`ACCESS_OBJECT_STORAGE`](/docs/sdk/api/py/generated-common-pb2#access_object_storage) | constant |
+| [`ADMIN`](/docs/sdk/api/py/generated-common-pb2#admin) | constant |
+| [`AUTHENTICATE_MC_ACCOUNT`](/docs/sdk/api/py/generated-common-pb2#authenticate_mc_account) | constant |
+| [`AccountTypeCredentials`](/docs/sdk/api/py/generated-common-pb2#accounttypecredentials) | enum |
+| [`AccountTypeDeviceCode`](/docs/sdk/api/py/generated-common-pb2#accounttypedevicecode) | enum |
+| [`BOT`](/docs/sdk/api/py/generated-common-pb2#bot) | constant |
+| [`BlockPosition`](/docs/sdk/api/py/block-position) | class |
+| [`BoolSetting`](/docs/sdk/api/py/generated-common-pb2#boolsetting) | class |
+| [`CHECK_PROXY`](/docs/sdk/api/py/generated-common-pb2#check_proxy) | constant |
+| [`CONTROL_BOTS`](/docs/sdk/api/py/generated-common-pb2#control_bots) | constant |
+| [`CONTROL_BOT_ACTIONS`](/docs/sdk/api/py/generated-common-pb2#control_bot_actions) | constant |
+| [`CREATE_INSTANCE`](/docs/sdk/api/py/generated-common-pb2#create_instance) | constant |
+| [`CREATE_USER`](/docs/sdk/api/py/generated-common-pb2#create_user) | constant |
+| [`ComboSetting`](/docs/sdk/api/py/generated-common-pb2#combosetting) | class |
+| [`ComboSetting.Option`](/docs/sdk/api/py/generated-common-pb2#combosettingoption) | class |
+| [`DELETE_INSTANCE`](/docs/sdk/api/py/generated-common-pb2#delete_instance) | constant |
+| [`DELETE_USER`](/docs/sdk/api/py/generated-common-pb2#delete_user) | constant |
+| [`DESCRIPTOR`](/docs/sdk/api/py/generated-common-pb2#descriptor) | constant |
+| [`DOWNLOAD_URL`](/docs/sdk/api/py/generated-common-pb2#download_url) | constant |
+| [`DoubleSetting`](/docs/sdk/api/py/generated-common-pb2#doublesetting) | class |
+| [`EXECUTE_SCRIPTS`](/docs/sdk/api/py/generated-common-pb2#execute_scripts) | constant |
+| [`GENERATE_API_TOKEN`](/docs/sdk/api/py/generated-common-pb2#generate_api_token) | constant |
+| [`GENERATE_SELF_API_TOKEN`](/docs/sdk/api/py/generated-common-pb2#generate_self_api_token) | constant |
+| [`GENERATE_SELF_WEBDAV_TOKEN`](/docs/sdk/api/py/generated-common-pb2#generate_self_webdav_token) | constant |
+| [`GLOBAL_COMMAND_EXECUTION`](/docs/sdk/api/py/generated-common-pb2#global_command_execution) | constant |
+| [`GLOBAL_SUBSCRIBE_LOGS`](/docs/sdk/api/py/generated-common-pb2#global_subscribe_logs) | constant |
+| [`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission) | enum |
+| [`INSTANCE`](/docs/sdk/api/py/generated-common-pb2#instance) | constant |
+| [`INSTANCE_COMMAND_EXECUTION`](/docs/sdk/api/py/generated-common-pb2#instance_command_execution) | constant |
+| [`INSTANCE_SUBSCRIBE_LOGS`](/docs/sdk/api/py/generated-common-pb2#instance_subscribe_logs) | constant |
+| [`INVALIDATE_SELF_SESSIONS`](/docs/sdk/api/py/generated-common-pb2#invalidate_self_sessions) | constant |
+| [`INVALIDATE_SESSIONS`](/docs/sdk/api/py/generated-common-pb2#invalidate_sessions) | constant |
+| [`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission) | enum |
+| [`IntSetting`](/docs/sdk/api/py/generated-common-pb2#intsetting) | class |
+| [`MICROSOFT_BEDROCK_CREDENTIALS`](/docs/sdk/api/py/generated-common-pb2#microsoft_bedrock_credentials) | constant |
+| [`MICROSOFT_BEDROCK_DEVICE_CODE`](/docs/sdk/api/py/generated-common-pb2#microsoft_bedrock_device_code) | constant |
+| [`MICROSOFT_JAVA_ACCESS_TOKEN`](/docs/sdk/api/py/generated-common-pb2#microsoft_java_access_token) | constant |
+| [`MICROSOFT_JAVA_COOKIES`](/docs/sdk/api/py/generated-common-pb2#microsoft_java_cookies) | constant |
+| [`MICROSOFT_JAVA_CREDENTIALS`](/docs/sdk/api/py/generated-common-pb2#microsoft_java_credentials) | constant |
+| [`MICROSOFT_JAVA_DEVICE_CODE`](/docs/sdk/api/py/generated-common-pb2#microsoft_java_device_code) | constant |
+| [`MICROSOFT_JAVA_REFRESH_TOKEN`](/docs/sdk/api/py/generated-common-pb2#microsoft_java_refresh_token) | constant |
+| [`MinMaxSetting`](/docs/sdk/api/py/generated-common-pb2#minmaxsetting) | class |
+| [`MinMaxSetting.Entry`](/docs/sdk/api/py/generated-common-pb2#minmaxsettingentry) | class |
+| [`MinecraftAccountProto`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountproto) | class |
+| [`MinecraftAccountProto.AccountTypeProto`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoaccounttypeproto) | enum |
+| [`MinecraftAccountProto.BedrockData`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotobedrockdata) | class |
+| [`MinecraftAccountProto.OfflineJavaData`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoofflinejavadata) | class |
+| [`MinecraftAccountProto.OnlineChainJavaData`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoonlinechainjavadata) | class |
+| [`MinecraftAccountProto.OnlineSimpleJavaData`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoonlinesimplejavadata) | class |
+| [`MinecraftAccountProto.TheAlteningJavaData`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotothealteningjavadata) | class |
+| [`OFFLINE`](/docs/sdk/api/py/generated-common-pb2#offline) | constant |
+| [`ProxyProto`](/docs/sdk/api/py/generated-common-pb2#proxyproto) | class |
+| [`ProxyProto.Type`](/docs/sdk/api/py/generated-common-pb2#proxyprototype) | enum |
+| [`RAW_PROTOCOL`](/docs/sdk/api/py/generated-common-pb2#raw_protocol) | constant |
+| [`READ_BOT_INFO`](/docs/sdk/api/py/generated-common-pb2#read_bot_info) | constant |
+| [`READ_CLIENT_DATA`](/docs/sdk/api/py/generated-common-pb2#read_client_data) | constant |
+| [`READ_INSTANCE`](/docs/sdk/api/py/generated-common-pb2#read_instance) | constant |
+| [`READ_INSTANCE_AUDIT_LOGS`](/docs/sdk/api/py/generated-common-pb2#read_instance_audit_logs) | constant |
+| [`READ_SERVER_CONFIG`](/docs/sdk/api/py/generated-common-pb2#read_server_config) | constant |
+| [`READ_USER`](/docs/sdk/api/py/generated-common-pb2#read_user) | constant |
+| [`SERVER`](/docs/sdk/api/py/generated-common-pb2#server) | constant |
+| [`ServerPlugin`](/docs/sdk/api/py/generated-common-pb2#serverplugin) | class |
+| [`SettingsDefinition`](/docs/sdk/api/py/generated-common-pb2#settingsdefinition) | class |
+| [`SettingsEntryIdentifier`](/docs/sdk/api/py/generated-common-pb2#settingsentryidentifier) | class |
+| [`SettingsNamespace`](/docs/sdk/api/py/generated-common-pb2#settingsnamespace) | class |
+| [`SettingsNamespace.SettingsEntry`](/docs/sdk/api/py/generated-common-pb2#settingsnamespacesettingsentry) | class |
+| [`SettingsPage`](/docs/sdk/api/py/generated-common-pb2#settingspage) | class |
+| [`SettingsPageEntryScopeType`](/docs/sdk/api/py/generated-common-pb2#settingspageentryscopetype) | enum |
+| [`StringListSetting`](/docs/sdk/api/py/generated-common-pb2#stringlistsetting) | class |
+| [`StringSetting`](/docs/sdk/api/py/generated-common-pb2#stringsetting) | class |
+| [`StringSetting.InputType`](/docs/sdk/api/py/generated-common-pb2#stringsettinginputtype) | enum |
+| [`THE_ALTENING`](/docs/sdk/api/py/generated-common-pb2#the_altening) | constant |
+| [`UPDATE_BOT_CONFIG`](/docs/sdk/api/py/generated-common-pb2#update_bot_config) | constant |
+| [`UPDATE_INSTANCE_CONFIG`](/docs/sdk/api/py/generated-common-pb2#update_instance_config) | constant |
+| [`UPDATE_INSTANCE_META`](/docs/sdk/api/py/generated-common-pb2#update_instance_meta) | constant |
+| [`UPDATE_SELF_EMAIL`](/docs/sdk/api/py/generated-common-pb2#update_self_email) | constant |
+| [`UPDATE_SELF_USERNAME`](/docs/sdk/api/py/generated-common-pb2#update_self_username) | constant |
+| [`UPDATE_SERVER_CONFIG`](/docs/sdk/api/py/generated-common-pb2#update_server_config) | constant |
+| [`UPDATE_USER`](/docs/sdk/api/py/generated-common-pb2#update_user) | constant |
+| [`USER`](/docs/sdk/api/py/generated-common-pb2#user) | constant |
+| [`UserRole`](/docs/sdk/api/py/generated-common-pb2#userrole) | enum |
+| [`WorldPosition`](/docs/sdk/api/py/world-position) | class |
+
+## ACCESS_OBJECT_STORAGE
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L112).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+ACCESS_OBJECT_STORAGE: InstancePermission
+```
+
+**Referenced types:** [`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission).
+
+## ADMIN
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L121).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+ADMIN: UserRole
+```
+
+**Referenced types:** [`UserRole`](/docs/sdk/api/py/generated-common-pb2#userrole).
+
+## AUTHENTICATE_MC_ACCOUNT
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L109).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+AUTHENTICATE_MC_ACCOUNT: InstancePermission
+```
+
+**Referenced types:** [`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission).
+
+## AccountTypeCredentials
+
+**Enum** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L13).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `int`.
+
+```python
+class AccountTypeCredentials(int, metaclass=_enum_type_wrapper.EnumTypeWrapper)
+```
+
+### `MICROSOFT_JAVA_CREDENTIALS`
+
+**Type:** `_ClassVar[AccountTypeCredentials]` ([`AccountTypeCredentials`](/docs/sdk/api/py/generated-common-pb2#accounttypecredentials)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L15)
+
+### `MICROSOFT_BEDROCK_CREDENTIALS`
+
+**Type:** `_ClassVar[AccountTypeCredentials]` ([`AccountTypeCredentials`](/docs/sdk/api/py/generated-common-pb2#accounttypecredentials)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L16)
+
+### `OFFLINE`
+
+**Type:** `_ClassVar[AccountTypeCredentials]` ([`AccountTypeCredentials`](/docs/sdk/api/py/generated-common-pb2#accounttypecredentials)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L17)
+
+### `MICROSOFT_JAVA_REFRESH_TOKEN`
+
+**Type:** `_ClassVar[AccountTypeCredentials]` ([`AccountTypeCredentials`](/docs/sdk/api/py/generated-common-pb2#accounttypecredentials)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L18)
+
+### `MICROSOFT_JAVA_COOKIES`
+
+**Type:** `_ClassVar[AccountTypeCredentials]` ([`AccountTypeCredentials`](/docs/sdk/api/py/generated-common-pb2#accounttypecredentials)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L19)
+
+### `MICROSOFT_JAVA_ACCESS_TOKEN`
+
+**Type:** `_ClassVar[AccountTypeCredentials]` ([`AccountTypeCredentials`](/docs/sdk/api/py/generated-common-pb2#accounttypecredentials)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L20)
+
+### `THE_ALTENING`
+
+**Type:** `_ClassVar[AccountTypeCredentials]` ([`AccountTypeCredentials`](/docs/sdk/api/py/generated-common-pb2#accounttypecredentials)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L21)
+
+## AccountTypeDeviceCode
+
+**Enum** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L23).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `int`.
+
+```python
+class AccountTypeDeviceCode(int, metaclass=_enum_type_wrapper.EnumTypeWrapper)
+```
+
+### `MICROSOFT_JAVA_DEVICE_CODE`
+
+**Type:** `_ClassVar[AccountTypeDeviceCode]` ([`AccountTypeDeviceCode`](/docs/sdk/api/py/generated-common-pb2#accounttypedevicecode)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L25)
+
+### `MICROSOFT_BEDROCK_DEVICE_CODE`
+
+**Type:** `_ClassVar[AccountTypeDeviceCode]` ([`AccountTypeDeviceCode`](/docs/sdk/api/py/generated-common-pb2#accounttypedevicecode)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L26)
+
+## BOT
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L125).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+BOT: SettingsPageEntryScopeType
+```
+
+**Referenced types:** [`SettingsPageEntryScopeType`](/docs/sdk/api/py/generated-common-pb2#settingspageentryscopetype).
+
+## BlockPosition
+
+**Class** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L127).
+
+**Import from:** `soulfire`, `soulfire.common_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class BlockPosition(_message.Message)
+```
+
+### `X_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L129)
+
+### `Y_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L130)
+
+### `Z_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L131)
+
+### `DIMENSION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L132)
+
+### `x`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L133)
+
+### `y`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L134)
+
+### `z`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L135)
+
+### `dimension`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L136)
+
+### `__init__`
+
+```python
+def __init__(self, x: _Optional[int]=..., y: _Optional[int]=..., z: _Optional[int]=..., dimension: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `x` | `_Optional[int]` | `...` | positional or keyword |
+| `y` | `_Optional[int]` | `...` | positional or keyword |
+| `z` | `_Optional[int]` | `...` | positional or keyword |
+| `dimension` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L137)
+
+## BoolSetting
+
+**Class** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L348).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class BoolSetting(_message.Message)
+```
+
+### `UI_NAME_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L350)
+
+### `DESCRIPTION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L351)
+
+### `DEF_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L352)
+
+### `DISABLED_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L353)
+
+### `ui_name`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L354)
+
+### `description`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L355)
+
+### `disabled`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L356)
+
+### `__init__`
+
+```python
+def __init__(self, ui_name: _Optional[str]=..., description: _Optional[str]=..., disabled: bool=..., **kwargs) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `ui_name` | `_Optional[str]` | `...` | positional or keyword |
+| `description` | `_Optional[str]` | `...` | positional or keyword |
+| `disabled` | `bool` | `...` | positional or keyword |
+| `**kwargs` | No type annotation | Optional | variadic keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L357)
+
+## CHECK_PROXY
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L110).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+CHECK_PROXY: InstancePermission
+```
+
+**Referenced types:** [`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission).
+
+## CONTROL_BOTS
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L117).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+CONTROL_BOTS: InstancePermission
+```
+
+**Referenced types:** [`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission).
+
+## CONTROL_BOT_ACTIONS
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L119).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+CONTROL_BOT_ACTIONS: InstancePermission
+```
+
+**Referenced types:** [`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission).
+
+## CREATE_INSTANCE
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L87).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+CREATE_INSTANCE: GlobalPermission
+```
+
+**Referenced types:** [`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission).
+
+## CREATE_USER
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L92).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+CREATE_USER: GlobalPermission
+```
+
+**Referenced types:** [`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission).
+
+## ComboSetting
+
+**Class** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L359).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class ComboSetting(_message.Message)
+```
+
+### `UI_NAME_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L372)
+
+### `DESCRIPTION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L373)
+
+### `OPTIONS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L374)
+
+### `DEF_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L375)
+
+### `DISABLED_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L376)
+
+### `ui_name`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L377)
+
+### `description`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L378)
+
+### `options`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[ComboSetting.Option]` ([`ComboSetting.Option`](/docs/sdk/api/py/generated-common-pb2#combosettingoption)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L379)
+
+### `disabled`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L380)
+
+### `__init__`
+
+```python
+def __init__(self, ui_name: _Optional[str]=..., description: _Optional[str]=..., options: _Optional[_Iterable[_Union[ComboSetting.Option, _Mapping]]]=..., disabled: bool=..., **kwargs) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `ui_name` | `_Optional[str]` | `...` | positional or keyword |
+| `description` | `_Optional[str]` | `...` | positional or keyword |
+| `options` | `_Optional[_Iterable[_Union[ComboSetting.Option, _Mapping]]]` ([`ComboSetting.Option`](/docs/sdk/api/py/generated-common-pb2#combosettingoption)) | `...` | positional or keyword |
+| `disabled` | `bool` | `...` | positional or keyword |
+| `**kwargs` | No type annotation | Optional | variadic keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L381)
+
+## ComboSetting.Option
+
+**Class** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L361).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class ComboSetting.Option(_message.Message)
+```
+
+### `ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L363)
+
+### `DISPLAY_NAME_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L364)
+
+### `ICON_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L365)
+
+### `KEYWORDS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L366)
+
+### `id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L367)
+
+### `display_name`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L368)
+
+### `icon_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L369)
+
+### `keywords`
+
+**Type:** `_containers.RepeatedScalarFieldContainer[str]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L370)
+
+### `__init__`
+
+```python
+def __init__(self, id: _Optional[str]=..., display_name: _Optional[str]=..., icon_id: _Optional[str]=..., keywords: _Optional[_Iterable[str]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `id` | `_Optional[str]` | `...` | positional or keyword |
+| `display_name` | `_Optional[str]` | `...` | positional or keyword |
+| `icon_id` | `_Optional[str]` | `...` | positional or keyword |
+| `keywords` | `_Optional[_Iterable[str]]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L371)
+
+## DELETE_INSTANCE
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L108).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+DELETE_INSTANCE: InstancePermission
+```
+
+**Referenced types:** [`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission).
+
+## DELETE_USER
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L95).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+DELETE_USER: GlobalPermission
+```
+
+**Referenced types:** [`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission).
+
+## DESCRIPTOR
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L11).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+DESCRIPTOR: _descriptor.FileDescriptor
+```
+
+## DOWNLOAD_URL
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L111).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+DOWNLOAD_URL: InstancePermission
+```
+
+**Referenced types:** [`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission).
+
+## DoubleSetting
+
+**Class** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L323).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class DoubleSetting(_message.Message)
+```
+
+### `UI_NAME_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L325)
+
+### `DESCRIPTION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L326)
+
+### `DEF_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L327)
+
+### `MIN_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L328)
+
+### `MAX_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L329)
+
+### `STEP_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L330)
+
+### `PLACEHOLDER_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L331)
+
+### `THOUSAND_SEPARATOR_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L332)
+
+### `DECIMAL_SCALE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L333)
+
+### `FIXED_DECIMAL_SCALE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L334)
+
+### `DISABLED_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L335)
+
+### `ui_name`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L336)
+
+### `description`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L337)
+
+### `min`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L338)
+
+### `max`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L339)
+
+### `step`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L340)
+
+### `placeholder`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L341)
+
+### `thousand_separator`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L342)
+
+### `decimal_scale`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L343)
+
+### `fixed_decimal_scale`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L344)
+
+### `disabled`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L345)
+
+### `__init__`
+
+```python
+def __init__(self, ui_name: _Optional[str]=..., description: _Optional[str]=..., min: _Optional[float]=..., max: _Optional[float]=..., step: _Optional[float]=..., placeholder: _Optional[str]=..., thousand_separator: bool=..., decimal_scale: _Optional[int]=..., fixed_decimal_scale: bool=..., disabled: bool=..., **kwargs) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `ui_name` | `_Optional[str]` | `...` | positional or keyword |
+| `description` | `_Optional[str]` | `...` | positional or keyword |
+| `min` | `_Optional[float]` | `...` | positional or keyword |
+| `max` | `_Optional[float]` | `...` | positional or keyword |
+| `step` | `_Optional[float]` | `...` | positional or keyword |
+| `placeholder` | `_Optional[str]` | `...` | positional or keyword |
+| `thousand_separator` | `bool` | `...` | positional or keyword |
+| `decimal_scale` | `_Optional[int]` | `...` | positional or keyword |
+| `fixed_decimal_scale` | `bool` | `...` | positional or keyword |
+| `disabled` | `bool` | `...` | positional or keyword |
+| `**kwargs` | No type annotation | Optional | variadic keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L346)
+
+## EXECUTE_SCRIPTS
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L118).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+EXECUTE_SCRIPTS: InstancePermission
+```
+
+**Referenced types:** [`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission).
+
+## GENERATE_API_TOKEN
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L102).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+GENERATE_API_TOKEN: GlobalPermission
+```
+
+**Referenced types:** [`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission).
+
+## GENERATE_SELF_API_TOKEN
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L99).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+GENERATE_SELF_API_TOKEN: GlobalPermission
+```
+
+**Referenced types:** [`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission).
+
+## GENERATE_SELF_WEBDAV_TOKEN
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L98).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+GENERATE_SELF_WEBDAV_TOKEN: GlobalPermission
+```
+
+**Referenced types:** [`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission).
+
+## GLOBAL_COMMAND_EXECUTION
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L96).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+GLOBAL_COMMAND_EXECUTION: GlobalPermission
+```
+
+**Referenced types:** [`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission).
+
+## GLOBAL_SUBSCRIBE_LOGS
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L88).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+GLOBAL_SUBSCRIBE_LOGS: GlobalPermission
+```
+
+**Referenced types:** [`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission).
+
+## GlobalPermission
+
+**Enum** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L28).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `int`.
+
+```python
+class GlobalPermission(int, metaclass=_enum_type_wrapper.EnumTypeWrapper)
+```
+
+### `CREATE_INSTANCE`
+
+**Type:** `_ClassVar[GlobalPermission]` ([`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L30)
+
+### `GLOBAL_SUBSCRIBE_LOGS`
+
+**Type:** `_ClassVar[GlobalPermission]` ([`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L31)
+
+### `READ_CLIENT_DATA`
+
+**Type:** `_ClassVar[GlobalPermission]` ([`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L32)
+
+### `READ_SERVER_CONFIG`
+
+**Type:** `_ClassVar[GlobalPermission]` ([`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L33)
+
+### `UPDATE_SERVER_CONFIG`
+
+**Type:** `_ClassVar[GlobalPermission]` ([`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L34)
+
+### `CREATE_USER`
+
+**Type:** `_ClassVar[GlobalPermission]` ([`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L35)
+
+### `READ_USER`
+
+**Type:** `_ClassVar[GlobalPermission]` ([`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L36)
+
+### `UPDATE_USER`
+
+**Type:** `_ClassVar[GlobalPermission]` ([`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L37)
+
+### `DELETE_USER`
+
+**Type:** `_ClassVar[GlobalPermission]` ([`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L38)
+
+### `GLOBAL_COMMAND_EXECUTION`
+
+**Type:** `_ClassVar[GlobalPermission]` ([`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L39)
+
+### `INVALIDATE_SESSIONS`
+
+**Type:** `_ClassVar[GlobalPermission]` ([`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L40)
+
+### `GENERATE_SELF_WEBDAV_TOKEN`
+
+**Type:** `_ClassVar[GlobalPermission]` ([`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L41)
+
+### `GENERATE_SELF_API_TOKEN`
+
+**Type:** `_ClassVar[GlobalPermission]` ([`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L42)
+
+### `UPDATE_SELF_USERNAME`
+
+**Type:** `_ClassVar[GlobalPermission]` ([`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L43)
+
+### `UPDATE_SELF_EMAIL`
+
+**Type:** `_ClassVar[GlobalPermission]` ([`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L44)
+
+### `GENERATE_API_TOKEN`
+
+**Type:** `_ClassVar[GlobalPermission]` ([`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L45)
+
+### `INVALIDATE_SELF_SESSIONS`
+
+**Type:** `_ClassVar[GlobalPermission]` ([`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L46)
+
+## INSTANCE
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L124).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+INSTANCE: SettingsPageEntryScopeType
+```
+
+**Referenced types:** [`SettingsPageEntryScopeType`](/docs/sdk/api/py/generated-common-pb2#settingspageentryscopetype).
+
+## INSTANCE_COMMAND_EXECUTION
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L104).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+INSTANCE_COMMAND_EXECUTION: InstancePermission
+```
+
+**Referenced types:** [`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission).
+
+## INSTANCE_SUBSCRIBE_LOGS
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L113).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+INSTANCE_SUBSCRIBE_LOGS: InstancePermission
+```
+
+**Referenced types:** [`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission).
+
+## INVALIDATE_SELF_SESSIONS
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L103).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+INVALIDATE_SELF_SESSIONS: GlobalPermission
+```
+
+**Referenced types:** [`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission).
+
+## INVALIDATE_SESSIONS
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L97).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+INVALIDATE_SESSIONS: GlobalPermission
+```
+
+**Referenced types:** [`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission).
+
+## InstancePermission
+
+**Enum** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L48).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `int`.
+
+```python
+class InstancePermission(int, metaclass=_enum_type_wrapper.EnumTypeWrapper)
+```
+
+### `INSTANCE_COMMAND_EXECUTION`
+
+**Type:** `_ClassVar[InstancePermission]` ([`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L50)
+
+### `READ_INSTANCE`
+
+**Type:** `_ClassVar[InstancePermission]` ([`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L51)
+
+### `UPDATE_INSTANCE_META`
+
+**Type:** `_ClassVar[InstancePermission]` ([`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L52)
+
+### `UPDATE_INSTANCE_CONFIG`
+
+**Type:** `_ClassVar[InstancePermission]` ([`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L53)
+
+### `DELETE_INSTANCE`
+
+**Type:** `_ClassVar[InstancePermission]` ([`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L54)
+
+### `AUTHENTICATE_MC_ACCOUNT`
+
+**Type:** `_ClassVar[InstancePermission]` ([`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L55)
+
+### `CHECK_PROXY`
+
+**Type:** `_ClassVar[InstancePermission]` ([`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L56)
+
+### `DOWNLOAD_URL`
+
+**Type:** `_ClassVar[InstancePermission]` ([`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L57)
+
+### `ACCESS_OBJECT_STORAGE`
+
+**Type:** `_ClassVar[InstancePermission]` ([`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L58)
+
+### `INSTANCE_SUBSCRIBE_LOGS`
+
+**Type:** `_ClassVar[InstancePermission]` ([`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L59)
+
+### `READ_INSTANCE_AUDIT_LOGS`
+
+**Type:** `_ClassVar[InstancePermission]` ([`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L60)
+
+### `READ_BOT_INFO`
+
+**Type:** `_ClassVar[InstancePermission]` ([`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L61)
+
+### `UPDATE_BOT_CONFIG`
+
+**Type:** `_ClassVar[InstancePermission]` ([`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L62)
+
+### `CONTROL_BOTS`
+
+**Type:** `_ClassVar[InstancePermission]` ([`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L63)
+
+### `EXECUTE_SCRIPTS`
+
+**Type:** `_ClassVar[InstancePermission]` ([`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L64)
+
+### `CONTROL_BOT_ACTIONS`
+
+**Type:** `_ClassVar[InstancePermission]` ([`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L65)
+
+### `RAW_PROTOCOL`
+
+**Type:** `_ClassVar[InstancePermission]` ([`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L66)
+
+## IntSetting
+
+**Class** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L302).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class IntSetting(_message.Message)
+```
+
+### `UI_NAME_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L304)
+
+### `DESCRIPTION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L305)
+
+### `DEF_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L306)
+
+### `MIN_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L307)
+
+### `MAX_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L308)
+
+### `STEP_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L309)
+
+### `PLACEHOLDER_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L310)
+
+### `THOUSAND_SEPARATOR_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L311)
+
+### `DISABLED_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L312)
+
+### `ui_name`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L313)
+
+### `description`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L314)
+
+### `min`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L315)
+
+### `max`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L316)
+
+### `step`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L317)
+
+### `placeholder`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L318)
+
+### `thousand_separator`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L319)
+
+### `disabled`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L320)
+
+### `__init__`
+
+```python
+def __init__(self, ui_name: _Optional[str]=..., description: _Optional[str]=..., min: _Optional[int]=..., max: _Optional[int]=..., step: _Optional[int]=..., placeholder: _Optional[str]=..., thousand_separator: bool=..., disabled: bool=..., **kwargs) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `ui_name` | `_Optional[str]` | `...` | positional or keyword |
+| `description` | `_Optional[str]` | `...` | positional or keyword |
+| `min` | `_Optional[int]` | `...` | positional or keyword |
+| `max` | `_Optional[int]` | `...` | positional or keyword |
+| `step` | `_Optional[int]` | `...` | positional or keyword |
+| `placeholder` | `_Optional[str]` | `...` | positional or keyword |
+| `thousand_separator` | `bool` | `...` | positional or keyword |
+| `disabled` | `bool` | `...` | positional or keyword |
+| `**kwargs` | No type annotation | Optional | variadic keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L321)
+
+## MICROSOFT_BEDROCK_CREDENTIALS
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L79).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+MICROSOFT_BEDROCK_CREDENTIALS: AccountTypeCredentials
+```
+
+**Referenced types:** [`AccountTypeCredentials`](/docs/sdk/api/py/generated-common-pb2#accounttypecredentials).
+
+## MICROSOFT_BEDROCK_DEVICE_CODE
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L86).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+MICROSOFT_BEDROCK_DEVICE_CODE: AccountTypeDeviceCode
+```
+
+**Referenced types:** [`AccountTypeDeviceCode`](/docs/sdk/api/py/generated-common-pb2#accounttypedevicecode).
+
+## MICROSOFT_JAVA_ACCESS_TOKEN
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L83).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+MICROSOFT_JAVA_ACCESS_TOKEN: AccountTypeCredentials
+```
+
+**Referenced types:** [`AccountTypeCredentials`](/docs/sdk/api/py/generated-common-pb2#accounttypecredentials).
+
+## MICROSOFT_JAVA_COOKIES
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L82).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+MICROSOFT_JAVA_COOKIES: AccountTypeCredentials
+```
+
+**Referenced types:** [`AccountTypeCredentials`](/docs/sdk/api/py/generated-common-pb2#accounttypecredentials).
+
+## MICROSOFT_JAVA_CREDENTIALS
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L78).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+MICROSOFT_JAVA_CREDENTIALS: AccountTypeCredentials
+```
+
+**Referenced types:** [`AccountTypeCredentials`](/docs/sdk/api/py/generated-common-pb2#accounttypecredentials).
+
+## MICROSOFT_JAVA_DEVICE_CODE
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L85).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+MICROSOFT_JAVA_DEVICE_CODE: AccountTypeDeviceCode
+```
+
+**Referenced types:** [`AccountTypeDeviceCode`](/docs/sdk/api/py/generated-common-pb2#accounttypedevicecode).
+
+## MICROSOFT_JAVA_REFRESH_TOKEN
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L81).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+MICROSOFT_JAVA_REFRESH_TOKEN: AccountTypeCredentials
+```
+
+**Referenced types:** [`AccountTypeCredentials`](/docs/sdk/api/py/generated-common-pb2#accounttypecredentials).
+
+## MinMaxSetting
+
+**Class** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L394).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class MinMaxSetting(_message.Message)
+```
+
+### `MIN_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L406)
+
+### `MAX_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L407)
+
+### `STEP_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L408)
+
+### `THOUSAND_SEPARATOR_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L409)
+
+### `MINENTRY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L410)
+
+### `MAXENTRY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L411)
+
+### `DISABLED_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L412)
+
+### `min`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L413)
+
+### `max`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L414)
+
+### `step`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L415)
+
+### `thousand_separator`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L416)
+
+### `minEntry`
+
+**Type:** [`MinMaxSetting.Entry`](/docs/sdk/api/py/generated-common-pb2#minmaxsettingentry).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L417)
+
+### `maxEntry`
+
+**Type:** [`MinMaxSetting.Entry`](/docs/sdk/api/py/generated-common-pb2#minmaxsettingentry).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L418)
+
+### `disabled`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L419)
+
+### `__init__`
+
+```python
+def __init__(self, min: _Optional[int]=..., max: _Optional[int]=..., step: _Optional[int]=..., thousand_separator: bool=..., minEntry: _Optional[_Union[MinMaxSetting.Entry, _Mapping]]=..., maxEntry: _Optional[_Union[MinMaxSetting.Entry, _Mapping]]=..., disabled: bool=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `min` | `_Optional[int]` | `...` | positional or keyword |
+| `max` | `_Optional[int]` | `...` | positional or keyword |
+| `step` | `_Optional[int]` | `...` | positional or keyword |
+| `thousand_separator` | `bool` | `...` | positional or keyword |
+| `minEntry` | `_Optional[_Union[MinMaxSetting.Entry, _Mapping]]` ([`MinMaxSetting.Entry`](/docs/sdk/api/py/generated-common-pb2#minmaxsettingentry)) | `...` | positional or keyword |
+| `maxEntry` | `_Optional[_Union[MinMaxSetting.Entry, _Mapping]]` ([`MinMaxSetting.Entry`](/docs/sdk/api/py/generated-common-pb2#minmaxsettingentry)) | `...` | positional or keyword |
+| `disabled` | `bool` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L420)
+
+## MinMaxSetting.Entry
+
+**Class** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L396).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class MinMaxSetting.Entry(_message.Message)
+```
+
+### `UI_NAME_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L398)
+
+### `DESCRIPTION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L399)
+
+### `DEF_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L400)
+
+### `PLACEHOLDER_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L401)
+
+### `ui_name`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L402)
+
+### `description`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L403)
+
+### `placeholder`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L404)
+
+### `__init__`
+
+```python
+def __init__(self, ui_name: _Optional[str]=..., description: _Optional[str]=..., placeholder: _Optional[str]=..., **kwargs) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `ui_name` | `_Optional[str]` | `...` | positional or keyword |
+| `description` | `_Optional[str]` | `...` | positional or keyword |
+| `placeholder` | `_Optional[str]` | `...` | positional or keyword |
+| `**kwargs` | No type annotation | Optional | variadic keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L405)
+
+## MinecraftAccountProto
+
+**Class** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L171).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class MinecraftAccountProto(_message.Message)
+```
+
+### `MICROSOFT_JAVA_CREDENTIALS`
+
+**Type:** [`MinecraftAccountProto.AccountTypeProto`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoaccounttypeproto).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L184)
+
+### `MICROSOFT_BEDROCK_CREDENTIALS`
+
+**Type:** [`MinecraftAccountProto.AccountTypeProto`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoaccounttypeproto).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L185)
+
+### `OFFLINE`
+
+**Type:** [`MinecraftAccountProto.AccountTypeProto`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoaccounttypeproto).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L186)
+
+### `MICROSOFT_JAVA_DEVICE_CODE`
+
+**Type:** [`MinecraftAccountProto.AccountTypeProto`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoaccounttypeproto).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L187)
+
+### `MICROSOFT_BEDROCK_DEVICE_CODE`
+
+**Type:** [`MinecraftAccountProto.AccountTypeProto`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoaccounttypeproto).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L188)
+
+### `MICROSOFT_JAVA_REFRESH_TOKEN`
+
+**Type:** [`MinecraftAccountProto.AccountTypeProto`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoaccounttypeproto).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L189)
+
+### `MICROSOFT_JAVA_COOKIES`
+
+**Type:** [`MinecraftAccountProto.AccountTypeProto`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoaccounttypeproto).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L190)
+
+### `MICROSOFT_JAVA_ACCESS_TOKEN`
+
+**Type:** [`MinecraftAccountProto.AccountTypeProto`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoaccounttypeproto).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L191)
+
+### `THE_ALTENING`
+
+**Type:** [`MinecraftAccountProto.AccountTypeProto`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoaccounttypeproto).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L192)
+
+### `TYPE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L220)
+
+### `PROFILE_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L221)
+
+### `LAST_KNOWN_NAME_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L222)
+
+### `ONLINE_CHAIN_JAVA_DATA_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L223)
+
+### `OFFLINE_JAVA_DATA_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L224)
+
+### `BEDROCK_DATA_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L225)
+
+### `ONLINE_SIMPLE_JAVA_DATA_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L226)
+
+### `THE_ALTENING_JAVA_DATA_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L227)
+
+### `CONFIG_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L228)
+
+### `PERSISTENT_METADATA_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L229)
+
+### `type`
+
+**Type:** [`MinecraftAccountProto.AccountTypeProto`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoaccounttypeproto).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L230)
+
+### `profile_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L231)
+
+### `last_known_name`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L232)
+
+### `online_chain_java_data`
+
+**Type:** [`MinecraftAccountProto.OnlineChainJavaData`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoonlinechainjavadata).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L233)
+
+### `offline_java_data`
+
+**Type:** [`MinecraftAccountProto.OfflineJavaData`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoofflinejavadata).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L234)
+
+### `bedrock_data`
+
+**Type:** [`MinecraftAccountProto.BedrockData`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotobedrockdata).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L235)
+
+### `online_simple_java_data`
+
+**Type:** [`MinecraftAccountProto.OnlineSimpleJavaData`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoonlinesimplejavadata).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L236)
+
+### `the_altening_java_data`
+
+**Type:** [`MinecraftAccountProto.TheAlteningJavaData`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotothealteningjavadata).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L237)
+
+### `config`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[SettingsNamespace]` ([`SettingsNamespace`](/docs/sdk/api/py/generated-common-pb2#settingsnamespace)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L238)
+
+### `persistent_metadata`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[SettingsNamespace]` ([`SettingsNamespace`](/docs/sdk/api/py/generated-common-pb2#settingsnamespace)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L239)
+
+### `__init__`
+
+```python
+def __init__(self, type: _Optional[_Union[MinecraftAccountProto.AccountTypeProto, str]]=..., profile_id: _Optional[str]=..., last_known_name: _Optional[str]=..., online_chain_java_data: _Optional[_Union[MinecraftAccountProto.OnlineChainJavaData, _Mapping]]=..., offline_java_data: _Optional[_Union[MinecraftAccountProto.OfflineJavaData, _Mapping]]=..., bedrock_data: _Optional[_Union[MinecraftAccountProto.BedrockData, _Mapping]]=..., online_simple_java_data: _Optional[_Union[MinecraftAccountProto.OnlineSimpleJavaData, _Mapping]]=..., the_altening_java_data: _Optional[_Union[MinecraftAccountProto.TheAlteningJavaData, _Mapping]]=..., config: _Optional[_Iterable[_Union[SettingsNamespace, _Mapping]]]=..., persistent_metadata: _Optional[_Iterable[_Union[SettingsNamespace, _Mapping]]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `type` | `_Optional[_Union[MinecraftAccountProto.AccountTypeProto, str]]` ([`MinecraftAccountProto.AccountTypeProto`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoaccounttypeproto)) | `...` | positional or keyword |
+| `profile_id` | `_Optional[str]` | `...` | positional or keyword |
+| `last_known_name` | `_Optional[str]` | `...` | positional or keyword |
+| `online_chain_java_data` | `_Optional[_Union[MinecraftAccountProto.OnlineChainJavaData, _Mapping]]` ([`MinecraftAccountProto.OnlineChainJavaData`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoonlinechainjavadata)) | `...` | positional or keyword |
+| `offline_java_data` | `_Optional[_Union[MinecraftAccountProto.OfflineJavaData, _Mapping]]` ([`MinecraftAccountProto.OfflineJavaData`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoofflinejavadata)) | `...` | positional or keyword |
+| `bedrock_data` | `_Optional[_Union[MinecraftAccountProto.BedrockData, _Mapping]]` ([`MinecraftAccountProto.BedrockData`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotobedrockdata)) | `...` | positional or keyword |
+| `online_simple_java_data` | `_Optional[_Union[MinecraftAccountProto.OnlineSimpleJavaData, _Mapping]]` ([`MinecraftAccountProto.OnlineSimpleJavaData`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoonlinesimplejavadata)) | `...` | positional or keyword |
+| `the_altening_java_data` | `_Optional[_Union[MinecraftAccountProto.TheAlteningJavaData, _Mapping]]` ([`MinecraftAccountProto.TheAlteningJavaData`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotothealteningjavadata)) | `...` | positional or keyword |
+| `config` | `_Optional[_Iterable[_Union[SettingsNamespace, _Mapping]]]` ([`SettingsNamespace`](/docs/sdk/api/py/generated-common-pb2#settingsnamespace)) | `...` | positional or keyword |
+| `persistent_metadata` | `_Optional[_Iterable[_Union[SettingsNamespace, _Mapping]]]` ([`SettingsNamespace`](/docs/sdk/api/py/generated-common-pb2#settingsnamespace)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L240)
+
+## MinecraftAccountProto.AccountTypeProto
+
+**Enum** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L173).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `int`.
+
+```python
+class MinecraftAccountProto.AccountTypeProto(int, metaclass=_enum_type_wrapper.EnumTypeWrapper)
+```
+
+### `MICROSOFT_JAVA_CREDENTIALS`
+
+**Type:** `_ClassVar[MinecraftAccountProto.AccountTypeProto]` ([`MinecraftAccountProto.AccountTypeProto`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoaccounttypeproto)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L175)
+
+### `MICROSOFT_BEDROCK_CREDENTIALS`
+
+**Type:** `_ClassVar[MinecraftAccountProto.AccountTypeProto]` ([`MinecraftAccountProto.AccountTypeProto`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoaccounttypeproto)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L176)
+
+### `OFFLINE`
+
+**Type:** `_ClassVar[MinecraftAccountProto.AccountTypeProto]` ([`MinecraftAccountProto.AccountTypeProto`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoaccounttypeproto)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L177)
+
+### `MICROSOFT_JAVA_DEVICE_CODE`
+
+**Type:** `_ClassVar[MinecraftAccountProto.AccountTypeProto]` ([`MinecraftAccountProto.AccountTypeProto`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoaccounttypeproto)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L178)
+
+### `MICROSOFT_BEDROCK_DEVICE_CODE`
+
+**Type:** `_ClassVar[MinecraftAccountProto.AccountTypeProto]` ([`MinecraftAccountProto.AccountTypeProto`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoaccounttypeproto)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L179)
+
+### `MICROSOFT_JAVA_REFRESH_TOKEN`
+
+**Type:** `_ClassVar[MinecraftAccountProto.AccountTypeProto]` ([`MinecraftAccountProto.AccountTypeProto`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoaccounttypeproto)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L180)
+
+### `MICROSOFT_JAVA_COOKIES`
+
+**Type:** `_ClassVar[MinecraftAccountProto.AccountTypeProto]` ([`MinecraftAccountProto.AccountTypeProto`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoaccounttypeproto)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L181)
+
+### `MICROSOFT_JAVA_ACCESS_TOKEN`
+
+**Type:** `_ClassVar[MinecraftAccountProto.AccountTypeProto]` ([`MinecraftAccountProto.AccountTypeProto`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoaccounttypeproto)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L182)
+
+### `THE_ALTENING`
+
+**Type:** `_ClassVar[MinecraftAccountProto.AccountTypeProto]` ([`MinecraftAccountProto.AccountTypeProto`](/docs/sdk/api/py/generated-common-pb2#minecraftaccountprotoaccounttypeproto)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L183)
+
+## MinecraftAccountProto.BedrockData
+
+**Class** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L215).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class MinecraftAccountProto.BedrockData(_message.Message)
+```
+
+### `AUTH_CHAIN_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L217)
+
+### `auth_chain`
+
+**Type:** `_struct_pb2.Struct`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L218)
+
+### `__init__`
+
+```python
+def __init__(self, auth_chain: _Optional[_Union[_struct_pb2.Struct, _Mapping]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `auth_chain` | `_Optional[_Union[_struct_pb2.Struct, _Mapping]]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L219)
+
+## MinecraftAccountProto.OfflineJavaData
+
+**Class** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L198).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class MinecraftAccountProto.OfflineJavaData(_message.Message)
+```
+
+### `__init__`
+
+```python
+def __init__(self) -> None
+```
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L200)
+
+## MinecraftAccountProto.OnlineChainJavaData
+
+**Class** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L193).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class MinecraftAccountProto.OnlineChainJavaData(_message.Message)
+```
+
+### `AUTH_CHAIN_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L195)
+
+### `auth_chain`
+
+**Type:** `_struct_pb2.Struct`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L196)
+
+### `__init__`
+
+```python
+def __init__(self, auth_chain: _Optional[_Union[_struct_pb2.Struct, _Mapping]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `auth_chain` | `_Optional[_Union[_struct_pb2.Struct, _Mapping]]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L197)
+
+## MinecraftAccountProto.OnlineSimpleJavaData
+
+**Class** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L201).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class MinecraftAccountProto.OnlineSimpleJavaData(_message.Message)
+```
+
+### `ACCESS_TOKEN_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L203)
+
+### `EXPIRE_TIME_MS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L204)
+
+### `access_token`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L205)
+
+### `expire_time_ms`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L206)
+
+### `__init__`
+
+```python
+def __init__(self, access_token: _Optional[str]=..., expire_time_ms: _Optional[int]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `access_token` | `_Optional[str]` | `...` | positional or keyword |
+| `expire_time_ms` | `_Optional[int]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L207)
+
+## MinecraftAccountProto.TheAlteningJavaData
+
+**Class** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L208).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class MinecraftAccountProto.TheAlteningJavaData(_message.Message)
+```
+
+### `ACCOUNT_TOKEN_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L210)
+
+### `ACCESS_TOKEN_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L211)
+
+### `account_token`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L212)
+
+### `access_token`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L213)
+
+### `__init__`
+
+```python
+def __init__(self, account_token: _Optional[str]=..., access_token: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `account_token` | `_Optional[str]` | `...` | positional or keyword |
+| `access_token` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L214)
+
+## OFFLINE
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L80).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+OFFLINE: AccountTypeCredentials
+```
+
+**Referenced types:** [`AccountTypeCredentials`](/docs/sdk/api/py/generated-common-pb2#accounttypecredentials).
+
+## ProxyProto
+
+**Class** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L151).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class ProxyProto(_message.Message)
+```
+
+### `HTTP`
+
+**Type:** [`ProxyProto.Type`](/docs/sdk/api/py/generated-common-pb2#proxyprototype).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L158)
+
+### `SOCKS4`
+
+**Type:** [`ProxyProto.Type`](/docs/sdk/api/py/generated-common-pb2#proxyprototype).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L159)
+
+### `SOCKS5`
+
+**Type:** [`ProxyProto.Type`](/docs/sdk/api/py/generated-common-pb2#proxyprototype).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L160)
+
+### `TYPE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L161)
+
+### `ADDRESS_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L162)
+
+### `USERNAME_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L163)
+
+### `PASSWORD_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L164)
+
+### `type`
+
+**Type:** [`ProxyProto.Type`](/docs/sdk/api/py/generated-common-pb2#proxyprototype).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L165)
+
+### `address`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L166)
+
+### `username`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L167)
+
+### `password`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L168)
+
+### `__init__`
+
+```python
+def __init__(self, type: _Optional[_Union[ProxyProto.Type, str]]=..., address: _Optional[str]=..., username: _Optional[str]=..., password: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `type` | `_Optional[_Union[ProxyProto.Type, str]]` ([`ProxyProto.Type`](/docs/sdk/api/py/generated-common-pb2#proxyprototype)) | `...` | positional or keyword |
+| `address` | `_Optional[str]` | `...` | positional or keyword |
+| `username` | `_Optional[str]` | `...` | positional or keyword |
+| `password` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L169)
+
+## ProxyProto.Type
+
+**Enum** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L153).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `int`.
+
+```python
+class ProxyProto.Type(int, metaclass=_enum_type_wrapper.EnumTypeWrapper)
+```
+
+### `HTTP`
+
+**Type:** `_ClassVar[ProxyProto.Type]` ([`ProxyProto.Type`](/docs/sdk/api/py/generated-common-pb2#proxyprototype)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L155)
+
+### `SOCKS4`
+
+**Type:** `_ClassVar[ProxyProto.Type]` ([`ProxyProto.Type`](/docs/sdk/api/py/generated-common-pb2#proxyprototype)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L156)
+
+### `SOCKS5`
+
+**Type:** `_ClassVar[ProxyProto.Type]` ([`ProxyProto.Type`](/docs/sdk/api/py/generated-common-pb2#proxyprototype)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L157)
+
+## RAW_PROTOCOL
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L120).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+RAW_PROTOCOL: InstancePermission
+```
+
+**Referenced types:** [`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission).
+
+## READ_BOT_INFO
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L115).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+READ_BOT_INFO: InstancePermission
+```
+
+**Referenced types:** [`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission).
+
+## READ_CLIENT_DATA
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L89).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+READ_CLIENT_DATA: GlobalPermission
+```
+
+**Referenced types:** [`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission).
+
+## READ_INSTANCE
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L105).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+READ_INSTANCE: InstancePermission
+```
+
+**Referenced types:** [`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission).
+
+## READ_INSTANCE_AUDIT_LOGS
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L114).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+READ_INSTANCE_AUDIT_LOGS: InstancePermission
+```
+
+**Referenced types:** [`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission).
+
+## READ_SERVER_CONFIG
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L90).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+READ_SERVER_CONFIG: GlobalPermission
+```
+
+**Referenced types:** [`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission).
+
+## READ_USER
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L93).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+READ_USER: GlobalPermission
+```
+
+**Referenced types:** [`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission).
+
+## SERVER
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L123).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+SERVER: SettingsPageEntryScopeType
+```
+
+**Referenced types:** [`SettingsPageEntryScopeType`](/docs/sdk/api/py/generated-common-pb2#settingspageentryscopetype).
+
+## ServerPlugin
+
+**Class** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L460).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class ServerPlugin(_message.Message)
+```
+
+### `ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L462)
+
+### `VERSION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L463)
+
+### `DESCRIPTION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L464)
+
+### `AUTHOR_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L465)
+
+### `LICENSE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L466)
+
+### `WEBSITE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L467)
+
+### `id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L468)
+
+### `version`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L469)
+
+### `description`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L470)
+
+### `author`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L471)
+
+### `license`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L472)
+
+### `website`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L473)
+
+### `__init__`
+
+```python
+def __init__(self, id: _Optional[str]=..., version: _Optional[str]=..., description: _Optional[str]=..., author: _Optional[str]=..., license: _Optional[str]=..., website: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `id` | `_Optional[str]` | `...` | positional or keyword |
+| `version` | `_Optional[str]` | `...` | positional or keyword |
+| `description` | `_Optional[str]` | `...` | positional or keyword |
+| `author` | `_Optional[str]` | `...` | positional or keyword |
+| `license` | `_Optional[str]` | `...` | positional or keyword |
+| `website` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L474)
+
+## SettingsDefinition
+
+**Class** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L422).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class SettingsDefinition(_message.Message)
+```
+
+### `ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L424)
+
+### `SCOPE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L425)
+
+### `STRING_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L426)
+
+### `INT_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L427)
+
+### `DOUBLE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L428)
+
+### `BOOL_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L429)
+
+### `COMBO_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L430)
+
+### `STRING_LIST_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L431)
+
+### `MIN_MAX_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L432)
+
+### `id`
+
+**Type:** [`SettingsEntryIdentifier`](/docs/sdk/api/py/generated-common-pb2#settingsentryidentifier).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L433)
+
+### `scope`
+
+**Type:** [`SettingsPageEntryScopeType`](/docs/sdk/api/py/generated-common-pb2#settingspageentryscopetype).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L434)
+
+### `string`
+
+**Type:** [`StringSetting`](/docs/sdk/api/py/generated-common-pb2#stringsetting).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L435)
+
+### `int`
+
+**Type:** [`IntSetting`](/docs/sdk/api/py/generated-common-pb2#intsetting).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L436)
+
+### `double`
+
+**Type:** [`DoubleSetting`](/docs/sdk/api/py/generated-common-pb2#doublesetting).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L437)
+
+### `bool`
+
+**Type:** [`BoolSetting`](/docs/sdk/api/py/generated-common-pb2#boolsetting).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L438)
+
+### `combo`
+
+**Type:** [`ComboSetting`](/docs/sdk/api/py/generated-common-pb2#combosetting).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L439)
+
+### `string_list`
+
+**Type:** [`StringListSetting`](/docs/sdk/api/py/generated-common-pb2#stringlistsetting).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L440)
+
+### `min_max`
+
+**Type:** [`MinMaxSetting`](/docs/sdk/api/py/generated-common-pb2#minmaxsetting).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L441)
+
+### `__init__`
+
+```python
+def __init__(self, id: _Optional[_Union[SettingsEntryIdentifier, _Mapping]]=..., scope: _Optional[_Union[SettingsPageEntryScopeType, str]]=..., string: _Optional[_Union[StringSetting, _Mapping]]=..., int: _Optional[_Union[IntSetting, _Mapping]]=..., double: _Optional[_Union[DoubleSetting, _Mapping]]=..., bool: _Optional[_Union[BoolSetting, _Mapping]]=..., combo: _Optional[_Union[ComboSetting, _Mapping]]=..., string_list: _Optional[_Union[StringListSetting, _Mapping]]=..., min_max: _Optional[_Union[MinMaxSetting, _Mapping]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `id` | `_Optional[_Union[SettingsEntryIdentifier, _Mapping]]` ([`SettingsEntryIdentifier`](/docs/sdk/api/py/generated-common-pb2#settingsentryidentifier)) | `...` | positional or keyword |
+| `scope` | `_Optional[_Union[SettingsPageEntryScopeType, str]]` ([`SettingsPageEntryScopeType`](/docs/sdk/api/py/generated-common-pb2#settingspageentryscopetype)) | `...` | positional or keyword |
+| `string` | `_Optional[_Union[StringSetting, _Mapping]]` ([`StringSetting`](/docs/sdk/api/py/generated-common-pb2#stringsetting)) | `...` | positional or keyword |
+| `int` | `_Optional[_Union[IntSetting, _Mapping]]` ([`IntSetting`](/docs/sdk/api/py/generated-common-pb2#intsetting)) | `...` | positional or keyword |
+| `double` | `_Optional[_Union[DoubleSetting, _Mapping]]` ([`DoubleSetting`](/docs/sdk/api/py/generated-common-pb2#doublesetting)) | `...` | positional or keyword |
+| `bool` | `_Optional[_Union[BoolSetting, _Mapping]]` ([`BoolSetting`](/docs/sdk/api/py/generated-common-pb2#boolsetting)) | `...` | positional or keyword |
+| `combo` | `_Optional[_Union[ComboSetting, _Mapping]]` ([`ComboSetting`](/docs/sdk/api/py/generated-common-pb2#combosetting)) | `...` | positional or keyword |
+| `string_list` | `_Optional[_Union[StringListSetting, _Mapping]]` ([`StringListSetting`](/docs/sdk/api/py/generated-common-pb2#stringlistsetting)) | `...` | positional or keyword |
+| `min_max` | `_Optional[_Union[MinMaxSetting, _Mapping]]` ([`MinMaxSetting`](/docs/sdk/api/py/generated-common-pb2#minmaxsetting)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L442)
+
+## SettingsEntryIdentifier
+
+**Class** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L257).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class SettingsEntryIdentifier(_message.Message)
+```
+
+### `NAMESPACE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L259)
+
+### `KEY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L260)
+
+### `namespace`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L261)
+
+### `key`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L262)
+
+### `__init__`
+
+```python
+def __init__(self, namespace: _Optional[str]=..., key: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `namespace` | `_Optional[str]` | `...` | positional or keyword |
+| `key` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L263)
+
+## SettingsNamespace
+
+**Class** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L242).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class SettingsNamespace(_message.Message)
+```
+
+### `NAMESPACE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L251)
+
+### `ENTRIES_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L252)
+
+### `namespace`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L253)
+
+### `entries`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[SettingsNamespace.SettingsEntry]` ([`SettingsNamespace.SettingsEntry`](/docs/sdk/api/py/generated-common-pb2#settingsnamespacesettingsentry)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L254)
+
+### `__init__`
+
+```python
+def __init__(self, namespace: _Optional[str]=..., entries: _Optional[_Iterable[_Union[SettingsNamespace.SettingsEntry, _Mapping]]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `namespace` | `_Optional[str]` | `...` | positional or keyword |
+| `entries` | `_Optional[_Iterable[_Union[SettingsNamespace.SettingsEntry, _Mapping]]]` ([`SettingsNamespace.SettingsEntry`](/docs/sdk/api/py/generated-common-pb2#settingsnamespacesettingsentry)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L255)
+
+## SettingsNamespace.SettingsEntry
+
+**Class** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L244).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class SettingsNamespace.SettingsEntry(_message.Message)
+```
+
+### `KEY_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L246)
+
+### `VALUE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L247)
+
+### `key`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L248)
+
+### `value`
+
+**Type:** `_struct_pb2.Value`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L249)
+
+### `__init__`
+
+```python
+def __init__(self, key: _Optional[str]=..., value: _Optional[_Union[_struct_pb2.Value, _Mapping]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `key` | `_Optional[str]` | `...` | positional or keyword |
+| `value` | `_Optional[_Union[_struct_pb2.Value, _Mapping]]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L250)
+
+## SettingsPage
+
+**Class** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L444).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class SettingsPage(_message.Message)
+```
+
+### `ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L446)
+
+### `OWNING_PLUGIN_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L447)
+
+### `PAGE_NAME_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L448)
+
+### `ENTRIES_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L449)
+
+### `ICON_ID_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L450)
+
+### `ENABLED_IDENTIFIER_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L451)
+
+### `id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L452)
+
+### `owning_plugin_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L453)
+
+### `page_name`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L454)
+
+### `entries`
+
+**Type:** `_containers.RepeatedCompositeFieldContainer[SettingsEntryIdentifier]` ([`SettingsEntryIdentifier`](/docs/sdk/api/py/generated-common-pb2#settingsentryidentifier)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L455)
+
+### `icon_id`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L456)
+
+### `enabled_identifier`
+
+**Type:** [`SettingsEntryIdentifier`](/docs/sdk/api/py/generated-common-pb2#settingsentryidentifier).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L457)
+
+### `__init__`
+
+```python
+def __init__(self, id: _Optional[str]=..., owning_plugin_id: _Optional[str]=..., page_name: _Optional[str]=..., entries: _Optional[_Iterable[_Union[SettingsEntryIdentifier, _Mapping]]]=..., icon_id: _Optional[str]=..., enabled_identifier: _Optional[_Union[SettingsEntryIdentifier, _Mapping]]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `id` | `_Optional[str]` | `...` | positional or keyword |
+| `owning_plugin_id` | `_Optional[str]` | `...` | positional or keyword |
+| `page_name` | `_Optional[str]` | `...` | positional or keyword |
+| `entries` | `_Optional[_Iterable[_Union[SettingsEntryIdentifier, _Mapping]]]` ([`SettingsEntryIdentifier`](/docs/sdk/api/py/generated-common-pb2#settingsentryidentifier)) | `...` | positional or keyword |
+| `icon_id` | `_Optional[str]` | `...` | positional or keyword |
+| `enabled_identifier` | `_Optional[_Union[SettingsEntryIdentifier, _Mapping]]` ([`SettingsEntryIdentifier`](/docs/sdk/api/py/generated-common-pb2#settingsentryidentifier)) | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L458)
+
+## SettingsPageEntryScopeType
+
+**Enum** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L73).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `int`.
+
+```python
+class SettingsPageEntryScopeType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper)
+```
+
+### `SERVER`
+
+**Type:** `_ClassVar[SettingsPageEntryScopeType]` ([`SettingsPageEntryScopeType`](/docs/sdk/api/py/generated-common-pb2#settingspageentryscopetype)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L75)
+
+### `INSTANCE`
+
+**Type:** `_ClassVar[SettingsPageEntryScopeType]` ([`SettingsPageEntryScopeType`](/docs/sdk/api/py/generated-common-pb2#settingspageentryscopetype)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L76)
+
+### `BOT`
+
+**Type:** `_ClassVar[SettingsPageEntryScopeType]` ([`SettingsPageEntryScopeType`](/docs/sdk/api/py/generated-common-pb2#settingspageentryscopetype)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L77)
+
+## StringListSetting
+
+**Class** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L383).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class StringListSetting(_message.Message)
+```
+
+### `UI_NAME_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L385)
+
+### `DESCRIPTION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L386)
+
+### `DEF_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L387)
+
+### `DISABLED_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L388)
+
+### `ui_name`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L389)
+
+### `description`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L390)
+
+### `disabled`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L391)
+
+### `__init__`
+
+```python
+def __init__(self, ui_name: _Optional[str]=..., description: _Optional[str]=..., disabled: bool=..., **kwargs) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `ui_name` | `_Optional[str]` | `...` | positional or keyword |
+| `description` | `_Optional[str]` | `...` | positional or keyword |
+| `disabled` | `bool` | `...` | positional or keyword |
+| `**kwargs` | No type annotation | Optional | variadic keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L392)
+
+## StringSetting
+
+**Class** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L265).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class StringSetting(_message.Message)
+```
+
+### `TEXT`
+
+**Type:** [`StringSetting.InputType`](/docs/sdk/api/py/generated-common-pb2#stringsettinginputtype).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L276)
+
+### `PASSWORD`
+
+**Type:** [`StringSetting.InputType`](/docs/sdk/api/py/generated-common-pb2#stringsettinginputtype).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L277)
+
+### `EMAIL`
+
+**Type:** [`StringSetting.InputType`](/docs/sdk/api/py/generated-common-pb2#stringsettinginputtype).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L278)
+
+### `SEARCH`
+
+**Type:** [`StringSetting.InputType`](/docs/sdk/api/py/generated-common-pb2#stringsettinginputtype).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L279)
+
+### `TEL`
+
+**Type:** [`StringSetting.InputType`](/docs/sdk/api/py/generated-common-pb2#stringsettinginputtype).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L280)
+
+### `URL`
+
+**Type:** [`StringSetting.InputType`](/docs/sdk/api/py/generated-common-pb2#stringsettinginputtype).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L281)
+
+### `TEXTAREA`
+
+**Type:** [`StringSetting.InputType`](/docs/sdk/api/py/generated-common-pb2#stringsettinginputtype).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L282)
+
+### `UI_NAME_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L283)
+
+### `DESCRIPTION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L284)
+
+### `DEF_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L285)
+
+### `INPUT_TYPE_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L286)
+
+### `PLACEHOLDER_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L287)
+
+### `MIN_LENGTH_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L288)
+
+### `MAX_LENGTH_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L289)
+
+### `PATTERN_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L290)
+
+### `DISABLED_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L291)
+
+### `ui_name`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L292)
+
+### `description`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L293)
+
+### `input_type`
+
+**Type:** [`StringSetting.InputType`](/docs/sdk/api/py/generated-common-pb2#stringsettinginputtype).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L294)
+
+### `placeholder`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L295)
+
+### `min_length`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L296)
+
+### `max_length`
+
+**Type:** `int`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L297)
+
+### `pattern`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L298)
+
+### `disabled`
+
+**Type:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L299)
+
+### `__init__`
+
+```python
+def __init__(self, ui_name: _Optional[str]=..., description: _Optional[str]=..., input_type: _Optional[_Union[StringSetting.InputType, str]]=..., placeholder: _Optional[str]=..., min_length: _Optional[int]=..., max_length: _Optional[int]=..., pattern: _Optional[str]=..., disabled: bool=..., **kwargs) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `ui_name` | `_Optional[str]` | `...` | positional or keyword |
+| `description` | `_Optional[str]` | `...` | positional or keyword |
+| `input_type` | `_Optional[_Union[StringSetting.InputType, str]]` ([`StringSetting.InputType`](/docs/sdk/api/py/generated-common-pb2#stringsettinginputtype)) | `...` | positional or keyword |
+| `placeholder` | `_Optional[str]` | `...` | positional or keyword |
+| `min_length` | `_Optional[int]` | `...` | positional or keyword |
+| `max_length` | `_Optional[int]` | `...` | positional or keyword |
+| `pattern` | `_Optional[str]` | `...` | positional or keyword |
+| `disabled` | `bool` | `...` | positional or keyword |
+| `**kwargs` | No type annotation | Optional | variadic keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L300)
+
+## StringSetting.InputType
+
+**Enum** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L267).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `int`.
+
+```python
+class StringSetting.InputType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper)
+```
+
+### `TEXT`
+
+**Type:** `_ClassVar[StringSetting.InputType]` ([`StringSetting.InputType`](/docs/sdk/api/py/generated-common-pb2#stringsettinginputtype)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L269)
+
+### `PASSWORD`
+
+**Type:** `_ClassVar[StringSetting.InputType]` ([`StringSetting.InputType`](/docs/sdk/api/py/generated-common-pb2#stringsettinginputtype)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L270)
+
+### `EMAIL`
+
+**Type:** `_ClassVar[StringSetting.InputType]` ([`StringSetting.InputType`](/docs/sdk/api/py/generated-common-pb2#stringsettinginputtype)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L271)
+
+### `SEARCH`
+
+**Type:** `_ClassVar[StringSetting.InputType]` ([`StringSetting.InputType`](/docs/sdk/api/py/generated-common-pb2#stringsettinginputtype)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L272)
+
+### `TEL`
+
+**Type:** `_ClassVar[StringSetting.InputType]` ([`StringSetting.InputType`](/docs/sdk/api/py/generated-common-pb2#stringsettinginputtype)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L273)
+
+### `URL`
+
+**Type:** `_ClassVar[StringSetting.InputType]` ([`StringSetting.InputType`](/docs/sdk/api/py/generated-common-pb2#stringsettinginputtype)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L274)
+
+### `TEXTAREA`
+
+**Type:** `_ClassVar[StringSetting.InputType]` ([`StringSetting.InputType`](/docs/sdk/api/py/generated-common-pb2#stringsettinginputtype)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L275)
+
+## THE_ALTENING
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L84).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+THE_ALTENING: AccountTypeCredentials
+```
+
+**Referenced types:** [`AccountTypeCredentials`](/docs/sdk/api/py/generated-common-pb2#accounttypecredentials).
+
+## UPDATE_BOT_CONFIG
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L116).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+UPDATE_BOT_CONFIG: InstancePermission
+```
+
+**Referenced types:** [`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission).
+
+## UPDATE_INSTANCE_CONFIG
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L107).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+UPDATE_INSTANCE_CONFIG: InstancePermission
+```
+
+**Referenced types:** [`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission).
+
+## UPDATE_INSTANCE_META
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L106).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+UPDATE_INSTANCE_META: InstancePermission
+```
+
+**Referenced types:** [`InstancePermission`](/docs/sdk/api/py/generated-common-pb2#instancepermission).
+
+## UPDATE_SELF_EMAIL
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L101).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+UPDATE_SELF_EMAIL: GlobalPermission
+```
+
+**Referenced types:** [`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission).
+
+## UPDATE_SELF_USERNAME
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L100).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+UPDATE_SELF_USERNAME: GlobalPermission
+```
+
+**Referenced types:** [`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission).
+
+## UPDATE_SERVER_CONFIG
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L91).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+UPDATE_SERVER_CONFIG: GlobalPermission
+```
+
+**Referenced types:** [`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission).
+
+## UPDATE_USER
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L94).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+UPDATE_USER: GlobalPermission
+```
+
+**Referenced types:** [`GlobalPermission`](/docs/sdk/api/py/generated-common-pb2#globalpermission).
+
+## USER
+
+**Constant** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L122).
+
+**Import from:** `soulfire.common_pb2`.
+
+```python
+USER: UserRole
+```
+
+**Referenced types:** [`UserRole`](/docs/sdk/api/py/generated-common-pb2#userrole).
+
+## UserRole
+
+**Enum** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L68).
+
+**Import from:** `soulfire.common_pb2`.
+
+**Bases:** `int`.
+
+```python
+class UserRole(int, metaclass=_enum_type_wrapper.EnumTypeWrapper)
+```
+
+### `ADMIN`
+
+**Type:** `_ClassVar[UserRole]` ([`UserRole`](/docs/sdk/api/py/generated-common-pb2#userrole)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L70)
+
+### `USER`
+
+**Type:** `_ClassVar[UserRole]` ([`UserRole`](/docs/sdk/api/py/generated-common-pb2#userrole)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L71)
+
+## WorldPosition
+
+**Class** in `common_pb2`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L139).
+
+**Import from:** `soulfire`, `soulfire.common_pb2`.
+
+**Bases:** `_message.Message`.
+
+```python
+class WorldPosition(_message.Message)
+```
+
+### `X_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L141)
+
+### `Y_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L142)
+
+### `Z_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L143)
+
+### `DIMENSION_FIELD_NUMBER`
+
+**Type:** `_ClassVar[int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L144)
+
+### `x`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L145)
+
+### `y`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L146)
+
+### `z`
+
+**Type:** `float`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L147)
+
+### `dimension`
+
+**Type:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L148)
+
+### `__init__`
+
+```python
+def __init__(self, x: _Optional[float]=..., y: _Optional[float]=..., z: _Optional[float]=..., dimension: _Optional[str]=...) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `x` | `_Optional[float]` | `...` | positional or keyword |
+| `y` | `_Optional[float]` | `...` | positional or keyword |
+| `z` | `_Optional[float]` | `...` | positional or keyword |
+| `dimension` | `_Optional[str]` | `...` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/common_pb2.pyi#L149)

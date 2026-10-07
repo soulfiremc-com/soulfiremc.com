@@ -1,0 +1,416 @@
+---
+title: "mc_auth_connect module"
+description: "Python API signatures, fields, and source for mc_auth_connect module."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+This module contains the generated protocol declarations. SDK imports that expose the same symbol link to the same definition.
+
+| Symbol | Kind |
+| --- | --- |
+| [`MCAuthService`](/docs/sdk/api/py/generated-mc-auth-connect#mcauthservice) | class |
+| [`MCAuthServiceASGIApplication`](/docs/sdk/api/py/generated-mc-auth-connect#mcauthserviceasgiapplication) | class |
+| [`MCAuthServiceClient`](/docs/sdk/api/py/generated-mc-auth-connect#mcauthserviceclient) | class |
+| [`MCAuthServiceClientSync`](/docs/sdk/api/py/generated-mc-auth-connect#mcauthserviceclientsync) | class |
+| [`MCAuthServiceSync`](/docs/sdk/api/py/generated-mc-auth-connect#mcauthservicesync) | class |
+| [`MCAuthServiceWSGIApplication`](/docs/sdk/api/py/generated-mc-auth-connect#mcauthservicewsgiapplication) | class |
+
+## MCAuthService
+
+**Class** in `mc_auth_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/mc_auth_connect.py#L37).
+
+**Import from:** `soulfire.mc_auth_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class MCAuthService(Protocol)
+```
+
+### `login_credentials`
+
+```python
+def login_credentials(self, request: CredentialsAuthRequest, ctx: RequestContext[CredentialsAuthRequest, CredentialsAuthResponse]) -> AsyncIterator[CredentialsAuthResponse]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`CredentialsAuthRequest`](/docs/sdk/api/py/generated-mc-auth-pb2#credentialsauthrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[CredentialsAuthRequest, CredentialsAuthResponse]` ([`CredentialsAuthRequest`](/docs/sdk/api/py/generated-mc-auth-pb2#credentialsauthrequest), [`CredentialsAuthResponse`](/docs/sdk/api/py/generated-mc-auth-pb2#credentialsauthresponse)) | Required | positional or keyword |
+
+**Returns:** `AsyncIterator[CredentialsAuthResponse]` ([`CredentialsAuthResponse`](/docs/sdk/api/py/generated-mc-auth-pb2#credentialsauthresponse)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/mc_auth_connect.py#L38)
+
+### `login_device_code`
+
+```python
+def login_device_code(self, request: DeviceCodeAuthRequest, ctx: RequestContext[DeviceCodeAuthRequest, DeviceCodeAuthResponse]) -> AsyncIterator[DeviceCodeAuthResponse]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`DeviceCodeAuthRequest`](/docs/sdk/api/py/generated-mc-auth-pb2#devicecodeauthrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[DeviceCodeAuthRequest, DeviceCodeAuthResponse]` ([`DeviceCodeAuthRequest`](/docs/sdk/api/py/generated-mc-auth-pb2#devicecodeauthrequest), [`DeviceCodeAuthResponse`](/docs/sdk/api/py/generated-mc-auth-pb2#devicecodeauthresponse)) | Required | positional or keyword |
+
+**Returns:** `AsyncIterator[DeviceCodeAuthResponse]` ([`DeviceCodeAuthResponse`](/docs/sdk/api/py/generated-mc-auth-pb2#devicecodeauthresponse)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/mc_auth_connect.py#L41)
+
+### `refresh`
+
+```python
+async def refresh(self, request: RefreshRequest, ctx: RequestContext[RefreshRequest, RefreshResponse]) -> RefreshResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`RefreshRequest`](/docs/sdk/api/py/generated-mc-auth-pb2#refreshrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[RefreshRequest, RefreshResponse]` ([`RefreshRequest`](/docs/sdk/api/py/generated-mc-auth-pb2#refreshrequest), [`RefreshResponse`](/docs/sdk/api/py/generated-mc-auth-pb2#refreshresponse)) | Required | positional or keyword |
+
+**Returns:** [`RefreshResponse`](/docs/sdk/api/py/generated-mc-auth-pb2#refreshresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/mc_auth_connect.py#L44)
+
+## MCAuthServiceASGIApplication
+
+**Class** in `mc_auth_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/mc_auth_connect.py#L48).
+
+**Import from:** `soulfire.mc_auth_connect`.
+
+**Bases:** `ConnectASGIApplication[MCAuthService]` ([`MCAuthService`](/docs/sdk/api/py/generated-mc-auth-connect#mcauthservice)).
+
+```python
+class MCAuthServiceASGIApplication(ConnectASGIApplication[MCAuthService])
+```
+
+**Referenced types:** [`MCAuthService`](/docs/sdk/api/py/generated-mc-auth-connect#mcauthservice).
+
+### `__init__`
+
+```python
+def __init__(self, service: MCAuthService | AsyncGenerator[MCAuthService], *, interceptors: Iterable[Interceptor]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | `MCAuthService \| AsyncGenerator[MCAuthService]` ([`MCAuthService`](/docs/sdk/api/py/generated-mc-auth-connect#mcauthservice)) | Required | positional or keyword |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `compressions` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/mc_auth_connect.py#L49)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/mc_auth_connect.py#L99)
+
+## MCAuthServiceClient
+
+**Class** in `mc_auth_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/mc_auth_connect.py#L104).
+
+**Import from:** `soulfire.mc_auth_connect`.
+
+**Bases:** `ConnectClient`.
+
+```python
+class MCAuthServiceClient(ConnectClient)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[Interceptor]=(), http_client: Client | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[Interceptor]` | `()` | keyword only |
+| `http_client` | `Client \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/mc_auth_connect.py#L105)
+
+### `login_credentials`
+
+```python
+def login_credentials(self, request: CredentialsAuthRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> AsyncIterator[CredentialsAuthResponse]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`CredentialsAuthRequest`](/docs/sdk/api/py/generated-mc-auth-pb2#credentialsauthrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `AsyncIterator[CredentialsAuthResponse]` ([`CredentialsAuthResponse`](/docs/sdk/api/py/generated-mc-auth-pb2#credentialsauthresponse)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/mc_auth_connect.py#L129)
+
+### `login_device_code`
+
+```python
+def login_device_code(self, request: DeviceCodeAuthRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> AsyncIterator[DeviceCodeAuthResponse]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`DeviceCodeAuthRequest`](/docs/sdk/api/py/generated-mc-auth-pb2#devicecodeauthrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `AsyncIterator[DeviceCodeAuthResponse]` ([`DeviceCodeAuthResponse`](/docs/sdk/api/py/generated-mc-auth-pb2#devicecodeauthresponse)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/mc_auth_connect.py#L149)
+
+### `refresh`
+
+```python
+async def refresh(self, request: RefreshRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> RefreshResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`RefreshRequest`](/docs/sdk/api/py/generated-mc-auth-pb2#refreshrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`RefreshResponse`](/docs/sdk/api/py/generated-mc-auth-pb2#refreshresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/mc_auth_connect.py#L169)
+
+## MCAuthServiceClientSync
+
+**Class** in `mc_auth_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/mc_auth_connect.py#L254).
+
+**Import from:** `soulfire.mc_auth_connect`.
+
+**Bases:** `ConnectClientSync`.
+
+```python
+class MCAuthServiceClientSync(ConnectClientSync)
+```
+
+### `__init__`
+
+```python
+def __init__(self, address: str, *, codec: Codec | None=_PROTO_BINARY_CODEC, protocol: ProtocolType=ProtocolType.CONNECT, accept_compression: Iterable[Compression] | None=None, send_compression: Compression | None=_GZIP_COMPRESSION, timeout_ms: int | None=None, read_max_bytes: int | None=None, interceptors: Iterable[InterceptorSync]=(), http_client: SyncClient | None=None) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `address` | `str` | Required | positional or keyword |
+| `codec` | `Codec \| None` | `_PROTO_BINARY_CODEC` | keyword only |
+| `protocol` | `ProtocolType` | `ProtocolType.CONNECT` | keyword only |
+| `accept_compression` | `Iterable[Compression] \| None` | `None` | keyword only |
+| `send_compression` | `Compression \| None` | `_GZIP_COMPRESSION` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+| `read_max_bytes` | `int \| None` | `None` | keyword only |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | keyword only |
+| `http_client` | `SyncClient \| None` | `None` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/mc_auth_connect.py#L255)
+
+### `login_credentials`
+
+```python
+def login_credentials(self, request: CredentialsAuthRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> Iterator[CredentialsAuthResponse]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`CredentialsAuthRequest`](/docs/sdk/api/py/generated-mc-auth-pb2#credentialsauthrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Iterator[CredentialsAuthResponse]` ([`CredentialsAuthResponse`](/docs/sdk/api/py/generated-mc-auth-pb2#credentialsauthresponse)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/mc_auth_connect.py#L279)
+
+### `login_device_code`
+
+```python
+def login_device_code(self, request: DeviceCodeAuthRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> Iterator[DeviceCodeAuthResponse]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`DeviceCodeAuthRequest`](/docs/sdk/api/py/generated-mc-auth-pb2#devicecodeauthrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Iterator[DeviceCodeAuthResponse]` ([`DeviceCodeAuthResponse`](/docs/sdk/api/py/generated-mc-auth-pb2#devicecodeauthresponse)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/mc_auth_connect.py#L298)
+
+### `refresh`
+
+```python
+def refresh(self, request: RefreshRequest, *, headers: Headers | Mapping[str, str] | None=None, timeout_ms: int | None=None) -> RefreshResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`RefreshRequest`](/docs/sdk/api/py/generated-mc-auth-pb2#refreshrequest) | Required | positional or keyword |
+| `headers` | `Headers \| Mapping[str, str] \| None` | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** [`RefreshResponse`](/docs/sdk/api/py/generated-mc-auth-pb2#refreshresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/mc_auth_connect.py#L317)
+
+## MCAuthServiceSync
+
+**Class** in `mc_auth_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/mc_auth_connect.py#L189).
+
+**Import from:** `soulfire.mc_auth_connect`.
+
+**Bases:** `Protocol`.
+
+```python
+class MCAuthServiceSync(Protocol)
+```
+
+### `login_credentials`
+
+```python
+def login_credentials(self, request: CredentialsAuthRequest, ctx: RequestContext[CredentialsAuthRequest, CredentialsAuthResponse]) -> Iterator[CredentialsAuthResponse]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`CredentialsAuthRequest`](/docs/sdk/api/py/generated-mc-auth-pb2#credentialsauthrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[CredentialsAuthRequest, CredentialsAuthResponse]` ([`CredentialsAuthRequest`](/docs/sdk/api/py/generated-mc-auth-pb2#credentialsauthrequest), [`CredentialsAuthResponse`](/docs/sdk/api/py/generated-mc-auth-pb2#credentialsauthresponse)) | Required | positional or keyword |
+
+**Returns:** `Iterator[CredentialsAuthResponse]` ([`CredentialsAuthResponse`](/docs/sdk/api/py/generated-mc-auth-pb2#credentialsauthresponse)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/mc_auth_connect.py#L190)
+
+### `login_device_code`
+
+```python
+def login_device_code(self, request: DeviceCodeAuthRequest, ctx: RequestContext[DeviceCodeAuthRequest, DeviceCodeAuthResponse]) -> Iterator[DeviceCodeAuthResponse]
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`DeviceCodeAuthRequest`](/docs/sdk/api/py/generated-mc-auth-pb2#devicecodeauthrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[DeviceCodeAuthRequest, DeviceCodeAuthResponse]` ([`DeviceCodeAuthRequest`](/docs/sdk/api/py/generated-mc-auth-pb2#devicecodeauthrequest), [`DeviceCodeAuthResponse`](/docs/sdk/api/py/generated-mc-auth-pb2#devicecodeauthresponse)) | Required | positional or keyword |
+
+**Returns:** `Iterator[DeviceCodeAuthResponse]` ([`DeviceCodeAuthResponse`](/docs/sdk/api/py/generated-mc-auth-pb2#devicecodeauthresponse)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/mc_auth_connect.py#L193)
+
+### `refresh`
+
+```python
+def refresh(self, request: RefreshRequest, ctx: RequestContext[RefreshRequest, RefreshResponse]) -> RefreshResponse
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | [`RefreshRequest`](/docs/sdk/api/py/generated-mc-auth-pb2#refreshrequest) | Required | positional or keyword |
+| `ctx` | `RequestContext[RefreshRequest, RefreshResponse]` ([`RefreshRequest`](/docs/sdk/api/py/generated-mc-auth-pb2#refreshrequest), [`RefreshResponse`](/docs/sdk/api/py/generated-mc-auth-pb2#refreshresponse)) | Required | positional or keyword |
+
+**Returns:** [`RefreshResponse`](/docs/sdk/api/py/generated-mc-auth-pb2#refreshresponse).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/mc_auth_connect.py#L196)
+
+## MCAuthServiceWSGIApplication
+
+**Class** in `mc_auth_connect`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/mc_auth_connect.py#L200).
+
+**Import from:** `soulfire.mc_auth_connect`.
+
+**Bases:** `ConnectWSGIApplication`.
+
+```python
+class MCAuthServiceWSGIApplication(ConnectWSGIApplication)
+```
+
+### `__init__`
+
+```python
+def __init__(self, service: MCAuthServiceSync, interceptors: Iterable[InterceptorSync]=(), read_max_bytes: int | None=None, compressions: Iterable[Compression] | None=None, codecs: Iterable[Codec] | None=_DEFAULT_CODECS) -> None
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `service` | [`MCAuthServiceSync`](/docs/sdk/api/py/generated-mc-auth-connect#mcauthservicesync) | Required | positional or keyword |
+| `interceptors` | `Iterable[InterceptorSync]` | `()` | positional or keyword |
+| `read_max_bytes` | `int \| None` | `None` | positional or keyword |
+| `compressions` | `Iterable[Compression] \| None` | `None` | positional or keyword |
+| `codecs` | `Iterable[Codec] \| None` | `_DEFAULT_CODECS` | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/mc_auth_connect.py#L201)
+
+### `path`
+
+Returns the URL path to mount the application to when serving multiple applications.
+
+```python
+@property
+def path(self) -> str
+```
+
+**Returns:** `str`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/mc_auth_connect.py#L249)

@@ -1,0 +1,1165 @@
+---
+title: "SoulFireTasks"
+description: "TypeScript API signatures, fields, and source for SoulFireTasks."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `tasks`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L974).
+
+Long jobs the server runs for the bot. Each `x` starts a task and resolves
+once accepted. Use `yield* task.result()` to wait for completion.
+Each `runX` starts it and streams its events instead,
+and the task is cancelled if the stream is.
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`.
+
+```ts
+class SoulFireTasks
+```
+
+## `constructor`
+
+```ts
+new SoulFireTasks(instanceId: string, botId: string, client: Client<GenService<{ startBotTask: { methodKind: "unary"; input: GenMessage<StartBotTaskRequest>; output: GenMessage<BotTask>; }; runBotTask: { methodKind: "server_streaming"; input: GenMessage<StartBotTaskRequest>; output: GenMessage<BotTaskEvent>; }; getBotTask: { methodKind: "unary"; input: GenMessage<GetBotTaskRequest>; output: GenMessage<BotTask>; }; listBotTasks: { methodKind: "unary"; input: GenMessage<ListBotTasksRequest>; output: GenMessage<ListBotTasksResponse>; }; watchBotTask: { methodKind: "server_streaming"; input: GenMessage<WatchBotTaskRequest>; output: GenMessage<BotTaskEvent>; }; watchBotTasks: { methodKind: "server_streaming"; input: GenMessage<WatchBotTasksRequest>; output: GenMessage<BotTaskEvent>; }; cancelBotTask: { methodKind: "unary"; input: GenMessage<CancelBotTaskRequest>; output: GenMessage<BotTask>; }; }>>, callOptions: (options?: CallOptions | undefined) => CallOptions | undefined): SoulFireTasks
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instanceId` | `string` | Required |  |
+| `botId` | `string` | Required |  |
+| `client` | `Client<GenService<{ startBotTask: { methodKind: "unary"; input: GenMessage<StartBotTaskRequest>; output: GenMessage<BotTask>; }; runBotTask: { methodKind: "server_streaming"; input: GenMessage<StartBotTaskRequest>; output: GenMessage<BotTaskEvent>; }; getBotTask: { methodKind: "unary"; input: GenMessage<GetBotTaskRequest>; output: GenMessage<BotTask>; }; listBotTasks: { methodKind: "unary"; input: GenMessage<ListBotTasksRequest>; output: GenMessage<ListBotTasksResponse>; }; watchBotTask: { methodKind: "server_streaming"; input: GenMessage<WatchBotTaskRequest>; output: GenMessage<BotTaskEvent>; }; watchBotTasks: { methodKind: "server_streaming"; input: GenMessage<WatchBotTasksRequest>; output: GenMessage<BotTaskEvent>; }; cancelBotTask: { methodKind: "unary"; input: GenMessage<CancelBotTaskRequest>; output: GenMessage<BotTask>; }; }>>` ([`StartBotTaskRequest`](/docs/sdk/api/ts/generated-soulfire-task-pb#startbottaskrequest), [`BotTask`](/docs/sdk/api/ts/bot-task), [`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`GetBotTaskRequest`](/docs/sdk/api/ts/generated-soulfire-task-pb#getbottaskrequest), [`ListBotTasksRequest`](/docs/sdk/api/ts/generated-soulfire-task-pb#listbottasksrequest), [`ListBotTasksResponse`](/docs/sdk/api/ts/generated-soulfire-task-pb#listbottasksresponse), [`WatchBotTaskRequest`](/docs/sdk/api/ts/generated-soulfire-task-pb#watchbottaskrequest), [`WatchBotTasksRequest`](/docs/sdk/api/ts/generated-soulfire-task-pb#watchbottasksrequest), [`CancelBotTaskRequest`](/docs/sdk/api/ts/generated-soulfire-task-pb#cancelbottaskrequest)) | Required |  |
+| `callOptions` | `(options?: CallOptions \| undefined) => CallOptions \| undefined` | Required |  |
+
+**Returns:** [`SoulFireTasks`](/docs/sdk/api/ts/soul-fire-tasks).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L975)
+
+## `start`
+
+Starts a task from its input message. `resultSchema` types `result()`.
+
+```ts
+start<Input extends DescMessage, Result extends DescMessage | undefined = undefined>(inputSchema: Input, input: MessageInitShape<Input>, resultSchema?: Result | undefined, options?: TaskStartOptions): Effect<SoulFireTask<Result>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `inputSchema` | `Input` | Required |  |
+| `input` | `MessageInitShape<Input>` | Required |  |
+| `resultSchema` | `Result \| undefined` | Optional |  |
+| `options` | [`TaskStartOptions`](/docs/sdk/api/ts/task-start-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<Result>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L990)
+
+## `run`
+
+Starts a task and streams its events until it ends. Unless
+`disconnectPolicy` says otherwise, the task is cancelled if the stream is.
+
+```ts
+run<Input extends DescMessage>(inputSchema: Input, input: MessageInitShape<Input>, options?: TaskStartOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `inputSchema` | `Input` | Required |  |
+| `input` | `MessageInitShape<Input>` | Required |  |
+| `options` | [`TaskStartOptions`](/docs/sdk/api/ts/task-start-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1029)
+
+## `goTo`
+
+Moves the bot to `goal` (see `goals`).
+
+```ts
+goTo(goal: PathfindGoal, options?: GoToTaskOptions): Effect<SoulFireTask<GenMessage<GoToTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `goal` | [`PathfindGoal`](/docs/sdk/api/ts/pathfind-goal) | Required |  |
+| `options` | [`GoToTaskOptions`](/docs/sdk/api/ts/go-to-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<GoToTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`GoToTaskResult`](/docs/sdk/api/ts/go-to-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1062)
+
+## `runGoTo`
+
+```ts
+runGoTo(goal: PathfindGoal, options?: GoToTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `goal` | [`PathfindGoal`](/docs/sdk/api/ts/pathfind-goal) | Required |  |
+| `options` | [`GoToTaskOptions`](/docs/sdk/api/ts/go-to-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1080)
+
+## `followEntity`
+
+Keeps within `distance` of an entity as it moves. `distance` defaults to 3.
+
+```ts
+followEntity(target: FollowEntityTarget, distance?: number, options?: FollowEntityTaskOptions): Effect<SoulFireTask<GenMessage<FollowEntityTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `target` | [`FollowEntityTarget`](/docs/sdk/api/ts/follow-entity-target) | Required |  |
+| `distance` | `number` | `3` |  |
+| `options` | [`FollowEntityTaskOptions`](/docs/sdk/api/ts/follow-entity-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<FollowEntityTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`FollowEntityTaskResult`](/docs/sdk/api/ts/follow-entity-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1099)
+
+## `runFollowEntity`
+
+`distance` defaults to 3.
+
+```ts
+runFollowEntity(target: FollowEntityTarget, distance?: number, options?: FollowEntityTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `target` | [`FollowEntityTarget`](/docs/sdk/api/ts/follow-entity-target) | Required |  |
+| `distance` | `number` | `3` |  |
+| `options` | [`FollowEntityTaskOptions`](/docs/sdk/api/ts/follow-entity-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1136)
+
+## `attackEntity`
+
+Chases one entity and attacks it until it's defeated or `maximumAttacks` is
+reached.
+
+```ts
+attackEntity(target: AttackEntityTarget, options?: AttackEntityTaskOptions): Effect<SoulFireTask<GenMessage<AttackEntityTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `target` | [`AttackEntityTarget`](/docs/sdk/api/ts/attack-entity-target) | Required |  |
+| `options` | [`AttackEntityTaskOptions`](/docs/sdk/api/ts/attack-entity-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<AttackEntityTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`AttackEntityTaskResult`](/docs/sdk/api/ts/attack-entity-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1172)
+
+## `runAttackEntity`
+
+```ts
+runAttackEntity(target: AttackEntityTarget, options?: AttackEntityTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `target` | [`AttackEntityTarget`](/docs/sdk/api/ts/attack-entity-target) | Required |  |
+| `options` | [`AttackEntityTaskOptions`](/docs/sdk/api/ts/attack-entity-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1216)
+
+## `attackNearest`
+
+Attacks the nearest entity matching `selector` within `radius`, then the
+next, up to `maximumTargets`.
+
+```ts
+attackNearest(selector: MessageInit<EntitySelector>, options?: AttackNearestTaskOptions): Effect<SoulFireTask<GenMessage<AttackNearestTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `selector` | `MessageInit<EntitySelector>` ([`EntitySelector`](/docs/sdk/api/ts/entity-selector)) | Required |  |
+| `options` | [`AttackNearestTaskOptions`](/docs/sdk/api/ts/attack-nearest-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<AttackNearestTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`AttackNearestTaskResult`](/docs/sdk/api/ts/attack-nearest-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1262)
+
+## `runAttackNearest`
+
+```ts
+runAttackNearest(selector: MessageInit<EntitySelector>, options?: AttackNearestTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `selector` | `MessageInit<EntitySelector>` ([`EntitySelector`](/docs/sdk/api/ts/entity-selector)) | Required |  |
+| `options` | [`AttackNearestTaskOptions`](/docs/sdk/api/ts/attack-nearest-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1306)
+
+## `rangedAttack`
+
+Shoots an entity with a bow or crossbow from between `minimumRange` and
+`maximumRange`, leading the target and aiming for the arrow's drop.
+
+```ts
+rangedAttack(target: AttackEntityTarget, options?: RangedAttackTaskOptions): Effect<SoulFireTask<GenMessage<RangedAttackTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `target` | [`AttackEntityTarget`](/docs/sdk/api/ts/attack-entity-target) | Required |  |
+| `options` | [`RangedAttackTaskOptions`](/docs/sdk/api/ts/ranged-attack-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<RangedAttackTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`RangedAttackTaskResult`](/docs/sdk/api/ts/ranged-attack-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1352)
+
+## `runRangedAttack`
+
+```ts
+runRangedAttack(target: AttackEntityTarget, options?: RangedAttackTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `target` | [`AttackEntityTarget`](/docs/sdk/api/ts/attack-entity-target) | Required |  |
+| `options` | [`RangedAttackTaskOptions`](/docs/sdk/api/ts/ranged-attack-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1370)
+
+## `flee`
+
+Moves away from the nearest threat until it is `safeDistance` away.
+
+```ts
+flee(threats: MessageInit<EntitySelector>, options?: FleeTaskOptions): Effect<SoulFireTask<GenMessage<FleeTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `threats` | `MessageInit<EntitySelector>` ([`EntitySelector`](/docs/sdk/api/ts/entity-selector)) | Required |  |
+| `options` | [`FleeTaskOptions`](/docs/sdk/api/ts/flee-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<FleeTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`FleeTaskResult`](/docs/sdk/api/ts/flee-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1385)
+
+## `runFlee`
+
+```ts
+runFlee(threats: MessageInit<EntitySelector>, options?: FleeTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `threats` | `MessageInit<EntitySelector>` ([`EntitySelector`](/docs/sdk/api/ts/entity-selector)) | Required |  |
+| `options` | [`FleeTaskOptions`](/docs/sdk/api/ts/flee-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1419)
+
+## `guard`
+
+Defends `position` from `threats`.
+
+```ts
+guard(position: MessageInit<BlockPosition>, threats: MessageInit<EntitySelector>, options?: GuardTaskOptions): Effect<SoulFireTask<GenMessage<GuardTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `position` | `MessageInit<BlockPosition>` ([`BlockPosition`](/docs/sdk/api/ts/block-position)) | Required |  |
+| `threats` | `MessageInit<EntitySelector>` ([`EntitySelector`](/docs/sdk/api/ts/entity-selector)) | Required |  |
+| `options` | [`GuardTaskOptions`](/docs/sdk/api/ts/guard-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<GuardTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`GuardTaskResult`](/docs/sdk/api/ts/guard-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1454)
+
+## `runGuard`
+
+```ts
+runGuard(position: MessageInit<BlockPosition>, threats: MessageInit<EntitySelector>, options?: GuardTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `position` | `MessageInit<BlockPosition>` ([`BlockPosition`](/docs/sdk/api/ts/block-position)) | Required |  |
+| `threats` | `MessageInit<EntitySelector>` ([`EntitySelector`](/docs/sdk/api/ts/entity-selector)) | Required |  |
+| `options` | [`GuardTaskOptions`](/docs/sdk/api/ts/guard-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1470)
+
+## `protect`
+
+Defends an entity from `threats`.
+
+```ts
+protect(entity: AttackEntityTarget, threats: MessageInit<EntitySelector>, options?: GuardTaskOptions): Effect<SoulFireTask<GenMessage<GuardTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `entity` | [`AttackEntityTarget`](/docs/sdk/api/ts/attack-entity-target) | Required |  |
+| `threats` | `MessageInit<EntitySelector>` ([`EntitySelector`](/docs/sdk/api/ts/entity-selector)) | Required |  |
+| `options` | [`GuardTaskOptions`](/docs/sdk/api/ts/guard-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<GuardTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`GuardTaskResult`](/docs/sdk/api/ts/guard-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1490)
+
+## `runProtect`
+
+```ts
+runProtect(entity: AttackEntityTarget, threats: MessageInit<EntitySelector>, options?: GuardTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `entity` | [`AttackEntityTarget`](/docs/sdk/api/ts/attack-entity-target) | Required |  |
+| `threats` | `MessageInit<EntitySelector>` ([`EntitySelector`](/docs/sdk/api/ts/entity-selector)) | Required |  |
+| `options` | [`GuardTaskOptions`](/docs/sdk/api/ts/guard-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1512)
+
+## `sleep`
+
+Walks to a bed and gets in.
+
+```ts
+sleep(options?: SleepTaskOptions): Effect<SoulFireTask<GenMessage<SleepTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SleepTaskOptions`](/docs/sdk/api/ts/sleep-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<SleepTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`SleepTaskResult`](/docs/sdk/api/ts/sleep-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1582)
+
+## `runSleep`
+
+```ts
+runSleep(options?: SleepTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`SleepTaskOptions`](/docs/sdk/api/ts/sleep-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1612)
+
+## `fish`
+
+Casts, waits for a bite, reels in, and repeats.
+
+```ts
+fish(options?: FishTaskOptions): Effect<SoulFireTask<GenMessage<FishTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`FishTaskOptions`](/docs/sdk/api/ts/fish-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<FishTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`FishTaskResult`](/docs/sdk/api/ts/fish-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1643)
+
+## `runFish`
+
+```ts
+runFish(options?: FishTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`FishTaskOptions`](/docs/sdk/api/ts/fish-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1677)
+
+## `farm`
+
+Harvests mature crops around `center` and replants the ones that need it.
+
+```ts
+farm(options?: FarmTaskOptions): Effect<SoulFireTask<GenMessage<FarmTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`FarmTaskOptions`](/docs/sdk/api/ts/farm-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<FarmTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`FarmTaskResult`](/docs/sdk/api/ts/farm-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1712)
+
+## `runFarm`
+
+```ts
+runFarm(options?: FarmTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`FarmTaskOptions`](/docs/sdk/api/ts/farm-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1750)
+
+## `breed`
+
+Feeds pairs of adult animals until the server confirms both are in love
+mode.
+
+```ts
+breed(options?: BreedTaskOptions): Effect<SoulFireTask<GenMessage<BreedTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`BreedTaskOptions`](/docs/sdk/api/ts/breed-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<BreedTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`BreedTaskResult`](/docs/sdk/api/ts/breed-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1790)
+
+## `runBreed`
+
+```ts
+runBreed(options?: BreedTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`BreedTaskOptions`](/docs/sdk/api/ts/breed-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1832)
+
+## `explore`
+
+Visits unexplored cells around `origin`.
+
+```ts
+explore(options?: ExploreTaskOptions): Effect<SoulFireTask<GenMessage<ExploreTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`ExploreTaskOptions`](/docs/sdk/api/ts/explore-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<ExploreTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`ExploreTaskResult`](/docs/sdk/api/ts/explore-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1875)
+
+## `runExplore`
+
+```ts
+runExplore(options?: ExploreTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`ExploreTaskOptions`](/docs/sdk/api/ts/explore-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1909)
+
+## `stash`
+
+Walks to the container, opens it and puts the items in.
+
+```ts
+stash(container: MessageInit<BlockPosition>, operations: readonly ContainerTransferSpec[], options?: ContainerTransferTaskOptions): Effect<SoulFireTask<GenMessage<ContainerTransferTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `container` | `MessageInit<BlockPosition>` ([`BlockPosition`](/docs/sdk/api/ts/block-position)) | Required |  |
+| `operations` | `readonly ContainerTransferSpec[]` ([`ContainerTransferSpec`](/docs/sdk/api/ts/container-transfer-spec)) | Required |  |
+| `options` | [`ContainerTransferTaskOptions`](/docs/sdk/api/ts/container-transfer-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<ContainerTransferTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`ContainerTransferTaskResult`](/docs/sdk/api/ts/container-transfer-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1944)
+
+## `runStash`
+
+```ts
+runStash(container: MessageInit<BlockPosition>, operations: readonly ContainerTransferSpec[], options?: ContainerTransferTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `container` | `MessageInit<BlockPosition>` ([`BlockPosition`](/docs/sdk/api/ts/block-position)) | Required |  |
+| `operations` | `readonly ContainerTransferSpec[]` ([`ContainerTransferSpec`](/docs/sdk/api/ts/container-transfer-spec)) | Required |  |
+| `options` | [`ContainerTransferTaskOptions`](/docs/sdk/api/ts/container-transfer-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1968)
+
+## `withdraw`
+
+Walks to the container, opens it and takes the items out.
+
+```ts
+withdraw(container: MessageInit<BlockPosition>, operations: readonly ContainerTransferSpec[], options?: ContainerTransferTaskOptions): Effect<SoulFireTask<GenMessage<ContainerTransferTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `container` | `MessageInit<BlockPosition>` ([`BlockPosition`](/docs/sdk/api/ts/block-position)) | Required |  |
+| `operations` | `readonly ContainerTransferSpec[]` ([`ContainerTransferSpec`](/docs/sdk/api/ts/container-transfer-spec)) | Required |  |
+| `options` | [`ContainerTransferTaskOptions`](/docs/sdk/api/ts/container-transfer-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<ContainerTransferTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`ContainerTransferTaskResult`](/docs/sdk/api/ts/container-transfer-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L1989)
+
+## `runWithdraw`
+
+```ts
+runWithdraw(container: MessageInit<BlockPosition>, operations: readonly ContainerTransferSpec[], options?: ContainerTransferTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `container` | `MessageInit<BlockPosition>` ([`BlockPosition`](/docs/sdk/api/ts/block-position)) | Required |  |
+| `operations` | `readonly ContainerTransferSpec[]` ([`ContainerTransferSpec`](/docs/sdk/api/ts/container-transfer-spec)) | Required |  |
+| `options` | [`ContainerTransferTaskOptions`](/docs/sdk/api/ts/container-transfer-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2013)
+
+## `maintainLoadout`
+
+Keeps each requirement's count in range by withdrawing from and depositing
+to `container`.
+
+```ts
+maintainLoadout(container: MessageInit<BlockPosition>, requirements: readonly LoadoutRequirementSpec[], options?: MaintainLoadoutTaskOptions): Effect<SoulFireTask<GenMessage<MaintainLoadoutTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `container` | `MessageInit<BlockPosition>` ([`BlockPosition`](/docs/sdk/api/ts/block-position)) | Required |  |
+| `requirements` | `readonly LoadoutRequirementSpec[]` ([`LoadoutRequirementSpec`](/docs/sdk/api/ts/loadout-requirement-spec)) | Required |  |
+| `options` | [`MaintainLoadoutTaskOptions`](/docs/sdk/api/ts/maintain-loadout-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<MaintainLoadoutTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`MaintainLoadoutTaskResult`](/docs/sdk/api/ts/maintain-loadout-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2035)
+
+## `runMaintainLoadout`
+
+```ts
+runMaintainLoadout(container: MessageInit<BlockPosition>, requirements: readonly LoadoutRequirementSpec[], options?: MaintainLoadoutTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `container` | `MessageInit<BlockPosition>` ([`BlockPosition`](/docs/sdk/api/ts/block-position)) | Required |  |
+| `requirements` | `readonly LoadoutRequirementSpec[]` ([`LoadoutRequirementSpec`](/docs/sdk/api/ts/loadout-requirement-spec)) | Required |  |
+| `options` | [`MaintainLoadoutTaskOptions`](/docs/sdk/api/ts/maintain-loadout-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2058)
+
+## `balanceLoadout`
+
+`maintainLoadout` once: a single rebalance, done when satisfied.
+
+```ts
+balanceLoadout(container: MessageInit<BlockPosition>, requirements: readonly LoadoutRequirementSpec[], options?: Omit<MaintainLoadoutTaskOptions, "maximumRebalances" | "completeWhenSatisfied">): Effect<SoulFireTask<GenMessage<MaintainLoadoutTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `container` | `MessageInit<BlockPosition>` ([`BlockPosition`](/docs/sdk/api/ts/block-position)) | Required |  |
+| `requirements` | `readonly LoadoutRequirementSpec[]` ([`LoadoutRequirementSpec`](/docs/sdk/api/ts/loadout-requirement-spec)) | Required |  |
+| `options` | `Omit<MaintainLoadoutTaskOptions, "maximumRebalances" \| "completeWhenSatisfied">` ([`MaintainLoadoutTaskOptions`](/docs/sdk/api/ts/maintain-loadout-task-options)) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<MaintainLoadoutTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`MaintainLoadoutTaskResult`](/docs/sdk/api/ts/maintain-loadout-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2078)
+
+## `autoEat`
+
+Eats when the food level drops to `foodLevel`. An empty `foodItemIds` (the
+default) eats any safe food.
+
+```ts
+autoEat(foodItemIds?: readonly string[], options?: AutoEatTaskOptions): Effect<SoulFireTask<GenMessage<AutoEatTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `foodItemIds` | `readonly string[]` | `[]` |  |
+| `options` | [`AutoEatTaskOptions`](/docs/sdk/api/ts/auto-eat-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<AutoEatTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`AutoEatTaskResult`](/docs/sdk/api/ts/auto-eat-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2100)
+
+## `runAutoEat`
+
+An empty `foodItemIds` (the default) eats any safe food.
+
+```ts
+runAutoEat(foodItemIds?: readonly string[], options?: AutoEatTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `foodItemIds` | `readonly string[]` | `[]` |  |
+| `options` | [`AutoEatTaskOptions`](/docs/sdk/api/ts/auto-eat-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2135)
+
+## `autoRespawn`
+
+Respawns after each death.
+
+```ts
+autoRespawn(options?: AutoRespawnTaskOptions): Effect<SoulFireTask<GenMessage<AutoRespawnTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`AutoRespawnTaskOptions`](/docs/sdk/api/ts/auto-respawn-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<AutoRespawnTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`AutoRespawnTaskResult`](/docs/sdk/api/ts/auto-respawn-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2168)
+
+## `runAutoRespawn`
+
+```ts
+runAutoRespawn(options?: AutoRespawnTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`AutoRespawnTaskOptions`](/docs/sdk/api/ts/auto-respawn-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2189)
+
+## `autoTotem`
+
+Keeps a totem of undying in the offhand.
+
+```ts
+autoTotem(options?: AutoTotemTaskOptions): Effect<SoulFireTask<GenMessage<AutoTotemTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`AutoTotemTaskOptions`](/docs/sdk/api/ts/auto-totem-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<AutoTotemTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`AutoTotemTaskResult`](/docs/sdk/api/ts/auto-totem-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2211)
+
+## `runAutoTotem`
+
+```ts
+runAutoTotem(options?: AutoTotemTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`AutoTotemTaskOptions`](/docs/sdk/api/ts/auto-totem-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2239)
+
+## `autoArmor`
+
+Keeps the best armor the bot has equipped.
+
+```ts
+autoArmor(options?: AutoArmorTaskOptions): Effect<SoulFireTask<GenMessage<AutoArmorTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`AutoArmorTaskOptions`](/docs/sdk/api/ts/auto-armor-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<AutoArmorTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`AutoArmorTaskResult`](/docs/sdk/api/ts/auto-armor-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2268)
+
+## `runAutoArmor`
+
+```ts
+runAutoArmor(options?: AutoArmorTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`AutoArmorTaskOptions`](/docs/sdk/api/ts/auto-armor-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2290)
+
+## `collectBlocks`
+
+Finds, reaches and mines `count` blocks with one of `blockIds` or `tags`.
+
+```ts
+collectBlocks(blockIds: string | readonly string[], options?: CollectBlocksTaskOptions): Effect<SoulFireTask<GenMessage<CollectBlocksTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `blockIds` | `string \| readonly string[]` | Required |  |
+| `options` | [`CollectBlocksTaskOptions`](/docs/sdk/api/ts/collect-blocks-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<CollectBlocksTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`CollectBlocksTaskResult`](/docs/sdk/api/ts/collect-blocks-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2313)
+
+## `runCollectBlocks`
+
+```ts
+runCollectBlocks(blockIds: string | readonly string[], options?: CollectBlocksTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `blockIds` | `string \| readonly string[]` | Required |  |
+| `options` | [`CollectBlocksTaskOptions`](/docs/sdk/api/ts/collect-blocks-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2353)
+
+## `excavate`
+
+Clears every diggable block in the cuboid from `from` to `to`, both
+included. At most 32,768 blocks.
+
+```ts
+excavate(from: MessageInit<BlockPosition>, to: MessageInit<BlockPosition>, options?: ExcavateTaskOptions): Effect<SoulFireTask<GenMessage<ExcavateTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `from` | `MessageInit<BlockPosition>` ([`BlockPosition`](/docs/sdk/api/ts/block-position)) | Required |  |
+| `to` | `MessageInit<BlockPosition>` ([`BlockPosition`](/docs/sdk/api/ts/block-position)) | Required |  |
+| `options` | [`ExcavateTaskOptions`](/docs/sdk/api/ts/excavate-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<ExcavateTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`ExcavateTaskResult`](/docs/sdk/api/ts/excavate-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2395)
+
+## `runExcavate`
+
+```ts
+runExcavate(from: MessageInit<BlockPosition>, to: MessageInit<BlockPosition>, options?: ExcavateTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `from` | `MessageInit<BlockPosition>` ([`BlockPosition`](/docs/sdk/api/ts/block-position)) | Required |  |
+| `to` | `MessageInit<BlockPosition>` ([`BlockPosition`](/docs/sdk/api/ts/block-position)) | Required |  |
+| `options` | [`ExcavateTaskOptions`](/docs/sdk/api/ts/excavate-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2419)
+
+## `build`
+
+Places `blocks`, each at `origin` plus its offset. At most 8192 blocks.
+
+```ts
+build(origin: MessageInit<BlockPosition>, blocks: readonly SchematicBlock[], options?: BuildTaskOptions): Effect<SoulFireTask<GenMessage<BuildTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `origin` | `MessageInit<BlockPosition>` ([`BlockPosition`](/docs/sdk/api/ts/block-position)) | Required |  |
+| `blocks` | `readonly SchematicBlock[]` ([`SchematicBlock`](/docs/sdk/api/ts/schematic-block)) | Required |  |
+| `options` | [`BuildTaskOptions`](/docs/sdk/api/ts/build-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<BuildTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`BuildTaskResult`](/docs/sdk/api/ts/build-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2444)
+
+## `runBuild`
+
+```ts
+runBuild(origin: MessageInit<BlockPosition>, blocks: readonly SchematicBlock[], options?: BuildTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `origin` | `MessageInit<BlockPosition>` ([`BlockPosition`](/docs/sdk/api/ts/block-position)) | Required |  |
+| `blocks` | `readonly SchematicBlock[]` ([`SchematicBlock`](/docs/sdk/api/ts/schematic-block)) | Required |  |
+| `options` | [`BuildTaskOptions`](/docs/sdk/api/ts/build-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2466)
+
+## `craft`
+
+`recipeId` comes from `recipes.list`, e.g. "display:42". `count` is recipe
+operations, not output items; it defaults to 1, at most 4096.
+
+```ts
+craft(recipeId: string, count?: number, options?: CraftTaskOptions): Effect<SoulFireTask<GenMessage<CraftTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `recipeId` | `string` | Required |  |
+| `count` | `number` | `1` |  |
+| `options` | [`CraftTaskOptions`](/docs/sdk/api/ts/craft-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<CraftTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`CraftTaskResult`](/docs/sdk/api/ts/craft-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2486)
+
+## `runCraft`
+
+`recipeId` comes from `recipes.list`, e.g. "display:42". `count` is recipe
+operations, not output items; it defaults to 1, at most 4096.
+
+```ts
+runCraft(recipeId: string, count?: number, options?: CraftTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `recipeId` | `string` | Required |  |
+| `count` | `number` | `1` |  |
+| `options` | [`CraftTaskOptions`](/docs/sdk/api/ts/craft-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2513)
+
+## `smelt`
+
+`input` selects items that fit a known cooking recipe. `count` is input
+items to cook; it defaults to 1, at most 4096.
+
+```ts
+smelt(input: MessageInit<ItemSelector>, count?: number, options?: SmeltTaskOptions): Effect<SoulFireTask<GenMessage<SmeltTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `input` | `MessageInit<ItemSelector>` ([`ItemSelector`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#itemselector)) | Required |  |
+| `count` | `number` | `1` |  |
+| `options` | [`SmeltTaskOptions`](/docs/sdk/api/ts/smelt-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<SmeltTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`SmeltTaskResult`](/docs/sdk/api/ts/smelt-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2538)
+
+## `runSmelt`
+
+`count` is input items to cook; it defaults to 1, at most 4096.
+
+```ts
+runSmelt(input: MessageInit<ItemSelector>, count?: number, options?: SmeltTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `input` | `MessageInit<ItemSelector>` ([`ItemSelector`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#itemselector)) | Required |  |
+| `count` | `number` | `1` |  |
+| `options` | [`SmeltTaskOptions`](/docs/sdk/api/ts/smelt-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2565)
+
+## `brew`
+
+Brews `count` potion bottles matching `input`, using one `ingredient` per
+bottle. `count` defaults to 1, at most 4096.
+
+```ts
+brew(input: MessageInit<ItemSelector>, ingredient: MessageInit<ItemSelector>, count?: number, options?: BrewTaskOptions): Effect<SoulFireTask<GenMessage<BrewTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `input` | `MessageInit<ItemSelector>` ([`ItemSelector`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#itemselector)) | Required |  |
+| `ingredient` | `MessageInit<ItemSelector>` ([`ItemSelector`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#itemselector)) | Required |  |
+| `count` | `number` | `1` |  |
+| `options` | [`BrewTaskOptions`](/docs/sdk/api/ts/brew-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<BrewTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`BrewTaskResult`](/docs/sdk/api/ts/brew-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2591)
+
+## `runBrew`
+
+`count` is bottles to brew; it defaults to 1, at most 4096.
+
+```ts
+runBrew(input: MessageInit<ItemSelector>, ingredient: MessageInit<ItemSelector>, count?: number, options?: BrewTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `input` | `MessageInit<ItemSelector>` ([`ItemSelector`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#itemselector)) | Required |  |
+| `ingredient` | `MessageInit<ItemSelector>` ([`ItemSelector`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#itemselector)) | Required |  |
+| `count` | `number` | `1` |  |
+| `options` | [`BrewTaskOptions`](/docs/sdk/api/ts/brew-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2621)
+
+## `villagerTrade`
+
+Trades with the merchant menu the bot has open. `offerIndex` is the
+zero-based index from `recipes.listVillagerTrades`. `count` defaults to 1,
+at most 4096.
+
+```ts
+villagerTrade(offerIndex: number, count?: number, options?: VillagerTradeTaskOptions): Effect<SoulFireTask<GenMessage<VillagerTradeTaskResult>>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `offerIndex` | `number` | Required |  |
+| `count` | `number` | `1` |  |
+| `options` | [`VillagerTradeTaskOptions`](/docs/sdk/api/ts/villager-trade-task-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireTask<GenMessage<VillagerTradeTaskResult>>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`VillagerTradeTaskResult`](/docs/sdk/api/ts/villager-trade-task-result), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2651)
+
+## `runVillagerTrade`
+
+`count` is trades to make; it defaults to 1, at most 4096.
+
+```ts
+runVillagerTrade(offerIndex: number, count?: number, options?: VillagerTradeTaskOptions): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `offerIndex` | `number` | Required |  |
+| `count` | `number` | `1` |  |
+| `options` | [`VillagerTradeTaskOptions`](/docs/sdk/api/ts/villager-trade-task-options) | `{}` |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2678)
+
+## `get`
+
+One of this bot's tasks, by id.
+
+```ts
+get<Result extends DescMessage | undefined = undefined>(taskId: string, resultSchema?: Result | undefined, options?: CallOptions | undefined): Effect<SoulFireTask<Result>, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `taskId` | `string` | Required |  |
+| `resultSchema` | `Result \| undefined` | Optional |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<SoulFireTask<Result>, SoulFireOperationError, never>` ([`SoulFireTask`](/docs/sdk/api/ts/soul-fire-task), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2707)
+
+## `list`
+
+This bot's tasks, all pages. Ended tasks only with `includeTerminal`.
+
+```ts
+list(options?: TaskListOptions): Effect<BotTask[], SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`TaskListOptions`](/docs/sdk/api/ts/task-list-options) | `{}` |  |
+
+**Returns:** `Effect<BotTask[], SoulFireOperationError, never>` ([`BotTask`](/docs/sdk/api/ts/bot-task), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2736)
+
+## `watch`
+
+Events of this bot's tasks, starting with a snapshot of them unless
+`includeSnapshot` is false.
+
+```ts
+watch(options?: { afterSequence?: bigint | undefined; includeSnapshot?: boolean | undefined; statuses?: readonly BotTaskStatus[] | undefined; call?: CallOptions | undefined; } | undefined): Stream<BotTaskEvent, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `{ afterSequence?: bigint \| undefined; includeSnapshot?: boolean \| undefined; statuses?: readonly BotTaskStatus[] \| undefined; call?: CallOptions \| undefined; } \| undefined` ([`BotTaskStatus`](/docs/sdk/api/ts/bot-task-status)) | Optional |  |
+
+**Returns:** `Stream<BotTaskEvent, SoulFireOperationError, never>` ([`BotTaskEvent`](/docs/sdk/api/ts/bot-task-event), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/tasks.ts#L2766)

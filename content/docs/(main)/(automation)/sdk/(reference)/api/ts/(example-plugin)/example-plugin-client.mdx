@@ -1,0 +1,75 @@
+---
+title: "ExamplePluginClient"
+description: "TypeScript API signatures, fields, and source for ExamplePluginClient."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `example-plugin`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/example-plugin.ts#L18).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`.
+
+```ts
+class ExamplePluginClient
+```
+
+## `constructor`
+
+```ts
+new ExamplePluginClient(client: Client<GenService<{ echo: { methodKind: "unary"; input: GenMessage<EchoRequest>; output: GenMessage<EchoResponse>; }; watchTicks: { methodKind: "server_streaming"; input: GenMessage<WatchTicksRequest>; output: GenMessage<Tick>; }; }>>): ExamplePluginClient
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `client` | `Client<GenService<{ echo: { methodKind: "unary"; input: GenMessage<EchoRequest>; output: GenMessage<EchoResponse>; }; watchTicks: { methodKind: "server_streaming"; input: GenMessage<WatchTicksRequest>; output: GenMessage<Tick>; }; }>>` ([`EchoRequest`](/docs/sdk/api/ts/generated-soulfire-plugin-example-v1-example-pb#echorequest), [`EchoResponse`](/docs/sdk/api/ts/generated-soulfire-plugin-example-v1-example-pb#echoresponse), [`WatchTicksRequest`](/docs/sdk/api/ts/generated-soulfire-plugin-example-v1-example-pb#watchticksrequest), [`Tick`](/docs/sdk/api/ts/generated-soulfire-plugin-example-v1-example-pb#tick)) | Required |  |
+
+**Returns:** [`ExamplePluginClient`](/docs/sdk/api/ts/example-plugin-client).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/example-plugin.ts#L21)
+
+## `echo`
+
+```ts
+echo(instanceId: string, message: string): Effect<EchoResponse, SoulFirePluginError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instanceId` | `string` | Required |  |
+| `message` | `string` | Required |  |
+
+**Returns:** `Effect<EchoResponse, SoulFirePluginError, never>` ([`EchoResponse`](/docs/sdk/api/ts/generated-soulfire-plugin-example-v1-example-pb#echoresponse), [`SoulFirePluginError`](/docs/sdk/api/ts/soul-fire-plugin-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/example-plugin.ts#L25)
+
+## `watchTicks`
+
+```ts
+watchTicks(instanceId: string, count: number): Stream<Tick, SoulFirePluginError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instanceId` | `string` | Required |  |
+| `count` | `number` | Required |  |
+
+**Returns:** `Stream<Tick, SoulFirePluginError, never>` ([`Tick`](/docs/sdk/api/ts/generated-soulfire-plugin-example-v1-example-pb#tick), [`SoulFirePluginError`](/docs/sdk/api/ts/soul-fire-plugin-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/example-plugin.ts#L35)
+
+## `[SoulFireExtensionTypeId]`
+
+**Modifiers:** `readonly`.
+
+**Type:** `true`.
+
+**Default:** `true`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/example-plugin.ts#L19)

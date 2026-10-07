@@ -1,0 +1,157 @@
+---
+title: "SoulFireFleet"
+description: "Python API signatures, fields, and source for SoulFireFleet."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `fleet`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/fleet.py#L299).
+
+**Import from:** `soulfire`, `soulfire.fleet`.
+
+```python
+class SoulFireFleet
+```
+
+## `__init__`
+
+```python
+def __init__(self, instance: SoulFireInstance, capabilities: CapabilitySet | None) -> None
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instance` | [`SoulFireInstance`](/docs/sdk/api/py/soul-fire-instance) | Required | positional or keyword |
+| `capabilities` | `CapabilitySet \| None` ([`CapabilitySet`](/docs/sdk/api/py/capability-set)) | Required | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/fleet.py#L300)
+
+## `select`
+
+```python
+def select(self, selector: FleetSelector | None=None, *, headers: Headers=None, timeout_ms: int | None=None) -> Effect[tuple[FleetBot, ...], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `selector` | `FleetSelector \| None` ([`FleetSelector`](/docs/sdk/api/py/fleet-selector)) | `None` | positional or keyword |
+| `headers` | [`Headers`](/docs/sdk/api/py/headers-fleet) | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[tuple[FleetBot, ...], SoulFireOperationError]` ([`FleetBot`](/docs/sdk/api/py/fleet-bot), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/fleet.py#L305)
+
+## `start`
+
+```python
+def start(self, selector: FleetSelector | None=None, *, headers: Headers=None, timeout_ms: int | None=None) -> Effect[list[BotStatus], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `selector` | `FleetSelector \| None` ([`FleetSelector`](/docs/sdk/api/py/fleet-selector)) | `None` | positional or keyword |
+| `headers` | [`Headers`](/docs/sdk/api/py/headers-fleet) | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[list[BotStatus], SoulFireOperationError]` ([`BotStatus`](/docs/sdk/api/py/generated-bot-pb2#botstatus), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/fleet.py#L329)
+
+## `stop`
+
+```python
+def stop(self, selector: FleetSelector | None=None, *, headers: Headers=None, timeout_ms: int | None=None) -> Effect[list[BotStatus], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `selector` | `FleetSelector \| None` ([`FleetSelector`](/docs/sdk/api/py/fleet-selector)) | `None` | positional or keyword |
+| `headers` | [`Headers`](/docs/sdk/api/py/headers-fleet) | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[list[BotStatus], SoulFireOperationError]` ([`BotStatus`](/docs/sdk/api/py/generated-bot-pb2#botstatus), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/fleet.py#L344)
+
+## `restart`
+
+```python
+def restart(self, selector: FleetSelector | None=None, *, headers: Headers=None, timeout_ms: int | None=None) -> Effect[list[BotStatus], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `selector` | `FleetSelector \| None` ([`FleetSelector`](/docs/sdk/api/py/fleet-selector)) | `None` | positional or keyword |
+| `headers` | [`Headers`](/docs/sdk/api/py/headers-fleet) | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[list[BotStatus], SoulFireOperationError]` ([`BotStatus`](/docs/sdk/api/py/generated-bot-pb2#botstatus), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/fleet.py#L359)
+
+## `start_tasks`
+
+```python
+def start_tasks[ResultT: Message](self, selector: FleetSelector, task_input: Message | Callable[[FleetBot, int, int], Message | Effect[Message, SoulFireOperationError]], result_type: type[ResultT], *, options: FleetTaskStartOptions | None=None) -> Effect[SoulFireFleetTaskGroup[ResultT], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `selector` | [`FleetSelector`](/docs/sdk/api/py/fleet-selector) | Required | positional or keyword |
+| `task_input` | `Message \| Callable[[FleetBot, int, int], Message \| Effect[Message, SoulFireOperationError]]` ([`FleetBot`](/docs/sdk/api/py/fleet-bot), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)) | Required | positional or keyword |
+| `result_type` | `type[ResultT]` | Required | positional or keyword |
+| `options` | `FleetTaskStartOptions \| None` ([`FleetTaskStartOptions`](/docs/sdk/api/py/fleet-task-start-options)) | `None` | keyword only |
+
+**Returns:** `Effect[SoulFireFleetTaskGroup[ResultT], SoulFireOperationError]` ([`SoulFireFleetTaskGroup`](/docs/sdk/api/py/soul-fire-fleet-task-group), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/fleet.py#L374)
+
+## `distribute`
+
+```python
+def distribute[ItemT](self, items: Iterable[ItemT], selector: FleetSelector | None=None, *, strategy: Literal['round-robin', 'contiguous']='round-robin', maximum_items_per_bot: int | None=None, require_all: bool=True, headers: Headers=None, timeout_ms: int | None=None) -> Effect[tuple[FleetAssignment[ItemT], ...], SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `items` | `Iterable[ItemT]` | Required | positional or keyword |
+| `selector` | `FleetSelector \| None` ([`FleetSelector`](/docs/sdk/api/py/fleet-selector)) | `None` | positional or keyword |
+| `strategy` | `Literal['round-robin', 'contiguous']` | `'round-robin'` | keyword only |
+| `maximum_items_per_bot` | `int \| None` | `None` | keyword only |
+| `require_all` | `bool` | `True` | keyword only |
+| `headers` | [`Headers`](/docs/sdk/api/py/headers-fleet) | `None` | keyword only |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[tuple[FleetAssignment[ItemT], ...], SoulFireOperationError]` ([`FleetAssignment`](/docs/sdk/api/py/fleet-assignment), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/fleet.py#L448)

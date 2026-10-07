@@ -1,0 +1,27 @@
+---
+title: "conditional"
+description: "TypeScript API signatures, fields, and source for conditional."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Function** in `behaviors`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/behaviors.ts#L112).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`.
+
+```ts
+conditional<A, E, R, B = void, E2 = never, R2 = never, EP = never, RP = never>(predicate: BotPredicate<EP, RP>, whenTrue: BotBehavior<A, E, R>, whenFalse?: BotBehavior<B, E2, R2> | undefined): BotBehavior<A | B | undefined, E | E2 | EP, R | R2 | RP>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `predicate` | `BotPredicate<EP, RP>` ([`BotPredicate`](/docs/sdk/api/ts/bot-predicate)) | Required |  |
+| `whenTrue` | `BotBehavior<A, E, R>` ([`BotBehavior`](/docs/sdk/api/ts/bot-behavior)) | Required |  |
+| `whenFalse` | `BotBehavior<B, E2, R2> \| undefined` ([`BotBehavior`](/docs/sdk/api/ts/bot-behavior)) | Optional |  |
+
+**Returns:** `BotBehavior<A | B | undefined, E | E2 | EP, R | R2 | RP>` ([`BotBehavior`](/docs/sdk/api/ts/bot-behavior)).
+
+**Referenced types:** [`BotPredicate`](/docs/sdk/api/ts/bot-predicate), [`BotBehavior`](/docs/sdk/api/ts/bot-behavior).

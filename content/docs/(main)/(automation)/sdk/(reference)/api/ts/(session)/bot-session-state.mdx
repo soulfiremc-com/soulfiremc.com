@@ -1,0 +1,142 @@
+---
+title: "BotSessionState"
+description: "TypeScript API signatures, fields, and source for BotSessionState."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Interface** in `session`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L52).
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`.
+
+```ts
+interface BotSessionState
+```
+
+## `blockSnapshots`
+
+Like `blocks`, for updates that carried a full snapshot.
+
+**Modifiers:** `readonly`.
+
+**Type:** `ReadonlyMap<string, BlockSnapshot>` ([`BlockSnapshot`](/docs/sdk/api/ts/block-snapshot)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L56)
+
+## `blocks`
+
+Blocks seen changing since the session opened (block update events), keyed
+`dimension:x:y:z`.
+
+**Modifiers:** `readonly`.
+
+**Type:** `ReadonlyMap<string, BlockState>` ([`BlockState`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#blockstate)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L61)
+
+## `bossBars`
+
+**Modifiers:** `readonly`.
+
+**Type:** `ReadonlyMap<string, BotBossBarState>` ([`BotBossBarState`](/docs/sdk/api/ts/bot-boss-bar-state)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L62)
+
+## `entities`
+
+Entities from entity events, by entity id; removed when they despawn.
+
+**Modifiers:** `readonly`.
+
+**Type:** `ReadonlyMap<number, NearbyEntity>` ([`NearbyEntity`](/docs/sdk/api/ts/nearby-entity)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L66)
+
+## `entitySnapshots`
+
+**Modifiers:** `readonly`.
+
+**Type:** `ReadonlyMap<number, EntitySnapshot>` ([`EntitySnapshot`](/docs/sdk/api/ts/entity-snapshot)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L67)
+
+## `environment`
+
+**Modifiers:** `readonly`.
+
+**Type:** [`BotEnvironmentState`](/docs/sdk/api/ts/bot-environment-state).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L68)
+
+## `epoch`
+
+**Modifiers:** `readonly`.
+
+**Type:** `string | undefined` (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L69)
+
+## `inventory`
+
+**Modifiers:** `readonly`.
+
+**Type:** `BotInventoryStateResponse | undefined` ([`BotInventoryStateResponse`](/docs/sdk/api/ts/bot-inventory-state-response)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L70)
+
+## `player`
+
+**Modifiers:** `readonly`.
+
+**Type:** `BotLiveState | undefined` ([`BotLiveState`](/docs/sdk/api/ts/bot-live-state)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L71)
+
+## `playerList`
+
+**Modifiers:** `readonly`.
+
+**Type:** `ReadonlyMap<string, PlayerListEntrySnapshot>` ([`PlayerListEntrySnapshot`](/docs/sdk/api/ts/generated-soulfire-bot-live-pb#playerlistentrysnapshot)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L72)
+
+## `resourcePacks`
+
+**Modifiers:** `readonly`.
+
+**Type:** `ReadonlyMap<string, BotResourcePackEvent>` ([`BotResourcePackEvent`](/docs/sdk/api/ts/bot-resource-pack-event)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L73)
+
+## `scoreboard`
+
+**Modifiers:** `readonly`.
+
+**Type:** [`BotScoreboardState`](/docs/sdk/api/ts/bot-scoreboard-state).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L74)
+
+## `sequence`
+
+**Modifiers:** `readonly`.
+
+**Type:** `bigint`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L75)
+
+## `snapshotRevision`
+
+**Modifiers:** `readonly`.
+
+**Type:** `bigint`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L76)
+
+## `status`
+
+**Modifiers:** `readonly`.
+
+**Type:** `BotStatus | undefined` ([`BotStatus`](/docs/sdk/api/ts/bot-status)) (optional).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/session.ts#L77)

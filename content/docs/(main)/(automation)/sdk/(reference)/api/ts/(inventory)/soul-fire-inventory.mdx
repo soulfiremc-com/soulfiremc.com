@@ -1,0 +1,365 @@
+---
+title: "SoulFireInventory"
+description: "TypeScript API signatures, fields, and source for SoulFireInventory."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `inventory`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L227).
+
+The inventory and the menu the bot has open. `move`, `transfer`, `toss`,
+`selectHotbar`, `equip` and `unequip` take an optional `expectedRevision`:
+when not 0, they fail with ABORTED if the menu changed since that revision.
+
+**Import from:** `@soulfiremc/sdk`, `@soulfiremc/sdk/browser`, `@soulfiremc/sdk/node`, `@soulfiremc/sdk/bun`.
+
+```ts
+class SoulFireInventory
+```
+
+## `constructor`
+
+```ts
+new SoulFireInventory(instanceId: string, botId: string, client: Client<GenService<{ getContainerSnapshot: { methodKind: "unary"; input: GenMessage<GetContainerSnapshotRequest>; output: GenMessage<GetContainerSnapshotResponse>; }; countItems: { methodKind: "unary"; input: GenMessage<CountItemsRequest>; output: GenMessage<CountItemsResponse>; }; findInventorySlots: { methodKind: "unary"; input: GenMessage<FindInventorySlotsRequest>; output: GenMessage<FindInventorySlotsResponse>; }; rankInventoryItems: { methodKind: "unary"; input: GenMessage<RankInventoryItemsRequest>; output: GenMessage<RankInventoryItemsResponse>; }; moveInventoryItem: { methodKind: "unary"; input: GenMessage<MoveInventoryItemRequest>; output: GenMessage<InventoryMutationResponse>; }; transferItems: { methodKind: "unary"; input: GenMessage<TransferItemsRequest>; output: GenMessage<InventoryMutationResponse>; }; tossItems: { methodKind: "unary"; input: GenMessage<TossItemsRequest>; output: GenMessage<InventoryMutationResponse>; }; selectHotbarItem: { methodKind: "unary"; input: GenMessage<SelectHotbarItemRequest>; output: GenMessage<InventoryMutationResponse>; }; equipItem: { methodKind: "unary"; input: GenMessage<EquipItemRequest>; output: GenMessage<InventoryMutationResponse>; }; unequipItem: { methodKind: "unary"; input: GenMessage<UnequipItemRequest>; output: GenMessage<InventoryMutationResponse>; }; openBlockContainer: { methodKind: "unary"; input: GenMessage<OpenBlockContainerRequest>; output: GenMessage<InventoryMutationResponse>; }; closeSemanticContainer: { methodKind: "unary"; input: GenMessage<CloseSemanticContainerRequest>; output: GenMessage<InventoryMutationResponse>; }; }>>, actionOptions: (options?: CallOptions | undefined) => CallOptions | undefined): SoulFireInventory
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instanceId` | `string` | Required |  |
+| `botId` | `string` | Required |  |
+| `client` | `Client<GenService<{ getContainerSnapshot: { methodKind: "unary"; input: GenMessage<GetContainerSnapshotRequest>; output: GenMessage<GetContainerSnapshotResponse>; }; countItems: { methodKind: "unary"; input: GenMessage<CountItemsRequest>; output: GenMessage<CountItemsResponse>; }; findInventorySlots: { methodKind: "unary"; input: GenMessage<FindInventorySlotsRequest>; output: GenMessage<FindInventorySlotsResponse>; }; rankInventoryItems: { methodKind: "unary"; input: GenMessage<RankInventoryItemsRequest>; output: GenMessage<RankInventoryItemsResponse>; }; moveInventoryItem: { methodKind: "unary"; input: GenMessage<MoveInventoryItemRequest>; output: GenMessage<InventoryMutationResponse>; }; transferItems: { methodKind: "unary"; input: GenMessage<TransferItemsRequest>; output: GenMessage<InventoryMutationResponse>; }; tossItems: { methodKind: "unary"; input: GenMessage<TossItemsRequest>; output: GenMessage<InventoryMutationResponse>; }; selectHotbarItem: { methodKind: "unary"; input: GenMessage<SelectHotbarItemRequest>; output: GenMessage<InventoryMutationResponse>; }; equipItem: { methodKind: "unary"; input: GenMessage<EquipItemRequest>; output: GenMessage<InventoryMutationResponse>; }; unequipItem: { methodKind: "unary"; input: GenMessage<UnequipItemRequest>; output: GenMessage<InventoryMutationResponse>; }; openBlockContainer: { methodKind: "unary"; input: GenMessage<OpenBlockContainerRequest>; output: GenMessage<InventoryMutationResponse>; }; closeSemanticContainer: { methodKind: "unary"; input: GenMessage<CloseSemanticContainerRequest>; output: GenMessage<InventoryMutationResponse>; }; }>>` ([`GetContainerSnapshotRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#getcontainersnapshotrequest), [`GetContainerSnapshotResponse`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#getcontainersnapshotresponse), [`CountItemsRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#countitemsrequest), [`CountItemsResponse`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#countitemsresponse), [`FindInventorySlotsRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#findinventoryslotsrequest), [`FindInventorySlotsResponse`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#findinventoryslotsresponse), [`RankInventoryItemsRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#rankinventoryitemsrequest), [`RankInventoryItemsResponse`](/docs/sdk/api/ts/rank-inventory-items-response), [`MoveInventoryItemRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#moveinventoryitemrequest), [`InventoryMutationResponse`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#inventorymutationresponse), [`TransferItemsRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#transferitemsrequest), [`TossItemsRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#tossitemsrequest), [`SelectHotbarItemRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#selecthotbaritemrequest), [`EquipItemRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#equipitemrequest), [`UnequipItemRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#unequipitemrequest), [`OpenBlockContainerRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#openblockcontainerrequest), [`CloseSemanticContainerRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#closesemanticcontainerrequest)) | Required |  |
+| `actionOptions` | `(options?: CallOptions \| undefined) => CallOptions \| undefined` | Required |  |
+
+**Returns:** [`SoulFireInventory`](/docs/sdk/api/ts/soul-fire-inventory).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L228)
+
+## `snapshot`
+
+The open menu (the player's inventory when no container is open), with
+every slot.
+
+```ts
+snapshot(options?: CallOptions | undefined): Effect<ContainerSnapshot, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<ContainerSnapshot, SoulFireOperationError, never>` ([`ContainerSnapshot`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#containersnapshot), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L245)
+
+## `count`
+
+Items matching `selector` in `areas`. No `areas` means container, main,
+hotbar, armor, offhand and crafting slots.
+
+```ts
+count(request: string | InventoryRequest<GenMessage<CountItemsRequest>>, options?: CallOptions | undefined): Effect<bigint, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `string \| InventoryRequest<GenMessage<CountItemsRequest>>` ([`InventoryRequest`](/docs/sdk/api/ts/inventory-request), [`CountItemsRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#countitemsrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<bigint, SoulFireOperationError, never>` ([`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L271)
+
+## `find`
+
+Slots holding items that match `selector`, in `areas` (the same default as
+`count`).
+
+```ts
+find(request: InventoryRequest<GenMessage<FindInventorySlotsRequest>>, options?: CallOptions | undefined): Effect<FindInventorySlotsResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `InventoryRequest<GenMessage<FindInventorySlotsRequest>>` ([`InventoryRequest`](/docs/sdk/api/ts/inventory-request), [`FindInventorySlotsRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#findinventoryslotsrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<FindInventorySlotsResponse, SoulFireOperationError, never>` ([`FindInventorySlotsResponse`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#findinventoryslotsresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L294)
+
+## `rank`
+
+Candidates for `kind`, best first, with the factors behind each score.
+`limit` defaults to 10 (at most 100); `areas` default to main, hotbar,
+armor and offhand.
+
+```ts
+rank(kind: InventoryRecommendationKind, options?: InventoryRankOptions, call?: CallOptions | undefined): Effect<RankInventoryItemsResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `kind` | [`InventoryRecommendationKind`](/docs/sdk/api/ts/inventory-recommendation-kind) | Required |  |
+| `options` | [`InventoryRankOptions`](/docs/sdk/api/ts/inventory-rank-options) | `{}` |  |
+| `call` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<RankInventoryItemsResponse, SoulFireOperationError, never>` ([`RankInventoryItemsResponse`](/docs/sdk/api/ts/rank-inventory-items-response), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L311)
+
+## `bestTool`
+
+The best tool for breaking the block at `targetBlock`.
+
+```ts
+bestTool(targetBlock: MessageInit<BlockPosition>, options?: InventoryRankingOptions, call?: CallOptions | undefined): Effect<InventoryItemRecommendation | undefined, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `targetBlock` | `MessageInit<BlockPosition>` ([`BlockPosition`](/docs/sdk/api/ts/block-position)) | Required |  |
+| `options` | [`InventoryRankingOptions`](/docs/sdk/api/ts/inventory-ranking-options) | `{}` |  |
+| `call` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<InventoryItemRecommendation | undefined, SoulFireOperationError, never>` ([`InventoryItemRecommendation`](/docs/sdk/api/ts/inventory-item-recommendation), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L327)
+
+## `bestWeapon`
+
+```ts
+bestWeapon(options?: InventoryRankingOptions, call?: CallOptions | undefined): Effect<InventoryItemRecommendation | undefined, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`InventoryRankingOptions`](/docs/sdk/api/ts/inventory-ranking-options) | `{}` |  |
+| `call` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<InventoryItemRecommendation | undefined, SoulFireOperationError, never>` ([`InventoryItemRecommendation`](/docs/sdk/api/ts/inventory-item-recommendation), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L342)
+
+## `bestArmor`
+
+```ts
+bestArmor(equipmentSlot: "head" | "chest" | "legs" | "feet", options?: InventoryRankingOptions, call?: CallOptions | undefined): Effect<InventoryItemRecommendation | undefined, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `equipmentSlot` | `"head" \| "chest" \| "legs" \| "feet"` | Required |  |
+| `options` | [`InventoryRankingOptions`](/docs/sdk/api/ts/inventory-ranking-options) | `{}` |  |
+| `call` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<InventoryItemRecommendation | undefined, SoulFireOperationError, never>` ([`InventoryItemRecommendation`](/docs/sdk/api/ts/inventory-item-recommendation), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L352)
+
+## `bestFood`
+
+```ts
+bestFood(options?: InventoryRankingOptions, call?: CallOptions | undefined): Effect<InventoryItemRecommendation | undefined, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`InventoryRankingOptions`](/docs/sdk/api/ts/inventory-ranking-options) | `{}` |  |
+| `call` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<InventoryItemRecommendation | undefined, SoulFireOperationError, never>` ([`InventoryItemRecommendation`](/docs/sdk/api/ts/inventory-item-recommendation), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L367)
+
+## `bestScaffold`
+
+```ts
+bestScaffold(options?: InventoryRankingOptions, call?: CallOptions | undefined): Effect<InventoryItemRecommendation | undefined, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `options` | [`InventoryRankingOptions`](/docs/sdk/api/ts/inventory-ranking-options) | `{}` |  |
+| `call` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<InventoryItemRecommendation | undefined, SoulFireOperationError, never>` ([`InventoryItemRecommendation`](/docs/sdk/api/ts/inventory-item-recommendation), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L377)
+
+## `move`
+
+Moves items from `sourceSlot` to `destinationSlot` of the open menu;
+`count` defaults to the whole stack.
+
+```ts
+move(request: InventoryRequest<GenMessage<MoveInventoryItemRequest>>, options?: CallOptions | undefined): Effect<InventoryMutationResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `InventoryRequest<GenMessage<MoveInventoryItemRequest>>` ([`InventoryRequest`](/docs/sdk/api/ts/inventory-request), [`MoveInventoryItemRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#moveinventoryitemrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<InventoryMutationResponse, SoulFireOperationError, never>` ([`InventoryMutationResponse`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#inventorymutationresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L391)
+
+## `transfer`
+
+Moves `count` items matching `selector` from area `from` to area `to`
+(`PLAYER` is main and hotbar). Fails if fewer are available or they don't
+fit.
+
+```ts
+transfer(request: InventoryRequest<GenMessage<TransferItemsRequest>>, options?: CallOptions | undefined): Effect<InventoryMutationResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `InventoryRequest<GenMessage<TransferItemsRequest>>` ([`InventoryRequest`](/docs/sdk/api/ts/inventory-request), [`TransferItemsRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#transferitemsrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<InventoryMutationResponse, SoulFireOperationError, never>` ([`InventoryMutationResponse`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#inventorymutationresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L408)
+
+## `toss`
+
+Drops `count` items matching `selector` on the ground.
+
+```ts
+toss(request: InventoryRequest<GenMessage<TossItemsRequest>>, options?: CallOptions | undefined): Effect<InventoryMutationResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `InventoryRequest<GenMessage<TossItemsRequest>>` ([`InventoryRequest`](/docs/sdk/api/ts/inventory-request), [`TossItemsRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#tossitemsrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<InventoryMutationResponse, SoulFireOperationError, never>` ([`InventoryMutationResponse`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#inventorymutationresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L423)
+
+## `selectHotbar`
+
+Selects `hotbarSlot` (0-8), or the item matching `selector`: a hotbar slot
+that holds one, or else a matching item swapped into the selected slot.
+
+```ts
+selectHotbar(request: InventoryRequest<GenMessage<SelectHotbarItemRequest>>, options?: CallOptions | undefined): Effect<InventoryMutationResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `InventoryRequest<GenMessage<SelectHotbarItemRequest>>` ([`InventoryRequest`](/docs/sdk/api/ts/inventory-request), [`SelectHotbarItemRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#selecthotbaritemrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<InventoryMutationResponse, SoulFireOperationError, never>` ([`InventoryMutationResponse`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#inventorymutationresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L439)
+
+## `equip`
+
+Puts an item matching `selector` in `equipmentSlot`: mainhand, offhand,
+head, chest, legs or feet. Closes an open container first, except for
+mainhand (which selects it as `selectHotbar` does).
+
+```ts
+equip(request: InventoryRequest<GenMessage<EquipItemRequest>>, options?: CallOptions | undefined): Effect<InventoryMutationResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `InventoryRequest<GenMessage<EquipItemRequest>>` ([`InventoryRequest`](/docs/sdk/api/ts/inventory-request), [`EquipItemRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#equipitemrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<InventoryMutationResponse, SoulFireOperationError, never>` ([`InventoryMutationResponse`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#inventorymutationresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L456)
+
+## `unequip`
+
+Moves the item in `equipmentSlot` (mainhand, offhand, head, chest, legs or
+feet) to `destinationArea`: MAIN, HOTBAR or PLAYER. It defaults to PLAYER,
+the first free main or hotbar slot.
+
+```ts
+unequip(request: InventoryRequest<GenMessage<UnequipItemRequest>>, options?: CallOptions | undefined): Effect<InventoryMutationResponse, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `request` | `InventoryRequest<GenMessage<UnequipItemRequest>>` ([`InventoryRequest`](/docs/sdk/api/ts/inventory-request), [`UnequipItemRequest`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#unequipitemrequest)) | Required |  |
+| `options` | `CallOptions \| undefined` | Optional |  |
+
+**Returns:** `Effect<InventoryMutationResponse, SoulFireOperationError, never>` ([`InventoryMutationResponse`](/docs/sdk/api/ts/generated-soulfire-inventory-pb#inventorymutationresponse), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L473)
+
+## `open`
+
+Opens the container block at `position`. Times out after 10 s.
+
+```ts
+open(position: MessageInit<BlockPosition>, options?: ContainerMutationOptions): Effect<SoulFireContainer, SoulFireOperationError, never>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `position` | `MessageInit<BlockPosition>` ([`BlockPosition`](/docs/sdk/api/ts/block-position)) | Required |  |
+| `options` | [`ContainerMutationOptions`](/docs/sdk/api/ts/container-mutation-options) | `{}` |  |
+
+**Returns:** `Effect<SoulFireContainer, SoulFireOperationError, never>` ([`SoulFireContainer`](/docs/sdk/api/ts/soul-fire-container), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L488)
+
+## `openScoped`
+
+```ts
+openScoped(position: MessageInit<BlockPosition>, options?: ContainerMutationOptions | undefined): Effect<SoulFireContainer, SoulFireOperationError, Scope>
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `...args` | `[position: MessageInit<BlockPosition>, options?: ContainerMutationOptions \| undefined]` ([`BlockPosition`](/docs/sdk/api/ts/block-position), [`ContainerMutationOptions`](/docs/sdk/api/ts/container-mutation-options)) | Optional |  |
+
+**Returns:** `Effect<SoulFireContainer, SoulFireOperationError, Scope>` ([`SoulFireContainer`](/docs/sdk/api/ts/soul-fire-container), [`SoulFireOperationError`](/docs/sdk/api/ts/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/typescript/src/inventory.ts#L548)

@@ -1,0 +1,92 @@
+---
+title: "CapabilitySet"
+description: "Python API signatures, fields, and source for CapabilitySet."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `connection`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/connection.py#L33).
+
+**Import from:** `soulfire`, `soulfire.connection`.
+
+```python
+class CapabilitySet
+```
+
+## `__init__`
+
+```python
+def __init__(self, response: SdkHandshakeResponse) -> None
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `response` | [`SdkHandshakeResponse`](/docs/sdk/api/py/generated-sdk-pb2#sdkhandshakeresponse) | Required | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/connection.py#L36)
+
+## `supports`
+
+```python
+def supports(self, capability: str, *, minimum_revision: int=1) -> bool
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `capability` | `str` | Required | positional or keyword |
+| `minimum_revision` | `int` | `1` | keyword only |
+
+**Returns:** `bool`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/connection.py#L41)
+
+## `require`
+
+```python
+def require(self, capability: str, *, minimum_revision: int=1) -> None
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `capability` | `str` | Required | positional or keyword |
+| `minimum_revision` | `int` | `1` | keyword only |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/connection.py#L44)
+
+## `revision`
+
+```python
+def revision(self, capability: str) -> int | None
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `capability` | `str` | Required | positional or keyword |
+
+**Returns:** `int | None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/connection.py#L48)
+
+## `revisions`
+
+```python
+@property
+def revisions(self) -> MappingProxyType[str, int]
+```
+
+**Returns:** `MappingProxyType[str, int]`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/connection.py#L52)

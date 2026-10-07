@@ -1,0 +1,69 @@
+---
+title: "ExamplePluginClient"
+description: "Python API signatures, fields, and source for ExamplePluginClient."
+icon: Code
+---
+
+Generated from the [pinned SDK source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d). Use the [matching installation](/docs/sdk/compatibility). Each source link points to this baseline.
+
+**Class** in `example_plugin`. [Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/example_plugin.py#L17).
+
+**Import from:** `soulfire`, `soulfire.example_plugin`.
+
+```python
+class ExamplePluginClient
+```
+
+## `__init__`
+
+```python
+def __init__(self, client: ExamplePluginServiceClient) -> None
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `client` | [`ExamplePluginServiceClient`](/docs/sdk/api/py/generated-plugin-example-v1-example-connect#examplepluginserviceclient) | Required | positional or keyword |
+
+**Returns:** `None`.
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/example_plugin.py#L20)
+
+## `echo`
+
+```python
+def echo(self, instance_id: str, message: str, *, timeout_ms: int | None=None) -> Effect[EchoResponse, SoulFireOperationError]
+```
+
+This callable returns an effect. The source uses `EffectGen` for its generator body. Compose the returned effect with `yield from`.
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instance_id` | `str` | Required | positional or keyword |
+| `message` | `str` | Required | positional or keyword |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Effect[EchoResponse, SoulFireOperationError]` ([`EchoResponse`](/docs/sdk/api/py/generated-plugin-example-v1-example-pb2#echoresponse), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/example_plugin.py#L24)
+
+## `watch_ticks`
+
+```python
+def watch_ticks(self, instance_id: str, count: int, *, timeout_ms: int | None=None) -> Stream[Tick, SoulFireOperationError]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Details |
+| --- | --- | --- | --- |
+| `instance_id` | `str` | Required | positional or keyword |
+| `count` | `int` | Required | positional or keyword |
+| `timeout_ms` | `int \| None` | `None` | keyword only |
+
+**Returns:** `Stream[Tick, SoulFireOperationError]` ([`Stream`](/docs/sdk/api/py/stream), [`Tick`](/docs/sdk/api/py/generated-plugin-example-v1-example-pb2#tick), [`SoulFireOperationError`](/docs/sdk/api/py/soul-fire-operation-error)).
+
+[Source](https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/sdk/python/src/soulfire/example_plugin.py#L36)
