@@ -40,7 +40,6 @@ import {
   jsonLdScript,
 } from "@/lib/seo";
 import { getSource } from "@/lib/source";
-import { cn } from "@/lib/utils";
 import { getMDXComponents } from "@/mdx-components";
 
 const docsSlugsInputSchema = z.array(z.string());
@@ -132,11 +131,7 @@ const clientLoader = browserCollections.docs.createClientLoader<{
             />
           </div>
         </div>
-        <DocsBody
-          className={cn(
-            props.markdownUrl.startsWith("/docs/sdk/api/") && "wrap-anywhere",
-          )}
-        >
+        <DocsBody>
           <MDX
             components={getMDXComponents({
               a: ({ href, ...anchorProps }) => {

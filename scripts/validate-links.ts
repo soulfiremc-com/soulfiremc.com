@@ -63,7 +63,10 @@ async function checkLinks() {
   }
 
   for (const [slug, destination] of docsRedirects) {
-    if (!files.some((file) => file.url === destination)) {
+    if (
+      destination.startsWith("/docs/") &&
+      !files.some((file) => file.url === destination)
+    ) {
       throw new Error(
         `Broken documentation redirect: ${slug} -> ${destination}`,
       );

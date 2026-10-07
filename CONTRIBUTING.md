@@ -102,26 +102,19 @@ Install Bun, Git, Python 3.14, and Java 25, then run:
 
 ```bash
 bun run generate-node-reference
-bun run generate-sdk-reference
 ```
 
-The node generator reads the registry and Java metadata. The SDK generator reads
-the TypeScript package entry points, including generated-module exports. The
-Python extractor reads package exports, public module declarations, and protocol
-stubs without importing the SDK. Both extractors produce the same API model.
-The renderer creates module overviews and linked declarations from that model.
-Generated pages preserve existing SDK reference URLs and link to the pinned source.
+The node generator reads the registry and Java metadata from the pinned source.
 Change the source or generator when a reference is wrong.
-
-Keep signatures, defaults, and descriptions in the SDK source. The generator
-copies source comments and docstrings. It does not invent missing descriptions
-or infer behavior from a type. Python `@fn` contracts show `Effect` return types
-while source implementations use `EffectGen`.
-
 For each SDK release, update the source pin and installation baseline together.
-Run the generator and review the output, including runtime entry points and
-protocol models. The existing `--check` mode compares saved pages with generated
-output. Reference generation does not require a separate CI workflow.
+The existing `--check` mode compares saved pages with generated output.
+
+The full SDK references live at [ts.soulfiremc.com](https://ts.soulfiremc.com/)
+and [py.soulfiremc.com](https://py.soulfiremc.com/).
+TypeDoc and mkdocstrings build these static sites from the SoulFire repository.
+Keep signatures, defaults, comments, and docstrings in the SDK source.
+See [the reference publishing instructions](https://github.com/soulfiremc-com/SoulFire/tree/main/sdk/reference).
+Keep tutorials, recipes, and explanations in this website.
 
 The homepage programs live in `src/lib/sdk-code-examples.ts`. After editing them,
 run `bun run generate-sdk-code` to refresh their highlighted HTML.

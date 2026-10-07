@@ -1,32 +1,15 @@
 ---
 title: SDK API reference
-description: Public exports, functions, classes, types, and protocol declarations for both SDKs.
+description: Generated TypeScript and Python references for the SoulFire SDK.
 icon: BookOpen
 ---
 
-The reference uses the [documented SDK baseline](/docs/sdk/compatibility).
-Both language references use one pinned source revision.
-Parameter and return types link to their definitions.
+The SDK reference sites document classes, methods, types, and generated protocol modules.
+Each site includes search and source code links.
 
-- [TypeScript reference](/docs/sdk/api/typescript) covers every package entry point, including runtime facades, functions, classes, interfaces, aliases, enums, and generated protocol modules.
-- [Python reference](/docs/sdk/api/python) covers package exports, public SDK modules, functions, classes, data models, aliases, and generated protocol modules.
-- [TypeScript types](/docs/sdk/api/types) lists the options, interfaces, aliases, and enums available from the main package.
-- [Server RPC reference](/docs/openapi) covers unary HTTP/JSON endpoints. Streaming and native gRPC contracts are outside that schema.
+- [TypeScript API reference](https://ts.soulfiremc.com/)
+- [Python API reference](https://py.soulfiremc.com/)
 
-Start with a [recipe](/docs/sdk/recipes) if you want a complete program.
-
-## Read a declaration
-
-Each page includes its import paths and source links.
-Callable declarations include parameter types, defaults, and return types.
-Classes include constructors and members declared by the SDK, including inherited SDK members.
-External bases remain visible in the class declaration.
-
-TypeScript runtime facades share the `SoulFire` page. Each runtime has its own contract.
-Python callables decorated with `@fn` show their returned `Effect` type.
-Their source implementations use `EffectGen` for the generator body.
-Protocol fields and Python protocol constructors come from the packaged declarations.
-
-Descriptions come from source comments and docstrings.
-If a declaration has no description, its source link supplies the implementation context.
-An optional parameter does not imply a particular default.
+Start with the [TypeScript tutorial](/docs/sdk/typescript) or [Python tutorial](/docs/sdk/python) for your first program.
+Use the [SDK recipes](/docs/sdk/recipes) for complete automation examples.
+The [server RPC reference](/docs/openapi) documents the lower level endpoints.

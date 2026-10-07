@@ -12,7 +12,6 @@
     "preview": "vite preview",
     "start": "vite preview",
     "generate-docs": "fumadocs-mdx",
-    "generate-sdk-reference": "tsx scripts/generate-sdk-reference.ts",
     "check-sdk-recipes": "tsx scripts/check-sdk-recipes.ts",
     "generate-routes": "tsx scripts/generate-routes.ts",
     "typecheck": "bun cf-typegen && bun generate-docs && bun generate-routes && tsc --noEmit",
@@ -32,7 +31,7 @@
     "test": "tsx --test tests/*.test.ts",
     "generate-node-reference": "tsx scripts/generate-node-reference.ts",
     "check-script-recipes": "tsx scripts/check-script-recipes.ts",
-    "check-docs": "bun validate-links && bun generate-node-reference --check && bun generate-sdk-reference --check && bun check-script-recipes && bun check-sdk-recipes && bun check-plugin-examples",
+    "check-docs": "bun validate-links && bun generate-node-reference --check && bun check-script-recipes && bun check-sdk-recipes && bun check-plugin-examples",
     "check-plugin-examples": "tsx scripts/check-plugin-examples.ts"
   },
   "dependencies": {
