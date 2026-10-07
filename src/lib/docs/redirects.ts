@@ -1,7 +1,4 @@
-import sdkReferenceRedirects from "./sdk-reference-redirects.json";
-
 export const docsRedirects = new Map<string, string>([
-  ...Object.entries(sdkReferenceRedirects),
   ["start-here/dedicated-server", "/docs/server/automated-setup"],
   ["how-to/docker", "/docs/server/docker"],
   ["how-to/dedicated-mode", "/docs/server/java"],
