@@ -1,7 +1,10 @@
 {
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "$schema": "./node_modules/@effect/tsgo/oxlint-schema.json",
   "jsPlugins": ["@shadcn/lint"],
-  "options": { "reportUnusedDisableDirectives": "error" },
+  "options": {
+    "reportUnusedDisableDirectives": "error",
+    "typeAware": true
+  },
   "rules": {
     "shadcn/no-unknown-classes": [
       "error",
@@ -235,7 +238,10 @@
       }
     ],
     "shadcn/require-static-classes": "error",
-    "shadcn/no-inline-styles": "error"
+    "shadcn/no-inline-styles": "error",
+    "effecttsgo/any-unknown-in-error-context": "off",
+    "effecttsgo/unsafe-effect-type-assertion": "off",
+    "effecttsgo/strict-effect-provide": "off"
   },
   "overrides": [
     {
@@ -251,5 +257,7 @@
     "src/lib/auth/**",
     "src/components/data-table/**",
     "src/routeTree.gen.ts"
-  ]
+  ],
+  "extends": ["./node_modules/@effect/tsgo/oxlint-presets/recommended.json"],
+  "plugins": ["typescript", "effecttsgo"]
 }

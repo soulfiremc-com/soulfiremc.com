@@ -16,10 +16,10 @@
     "generate-routes": "tsx scripts/generate-routes.ts",
     "typecheck": "bun cf-typegen && bun generate-docs && bun generate-routes && tsc --noEmit",
     "validate-links": "bun generate-docs && tsx scripts/validate-links.ts",
-    "fix": "oxlint --fix && oxfmt --write",
-    "check": "bun generate-sdk-code --check && oxlint && oxfmt --check",
+    "fix": "oxlint --type-aware --fix && oxfmt --write",
+    "check": "bun generate-sdk-code --check && oxlint --type-aware && oxfmt --check",
     "generate-sdk-code": "tsx scripts/generate-sdk-code.ts",
-    "lint": "oxlint",
+    "lint": "oxlint --type-aware",
     "format": "oxfmt --write",
     "format:check": "oxfmt --check",
     "postinstall": "bun generate-docs && bun generate-routes",
@@ -32,7 +32,8 @@
     "generate-node-reference": "tsx scripts/generate-node-reference.ts",
     "check-script-recipes": "tsx scripts/check-script-recipes.ts",
     "check-docs": "bun validate-links && bun generate-node-reference --check && bun check-script-recipes && bun check-sdk-recipes && bun check-plugin-examples",
-    "check-plugin-examples": "tsx scripts/check-plugin-examples.ts"
+    "check-plugin-examples": "tsx scripts/check-plugin-examples.ts",
+    "prepare": "effect-tsgo patch --no-typescript --oxlint"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
@@ -117,6 +118,7 @@
     "zod": "^4.5.4"
   },
   "devDependencies": {
+    "@effect/tsgo": "0.51.1",
     "@octokit/openapi-types": "^29.0.1",
     "@shadcn/lint": "^0.2.0",
     "@tailwindcss/postcss": "4.3.3",
@@ -135,8 +137,9 @@
     "github-slugger": "^2.0.0",
     "miniflare": "5.20260908.0-alpha",
     "next-validate-link": "^1.6.7",
-    "oxfmt": "^0.72.0",
-    "oxlint": "^1.85.0",
+    "oxfmt": "0.72.0",
+    "oxlint": "1.87.0",
+    "oxlint-tsgolint": "7.0.2003",
     "postcss": "^8.5.28",
     "shadcn": "^4.21.0",
     "sharp": "^0.35.4",
