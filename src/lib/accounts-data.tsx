@@ -657,12 +657,12 @@ export const SHOPS: Shop[] = [
         summary:
           "Cookie NFAs with multiple Hypixel tiers, random rank options, and no-VPN-detection variants on higher levels.",
         badges: ["partner", "affiliate", "high-quality", "instant-delivery"],
-        price: "25¢+",
-        priceValue: 0.25,
+        price: "12-16¢",
+        priceValue: 0.12,
         linkDiscountMessage:
           "Register using the link below for a 5% discount on checkout",
         priceDetails:
-          "Current public store starts at 25¢ for Hypixel Level 1-9 and Gamepass NFAs, then 40¢ for Level 10+, 55¢ for Bedwars 8+, 67¢ for Level 21+, 70¢ for random rank, $3.50 for MVP+, and $4.50 for Level 70+. Terms advertise replacements within 24 hours.",
+          "Cookie NFAs cost 12-16¢. Higher Hypixel tiers and ranked variants cost more. Terms advertise replacements within 24 hours.",
       },
       "mfa-accounts": {
         summary:
