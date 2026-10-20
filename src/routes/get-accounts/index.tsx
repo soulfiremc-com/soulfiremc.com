@@ -58,6 +58,7 @@ import {
   type FilterableBadge,
   getDiscordInviteUrl,
   getShopBySlug,
+  isProviderPromoted,
   PROVIDER_THEMES,
   PROVIDERS,
   type Provider,
@@ -564,8 +565,13 @@ function sortProviders(
   sort: SortOption,
   summaries: Record<string, ReviewSummary>,
 ): Provider[] {
-  const topProviders = providers.filter((provider) => provider.alwaysOnTop);
-  const otherProviders = providers.filter((provider) => !provider.alwaysOnTop);
+  const now = Date.now();
+  const topProviders = providers.filter((provider) =>
+    isProviderPromoted(provider, now),
+  );
+  const otherProviders = providers.filter(
+    (provider) => !isProviderPromoted(provider, now),
+  );
 
   if (sort === "default" || sort === "best-rated") {
     return [
@@ -608,15 +614,13 @@ function MainContent() {
     });
   };
 
-  const filteredProviders = useMemo(() => {
-    return providers.filter((provider) => {
-      const matchesCategory = category ? provider.category === category : true;
-      const matchesBadges =
-        provider.alwaysOnTop ||
-        badges.every((filter) => provider.badges.includes(filter));
-      return matchesCategory && matchesBadges;
-    });
-  }, [badges, category]);
+  const filteredProviders = providers.filter((provider) => {
+    const matchesCategory = category ? provider.category === category : true;
+    const matchesBadges =
+      isProviderPromoted(provider) ||
+      badges.every((filter) => provider.badges.includes(filter));
+    return matchesCategory && matchesBadges;
+  });
 
   const nfaProviders = sortProviders(
     filteredProviders.filter((p) => p.category === "nfa-accounts"),

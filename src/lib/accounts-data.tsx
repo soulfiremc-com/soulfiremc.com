@@ -75,7 +75,7 @@ export type Shop = {
   paymentMethods?: string[];
   startDate?: string;
   gallery?: { src: string; alt: string }[];
-  alwaysOnTop?: boolean;
+  promotedUntil?: string;
   listings: Partial<Record<Category, Listing>>;
 };
 
@@ -94,7 +94,7 @@ export type Provider = {
   paymentMethods?: string[];
   startDate?: string;
   gallery?: { src: string; alt: string }[];
-  alwaysOnTop?: boolean;
+  promotedUntil?: string;
   badges: Badge[];
   category: Category;
   price: string;
@@ -104,6 +104,16 @@ export type Provider = {
   linkDiscountMessage?: string;
   priceDetails?: string;
 };
+
+export function isProviderPromoted(
+  provider: Pick<Provider, "promotedUntil">,
+  now = Date.now(),
+): boolean {
+  return (
+    provider.promotedUntil !== undefined &&
+    now < Date.parse(provider.promotedUntil)
+  );
+}
 
 export function getDiscordInviteUrl(
   provider: Pick<Provider, "discordUrl" | "url">,
@@ -636,7 +646,7 @@ export const SHOPS: Shop[] = [
   {
     slug: "localts",
     name: "Localts",
-    alwaysOnTop: true,
+    promotedUntil: "2026-12-28T14:42:46+01:00",
     logo: "/accounts/localts.png",
     theme: "localts",
     url: "https://localts.store/?campaign=soulfire",
@@ -791,7 +801,7 @@ export const PROVIDERS: Provider[] = (
         paymentMethods: shop.paymentMethods,
         startDate: shop.startDate,
         gallery: shop.gallery,
-        alwaysOnTop: shop.alwaysOnTop,
+        promotedUntil: shop.promotedUntil,
         category,
         ...listing,
       },
