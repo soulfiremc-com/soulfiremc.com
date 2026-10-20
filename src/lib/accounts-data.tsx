@@ -413,7 +413,7 @@ export const SHOPS: Shop[] = [
     logo: "/accounts/atomic-nfas.webp",
     url: "https://atomic-nfas.mysellauth.com",
     websiteUrl: "https://atomic-nfas.mysellauth.com",
-    discordUrl: "https://discord.gg/hdXPTfZJcX",
+    discordUrl: "https://dsc.gg/atomicnfas",
     startDate: "Jan 2026",
     listings: {
       "nfa-accounts": {
