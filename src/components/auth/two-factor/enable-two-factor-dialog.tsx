@@ -134,7 +134,8 @@ export function EnableTwoFactorDialog({
       onError: () => form.setFieldValue("code", ""),
       onSuccess: () => {
         toast.success(twoFactorLocalization.twoFactorEnabled);
-        setStep("backupCodes");
+        if (backupCodes.length) setStep("backupCodes");
+        else handleOpenChange(false);
       },
     },
   );
