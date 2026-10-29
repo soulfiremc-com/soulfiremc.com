@@ -14,7 +14,6 @@ const theme = {
   cyan: "#4b8d96",
   green: "#5d8d76",
   rose: "#b26a76",
-  violet: "#7f70ad",
 };
 
 function fitTitleSize(
@@ -591,11 +590,11 @@ function Layout({
 export function HomeOgImage() {
   return (
     <Layout
-      section="Core Platform"
+      section="Server testing"
       path="site/home"
       accent={theme.green}
-      title="Advanced Minecraft Stress Testing"
-      description="Real client code across versions with GUI, CLI, and dedicated server workflows."
+      title="Minecraft bots for server testing"
+      description="Run Minecraft clients as bots with the desktop app, CLI, or dedicated server."
       titleSize={92}
       footer={["All versions", "GUI and CLI", "Plugins"]}
       sidebar={
@@ -604,8 +603,8 @@ export function HomeOgImage() {
           top={
             <TextHero
               accent={theme.green}
-              title="Real clients"
-              description="Protocol behavior that matches production sessions."
+              title="Fabric clients"
+              description="Minecraft's own physics and networking."
             />
           }
           rows={[
@@ -779,56 +778,6 @@ export function AccountOgImage({
             label: listing.label,
             value: listing.price,
           }))}
-        />
-      }
-    />
-  );
-}
-
-export function ResourceOgImage({
-  name,
-  description,
-  author,
-  category,
-  badges,
-  version,
-  logoSrc,
-}: {
-  name: string;
-  description: string;
-  author: string;
-  category: string;
-  badges: string[];
-  version?: string;
-  logoSrc?: string;
-}) {
-  const normalizedBadges = badges.map((badge) => labelize(badge));
-
-  return (
-    <Layout
-      section="Community Resource"
-      path="resources/item"
-      accent={theme.violet}
-      title={name}
-      description={description}
-      titleSize={fitTitleSize(name, {
-        base: 82,
-        medium: 74,
-        long: 66,
-        xlong: 58,
-      })}
-      sidebar={
-        <Sidebar
-          accent={theme.violet}
-          top={
-            <LogoHero value={name} accent={theme.violet} logoSrc={logoSrc} />
-          }
-          entries={normalizedBadges}
-          rows={[
-            { label: "Category", value: labelize(category) },
-            { label: "Author", value: author },
-            ...(version ? [{ label: "Version", value: `v${version}` }] : []),
-          ]}
         />
       }
     />

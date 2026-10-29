@@ -64,7 +64,7 @@ function getItemPath(itemType: ItemType, itemSlug: string) {
     case "proxy":
       return `/get-proxies/${itemSlug}`;
     case "resource":
-      return `/resources/${itemSlug}`;
+      return null;
   }
 }
 
@@ -231,99 +231,108 @@ export function ReviewModeration() {
         />
       ) : (
         <div className="grid gap-4">
-          {result.comments.map((comment) => (
-            <Card key={comment.id} className="gap-5">
-              <CardHeader className="gap-3">
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                  <div className="flex min-w-0 items-center gap-3">
-                    <Avatar size="lg">
-                      {comment.authorImage ? (
-                        <AvatarImage
-                          src={comment.authorImage}
-                          alt={comment.authorName}
-                        />
-                      ) : null}
-                      <AvatarFallback>
-                        {getInitial(comment.authorName)}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="min-w-0">
-                      <CardTitle className="truncate text-base">
-                        {comment.authorName}
-                      </CardTitle>
-                      {comment.authorEmail ? (
-                        <p className="truncate text-sm text-muted-foreground">
-                          {comment.authorEmail}
-                        </p>
-                      ) : null}
+          {result.comments.map((comment) => {
+            const itemPath = getItemPath(comment.itemType, comment.itemSlug);
+            return (
+              <Card key={comment.id} className="gap-5">
+                <CardHeader className="gap-3">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                    <div className="flex min-w-0 items-center gap-3">
+                      <Avatar size="lg">
+                        {comment.authorImage ? (
+                          <AvatarImage
+                            src={comment.authorImage}
+                            alt={comment.authorName}
+                          />
+                        ) : null}
+                        <AvatarFallback>
+                          {getInitial(comment.authorName)}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="min-w-0">
+                        <CardTitle className="truncate text-base">
+                          {comment.authorName}
+                        </CardTitle>
+                        {comment.authorEmail ? (
+                          <p className="truncate text-sm text-muted-foreground">
+                            {comment.authorEmail}
+                          </p>
+                        ) : null}
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Badge variant="secondary">
+                        {getItemTypeLabel(comment.itemType)}
+                      </Badge>
+                      {itemPath ? (
+                        <a
+                          href={itemPath}
+                          className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                        >
+                          {comment.itemSlug}
+                          <ExternalLink className="size-3" />
+                        </a>
+                      ) : (
+                        <span className="text-sm text-muted-foreground">
+                          {comment.itemSlug}
+                        </span>
+                      )}
                     </div>
                   </div>
+                </CardHeader>
 
-                  <div className="flex flex-wrap items-center gap-2">
-                    <Badge variant="secondary">
-                      {getItemTypeLabel(comment.itemType)}
-                    </Badge>
-                    <a
-                      href={getItemPath(comment.itemType, comment.itemSlug)}
-                      className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
-                    >
-                      {comment.itemSlug}
-                      <ExternalLink className="size-3" />
-                    </a>
+                <CardContent className="flex flex-col gap-4">
+                  <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+                    <ReviewStars value={comment.rating} size="sm" />
+                    <span className="tabular-nums">
+                      {comment.rating.toFixed(1)}
+                    </span>
+                    <span aria-hidden="true">·</span>
+                    <CustomTimeAgo date={comment.createdAt} />
                   </div>
-                </div>
-              </CardHeader>
+                  <p className="rounded-md border bg-muted/20 p-3 text-sm leading-6">
+                    {comment.body}
+                  </p>
+                </CardContent>
 
-              <CardContent className="flex flex-col gap-4">
-                <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-                  <ReviewStars value={comment.rating} size="sm" />
-                  <span className="tabular-nums">
-                    {comment.rating.toFixed(1)}
-                  </span>
-                  <span aria-hidden="true">·</span>
-                  <CustomTimeAgo date={comment.createdAt} />
-                </div>
-                <p className="rounded-md border bg-muted/20 p-3 text-sm leading-6">
-                  {comment.body}
-                </p>
-              </CardContent>
-
-              <CardFooter>
-                <form className="flex gap-2" onSubmit={moderateComment}>
-                  <input type="hidden" name="reviewId" value={comment.id} />
-                  <Button
-                    type="submit"
-                    name="commentStatus"
-                    value="approved"
-                    disabled={moderation.isPending}
-                  >
-                    {pendingReviewId === comment.id &&
-                    pendingReviewStatus === "approved" ? (
-                      <Spinner data-icon="inline-start" />
-                    ) : (
-                      <Check data-icon="inline-start" />
-                    )}
-                    Approve
-                  </Button>
-                  <Button
-                    type="submit"
-                    name="commentStatus"
-                    value="rejected"
-                    variant="outline"
-                    disabled={moderation.isPending}
-                  >
-                    {pendingReviewId === comment.id &&
-                    pendingReviewStatus === "rejected" ? (
-                      <Spinner data-icon="inline-start" />
-                    ) : (
-                      <X data-icon="inline-start" />
-                    )}
-                    Reject
-                  </Button>
-                </form>
-              </CardFooter>
-            </Card>
-          ))}
+                <CardFooter>
+                  <form className="flex gap-2" onSubmit={moderateComment}>
+                    <input type="hidden" name="reviewId" value={comment.id} />
+                    <Button
+                      type="submit"
+                      name="commentStatus"
+                      value="approved"
+                      disabled={moderation.isPending}
+                    >
+                      {pendingReviewId === comment.id &&
+                      pendingReviewStatus === "approved" ? (
+                        <Spinner data-icon="inline-start" />
+                      ) : (
+                        <Check data-icon="inline-start" />
+                      )}
+                      Approve
+                    </Button>
+                    <Button
+                      type="submit"
+                      name="commentStatus"
+                      value="rejected"
+                      variant="outline"
+                      disabled={moderation.isPending}
+                    >
+                      {pendingReviewId === comment.id &&
+                      pendingReviewStatus === "rejected" ? (
+                        <Spinner data-icon="inline-start" />
+                      ) : (
+                        <X data-icon="inline-start" />
+                      )}
+                      Reject
+                    </Button>
+                  </form>
+                </CardFooter>
+              </Card>
+            );
+          })}
         </div>
       )}
     </section>

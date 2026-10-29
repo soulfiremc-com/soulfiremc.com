@@ -5,6 +5,7 @@
 @import "fumadocs-openapi/css/preset.css";
 @import "fumadocs-twoslash/twoslash.css";
 @import "shadcn/tailwind.css";
+@import "./components/home/home.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -112,13 +113,6 @@
   --color-localts-sky: #85c4f3;
   --color-rating: var(--color-amber-500);
   --color-rating-muted: var(--color-amber-200);
-  --color-script-canvas: #1e1e2e;
-  --color-script-node: #2a2a3a;
-  --color-script-line: #3a3a4a;
-  --color-script-muted: #777;
-  --color-script-label: #e0e0e0;
-  --color-script-secondary: #999;
-  --color-script-value: #e0c070;
   --text-2xs: 0.6875rem;
   --text-3xs: 0.625rem;
   --text-4xs: 0.5rem;
@@ -142,35 +136,7 @@
   --color-sidebar-ring: var(--sidebar-ring);
   --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono Variable", ui-monospace, monospace;
-  --animate-shiny-text: shiny-text 8s infinite;
-  --animate-ripple: ripple var(--duration, 2s) ease calc(var(--i, 0) * 0.2s)
-    infinite;
   --animate-orbit: orbit calc(var(--duration) * 1s) linear infinite;
-  --animate-grid: grid 15s linear infinite;
-  --animate-marquee: marquee var(--duration) infinite linear;
-  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
-
-  @keyframes shiny-text {
-    0%,
-    90%,
-    100% {
-      background-position: calc(-100% - var(--shiny-width)) 0;
-    }
-    30%,
-    60% {
-      background-position: calc(100% + var(--shiny-width)) 0;
-    }
-  }
-
-  @keyframes ripple {
-    0%,
-    100% {
-      transform: translate(-50%, -50%) scale(1);
-    }
-    50% {
-      transform: translate(-50%, -50%) scale(0.9);
-    }
-  }
 
   @keyframes orbit {
     0% {
@@ -182,55 +148,6 @@
         translateY(calc(var(--radius) * 1px))
         rotate(calc((var(--angle) * -1deg) - 360deg));
     }
-  }
-
-  @keyframes grid {
-    0% {
-      transform: translateY(-50%);
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
-
-  --animate-edge-flow: edge-flow 0.8s linear infinite;
-  @keyframes edge-flow {
-    to {
-      stroke-dashoffset: -10;
-    }
-  }
-
-  --animate-meteor: meteor 5s linear infinite;
-  @keyframes meteor {
-    0% {
-      transform: rotate(var(--angle)) translateX(0);
-      opacity: 1;
-    }
-    70% {
-      opacity: 1;
-    }
-    100% {
-      transform: rotate(var(--angle)) translateX(-500px);
-      opacity: 0;
-    }
-  }
-}
-
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(calc(-100% - var(--marquee-gap, 16px)));
-  }
-}
-
-@keyframes marquee-vertical {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(calc(-100% - var(--marquee-gap, 12px)));
   }
 }
 

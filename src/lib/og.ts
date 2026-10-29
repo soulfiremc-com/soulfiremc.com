@@ -29,10 +29,6 @@ export function getAccountPageImage(slug: string) {
   return createOgImage("/og/accounts", [slug]);
 }
 
-export function getResourcePageImage(slug: string) {
-  return createOgImage("/og/resources", [slug]);
-}
-
 export function labelize(value: string) {
   return value
     .split(/[-/]/g)

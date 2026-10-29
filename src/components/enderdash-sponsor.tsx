@@ -17,10 +17,10 @@ const featureTitle =
 const featureDescription =
   "EnderDash lets you manage your existing Minecraft servers from one dashboard by installing a single plugin. Run commands, read logs, manage files, invite your whole team, manage players, and keep Ocelot close at hand without changing your current infrastructure or panel.";
 
-const footerTitle = "Need a more capable admin panel for your server?";
+const footerTitle = "Server management with EnderDash";
 
 const footerDescription =
-  "EnderDash adds an advanced dashboard to your existing Minecraft servers with a single plugin, batteries included.";
+  "Install the EnderDash plugin to manage your existing servers from a web dashboard.";
 
 const featureHighlights = [
   "Run commands with tab completion",
@@ -179,7 +179,7 @@ export function EnderDashSponsor({
             </p>
           </div>
         </div>
-        <SponsorButton href={href} label="Check out EnderDash" size="default" />
+        <SponsorButton href={href} label="Visit EnderDash" size="default" />
       </div>
     </aside>
   );

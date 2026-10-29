@@ -22,7 +22,6 @@ const DAILY_PAGES = new Set([
   "/get-accounts",
   "/get-proxies",
   "/pricing",
-  "/resources",
 ]);
 function getSitemapSettings(path: string): {
   priority: number;
@@ -34,11 +33,7 @@ function getSitemapSettings(path: string): {
   if (path.startsWith("/docs/openapi/"))
     return { priority: 0.3, changefreq: "weekly" };
   if (path.startsWith("/docs/")) return { priority: 0.7, changefreq: "weekly" };
-  if (
-    path.startsWith("/get-accounts/") ||
-    path.startsWith("/get-proxies/") ||
-    path.startsWith("/resources/")
-  )
+  if (path.startsWith("/get-accounts/") || path.startsWith("/get-proxies/"))
     return { priority: 0.6, changefreq: "weekly" };
   return { priority: 0.5, changefreq: "weekly" };
 }

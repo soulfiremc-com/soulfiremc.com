@@ -12,46 +12,41 @@ export function SiteShell({ children }: { children: ReactNode }) {
       {...baseOptions}
       links={[
         {
-          type: "main",
-          text: "Documentation",
+          text: "Docs",
           url: "/docs",
           description: "Learn how to use SoulFire",
         },
         {
-          type: "main",
           text: "Downloads",
           url: "/download",
           description: "Download SoulFire",
         },
         {
-          type: "main",
-          text: "Blog",
-          url: "/blog",
-          description: "SoulFire Blog",
-        },
-        {
-          type: "main",
-          text: "Get Accounts",
+          text: "Accounts",
           url: "/get-accounts",
-          description: "Get Accounts for SoulFire",
+          description: "Find Minecraft accounts for your bots",
         },
         {
-          type: "main",
-          text: "Get Proxies",
+          text: "Proxies",
           url: "/get-proxies",
-          description: "Get Proxies for SoulFire",
+          description: "Find proxies for your bot sessions",
         },
         {
-          type: "main",
-          text: "Resources",
-          url: "/resources",
-          description: "SoulFire plugins and scripts",
-        },
-        {
-          type: "main",
-          text: "Pricing",
-          url: "/pricing",
-          description: "Support SoulFire",
+          type: "menu",
+          text: "More",
+          secondary: true,
+          items: [
+            {
+              text: "Blog",
+              url: "/blog",
+              description: "News and guides from SoulFire",
+            },
+            {
+              text: "Pricing",
+              url: "/pricing",
+              description: "Support SoulFire development",
+            },
+          ],
         },
         ...(baseOptions.links || []),
         {

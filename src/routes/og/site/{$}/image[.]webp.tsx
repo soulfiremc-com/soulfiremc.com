@@ -1,4 +1,4 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import type { ReactElement } from "react";
 import {
   DirectoryOgImage,
@@ -10,7 +10,6 @@ import { getSortedBlogPages } from "@/lib/blog";
 import { stripOgSuffix } from "@/lib/og";
 import { createOgImageResponse } from "@/lib/og-image";
 import { PROVIDERS as PROXY_PROVIDERS } from "@/lib/proxies-data";
-import { RESOURCES } from "@/lib/resources-data";
 
 export const Route = createFileRoute("/og/site/{$}/image.webp")({
   server: {
@@ -19,7 +18,7 @@ export const Route = createFileRoute("/og/site/{$}/image.webp")({
         const slugs = params._splat?.split("/").filter(Boolean) ?? [];
         const [page] = stripOgSuffix(slugs);
 
-        if (!page) throw notFound();
+        if (!page) return new Response(null, { status: 404 });
 
         let image: ReactElement;
 
@@ -75,21 +74,8 @@ export const Route = createFileRoute("/og/site/{$}/image.webp")({
             );
             break;
           }
-          case "resources":
-            image = (
-              <DirectoryOgImage
-                label="Resources"
-                title="Plugins and Scripts for SoulFire"
-                description="Community resources for automation, PvP, utility, and custom bot behavior."
-                accent="#b89cff"
-                secondary="#58c7ff"
-                count={RESOURCES.length}
-                samples={RESOURCES.map((r) => r.name)}
-              />
-            );
-            break;
           default:
-            throw notFound();
+            return new Response(null, { status: 404 });
         }
 
         return createOgImageResponse(image);
