@@ -53,6 +53,7 @@ import {
   type Badge,
   CATEGORY_CONFIG,
   type Category,
+  compareProviderPrices,
   FILTER_BADGES,
   FILTER_CATEGORIES,
   type FilterableBadge,
@@ -585,11 +586,7 @@ function sortProviders(
   }
   return [
     ...topProviders,
-    ...otherProviders.sort((a, b) =>
-      sort === "price-asc"
-        ? a.priceValue - b.priceValue
-        : b.priceValue - a.priceValue,
-    ),
+    ...otherProviders.sort((a, b) => compareProviderPrices(a, b, sort)),
   ];
 }
 
@@ -1083,7 +1080,7 @@ function createAccountsItemListJsonLd(
             provider.category === "mfa-accounts"
               ? "MFA full-access Minecraft accounts"
               : "NFA temporary Minecraft accounts",
-          ...(shop && liveShopData
+          ...(shop && liveShopData && provider.priceValue !== undefined
             ? {
                 aggregateOffer: getShopAggregateOffer(shop, liveShopData),
                 offers: getListingOffer(

@@ -1,4 +1,4 @@
-import type { Offer } from "schema-dts";
+import type { AggregateOffer, Offer } from "schema-dts";
 import type { Category, Shop } from "@/lib/accounts-data";
 
 const RAVEALTS_STOCK_URL = "https://api.ravealts.com/alts/stock";
@@ -109,15 +109,17 @@ function parseLocaltsStockByCategory(
 export function getListingOffer(
   shop: Shop,
   category: Category,
-  listingPriceValue: number,
+  listingPriceValue: number | undefined,
   liveData?: LiveShopData,
 ): Offer {
   const stockValue = liveData?.stockByCategory?.[category];
 
   return {
     "@type": "Offer",
-    priceCurrency: "USD",
-    price: listingPriceValue.toFixed(2),
+    ...(listingPriceValue !== undefined && {
+      priceCurrency: "USD",
+      price: listingPriceValue.toFixed(2),
+    }),
     availability:
       typeof stockValue === "number" && stockValue <= OUT_OF_STOCK_THRESHOLD
         ? "https://schema.org/OutOfStock"
@@ -135,22 +137,28 @@ export function getListingOffer(
 export function getShopAggregateOffer(
   shop: Shop,
   liveData?: LiveShopData,
-): Offer | undefined {
-  const listings = Object.entries(shop.listings) as [
-    Category,
-    NonNullable<Shop["listings"][Category]>,
-  ][];
+): AggregateOffer | undefined {
+  const listings = (
+    Object.entries(shop.listings) as [
+      Category,
+      NonNullable<Shop["listings"][Category]>,
+    ][]
+  ).flatMap(([category, listing]) =>
+    listing.priceValue === undefined
+      ? []
+      : [{ category, price: listing.priceValue }],
+  );
   if (listings.length === 0) {
     return undefined;
   }
 
-  const prices = listings.map(([, listing]) => listing.priceValue);
-  const totalStock = listings.reduce((total, [category]) => {
+  const prices = listings.map((listing) => listing.price);
+  const totalStock = listings.reduce((total, { category }) => {
     const value = liveData?.stockByCategory?.[category];
     return typeof value === "number" ? total + value : total;
   }, 0);
   const knownStockCount = listings.filter(
-    ([category]) => typeof liveData?.stockByCategory?.[category] === "number",
+    ({ category }) => typeof liveData?.stockByCategory?.[category] === "number",
   ).length;
 
   return {

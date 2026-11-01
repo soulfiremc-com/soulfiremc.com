@@ -54,7 +54,8 @@ export type Listing = {
   summary: string;
   badges: Badge[];
   price: string;
-  priceValue: number;
+  // USD catalog price, when a comparable account price is available.
+  priceValue?: number;
   couponCode?: string;
   couponDiscount?: string;
   linkDiscountMessage?: string;
@@ -98,7 +99,7 @@ export type Provider = {
   badges: Badge[];
   category: Category;
   price: string;
-  priceValue: number;
+  priceValue?: number;
   couponCode?: string;
   couponDiscount?: string;
   linkDiscountMessage?: string;
@@ -113,6 +114,22 @@ export function isProviderPromoted(
     provider.promotedUntil !== undefined &&
     now < Date.parse(provider.promotedUntil)
   );
+}
+
+export function compareProviderPrices(
+  a: Pick<Provider, "priceValue">,
+  b: Pick<Provider, "priceValue">,
+  sort: "price-asc" | "price-desc",
+): number {
+  if (a.priceValue === undefined) {
+    return b.priceValue === undefined ? 0 : 1;
+  }
+  if (b.priceValue === undefined) {
+    return -1;
+  }
+  return sort === "price-asc"
+    ? a.priceValue - b.priceValue
+    : b.priceValue - a.priceValue;
 }
 
 export function getDiscordInviteUrl(
@@ -771,6 +788,178 @@ export const SHOPS: Shop[] = [
         couponDiscount: "10% off",
         priceDetails:
           "Shop pricing ranges from $0.08 to $5.99 across budget NFA alts and full-email-access MFA accounts.",
+      },
+    },
+  },
+  // Verified 2026-11-01. Sources and limitations: docs/account-shop-research.md.
+  {
+    slug: "altsgreat",
+    name: "AltsGreat",
+    logo: "/accounts/altsgreat.png",
+    url: "https://altsgreat.com/categories/minecraft-accounts",
+    websiteUrl: "https://altsgreat.com",
+    trustpilotUrl: "https://www.trustpilot.com/review/altsgreat.com",
+    paymentMethods: ["Card", "Crypto"],
+    listings: {
+      "mfa-accounts": {
+        summary:
+          "Full-access Java and Bedrock accounts, including Hypixel ranked, Bedwars, Skyblock, DonutSMP, and cape listings. Several account purchase buttons lead to Eldorado checkout, so review the linked offer's seller, price, and terms.",
+        badges: [],
+        price: "$6.99+",
+        priceValue: 6.99,
+        priceDetails:
+          "The catalog advertises Hypixel-unbanned full-access accounts at $6.99, DonutSMP-unbanned at $8.99, fresh Java + Bedrock at $9.99, VIP at $10.49, and MVP+ at $25.99. Confirm the final price and delivery terms on the linked checkout. Warranties vary by product. The refund policy requests reports of technical problems within 24 hours and offers a refund if support cannot fix or replace a faulty product.",
+      },
+    },
+  },
+  {
+    slug: "fastalts",
+    name: "FastAlts",
+    logo: "/accounts/fastalts.svg",
+    url: "https://fastalts.com/minecraft/account",
+    websiteUrl: "https://fastalts.com",
+    trustpilotUrl: "https://www.trustpilot.com/review/fastalts.com",
+    paymentMethods: ["Visa", "Mastercard", "Apple Pay", "Google Pay"],
+    socialLinks: [{ platform: "email", url: "mailto:support@fastalts.com" }],
+    listings: {
+      "mfa-accounts": {
+        summary:
+          "Full-access Minecraft accounts with the linked email inbox, including Java + Bedrock and specific cape pools. Advertises automatic delivery after payment, escrow, and a 30-day replacement guarantee for defects present at delivery.",
+        badges: ["instant-delivery", "replacement-warranty"],
+        price: "$18.99+",
+        priceValue: 18.99,
+        priceDetails:
+          "The standard full-access listing publishes a USD price of $18.99; the storefront can display local currencies. Cape listings include Migrator, Vanilla, Followers, Purple Heart, Pan, and multiple-cape options. Only explicitly listed account traits are guaranteed. Report problems from the order page before confirming receipt. The 30-day guarantee covers defects present at delivery, with replacement first and a refund if no valid replacement exists.",
+      },
+    },
+  },
+  {
+    slug: "eldorado",
+    name: "Eldorado",
+    logo: "/accounts/eldorado.png",
+    url: "https://www.eldorado.gg/minecraft-accounts/a/61-1-0",
+    websiteUrl: "https://www.eldorado.gg",
+    trustpilotUrl: "https://www.trustpilot.com/review/eldorado.gg",
+    paymentMethods: [
+      "Card",
+      "Apple Pay",
+      "Google Pay",
+      "PayPal",
+      "Crypto",
+      "Klarna",
+      "BLIK",
+      "Cash App",
+      "Alipay",
+      "PIX",
+      "Local methods",
+    ],
+    socialLinks: [
+      { platform: "x", url: "https://x.com/EldoradoGg" },
+      {
+        platform: "youtube",
+        url: "https://www.youtube.com/@Eldorado.gg_Official",
+      },
+      { platform: "tiktok", url: "https://www.tiktok.com/@eldoradogg1" },
+      {
+        platform: "instagram",
+        url: "https://www.instagram.com/eldoradogg_official/",
+      },
+      {
+        platform: "facebook",
+        url: "https://www.facebook.com/eldoradogg.official/",
+      },
+    ],
+    startDate: "2018",
+    listings: {
+      "mfa-accounts": {
+        summary:
+          "Marketplace for full-access Minecraft accounts, including Java + Bedrock, Hypixel ranked, Skyblock, Bedwars, and cape listings. Compare each seller's account details and delivery time. TradeShield holds payment through the order protection period.",
+        badges: [],
+        price: "Varies by seller",
+        priceDetails:
+          "Prices vary by seller, edition, account progress, and capes. The category also contains temporary Game Pass offers and cape codes, so confirm that the listing includes a permanent Microsoft account with full email access. Standard account protection lasts 5 days after the order is marked received. Eligible offers have paid 3- or 6-month warranty extensions. The published buyer payment fee is 8% + $0.30. Payment options depend on country, currency, and device; delivery can be instant or manual.",
+      },
+    },
+  },
+  {
+    slug: "g2g",
+    name: "G2G",
+    logo: "/accounts/g2g.png",
+    url: "https://www.g2g.com/categories/minecraft-account",
+    websiteUrl: "https://www.g2g.com",
+    trustpilotUrl: "https://www.trustpilot.com/review/www.g2g.com",
+    paymentMethods: [
+      "Card",
+      "PayPal",
+      "Apple Pay",
+      "Google Pay",
+      "Crypto",
+      "Skrill",
+      "Payoneer",
+      "Bank Transfer",
+      "Local methods",
+    ],
+    socialLinks: [
+      { platform: "instagram", url: "https://www.instagram.com/g2g_global/" },
+      { platform: "facebook", url: "https://www.facebook.com/G2Gdotcom" },
+      { platform: "x", url: "https://x.com/G2Gdotcom" },
+    ],
+    startDate: "2013",
+    listings: {
+      "mfa-accounts": {
+        summary:
+          "Marketplace with full-access Microsoft Java and Bedrock accounts, Hypixel ranks, server progress, and capes. Seller ratings, delivery estimates, and account details vary by offer. GamerProtect provides a 14-day insurance period for game accounts.",
+        badges: ["replacement-warranty"],
+        price: "Varies by seller",
+        priceDetails:
+          "Compare full-access Microsoft account offers rather than the category's lowest advertised price, which can include offline accounts or other products. Check permanent ownership, full email access, edition, and server status in the individual listing. GamerProtect covers eligible account issues for 14 days from delivery, with a refund or replacement depending on the case. Report problems before confirming receipt. Delivery times and payment fees vary by seller and payment method; local payment availability depends on currency and region.",
+      },
+    },
+  },
+  {
+    slug: "gameboost",
+    name: "GameBoost",
+    logo: "/accounts/gameboost.png",
+    url: "https://gameboost.com/minecraft/accounts",
+    websiteUrl: "https://gameboost.com",
+    discordUrl: "https://discord.gg/gameboost",
+    trustpilotUrl: "https://www.trustpilot.com/review/gameboost.com",
+    paymentMethods: [
+      "Card",
+      "Apple Pay",
+      "Google Pay",
+      "Klarna",
+      "Bank Transfer",
+      "Paysafecard",
+      "Crypto",
+      "Skrill",
+      "Neteller",
+    ],
+    socialLinks: [
+      {
+        platform: "facebook",
+        url: "https://www.facebook.com/GlobalGamingServices",
+      },
+      {
+        platform: "instagram",
+        url: "https://www.instagram.com/official.gameboost/",
+      },
+      { platform: "x", url: "https://x.com/GameBoostCom" },
+      {
+        platform: "youtube",
+        url: "https://www.youtube.com/@GameBoostOfficial",
+      },
+      { platform: "tiktok", url: "https://www.tiktok.com/@official.gameboost" },
+      { platform: "email", url: "mailto:support@gameboost.com" },
+    ],
+    listings: {
+      "mfa-accounts": {
+        summary:
+          "Marketplace for full-access Java and Bedrock accounts, Hypixel ranks, Bedwars and Skyblock profiles, and capes. Offers seller chat, 24/7 support, and a free 14-day account warranty. Instant and manual delivery options depend on the listing.",
+        badges: ["replacement-warranty"],
+        price: "Varies by seller",
+        priceDetails:
+          "Prices vary by seller, account features, and display currency. The category also includes Game Pass access, cape codes, and name-only offers, so confirm that the product includes the permanent account and email access you need. Accounts include a free 14-day warranty; lifetime coverage is an optional paid upgrade. Contact the seller first, then open a support ticket for unresolved problems. Refunds can use store credit or the original payment method under the warranty policy. Payment fees and regional availability can affect checkout.",
       },
     },
   },
