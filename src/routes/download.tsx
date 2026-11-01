@@ -42,6 +42,7 @@ import {
   CredenzaTitle,
 } from "@/components/ui/credenza";
 import { Skeleton } from "@/components/ui/skeleton";
+import { trackClientDownload } from "@/lib/analytics";
 import {
   createClientDownloads,
   createServerDownloads,
@@ -347,6 +348,11 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
             size="lg"
             className="w-full gap-2 text-xs sm:text-sm"
             onClick={() => {
+              trackClientDownload({
+                os: selection.os,
+                architecture: selection.cpu,
+                href: downloadHref,
+              });
               setShowThankYou(true);
               // Trigger the download programmatically
               const link = document.createElement("a");
@@ -385,6 +391,16 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
               Your download should start shortly. If it doesn&apos;t,{" "}
               <a
                 href={downloadHref ?? "#"}
+                onClick={() => {
+                  if (downloadHref) {
+                    trackClientDownload({
+                      os: selection.os,
+                      architecture: selection.cpu,
+                      href: downloadHref,
+                      retry: true,
+                    });
+                  }
+                }}
                 className="underline text-primary"
                 {...(isDirectGithubDownload
                   ? { download: "" }

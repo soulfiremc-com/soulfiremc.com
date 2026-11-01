@@ -4,6 +4,7 @@ import { RootProvider } from "fumadocs-ui/provider/tanstack";
 import { ThemeProvider, useTheme } from "next-themes";
 import { AuthProvider } from "@/components/auth/auth-provider";
 import { AuthTurnstile } from "@/components/auth-turnstile";
+import { CookieConsentBanner } from "@/components/cookie-consent-banner";
 import { Toaster } from "@/components/ui/sonner";
 import { adminPlugin } from "@/lib/auth/admin-plugin";
 import { dashPlugin } from "@/lib/auth/dash-plugin";
@@ -20,7 +21,10 @@ import {
   AUTH_UI_VIEW_PATHS,
   DEFAULT_AUTH_REDIRECT_PATH,
 } from "@/lib/auth-ui-config";
-import { PostHogProvider } from "@/lib/integrations/posthog";
+import {
+  isPostHogConfigured,
+  PostHogProvider,
+} from "@/lib/integrations/posthog";
 import { AuthLink } from "./auth-link";
 
 const authUiPlugins = [
@@ -79,6 +83,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         <RootProvider>
           <AuthUIProviders>
             {children}
+            {isPostHogConfigured && <CookieConsentBanner />}
             <Toaster richColors />
           </AuthUIProviders>
         </RootProvider>

@@ -2,6 +2,7 @@ import posthog from "posthog-js";
 import { PostHogProvider as PHProvider } from "posthog-js/react";
 
 const POSTHOG_KEY = import.meta.env.VITE_POSTHOG_KEY;
+export const isPostHogConfigured = Boolean(POSTHOG_KEY);
 
 if (typeof window !== "undefined" && POSTHOG_KEY) {
   posthog.init(POSTHOG_KEY, {

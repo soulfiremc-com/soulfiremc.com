@@ -1,0 +1,107 @@
+{
+  "version": 1,
+  "website": {
+    "posthog_project_id": 101553,
+    "events": {
+      "installer_download_clicked": {
+        "trigger": "A primary download or retry click opens a versioned SoulFireClient .exe or .dmg installer URL.",
+        "properties": [
+          "operating_system",
+          "architecture",
+          "release_version",
+          "source",
+          "retry"
+        ],
+        "meaning": "Download intent. It does not prove that the transfer completed, the installer ran, or the product activated."
+      },
+      "installer_store_opened": {
+        "trigger": "A download or retry click opens the SoulFire Flathub listing.",
+        "properties": ["operating_system", "architecture", "source", "retry"],
+        "meaning": "Store intent, counted separately from direct installer clicks."
+      },
+      "installer_releases_opened": {
+        "trigger": "A download or retry click opens the latest GitHub release when its version is unavailable.",
+        "properties": ["operating_system", "architecture", "source", "retry"],
+        "meaning": "Fallback release-page intent, counted separately from direct installer clicks."
+      }
+    },
+    "reports": [
+      {
+        "name": "Installer download intent",
+        "measure": "Unique visitors with installer_download_clicked per week",
+        "breakdown": ["operating_system", "architecture", "release_version"],
+        "filter": {
+          "source": "download_page",
+          "retry": false
+        }
+      },
+      {
+        "name": "Download page conversion",
+        "measure": "Unique visitors with /download $pageview followed by installer_download_clicked in the same session / unique /download visitors",
+        "separate_outcomes": [
+          "installer_store_opened",
+          "installer_releases_opened"
+        ],
+        "limitations": "Cookieless visitors have limited identity and attribution. This report cannot give a precise conversion rate across sessions."
+      }
+    ],
+    "consent": {
+      "pending": "No installer events are captured.",
+      "granted": "Normal PostHog tracking.",
+      "denied": "Existing on_reject configuration captures cookieless events without persistent analytics identity."
+    }
+  },
+  "product": {
+    "repository": "soulfiremc-com/SoulFireClient",
+    "project": "Existing SoulFireClient PostHog project; separate from the website project.",
+    "events": {
+      "product_session_started": {
+        "trigger": "An authenticated, real dashboard transport is available.",
+        "properties": ["client_surface", "measurement_version"],
+        "person_set_once": ["product_first_session_at"],
+        "exclusions": ["demo mode", "impersonation", "unconfigured analytics"]
+      },
+      "product_activated": {
+        "trigger": "A fresh bot-status result reports an online bot with connectionPhase SPAWNED for the authenticated user.",
+        "properties": [
+          "client_surface",
+          "measurement_version",
+          "activation=first_bot_spawned"
+        ],
+        "person_set_once": ["product_activated_at"],
+        "deduplication": "The client records activation once per user in each local browser profile. It saves the marker only after the SDK accepts the event. Reports count unique identified users to handle storage resets and multiple devices.",
+        "exclusions": [
+          "demo mode",
+          "impersonation",
+          "offline bots",
+          "connecting bots",
+          "empty bot lists"
+        ]
+      }
+    },
+    "reports": [
+      {
+        "name": "Observed product activations",
+        "measure": "Unique identified users with product_activated per week",
+        "breakdown": ["client_surface"],
+        "filter": {
+          "measurement_version": 1
+        }
+      },
+      {
+        "name": "7-day observed activation rate",
+        "measure": "Unique users whose first observed product_session_started is followed by product_activated within 7 days / unique users with a first observed product_session_started",
+        "cohort": "Filter product_first_session_at to the reporting period and allow 7 days of follow-up.",
+        "filter": {
+          "measurement_version": 1
+        }
+      }
+    ],
+    "limitations": [
+      "These events start with this release. Existing users and bots can qualify. The first observed activation does not prove the first activation in the product lifetime.",
+      "SDK acceptance confirms that the SDK queued the event. Blocking, offline shutdown, or network errors can reduce delivery.",
+      "The website and client use separate PostHog projects and identities. These reports do not establish a joined website-to-activation funnel.",
+      "No server addresses, bot names, account names, instance IDs, or bot IDs are added to these events."
+    ]
+  }
+}
