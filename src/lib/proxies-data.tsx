@@ -535,29 +535,4 @@ export const PROVIDERS: Provider[] = [
       { platform: "youtube", url: "https://www.youtube.com/@IPRoyalOfficial" },
     ],
   },
-  {
-    slug: "netnut",
-    name: "NetNut",
-    logo: "/providers/netnut.svg",
-    summary:
-      "85M+ residential IPs with ISP-based network for fast speeds. Direct ISP connectivity reduces latency.",
-    url: "https://netnut.io?ref=odblmzc&utm_source=get-proxies&utm_campaign=soulfire",
-    badges: ["high-quality", "residential", "isp"],
-    paymentMethods: [
-      "PayPal",
-      "Visa",
-      "Mastercard",
-      "Amex",
-      "Bank wire",
-      "Bitcoin",
-    ],
-    socialLinks: [
-      { platform: "email", url: "mailto:sales@netnut.io" },
-      { platform: "facebook", url: "https://www.facebook.com/NetNut.io" },
-      { platform: "x", url: "https://twitter.com/netnut_io" },
-      { platform: "linkedin", url: "https://www.linkedin.com/company/netnut/" },
-      { platform: "discord", url: "https://discord.gg/BUjgwh6eVG" },
-      { platform: "telegram", url: "https://t.me/netnut_io" },
-    ],
-  },
 ];
