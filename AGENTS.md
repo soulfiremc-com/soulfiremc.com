@@ -62,3 +62,10 @@ After making changes, run `bun run check` and fix all errors.
 - Follow the collection schema for front matter. Do not invent unsupported metadata fields.
 - Link relevant internal pages and credible references. Use images only when they help explain the topic.
 - End with a practical next step, checklist, or related links. Preview the rendered post before publishing.
+
+## Branding and product language
+
+Before naming features or changing user-facing text and visuals, read the [SoulFire brand guidance](https://github.com/soulfiremc-com/brand).
+Use its terminology, naming, writing, and visual identity guides.
+Keep proposed renames separate from accepted guidance.
+Preserve public identifiers until the owning repository approves a migration.
