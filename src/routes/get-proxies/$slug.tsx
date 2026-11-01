@@ -1,3 +1,4 @@
+import { discordEmbedScript } from "@/lib/discord-embed";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import {
   createFileRoute,
@@ -388,6 +389,16 @@ export const Route = createFileRoute("/get-proxies/$slug")({
         imageAlt: `${data.provider.name} preview`,
       }),
       links: getCanonicalLinks(`/get-proxies/${data.provider.slug}`),
+      scripts: discordEmbedScript({
+        title: data.provider.name,
+        description: `${data.provider.summary}${data.provider.couponCode ? `\nCoupon: ${data.provider.couponCode}` : ""}`,
+        url: `https://soulfiremc.com/get-proxies/${data.provider.slug}`,
+        label: "View provider",
+        thumbnail: data.provider.logo
+          ? new URL(data.provider.logo, "https://soulfiremc.com").href
+          : undefined,
+        links: [{ label: "Visit provider", url: data.provider.url }],
+      }),
     };
   },
   component: GetProxyDetailPage,

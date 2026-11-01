@@ -1,3 +1,4 @@
+import { discordEmbedScript } from "@/lib/discord-embed";
 import { SiDiscord, SiTrustpilot } from "@icons-pack/react-simple-icons";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import {
@@ -379,6 +380,26 @@ export const Route = createFileRoute("/get-accounts/$slug")({
         imageAlt: `${data.shop.name} preview`,
       }),
       links: getCanonicalLinks(`/get-accounts/${data.shop.slug}`),
+      scripts: discordEmbedScript({
+        title: data.shop.name,
+        description: data.providers
+          .map(
+            (provider) =>
+              `${provider.summary} · ${provider.price}${provider.couponCode ? ` · Coupon: ${provider.couponCode}` : ""}`,
+          )
+          .join("\n"),
+        url: `https://soulfiremc.com/get-accounts/${data.shop.slug}`,
+        label: "View provider",
+        thumbnail: data.shop.logo
+          ? new URL(data.shop.logo, "https://soulfiremc.com").href
+          : undefined,
+        links: [
+          { label: "Visit shop", url: data.shop.url },
+          ...(data.shop.discordUrl
+            ? [{ label: "Discord", url: data.shop.discordUrl }]
+            : []),
+        ],
+      }),
     };
   },
   component: AccountDetailPage,

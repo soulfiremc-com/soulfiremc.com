@@ -1,3 +1,4 @@
+import { discordEmbedScript } from "@/lib/discord-embed";
 import browserCollections from "fumadocs-mdx:collections/browser";
 import {
   createFileRoute,
@@ -212,6 +213,19 @@ export const Route = createFileRoute("/docs/$")({
       }),
       links: getCanonicalLinks(path),
       scripts: [
+        ...discordEmbedScript({
+          title,
+          description,
+          url: new URL(path, "https://soulfiremc.com").href,
+          label: "Read guide",
+          images: [new URL(imageUrl, "https://soulfiremc.com").href],
+          links: [
+            {
+              label: "Download SoulFire",
+              url: "https://soulfiremc.com/download",
+            },
+          ],
+        }),
         jsonLdScript(
           createStructuredDataGraph([
             createWebPageStructuredData({
