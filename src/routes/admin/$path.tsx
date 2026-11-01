@@ -4,6 +4,7 @@ import { ADMIN_REVIEW_PATH, AUTH_UI_VIEW_PATHS } from "@/lib/auth-ui-config";
 
 const validAdminPathSegments = new Set([
   AUTH_UI_VIEW_PATHS.admin.users,
+  AUTH_UI_VIEW_PATHS.settings.activity,
   ADMIN_REVIEW_PATH,
 ]);
 
