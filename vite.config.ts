@@ -1,3 +1,4 @@
+import { readdirSync } from "node:fs";
 import { cloudflare } from "@cloudflare/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
 import { devtools } from "@tanstack/devtools-vite";
@@ -6,37 +7,18 @@ import react from "@vitejs/plugin-react";
 import mdx from "fumadocs-mdx/vite";
 import { defineConfig } from "vite";
 import * as MdxConfig from "./source.config.ts";
-import { AUTH_UI_BASE_PATHS } from "./src/lib/auth-ui-config.ts";
+import {
+  getBlogSitemapPages,
+  getRenderedPageSitemap,
+  shouldPrerenderPage,
+} from "./src/lib/sitemap.ts";
 const securityHeaders = {
   "X-DNS-Prefetch-Control": "on",
   "X-XSS-Protection": "0",
   "X-Frame-Options": "SAMEORIGIN",
   "X-Content-Type-Options": "nosniff",
 };
-type Changefreq = "daily" | "weekly";
-const DAILY_PAGES = new Set([
-  "/",
-  "/blog",
-  "/docs",
-  "/download",
-  "/get-accounts",
-  "/get-proxies",
-  "/pricing",
-]);
-function getSitemapSettings(path: string): {
-  priority: number;
-  changefreq: Changefreq;
-} {
-  if (path === "/") return { priority: 1.0, changefreq: "daily" };
-  if (DAILY_PAGES.has(path)) return { priority: 0.9, changefreq: "daily" };
-  if (path.startsWith("/blog/")) return { priority: 0.7, changefreq: "weekly" };
-  if (path.startsWith("/docs/openapi/"))
-    return { priority: 0.3, changefreq: "weekly" };
-  if (path.startsWith("/docs/")) return { priority: 0.7, changefreq: "weekly" };
-  if (path.startsWith("/get-accounts/") || path.startsWith("/get-proxies/"))
-    return { priority: 0.6, changefreq: "weekly" };
-  return { priority: 0.5, changefreq: "weekly" };
-}
+const sitemapHost = "https://soulfiremc.com";
 export default defineConfig(() => ({
   environments: { ssr: { build: { sourcemap: true } } },
   envPrefix: ["VITE_"],
@@ -62,9 +44,14 @@ export default defineConfig(() => ({
     tanstackStart({
       sitemap: {
         enabled: true,
-        host: "https://soulfiremc.com",
+        host: sitemapHost,
       },
       pages: [
+        ...getBlogSitemapPages(
+          readdirSync(MdxConfig.blog.dir, { withFileTypes: true })
+            .filter((entry) => entry.isFile())
+            .map((entry) => entry.name),
+        ),
         {
           path: "/admin",
           prerender: {
@@ -79,30 +66,13 @@ export default defineConfig(() => ({
         enabled: true,
         crawlLinks: true,
         autoSubfolderIndex: false,
-        filter: ({ path }: { path: string }) =>
-          !(
-            path.startsWith("/_") ||
-            path.startsWith("/api") ||
-            path.startsWith("/og") ||
-            path.startsWith("//") ||
-            (path !== "/" && path.endsWith("/")) ||
-            path.includes("://") ||
-            path.includes("#") ||
-            path === "/discord" ||
-            path === "/github" ||
-            path === "/donate" ||
-            path === "/demo-video" ||
-            path === "/admin" ||
-            path.startsWith(`${AUTH_UI_BASE_PATHS.settings}/`)
-          ),
-        onSuccess: ({
-          page,
-        }: {
-          page: {
-            path: string;
-          };
-        }) => ({
-          sitemap: getSitemapSettings(page.path),
+        filter: (page) => {
+          // Start retains skipped and failed pages in its sitemap input.
+          page.sitemap = { ...page.sitemap, exclude: true };
+          return shouldPrerenderPage(page.path);
+        },
+        onSuccess: ({ page, html }) => ({
+          sitemap: getRenderedPageSitemap(page.path, html, sitemapHost),
         }),
       },
     }),

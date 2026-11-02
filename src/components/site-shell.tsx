@@ -32,15 +32,15 @@ export function SiteShell({ children }: { children: ReactNode }) {
           description: "Find proxies for your bot sessions",
         },
         {
+          text: "Blog",
+          url: "/blog",
+          description: "News and guides from SoulFire",
+        },
+        {
           type: "menu",
           text: "More",
           secondary: true,
           items: [
-            {
-              text: "Blog",
-              url: "/blog",
-              description: "News and guides from SoulFire",
-            },
             {
               text: "Pricing",
               url: "/pricing",
