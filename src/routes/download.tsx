@@ -1,3 +1,4 @@
+import { usePrerenderedSearch } from "@/hooks/use-prerendered-search";
 import { SiGithub } from "@icons-pack/react-simple-icons";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 import {
@@ -197,7 +198,10 @@ function DownloadSelectionComponent({
 }: {
   clientDownloads: DownloadLinkMap;
 }) {
-  const selection = Route.useSearch();
+  const selection = usePrerenderedSearch(
+    Route.useSearch(),
+    downloadSearchSchema.parse({}),
+  );
   return (
     <>
       <DownloadConfigurator links={clientDownloads} />
@@ -207,7 +211,10 @@ function DownloadSelectionComponent({
 }
 
 function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
-  const selection = Route.useSearch();
+  const selection = usePrerenderedSearch(
+    Route.useSearch(),
+    downloadSearchSchema.parse({}),
+  );
   const navigate = Route.useNavigate();
   const hasExplicitParams = useRouterState({
     select: ({ location }) =>

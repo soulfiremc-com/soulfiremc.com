@@ -30,6 +30,7 @@ export function CustomTimeAgo(props: Props) {
         {new Intl.DateTimeFormat("en-US", {
           dateStyle: "medium",
           timeStyle: "short",
+          timeZone: "UTC",
         }).format(date)}
       </time>
     );

@@ -115,10 +115,10 @@ function DiscordMemberBadge({
       </HoverCardTrigger>
       <HoverCardContent className="w-auto text-sm">
         {info.guild?.name && <p className="font-medium">{info.guild.name}</p>}
-        <p>{info.approximate_member_count?.toLocaleString()} members</p>
+        <p>{info.approximate_member_count?.toLocaleString("en-US")} members</p>
         {info.approximate_presence_count && (
           <p className="text-success">
-            {info.approximate_presence_count.toLocaleString()} online
+            {info.approximate_presence_count.toLocaleString("en-US")} online
           </p>
         )}
       </HoverCardContent>
