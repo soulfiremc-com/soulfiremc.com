@@ -1,3 +1,4 @@
+import { usePrerenderedSearch } from "@/hooks/use-prerendered-search";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   createFileRoute,
@@ -314,7 +315,10 @@ function MainContent() {
   const providers = PROVIDERS;
   const { summaries, userReviews, pendingBySlug, upsertReview, deleteReview } =
     useReviews("proxy", proxyReviewSlugs);
-  const { badges, sort } = Route.useSearch();
+  const { badges, sort } = usePrerenderedSearch(
+    Route.useSearch(),
+    proxiesSearchSchema.parse({}),
+  );
   const navigate = Route.useNavigate();
 
   const clearFilters = () => {

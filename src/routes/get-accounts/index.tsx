@@ -1,9 +1,11 @@
+import { usePrerenderedSearch } from "@/hooks/use-prerendered-search";
 import { SiDiscord, SiTrustpilot } from "@icons-pack/react-simple-icons";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   createFileRoute,
   Link,
   stripSearchParams,
+  useHydrated,
 } from "@tanstack/react-router";
 import {
   BookOpen,
@@ -565,8 +567,8 @@ function sortProviders(
   providers: Provider[],
   sort: SortOption,
   summaries: Record<string, ReviewSummary>,
+  now: number,
 ): Provider[] {
-  const now = Date.now();
   const topProviders = providers.filter((provider) =>
     isProviderPromoted(provider, now),
   );
@@ -591,11 +593,16 @@ function sortProviders(
 }
 
 function MainContent() {
+  const { renderedAt } = Route.useLoaderData();
+  const now = useHydrated() ? Date.now() : renderedAt;
   const providers = PROVIDERS;
   const slugs = useMemo(() => [...new Set(providers.map((p) => p.slug))], []);
   const { summaries, userReviews, pendingBySlug, upsertReview, deleteReview } =
     useReviews("account", slugs);
-  const { category, badges, sort } = Route.useSearch();
+  const { category, badges, sort } = usePrerenderedSearch(
+    Route.useSearch(),
+    accountsSearchSchema.parse({}),
+  );
   const navigate = Route.useNavigate();
 
   const clearFilters = () => {
@@ -614,7 +621,7 @@ function MainContent() {
   const filteredProviders = providers.filter((provider) => {
     const matchesCategory = category ? provider.category === category : true;
     const matchesBadges =
-      isProviderPromoted(provider) ||
+      isProviderPromoted(provider, now) ||
       badges.every((filter) => provider.badges.includes(filter));
     return matchesCategory && matchesBadges;
   });
@@ -623,11 +630,13 @@ function MainContent() {
     filteredProviders.filter((p) => p.category === "nfa-accounts"),
     sort,
     summaries,
+    now,
   );
   const mfaProviders = sortProviders(
     filteredProviders.filter((p) => p.category === "mfa-accounts"),
     sort,
     summaries,
+    now,
   );
 
   const hasActiveFilters =
@@ -1134,6 +1143,7 @@ export const Route = createFileRoute("/get-accounts/")({
     void context.queryClient.prefetchQuery(allAccountLiveShopDataQueryOptions);
     void context.queryClient.prefetchQuery(accountsDiscordInvitesQueryOptions);
     void context.queryClient.prefetchQuery(accountReviewsQueryOptions);
+    return { renderedAt: Date.now() };
   },
   component: GetAccountsPage,
 });
