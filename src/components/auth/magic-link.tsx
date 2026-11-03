@@ -1,37 +1,38 @@
-"use client";
+"use client"
 
 import {
   getAuthCallbackURL,
   authMutationKeys,
-  validateEmailAddress,
-} from "@better-auth-ui/core";
-import type { MagicLinkAuthClient } from "@better-auth-ui/core/plugins/magic-link";
-import { getSsoFallbackEmail } from "@better-auth-ui/core/plugins/sso";
-import { useAuth, useAuthPlugin } from "@better-auth-ui/react";
-import { useSignInMagicLink } from "@better-auth-ui/react/plugins/magic-link";
-import { useIsMutating } from "@tanstack/react-query";
+  validateEmailAddress
+} from "@better-auth-ui/core"
+import type { MagicLinkAuthClient } from "@better-auth-ui/core/plugins/magic-link"
+import { getSsoFallbackEmail } from "@better-auth-ui/core/plugins/sso"
+import { useAuth, useAuthPlugin } from "@better-auth-ui/react"
+import { useSignInMagicLink } from "@better-auth-ui/react/plugins/magic-link"
+import { useIsMutating } from "@tanstack/react-query"
+import { useId } from "react"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   Field,
   FieldDescription,
   FieldGroup,
   FieldLabel,
-  FieldSeparator,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { magicLinkPlugin } from "@/lib/auth/magic-link-plugin";
-import { cn } from "@/lib/utils";
-import { isAuthFormFieldInvalid, useAuthForm } from "./auth-form";
-import { MAGIC_LINK_SENT_STORAGE_KEY } from "./magic-link-sent";
-import { ProviderButtons, type SocialLayout } from "./provider-buttons";
-import { ReauthenticationNotice } from "./reauthentication";
+  FieldSeparator
+} from "@/components/ui/field"
+import { Input } from "@/components/ui/input"
+import { magicLinkPlugin } from "@/lib/auth/magic-link-plugin"
+import { cn } from "@/lib/utils"
+import { isAuthFormFieldInvalid, useAuthForm } from "./auth-form"
+import { MAGIC_LINK_SENT_STORAGE_KEY } from "./magic-link-sent"
+import { ProviderButtons, type SocialLayout } from "./provider-buttons"
+import { ReauthenticationNotice } from "./reauthentication"
 
 export type MagicLinkProps = {
-  className?: string;
-  socialLayout?: SocialLayout;
-  socialPosition?: "top" | "bottom";
-};
+  className?: string
+  socialLayout?: SocialLayout
+  socialPosition?: "top" | "bottom"
+}
 
 /**
  * Render a card-based sign-in form that sends an email magic link and optionally shows social provider buttons.
@@ -44,8 +45,9 @@ export type MagicLinkProps = {
 export function MagicLink({
   className,
   socialLayout,
-  socialPosition = "bottom",
+  socialPosition = "bottom"
 }: MagicLinkProps) {
+  const emailErrorId = useId()
   const {
     authClient,
     basePaths,
@@ -57,39 +59,40 @@ export function MagicLink({
     redirectTo,
     socialProviders,
     viewPaths,
-    Link,
-  } = useAuth<MagicLinkAuthClient>();
+    Link
+  } = useAuth<MagicLinkAuthClient>()
   const { localization: magicLinkLocalization, viewPaths: magicLinkViewPaths } =
-    useAuthPlugin(magicLinkPlugin);
+    useAuthPlugin(magicLinkPlugin)
 
   const { mutateAsync: signInMagicLink, isPending: signInMagicLinkPending } =
     useSignInMagicLink(authClient, {
+      meta: { errorPresentation: "inline" },
       onSuccess: (_data, variables) => {
-        sessionStorage.setItem(MAGIC_LINK_SENT_STORAGE_KEY, variables.email);
+        sessionStorage.setItem(MAGIC_LINK_SENT_STORAGE_KEY, variables.email)
         navigate({
-          to: `${basePaths.auth}/${magicLinkViewPaths.auth.magicLinkSent}`,
-        });
-      },
-    });
+          to: `${basePaths.auth}/${magicLinkViewPaths.auth.magicLinkSent}`
+        })
+      }
+    })
 
   const signInMutating = useIsMutating({
-    mutationKey: authMutationKeys.signIn.all,
-  });
+    mutationKey: authMutationKeys.signIn.all
+  })
   const signUpMutating = useIsMutating({
-    mutationKey: authMutationKeys.signUp.all,
-  });
-  const isPending = signInMutating + signUpMutating > 0;
+    mutationKey: authMutationKeys.signUp.all
+  })
+  const isPending = signInMutating + signUpMutating > 0
 
   const form = useAuthForm({
     defaultValues: { email: getSsoFallbackEmail() },
     onSubmit: async ({ value }) =>
       await signInMagicLink({
         callbackURL: getAuthCallbackURL(baseURL, redirectTo),
-        email: value.email,
-      }),
-  });
+        email: value.email
+      })
+  })
 
-  const showSeparator = socialProviders && socialProviders.length > 0;
+  const showSeparator = socialProviders && socialProviders.length > 0
 
   return (
     <Card className={cn("w-full max-w-sm", className)}>
@@ -115,7 +118,10 @@ export function MagicLink({
           )}
 
           <form.AppForm>
-            <form.AuthFormRoot>
+            <form.AuthFormRoot
+              noValidate
+              serverErrorMessage={localization.errors.generic}
+            >
               <FieldGroup>
                 <form.AppField
                   name="email"
@@ -123,12 +129,12 @@ export function MagicLink({
                     onChange: ({ value }) =>
                       validateEmailAddress(value, {
                         invalidMessage: localization.auth.invalidEmail,
-                        requiredMessage: localization.auth.fieldRequired,
-                      }),
+                        requiredMessage: localization.auth.fieldRequired
+                      })
                   }}
                 >
                   {(field) => {
-                    const isInvalid = isAuthFormFieldInvalid(field.state.meta);
+                    const isInvalid = isAuthFormFieldInvalid(field.state.meta)
                     return (
                       <Field data-invalid={isInvalid}>
                         <FieldLabel htmlFor="email">
@@ -136,6 +142,9 @@ export function MagicLink({
                         </FieldLabel>
                         <Input
                           id="email"
+                          aria-describedby={
+                            isInvalid ? emailErrorId : undefined
+                          }
                           name={field.name}
                           type="email"
                           autoComplete="email"
@@ -149,9 +158,9 @@ export function MagicLink({
                           disabled={isPending}
                           aria-invalid={isInvalid}
                         />
-                        <field.AuthFormFieldError />
+                        <field.AuthFormFieldError id={emailErrorId} />
                       </Field>
-                    );
+                    )
                   }}
                 </form.AppField>
 
@@ -169,9 +178,10 @@ export function MagicLink({
                         key={`${plugin.id}-${index.toString()}`}
                         view="magicLink"
                       />
-                    )),
+                    ))
                   )}
                 </div>
+                <form.AuthFormServerError />
               </FieldGroup>
             </form.AuthFormRoot>
           </form.AppForm>
@@ -206,5 +216,5 @@ export function MagicLink({
         )}
       </CardContent>
     </Card>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import {
   createBrowserTablePersistenceAdapters,
@@ -6,9 +6,9 @@ import {
   parseTableUrlState,
   serializeTableColumnVisibility,
   serializeTableUrlState,
-  type TablePersistenceAdapters,
-} from "@better-auth-ui/core";
-import { useCreateAtom, useSelector } from "@tanstack/react-store";
+  type TablePersistenceAdapters
+} from "@better-auth-ui/core"
+import { useCreateAtom, useSelector } from "@tanstack/react-store"
 import {
   type ColumnFiltersState,
   type ColumnVisibilityState,
@@ -16,40 +16,40 @@ import {
   type PaginationState,
   type RowSelectionState,
   type SortingState,
-  type Updater,
-} from "@tanstack/react-table";
+  type Updater
+} from "@tanstack/react-table"
 import {
   type MutableRefObject,
   useCallback,
   useEffect,
   useMemo,
   useRef,
-  useState,
-} from "react";
-import { ORGANIZATION_TABLE_PAGE_SIZE } from "./organization-table";
+  useState
+} from "react"
+import { ORGANIZATION_TABLE_PAGE_SIZE } from "./organization-table"
 
-const TABLE_STATE_STORAGE_PREFIX = "better-auth-ui:organization-table";
+const TABLE_STATE_STORAGE_PREFIX = "better-auth-ui:organization-table"
 
 type OrganizationTableUrlState = {
-  columnFilters: ColumnFiltersState;
-  globalFilter: string;
-  pagination: PaginationState;
-  sorting: SortingState;
-};
+  columnFilters: ColumnFiltersState
+  globalFilter: string
+  pagination: PaginationState
+  sorting: SortingState
+}
 
 function readColumnVisibility(
   adapters: TablePersistenceAdapters,
   stateKey: string,
-  allowedColumnIds?: readonly string[],
+  allowedColumnIds?: readonly string[]
 ): ColumnVisibilityState {
   try {
     const value =
       adapters.storage?.read(
-        `${TABLE_STATE_STORAGE_PREFIX}:${stateKey}:columns`,
-      ) ?? null;
-    return parseTableColumnVisibility(value, allowedColumnIds);
+        `${TABLE_STATE_STORAGE_PREFIX}:${stateKey}:columns`
+      ) ?? null
+    return parseTableColumnVisibility(value, allowedColumnIds)
   } catch {
-    return {};
+    return {}
   }
 }
 
@@ -58,61 +58,61 @@ function writeUrlState(
   stateKey: string,
   defaultPageSize: number,
   state: OrganizationTableUrlState,
-  syncedSearch: MutableRefObject<string>,
+  syncedSearch: MutableRefObject<string>
 ) {
   const next = serializeTableUrlState(
     adapters.search.read(),
     stateKey,
     defaultPageSize,
-    state,
-  );
-  const nextSearch = next.toString();
-  if (nextSearch === syncedSearch.current) return;
+    state
+  )
+  const nextSearch = next.toString()
+  if (nextSearch === syncedSearch.current) return
 
-  syncedSearch.current = nextSearch;
-  adapters.search.replace(next);
+  syncedSearch.current = nextSearch
+  adapters.search.replace(next)
 }
 
 export function useOrganizationTableState(
   stateKey: string,
   defaultPageSize = ORGANIZATION_TABLE_PAGE_SIZE,
   allowedColumnIds?: readonly string[],
-  persistenceAdapters?: TablePersistenceAdapters,
+  persistenceAdapters?: TablePersistenceAdapters
 ) {
-  const allowedColumnIdsKey = allowedColumnIds?.join("\u0000");
+  const allowedColumnIdsKey = allowedColumnIds?.join("\u0000")
   const stableAllowedColumnIds = useMemo(
     () => allowedColumnIdsKey?.split("\u0000"),
-    [allowedColumnIdsKey],
-  );
+    [allowedColumnIdsKey]
+  )
   const adapters = useMemo(
     () => persistenceAdapters ?? createBrowserTablePersistenceAdapters(),
-    [persistenceAdapters],
-  );
+    [persistenceAdapters]
+  )
   const urlStateToken = useMemo(
     () => ({ adapters, defaultPageSize, stableAllowedColumnIds, stateKey }),
-    [adapters, defaultPageSize, stableAllowedColumnIds, stateKey],
-  );
-  const columnFiltersAtom = useCreateAtom<ColumnFiltersState>([]);
-  const columnVisibilityAtom = useCreateAtom<ColumnVisibilityState>({});
-  const globalFilterAtom = useCreateAtom("");
+    [adapters, defaultPageSize, stableAllowedColumnIds, stateKey]
+  )
+  const columnFiltersAtom = useCreateAtom<ColumnFiltersState>([])
+  const columnVisibilityAtom = useCreateAtom<ColumnVisibilityState>({})
+  const globalFilterAtom = useCreateAtom("")
   const paginationAtom = useCreateAtom<PaginationState>({
     pageIndex: 0,
-    pageSize: defaultPageSize,
-  });
-  const rowSelectionAtom = useCreateAtom<RowSelectionState>({});
-  const sortingAtom = useCreateAtom<SortingState>([]);
-  const columnFilters = useSelector(columnFiltersAtom);
-  const columnVisibility = useSelector(columnVisibilityAtom);
-  const globalFilter = useSelector(globalFilterAtom);
-  const pagination = useSelector(paginationAtom);
-  const rowSelection = useSelector(rowSelectionAtom);
-  const sorting = useSelector(sortingAtom);
+    pageSize: defaultPageSize
+  })
+  const rowSelectionAtom = useCreateAtom<RowSelectionState>({})
+  const sortingAtom = useCreateAtom<SortingState>([])
+  const columnFilters = useSelector(columnFiltersAtom)
+  const columnVisibility = useSelector(columnVisibilityAtom)
+  const globalFilter = useSelector(globalFilterAtom)
+  const pagination = useSelector(paginationAtom)
+  const rowSelection = useSelector(rowSelectionAtom)
+  const sorting = useSelector(sortingAtom)
   const [restoredUrlStateToken, setRestoredUrlStateToken] =
-    useState<typeof urlStateToken>();
-  const [visibilityReady, setVisibilityReady] = useState(false);
-  const urlReady = restoredUrlStateToken === urlStateToken;
-  const restoringUrlState = useRef(false);
-  const syncedSearch = useRef("");
+    useState<typeof urlStateToken>()
+  const [visibilityReady, setVisibilityReady] = useState(false)
+  const urlReady = restoredUrlStateToken === urlStateToken
+  const restoringUrlState = useRef(false)
+  const syncedSearch = useRef("")
   const atoms = useMemo(
     () => ({
       columnFilters: columnFiltersAtom,
@@ -120,7 +120,7 @@ export function useOrganizationTableState(
       globalFilter: globalFilterAtom,
       pagination: paginationAtom,
       rowSelection: rowSelectionAtom,
-      sorting: sortingAtom,
+      sorting: sortingAtom
     }),
     [
       columnFiltersAtom,
@@ -128,68 +128,69 @@ export function useOrganizationTableState(
       globalFilterAtom,
       paginationAtom,
       rowSelectionAtom,
-      sortingAtom,
-    ],
-  );
+      sortingAtom
+    ]
+  )
 
   const setPagination = useCallback(
     (updater: Updater<PaginationState>) => {
-      paginationAtom.set((current) => functionalUpdate(updater, current));
+      paginationAtom.set((current) => functionalUpdate(updater, current))
     },
-    [paginationAtom],
-  );
+    [paginationAtom]
+  )
   const setColumnVisibility = useCallback(
     (updater: Updater<ColumnVisibilityState>) => {
-      columnVisibilityAtom.set((current) => functionalUpdate(updater, current));
+      columnVisibilityAtom.set((current) => functionalUpdate(updater, current))
     },
-    [columnVisibilityAtom],
-  );
+    [columnVisibilityAtom]
+  )
   const setColumnFilters = useCallback(
     (updater: Updater<ColumnFiltersState>) => {
-      columnFiltersAtom.set((current) => functionalUpdate(updater, current));
+      columnFiltersAtom.set((current) => functionalUpdate(updater, current))
     },
-    [columnFiltersAtom],
-  );
+    [columnFiltersAtom]
+  )
   const setGlobalFilter = useCallback(
     (updater: Updater<string>) => {
-      globalFilterAtom.set((current) => functionalUpdate(updater, current));
+      globalFilterAtom.set((current) => functionalUpdate(updater, current))
     },
-    [globalFilterAtom],
-  );
+    [globalFilterAtom]
+  )
   const setSorting = useCallback(
     (updater: Updater<SortingState>) => {
-      sortingAtom.set((current) => functionalUpdate(updater, current));
+      sortingAtom.set((current) => functionalUpdate(updater, current))
     },
-    [sortingAtom],
-  );
+    [sortingAtom]
+  )
 
   useEffect(() => {
     const resetPage = () => {
-      if (restoringUrlState.current) return;
-      const current = paginationAtom.get();
-      if (current.pageIndex === 0) rowSelectionAtom.set({});
-      else paginationAtom.set({ ...current, pageIndex: 0 });
-    };
+      if (restoringUrlState.current) return
+      rowSelectionAtom.set({})
+      paginationAtom.set((current) =>
+        current.pageIndex === 0 ? current : { ...current, pageIndex: 0 }
+      )
+    }
     const subscriptions = [
       columnFiltersAtom.subscribe(resetPage),
       globalFilterAtom.subscribe(resetPage),
       sortingAtom.subscribe(resetPage),
-      paginationAtom.subscribe(() => rowSelectionAtom.set({})),
-    ];
+      paginationAtom.subscribe(() => rowSelectionAtom.set({}))
+    ]
 
     return () => {
-      for (const subscription of subscriptions) subscription.unsubscribe();
-    };
+      for (const subscription of subscriptions) subscription.unsubscribe()
+    }
   }, [
     columnFiltersAtom,
     globalFilterAtom,
     paginationAtom,
     rowSelectionAtom,
-    sortingAtom,
-  ]);
+    sortingAtom
+  ])
 
   useEffect(() => {
-    if (!urlReady) return;
+    if (!urlReady) return
     writeUrlState(
       adapters,
       stateKey,
@@ -198,10 +199,10 @@ export function useOrganizationTableState(
         columnFilters,
         globalFilter,
         pagination,
-        sorting,
+        sorting
       },
-      syncedSearch,
-    );
+      syncedSearch
+    )
   }, [
     adapters,
     columnFilters,
@@ -210,48 +211,48 @@ export function useOrganizationTableState(
     pagination,
     sorting,
     stateKey,
-    urlReady,
-  ]);
+    urlReady
+  ])
 
   useEffect(() => {
-    if (!urlReady || !visibilityReady) return;
+    if (!urlReady || !visibilityReady) return
     try {
       adapters.storage?.write(
         `${TABLE_STATE_STORAGE_PREFIX}:${stateKey}:columns`,
-        serializeTableColumnVisibility(columnVisibility),
-      );
+        serializeTableColumnVisibility(columnVisibility)
+      )
     } catch {
       // Browsers can disable storage while still allowing the table to work.
     }
-  }, [adapters, columnVisibility, stateKey, urlReady, visibilityReady]);
+  }, [adapters, columnVisibility, stateKey, urlReady, visibilityReady])
 
   useEffect(() => {
-    setRestoredUrlStateToken(undefined);
-    setVisibilityReady(false);
+    setRestoredUrlStateToken(undefined)
+    setVisibilityReady(false)
     columnVisibilityAtom.set(
-      readColumnVisibility(adapters, stateKey, stableAllowedColumnIds),
-    );
-    setVisibilityReady(true);
+      readColumnVisibility(adapters, stateKey, stableAllowedColumnIds)
+    )
+    setVisibilityReady(true)
     const restoreUrlState = () => {
-      restoringUrlState.current = true;
-      const search = adapters.search.read();
-      syncedSearch.current = search.toString();
+      restoringUrlState.current = true
+      const search = adapters.search.read()
+      syncedSearch.current = search.toString()
       const next = parseTableUrlState(
         search,
         stateKey,
         defaultPageSize,
         ORGANIZATION_TABLE_PAGE_SIZE_OPTIONS,
-        stableAllowedColumnIds,
-      );
-      columnFiltersAtom.set(next.columnFilters);
-      globalFilterAtom.set(next.globalFilter);
-      sortingAtom.set(next.sorting);
-      paginationAtom.set(next.pagination);
-      restoringUrlState.current = false;
-      setRestoredUrlStateToken(urlStateToken);
-    };
-    restoreUrlState();
-    return adapters.search.subscribe(restoreUrlState);
+        stableAllowedColumnIds
+      )
+      columnFiltersAtom.set(next.columnFilters)
+      globalFilterAtom.set(next.globalFilter)
+      sortingAtom.set(next.sorting)
+      paginationAtom.set(next.pagination)
+      restoringUrlState.current = false
+      setRestoredUrlStateToken(urlStateToken)
+    }
+    restoreUrlState()
+    return adapters.search.subscribe(restoreUrlState)
   }, [
     adapters,
     columnFiltersAtom,
@@ -262,8 +263,8 @@ export function useOrganizationTableState(
     sortingAtom,
     stableAllowedColumnIds,
     stateKey,
-    urlStateToken,
-  ]);
+    urlStateToken
+  ])
 
   return {
     atoms,
@@ -279,8 +280,8 @@ export function useOrganizationTableState(
     setGlobalFilter,
     setPagination,
     setRowSelection: rowSelectionAtom.set,
-    setSorting,
-  };
+    setSorting
+  }
 }
 
-export const ORGANIZATION_TABLE_PAGE_SIZE_OPTIONS = [10, 20, 50] as const;
+export const ORGANIZATION_TABLE_PAGE_SIZE_OPTIONS = [10, 20, 50] as const

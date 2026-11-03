@@ -1,61 +1,59 @@
-"use client";
+"use client"
 
 import {
+  getAuthErrorCode,
   getAuthLinkURL,
   authMutationKeys,
-  validateStringLength,
-} from "@better-auth-ui/core";
+  validateEmailAddress,
+  validateStringLength
+} from "@better-auth-ui/core"
 import {
   isPasskeyAutoFillEnabled,
-  withPasskeyAutoFill,
-} from "@better-auth-ui/core/plugins/passkey";
-import type { UsernameAuthClient } from "@better-auth-ui/core/plugins/username";
+  withPasskeyAutoFill
+} from "@better-auth-ui/core/plugins/passkey"
+import type { UsernameAuthClient } from "@better-auth-ui/core/plugins/username"
 import {
   AuthPrompts,
   useAuth,
   useAuthPlugin,
   useFetchOptions,
-  useSignInEmail,
-} from "@better-auth-ui/react";
-import { useSignInUsername } from "@better-auth-ui/react/plugins/username";
-import { useIsMutating } from "@tanstack/react-query";
-import { Eye, EyeOff } from "lucide-react";
-import { useState } from "react";
+  useSignInEmail
+} from "@better-auth-ui/react"
+import { useSignInUsername } from "@better-auth-ui/react/plugins/username"
+import { useIsMutating } from "@tanstack/react-query"
+import { Eye, EyeOff } from "lucide-react"
+import { useState } from "react"
 import {
   ProviderButtons,
-  type SocialLayout,
-} from "@/components/auth/provider-buttons";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
+  type SocialLayout
+} from "@/components/auth/provider-buttons"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   Field,
   FieldDescription,
   FieldGroup,
   FieldLabel,
-  FieldSeparator,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+  FieldSeparator
+} from "@/components/ui/field"
+import { Input } from "@/components/ui/input"
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
-  InputGroupInput,
-} from "@/components/ui/input-group";
-import { useSignInContinuation } from "@/lib/auth/use-sign-in-continuation";
-import { usernamePlugin } from "@/lib/auth/username-plugin";
-import { cn } from "@/lib/utils";
-import { isAuthFormFieldInvalid, useAuthForm } from "../auth-form";
-import { LastUsedBadge } from "../last-login-method/last-used-badge";
-import { ReauthenticationNotice } from "../reauthentication";
+  InputGroupInput
+} from "@/components/ui/input-group"
+import { useSignInContinuation } from "@/lib/auth/use-sign-in-continuation"
+import { usernamePlugin } from "@/lib/auth/username-plugin"
+import { cn } from "@/lib/utils"
+import { isAuthFormFieldInvalid, useAuthForm } from "../auth-form"
+import { LastUsedBadge } from "../last-login-method/last-used-badge"
+import { ReauthenticationNotice } from "../reauthentication"
 
 export type SignInUsernameProps = {
-  className?: string;
-  socialLayout?: SocialLayout;
-  socialPosition?: "top" | "bottom";
-};
-
-function isEmail(value: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  className?: string
+  socialLayout?: SocialLayout
+  socialPosition?: "top" | "bottom"
 }
 
 /**
@@ -66,7 +64,7 @@ function isEmail(value: string): boolean {
 export function SignInUsername({
   className,
   socialLayout,
-  socialPosition = "bottom",
+  socialPosition = "bottom"
 }: SignInUsernameProps) {
   const {
     authClient,
@@ -78,104 +76,88 @@ export function SignInUsername({
     redirectTo,
     viewPaths,
     navigate,
-    Link,
-  } = useAuth<UsernameAuthClient>();
+    Link
+  } = useAuth<UsernameAuthClient>()
 
-  const { fetchOptions, resetFetchOptions } = useFetchOptions();
-  const continueSignIn = useSignInContinuation();
+  const { fetchOptions, resetFetchOptions } = useFetchOptions()
+  const continueSignIn = useSignInContinuation()
 
-  const { localization: usernameLocalization } = useAuthPlugin(usernamePlugin);
+  const { localization: usernameLocalization } = useAuthPlugin(usernamePlugin)
 
   const { mutateAsync: signInEmail, isPending: isSignInEmailPending } =
     useSignInEmail(authClient, {
-      onError: (error, { email }) => {
-        form.setFieldValue("password", "");
-
-        if (error.error?.code === "EMAIL_NOT_VERIFIED") {
-          sessionStorage.setItem("better-auth-ui.verify-email", email);
-          navigate({
-            to: getAuthLinkURL(
-              `${basePaths.auth}/${viewPaths.auth.verifyEmail}`,
-              redirectTo,
-            ),
-          });
-        }
-
-        resetFetchOptions();
-      },
+      meta: { errorPresentation: "inline" },
+      onError: () => resetFetchOptions(),
       onSuccess: (data) => {
-        sessionStorage.removeItem("better-auth-ui.verify-email");
-        continueSignIn(data);
-      },
-    });
+        sessionStorage.removeItem("better-auth-ui.verify-email")
+        continueSignIn(data)
+      }
+    })
 
   const { mutateAsync: signInUsername, isPending: isSignInUsernamePending } =
     useSignInUsername(authClient, {
-      onError: (error) => {
-        form.setFieldValue("password", "");
-
-        if (error.error?.code === "EMAIL_NOT_VERIFIED") {
-          sessionStorage.removeItem("better-auth-ui.verify-email");
-
-          navigate({
-            to: getAuthLinkURL(
-              `${basePaths.auth}/${viewPaths.auth.verifyEmail}`,
-              redirectTo,
-            ),
-          });
-        }
-
-        resetFetchOptions();
-      },
+      meta: { errorPresentation: "inline" },
+      onError: () => resetFetchOptions(),
       onSuccess: (data) => {
-        sessionStorage.removeItem("better-auth-ui.verify-email");
-        continueSignIn(data);
-      },
-    });
+        sessionStorage.removeItem("better-auth-ui.verify-email")
+        continueSignIn(data)
+      }
+    })
 
   const signInMutating = useIsMutating({
-    mutationKey: authMutationKeys.signIn.all,
-  });
+    mutationKey: authMutationKeys.signIn.all
+  })
   const signUpMutating = useIsMutating({
-    mutationKey: authMutationKeys.signUp.all,
-  });
-  const isPending = signInMutating + signUpMutating > 0;
-  const isSignInPending = isSignInEmailPending || isSignInUsernamePending;
+    mutationKey: authMutationKeys.signUp.all
+  })
+  const isPending = signInMutating + signUpMutating > 0
+  const isSignInPending = isSignInEmailPending || isSignInUsernamePending
 
   const Captcha = plugins.find(
-    (plugin) => plugin.captchaComponent,
-  )?.captchaComponent;
+    (plugin) => plugin.captchaComponent
+  )?.captchaComponent
 
-  const passkeyAutoFill = isPasskeyAutoFillEnabled(plugins);
+  const passkeyAutoFill = isPasskeyAutoFillEnabled(plugins)
 
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
   const form = useAuthForm({
     defaultValues: { identifier: "", password: "", rememberMe: false },
     onSubmit: async ({ value }) => {
-      if (isEmail(value.identifier)) {
-        await signInEmail({
-          email: value.identifier,
+      const identifier = value.identifier.trim()
+      const isEmail = identifier.includes("@")
+      try {
+        const params = {
           password: value.password,
           ...(emailAndPassword?.rememberMe
             ? { rememberMe: value.rememberMe }
             : {}),
-          fetchOptions,
-        });
-      } else {
-        await signInUsername({
-          username: value.identifier,
-          password: value.password,
-          ...(emailAndPassword?.rememberMe
-            ? { rememberMe: value.rememberMe }
-            : {}),
-          fetchOptions,
-        });
+          fetchOptions
+        }
+        if (isEmail) {
+          await signInEmail({ ...params, email: identifier })
+        } else {
+          await signInUsername({ ...params, username: identifier })
+        }
+      } catch (error) {
+        if (getAuthErrorCode(error) !== "EMAIL_NOT_VERIFIED") throw error
+
+        if (isEmail) {
+          sessionStorage.setItem("better-auth-ui.verify-email", identifier)
+        } else {
+          sessionStorage.removeItem("better-auth-ui.verify-email")
+        }
+        navigate({
+          to: getAuthLinkURL(
+            `${basePaths.auth}/${viewPaths.auth.verifyEmail}`,
+            redirectTo
+          )
+        })
       }
-    },
-  });
+    }
+  })
 
   const showSeparator =
-    emailAndPassword?.enabled && socialProviders && socialProviders.length > 0;
+    emailAndPassword?.enabled && socialProviders && socialProviders.length > 0
 
   return (
     <Card className={cn("w-full max-w-sm", className)}>
@@ -205,22 +187,27 @@ export function SignInUsername({
 
           {emailAndPassword?.enabled && (
             <form.AppForm>
-              <form.AuthFormRoot>
+              <form.AuthFormRoot
+                serverErrorMessage={localization.errors.generic}
+              >
                 <FieldGroup>
                   <form.AppField
                     name="identifier"
                     validators={{
                       onChange: ({ value }) =>
-                        validateStringLength(value, {
-                          requiredMessage: localization.auth.fieldRequired,
-                          trim: true,
-                        }),
+                        value.includes("@")
+                          ? validateEmailAddress(value, {
+                              invalidMessage: localization.auth.invalidEmail,
+                              requiredMessage: localization.auth.fieldRequired
+                            })
+                          : validateStringLength(value, {
+                              requiredMessage: localization.auth.fieldRequired,
+                              trim: true
+                            })
                     }}
                   >
                     {(field) => {
-                      const isInvalid = isAuthFormFieldInvalid(
-                        field.state.meta,
-                      );
+                      const isInvalid = isAuthFormFieldInvalid(field.state.meta)
                       return (
                         <Field data-invalid={isInvalid}>
                           <FieldLabel htmlFor="email">
@@ -233,7 +220,7 @@ export function SignInUsername({
                             type="text"
                             autoComplete={withPasskeyAutoFill(
                               "username",
-                              passkeyAutoFill,
+                              passkeyAutoFill
                             )}
                             placeholder={
                               usernameLocalization.usernameOrEmailPlaceholder
@@ -249,7 +236,7 @@ export function SignInUsername({
                           />
                           <field.AuthFormFieldError />
                         </Field>
-                      );
+                      )
                     }}
                   </form.AppField>
 
@@ -261,21 +248,19 @@ export function SignInUsername({
                           maxLength: emailAndPassword?.maxPasswordLength,
                           maxLengthMessage: localization.auth.tooLong.replace(
                             "{{max}}",
-                            String(emailAndPassword?.maxPasswordLength),
+                            String(emailAndPassword?.maxPasswordLength)
                           ),
                           minLength: emailAndPassword?.minPasswordLength,
                           minLengthMessage: localization.auth.tooShort.replace(
                             "{{min}}",
-                            String(emailAndPassword?.minPasswordLength),
+                            String(emailAndPassword?.minPasswordLength)
                           ),
-                          requiredMessage: localization.auth.fieldRequired,
-                        }),
+                          requiredMessage: localization.auth.fieldRequired
+                        })
                     }}
                   >
                     {(field) => {
-                      const isInvalid = isAuthFormFieldInvalid(
-                        field.state.meta,
-                      );
+                      const isInvalid = isAuthFormFieldInvalid(field.state.meta)
                       return (
                         <Field data-invalid={isInvalid}>
                           <FieldLabel htmlFor="password">
@@ -289,7 +274,7 @@ export function SignInUsername({
                               type={isPasswordVisible ? "text" : "password"}
                               autoComplete={withPasskeyAutoFill(
                                 "current-password",
-                                passkeyAutoFill,
+                                passkeyAutoFill
                               )}
                               value={field.state.value}
                               onBlur={field.handleBlur}
@@ -320,7 +305,7 @@ export function SignInUsername({
                                     : localization.auth.showPassword
                                 }
                                 onClick={() => {
-                                  setIsPasswordVisible((visible) => !visible);
+                                  setIsPasswordVisible((visible) => !visible)
                                 }}
                               >
                                 {isPasswordVisible ? <EyeOff /> : <Eye />}
@@ -330,7 +315,7 @@ export function SignInUsername({
 
                           <field.AuthFormFieldError />
                         </Field>
-                      );
+                      )
                     }}
                   </form.AppField>
 
@@ -384,7 +369,7 @@ export function SignInUsername({
                           key={`${plugin.id}-${index.toString()}`}
                           view="signIn"
                         />
-                      )),
+                      ))
                     )}
                   </div>
                 </FieldGroup>
@@ -431,5 +416,5 @@ export function SignInUsername({
         </div>
       </CardContent>
     </Card>
-  );
+  )
 }

@@ -1,48 +1,53 @@
-"use client";
+"use client"
 
-import { authMutationKeys } from "@better-auth-ui/core";
-import type { EmailOtpAuthClient } from "@better-auth-ui/core/plugins/email-otp";
-import { getSsoFallbackEmail } from "@better-auth-ui/core/plugins/sso";
-import { useAuth, useAuthPlugin, useFetchOptions } from "@better-auth-ui/react";
+import { authMutationKeys, validateEmailAddress } from "@better-auth-ui/core"
+import type { EmailOtpAuthClient } from "@better-auth-ui/core/plugins/email-otp"
+import { getSsoFallbackEmail } from "@better-auth-ui/core/plugins/sso"
+import { useAuth, useAuthPlugin, useFetchOptions } from "@better-auth-ui/react"
 import {
   useSendVerificationOtp,
-  useSignInEmailOtp,
-} from "@better-auth-ui/react/plugins/email-otp";
-import { useSelector } from "@tanstack/react-form";
-import { useIsMutating } from "@tanstack/react-query";
-import { useState } from "react";
+  useSignInEmailOtp
+} from "@better-auth-ui/react/plugins/email-otp"
+import { useSelector } from "@tanstack/react-form"
+import { useIsMutating } from "@tanstack/react-query"
+import { useId, useState } from "react"
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+  CardTitle
+} from "@/components/ui/card"
 import {
   Field,
   FieldDescription,
   FieldGroup,
   FieldLabel,
-  FieldSeparator,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { emailOtpPlugin } from "@/lib/auth/email-otp-plugin";
-import { useResendCooldown } from "@/lib/auth/use-resend-cooldown";
-import { useSignInContinuation } from "@/lib/auth/use-sign-in-continuation";
-import { cn } from "@/lib/utils";
-import { runAuthFormAction, submitAuthForm, useAuthForm } from "../auth-form";
-import { OpenEmailButton } from "../open-email-button";
-import { OtpField } from "../otp-field";
-import { ProviderButtons, type SocialLayout } from "../provider-buttons";
-import { ReauthenticationNotice } from "../reauthentication";
+  FieldSeparator
+} from "@/components/ui/field"
+import { Input } from "@/components/ui/input"
+import { emailOtpPlugin } from "@/lib/auth/email-otp-plugin"
+import { useResendCooldown } from "@/lib/auth/use-resend-cooldown"
+import { useSignInContinuation } from "@/lib/auth/use-sign-in-continuation"
+import { cn } from "@/lib/utils"
+import {
+  isAuthFormFieldInvalid,
+  runAuthFormAction,
+  submitAuthForm,
+  useAuthForm
+} from "../auth-form"
+import { OpenEmailButton } from "../open-email-button"
+import { OtpField } from "../otp-field"
+import { ProviderButtons, type SocialLayout } from "../provider-buttons"
+import { ReauthenticationNotice } from "../reauthentication"
 
 export type EmailOtpProps = {
-  className?: string;
-  socialLayout?: SocialLayout;
-  socialPosition?: "top" | "bottom";
-};
+  className?: string
+  socialLayout?: SocialLayout
+  socialPosition?: "top" | "bottom"
+}
 
 /**
  * Passwordless sign-in with an emailed one-time code.
@@ -57,8 +62,9 @@ export type EmailOtpProps = {
 export function EmailOtp({
   className,
   socialLayout,
-  socialPosition = "bottom",
+  socialPosition = "bottom"
 }: EmailOtpProps) {
+  const emailErrorId = useId()
   const {
     authClient,
     basePaths,
@@ -67,63 +73,63 @@ export function EmailOtp({
     plugins,
     socialProviders,
     viewPaths,
-    Link,
-  } = useAuth();
+    Link
+  } = useAuth()
   const { localization: emailOtpLocalization, otpLength } =
-    useAuthPlugin(emailOtpPlugin);
+    useAuthPlugin(emailOtpPlugin)
 
-  const { fetchOptions, resetCaptcha } = useFetchOptions();
+  const { fetchOptions, resetCaptcha } = useFetchOptions()
   const Captcha = plugins.find(
-    (plugin) => plugin.captchaComponent,
-  )?.captchaComponent;
-  const otpClient = authClient as EmailOtpAuthClient;
-  const continueSignIn = useSignInContinuation();
-  const { cooldown, isCoolingDown, startCooldown } = useResendCooldown();
+    (plugin) => plugin.captchaComponent
+  )?.captchaComponent
+  const otpClient = authClient as EmailOtpAuthClient
+  const continueSignIn = useSignInContinuation()
+  const { cooldown, isCoolingDown, startCooldown } = useResendCooldown()
 
-  const [codeSent, setCodeSent] = useState(false);
+  const [codeSent, setCodeSent] = useState(false)
 
   const { mutateAsync: sendVerificationOtp, isPending: isSending } =
     useSendVerificationOtp(otpClient, {
       onError: () => resetCaptcha(),
       onSuccess: () => {
-        resetCaptcha();
-        setCodeSent(true);
-        startCooldown();
-      },
-    });
+        resetCaptcha()
+        setCodeSent(true)
+        startCooldown()
+      }
+    })
 
   const { mutateAsync: signInEmailOtp, isPending: isSigningIn } =
     useSignInEmailOtp(otpClient, {
       onError: () => {
-        form.setFieldValue("code", "");
-        resetCaptcha();
+        form.setFieldValue("code", "")
+        resetCaptcha()
       },
-      onSuccess: (data) => continueSignIn(data),
-    });
+      onSuccess: (data) => continueSignIn(data)
+    })
 
   const signInMutating = useIsMutating({
-    mutationKey: authMutationKeys.signIn.all,
-  });
+    mutationKey: authMutationKeys.signIn.all
+  })
   const signUpMutating = useIsMutating({
-    mutationKey: authMutationKeys.signUp.all,
-  });
-  const isPending = signInMutating + signUpMutating > 0 || isSending;
+    mutationKey: authMutationKeys.signUp.all
+  })
+  const isPending = signInMutating + signUpMutating > 0 || isSending
 
   const sendCode = async () =>
     await sendVerificationOtp({
       email: form.state.values.email,
       type: "sign-in",
-      fetchOptions,
-    });
+      fetchOptions
+    })
   const verifyCode = async (completedCode: string) => {
-    if (isPending || isSigningIn) return;
+    if (isPending || isSigningIn) return
 
     await signInEmailOtp({
       email: form.state.values.email,
       otp: completedCode,
-      fetchOptions,
-    });
-  };
+      fetchOptions
+    })
+  }
 
   const form = useAuthForm({
     defaultValues: { code: "", email: getSsoFallbackEmail() },
@@ -132,21 +138,21 @@ export function EmailOtp({
         await sendVerificationOtp({
           email: value.email,
           type: "sign-in",
-          fetchOptions,
-        });
-        return;
+          fetchOptions
+        })
+        return
       }
 
-      await verifyCode(value.code);
-    },
-  });
+      await verifyCode(value.code)
+    }
+  })
   const codeComplete = useSelector(
     form.store,
-    (state) => state.values.code.length === otpLength,
-  );
-  const email = useSelector(form.store, (state) => state.values.email);
+    (state) => state.values.code.length === otpLength
+  )
+  const email = useSelector(form.store, (state) => state.values.email)
 
-  const showSeparator = socialProviders && socialProviders.length > 0;
+  const showSeparator = socialProviders && socialProviders.length > 0
 
   return (
     <Card className={cn("w-full max-w-sm", className)}>
@@ -178,7 +184,7 @@ export function EmailOtp({
           )}
 
           <form.AppForm>
-            <form.AuthFormRoot>
+            <form.AuthFormRoot noValidate>
               <FieldGroup>
                 {codeSent ? (
                   <form.AppField name="code">
@@ -196,15 +202,34 @@ export function EmailOtp({
                     )}
                   </form.AppField>
                 ) : (
-                  <form.AppField name="email">
+                  <form.AppField
+                    name="email"
+                    validators={{
+                      onChange: ({ value }) =>
+                        validateEmailAddress(value, {
+                          invalidMessage: localization.auth.invalidEmail,
+                          requiredMessage: localization.auth.fieldRequired
+                        })
+                    }}
+                  >
                     {(field) => (
-                      <Field>
+                      <Field
+                        data-invalid={isAuthFormFieldInvalid(field.state.meta)}
+                      >
                         <FieldLabel htmlFor="email">
                           {localization.auth.email}
                         </FieldLabel>
                         <Input
                           id="email"
+                          aria-describedby={
+                            isAuthFormFieldInvalid(field.state.meta)
+                              ? emailErrorId
+                              : undefined
+                          }
                           name={field.name}
+                          aria-invalid={isAuthFormFieldInvalid(
+                            field.state.meta
+                          )}
                           type="email"
                           autoComplete="email"
                           value={field.state.value}
@@ -216,7 +241,7 @@ export function EmailOtp({
                           required
                           disabled={isPending}
                         />
-                        <field.AuthFormFieldError />
+                        <field.AuthFormFieldError id={emailErrorId} />
                       </Field>
                     )}
                   </form.AppField>
@@ -252,7 +277,7 @@ export function EmailOtp({
                         {isCoolingDown
                           ? localization.auth.resendIn.replace(
                               "{{seconds}}",
-                              String(cooldown),
+                              String(cooldown)
                             )
                           : localization.auth.resend}
                       </Button>
@@ -262,8 +287,8 @@ export function EmailOtp({
                         variant="ghost"
                         disabled={isPending || isSigningIn}
                         onClick={() => {
-                          setCodeSent(false);
-                          form.setFieldValue("code", "");
+                          setCodeSent(false)
+                          form.setFieldValue("code", "")
                         }}
                       >
                         {emailOtpLocalization.useDifferentEmail}
@@ -276,7 +301,7 @@ export function EmailOtp({
                           key={`${plugin.id}-${AuthButton.name}`}
                           view="emailOtp"
                         />
-                      )),
+                      ))
                     )
                   )}
                 </div>
@@ -314,5 +339,5 @@ export function EmailOtp({
         )}
       </CardContent>
     </Card>
-  );
+  )
 }

@@ -1,20 +1,20 @@
-"use client";
+"use client"
 
 import {
   authQueryKeys,
   isReauthenticationRequiredError,
-  validateStringLength,
-} from "@better-auth-ui/core";
+  validateStringLength
+} from "@better-auth-ui/core"
 import {
   useAuth,
   useAuthPlugin,
   useDeleteUser,
-  useListAccounts,
-} from "@better-auth-ui/react";
-import { useQueryClient } from "@tanstack/react-query";
-import { Eye, EyeOff, TriangleAlert } from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
+  useListAccounts
+} from "@better-auth-ui/react"
+import { useQueryClient } from "@tanstack/react-query"
+import { Eye, EyeOff, TriangleAlert } from "lucide-react"
+import { useState } from "react"
+import { toast } from "sonner"
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -24,56 +24,55 @@ import {
   AlertDialogHeader,
   AlertDialogMedia,
   AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { buttonVariants } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Field, FieldLabel } from "@/components/ui/field";
+  AlertDialogTrigger
+} from "@/components/ui/alert-dialog"
+import { buttonVariants } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Field, FieldLabel } from "@/components/ui/field"
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
-  InputGroupInput,
-} from "@/components/ui/input-group";
-import { deleteUserPlugin } from "@/lib/auth/delete-user-plugin";
-import { cn } from "@/lib/utils";
-import { isAuthFormFieldInvalid, useAuthForm } from "../auth-form";
-import { ReauthenticationAction } from "../reauthentication";
+  InputGroupInput
+} from "@/components/ui/input-group"
+import { deleteUserPlugin } from "@/lib/auth/delete-user-plugin"
+import { cn } from "@/lib/utils"
+import { isAuthFormFieldInvalid, useAuthForm } from "../auth-form"
+import { ReauthenticationAction } from "../reauthentication"
 
 export type DeleteAccountProps = {
-  className?: string;
-};
+  className?: string
+}
 
 /**
  * Danger-zone card to delete the authenticated account, with a confirmation dialog and toasts.
  */
 export function DeleteAccount({ className }: DeleteAccountProps) {
-  const { authClient, basePaths, localization, viewPaths, navigate } =
-    useAuth();
+  const { authClient, basePaths, localization, viewPaths, navigate } = useAuth()
 
   const {
     localization: deleteUserLocalization,
-    sendDeleteAccountVerification,
-  } = useAuthPlugin(deleteUserPlugin);
+    sendDeleteAccountVerification
+  } = useAuthPlugin(deleteUserPlugin)
 
-  const { data: accounts } = useListAccounts(authClient);
+  const { data: accounts } = useListAccounts(authClient)
 
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient()
 
-  const [confirmOpen, setConfirmOpen] = useState(false);
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false)
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
   const hasCredentialAccount = accounts?.some(
-    (account) => account.providerId === "credential",
-  );
-  const needsPassword = !sendDeleteAccountVerification && hasCredentialAccount;
+    (account) => account.providerId === "credential"
+  )
+  const needsPassword = !sendDeleteAccountVerification && hasCredentialAccount
 
   const deleteUser = useDeleteUser(authClient, {
-    meta: { errorPresentation: "inline" },
-  });
+    meta: { errorPresentation: "inline" }
+  })
   const needsReauthentication = isReauthenticationRequiredError(
-    deleteUser.error,
-  );
+    deleteUser.error
+  )
 
   const form = useAuthForm({
     defaultValues: { password: "" },
@@ -82,31 +81,32 @@ export function DeleteAccount({ className }: DeleteAccountProps) {
         needsPassword ? { password: value.password } : {},
         {
           onSuccess: () => {
-            setConfirmOpen(false);
-            form.reset();
+            setConfirmOpen(false)
+            form.reset()
 
             if (sendDeleteAccountVerification) {
-              toast.success(deleteUserLocalization.deleteUserVerificationSent);
+              toast.success(deleteUserLocalization.deleteUserVerificationSent)
             } else {
-              toast.success(deleteUserLocalization.deleteUserSuccess);
-              queryClient.removeQueries({ queryKey: authQueryKeys.all });
+              toast.success(deleteUserLocalization.deleteUserSuccess)
+              queryClient.removeQueries({ queryKey: authQueryKeys.all })
               navigate({
                 to: `${basePaths.auth}/${viewPaths.auth.signIn}`,
-                replace: true,
-              });
+                replace: true
+              })
             }
-          },
-        },
-      );
-    },
-  });
+          }
+        }
+      )
+    }
+  })
 
   const handleDialogOpenChange = (open: boolean) => {
-    setConfirmOpen(open);
-    deleteUser.reset();
-    form.reset();
-    setIsPasswordVisible(false);
-  };
+    if (!open && deleteUser.isPending) return
+    setConfirmOpen(open)
+    deleteUser.reset()
+    form.reset()
+    setIsPasswordVisible(false)
+  }
 
   return (
     <Card className={cn("border-destructive", className)}>
@@ -124,7 +124,7 @@ export function DeleteAccount({ className }: DeleteAccountProps) {
         <AlertDialog open={confirmOpen} onOpenChange={handleDialogOpenChange}>
           <AlertDialogTrigger
             className={cn(
-              buttonVariants({ variant: "destructive", size: "sm" }),
+              buttonVariants({ variant: "destructive", size: "sm" })
             )}
             disabled={!accounts}
           >
@@ -143,7 +143,10 @@ export function DeleteAccount({ className }: DeleteAccountProps) {
               </>
             ) : (
               <form.AppForm>
-                <form.AuthFormRoot className="flex flex-col gap-6">
+                <form.AuthFormRoot
+                  className="flex flex-col gap-6"
+                  serverErrorMessage={localization.errors.generic}
+                >
                   <AlertDialogHeader>
                     <AlertDialogMedia className="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">
                       <TriangleAlert />
@@ -164,14 +167,14 @@ export function DeleteAccount({ className }: DeleteAccountProps) {
                       validators={{
                         onChange: ({ value }) =>
                           validateStringLength(value, {
-                            requiredMessage: localization.auth.fieldRequired,
-                          }),
+                            requiredMessage: localization.auth.fieldRequired
+                          })
                       }}
                     >
                       {(field) => {
                         const isInvalid = isAuthFormFieldInvalid(
-                          field.state.meta,
-                        );
+                          field.state.meta
+                        )
                         return (
                           <Field data-invalid={isInvalid}>
                             <FieldLabel htmlFor="delete-password">
@@ -210,7 +213,7 @@ export function DeleteAccount({ className }: DeleteAccountProps) {
                                       : localization.auth.showPassword
                                   }
                                   onClick={() => {
-                                    setIsPasswordVisible((visible) => !visible);
+                                    setIsPasswordVisible((visible) => !visible)
                                   }}
                                 >
                                   {isPasswordVisible ? <EyeOff /> : <Eye />}
@@ -220,10 +223,12 @@ export function DeleteAccount({ className }: DeleteAccountProps) {
 
                             <field.AuthFormFieldError />
                           </Field>
-                        );
+                        )
                       }}
                     </form.AppField>
                   )}
+
+                  <form.AuthFormServerError />
 
                   <AlertDialogFooter>
                     <AlertDialogCancel disabled={deleteUser.isPending}>
@@ -245,5 +250,5 @@ export function DeleteAccount({ className }: DeleteAccountProps) {
         </AlertDialog>
       </CardContent>
     </Card>
-  );
+  )
 }
