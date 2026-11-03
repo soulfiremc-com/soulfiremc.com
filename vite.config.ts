@@ -1,4 +1,5 @@
 import { readdirSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 import { cloudflare } from "@cloudflare/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
 import { devtools } from "@tanstack/devtools-vite";
@@ -20,6 +21,12 @@ const securityHeaders = {
 };
 const sitemapHost = "https://soulfiremc.com";
 export default defineConfig(() => ({
+  define: {
+    "import.meta.env.VITE_APP_VERSION": JSON.stringify(
+      process.env.VITE_APP_VERSION?.trim() ||
+        execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(),
+    ),
+  },
   environments: { ssr: { build: { sourcemap: true } } },
   envPrefix: ["VITE_"],
   resolve: {
