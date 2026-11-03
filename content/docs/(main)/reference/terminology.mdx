@@ -13,10 +13,10 @@ SoulFire has two main components: a server and a client.
 ### Server
 
 The SoulFire server is also called the **backend**.
-It manages users, bots, and instances.
+It manages users, bots, and projects.
 
 - **Users**: The server manages the users and their permissions.
-- **Instances**: An instance keeps one group of accounts, bots, proxies, scripts, settings, and permissions separate from other groups.
+- **Projects**: A project keeps one group of accounts, bots, proxies, scripts, settings, and permissions separate from other groups.
 - **Bots**: Each configured account is one independently controlled bot with its own desired and runtime state.
 - **Plugins**: SoulFire plugins are loaded and managed by the server.
 - **Proxies/Accounts**: The server manages the proxies and accounts used by the bots.
@@ -32,13 +32,13 @@ Custom software can use the SoulFire API as an API client.
 - **GUI**: The client can be a graphical user interface.
 - **CLI**: The client can be a command-line interface.
 - **API**: The client can be an API client.
-- **Interactions**: The client interacts with the server to manage users, instances, bots, plugins, proxies and accounts.
+- **Interactions**: The client interacts with the server to manage users, projects, bots, plugins, proxies and accounts.
 
 Clients can connect to any SoulFire server, as long as they have the correct credentials and use the same API version.
 
 ### Chart
 
-This chart shows the relationship between clients, servers, instances, and bots.
+This chart shows the relationship between clients, servers, projects, and bots.
 
 <Mermaid chart="
 graph TD
@@ -48,9 +48,9 @@ graph TD
     S --> S2[Server #2]
     S --> SN[Server #n]
     S1 --> I[ ]:::empty
-    I --> I1[Instance #1]
-    I --> I2[Instance #2]
-    I --> IN[Instance #n]
+    I --> I1[Project #1]
+    I --> I2[Project #2]
+    I --> IN[Project #n]
     S1 --> U[Users]
     I1 --> B[ ]:::empty
     B --> B1[Bot #1]
@@ -59,3 +59,11 @@ graph TD
 
     classDef empty width:0px,height:0px;
 " />
+
+## Product names and API names
+
+The app calls the saved automation container a **Project**. A **Fleet** is a selection of its bots.
+The API and SDKs keep `Instance`, `instance_id`, `instanceId`, and `client.instance(...)` for compatibility.
+A Minecraft profile ID still identifies a Minecraft account.
+
+See [names and compatibility](/docs/reference/naming) for old labels, feature names, variable lifetimes, and configuration contents.

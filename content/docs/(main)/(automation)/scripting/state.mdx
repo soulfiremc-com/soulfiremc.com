@@ -13,13 +13,21 @@ An event value is not a durable record of every earlier event.
 
 ## Bot variables
 
-Variable nodes store and read values associated with a bot.
+**Connection variable** nodes store temporary values for one bot connection.
+A new connection starts without those values. **Persistent bot variable** nodes use the account's saved metadata.
 Use them for behavior that needs state across multiple events for that bot.
 Choose a stable variable name and a documented value type.
 Initialize the value before the first read, or use a defined fallback.
 
 Check the actual variable nodes and their ports in the [node reference](/docs/scripting/node-reference).
 Do not assume that every storage node has the same lifetime or scope.
+
+## Project variables
+
+**Project runtime variable** nodes keep temporary state while bots stop and start. Their values reset when the SoulFire server restarts.
+**Persistent project variable** nodes use saved project metadata.
+The node types retain their existing `variable.*_instance` and `variable.*_bot` names.
+See [names and compatibility](/docs/reference/naming) for the earlier labels and unchanged IDs.
 
 ## Caches and persistent storage
 

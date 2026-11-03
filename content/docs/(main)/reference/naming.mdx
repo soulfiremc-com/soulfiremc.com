@@ -1,0 +1,96 @@
+---
+title: Names and compatibility
+sidebarTitle: Naming compatibility
+description: Map Project, feature, and script-node labels to the identifiers used by existing integrations.
+icon: Languages
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+The updated app uses **Project** for a saved automation container. Older releases call it **Instance**.
+A project owns bots, settings, accounts, proxies, scripts, files, access, and metadata, and remains available while its bots are stopped.
+**Fleet** describes a selection of bots within that project.
+
+The display-name migration changes labels, not API identities, data ownership, configuration formats, or runtime behavior.
+Published SDK references and generated node documentation keep their pinned source revision and can use the earlier labels.
+
+## Product names
+
+| Earlier label | Updated label | Compatibility |
+| --- | --- | --- |
+| Instance | Project | API types and fields keep `Instance`, `instanceId`, and `instance_id`. |
+| Instance settings | Project settings | Existing routes stay valid. |
+| Bot POV | Bot view | POV remains the technical capability name. |
+| Control lease in app text | Take control / Release control | Lease terminology remains in the API. |
+| Load profile / Save profile | Import configuration / Export configuration | Existing JSON files remain importable. |
+| Duplicate instance | Create from configuration | Same copy operation, with its contents described explicitly. |
+
+A **Minecraft profile ID** still identifies a Minecraft account. It is not a configuration file or a SoulFire user ID.
+The `instance` CLI command and SDK methods such as `client.instance(...)`, `getOrCreateInstance`, and `get_or_create_instance` remain valid.
+Raw API errors can still refer to an Instance or an `instance_id` field.
+
+## Feature names
+
+| Earlier name | Updated display name | Stable ID |
+| --- | --- | --- |
+| Auto Armor | Auto equip armor | `auto-armor` |
+| Auto Totem | Auto equip totem | `auto-totem` |
+| Auto Jump | Random jump | `auto-jump` |
+| Auto Chat Message | Auto chat | `auto-chat-message` |
+| Auto Register | Auto login and register | `auto-register` |
+| AI Chat Bot | AI chat | `ai-chat-bot` |
+| Kill Aura / KillAura | Auto attack | `kill-aura` |
+| Client Settings | Minecraft client settings | `client-settings` |
+| Fake Virtual Host | Handshake host override | `fake-virtual-host` |
+| Server List Bypass | Ping before join | `server-list-bypass` |
+| Forwarding Bypass | Player forwarding | `forwarding-bypass` |
+
+Other built-in names use sentence case, including Auto eat, Auto respawn, Auto reconnect, Captcha solver, Chat logger, Disconnect logger, and Client brand.
+Anti AFK retains its familiar acronym.
+The migrated app searches stable IDs in hyphenated, spaced, and compact forms, so earlier names remain discoverable.
+A connected server supplies its feature labels. Older servers can still show the earlier names.
+
+## Script nodes
+
+| Earlier name | Updated display name | Stable type |
+| --- | --- | --- |
+| Debounce | Cooldown | `flow.debounce` |
+| On Bot Init | On connection created | `trigger.on_bot_init` |
+| On Join | On player ready | `trigger.on_join` |
+| Get Bot State | Get movement state | `data.get_bot_state` |
+| Select Slot | Select hotbar slot | `action.select_slot` |
+| Drop Item | Drop cursor item | `action.drop_item` |
+| Print | Log message | `action.print` |
+| Pathfind To | Go to position | `action.pathfind_to` |
+| Get/Set Session Bot Variable | Get/Set connection variable | `variable.get_session_bot`, `variable.set_session_bot` |
+| Get/Set Session Instance Variable | Get/Set project runtime variable | `variable.get_session_instance`, `variable.set_session_instance` |
+| Get/Set Persistent Bot Variable | Get/Set persistent bot variable | `variable.get_persistent_bot`, `variable.set_persistent_bot` |
+| Get/Set Persistent Instance Variable | Get/Set persistent project variable | `variable.get_persistent_instance`, `variable.set_persistent_instance` |
+
+Existing graphs resolve through the same node types and keep explicit labels chosen by their authors.
+Previous node names remain search keywords. Use the [node reference](/docs/scripting/node-reference) for ports and the pinned implementation.
+See [script state](/docs/scripting/state) for variable ownership and lifetime.
+
+## Configuration copies and exports
+
+**Create from configuration** copies settings, accounts and their credentials, proxies, project and account persistent metadata, and the icon.
+It excludes scripts, files, permissions, and history. The new project belongs to the person who creates it.
+
+**Export configuration** includes settings, accounts and their credentials, proxies, and account persistent metadata.
+The app currently omits project-level persistent metadata from exports.
+
+<Callout type="warn" title="Keep exported files private">
+  Configuration files contain account credentials and proxy passwords. Share them only with people who should have those credentials.
+</Callout>
+A configuration export is not a complete project backup.
+
+New downloads use `soulfire-configuration.json`. Older files named `profile.json` remain importable.
+Use [server backup and restore](/docs/server/backup-and-restore) when you need to recover the complete SoulFire server.
+
+## Versions and translations
+
+The app's English source strings change first. Other locales keep their existing names until their Crowdin translations are reviewed.
+Examples that use `instance` identifiers remain compatible, including examples for SDK versions published before this display-name migration.
+
+The [shared naming proposal](https://github.com/soulfiremc-com/brand/pull/1)
+records the selected mappings and the coordinated rollout. Its acceptance status is separate from implementation and release.
