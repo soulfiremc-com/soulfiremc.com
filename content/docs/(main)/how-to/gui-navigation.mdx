@@ -7,7 +7,8 @@ icon: AppWindow
 
 ![SoulFire demo overview showing the instance sidebar, bot controls, and online count](/docs/images/instance-overview.jpg)
 
-The screenshot shows demo data in client 2.10.1. Labels and available pages can differ with your permissions and version.
+The screenshot shows demo data in client 2.10.1, which uses **Instance**. The updated app uses **Project**.
+Labels and available pages can differ with your permissions and version. See [names and compatibility](/docs/reference/naming).
 
 ## Top-level navigation
 
@@ -18,7 +19,7 @@ Users with admin permission also see server administration pages.
 
 | Area | Use it for |
 | --- | --- |
-| **Instances** | Create instances and open existing ones |
+| **Projects** | Create projects and open existing ones |
 | **Access** | Manage access tokens and user-scoped access |
 | **Settings** | Change personal client settings |
 
@@ -36,17 +37,19 @@ These entries require admin access on the connected server.
 | **Server Settings** | Change server configuration |
 | **Dev Settings** | Adjust advanced developer options |
 
-## Inside an instance
+<a id="inside-an-instance" />
 
-Most day-to-day work happens inside an instance.
+## Inside a project
+
+Most day-to-day work happens inside a project.
 
 ### Controls
 
 | Area | Use it for |
 | --- | --- |
 | **Overview** | Start, restart, stop, and inspect individual bots or groups |
-| **Terminal** | Run commands against that instance |
-| **Audit Log** | Review actions taken on the instance |
+| **Terminal** | Run commands against that project |
+| **Audit Log** | Review actions taken on the project |
 
 ### Settings
 
@@ -56,7 +59,7 @@ Most day-to-day work happens inside an instance.
 | **Account Settings** | Import accounts and control how they are used |
 | **Proxy Settings** | Import proxies and set proxy behavior |
 | **AI Settings** | Configure AI-backed features |
-| **Instance Settings** | Edit instance-specific metadata |
+| **Project Settings** | Edit project-specific metadata |
 
 ### Automation and extensions
 
@@ -64,13 +67,13 @@ Most day-to-day work happens inside an instance.
 | --- | --- |
 | **Plugins** | Enable or disable built-in plugins |
 | **Plugin Settings** | Configure enabled plugins |
-| **Scripts** | Build and manage visual automation for the instance |
+| **Scripts** | Build and manage visual automation for the project |
 
 ## Control a bot through POV
 
-Open a bot's POV to watch live video and control its native Minecraft interface.
+Open **Bot view** to watch live video and control its native Minecraft interface.
 The viewer forwards keyboard, mouse, scroll, and text input, including inventory screens and dialogs.
-Opening POV requires read and control permissions and acquires exclusive bot control.
+Opening Bot view requires read and control permissions and acquires exclusive bot control.
 The viewer releases control if its input heartbeat stops.
 
 ## Personal preferences

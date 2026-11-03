@@ -6,15 +6,15 @@ icon: Blocks
 ---
 
 SoulFire includes built-in plugins.
-You can enable or disable each plugin for an instance.
-Auto Armor, Auto Eat, and Auto Totem are disabled by default. Enable them when automatic inventory changes are needed.
+You can enable or disable each plugin for a project.
+Auto equip armor, Auto eat, and Auto equip totem are disabled by default. Enable them when automatic inventory changes are needed.
 
 | ID | Description | Author | License |
 | --- | --- | --- | --- |
 | `ai-chat-bot` | Allow players to chat with an AI | AlexProgrammerDE | AGPL-3.0 |
 | `anti-afk` | Automatically moves x amount of blocks in a random direction to prevent being kicked for being AFK | AlexProgrammerDE | AGPL-3.0 |
 | `auto-armor` | Automatically puts on the best armor | AlexProgrammerDE | AGPL-3.0 |
-| `auto-chat-message` | Automatically sends messages in a configured delay | AlexProgrammerDE | AGPL-3.0 |
+| `auto-chat-message` | Sends configured chat messages repeatedly after a configurable delay | AlexProgrammerDE | AGPL-3.0 |
 | `auto-eat` | Automatically eats food when hungry | AlexProgrammerDE | AGPL-3.0 |
 | `auto-jump` | Automatically jumps randomly | AlexProgrammerDE | AGPL-3.0 |
 | `auto-reconnect` | Automatically reconnects bots when they time out or are kicked | AlexProgrammerDE | AGPL-3.0 |
@@ -27,10 +27,13 @@ Auto Armor, Auto Eat, and Auto Totem are disabled by default. Enable them when a
 | `client-settings` | Sends client settings to the server | AlexProgrammerDE | AGPL-3.0 |
 | `dialog-handler` | Handles server-sent dialogs and exposes them via gRPC | AlexProgrammerDE | AGPL-3.0 |
 | `disconnect-logger` | Logs all bot disconnects to the terminal Includes deduplication to prevent spamming the same disconnect message too often | AlexProgrammerDE | AGPL-3.0 |
-| `fake-virtual-host` | Fakes the virtual host | AlexProgrammerDE | AGPL-3.0 |
-| `kill-aura` | Automatically attacks entities | AlexProgrammerDE | AGPL-3.0 |
-| `server-list-bypass` | Pings the server list before connecting. (Bypasses anti-bots like EpicGuard) | AlexProgrammerDE | AGPL-3.0 |
-| `forwarding-bypass` | Allows bypassing proxy forwarding | AlexProgrammerDE | AGPL-3.0 |
+| `fake-virtual-host` | Overrides the host and port sent in the Minecraft connection handshake | AlexProgrammerDE | AGPL-3.0 |
+| `kill-aura` | Automatically attacks nearby entities (KillAura) | AlexProgrammerDE | AGPL-3.0 |
+| `server-list-bypass` | Pings the Minecraft server before joining; acceptance depends on server configuration | AlexProgrammerDE | AGPL-3.0 |
+| `forwarding-bypass` | Sets player forwarding data for the selected mode; acceptance depends on server configuration | AlexProgrammerDE | AGPL-3.0 |
+
+The [naming reference](/docs/reference/naming) maps earlier display names to the current labels.
+Plugin IDs in this table stay unchanged.
 
 ## How this list is generated
 
