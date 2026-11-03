@@ -365,6 +365,7 @@ function ProviderLogo({ provider }: { provider: Provider }) {
 
 function ProviderCard({
   provider,
+  promoted,
   reviewSummary,
   userReview,
   reviewPending,
@@ -372,6 +373,7 @@ function ProviderCard({
   onClearRating,
 }: {
   provider: Provider;
+  promoted: boolean;
   reviewSummary: ReviewSummary;
   userReview?: UserReviewRecord;
   reviewPending: boolean;
@@ -416,6 +418,7 @@ function ProviderCard({
                 {provider.name}
               </Link>
             </h3>
+            {promoted && <UiBadge variant="secondary">Promoted</UiBadge>}
             {provider.startDate && (
               <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
                 <Calendar className="h-3 w-3" />
@@ -641,6 +644,9 @@ function MainContent() {
 
   const hasActiveFilters =
     badges.length > 0 || category !== undefined || sort !== "default";
+  const hasPromotedProviders = filteredProviders.some((provider) =>
+    isProviderPromoted(provider, now),
+  );
 
   const [filtersOpen, setFiltersOpen] = useState(false);
 
@@ -836,6 +842,12 @@ function MainContent() {
           </Empty>
         ) : (
           <>
+            {hasPromotedProviders && (
+              <p className="text-sm text-muted-foreground">
+                Promoted placements stay first. Other providers follow your
+                selected filters and sort order.
+              </p>
+            )}
             {/* MFA Accounts Section */}
             {mfaProviders.length > 0 && (
               <div className="flex flex-col gap-4">
@@ -853,6 +865,7 @@ function MainContent() {
                     <ProviderCard
                       key={provider.slug}
                       provider={provider}
+                      promoted={isProviderPromoted(provider, now)}
                       reviewSummary={summaries[provider.slug]}
                       userReview={userReviews[provider.slug]}
                       reviewPending={pendingBySlug[provider.slug] ?? false}
@@ -885,6 +898,7 @@ function MainContent() {
                     <ProviderCard
                       key={provider.slug}
                       provider={provider}
+                      promoted={isProviderPromoted(provider, now)}
                       reviewSummary={summaries[provider.slug]}
                       userReview={userReviews[provider.slug]}
                       reviewPending={pendingBySlug[provider.slug] ?? false}
