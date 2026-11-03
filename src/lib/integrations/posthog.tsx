@@ -12,6 +12,9 @@ if (typeof window !== "undefined" && POSTHOG_KEY) {
     capture_exceptions: true,
     debug: import.meta.env.DEV,
     cookieless_mode: "on_reject",
+    loaded: (client) => {
+      client.register({ app_version: import.meta.env.VITE_APP_VERSION });
+    },
   });
 }
 
