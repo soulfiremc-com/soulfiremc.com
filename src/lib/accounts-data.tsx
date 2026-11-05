@@ -331,8 +331,8 @@ export const SHOPS: Shop[] = [
     name: "Ravealts",
     logo: "/accounts/ravealts.gif",
     logoUnoptimized: true,
-    url: "https://dash.ravealts.com",
-    websiteUrl: "https://ravealts.com",
+    url: "https://ravealts.com?via=soulfire",
+    websiteUrl: "https://ravealts.com?via=soulfire",
     discordUrl: "https://discord.ravealts.com",
     trustpilotUrl: "https://www.trustpilot.com/review/ravealts.com",
     paymentMethods: [
