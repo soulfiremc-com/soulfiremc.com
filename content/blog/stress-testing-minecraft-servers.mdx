@@ -217,15 +217,15 @@ If TPS looks fine but **CPU is pinned above 80%**, you're closer to the limit th
 
 When Spark shows a specific plugin consuming more than 10% of CPU, investigate its configuration first. Many plugins have expensive features that can be disabled. If entity AI dominates the profile (>30%), lower mob caps. If chunk operations are excessive, tighten chunk loading rates in `paper-global.yml`.
 
-## Using SoulFire for Testing
+## Using Soulfire for Testing
 
-I'd recommend [SoulFire](/download) for this. Unlike most bot frameworks that reimplement the Minecraft protocol from scratch, SoulFire runs actual Fabric client code, so bots behave exactly like real players at the protocol level. You don't get weird packet timing or broken physics that throws off your results. The load is basically identical to real players, which is the whole point.
+I'd recommend [Soulfire](/download) for this. Unlike most bot frameworks that reimplement the Minecraft protocol from scratch, Soulfire runs actual Fabric client code, so bots behave exactly like real players at the protocol level. You don't get weird packet timing or broken physics that throws off your results. The load is basically identical to real players, which is the whole point.
 
 It also supports multiple Minecraft versions through ViaFabricPlus, so you can test whatever version you're running without hunting for a compatible tool.
 
 **Here's how I usually run a test:**
 
-1. Set your target server and bot count in the SoulFire interface
+1. Set your target server and bot count in the Soulfire interface
 2. Stagger the joins (1-3 seconds between bots) so you don't flood the login server
 3. Turn on the movement and activity plugins so bots aren't just standing there
 4. Keep Spark running on the server the whole time

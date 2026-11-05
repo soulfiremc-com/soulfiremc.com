@@ -10,7 +10,7 @@ const program = Effect.scoped(
       installation: { version: "2.10.2" },
     });
 
-    yield* bot.chat.send("Hello from SoulFire");
+    yield* bot.chat.send("Hello from Soulfire");
     yield* Effect.logInfo(\`Health: \${bot.state.player?.health}\`);
   }),
 );
@@ -29,7 +29,7 @@ def program() -> EffectGen[None, SoulFireOperationError, Scope]:
         username="DocsBot_1",
         installation={"version": "2.10.2"},
     )
-    yield from bot.chat.send("Hello from SoulFire")
+    yield from bot.chat.send("Hello from Soulfire")
     yield from sync(lambda: print(bot.state.player))
 
 

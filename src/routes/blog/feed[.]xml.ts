@@ -11,9 +11,9 @@ export const Route = createFileRoute("/blog/feed.xml")({
         const rss = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>SoulFire Blog</title>
+    <title>Soulfire Blog</title>
     <link>${siteUrl}/blog</link>
-    <description>Latest updates, tutorials, and insights from the SoulFire team</description>
+    <description>Latest updates, tutorials, and insights from the Soulfire team</description>
     <language>en-us</language>
     <atom:link href="${siteUrl}/blog/feed.xml" rel="self" type="application/rss+xml" />
     ${posts

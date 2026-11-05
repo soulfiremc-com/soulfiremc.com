@@ -9,13 +9,13 @@ import { Mermaid } from '../../../../src/components/mdx/mermaid';
 
 ## One product, two roles
 
-SoulFire has a client and a server, like Minecraft.
+Soulfire has a client and a server, like Minecraft.
 You use the client to control bots.
 The server runs the bot connections.
 
 ## Integrated server (local)
 
-The GUI and CLI include an integrated SoulFire server.
+The GUI and CLI include an integrated Soulfire server.
 It runs bots on your computer without a separate server setup.
 Only the client that started the integrated server can use it.
 For remote access, use a dedicated server.
@@ -23,8 +23,8 @@ For remote access, use a dedicated server.
 <Mermaid chart="
 graph LR
     subgraph Y[Your machine]
-        C[SoulFire client]
-        I[SoulFire integrated server]
+        C[Soulfire client]
+        I[Soulfire integrated server]
     end
     subgraph M[Minecraft Server]
     end
@@ -36,7 +36,7 @@ This is the recommended mode for most first-time users.
 
 ## Dedicated server (remote)
 
-A dedicated server runs SoulFire separately from the GUI or CLI.
+A dedicated server runs Soulfire separately from the GUI or CLI.
 Use it to run bots on one machine and control them from another.
 Several users and clients can connect to the same server.
 You can also run several dedicated servers on one or more machines.
@@ -44,13 +44,13 @@ You can also run several dedicated servers on one or more machines.
 <Mermaid chart="
 graph LR
     subgraph Y[Your machine]
-        YourClient[SoulFire client]
+        YourClient[Soulfire client]
     end
     subgraph O[Other user's machine]
-        OtherClient[SoulFire client]
+        OtherClient[Soulfire client]
     end
     subgraph R[Remote machine]
-        S[SoulFire dedicated server]
+        S[Soulfire dedicated server]
     end
     subgraph M[Minecraft Server]
     end

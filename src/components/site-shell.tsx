@@ -14,12 +14,12 @@ export function SiteShell({ children }: { children: ReactNode }) {
         {
           text: "Docs",
           url: "/docs",
-          description: "Learn how to use SoulFire",
+          description: "Learn how to use Soulfire",
         },
         {
           text: "Downloads",
           url: "/download",
-          description: "Download SoulFire",
+          description: "Download Soulfire",
         },
         {
           text: "Accounts",
@@ -34,7 +34,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
         {
           text: "Blog",
           url: "/blog",
-          description: "News and guides from SoulFire",
+          description: "News and guides from Soulfire",
         },
         {
           type: "menu",
@@ -44,7 +44,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
             {
               text: "Pricing",
               url: "/pricing",
-              description: "Support SoulFire development",
+              description: "Support Soulfire development",
             },
           ],
         },
@@ -59,7 +59,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
       {children}
       <footer className="border-t py-6 text-sm text-fd-muted-foreground">
         <div className="mx-auto flex w-full max-w-(--fd-layout-width) flex-col items-center gap-2 px-4 sm:flex-row sm:justify-between">
-          <p>&copy; {new Date().getFullYear()} SoulFire</p>
+          <p>&copy; {new Date().getFullYear()} Soulfire</p>
           <nav className="flex gap-4">
             <Link
               to="/privacy-policy"

@@ -267,7 +267,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
       <CardHeader>
         <CardTitle className="text-2xl">Choose your build</CardTitle>
         <CardDescription>
-          SoulFire is multi-platform. Tell us what you are running and we will
+          Soulfire is multi-platform. Tell us what you are running and we will
           point you to the best download.
         </CardDescription>
       </CardHeader>
@@ -420,7 +420,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
           </CredenzaHeader>
           <CredenzaBody>
             <p className="text-sm text-muted-foreground">
-              SoulFire is free, open-source, and community-driven. If you find
+              Soulfire is free, open-source, and community-driven. If you find
               it useful, consider supporting the project:
             </p>
             <div className="mt-4 flex flex-col gap-3">
@@ -487,7 +487,7 @@ function DownloadSelectionSkeleton() {
         <CardHeader>
           <CardTitle className="text-2xl">Choose your build</CardTitle>
           <CardDescription>
-            SoulFire is multi-platform. Tell us what you are running and we will
+            Soulfire is multi-platform. Tell us what you are running and we will
             point you to the best download.
           </CardDescription>
         </CardHeader>
@@ -554,8 +554,8 @@ function DownloadSelectionSkeleton() {
 }
 
 const SERVER_ICONS = {
-  "SoulFire CLI": <Terminal className="h-5 w-5" />,
-  "SoulFire Dedicated": <Server className="h-5 w-5" />,
+  "Soulfire CLI": <Terminal className="h-5 w-5" />,
+  "Soulfire Dedicated": <Server className="h-5 w-5" />,
 } as const;
 
 type DownloadPageContentProps = {
@@ -579,7 +579,7 @@ function DownloadPageContent({
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-              Download SoulFire
+              Download Soulfire
             </h1>
             <p className="max-w-2xl text-lg text-muted-foreground">
               Pick your operating system and CPU architecture. We&apos;ll give
@@ -621,7 +621,7 @@ function DownloadPageContent({
               Learn the workflow
             </CardTitle>
             <CardDescription>
-              Understand how SoulFire operates before launching your first test.
+              Understand how Soulfire operates before launching your first test.
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
@@ -649,7 +649,7 @@ function DownloadPageContent({
           <CardContent className="flex flex-col gap-4">
             <p className="text-muted-foreground">
               Explore every screen, test presets, and share the experience with
-              your team by opening the fully interactive SoulFire demo.
+              your team by opening the fully interactive Soulfire demo.
             </p>
             <Button asChild>
               <a
@@ -709,12 +709,12 @@ function DownloadPageContent({
               Support the project
             </CardTitle>
             <CardDescription>
-              SoulFire is free and open source. Donations help keep it that way.
+              Soulfire is free and open source. Donations help keep it that way.
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <p className="text-muted-foreground">
-              If SoulFire saves you time or you just want to say thanks,
+              If Soulfire saves you time or you just want to say thanks,
               consider buying the developer a coffee. Every contribution helps
               fund hosting, development, and new features.
             </p>
@@ -776,11 +776,11 @@ export const Route = createFileRoute("/download")({
   },
   head: () => ({
     meta: getPageMeta({
-      title: "Download SoulFire - SoulFire",
-      description: "Pick your OS and CPU to grab the right SoulFire build.",
+      title: "Download Soulfire - Soulfire",
+      description: "Pick your OS and CPU to grab the right Soulfire build.",
       path: "/download",
       imageUrl: "/og/site/download/image.webp",
-      imageAlt: "SoulFire download page preview",
+      imageAlt: "Soulfire download page preview",
     }),
     links: getCanonicalLinks("/download"),
   }),

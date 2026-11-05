@@ -1,20 +1,20 @@
 ---
 title: Build Your First Plugin
 sidebarTitle: "First plugin"
-description: Build a SoulFire plugin from the official template and load it as a Fabric mod.
+description: Build a Soulfire plugin from the official template and load it as a Fabric mod.
 icon: Plug
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 
-This guide builds a plugin that SoulFire can load.
-The official template already contains the required Fabric, Loom, and SoulFire setup.
+This guide builds a plugin that Soulfire can load.
+The official template already contains the required Fabric, Loom, and Soulfire setup.
 
 <Callout type="info">
   The official template repository is [SoulFirePluginExample](https://github.com/soulfiremc-com/SoulFirePluginExample).
   Use it as your starting template. Then compare it with the current [Javadocs](https://ci.codemc.io/job/AlexProgrammerDE/job/SoulFire/javadoc/)
-  and current [SoulFire source](https://github.com/soulfiremc-com/SoulFire) for low-level APIs.
+  and current [Soulfire source](https://github.com/soulfiremc-com/SoulFire) for low-level APIs.
 </Callout>
 
 If you are new to Fabric itself, keep [Fabric Documentation](https://docs.fabricmc.net/) open too.
@@ -24,7 +24,7 @@ If you are new to Fabric itself, keep [Fabric Documentation](https://docs.fabric
 - Install Java 25.
 - Install Git.
 - Use IntelliJ IDEA for Fabric Loom, Mixins, and Java plugin work.
-- Have a working SoulFire install where you can test jars in `minecraft/mods`.
+- Have a working Soulfire install where you can test jars in `minecraft/mods`.
 
 ## Success criteria
 
@@ -33,7 +33,7 @@ At the end of this guide, you will have:
 - a plugin project cloned from the template
 - a `ModInitializer` that registers your `ExternalPlugin`
 - a built jar in `build/libs`
-- a jar that loads from SoulFire's `minecraft/mods` directory
+- a jar that loads from Soulfire's `minecraft/mods` directory
 
 ## Align the template with your backend
 
@@ -41,8 +41,8 @@ The template is a starting project, not a promise that its pinned dependencies m
 At this audit, it pins `2.9.1-SNAPSHOT` and Minecraft `1.21.11_unobfuscated`.
 The native examples below compile against the [2.10.2 release baseline](/docs/sdk/compatibility), whose runtime uses Minecraft `26.3`.
 
-Compare the template's Minecraft, Fabric Loader, SoulFire, Loom, and Java versions with the backend you will run.
-Update the dependency set together. Do not change only the SoulFire version and retain incompatible Minecraft classes.
+Compare the template's Minecraft, Fabric Loader, Soulfire, Loom, and Java versions with the backend you will run.
+Update the dependency set together. Do not change only the Soulfire version and retain incompatible Minecraft classes.
 For a released backend, use its matching published artifacts and source.
 For source development, use the matching backend build and local Maven artifacts.
 
@@ -78,7 +78,7 @@ Read [Gradle and project layout](/docs/development/gradle-and-project-layout) be
   <Step>
     ### Keep the Fabric entrypoint
 
-    SoulFire plugins are Fabric mods, so the JVM entrypoint is still a normal `ModInitializer`:
+    Soulfire plugins are Fabric mods, so the JVM entrypoint is still a normal `ModInitializer`:
 
     ```java title="Main.java" doc-test
     package com.example.myplugin;
@@ -94,7 +94,7 @@ Read [Gradle and project layout](/docs/development/gradle-and-project-layout) be
     }
     ```
 
-    `SoulFireAPI.loadPlugin(...)` registers the plugin with SoulFire.
+    `SoulFireAPI.loadPlugin(...)` registers the plugin with Soulfire.
   </Step>
 
   <Step>
@@ -119,7 +119,7 @@ Read [Gradle and project layout](/docs/development/gradle-and-project-layout) be
         super(new PluginInfo(
           "my-plugin",
           "1.0.0",
-          "Example SoulFire plugin",
+          "Example Soulfire plugin",
           "YourName",
           "MIT",
           "https://example.com"
@@ -145,9 +145,9 @@ Read [Gradle and project layout](/docs/development/gradle-and-project-layout) be
   </Step>
 
   <Step>
-    ### Install it into SoulFire
+    ### Install it into Soulfire
 
-    Copy the jar into SoulFire's Fabric mods directory and restart SoulFire:
+    Copy the jar into Soulfire's Fabric mods directory and restart Soulfire:
 
     - all deployments: `minecraft/mods` under the backend's base directory
     - Docker: `/soulfire/data/minecraft/mods` inside the container
@@ -187,7 +187,7 @@ Use the built-in plugin inspection tools:
 - run `print-docs plugins` if you want the current built-in plugin documentation output
 
 If the mod failed before registration, read the startup logs first.
-Fabric loading problems, missing dependencies, and bad mixin config usually fail before SoulFire ever sees your `ExternalPlugin`.
+Fabric loading problems, missing dependencies, and bad mixin config usually fail before Soulfire ever sees your `ExternalPlugin`.
 
 If Fabric itself is complaining, go back to:
 

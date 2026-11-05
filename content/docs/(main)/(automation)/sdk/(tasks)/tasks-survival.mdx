@@ -54,7 +54,7 @@ leave the bed.
 
 ## Fish with server-timed bite detection
 
-Fishing timing stays on the SoulFire game thread. The task selects a matching
+Fishing timing stays on the Soulfire game thread. The task selects a matching
 rod, casts, watches the synchronized hook state for a bite, reels in, and
 repeats:
 
@@ -80,7 +80,7 @@ result = yield from fishing.result()
 
 The bounded form defaults to one confirmed bite and reel. `runFish` and
 `run_fish` keep fishing until cancellation by default. The result reports
-confirmed catches and failed casts. SoulFire reels in an active line during
+confirmed catches and failed casts. Soulfire reels in an active line during
 cleanup and restores the previous hotbar selection when requested.
 
 ## Farm and replant mature crops
@@ -170,12 +170,12 @@ It finds suitable food, walks to each animal, and feeds them:
 </Tabs>
 
 Omit `animals` to consider every observable animal subtype. Omit `food` to
-let SoulFire choose any inventory item that both selected animals recognize
+let Soulfire choose any inventory item that both selected animals recognize
 as breeding food. The optional selectors can narrow either side without
-hard-coding food tables in the SDK. SoulFire supports same-type pairs and the
+hard-coding food tables in the SDK. Soulfire supports same-type pairs and the
 vanilla horse and donkey cross. It excludes sterile mules.
 
-A successful entity-interaction call is not enough to count a feed. SoulFire
+A successful entity-interaction call is not enough to count a feed. Soulfire
 waits for the server's love-mode entity event for each animal. The result
 therefore reports `pairsStarted` or `pairs_started`, not a guessed offspring
 count. Minecraft can still delay or prevent offspring after both parents enter

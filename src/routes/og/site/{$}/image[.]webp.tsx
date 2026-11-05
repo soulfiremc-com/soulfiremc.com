@@ -34,7 +34,7 @@ export const Route = createFileRoute("/og/site/{$}/image.webp")({
             image = (
               <DirectoryOgImage
                 label="Blog"
-                title="SoulFire Blog"
+                title="Soulfire Blog"
                 description="Tutorials, field notes, and deep dives on Minecraft bot testing and development."
                 accent="#ffb562"
                 secondary="#ff7d99"
@@ -48,8 +48,8 @@ export const Route = createFileRoute("/og/site/{$}/image.webp")({
             image = (
               <DirectoryOgImage
                 label="Proxies"
-                title="Proxy Providers for SoulFire"
-                description="Residential, datacenter, ISP, and mobile networks tested with SoulFire sessions."
+                title="Proxy Providers for Soulfire"
+                description="Residential, datacenter, ISP, and mobile networks tested with Soulfire sessions."
                 accent="#58c7ff"
                 secondary="#4a7dff"
                 count={PROXY_PROVIDERS.length}
@@ -64,7 +64,7 @@ export const Route = createFileRoute("/og/site/{$}/image.webp")({
             image = (
               <DirectoryOgImage
                 label="Accounts"
-                title="Minecraft Accounts for SoulFire"
+                title="Minecraft Accounts for Soulfire"
                 description="MFA and NFA providers with pricing and delivery details."
                 accent="#75f1ba"
                 secondary="#ffb562"

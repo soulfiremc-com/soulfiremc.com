@@ -32,18 +32,18 @@ interface EmailOTPParams {
   type: "sign-in" | "email-verification" | "forget-password" | "change-email";
 }
 
-const siteName = "SoulFire";
+const siteName = "Soulfire";
 const baseUrl = "https://soulfiremc.com";
 const logoUrl = `${baseUrl}/logo-square.png`;
-const fromAddress = "SoulFire Auth <auth@transactional.soulfiremc.com>";
-const replyTo = "SoulFire Support <support@transactional.soulfiremc.com>";
+const fromAddress = "Soulfire Auth <auth@transactional.soulfiremc.com>";
+const replyTo = "Soulfire Support <support@transactional.soulfiremc.com>";
 
 export const EMAIL_OTP_EXPIRATION_SECONDS = 5 * 60;
 export const TWO_FACTOR_OTP_EXPIRATION_MINUTES = 3;
 
 const emailOtpContent = {
   "sign-in": {
-    heading: "Sign in to SoulFire",
+    heading: "Sign in to Soulfire",
     subject: `Your sign-in code for ${siteName}`,
     description:
       "Use this code to sign in to your {appName} account {email}. Enter it in your open browser window.",

@@ -69,7 +69,7 @@ const proxiesFaqItems: {
   answerElement: React.ReactNode;
 }[] = [
   {
-    question: "Why do I need proxies for SoulFire?",
+    question: "Why do I need proxies for Soulfire?",
     answerHtml:
       'When running multiple bots, servers may block your IP. Proxies give each bot a different IP address, avoiding rate limits and IP bans. Learn more in the <a href="https://soulfiremc.com/docs/how-to/import-proxies">Proxy Guide</a>.',
     answerElement: (
@@ -122,16 +122,16 @@ const proxiesFaqItems: {
   {
     question: "Are these affiliate links?",
     answerHtml:
-      "Yes, some links are affiliate links. Purchases through them help fund SoulFire development at no extra cost to you.",
+      "Yes, some links are affiliate links. Purchases through them help fund Soulfire development at no extra cost to you.",
     answerElement: (
       <>
         Yes, some links are affiliate links. Purchases through them help fund
-        SoulFire development at no extra cost to you.
+        Soulfire development at no extra cost to you.
       </>
     ),
   },
   {
-    question: "Can I use free proxies with SoulFire?",
+    question: "Can I use free proxies with Soulfire?",
     answerHtml:
       "Some providers like Webshare offer a free tier. Free public proxy lists are not recommended since they're slow, unreliable, and often already blocked.",
     answerElement: (
@@ -522,7 +522,7 @@ function GetProxiesClient() {
         </p>
         <p className="text-sm text-muted-foreground">
           <BookOpen className="inline h-4 w-4 align-text-bottom" /> For more
-          information on how to use proxies with SoulFire, read the{" "}
+          information on how to use proxies with Soulfire, read the{" "}
           <Link
             to="/docs/$"
             params={{ _splat: "how-to/import-proxies" }}
@@ -545,7 +545,7 @@ function GetProxiesClient() {
         <div className="flex flex-col gap-1">
           <h2 className="text-2xl font-semibold">Frequently Asked Questions</h2>
           <p className="text-sm text-muted-foreground">
-            Common questions about proxies for SoulFire
+            Common questions about proxies for Soulfire
           </p>
         </div>
         <Accordion type="single" collapsible className="w-full">
@@ -564,7 +564,7 @@ function GetProxiesClient() {
         <p className="text-sm text-muted-foreground">
           <strong>Disclosure:</strong> This page contains affiliate links. When
           you purchase through these links, we may earn a commission at no extra
-          cost to you. These commissions help fund the development of SoulFire.
+          cost to you. These commissions help fund the development of Soulfire.
         </p>
         <p className="text-sm text-muted-foreground">
           Inaccurate information or broken links? Submit a pull request on{" "}
@@ -600,9 +600,9 @@ function createProxiesItemListJsonLd(
     "@context": "https://schema.org",
     "@type": "ItemList",
     "@id": "https://soulfiremc.com/get-proxies#provider-list",
-    name: "Proxy Providers for SoulFire",
+    name: "Proxy Providers for Soulfire",
     description:
-      "Trusted proxy providers for Minecraft bot testing with SoulFire. Compare residential, datacenter, ISP, and mobile proxies.",
+      "Trusted proxy providers for Minecraft bot testing with Soulfire. Compare residential, datacenter, ISP, and mobile proxies.",
     numberOfItems: PROVIDERS.length,
     itemListElement: PROVIDERS.map((provider, index) => {
       const reviewSummary = reviewSummaries?.[provider.slug];
@@ -683,7 +683,7 @@ const proxiesPageData = (() => {
     inLanguage: "en-US",
     isPartOf: {
       "@type": "WebSite",
-      name: "SoulFire",
+      name: "Soulfire",
       url: "https://soulfiremc.com",
     },
     breadcrumb: {
@@ -709,12 +709,12 @@ export const Route = createFileRoute("/get-proxies/")({
   },
   head: () => ({
     meta: getPageMeta({
-      title: "Get Proxies - SoulFire",
+      title: "Get Proxies - Soulfire",
       description:
         "Best proxy providers for Minecraft bot testing. Compare residential, datacenter, ISP, and mobile proxies. Free tiers available, with coupon codes and bulk pricing from top providers.",
       path: "/get-proxies",
       imageUrl: "/og/site/get-proxies/image.webp",
-      imageAlt: "SoulFire proxy providers page preview",
+      imageAlt: "Soulfire proxy providers page preview",
     }),
     links: getCanonicalLinks("/get-proxies"),
   }),

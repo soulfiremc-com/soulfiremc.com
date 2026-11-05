@@ -1,7 +1,7 @@
 ---
 title: Choose an automation layer
 sidebarTitle: "Automation"
-description: Choose how to automate SoulFire bots with commands, visual scripts, SDKs, durable tasks, or the beat-game runner.
+description: Choose how to automate Soulfire bots with commands, visual scripts, SDKs, durable tasks, or the beat-game runner.
 icon: Bot
 ---
 
@@ -9,7 +9,7 @@ import { Bot, Blocks, Code2, Terminal, Workflow } from 'lucide-react';
 import { Cards, Card } from 'fumadocs-ui/components/card';
 import { Callout } from 'fumadocs-ui/components/callout';
 
-SoulFire provides several automation options.
+Soulfire provides several automation options.
 Choose the simplest option that can do your task.
 
 | Goal | Use |
@@ -21,15 +21,15 @@ Choose the simplest option that can do your task.
 | Automate Minecraft game progress | [Beat-game runner](/docs/sdk/automation) |
 | Add new server features | [Plugins](/docs/sdk/plugins) |
 
-## What SoulFire manages
+## What Soulfire manages
 
-SoulFire manages Minecraft connections, pathfinding, bot input, and reusable tasks.
+Soulfire manages Minecraft connections, pathfinding, bot input, and reusable tasks.
 Your application chooses the goals and combines these features.
 
 The beat-game planner runs in `@soulfiremc/beat-game`.
-It does not run inside the SoulFire server or SoulFireClient.
+It does not run inside the Soulfire server or SoulFireClient.
 The TypeScript worker can resume saved progress, coordinate teams, and call plugin APIs.
-You can change its plan without changing SoulFire.
+You can change its plan without changing Soulfire.
 
 <Callout type="info">
   SoulFireClient does not contain a native beat-game dashboard. Run and

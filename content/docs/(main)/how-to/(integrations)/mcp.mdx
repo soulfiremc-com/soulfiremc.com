@@ -1,17 +1,17 @@
 ---
 title: MCP (AI Integration)
 sidebarTitle: "MCP"
-description: Connect an AI assistant to SoulFire with the Model Context Protocol.
+description: Connect an AI assistant to Soulfire with the Model Context Protocol.
 icon: Cable
 ---
 
 ## What is MCP?
 
 MCP (Model Context Protocol) lets AI assistants use external tools and services.
-SoulFire exposes its API as MCP tools.
+Soulfire exposes its API as MCP tools.
 An assistant can control bot instances, run commands, and change settings through natural language.
 
-Install and start SoulFire before you continue.
+Install and start Soulfire before you continue.
 See [Start Here](/docs/start-here) for installation steps.
 
 ## Available actions
@@ -33,7 +33,7 @@ Through MCP, an AI assistant can:
 The MCP endpoint requires a JWT API token.
 Create one in any of these ways:
 
-1. **The SoulFire GUI**: Go to your profile settings and generate an API token
+1. **The Soulfire GUI**: Go to your profile settings and generate an API token
 2. **The CLI**: Use the `generate-token api` command
 3. **The gRPC API**: Call `ClientService.GenerateAPIToken` or `UserService.GenerateUserAPIToken`
 
@@ -64,7 +64,7 @@ Add the following to your Claude Desktop MCP configuration file (`claude_desktop
 }
 ```
 
-Replace `your-server:port` with the SoulFire server address.
+Replace `your-server:port` with the Soulfire server address.
 Replace `YOUR_API_TOKEN` with the JWT token.
 
 ## Connecting Claude Code
@@ -88,7 +88,7 @@ Use these settings with other MCP clients:
 
 ## Available tools
 
-SoulFire groups its MCP tools by purpose:
+Soulfire groups its MCP tools by purpose:
 
 ### Instance Management
 - `list_instances`: List all instances visible to the current user
@@ -106,7 +106,7 @@ SoulFire groups its MCP tools by purpose:
 - `remove_instance_proxy`: Remove a proxy
 
 ### Command Execution
-- `execute_command`: Execute a SoulFire command (global, instance, or bot scope)
+- `execute_command`: Execute a Soulfire command (global, instance, or bot scope)
 - `tab_complete_command`: Get tab-completion suggestions
 
 ### Bot Control
@@ -158,7 +158,7 @@ SoulFire groups its MCP tools by purpose:
 
 ## Example Conversation
 
-Once connected, you can talk to SoulFire in plain language:
+Once connected, you can talk to Soulfire in plain language:
 
 > **You**: Create a new instance called "Test Server" and add 5 offline accounts named bot1 through bot5
 

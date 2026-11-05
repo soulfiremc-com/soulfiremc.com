@@ -1,14 +1,14 @@
 ---
 title: Plugin-defined APIs
 sidebarTitle: "Plugins"
-description: Call APIs that SoulFire server plugins provide.
+description: Call APIs that Soulfire server plugins provide.
 icon: Plug
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from '../../../../../../../src/components/mdx/sdk-tabs';
 
-A SoulFire plugin can add RPCs, streams, permissions, events, and durable tasks.
+A Soulfire plugin can add RPCs, streams, permissions, events, and durable tasks.
 When the SDK connects, it gets the list of installed plugins and their versions.
 
 Applications have two ways to consume a plugin:
@@ -51,17 +51,17 @@ public final class ExamplePlugin extends ExternalPlugin {
 
 Protobuf packages must use `soulfire.plugin.<plugin_id_with_underscores>.v<api_major>`.
 Each RPC, task provider, and event type declares its required permissions.
-SoulFire applies these permissions to every request and event.
+Soulfire applies these permissions to every request and event.
 
-After SoulFire allows a request, an RPC handler can read `PluginCallContext.current()`.
+After Soulfire allows a request, an RPC handler can read `PluginCallContext.current()`.
 This context contains the user, permissions, request targets, task manager, request data, and cancellation state.
-SoulFire records instance plugin calls in the audit log.
+Soulfire records instance plugin calls in the audit log.
 It also records request, error, and response-time metrics for the plugin.
 
 Use `context.settings().registerServerPage(...)` or
 `registerInstancePage(...)` for settings that must appear in every matching
 settings registry. Use `context.commands().register(...)` for a Brigadier root
-command. SoulFire validates these declarations during `onLoad`.
+command. Soulfire validates these declarations during `onLoad`.
 It installs them before the related lifecycle event runs.
 
 Applications call plugin RPCs, read plugin events, or start plugin tasks through the SDK.
@@ -193,7 +193,7 @@ when the server must keep working after the SDK process disconnects.
 ## Run plugin-defined tasks
 
 A plugin task provider declares its result type and can declare a typed
-progress detail. SoulFire validates both at runtime before publishing them.
+progress detail. Soulfire validates both at runtime before publishing them.
 
 ```java
 context.tasks().register(
@@ -256,7 +256,7 @@ option (soulfire.v1.api_method) = {
 };
 ```
 
-SoulFire creates the MCP input schema from the protobuf request.
+Soulfire creates the MCP input schema from the protobuf request.
 It uses the same authentication, permissions, context, metrics, and audit log
 as plugin gRPC requests. Streaming methods cannot opt in. Methods with
 mutation or destructive permissions must also set
@@ -339,7 +339,7 @@ changes.
 
 ## Permission behavior
 
-Plugin RPC registration includes permission descriptors. SoulFire applies
+Plugin RPC registration includes permission descriptors. Soulfire applies
 authentication, instance scope, permission checks, metrics, and audit context
 before invoking the plugin method.
 

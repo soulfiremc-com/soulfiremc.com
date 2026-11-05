@@ -11,8 +11,8 @@ if (!DISCORD_BOT_TOKEN || !DISCORD_CLIENT_ID) {
 const metadata = [
   {
     key: "verified_account",
-    name: "SoulFire Account",
-    description: "Has a verified SoulFire account",
+    name: "Soulfire Account",
+    description: "Has a verified Soulfire account",
     type: 7, // boolean_equal
   },
   {

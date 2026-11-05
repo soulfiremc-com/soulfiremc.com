@@ -89,7 +89,7 @@ selection can still reject the following operation, so group reports always
 retain per-bot failures.
 
 `requiredCapabilities` and `required_capabilities` validate capabilities
-negotiated for the connected SoulFire server. They fail early when the server
+negotiated for the connected Soulfire server. They fail early when the server
 cannot run the requested operation.
 
 ## Control matching bots
@@ -189,7 +189,7 @@ its stable index, and the total selected count.
 </Tabs>
 
 The concurrency limit applies to task-start RPCs. Tasks continue concurrently
-on the SoulFire server after they start. A group idempotency key is suffixed
+on the Soulfire server after they start. A group idempotency key is suffixed
 with the bot ID in Python so retries remain unique per bot.
 
 Start failures do not discard tasks that started successfully. Inspect

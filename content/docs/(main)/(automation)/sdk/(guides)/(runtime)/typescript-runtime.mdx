@@ -38,7 +38,7 @@ const program = Effect.scoped(
       username: "SoulFireBot",
       installation: { version: "2.10.2" },
     });
-    yield* bot.chat.send("Hello from SoulFire");
+    yield* bot.chat.send("Hello from Soulfire");
     yield* Effect.logInfo(bot.state.player);
   }),
 );
@@ -84,7 +84,7 @@ const program = Effect.scoped(
     });
     const bot = client.instance("instance-uuid").bot("bot-uuid");
     yield* bot.connect();
-    yield* bot.chat.send("Hello from SoulFire");
+    yield* bot.chat.send("Hello from Soulfire");
   }),
 );
 
@@ -143,7 +143,7 @@ instead of processing every delta itself.
 ## Interact with blocks and beds
 
 Use `interactBlock` when the intent is to activate a block rather than place
-against it. SoulFire checks that the target is loaded and reachable.
+against it. Soulfire checks that the target is loaded and reachable.
 
 ```ts
 yield* bot.interactBlock({
@@ -223,7 +223,7 @@ const task = yield* bot.recipes.smelt(
 yield* task.result();
 ```
 
-Crafting and smelting run on the SoulFire server as resource-aware tasks.
+Crafting and smelting run on the Soulfire server as resource-aware tasks.
 Interrupt the local stream for a call-owned task.
 Keep the task handle when the task must survive the SDK process.
 

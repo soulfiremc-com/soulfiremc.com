@@ -1,6 +1,6 @@
 ---
-title: Making Money on DonutSMP with SoulFire's Node Scripting
-description: A practical breakdown of DonutSMP's economy and how SoulFire's visual scripting system can automate farming, trading, and shard generation at scale
+title: Making Money on DonutSMP with Soulfire's Node Scripting
+description: A practical breakdown of DonutSMP's economy and how Soulfire's visual scripting system can automate farming, trading, and shard generation at scale
 author: Pistonmaster
 date: 2026-02-24
 tags: [minecraft, donutsmp, economy, automation, scripting, soulfire]
@@ -51,7 +51,7 @@ Tools like [DonutCalc](https://donutcalc.com/) help plan the grind to 3.0x. The 
 
 ## Money-Making Methods That Scale with Bots
 
-Not every farming method benefits from automation. Here are the ones that do, ordered by how well they pair with SoulFire.
+Not every farming method benefits from automation. Here are the ones that do, ordered by how well they pair with Soulfire.
 
 <Tabs items={['AFK Shards', 'Spawner Farms', 'Sell Arbitrage', 'AH Flipping']}>
   <Tab value="AFK Shards">
@@ -63,7 +63,7 @@ Shards themselves aren't directly tradeable, but they buy spawners from `/shop`.
 
 Donut+ also changes the equation a bit. The official store currently lists Donut+ at $4.99 for 30 days, and one of its perks is earning shards anywhere on the server instead of only in AFK. That can matter if your bots need to stay near farms rather than in the AFK zone.
 
-**Why it works with SoulFire:** Zero interaction needed after joining. The bot just has to stay connected. SoulFire's node scripting can handle reconnection on disconnect, lobby selection, and even auto-claiming shard rewards.
+**Why it works with Soulfire:** Zero interaction needed after joining. The bot just has to stay connected. Soulfire's node scripting can handle reconnection on disconnect, lobby selection, and even auto-claiming shard rewards.
 
 | Metric | Without Booster | With 4x Booster |
 |--------|----------------|-----------------|
@@ -79,9 +79,9 @@ Spawner farms still scale extremely well with bots, but the old "just buy iron g
 
 On a live Donut.Auction snapshot while refreshing this post, Iron Ingots were around $123.5k per stack on the auction house, Sugar Cane around $73.6k/stack, Bone Blocks around $52.7k/stack, and Bamboo around $10.1k/stack. That doesn't make one farm universally "best," but it does show why live price tracking now matters more than old shard-shop heuristics.
 
-The catch is that someone needs to be nearby to keep the chunks loaded. That's where SoulFire bots come in. They stand near the farm, collect drops periodically, and `/sell` them or route them into whatever exit path currently pays best. The farm runs 24/7 as long as the bot stays online.
+The catch is that someone needs to be nearby to keep the chunks loaded. That's where Soulfire bots come in. They stand near the farm, collect drops periodically, and `/sell` them or route them into whatever exit path currently pays best. The farm runs 24/7 as long as the bot stays online.
 
-**Why it works with SoulFire:** Bots act as chunk loaders and item collectors. Node scripts can handle periodic inventory collection, selling, and reconnection after kicks or disconnects.
+**Why it works with Soulfire:** Bots act as chunk loaders and item collectors. Node scripts can handle periodic inventory collection, selling, and reconnection after kicks or disconnects.
 
 | Live AH Snapshot | Approximate Value per Stack |
 |------------------|-----------------------------|
@@ -98,7 +98,7 @@ Once your sell multiplier hits 3.0x, you can buy items through `/order` listings
 
 The bot places bulk orders for cheap items (kelp blocks, iron, bones), waits for other players to fill them, collects the deliveries, and runs `/sell`. Rinse and repeat.
 
-**Why it works with SoulFire:** The entire loop can be scripted. Place order, wait, collect from GUI, sell, repeat. Node scripting handles the GUI interactions through inventory click nodes.
+**Why it works with Soulfire:** The entire loop can be scripted. Place order, wait, collect from GUI, sell, repeat. Node scripting handles the GUI interactions through inventory click nodes.
 
 The main bottleneck is order fill speed. Popular items get filled quickly, but niche items might sit for hours. A smart script rotates through multiple item types.
   </Tab>
@@ -110,7 +110,7 @@ New players constantly list items below market value on `/ah`. Buy low, sell hig
 
 DonutSMP has a [public API](https://api.donutsmp.net/index.html) and community tools like [donut.auction](https://donut.auction/), [DonutSMP Stats](https://donutstats.org/), and [Donut Stats](https://www.donutstats.net/) that track price history and server activity. A bot that knows current market prices can snipe underpriced listings faster than any human.
 
-**Why it works with SoulFire:** The Web Fetch node can query price APIs. Combined with chat parsing and inventory interaction, a script can monitor the AH, detect deals, and buy them automatically.
+**Why it works with Soulfire:** The Web Fetch node can query price APIs. Combined with chat parsing and inventory interaction, a script can monitor the AH, detect deals, and buy them automatically.
   </Tab>
 </Tabs>
 
@@ -124,9 +124,9 @@ Play with the numbers below to get a rough idea of what different setups could g
 This calculator uses approximate values that change frequently. Farm output depends on your specific design, server TPS, collection path, and whether chunks stay loaded. Real results will vary. Check [donut.auction](https://donut.auction/) for live pricing data.
 </Callout>
 
-## How SoulFire's Node Scripting Makes This Possible
+## How Soulfire's Node Scripting Makes This Possible
 
-SoulFire isn't a simple autoclicker. It runs actual Minecraft client code built on Fabric, so the server can't distinguish it from a real player by protocol alone. But the real power is in the visual node scripting system, which lets you build complex automation without writing a single line of code.
+Soulfire isn't a simple autoclicker. It runs actual Minecraft client code built on Fabric, so the server can't distinguish it from a real player by protocol alone. But the real power is in the visual node scripting system, which lets you build complex automation without writing a single line of code.
 
 ### What the Scripting System Can Do
 
@@ -162,7 +162,7 @@ Use the **On Join** trigger to detect when the bot enters the server. Connect it
 
 ### Handle Disconnects
 
-Add an **On Disconnect** trigger that connects to a **Wait** node (30 seconds to avoid rapid reconnection loops), then the bot automatically reconnects. SoulFire handles the actual reconnection logic. The script just needs to re-run the `/afk` command on the next **On Join** event.
+Add an **On Disconnect** trigger that connects to a **Wait** node (30 seconds to avoid rapid reconnection loops), then the bot automatically reconnects. Soulfire handles the actual reconnection logic. The script just needs to re-run the `/afk` command on the next **On Join** event.
 
 </Step>
 <Step>
@@ -220,11 +220,11 @@ Running one bot is a proof of concept. Running 10+ is where things get interesti
 
 ### Multi-Account Management
 
-SoulFire is designed to run many bots simultaneously from a single instance. Each bot runs its own script independently. You can assign different scripts to different bots, so some farm shards while others operate spawner farms.
+Soulfire is designed to run many bots simultaneously from a single instance. Each bot runs its own script independently. You can assign different scripts to different bots, so some farm shards while others operate spawner farms.
 
 ### Proxy Rotation
 
-DonutSMP tracks IPs and can ban "associated accounts." Running all your bots from one IP is a quick way to lose everything. SoulFire supports SOCKS5 and HTTP proxies natively, so you can route each bot through a different residential proxy.
+DonutSMP tracks IPs and can ban "associated accounts." Running all your bots from one IP is a quick way to lose everything. Soulfire supports SOCKS5 and HTTP proxies natively, so you can route each bot through a different residential proxy.
 
 ### The Death and Re-Gear Problem
 
@@ -234,7 +234,7 @@ Death is still expensive, but not because of the old two-day lockout. The real p
 
 | Risk | Severity | Mitigation |
 |------|----------|------------|
-| Bot detection by anti-cheat | Medium | SoulFire uses real client code, reducing protocol-level detection |
+| Bot detection by anti-cheat | Medium | Soulfire uses real client code, reducing protocol-level detection |
 | Admin manual review | High | Vary bot behavior, don't run identical patterns |
 | IP-based ban waves | High | Use residential proxies, one per bot |
 | Death while loaded near farms | Medium | Script damage detection, stash gear, auto-return to safe coordinates |
@@ -256,7 +256,7 @@ For context, here's where DonutSMP currency and items trade hands outside the se
 | eBay | Money, spawners, accounts | Small lots often land around ~$0.05-0.10/M |
 | Various `.market` sites | Money, spawners, bases | Varies |
 
-Eldorado also lists **boosting services** where sellers will AFK farm, build bases, or dig for you. That's essentially what you'd be automating with SoulFire, but doing it yourself instead of paying someone.
+Eldorado also lists **boosting services** where sellers will AFK farm, build bases, or dig for you. That's essentially what you'd be automating with Soulfire, but doing it yourself instead of paying someone.
 
 The market supports the idea that there's real demand here. People pay for in-game currency and services, and the supply side is where bots fit in.
 
@@ -264,4 +264,4 @@ The market supports the idea that there's real demand here. People pay for in-ga
 
 If you want to experiment with this, start small. One bot, AFK shard farming, no real-money trading. Get comfortable with the node scripting system, understand how DonutSMP's mechanics work firsthand, and build up from there.
 
-The [SoulFire scripting documentation](/docs/scripting) covers the full node reference, and the [examples page](/docs/scripting/examples) has starter workflows you can adapt. For DonutSMP-specific economy data, [donut.auction](https://donut.auction/), [donutstats.org](https://donutstats.org/), and [donutstats.net](https://www.donutstats.net/) are the best live resources.
+The [Soulfire scripting documentation](/docs/scripting) covers the full node reference, and the [examples page](/docs/scripting/examples) has starter workflows you can adapt. For DonutSMP-specific economy data, [donut.auction](https://donut.auction/), [donutstats.org](https://donutstats.org/), and [donutstats.net](https://www.donutstats.net/) are the best live resources.

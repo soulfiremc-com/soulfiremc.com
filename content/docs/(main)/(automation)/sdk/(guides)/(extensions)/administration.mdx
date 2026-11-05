@@ -1,14 +1,14 @@
 ---
 title: Server administration
 sidebarTitle: "Administration"
-description: Manage SoulFire settings, users, logs, metrics, scripts, commands, plugins, and audit records.
+description: Manage Soulfire settings, users, logs, metrics, scripts, commands, plugins, and audit records.
 icon: Settings
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from '../../../../../../../src/components/mdx/sdk-tabs';
 
-Use `soulfire.admin` to manage the SoulFire server.
+Use `soulfire.admin` to manage the Soulfire server.
 It uses the same authentication, timeouts, cancellation, and typed errors as bot automation.
 
 ## Inspect server state
@@ -116,7 +116,7 @@ such as `INSTANCE_OWNER`.
 </Tabs>
 
 Global permissions omit the resource ID. Instance, bot, and task permissions
-require the matching UUID. SoulFire keeps overrides after you remove their
+require the matching UUID. Soulfire keeps overrides after you remove their
 plugin and returns them with `active: false`. Reinstalling the plugin does not
 change these values.
 

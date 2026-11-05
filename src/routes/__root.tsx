@@ -52,7 +52,7 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
       {
         rel: "alternate",
         type: "application/rss+xml",
-        title: "SoulFire Blog Feed",
+        title: "Soulfire Blog Feed",
         href: "/blog/feed.xml",
       },
     ],

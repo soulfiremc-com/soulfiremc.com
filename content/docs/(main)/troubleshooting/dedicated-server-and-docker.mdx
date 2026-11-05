@@ -9,7 +9,7 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 ## Start with the server
 
-If you run SoulFire as a dedicated server, fix the server-side access path first.
+If you run Soulfire as a dedicated server, fix the server-side access path first.
 Do not keep changing GUI settings while the remote stack itself is unhealthy.
 
 ## Make sure that the access mode matches
@@ -21,7 +21,7 @@ Your client URL needs to match the way the server is exposed:
 - Traefik with public-IP HTTPS
 - plain HTTP
 
-If they do not match, the client cannot connect even when SoulFire works.
+If they do not match, the client cannot connect even when Soulfire works.
 
 ## Use the setup script management menu
 
@@ -55,7 +55,7 @@ Make sure that these Cloudflared settings are correct:
 - the Cloudflare-side tunnel configuration
 - that the URL you use in the client is the tunnel URL, not a local container address
 
-If the tunnel is healthy but SoulFire still does not respond, inspect the app container next.
+If the tunnel is healthy but Soulfire still does not respond, inspect the app container next.
 
 ## If Traefik is the failing layer
 
@@ -66,7 +66,7 @@ Make sure that these Traefik settings are correct:
 - certificate issuance status
 - container logs for Traefik and the app
 
-Do not assume a certificate problem is a SoulFire application problem.
+Do not assume a certificate problem is a Soulfire application problem.
 
 ## If Docker is the failing layer
 
@@ -81,7 +81,7 @@ After the basic login works, enable proxies, automation, and external integratio
 
 ## If POV or inventory images fail
 
-SoulFire bundles the Vulkan loader and Mesa lavapipe, so a display server and system Vulkan packages are not required.
+Soulfire bundles the Vulkan loader and Mesa lavapipe, so a display server and system Vulkan packages are not required.
 Compatible GPU drivers provide hardware acceleration. Containers require explicit GPU access to use hardware rendering.
 Linux native packages target glibc. Use a glibc-based image rather than Alpine's musl runtime.
 The bundled macOS runtime requires macOS 15 or newer.
@@ -103,7 +103,7 @@ Do not use `/mcp`, `/webdav`, or `/docs` as the normal client login address.
 
 ## If links and related endpoints look wrong
 
-SoulFire uses the public server address to create links and related endpoints.
+Soulfire uses the public server address to create links and related endpoints.
 
 If related URLs are wrong, make sure that the public server address is correct.
 

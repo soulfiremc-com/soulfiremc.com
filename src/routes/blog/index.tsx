@@ -21,9 +21,9 @@ const blogIndexLoader = createServerFn({ method: "GET" }).handler(async () => {
 
 export const Route = createFileRoute("/blog/")({
   head: () => {
-    const title = "Blog - SoulFire";
+    const title = "Blog - Soulfire";
     const description =
-      "Latest updates, tutorials, and insights about Minecraft bot testing, server stress testing, and SoulFire development.";
+      "Latest updates, tutorials, and insights about Minecraft bot testing, server stress testing, and Soulfire development.";
 
     return {
       meta: getPageMeta({
@@ -31,7 +31,7 @@ export const Route = createFileRoute("/blog/")({
         description,
         path: "/blog",
         imageUrl: "/og/site/blog/image.webp",
-        imageAlt: "SoulFire blog preview",
+        imageAlt: "Soulfire blog preview",
       }),
       links: getCanonicalLinks("/blog"),
       scripts: [
@@ -67,7 +67,7 @@ function BlogIndexPage() {
         <div className="mb-12">
           <h1 className="mb-4 text-4xl font-bold sm:text-5xl">Blog</h1>
           <p className="text-lg text-muted-foreground sm:text-xl">
-            Latest updates, tutorials, and insights from the SoulFire team
+            Latest updates, tutorials, and insights from the Soulfire team
           </p>
         </div>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">

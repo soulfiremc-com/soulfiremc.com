@@ -219,11 +219,11 @@ Then move to simulated attacks. Start small -- 10 bots over 60 seconds -- and es
 
 Don't skip false positive testing either. Multiple players behind the same router, players on VPNs, players with flaky connections that cause rapid reconnects. If any of those get blocked, you need to loosen your thresholds or add whitelist exceptions.
 
-### Using SoulFire for Testing
+### Using Soulfire for Testing
 
-SoulFire is built on Fabric and runs actual Minecraft client code, which makes it ideal for anti-bot testing. Your protection can't tell SoulFire apart from a real client by checking for protocol quirks. That's the whole point -- your tests should look like real attacks.
+Soulfire is built on Fabric and runs actual Minecraft client code, which makes it ideal for anti-bot testing. Your protection can't tell Soulfire apart from a real client by checking for protocol quirks. That's the whole point -- your tests should look like real attacks.
 
-Useful SoulFire plugins for testing:
+Useful Soulfire plugins for testing:
 
 - **server-list-bypass**: Tests whether your server-list check actually catches bots that skip the ping step
 - **anti-afk**: Generates random movement to test behavioral analysis
@@ -266,4 +266,4 @@ fi
 
 Track these metrics over time: blocks per hour, attack frequency, detection speed, and TPS during attacks versus baseline. Also keep an eye on how often you're manually whitelisting false positives -- if that number keeps growing, it's time to dial back your thresholds.
 
-The best anti-bot setup is one you've actually tested, not one you copied from a guide and hoped for the best. Clone your server, throw SoulFire at it, tune your configs, and re-test after every change. That's it.
+The best anti-bot setup is one you've actually tested, not one you copied from a guide and hoped for the best. Clone your server, throw Soulfire at it, tune your configs, and re-test after every change. That's it.

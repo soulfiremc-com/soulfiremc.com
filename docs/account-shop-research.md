@@ -12,8 +12,8 @@ Temporary Game Pass access, offline accounts, cape codes, and name-only offers d
 Eldorado, G2G, and GameBoost therefore show **Varies by seller**.
 Their entries omit a numeric price for sorting and structured data.
 
-No new entry has a SoulFire affiliate, partner, official integration, or high-quality badge.
-A public affiliate program does not establish a relationship with SoulFire.
+No new entry has a Soulfire affiliate, partner, official integration, or high-quality badge.
+A public affiliate program does not establish a relationship with Soulfire.
 Instant delivery applies only to FastAlts, whose public product and policy pages describe automatic stock delivery.
 The other catalogs include external checkout or seller-dependent delivery.
 
@@ -126,7 +126,7 @@ The [affiliate program](https://affiliates.eldorado.gg/) advertises a 30-day tra
 It advertises commissions up to 50%, but the public page does not clearly establish the calculation base for that percentage.
 The [affiliate terms](https://affiliates.eldorado.gg/terms-of-service) leave rates and qualifying transactions to the program or dashboard.
 They require approval of promotional channels. Deal comparison and coupon sites require prior written approval.
-That restriction matters for SoulFire's directory before affiliate enrollment.
+That restriction matters for Soulfire's directory before affiliate enrollment.
 
 Buyer API access and affiliate credit on API purchases remain unconfirmed.
 
@@ -213,5 +213,5 @@ Those links are first-party-published destinations, not claims that every extern
 Before changing a price, compare the exact account type and currency with the linked offer.
 Before adding a warranty badge, read the product exclusions and distinguish included coverage from paid upgrades.
 Before adding Discord, verify the invite's guild identity and expiry through Discord's public invite endpoint.
-Before adding affiliate attribution, obtain approved SoulFire links and confirm the directory as an accepted promotional channel.
+Before adding affiliate attribution, obtain approved Soulfire links and confirm the directory as an accepted promotional channel.
 Before implementing purchases, obtain current buyer API documentation, delivery formats, retry behavior, and explicit affiliate attribution rules.

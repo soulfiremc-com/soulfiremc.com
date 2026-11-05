@@ -62,12 +62,12 @@ export function createClientDownloads(
 export function createServerDownloads(version: string): ServerDownload[] {
   return [
     {
-      name: "SoulFire CLI",
+      name: "Soulfire CLI",
       description: "Headless command-line client",
       url: `${GH_SERVER_BASE}/${version}/SoulFireCLI-${version}.jar`,
     },
     {
-      name: "SoulFire Dedicated",
+      name: "Soulfire Dedicated",
       description: "Dedicated server controller",
       url: `${GH_SERVER_BASE}/${version}/SoulFireDedicated-${version}.jar`,
     },

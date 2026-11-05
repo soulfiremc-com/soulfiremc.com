@@ -89,8 +89,8 @@ function Imprint() {
 export const Route = createFileRoute("/imprint")({
   head: () => ({
     meta: getPageMeta({
-      title: "Imprint - SoulFire",
-      description: "SoulFire Legal Notice (Impressum).",
+      title: "Imprint - Soulfire",
+      description: "Soulfire Legal Notice (Impressum).",
       path: "/imprint",
     }),
     links: getCanonicalLinks("/imprint"),

@@ -82,15 +82,15 @@ function DemoVideo() {
           dialogRef.current?.focus();
         }}
       >
-        <DialogTitle className="sr-only">SoulFire walkthrough</DialogTitle>
+        <DialogTitle className="sr-only">Soulfire walkthrough</DialogTitle>
         <DialogDescription className="sr-only">
-          Watch the SoulFire demo on YouTube.
+          Watch the Soulfire demo on YouTube.
         </DialogDescription>
         {open && (
           <iframe
             className="aspect-video w-full"
             src="https://www.youtube-nocookie.com/embed/BD-xE8vbHtQ"
-            title="SoulFire walkthrough"
+            title="Soulfire walkthrough"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
@@ -106,13 +106,13 @@ const capabilities = [
     icon: Box,
     title: "Real Minecraft clients",
     text: "Built on Fabric, so bots use Minecraft's own physics and networking.",
-    link: "How SoulFire works",
+    link: "How Soulfire works",
     path: "concepts",
   },
   {
     icon: Globe2,
     title: "Java and Bedrock",
-    text: "Connect to versions from Classic through the latest release. SoulFire translates the protocol for you.",
+    text: "Connect to versions from Classic through the latest release. Soulfire translates the protocol for you.",
     link: "Supported versions",
     path: "reference/versions",
   },
@@ -226,7 +226,7 @@ function AutomationSection() {
             <div className="terminal-preview">
               <div className="workflow-title">
                 <Terminal className="size-4" />
-                <span>SoulFire CLI</span>
+                <span>Soulfire CLI</span>
                 <span>Example session</span>
               </div>
               <pre>
@@ -372,14 +372,14 @@ export function HomeFrontpage({
                 </h1>
                 <p>
                   Stress test your Minecraft server or automate the repetitive
-                  work. SoulFire bots run real client code, with visual
+                  work. Soulfire bots run real client code, with visual
                   scripting and SDKs.
                 </p>
                 <div className="home-hero-actions">
                   <Button asChild size="lg">
                     <Link to="/download">
                       <Download data-icon="inline-start" />
-                      Download SoulFire
+                      Download Soulfire
                       <ArrowRight data-icon="inline-end" />
                     </Link>
                   </Button>
@@ -523,7 +523,7 @@ export function HomeFrontpage({
                   <Button asChild size="lg">
                     <Link to="/download">
                       <Download data-icon="inline-start" />
-                      Download SoulFire
+                      Download Soulfire
                       <ArrowRight data-icon="inline-end" />
                     </Link>
                   </Button>

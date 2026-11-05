@@ -8,7 +8,7 @@ icon: Activity
 ## Account, bot, and connection
 
 An account is the identity used to log into Minecraft.
-A bot is the SoulFire representation of that account in an instance.
+A bot is the Soulfire representation of that account in an instance.
 A connection is one live Minecraft session for that bot.
 The bot ID can remain stable across reconnects. The session does not.
 
@@ -18,7 +18,7 @@ Requested state records what the backend must try to do, such as keep a bot runn
 Runtime state records what the bot is doing now, such as connecting, connected, or disconnected.
 A running request can coexist with a disconnect and retry delay.
 
-The SoulFire server owns requested state.
+The Soulfire server owns requested state.
 Closing a remote GUI or SDK connection does not automatically request stopped state.
 The SDK's managed setup and `bot.connect()` add scoped ownership.
 They stop bots that the scope starts and leave bots already requested to run running.

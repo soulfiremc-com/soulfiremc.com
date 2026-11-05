@@ -1,7 +1,7 @@
 ---
 title: Command-Line Flags
 sidebarTitle: "CLI flags"
-description: Configure the SoulFire client with command-line flags.
+description: Configure the Soulfire client with command-line flags.
 icon: Flag
 ---
 
@@ -30,12 +30,12 @@ They control bot behavior and the connection between the CLI and server.
 | `--bot-connect-timeout` | `30` | Connect timeout in seconds |
 | `--bot-resolve-srv` | `true` | Try to resolve SRV records from the address |
 | `--bot-concurrent-connects` | `1` | Max amount of bots attempting to connect at once |
-| `--bot-restore-on-reboot` | `true` | Reconnect this bot when SoulFire starts if it was previously desired to be running. |
-| `--bot-ignore-packet-handling-errors` | `true` | Sometimes a bot fails to process a packet. When that happens it disconnects due to "packet errors". When this option is turned on, SoulFire will ignore errors during the packet handling process and keep bots connected. This might cause bots to have inconsistent world state though, so it could be detected by the server. |
+| `--bot-restore-on-reboot` | `true` | Reconnect this bot when Soulfire starts if it was previously desired to be running. |
+| `--bot-ignore-packet-handling-errors` | `true` | Sometimes a bot fails to process a packet. When that happens it disconnects due to "packet errors". When this option is turned on, Soulfire will ignore errors during the packet handling process and keep bots connected. This might cause bots to have inconsistent world state though, so it could be detected by the server. |
 | `--bot-use-io-uring` | `false` | Whether to use IO_URING for bot connections. This can improve performance and reduce CPU usage on Linux systems that support it. Requires a compatible kernel version and Java version. IO_URING won't be used if this option is disabled, your protocol version is bedrock edition or your PC does not support IO_URING. |
 | `--account-shuffle-accounts` | `false` | This setting randomizes account order before bots connect. |
-| `--account-use-proxies-for-account-auth` | `false` | SoulFire uses imported proxies for account authentication. Otherwise, the SoulFire server connects directly. |
-| `--account-account-import-concurrency` | `3` | SoulFire imports no more than this number of accounts at the same time when authentication requires credentials. |
+| `--account-use-proxies-for-account-auth` | `false` | Soulfire uses imported proxies for account authentication. Otherwise, the Soulfire server connects directly. |
+| `--account-account-import-concurrency` | `3` | Soulfire imports no more than this number of accounts at the same time when authentication requires credentials. |
 | `--proxy-bots-per-proxy` | `-1` | Amount of bots that can be on a single proxy |
 | `--proxy-shuffle-proxies` | `false` | This setting randomizes proxy order before bots connect. |
 | `--proxy-sticky-proxies` | `false` | Reuse the last successfully assigned proxy when each bot reconnects |
@@ -55,7 +55,7 @@ They control bot behavior and the connection between the CLI and server.
 | `--pathfinding-expire-timeout` | `180` | Maximum time in seconds before pathfinding gives up |
 | `--ai-chat-bot-enabled` | `false` | Enable the AI Chat Bot |
 | `--ai-chat-bot-prompt` | `You are a Minecraft chat bot, you chat with playe...` | What the bot is instructed to say |
-| `--ai-chat-bot-model` | `nemotron-mini` | SoulFire uses this AI model for inference. |
+| `--ai-chat-bot-model` | `nemotron-mini` | Soulfire uses this AI model for inference. |
 | `--ai-chat-bot-keyword` | `!ai` | Only respond to messages containing this keyword |
 | `--ai-chat-bot-filter-keyword` | `true` | Filter out the keyword from messages sent by the AI |
 | `--ai-chat-bot-history-length` | `10` | Max number of messages to keep in the conversation history |
@@ -92,9 +92,9 @@ They control bot behavior and the connection between the CLI and server.
 | `--auto-totem-delay-max` | `2` | Maximum delay between using totems |
 | `--captcha-solver-enabled` | `false` | Enable the Captcha Solver |
 | `--captcha-solver-prompt` | `Extract the text from the CAPTCHA image. Only res...` | What the bots instruction is |
-| `--captcha-solver-model` | `llava` | SoulFire uses this AI model to detect text in the CAPTCHA image. |
-| `--captcha-solver-response-command` | `%s` | SoulFire runs this command with the response. Without /, SoulFire sends a chat message. |
-| `--captcha-solver-image-source` | `MAP_IN_HAND` | SoulFire gets CAPTCHA images from this source. |
+| `--captcha-solver-model` | `llava` | Soulfire uses this AI model to detect text in the CAPTCHA image. |
+| `--captcha-solver-response-command` | `%s` | Soulfire runs this command with the response. Without /, Soulfire sends a chat message. |
+| `--captcha-solver-image-source` | `MAP_IN_HAND` | Soulfire gets CAPTCHA images from this source. |
 | `--captcha-solver-captcha-trigger` | `CHAT_MESSAGE` | What triggers the captcha solver |
 | `--captcha-solver-text-trigger` | `/captcha` | Text that must be contained in the message to trigger image-based captcha solving |
 | `--captcha-solver-captcha-regex` | `/captcha (\w+)` | Regex pattern with a capturing group to extract the captcha text from the message |
@@ -102,7 +102,7 @@ They control bot behavior and the connection between the CLI and server.
 | `--captcha-solver-pov-render-height` | `480` | Height of the POV render image in pixels |
 | `--chat-logger-enabled` | `true` | Log all received chat messages to the terminal |
 | `--chat-logger-log-death-messages` | `true` | Log all death messages to the terminal |
-| `--chat-logger-deduplicate-amount` | `1` | SoulFire logs the same message no more than this number of times within five seconds. |
+| `--chat-logger-deduplicate-amount` | `1` | Soulfire logs the same message no more than this number of times within five seconds. |
 | `--client-brand-enabled` | `true` | Send client brand to the server |
 | `--client-brand-client-brand` | `vanilla` | The client brand to send to the server |
 | `--client-settings-enabled` | `true` | Send client settings to the server when joining |
@@ -122,7 +122,7 @@ They control bot behavior and the connection between the CLI and server.
 | `--client-settings-allows-listing` | `true` | Whether the client wants their username to be shown in the server list |
 | `--client-settings-particle-status` | `MINIMAL` | How many particles the client will render |
 | `--disconnect-logger-enabled` | `true` | Log all bot disconnects to the terminal |
-| `--disconnect-logger-deduplicate-amount` | `1` | SoulFire logs the same disconnect message no more than this number of times within five seconds. |
+| `--disconnect-logger-deduplicate-amount` | `1` | Soulfire logs the same disconnect message no more than this number of times within five seconds. |
 | `--fake-virtual-host-enabled` | `false` | Whether to fake the virtual host or not |
 | `--fake-virtual-host-hostname` | `localhost` | The hostname to fake |
 | `--fake-virtual-host-port` | `25565` | The port to fake |
@@ -141,7 +141,7 @@ They control bot behavior and the connection between the CLI and server.
 | `--forwarding-bypass-enabled` | `false` | Enable the forwarding bypass |
 | `--forwarding-bypass-forwarding-mode` | `LEGACY` | What type of forwarding to use |
 | `--forwarding-bypass-secret` | `forwarding secret` | Secret key used for forwarding. (Not needed for legacy mode) |
-| `--forwarding-bypass-player-address` | `127.0.0.1` | SoulFire uses this value as the player IP. Only some forwarding modes use this setting. |
+| `--forwarding-bypass-player-address` | `127.0.0.1` | Soulfire uses this value as the player IP. Only some forwarding modes use this setting. |
 
 ## How to generate this list
 

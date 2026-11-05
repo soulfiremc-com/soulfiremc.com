@@ -1,7 +1,7 @@
 ---
 title: Durable tasks
 sidebarTitle: "Durable tasks"
-description: Start, observe, cancel, and reconnect to long-running SoulFire bot work.
+description: Start, observe, cancel, and reconnect to long-running Soulfire bot work.
 icon: ListChecks
 ---
 
@@ -9,7 +9,7 @@ import { Cards, Card } from 'fumadocs-ui/components/card';
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from '../../../../../../src/components/mdx/sdk-tabs';
 
-A durable task runs on the SoulFire server.
+A durable task runs on the Soulfire server.
 A detached task can continue after the SDK disconnects while its backend and bot remain available.
 Managed installation closes the local backend at scope exit.
 Scoped bot connection also stops bots started by that scope.
@@ -133,5 +133,5 @@ Store the task ID returned by `start`. A later SDK process can call
 revisions.
 
 Use an idempotency key when retrying task creation after an uncertain network
-failure. SoulFire returns the existing task when the owner, bot, key, and input
+failure. Soulfire returns the existing task when the owner, bot, key, and input
 match.

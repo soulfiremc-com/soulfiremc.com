@@ -161,9 +161,9 @@ For the first 24 hours, track the numbers that matter: peak concurrent players, 
 
 During the first week, dig into what actually happened. Which plugins threw errors? Where did players get stuck or confused? Did the economy hold up or did someone find an exploit on day two? Fix things fast. The first week sets the tone for everything that follows.
 
-## Using SoulFire for Load Testing
+## Using Soulfire for Load Testing
 
-Testing features by hand is fine, but it won't tell you the one thing that actually matters: can your server survive 100 players joining at once? SoulFire runs actual Fabric client code, so bots behave like real players at the protocol level. Your server can't tell the difference.
+Testing features by hand is fine, but it won't tell you the one thing that actually matters: can your server survive 100 players joining at once? Soulfire runs actual Fabric client code, so bots behave like real players at the protocol level. Your server can't tell the difference.
 
 Configure a launch simulation: 100 bots joining over 10 minutes (10 per minute), with Auto-Respawn, Anti-AFK, and Auto-Reconnect enabled. Let it run for 2 hours while monitoring with Spark and watching the console for errors.
 

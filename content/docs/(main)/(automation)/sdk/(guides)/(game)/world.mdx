@@ -45,7 +45,7 @@ Use it for lookups, searches, raycasts, entity inspection, and combat planning.
   </Tab>
 </Tabs>
 
-An `EntityReference` contains a network ID and connection epoch. SoulFire
+An `EntityReference` contains a network ID and connection epoch. Soulfire
 rejects a reference from an earlier connection instead of accidentally
 targeting a different entity that reused the same numeric ID.
 
@@ -139,7 +139,7 @@ preserves drops.
 ## Estimate explosion damage
 
 Explosion estimation samples the target's visible bounding-box volume using
-Minecraft's own block exposure algorithm. SoulFire then reports each
+Minecraft's own block exposure algorithm. Soulfire then reports each
 mitigation stage separately.
 
 ```ts
@@ -194,7 +194,7 @@ line-of-sight requirements. Block searches accept sphere or box regions.
 Entity searches accept type, tag, category, health, equipment, effect,
 ownership, player-name, and liveness filters.
 
-SoulFire bounds query radius, volume, and page size so one SDK request cannot
+Soulfire bounds query radius, volume, and page size so one SDK request cannot
 stall a bot. For continuous observation, subscribe to
 [live events](/docs/sdk/events) and keep the session indexes instead of
 repeating large scans.

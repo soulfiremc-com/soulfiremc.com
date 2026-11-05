@@ -1,7 +1,7 @@
 ---
 title: Architecture And Protocols
 sidebarTitle: "Architecture and protocols"
-description: Learn how SoulFire starts, loads plugins, manages bots, and processes actions from the GUI or CLI.
+description: Learn how Soulfire starts, loads plugins, manages bots, and processes actions from the GUI or CLI.
 icon: Network
 ---
 
@@ -18,10 +18,10 @@ It explains how a UI or RPC request becomes bot behavior.
 
 ## Runtime layers
 
-SoulFire has these runtime layers:
+Soulfire has these runtime layers:
 
 1. **Bootstrap and launcher** prepare startup, properties, and mixin loading.
-2. **Fabric** loads SoulFire itself as a mod and also loads your external plugin jar as another Fabric mod.
+2. **Fabric** loads Soulfire itself as a mod and also loads your external plugin jar as another Fabric mod.
 3. **SoulFireServer** manages the global server process, settings, auth, RPC server, and instances.
 4. **InstanceManager** manages one separate group of settings, accounts, proxies, metrics, and automation.
 5. **BotStateManager** persists each bot's desired state and reconciles connection attempts.
@@ -30,14 +30,14 @@ SoulFire has these runtime layers:
 
 For plugin authors, the important points are:
 
-- Fabric loads both SoulFire and your plugin jar
-- SoulFire exposes higher-level hooks through events, settings, metadata, and control APIs
+- Fabric loads both Soulfire and your plugin jar
+- Soulfire exposes higher-level hooks through events, settings, metadata, and control APIs
 - the GUI and CLI are thin clients over structured gRPC and proto definitions
-- when you need to go lower, you are following the same path SoulFire itself follows
+- when you need to go lower, you are following the same path Soulfire itself follows
 
 ## Internal plugins versus external plugins
 
-SoulFire has two plugin loading models:
+Soulfire has two plugin loading models:
 
 - **internal plugins** are scanned from `com.soulfiremc.server.plugins` using `@InternalPluginClass`
 - **external plugins** are ordinary Fabric mods that call `SoulFireAPI.loadPlugin(...)` from a `ModInitializer`
@@ -58,7 +58,7 @@ Internal and external plugins use the same event, settings, metadata, and contro
 ## Settings and UI protocol
 
 The GUI and CLI do not hardcode plugin pages.
-Instead, SoulFire exports structured definitions over gRPC:
+Instead, Soulfire exports structured definitions over gRPC:
 
 - `server.proto` exposes server config, setting definitions, pages, and plugins
 - `instance.proto` exposes instance config, setting definitions, pages, and plugins
@@ -68,7 +68,7 @@ After registration, your settings page appears in the GUI and CLI.
 
 ## Bot action protocol
 
-SoulFire's internal action protocol for live bot control is described in `bot.proto`.
+Soulfire's internal action protocol for live bot control is described in `bot.proto`.
 That service includes:
 
 - per-bot desired state, restart, and status streaming
@@ -85,7 +85,7 @@ The important implementation detail is what happens after the RPC call arrives:
 
 1. the request is resolved to an online `BotConnection`
 2. permissions are checked
-3. SoulFire schedules a low-level operation through `BotControlAPI` or direct player and gameMode access
+3. Soulfire schedules a low-level operation through `BotControlAPI` or direct player and gameMode access
 4. control state or sequence tasks drive the actual Minecraft-side behavior
 
 Plugins follow the same process.
@@ -101,7 +101,7 @@ Examples from the current implementation:
 - movement RPCs write to `ControlState`
 - rotation, hotbar, inventory, mouse, and dialog actions typically use `ControlTask.once(...)`
 - multi-step automation uses staged controlling tasks
-- input booleans become real player movement through SoulFire's keyboard input mixin
+- input booleans become real player movement through Soulfire's keyboard input mixin
 
 ## Script protocol
 
@@ -119,7 +119,7 @@ Plugin development is what you use when you need lower-level access than the scr
 
 ## Why Mixins appear in the architecture
 
-SoulFire is built on Fabric and real Minecraft client code.
+Soulfire is built on Fabric and real Minecraft client code.
 That means some of its own public hooks are created by Mixins:
 
 - packet pre-send and pre-receive events
@@ -129,7 +129,7 @@ That means some of its own public hooks are created by Mixins:
 - control-state-driven input
 
 So when you write a plugin Mixin, you are not leaving the architecture.
-You are using the same extension mechanism SoulFire itself uses for its lowest-level integrations.
+You are using the same extension mechanism Soulfire itself uses for its lowest-level integrations.
 
 <Callout type="info">
 To trace behavior, start in the proto file.
@@ -138,7 +138,7 @@ Then read the matching gRPC service and the plugin or Mixin that uses the same A
 
 ## Best places to trace behavior
 
-- [SoulFire source root](https://github.com/soulfiremc-com/SoulFire)
+- [Soulfire source root](https://github.com/soulfiremc-com/SoulFire)
 - [gRPC service implementations](https://github.com/soulfiremc-com/SoulFire/tree/main/mod/src/main/java/com/soulfiremc/server/grpc)
 - [Proto definitions](https://github.com/soulfiremc-com/SoulFire/tree/main/proto/src/main/proto/soulfire)
 - [Built-in plugins](https://github.com/soulfiremc-com/SoulFire/tree/main/mod/src/main/java/com/soulfiremc/server/plugins)

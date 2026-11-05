@@ -1,16 +1,16 @@
 ---
 title: Migrate from Mineflayer
 sidebarTitle: "Migrate from Mineflayer"
-description: Move Mineflayer automation to the SoulFire SDK.
+description: Move Mineflayer automation to the Soulfire SDK.
 icon: Replace
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from '../../../../../../src/components/mdx/sdk-tabs';
 
-SoulFire and Mineflayer solve many of the same automation problems.
-SoulFire uses a server-managed SDK and does not copy the Mineflayer API.
-Map each Mineflayer concept to the native SoulFire object model.
+Soulfire and Mineflayer solve many of the same automation problems.
+Soulfire uses a server-managed SDK and does not copy the Mineflayer API.
+Map each Mineflayer concept to the native Soulfire object model.
 This model provides durable tasks, reconnect-safe state, fleets, permissions, and typed plugin APIs.
 
 The parity audit tracks all 306 headings in the
@@ -27,10 +27,10 @@ reference.
 | Native | 201 | Direct protocol API, SDK operation, retained state, or semantic event |
 | Different semantics | 50 | The capability is server-authoritative instead of a mutable in-process object |
 | Server task | 17 | Multi-tick work runs durably near the game loop |
-| SDK convenience | 17 | A language-native helper composes stable SoulFire operations |
+| SDK convenience | 17 | A language-native helper composes stable Soulfire operations |
 | Plugin extension | 12 | A typed, permissioned plugin contract owns the specialized feature |
 | Raw protocol | 6 | Packet-exact behavior uses the audited low-level escape hatch |
-| Intentionally unsupported | 3 | SoulFire does not inject arbitrary JavaScript into its server process |
+| Intentionally unsupported | 3 | Soulfire does not inject arbitrary JavaScript into its server process |
 
 The [machine-readable parity matrix](https://github.com/soulfiremc-com/SoulFire/blob/main/docs/mineflayer-parity.json)
 records the source heading count and digest for that audit.
@@ -38,14 +38,14 @@ It is a dated comparison, not an automatic CI compatibility gate.
 
 ## Start with the object model
 
-| Mineflayer concept | SoulFire equivalent |
+| Mineflayer concept | Soulfire equivalent |
 | --- | --- |
 | Bot construction | `SoulFire.createBot({ server, username })` or Python `SoulFire.create_bot(server=..., username=...)` |
 | Mutable `bot.world` | `bot.world` snapshots and bounded queries |
 | EventEmitter state | `bot.events()` or synchronized `bot.observe()` |
 | Movement plugin | `bot.pathfinder` and durable `bot.tasks` |
 | Inventory windows | `bot.inventory` and scoped container handles |
-| Runtime plugin injection | Installed SoulFire plugins with typed SDK companions |
+| Runtime plugin injection | Installed Soulfire plugins with typed SDK companions |
 | Raw packet access | Permissioned `bot.protocol` schema, send, and watch APIs |
 
 `BotSession` retains entities, blocks, inventory, player-list entries, weather,
@@ -58,7 +58,7 @@ Existing IDs remain available through `client.instance(id).bot(id)`.
 
 ## Replace event listeners
 
-Mineflayer listeners run inside the Minecraft client process. SoulFire streams
+Mineflayer listeners run inside the Minecraft client process. Soulfire streams
 ordered event envelopes over the SDK and can resume after a transient
 transport failure.
 
@@ -102,7 +102,7 @@ higher event volume.
 
 ## Replace direct actions
 
-| Mineflayer operation | SoulFire API |
+| Mineflayer operation | Soulfire API |
 | --- | --- |
 | `bot.chat`, `bot.whisper`, tab completion | `bot.chat.send`, `whisper`, `complete` |
 | `blockAt`, `findBlocks`, cursor checks | `bot.world.block`, `queryBlocks`, `raycast` |
@@ -142,7 +142,7 @@ time-sensitive execution and behaviors for application-level orchestration.
 
 ## Replace Mineflayer plugins
 
-A SoulFire plugin runs on the server and declares its public contract. It can
+A Soulfire plugin runs on the server and declares its public contract. It can
 publish:
 
 - Unary and server-streaming RPCs through the stable web transport.
@@ -155,7 +155,7 @@ a typed companion module for normal use, or invoke a descriptor reflectively
 when building generic tooling.
 
 <Callout type="warning">
-  The SDK cannot load arbitrary JavaScript into the SoulFire server process.
+  The SDK cannot load arbitrary JavaScript into the Soulfire server process.
   Install a reviewed server plugin, grant its declared permissions, and call
   its typed SDK surface instead.
 </Callout>
@@ -168,7 +168,7 @@ domain model. It requires a separate dangerous permission and enforces packet
 size and rate limits.
 
 If a packet-level experiment becomes common application logic, move it into a
-SoulFire plugin and publish a semantic RPC or task contract. That keeps
+Soulfire plugin and publish a semantic RPC or task contract. That keeps
 Minecraft version details close to the server and gives SDK callers a stable,
 typed API.
 

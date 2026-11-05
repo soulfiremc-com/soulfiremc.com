@@ -58,7 +58,7 @@ the compatible menu is already open.
 ## Trade with a villager
 
 Open the villager menu with `bot.interactEntity` before inspecting or
-executing trades. SoulFire reads the live merchant offers, including adjusted
+executing trades. Soulfire reads the live merchant offers, including adjusted
 costs, uses, stock, experience, demand, and price data.
 
 <Tabs items={['TypeScript', 'Python']}>
@@ -145,7 +145,7 @@ menu slots:
 Use `stash` to move items from the player inventory into the container and
 `withdraw` for the opposite direction. Selectors support IDs, tags,
 fingerprints, names, enchantments, stack counts, and remaining durability.
-Each exact operation must be fully satisfiable. SoulFire preflights the whole
+Each exact operation must be fully satisfiable. Soulfire preflights the whole
 batch before sending any menu click, so a later exact operation cannot leave
 earlier operations applied. Set `allowPartial` or `allow_partial` on an
 operation when best-effort movement is intentional.
@@ -209,7 +209,7 @@ loadout = yield from bot.tasks.maintain_loadout(
 
 The unbounded form keeps monitoring until cancellation. Use
 `balanceLoadout` or `balance_loadout` for a one-shot rebalance, or set a
-finite rebalance limit. SoulFire plans each transfer batch before it moves
+finite rebalance limit. Soulfire plans each transfer batch before it moves
 items. A temporarily empty chest returns a typed container-exhausted result
 without corrupting menu state. Results report final counts, whether each requirement is satisfied,
 and cumulative withdrawn and deposited counts.

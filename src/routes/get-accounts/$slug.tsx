@@ -216,7 +216,7 @@ function getAccountDetailPageData({
     },
     isPartOf: {
       "@type": "WebSite",
-      name: "SoulFire",
+      name: "Soulfire",
       url: "https://soulfiremc.com",
     },
   };

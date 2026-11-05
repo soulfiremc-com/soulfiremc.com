@@ -45,7 +45,7 @@ def program() -> EffectGen[None, SoulFireOperationError, Scope]:
     )
     bot = client.instance("instance-uuid").bot("bot-uuid")
     yield from bot.connect()
-    yield from bot.chat.send("Hello from SoulFire")
+    yield from bot.chat.send("Hello from Soulfire")
 
 
 asyncio.run(run_async(scoped(program).or_die()))

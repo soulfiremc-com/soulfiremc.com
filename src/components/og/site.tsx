@@ -72,7 +72,7 @@ function Header({
             letterSpacing: "-0.03em",
           }}
         >
-          SoulFire
+          Soulfire
         </div>
         <div
           style={{
@@ -623,7 +623,7 @@ export function DownloadOgImage({ version }: { version?: string }) {
       section="Distribution"
       path="site/download"
       accent={theme.orange}
-      title="Download SoulFire"
+      title="Download Soulfire"
       description="Native installers for every platform, with desktop and server workflows ready out of the box."
       titleSize={96}
       footer={["Windows", "macOS", "Linux"]}

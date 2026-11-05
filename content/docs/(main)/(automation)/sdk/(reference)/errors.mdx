@@ -1,14 +1,14 @@
 ---
 title: Errors, retries, and cancellation
 sidebarTitle: "Errors and retries"
-description: Handle SoulFire errors without losing information that helps you find the cause.
+description: Handle Soulfire errors without losing information that helps you find the cause.
 icon: TriangleAlert
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from '../../../../../../src/components/mdx/sdk-tabs';
 
-SoulFire separates transport errors, rejected game actions, and failed tasks.
+Soulfire separates transport errors, rejected game actions, and failed tasks.
 The error type tells the application whether to retry, change input, inspect progress, or request permission.
 
 ## Error families
@@ -101,7 +101,7 @@ Retry only when both conditions hold:
 - The error reports `retryable`.
 - Repeating the operation cannot duplicate a game-side mutation.
 
-Use an idempotency key for supported mutations and task starts. SoulFire
+Use an idempotency key for supported mutations and task starts. Soulfire
 stores the completed response for the key within its bounded retention window.
 A retry with the same key receives the original result instead of repeating
 the action.

@@ -139,7 +139,7 @@ async function generateUniqueUsername() {
 }
 
 export const auth = betterAuth({
-  appName: "SoulFire",
+  appName: "Soulfire",
   baseURL: "https://soulfiremc.com",
   secret: process.env.BETTER_AUTH_SECRET ?? "",
   database: drizzleAdapter(db, {
@@ -258,7 +258,7 @@ export const auth = betterAuth({
     oauthPopup(),
     emailHarmony(),
     twoFactor({
-      issuer: "SoulFire",
+      issuer: "Soulfire",
       otpOptions: {
         period: TWO_FACTOR_OTP_EXPIRATION_MINUTES,
         storeOTP: "hashed",

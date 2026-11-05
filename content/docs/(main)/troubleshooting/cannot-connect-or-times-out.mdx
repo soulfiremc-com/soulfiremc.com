@@ -11,12 +11,12 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 First, identify which connection fails:
 
-1. your GUI or CLI cannot connect to the SoulFire server
-2. SoulFire is running, but the bots cannot stay connected to the target Minecraft server
+1. your GUI or CLI cannot connect to the Soulfire server
+2. Soulfire is running, but the bots cannot stay connected to the target Minecraft server
 
 Use the matching section below.
 
-## If the GUI or CLI cannot connect to the SoulFire server
+## If the GUI or CLI cannot connect to the Soulfire server
 
 ### Make sure that the server URL is correct
 
@@ -53,7 +53,7 @@ If you deliberately chose HTTP-only mode, remember that some setups behave bette
 An open documentation page does not prove that client login works.
 Test a normal GUI or CLI login with a new token.
 
-## If the bots connect to SoulFire but time out on the target Minecraft server
+## If the bots connect to Soulfire but time out on the target Minecraft server
 
 ### Remove proxies first
 
@@ -79,7 +79,7 @@ Make sure that these values are correct:
 - connect/read/write timeout values
 
 If local servers also fail, do not assume the remote target is the problem.
-This result points to a configuration error or SoulFire regression.
+This result points to a configuration error or Soulfire regression.
 
 ### Review the server login requirements
 
@@ -120,7 +120,7 @@ If that works, add the layers back one at a time.
 
 ## What to capture before you report it
 
-- exact SoulFire version
+- exact Soulfire version
 - exact timeout or disconnect text
 - whether `localhost` also fails
 - whether the issue happens with proxies disabled
@@ -135,6 +135,6 @@ If that works, add the layers back one at a time.
 - [CLI Flags](/docs/reference/cli-flags)
 
 <Callout type="info">
-  If the timeout started after an update, record the old and new SoulFire versions.
+  If the timeout started after an update, record the old and new Soulfire versions.
   This information helps developers reproduce a regression.
 </Callout>

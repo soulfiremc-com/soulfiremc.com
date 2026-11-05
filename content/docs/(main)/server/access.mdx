@@ -7,13 +7,13 @@ icon: KeyRound
 
 ## Generate an API token
 
-Run this command in the SoulFire server console:
+Run this command in the Soulfire server console:
 
 ```text
 generate-token api
 ```
 
-The token uses the permissions of the current SoulFire user.
+The token uses the permissions of the current Soulfire user.
 For a remote client, enter the backend URL and that token.
 Check the identity with `whoami` in the authenticated terminal.
 
@@ -22,7 +22,7 @@ A token from `generate-token webdav` is not an API token.
 
 ## Use HTTPS for remote clients
 
-Terminate HTTPS at a reverse proxy or tunnel in front of SoulFire.
+Terminate HTTPS at a reverse proxy or tunnel in front of Soulfire.
 Use the [automated setup](/docs/server/automated-setup) or the HTTPS examples in [Docker deployment](/docs/server/docker).
 The configured hostname must match the certificate presented to the client.
 
