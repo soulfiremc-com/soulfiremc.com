@@ -314,7 +314,6 @@ export const PROVIDERS: Provider[] = [
     socialLinks: [
       { platform: "email", url: "mailto:support@flameproxies.com" },
       { platform: "x", url: "https://x.com/flameproxies_" },
-      { platform: "discord", url: "https://discord.com/invite/flameproxy" },
       { platform: "telegram", url: "https://t.me/flameproxies" },
     ],
   },
@@ -369,7 +368,6 @@ export const PROVIDERS: Provider[] = [
     socialLinks: [
       { platform: "email", url: "mailto:team@loopway.io" },
       { platform: "discord", url: "https://discord.gg/qrB786CqGf" },
-      { platform: "x", url: "https://x.com/loopwayio" },
     ],
   },
   {
@@ -411,7 +409,7 @@ export const PROVIDERS: Provider[] = [
     logo: "/providers/brightdata.png",
     summary:
       "Market leader with 770K+ datacenter IPs and massive residential network. ISO 27001 & SOC 2 certified with 99.99% uptime.",
-    url: "https://get.brightdata.com/soulfire?utm_source=get-proxies&utm_campaign=soulfire",
+    url: "https://brightdata.com/?utm_source=get-proxies&utm_campaign=soulfire",
     badges: [
       "bedrock-udp",
       "enterprise",

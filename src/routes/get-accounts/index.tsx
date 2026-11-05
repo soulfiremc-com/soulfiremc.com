@@ -955,16 +955,8 @@ function GetAccountsClient() {
 
       <div className="mx-auto flex max-w-5xl flex-col gap-2 border-t pt-6 text-center">
         <p className="text-sm text-muted-foreground">
-          <strong>Source:</strong> Provider list curated from{" "}
-          <a
-            href="https://alts.watchdog.gay"
-            target="_blank"
-            rel="noopener nofollow"
-            className="underline hover:text-foreground"
-          >
-            alts.watchdog.gay
-          </a>
-          . Rankings based on community feedback and value.
+          <strong>Source:</strong> Provider list originally curated from
+          alts.watchdog.gay. Rankings based on community feedback and value.
         </p>
         <p className="text-sm text-muted-foreground">
           <strong>Disclaimer:</strong> SoulFire does not own or operate these

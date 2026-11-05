@@ -481,7 +481,6 @@ export const SHOPS: Shop[] = [
     logo: "/accounts/nicealts.png",
     url: "https://nicealts.com",
     websiteUrl: "https://nicealts.com",
-    discordUrl: "https://discord.gg/QdFhNQ5rcv",
     trustpilotUrl: "https://www.trustpilot.com/review/nicealts.com",
     paymentMethods: [
       "Card",

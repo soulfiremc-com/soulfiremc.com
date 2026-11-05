@@ -133,7 +133,7 @@ function PrivacyPolicy() {
           ratings and reviews, to prevent automated abuse. For more information,
           see Cloudflare&apos;s{" "}
           <a
-            href="https://www.cloudflare.com/trust-hub/turnstile-privacy-addendum/"
+            href="https://www.cloudflare.com/turnstile-privacy-policy/"
             target="_blank"
             rel="noopener noreferrer"
           >

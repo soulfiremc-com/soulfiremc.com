@@ -7,7 +7,7 @@ function Imprint() {
     <main className="px-4 py-12 w-full max-w-(--fd-layout-width) mx-auto prose">
       <h1>Imprint (Impressum)</h1>
       <p>
-        <strong>Last updated:</strong> March 2, 2026
+        <strong>Last updated:</strong> November 5, 2026
       </p>
 
       <p>
@@ -55,19 +55,10 @@ function Imprint() {
         Germany
       </address>
 
-      <h2>EU Dispute Resolution</h2>
+      <h2>Consumer Dispute Resolution</h2>
       <p>
-        The European Commission provides a platform for online dispute
-        resolution (ODR):{" "}
-        <a
-          href="https://ec.europa.eu/consumers/odr/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          https://ec.europa.eu/consumers/odr/
-        </a>
-        . We are neither willing nor obliged to participate in dispute
-        resolution proceedings before a consumer arbitration board.
+        We are neither willing nor obliged to participate in dispute resolution
+        proceedings before a consumer arbitration board.
       </p>
 
       <h2>Related Legal Documents</h2>
