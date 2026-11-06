@@ -1,6 +1,7 @@
 import { readdirSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { cloudflare } from "@cloudflare/vite-plugin";
+import posthog from "@posthog/rollup-plugin";
 import tailwindcss from "@tailwindcss/vite";
 import { devtools } from "@tanstack/devtools-vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
@@ -20,7 +21,7 @@ const securityHeaders = {
   "X-Content-Type-Options": "nosniff",
 };
 const sitemapHost = "https://soulfiremc.com";
-export default defineConfig(() => ({
+export default defineConfig(({ command }) => ({
   define: {
     "import.meta.env.VITE_APP_VERSION": JSON.stringify(
       process.env.VITE_APP_VERSION?.trim() ||
@@ -85,6 +86,29 @@ export default defineConfig(() => ({
       },
     }),
     react(),
+    ...(command === "build" && process.env.POSTHOG_PERSONAL_API_KEY
+      ? [
+          {
+            ...posthog({
+              personalApiKey: process.env.POSTHOG_PERSONAL_API_KEY,
+              projectId: "101553",
+              host: "https://eu.posthog.com",
+              sourcemaps: {
+                enabled: true,
+                releaseName: "soulfiremc.com",
+                releaseVersion:
+                  process.env.GITHUB_SHA ??
+                  execFileSync("git", ["rev-parse", "HEAD"], {
+                    encoding: "utf8",
+                  }).trim(),
+                deleteAfterUpload: false,
+              },
+            }),
+            applyToEnvironment: (environment: { name: string }) =>
+              environment.name === "client",
+          },
+        ]
+      : []),
   ],
   server: {
     headers: securityHeaders,

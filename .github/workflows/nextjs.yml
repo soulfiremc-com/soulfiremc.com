@@ -45,3 +45,8 @@ jobs:
 
       - name: Run tests
         run: bun run test
+
+      - name: Build website and upload source maps
+        env:
+          POSTHOG_PERSONAL_API_KEY: ${{ github.event_name == 'push' && secrets.POSTHOG_PERSONAL_API_KEY || '' }}
+        run: bun run build
