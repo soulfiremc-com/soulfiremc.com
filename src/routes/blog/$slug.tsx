@@ -1,9 +1,9 @@
+import { Schema } from "effect";
 import { discordEmbedScript } from "@/lib/discord-embed";
 import browserCollections from "fumadocs-mdx:collections/browser";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { Suspense } from "react";
-import * as z from "zod";
 import { SiteShell } from "@/components/site-shell";
 import { getBlogPostData } from "@/lib/blog";
 import { getBlogPageImage } from "@/lib/og";
@@ -18,7 +18,11 @@ import {
 import { getMDXComponents } from "@/mdx-components";
 
 const blogPostLoader = createServerFn({ method: "GET" })
-  .validator(z.object({ slug: z.string().min(1) }))
+  .validator(
+    Schema.toStandardSchemaV1(
+      Schema.Struct({ slug: Schema.String.check(Schema.isMinLength(1)) }),
+    ),
+  )
   .handler(async ({ data }) => {
     const post = await getBlogPostData(data.slug);
     if (!post) {

@@ -1,3 +1,4 @@
+import { Schema, Effect, Option } from "effect";
 import { usePrerenderedSearch } from "@/hooks/use-prerendered-search";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import {
@@ -15,7 +16,6 @@ import {
   Star,
 } from "lucide-react";
 import { Suspense, useMemo, useState } from "react";
-import { z } from "zod";
 import { CouponCode } from "@/components/coupon-code";
 import { Image } from "@/components/image";
 import { PaymentMethods } from "@/components/payment-methods";
@@ -158,9 +158,13 @@ const BADGES = [
 
 const SORT_OPTIONS = ["default", "best-rated"] as const;
 
-const proxiesSearchSchema = z.object({
-  badges: z.array(z.enum(BADGES)).catch([]).default([]),
-  sort: z.enum(SORT_OPTIONS).catch("default").default("default"),
+const proxiesSearchSchema = Schema.Struct({
+  badges: Schema.mutable(Schema.Array(Schema.Literals(BADGES)))
+    .pipe(Schema.catchDecoding(() => Effect.succeed(Option.some([]))))
+    .pipe(Schema.withDecodingDefaultType(Effect.succeed([]))),
+  sort: Schema.Literals(SORT_OPTIONS)
+    .pipe(Schema.catchDecoding(() => Effect.succeed(Option.some("default"))))
+    .pipe(Schema.withDecodingDefaultType(Effect.succeed("default"))),
 });
 
 const SORT_CONFIG = {
@@ -317,7 +321,7 @@ function MainContent() {
     useReviews("proxy", proxyReviewSlugs);
   const { badges, sort } = usePrerenderedSearch(
     Route.useSearch(),
-    proxiesSearchSchema.parse({}),
+    Schema.decodeUnknownSync(proxiesSearchSchema)({}),
   );
   const navigate = Route.useNavigate();
 
@@ -703,7 +707,7 @@ const proxiesPageData = (() => {
 })();
 
 export const Route = createFileRoute("/get-proxies/")({
-  validateSearch: proxiesSearchSchema,
+  validateSearch: Schema.toStandardSchemaV1(proxiesSearchSchema),
   search: {
     middlewares: [stripSearchParams({ badges: [], sort: "default" })],
   },

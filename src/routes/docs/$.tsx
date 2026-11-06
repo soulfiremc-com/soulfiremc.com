@@ -1,3 +1,4 @@
+import { Schema } from "effect";
 import { discordEmbedScript } from "@/lib/discord-embed";
 import browserCollections from "fumadocs-mdx:collections/browser";
 import {
@@ -18,7 +19,6 @@ import {
   DocsTitle,
 } from "fumadocs-ui/page";
 import { Suspense } from "react";
-import * as z from "zod";
 import { APIPage } from "@/components/api-page";
 import { EnderDashSponsor } from "@/components/enderdash-sponsor";
 import { Feedback } from "@/components/feedback";
@@ -43,7 +43,7 @@ import {
 import { getSource } from "@/lib/source";
 import { getMDXComponents } from "@/mdx-components";
 
-const docsSlugsInputSchema = z.array(z.string());
+const docsSlugsInputSchema = Schema.mutable(Schema.Array(Schema.String));
 
 type BaseDocsLoaderData = {
   description?: string;
@@ -70,7 +70,7 @@ type DocsLoaderData = DocsPageLoaderData | OpenApiPageLoaderData;
 const serverLoader = createServerFn({
   method: "GET",
 })
-  .validator(docsSlugsInputSchema)
+  .validator(Schema.toStandardSchemaV1(docsSlugsInputSchema))
   .handler(async ({ data: slugs }) => {
     const source = await getSource();
     const page = source.getPage(slugs);

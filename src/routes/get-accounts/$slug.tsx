@@ -1,3 +1,4 @@
+import { Schema } from "effect";
 import { discordEmbedScript } from "@/lib/discord-embed";
 import { SiDiscord, SiTrustpilot } from "@icons-pack/react-simple-icons";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
@@ -335,7 +336,7 @@ function SocialLinks({
 }
 
 export const Route = createFileRoute("/get-accounts/$slug")({
-  validateSearch: reviewsSearchSchema,
+  validateSearch: Schema.toStandardSchemaV1(reviewsSearchSchema),
   search: {
     middlewares: [stripSearchParams({ reviewsPage: 1 })],
   },

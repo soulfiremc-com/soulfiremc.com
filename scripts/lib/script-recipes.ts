@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { Schema } from "effect";
 import type { NodePort } from "./java-metadata";
 
 export type CatalogNode = {
@@ -7,35 +7,40 @@ export type CatalogNode = {
   inputs: NodePort[];
   outputs: NodePort[];
 };
-const recipeSchema = z.object({
-  version: z.literal(1),
-  name: z.string().min(1),
-  description: z.string(),
-  paused: z.literal(true),
-  nodes: z
-    .array(
-      z.object({
-        id: z.string().min(1),
-        type: z.string().min(1),
-        position: z.object({ x: z.number().finite(), y: z.number().finite() }),
-        data: z.record(z.string(), z.unknown()),
+const recipeSchema = Schema.Struct({
+  version: Schema.Literal(1),
+  name: Schema.String.check(Schema.isMinLength(1)),
+  description: Schema.String,
+  paused: Schema.Literal(true),
+  nodes: Schema.mutable(
+    Schema.Array(
+      Schema.Struct({
+        id: Schema.String.check(Schema.isMinLength(1)),
+        type: Schema.String.check(Schema.isMinLength(1)),
+        position: Schema.Struct({
+          x: Schema.Finite.check(Schema.isFinite()),
+          y: Schema.Finite.check(Schema.isFinite()),
+        }),
+        data: Schema.Record(Schema.String, Schema.Unknown),
       }),
-    )
-    .min(1),
-  edges: z.array(
-    z.object({
-      id: z.string().min(1),
-      source: z.string(),
-      target: z.string(),
-      sourceHandle: z.string(),
-      targetHandle: z.string(),
-    }),
+    ),
+  ).check(Schema.isMinLength(1)),
+  edges: Schema.mutable(
+    Schema.Array(
+      Schema.Struct({
+        id: Schema.String.check(Schema.isMinLength(1)),
+        source: Schema.String,
+        target: Schema.String,
+        sourceHandle: Schema.String,
+        targetHandle: Schema.String,
+      }),
+    ),
   ),
 });
 
 /** Validate the structural contract of small, acyclic documentation recipes. */
 export function validateRecipe(value: unknown, catalog: CatalogNode[]) {
-  const recipe = recipeSchema.parse(value);
+  const recipe = Schema.decodeUnknownSync(recipeSchema)(value);
   const nodes = new Map(recipe.nodes.map((node) => [node.id, node]));
   if (nodes.size !== recipe.nodes.length) throw new Error("Duplicate node ID");
   if (new Set(recipe.edges.map((edge) => edge.id)).size !== recipe.edges.length)

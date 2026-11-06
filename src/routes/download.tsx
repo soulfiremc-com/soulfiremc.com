@@ -1,3 +1,4 @@
+import { Schema, Effect, Option } from "effect";
 import { useHydratedQueryResult } from "@/hooks/use-hydrated-query-result";
 import { usePrerenderedSearch } from "@/hooks/use-prerendered-search";
 import { SiGithub } from "@icons-pack/react-simple-icons";
@@ -21,7 +22,6 @@ import {
   Terminal,
 } from "lucide-react";
 import { Suspense, useEffect, useRef, useState } from "react";
-import { z } from "zod";
 import { Image } from "@/components/image";
 import { SiteShell } from "@/components/site-shell";
 import { CustomTimeAgo } from "@/components/time-ago";
@@ -119,12 +119,20 @@ const OS_IDS = OS_OPTIONS.map((option) => option.id);
 
 const CPU_IDS = CPU_OPTIONS.map((option) => option.id);
 
-const downloadSearchSchema = z.object({
-  os: z.enum(OS_IDS).catch(DEFAULT_OS.id).default(DEFAULT_OS.id),
-  cpu: z.enum(CPU_IDS).catch(DEFAULT_CPU.id).default(DEFAULT_CPU.id),
+const downloadSearchSchema = Schema.Struct({
+  os: Schema.Literals(OS_IDS)
+    .pipe(
+      Schema.catchDecoding(() => Effect.succeed(Option.some(DEFAULT_OS.id))),
+    )
+    .pipe(Schema.withDecodingDefaultType(Effect.succeed(DEFAULT_OS.id))),
+  cpu: Schema.Literals(CPU_IDS)
+    .pipe(
+      Schema.catchDecoding(() => Effect.succeed(Option.some(DEFAULT_CPU.id))),
+    )
+    .pipe(Schema.withDecodingDefaultType(Effect.succeed(DEFAULT_CPU.id))),
 });
 
-type DownloadSelection = z.infer<typeof downloadSearchSchema>;
+type DownloadSelection = (typeof downloadSearchSchema)["Type"];
 
 function DownloadSelectionComponent({
   clientDownloads,
@@ -133,7 +141,7 @@ function DownloadSelectionComponent({
 }) {
   const selection = usePrerenderedSearch(
     Route.useSearch(),
-    downloadSearchSchema.parse({}),
+    Schema.decodeUnknownSync(downloadSearchSchema)({}),
   );
   return (
     <>
@@ -146,7 +154,7 @@ function DownloadSelectionComponent({
 function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
   const selection = usePrerenderedSearch(
     Route.useSearch(),
-    downloadSearchSchema.parse({}),
+    Schema.decodeUnknownSync(downloadSearchSchema)({}),
   );
   const navigate = Route.useNavigate();
   const hasExplicitParams = useRouterState({
@@ -711,7 +719,7 @@ const fallbackDownloadData = {
 };
 
 export const Route = createFileRoute("/download")({
-  validateSearch: downloadSearchSchema,
+  validateSearch: Schema.toStandardSchemaV1(downloadSearchSchema),
   search: {
     middlewares: [
       stripSearchParams({ os: DEFAULT_OS.id, cpu: DEFAULT_CPU.id }),

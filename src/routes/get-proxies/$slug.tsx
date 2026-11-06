@@ -1,3 +1,4 @@
+import { Schema } from "effect";
 import { discordEmbedScript } from "@/lib/discord-embed";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import {
@@ -351,7 +352,7 @@ function getProxyDetailPageData({
 }
 
 export const Route = createFileRoute("/get-proxies/$slug")({
-  validateSearch: reviewsSearchSchema,
+  validateSearch: Schema.toStandardSchemaV1(reviewsSearchSchema),
   search: {
     middlewares: [stripSearchParams({ reviewsPage: 1 })],
   },

@@ -1,3 +1,4 @@
+import { Schema, Effect, Option } from "effect";
 import { usePrerenderedSearch } from "@/hooks/use-prerendered-search";
 import { SiDiscord, SiTrustpilot } from "@icons-pack/react-simple-icons";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -18,7 +19,6 @@ import {
   Users,
 } from "lucide-react";
 import { Suspense, useMemo, useState } from "react";
-import { z } from "zod";
 import { CouponCode } from "@/components/coupon-code";
 import { Image } from "@/components/image";
 import { PaymentMethods } from "@/components/payment-methods";
@@ -307,10 +307,16 @@ const SORT_OPTIONS = [
   "price-desc",
 ] as const;
 
-const accountsSearchSchema = z.object({
-  category: z.enum(CATEGORIES).optional().catch(undefined),
-  badges: z.array(z.enum(BADGES)).catch([]).default([]),
-  sort: z.enum(SORT_OPTIONS).catch("default").default("default"),
+const accountsSearchSchema = Schema.Struct({
+  category: Schema.optional(Schema.Literals(CATEGORIES)).pipe(
+    Schema.catchDecoding(() => Effect.succeed(Option.some(undefined))),
+  ),
+  badges: Schema.mutable(Schema.Array(Schema.Literals(BADGES)))
+    .pipe(Schema.catchDecoding(() => Effect.succeed(Option.some([]))))
+    .pipe(Schema.withDecodingDefaultType(Effect.succeed([]))),
+  sort: Schema.Literals(SORT_OPTIONS)
+    .pipe(Schema.catchDecoding(() => Effect.succeed(Option.some("default"))))
+    .pipe(Schema.withDecodingDefaultType(Effect.succeed("default"))),
 });
 
 function ProviderBadge({
@@ -573,7 +579,7 @@ function MainContent() {
     useReviews("account", slugs);
   const { category, badges, sort } = usePrerenderedSearch(
     Route.useSearch(),
-    accountsSearchSchema.parse({}),
+    Schema.decodeUnknownSync(accountsSearchSchema)({}),
   );
   const navigate = Route.useNavigate();
 
@@ -1082,7 +1088,7 @@ function AccountsItemListStructuredData() {
 }
 
 export const Route = createFileRoute("/get-accounts/")({
-  validateSearch: accountsSearchSchema,
+  validateSearch: Schema.toStandardSchemaV1(accountsSearchSchema),
   search: {
     middlewares: [stripSearchParams({ badges: [], sort: "default" })],
   },

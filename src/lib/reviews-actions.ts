@@ -1,7 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { getRequest, getRequestHost } from "@tanstack/react-start/server";
-import { Effect } from "effect";
-import * as z from "zod";
+import { Effect, Schema } from "effect";
 import { auth } from "@/lib/auth";
 import { reviewStore } from "@/lib/review-store";
 import {
@@ -35,31 +34,45 @@ export type {
   SubmitReviewResult,
 } from "@/lib/review-workflows";
 
-const itemTypeSchema = z.enum(["account", "proxy", "resource"]);
+const itemTypeSchema = Schema.Literals(["account", "proxy", "resource"]);
 
-const getReviewsInputSchema = z.object({
+const getReviewsInputSchema = Schema.Struct({
   itemType: itemTypeSchema,
-  slugs: z.array(z.string().min(1)).min(1).max(100),
-  includeWrittenReviews: z.boolean().default(false),
-  reviewsPage: z.number().int().min(1).default(1),
+  slugs: Schema.mutable(
+    Schema.Array(Schema.String.check(Schema.isMinLength(1))),
+  )
+    .check(Schema.isMinLength(1))
+    .check(Schema.isMaxLength(100)),
+  includeWrittenReviews: Schema.Boolean.pipe(
+    Schema.withDecodingDefaultType(Effect.succeed(false)),
+  ),
+  reviewsPage: Schema.Finite.check(Schema.isInt())
+    .check(Schema.isGreaterThanOrEqualTo(1))
+    .pipe(Schema.withDecodingDefaultType(Effect.succeed(1))),
 });
 
-const submitReviewInputSchema = z.object({
+const submitReviewInputSchema = Schema.Struct({
   itemType: itemTypeSchema,
-  itemSlug: z.string().min(1),
-  rating: z.number().int().min(1).max(5),
-  body: z.string().nullable().default(null),
-  turnstileToken: z.string().nullable().default(null),
+  itemSlug: Schema.String.check(Schema.isMinLength(1)),
+  rating: Schema.Finite.check(Schema.isInt())
+    .check(Schema.isGreaterThanOrEqualTo(1))
+    .check(Schema.isLessThanOrEqualTo(5)),
+  body: Schema.NullOr(Schema.String).pipe(
+    Schema.withDecodingDefaultType(Effect.succeed(null)),
+  ),
+  turnstileToken: Schema.NullOr(Schema.String).pipe(
+    Schema.withDecodingDefaultType(Effect.succeed(null)),
+  ),
 });
 
-const deleteReviewInputSchema = z.object({
+const deleteReviewInputSchema = Schema.Struct({
   itemType: itemTypeSchema,
-  itemSlug: z.string().min(1),
+  itemSlug: Schema.String.check(Schema.isMinLength(1)),
 });
 
-const moderateReviewCommentInputSchema = z.object({
-  reviewId: z.string().uuid(),
-  commentStatus: z.enum(["approved", "rejected"]),
+const moderateReviewCommentInputSchema = Schema.Struct({
+  reviewId: Schema.String.check(Schema.isUUID()),
+  commentStatus: Schema.Literals(["approved", "rejected"]),
 });
 
 function runReviewWorkflow<A, E>(
@@ -81,13 +94,13 @@ function runReviewWorkflow<A, E>(
 }
 
 export const getReviewsServerFn = createServerFn({ method: "GET" })
-  .validator(getReviewsInputSchema)
+  .validator(Schema.toStandardSchemaV1(getReviewsInputSchema))
   .handler(({ data }): Promise<GetReviewsResult> =>
     runReviewWorkflow(getReviews(data), getRequest()),
   );
 
 export const submitReviewServerFn = createServerFn({ method: "POST" })
-  .validator(submitReviewInputSchema)
+  .validator(Schema.toStandardSchemaV1(submitReviewInputSchema))
   .handler(({ data }): Promise<SubmitReviewResult> => {
     const request = getRequest();
     return runReviewWorkflow(
@@ -112,13 +125,13 @@ export const getPendingReviewCommentsServerFn = createServerFn({
 );
 
 export const moderateReviewCommentServerFn = createServerFn({ method: "POST" })
-  .validator(moderateReviewCommentInputSchema)
+  .validator(Schema.toStandardSchemaV1(moderateReviewCommentInputSchema))
   .handler(({ data }): Promise<ModerateReviewCommentResult> =>
     runReviewWorkflow(moderateReview(data), getRequest()),
   );
 
 export const deleteReviewServerFn = createServerFn({ method: "POST" })
-  .validator(deleteReviewInputSchema)
+  .validator(Schema.toStandardSchemaV1(deleteReviewInputSchema))
   .handler(({ data }): Promise<DeleteReviewResult> =>
     runReviewWorkflow(deleteReview(data), getRequest()),
   );
