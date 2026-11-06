@@ -64,6 +64,7 @@ import {
 } from "@/lib/review-core";
 import { reviewsQueryOptions } from "@/lib/reviews-query";
 import { reviewsSearchSchema } from "@/lib/reviews-search-params";
+import { useHydratedQueryResult } from "@/hooks/use-hydrated-query-result";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
@@ -418,21 +419,23 @@ function AccountDetailPage() {
   const affiliateBadgeClassName =
     data.shop.theme === "localts" ? theme?.badge : undefined;
   const discordInviteUrl = getDiscordInviteUrl(data.shop);
-  const reviewsQuery = useQuery(
-    reviewsQueryOptions({
-      itemType: "account",
-      slugs: [data.shop.slug],
-      includeWrittenReviews: true,
-      reviewsPage: data.reviewsPage,
-    }),
+  const reviewsQuery = useHydratedQueryResult(
+    useQuery(
+      reviewsQueryOptions({
+        itemType: "account",
+        slugs: [data.shop.slug],
+        includeWrittenReviews: true,
+        reviewsPage: data.reviewsPage,
+      }),
+    ),
   );
   const reviewSummary =
     reviewsQuery.data?.summaries[data.shop.slug] ?? emptyReviewSummary();
-  const liveShopDataQuery = useQuery(
-    accountLiveShopDataQueryOptions(data.shop.slug),
+  const liveShopDataQuery = useHydratedQueryResult(
+    useQuery(accountLiveShopDataQueryOptions(data.shop.slug)),
   );
-  const discordInviteQuery = useQuery(
-    accountDiscordInviteQueryOptions(data.shop.slug),
+  const discordInviteQuery = useHydratedQueryResult(
+    useQuery(accountDiscordInviteQueryOptions(data.shop.slug)),
   );
 
   return (
@@ -658,10 +661,13 @@ function AccountDetailPage() {
                   Availability:{" "}
                   {liveShopDataQuery.isPending ? (
                     <Skeleton className="inline-block h-4 w-20 align-middle" />
-                  ) : String(liveOffer.availability).includes("OutOfStock") ? (
+                  ) : liveOffer.availability ===
+                    "https://schema.org/OutOfStock" ? (
                     "Out of stock"
-                  ) : (
+                  ) : liveOffer.availability ? (
                     "In stock"
+                  ) : (
+                    "Check availability"
                   )}
                 </div>
                 <Button asChild>

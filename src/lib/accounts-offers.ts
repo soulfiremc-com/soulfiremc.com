@@ -120,10 +120,12 @@ export function getListingOffer(
       priceCurrency: "USD",
       price: listingPriceValue.toFixed(2),
     }),
-    availability:
-      typeof stockValue === "number" && stockValue <= OUT_OF_STOCK_THRESHOLD
-        ? "https://schema.org/OutOfStock"
-        : "https://schema.org/InStock",
+    ...(typeof stockValue === "number" && {
+      availability:
+        stockValue <= OUT_OF_STOCK_THRESHOLD
+          ? "https://schema.org/OutOfStock"
+          : "https://schema.org/InStock",
+    }),
     ...(typeof stockValue === "number" && {
       inventoryLevel: {
         "@type": "QuantitativeValue",
@@ -167,11 +169,12 @@ export function getShopAggregateOffer(
     lowPrice: Math.min(...prices).toFixed(2),
     highPrice: Math.max(...prices).toFixed(2),
     offerCount: listings.length,
-    availability:
-      knownStockCount > 0 && totalStock <= OUT_OF_STOCK_THRESHOLD
-        ? "https://schema.org/OutOfStock"
-        : "https://schema.org/InStock",
-    ...(knownStockCount > 0 && {
+    ...(totalStock > OUT_OF_STOCK_THRESHOLD
+      ? { availability: "https://schema.org/InStock" as const }
+      : knownStockCount === listings.length
+        ? { availability: "https://schema.org/OutOfStock" as const }
+        : {}),
+    ...(knownStockCount === listings.length && {
       inventoryLevel: {
         "@type": "QuantitativeValue",
         value: totalStock,

@@ -106,3 +106,51 @@ await test("price sorting keeps unknown prices last in both directions", () => {
     ["paid", "budget", "free", "variable", "another-variable"],
   );
 });
+
+await test("missing or failed stock lookups do not claim availability", async (t) => {
+  const shop = getShopBySlug("localts");
+  assert.ok(shop);
+  assert.equal(
+    getListingOffer(shop, "nfa-accounts", 0.12).availability,
+    undefined,
+  );
+  assert.equal(getShopAggregateOffer(shop)?.availability, undefined);
+  t.mock.method(
+    globalThis,
+    "fetch",
+    async () => new Response("Unavailable", { status: 503 }),
+  );
+  const liveData = await getLiveShopData(shop);
+  assert.equal(
+    getListingOffer(shop, "nfa-accounts", 0.12, liveData).availability,
+    undefined,
+  );
+});
+
+await test("aggregate stock remains unknown when only an empty category is known", () => {
+  const shop = getShopBySlug("localts");
+  assert.ok(shop);
+  const partial = { stockByCategory: { "nfa-accounts": 0 } };
+  assert.equal(
+    getListingOffer(shop, "nfa-accounts", 0.12, partial).availability,
+    "https://schema.org/OutOfStock",
+  );
+  assert.equal(
+    getListingOffer(shop, "mfa-accounts", 5, partial).availability,
+    undefined,
+  );
+  assert.equal(getShopAggregateOffer(shop, partial)?.availability, undefined);
+  assert.equal(getShopAggregateOffer(shop, partial)?.inventoryLevel, undefined);
+  assert.equal(
+    getShopAggregateOffer(shop, {
+      stockByCategory: { "nfa-accounts": 0, "mfa-accounts": 2 },
+    })?.availability,
+    "https://schema.org/InStock",
+  );
+  assert.equal(
+    getShopAggregateOffer(shop, {
+      stockByCategory: { "nfa-accounts": 0, "mfa-accounts": 0 },
+    })?.availability,
+    "https://schema.org/OutOfStock",
+  );
+});

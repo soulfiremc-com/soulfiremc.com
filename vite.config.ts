@@ -27,6 +27,7 @@ export default defineConfig(() => ({
         execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(),
     ),
   },
+  build: { sourcemap: true },
   environments: { ssr: { build: { sourcemap: true } } },
   envPrefix: ["VITE_"],
   resolve: {

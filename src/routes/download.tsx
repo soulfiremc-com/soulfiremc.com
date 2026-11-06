@@ -1,3 +1,4 @@
+import { useHydratedQueryResult } from "@/hooks/use-hydrated-query-result";
 import { usePrerenderedSearch } from "@/hooks/use-prerendered-search";
 import { SiGithub } from "@icons-pack/react-simple-icons";
 import { queryOptions, useQuery } from "@tanstack/react-query";
@@ -44,6 +45,8 @@ import {
 } from "@/components/ui/credenza";
 import { Skeleton } from "@/components/ui/skeleton";
 import { trackClientDownload } from "@/lib/analytics";
+import { detectDownloadPlatform } from "@/lib/download-platform";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   createClientDownloads,
   createServerDownloads,
@@ -123,76 +126,6 @@ const downloadSearchSchema = z.object({
 
 type DownloadSelection = z.infer<typeof downloadSearchSchema>;
 
-function detectBrowserOS(): OsOption["id"] | null {
-  if (typeof window === "undefined") return null;
-
-  const userAgent = window.navigator.userAgent.toLowerCase();
-  const platform = window.navigator.platform?.toLowerCase() ?? "";
-
-  // Check for Windows
-  if (userAgent.includes("win") || platform.includes("win")) {
-    return "windows";
-  }
-
-  // Check for macOS
-  if (
-    userAgent.includes("mac") ||
-    platform.includes("mac") ||
-    platform.includes("iphone") ||
-    platform.includes("ipad")
-  ) {
-    return "macos";
-  }
-
-  // Check for Linux (including Android which is Linux-based, but we'll treat as Linux)
-  if (
-    userAgent.includes("linux") ||
-    userAgent.includes("x11") ||
-    platform.includes("linux")
-  ) {
-    return "linux";
-  }
-
-  return null;
-}
-
-function detectBrowserCPU(): CpuOption["id"] | null {
-  if (typeof window === "undefined") return null;
-
-  const userAgent = window.navigator.userAgent.toLowerCase();
-  const platform = window.navigator.platform?.toLowerCase() ?? "";
-
-  // Check for ARM architecture
-  // Common indicators: aarch64, arm64, arm in platform/userAgent
-  if (
-    platform.includes("aarch64") ||
-    platform.includes("arm64") ||
-    platform.includes("arm") ||
-    userAgent.includes("aarch64") ||
-    userAgent.includes("arm64")
-  ) {
-    return "arm64";
-  }
-
-  // Check for x86_64/AMD64 architecture
-  // Common indicators: x86_64, x64, amd64, win64, wow64 (Windows 64-bit), x86_64 in platform
-  if (
-    platform.includes("x86_64") ||
-    platform.includes("x64") ||
-    platform.includes("amd64") ||
-    platform.includes("win64") ||
-    userAgent.includes("x86_64") ||
-    userAgent.includes("x64") ||
-    userAgent.includes("amd64") ||
-    userAgent.includes("win64") ||
-    userAgent.includes("wow64")
-  ) {
-    return "x64";
-  }
-
-  return null;
-}
-
 function DownloadSelectionComponent({
   clientDownloads,
 }: {
@@ -222,14 +155,14 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
   });
   const hasDetectedPlatform = useRef(false);
   const [showThankYou, setShowThankYou] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     if (hasDetectedPlatform.current) return;
     hasDetectedPlatform.current = true;
-    if (hasExplicitParams) return;
-
-    const os = detectBrowserOS();
-    const cpu = detectBrowserCPU();
+    const { os, cpu, mobile } = detectDownloadPlatform(window.navigator);
+    setIsMobile(mobile);
+    if (hasExplicitParams || mobile) return;
     if (!os && !cpu) return;
 
     void navigate({
@@ -272,6 +205,15 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
         </CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-8">
+        {isMobile && (
+          <Alert>
+            <AlertTitle>Download on a computer</AlertTitle>
+            <AlertDescription>
+              SoulFire desktop downloads require Windows, macOS, or Linux.
+              Choose the computer you want to install it on below.
+            </AlertDescription>
+          </Alert>
+        )}
         <div className="flex flex-col gap-3">
           <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
             Operating system
@@ -374,7 +316,8 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
             }}
           >
             <Download className="h-5 w-5" />
-            Download
+            Download for{" "}
+            {OS_OPTIONS.find((option) => option.id === selection.os)?.label}
           </Button>
         ) : (
           <Button
@@ -791,7 +734,9 @@ export const Route = createFileRoute("/download")({
 });
 
 function DownloadPage() {
-  const downloadQuery = useQuery(downloadPageQueryOptions);
+  const downloadQuery = useHydratedQueryResult(
+    useQuery(downloadPageQueryOptions),
+  );
   const data = downloadQuery.data ?? fallbackDownloadData;
 
   return (

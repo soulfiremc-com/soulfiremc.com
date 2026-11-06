@@ -55,19 +55,21 @@ import {
   type Badge,
   CATEGORY_CONFIG,
   type Category,
-  compareProviderPrices,
   FILTER_BADGES,
   FILTER_CATEGORIES,
   type FilterableBadge,
   getDiscordInviteUrl,
   getShopBySlug,
-  isProviderPromoted,
   PROVIDER_THEMES,
   PROVIDERS,
   type Provider,
   SORT_CONFIG,
   type SortOption,
 } from "@/lib/accounts-data";
+import {
+  filterAccountProviders,
+  sortAccountProviders,
+} from "@/lib/account-provider-list";
 import { getListingOffer, getShopAggregateOffer } from "@/lib/accounts-offers";
 import {
   accountsDiscordInvitesQueryOptions,
@@ -75,7 +77,6 @@ import {
   type LiveShopDataBySlug,
 } from "@/lib/accounts-queries";
 import {
-  compareReviewSummaries,
   getAggregateRatingJsonLd,
   type ReviewSummary,
   type UserReviewRecord,
@@ -563,35 +564,6 @@ function ProviderCard({
   );
 }
 
-function sortProviders(
-  providers: Provider[],
-  sort: SortOption,
-  summaries: Record<string, ReviewSummary>,
-  now: number,
-): Provider[] {
-  const topProviders = providers.filter((provider) =>
-    isProviderPromoted(provider, now),
-  );
-  const otherProviders = providers.filter(
-    (provider) => !isProviderPromoted(provider, now),
-  );
-
-  if (sort === "default" || sort === "best-rated") {
-    return [
-      ...topProviders,
-      ...otherProviders.sort(
-        (a, b) =>
-          compareReviewSummaries(summaries[a.slug], summaries[b.slug], sort) ||
-          a.name.localeCompare(b.name),
-      ),
-    ];
-  }
-  return [
-    ...topProviders,
-    ...otherProviders.sort((a, b) => compareProviderPrices(a, b, sort)),
-  ];
-}
-
 function MainContent() {
   const { renderedAt } = Route.useLoaderData();
   const now = useHydrated() ? Date.now() : renderedAt;
@@ -618,21 +590,15 @@ function MainContent() {
     });
   };
 
-  const filteredProviders = providers.filter((provider) => {
-    const matchesCategory = category ? provider.category === category : true;
-    const matchesBadges =
-      isProviderPromoted(provider, now) ||
-      badges.every((filter) => provider.badges.includes(filter));
-    return matchesCategory && matchesBadges;
-  });
+  const filteredProviders = filterAccountProviders(providers, category, badges);
 
-  const nfaProviders = sortProviders(
+  const nfaProviders = sortAccountProviders(
     filteredProviders.filter((p) => p.category === "nfa-accounts"),
     sort,
     summaries,
     now,
   );
-  const mfaProviders = sortProviders(
+  const mfaProviders = sortAccountProviders(
     filteredProviders.filter((p) => p.category === "mfa-accounts"),
     sort,
     summaries,

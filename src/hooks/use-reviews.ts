@@ -7,6 +7,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { useCallback, useMemo } from "react";
+import { useHydratedQueryResult } from "@/hooks/use-hydrated-query-result";
 import { useReviewTurnstile } from "@/components/review-turnstile-provider";
 import { useSession } from "@/lib/auth-hooks";
 import {
@@ -74,6 +75,8 @@ export function useReviews(
     ...queryOptions,
     enabled: normalizedSlugs.length > 0,
   });
+  const { data: reviewsData, isPending: loading } =
+    useHydratedQueryResult(reviewsQuery);
   const mutationKey = reviewMutationKey(itemType, session?.user.id);
   const { mutateAsync } = useMutation(
     reviewMutationOptions({
@@ -95,8 +98,8 @@ export function useReviews(
   );
 
   const summaries = useMemo(
-    () => withEmptySummaries(normalizedSlugs, reviewsQuery.data?.summaries),
-    [normalizedSlugs, reviewsQuery.data?.summaries],
+    () => withEmptySummaries(normalizedSlugs, reviewsData?.summaries),
+    [normalizedSlugs, reviewsData?.summaries],
   );
   const writtenReviews = useMemo(() => {
     if (!includeWrittenReviews || normalizedSlugs.length !== 1) {
@@ -105,13 +108,12 @@ export function useReviews(
 
     return {
       [normalizedSlugs[0]]:
-        reviewsQuery.data?.writtenReviews ??
-        emptyWrittenReviews(writtenReviewsPage),
+        reviewsData?.writtenReviews ?? emptyWrittenReviews(writtenReviewsPage),
     };
   }, [
     includeWrittenReviews,
     normalizedSlugs,
-    reviewsQuery.data?.writtenReviews,
+    reviewsData?.writtenReviews,
     writtenReviewsPage,
   ]);
 
@@ -129,7 +131,7 @@ export function useReviews(
     }
 
     if (
-      reviewsQuery.isPending ||
+      loading ||
       queryClient.isMutating({
         mutationKey,
         exact: true,
@@ -151,7 +153,7 @@ export function useReviews(
       action: "upsert",
       slug,
       ...nextReview,
-      needsTurnstile: !reviewsQuery.data?.userReviews[slug],
+      needsTurnstile: !reviewsData?.userReviews[slug],
     });
 
   const deleteReview = (slug: string) =>
@@ -159,9 +161,9 @@ export function useReviews(
 
   return {
     summaries,
-    userReviews: reviewsQuery.data?.userReviews ?? {},
+    userReviews: reviewsData?.userReviews ?? {},
     writtenReviews,
-    loading: reviewsQuery.isPending,
+    loading,
     pendingBySlug,
     upsertReview,
     deleteReview,
