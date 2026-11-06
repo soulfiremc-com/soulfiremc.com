@@ -1,15 +1,22 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { deleteCookie, getCookie } from "@tanstack/react-start/server";
 import { and, eq } from "drizzle-orm";
+import { Data, Effect } from "effect";
 import { db } from "@/lib/db";
 import { account, user } from "@/lib/db/auth-schema";
 import {
-  exchangeDiscordCode,
-  getDiscordUser,
-  pushLinkedRoleMetadata,
+  exchangeDiscordCodeEffect,
+  getDiscordUserEffect,
+  pushLinkedRoleMetadataEffect,
 } from "@/lib/discord";
 
 const REDIRECT_URI = "https://soulfiremc.com/api/discord/linked-role/callback";
+
+class DiscordAccountLookupError extends Data.TaggedError(
+  "DiscordAccountLookupError",
+)<{
+  readonly cause: unknown;
+}> {}
 
 export const Route = createFileRoute("/api/discord/linked-role/callback")({
   server: {
@@ -33,51 +40,61 @@ export const Route = createFileRoute("/api/discord/linked-role/callback")({
           return Response.json({ error: "Invalid state" }, { status: 403 });
         }
 
-        const tokens = await exchangeDiscordCode(code, REDIRECT_URI);
-        const discordUser = await getDiscordUser(tokens.access_token);
+        return Effect.runPromise(
+          Effect.gen(function* () {
+            const tokens = yield* exchangeDiscordCodeEffect(code, REDIRECT_URI);
+            const discordUser = yield* getDiscordUserEffect(
+              tokens.access_token,
+            );
 
-        const sfAccount = await db
-          .select({
-            userId: account.userId,
-            userName: user.name,
-            emailVerified: user.emailVerified,
-            createdAt: user.createdAt,
-          })
-          .from(account)
-          .innerJoin(user, eq(account.userId, user.id))
-          .where(
-            and(
-              eq(account.providerId, "discord"),
-              eq(account.accountId, discordUser.id),
-            ),
-          )
-          .limit(1);
+            const sfAccount = yield* Effect.tryPromise({
+              try: () =>
+                db
+                  .select({
+                    userId: account.userId,
+                    userName: user.name,
+                    emailVerified: user.emailVerified,
+                    createdAt: user.createdAt,
+                  })
+                  .from(account)
+                  .innerJoin(user, eq(account.userId, user.id))
+                  .where(
+                    and(
+                      eq(account.providerId, "discord"),
+                      eq(account.accountId, discordUser.id),
+                    ),
+                  )
+                  .limit(1),
+              catch: (cause) => new DiscordAccountLookupError({ cause }),
+            });
 
-        const sfUser = sfAccount[0];
+            const sfUser = sfAccount[0];
 
-        if (sfUser) {
-          await pushLinkedRoleMetadata(tokens.access_token, {
-            platform_name: "SoulFire",
-            platform_username: sfUser.userName,
-            metadata: {
-              verified_account: 1,
-              email_verified: sfUser.emailVerified ? 1 : 0,
-              account_created: sfUser.createdAt.toISOString(),
-            },
-          });
-        } else {
-          await pushLinkedRoleMetadata(tokens.access_token, {
-            platform_name: "SoulFire",
-            platform_username: null,
-            metadata: {
-              verified_account: 0,
-              email_verified: 0,
-              account_created: new Date().toISOString(),
-            },
-          });
-        }
+            if (sfUser) {
+              yield* pushLinkedRoleMetadataEffect(tokens.access_token, {
+                platform_name: "SoulFire",
+                platform_username: sfUser.userName,
+                metadata: {
+                  verified_account: 1,
+                  email_verified: sfUser.emailVerified ? 1 : 0,
+                  account_created: sfUser.createdAt.toISOString(),
+                },
+              });
+            } else {
+              yield* pushLinkedRoleMetadataEffect(tokens.access_token, {
+                platform_name: "SoulFire",
+                platform_username: null,
+                metadata: {
+                  verified_account: 0,
+                  email_verified: 0,
+                  account_created: new Date().toISOString(),
+                },
+              });
+            }
 
-        return Response.redirect("https://discord.com/");
+            return Response.redirect("https://discord.com/");
+          }),
+        );
       },
     },
   },

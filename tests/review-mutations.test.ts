@@ -31,7 +31,7 @@ function setup(
   return { queryClient, observer: new MutationObserver(queryClient, options) };
 }
 
-test("pending mutations remain shared through verification and cache refresh", async () => {
+await test("pending mutations remain shared through verification and cache refresh", async () => {
   const verification = deferred<string>();
   const refresh = deferred<void>();
   const refreshStarted = deferred<void>();
@@ -81,7 +81,7 @@ test("pending mutations remain shared through verification and cache refresh", a
   queryClient.clear();
 });
 
-test("verification failures skip submission and invalidation and release pending state", async () => {
+await test("verification failures skip submission and invalidation and release pending state", async () => {
   const { queryClient, observer } = setup({
     executeTurnstile: async () => {
       throw new Error();
@@ -102,7 +102,7 @@ test("verification failures skip submission and invalidation and release pending
   queryClient.clear();
 });
 
-test("edits bypass verification and rejected deletes do not refresh reviews", async () => {
+await test("edits bypass verification and rejected deletes do not refresh reviews", async () => {
   const { queryClient, observer } = setup({
     executeTurnstile: async () => assert.fail(),
     submitReview: async ({ data }) => {
@@ -129,7 +129,7 @@ test("edits bypass verification and rejected deletes do not refresh reviews", as
   queryClient.clear();
 });
 
-test("network failures propagate without retrying and release pending state", async () => {
+await test("network failures propagate without retrying and release pending state", async () => {
   const failure = new Error();
   let calls = 0;
   const { queryClient, observer } = setup({
@@ -143,6 +143,56 @@ test("network failures propagate without retrying and release pending state", as
     (error) => error === failure,
   );
   assert.equal(calls, 1);
+  assert.equal(queryClient.isMutating(), 0);
+  queryClient.clear();
+});
+
+await test("server rejections preserve their result and skip review cache refresh", async () => {
+  for (const error of ["unauthorized", "verification"] as const) {
+    const { queryClient, observer } = setup({
+      submitReview: async () =>
+        error === "verification"
+          ? { ok: false, error, errorCodes: ["invalid-input-response"] }
+          : { ok: false, error },
+    });
+    queryClient.invalidateQueries = async () =>
+      assert.fail("Rejected submissions must not refresh");
+    assert.deepEqual(
+      await observer.mutate({
+        action: "upsert",
+        slug: "shop",
+        rating: 5,
+        needsTurnstile: false,
+      }),
+      { error },
+    );
+    assert.equal(queryClient.isMutating(), 0);
+    queryClient.clear();
+  }
+});
+
+await test("refresh failures preserve their cause and never resubmit a successful write", async () => {
+  const failure = new Error("Refresh failed");
+  let writes = 0;
+  const { queryClient, observer } = setup({
+    submitReview: async () => {
+      writes++;
+      return { ok: true };
+    },
+  });
+  queryClient.invalidateQueries = async () => {
+    throw failure;
+  };
+  await assert.rejects(
+    observer.mutate({
+      action: "upsert",
+      slug: "shop",
+      rating: 5,
+      needsTurnstile: false,
+    }),
+    (error) => error === failure,
+  );
+  assert.equal(writes, 1);
   assert.equal(queryClient.isMutating(), 0);
   queryClient.clear();
 });

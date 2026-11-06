@@ -6,6 +6,7 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { betterAuth } from "better-auth/minimal";
 import { jwt, twoFactor } from "better-auth/plugins";
 import { eq } from "drizzle-orm";
+import { Effect } from "effect";
 import { Miniflare } from "miniflare";
 import { db, dbSchema, reviewDb, runWithD1Database } from "../src/lib/db";
 import { user, verification } from "../src/lib/db/auth-schema";
@@ -14,6 +15,16 @@ import {
   setReviewBookmark,
 } from "../src/lib/db/replication";
 import { review } from "../src/lib/db/schema";
+import { reviewStore } from "../src/lib/review-store";
+import {
+  deleteReview,
+  getReviews,
+  moderateReview,
+  ReviewSession,
+  ReviewStore,
+  ReviewVerification,
+  submitReview,
+} from "../src/lib/review-workflows";
 import {
   getReviewSummaries,
   getUserReviews,
@@ -90,6 +101,73 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
         body: { email, password, name: "D1 user" },
       });
       const userId = created.user.id;
+
+      await t.test(
+        "Effect review workflows persist, moderate, edit, and delete through D1",
+        async () => {
+          const slug = crypto.randomUUID();
+          const input = {
+            itemType: "account",
+            itemSlug: slug,
+            rating: 5,
+            body: "Useful service",
+          } as const;
+          const run = <A, E>(
+            program: Effect.Effect<
+              A,
+              E,
+              ReviewSession | ReviewStore | ReviewVerification
+            >,
+          ) =>
+            Effect.runPromise(
+              program.pipe(
+                Effect.provideService(ReviewStore, reviewStore),
+                Effect.provideService(ReviewSession, {
+                  currentUser: Effect.succeed({ id: userId, role: "admin" }),
+                }),
+                Effect.provideService(ReviewVerification, {
+                  verify: Effect.void,
+                }),
+              ),
+            );
+          assert.deepEqual(await run(submitReview(input)), { ok: true });
+          let result = await run(
+            getReviews({
+              itemType: "account",
+              slugs: [slug],
+              includeWrittenReviews: true,
+              reviewsPage: 1,
+            }),
+          );
+          assert.equal(result.summaries[slug].reviewCount, 1);
+          assert.equal(result.userReviews[slug].commentStatus, "pending");
+          const entry = result.writtenReviews?.entries[0];
+          assert.ok(entry);
+          assert.equal(entry.body, null);
+          await run(
+            moderateReview({ reviewId: entry.id, commentStatus: "approved" }),
+          );
+          await run(submitReview({ ...input, rating: 4 }));
+          result = await run(
+            getReviews({
+              itemType: "account",
+              slugs: [slug],
+              includeWrittenReviews: true,
+              reviewsPage: 1,
+            }),
+          );
+          assert.equal(
+            result.writtenReviews?.entries[0].body,
+            "Useful service",
+          );
+          assert.equal(result.summaries[slug].averageRating, 4);
+          await run(deleteReview(input));
+          assert.equal(
+            (await getReviewSummaries("account", [slug]))[slug].reviewCount,
+            0,
+          );
+        },
+      );
 
       await t.test(
         "auth creates and reads dates, booleans, and joined sessions",
@@ -236,6 +314,25 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
               .insert(user)
               .values({ id, name: id, email: `${id}@example.com` });
             await new Promise((resolve) => setTimeout(resolve, 5));
+            const slug = crypto.randomUUID();
+            await Effect.runPromise(
+              Effect.gen(function* () {
+                // Force Effect to resume on its scheduler across concurrent
+                // request contexts before resolving the lazy database proxy.
+                yield* Effect.sleep("5 millis");
+                yield* reviewStore.create({
+                  userId: id,
+                  itemType: "account",
+                  itemSlug: slug,
+                  rating: 5,
+                  body: null,
+                  commentStatus: "approved",
+                });
+                const entry = yield* reviewStore.find(id, "account", slug);
+                assert.ok(entry);
+                yield* reviewStore.delete(id, "account", slug);
+              }),
+            );
             const rows = await db.select().from(user);
             assert.deepEqual(
               rows.map((row) => row.id),

@@ -1,3 +1,6 @@
+import { Data, Effect, Schema } from "effect";
+import { requestJson } from "@/lib/backend-http";
+
 const TURNSTILE_SITEVERIFY_URL =
   "https://challenges.cloudflare.com/turnstile/v0/siteverify";
 
@@ -5,12 +8,18 @@ const LOCAL_HOSTNAMES = new Set(["localhost", "127.0.0.1", "::1", "[::1]"]);
 
 export const REVIEW_TURNSTILE_ACTION = "review";
 
-type TurnstileSiteverifyResponse = {
-  success: boolean;
-  action?: string;
-  hostname?: string;
-  "error-codes"?: string[];
-};
+const turnstileResponseSchema = Schema.Struct({
+  success: Schema.Boolean,
+  action: Schema.optionalKey(Schema.String),
+  hostname: Schema.optionalKey(Schema.String),
+  "error-codes": Schema.optionalKey(Schema.Array(Schema.String)),
+});
+
+export class TurnstileVerificationError extends Data.TaggedError(
+  "TurnstileVerificationError",
+)<{
+  readonly errorCodes: string[];
+}> {}
 
 export function getTurnstileRemoteIp(headers: Headers): string | null {
   const cfConnectingIp = headers.get("cf-connecting-ip");
@@ -40,90 +49,84 @@ export function getExpectedTurnstileHostname(hostname: string): string | null {
   return normalizedHostname;
 }
 
-export async function validateTurnstileToken({
-  token,
-  remoteIp,
-  expectedAction,
-  expectedHostname,
-}: {
+type TurnstileInput = {
   token: string;
   remoteIp?: string | null;
   expectedAction?: string;
   expectedHostname?: string | null;
-}) {
-  if (typeof token !== "string" || token.length === 0 || token.length > 2048) {
-    return {
-      success: false,
-      errorCodes: ["invalid-input-response"],
-    };
-  }
+};
 
-  const reviewSecretKey = process.env.REVIEW_TURNSTILE_SECRET_KEY;
-  const secret = reviewSecretKey ?? "";
-  if (!secret) {
-    return {
-      success: false,
-      errorCodes: ["missing-input-secret"],
-    };
-  }
+export const validateTurnstileTokenEffect = Effect.fn("validateTurnstileToken")(
+  function* ({
+    token,
+    remoteIp,
+    expectedAction,
+    expectedHostname,
+  }: TurnstileInput) {
+    if (
+      typeof token !== "string" ||
+      token.length === 0 ||
+      token.length > 2048
+    ) {
+      return yield* new TurnstileVerificationError({
+        errorCodes: ["invalid-input-response"],
+      });
+    }
 
-  const formData = new FormData();
-  formData.set("secret", secret);
-  formData.set("response", token);
-  formData.set("idempotency_key", crypto.randomUUID());
+    const secret = process.env.REVIEW_TURNSTILE_SECRET_KEY;
+    if (!secret) {
+      return yield* new TurnstileVerificationError({
+        errorCodes: ["missing-input-secret"],
+      });
+    }
 
-  if (remoteIp) {
-    formData.set("remoteip", remoteIp);
-  }
+    const formData = new FormData();
+    formData.set("secret", secret);
+    formData.set("response", token);
+    formData.set("idempotency_key", crypto.randomUUID());
+    if (remoteIp) formData.set("remoteip", remoteIp);
 
-  let siteverifyResponse: Response;
+    const result = yield* requestJson(
+      TURNSTILE_SITEVERIFY_URL,
+      turnstileResponseSchema,
+      {
+        init: { method: "POST", body: formData, cache: "no-store" },
+      },
+    ).pipe(
+      Effect.mapError(
+        () =>
+          new TurnstileVerificationError({ errorCodes: ["internal-error"] }),
+      ),
+    );
 
-  try {
-    siteverifyResponse = await fetch(TURNSTILE_SITEVERIFY_URL, {
-      method: "POST",
-      body: formData,
-      cache: "no-store",
-    });
-  } catch {
-    return {
-      success: false,
-      errorCodes: ["internal-error"],
-    };
-  }
+    if (!result.success) {
+      return yield* new TurnstileVerificationError({
+        errorCodes: [...(result["error-codes"] ?? ["invalid-input-response"])],
+      });
+    }
+    if (expectedAction && result.action !== expectedAction) {
+      return yield* new TurnstileVerificationError({
+        errorCodes: ["action-mismatch"],
+      });
+    }
+    if (expectedHostname && result.hostname !== expectedHostname) {
+      return yield* new TurnstileVerificationError({
+        errorCodes: ["hostname-mismatch"],
+      });
+    }
+  },
+);
 
-  if (!siteverifyResponse.ok) {
-    return {
-      success: false,
-      errorCodes: ["internal-error"],
-    };
-  }
-
-  const result =
-    (await siteverifyResponse.json()) as TurnstileSiteverifyResponse;
-
-  if (!result.success) {
-    return {
-      success: false,
-      errorCodes: result["error-codes"] ?? ["invalid-input-response"],
-    };
-  }
-
-  if (expectedAction && result.action !== expectedAction) {
-    return {
-      success: false,
-      errorCodes: ["action-mismatch"],
-    };
-  }
-
-  if (expectedHostname && result.hostname !== expectedHostname) {
-    return {
-      success: false,
-      errorCodes: ["hostname-mismatch"],
-    };
-  }
-
-  return {
-    success: true,
-    errorCodes: [],
-  };
+export function validateTurnstileToken(input: TurnstileInput) {
+  return Effect.runPromise(
+    validateTurnstileTokenEffect(input).pipe(
+      Effect.match({
+        onFailure: (error) => ({
+          success: false,
+          errorCodes: error.errorCodes,
+        }),
+        onSuccess: () => ({ success: true, errorCodes: [] as string[] }),
+      }),
+    ),
+  );
 }

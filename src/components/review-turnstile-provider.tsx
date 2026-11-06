@@ -1,5 +1,6 @@
 "use client";
 
+import { Effect } from "effect";
 import {
   createContext,
   type ReactNode,
@@ -15,14 +16,10 @@ import {
   type TurnstileProps,
 } from "react-turnstile";
 
+import { createReviewChallenge } from "@/lib/review-challenge";
+
 type ReviewTurnstileContextValue = {
   executeTurnstile: () => Promise<string>;
-};
-
-type PendingChallenge = {
-  resolve: (token: string) => void;
-  reject: (error: Error) => void;
-  timeoutId: number;
 };
 
 const DEFAULT_CONTEXT: ReviewTurnstileContextValue = {
@@ -32,7 +29,6 @@ const DEFAULT_CONTEXT: ReviewTurnstileContextValue = {
 };
 
 const TURNSTILE_ACTION = "review";
-const TURNSTILE_TIMEOUT_MS = 20_000;
 
 const ReviewTurnstileContext =
   createContext<ReviewTurnstileContextValue>(DEFAULT_CONTEXT);
@@ -48,18 +44,7 @@ function toError(message: string, error?: unknown) {
 export function ReviewTurnstileProvider({ children }: { children: ReactNode }) {
   const siteKey = import.meta.env.VITE_REVIEW_TURNSTILE_SITE_KEY;
   const widgetRef = useRef<BoundTurnstileObject | null>(null);
-  const pendingRef = useRef<PendingChallenge | null>(null);
-
-  const clearPending = useCallback(() => {
-    const pending = pendingRef.current;
-    if (!pending) {
-      return null;
-    }
-
-    window.clearTimeout(pending.timeoutId);
-    pendingRef.current = null;
-    return pending;
-  }, []);
+  const challenge = useMemo(() => createReviewChallenge(), []);
 
   const resolvePending = useCallback(
     (token: string, boundTurnstile?: BoundTurnstileObject) => {
@@ -67,9 +52,9 @@ export function ReviewTurnstileProvider({ children }: { children: ReactNode }) {
         widgetRef.current = boundTurnstile;
       }
 
-      clearPending()?.resolve(token);
+      challenge.resolve(token);
     },
-    [clearPending],
+    [challenge],
   );
 
   const rejectPending = useCallback(
@@ -82,9 +67,9 @@ export function ReviewTurnstileProvider({ children }: { children: ReactNode }) {
         widgetRef.current = boundTurnstile;
       }
 
-      clearPending()?.reject(toError(message, error));
+      challenge.reject(message, error);
     },
-    [clearPending],
+    [challenge],
   );
 
   useEffect(() => {
@@ -107,35 +92,12 @@ export function ReviewTurnstileProvider({ children }: { children: ReactNode }) {
       );
     }
 
-    if (pendingRef.current) {
-      return Promise.reject(
-        new Error("Cloudflare Turnstile is already verifying another request."),
-      );
-    }
-
-    return new Promise<string>((resolve, reject) => {
-      const timeoutId = window.setTimeout(() => {
-        pendingRef.current = null;
-        reject(new Error("Cloudflare Turnstile timed out. Please try again."));
-      }, TURNSTILE_TIMEOUT_MS);
-
-      pendingRef.current = {
-        resolve,
-        reject,
-        timeoutId,
-      };
-
-      try {
-        boundTurnstile.reset();
-        boundTurnstile.execute();
-      } catch (error) {
-        clearPending();
-        reject(
-          toError("Cloudflare Turnstile failed to start verification.", error),
-        );
-      }
-    });
-  }, [clearPending]);
+    return Effect.runPromise(
+      challenge
+        .execute(boundTurnstile)
+        .pipe(Effect.mapError((error) => toError(error.message, error.cause))),
+    );
+  }, [challenge, siteKey]);
 
   const handleLoad = useCallback<NonNullable<TurnstileProps["onLoad"]>>(
     (_widgetId, boundTurnstile) => {
