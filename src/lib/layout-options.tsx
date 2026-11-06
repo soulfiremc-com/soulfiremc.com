@@ -13,9 +13,9 @@ export function getBaseLayoutOptions(): BaseLayoutProps {
             src="/logo.png"
             width={32}
             height={32}
-            alt="SoulFire Logo"
+            alt="Soulfire Logo"
           />
-          <span className="font-medium">SoulFire</span>
+          <span className="font-medium">Soulfire</span>
         </>
       ),
       transparentMode: "top",

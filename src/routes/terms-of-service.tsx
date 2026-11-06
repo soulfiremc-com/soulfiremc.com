@@ -41,7 +41,7 @@ function TermsOfService() {
 
       <h2>1. Agreement to Terms</h2>
       <p>
-        By accessing or using the SoulFire website at{" "}
+        By accessing or using the Soulfire website at{" "}
         <a href="https://soulfiremc.com">soulfiremc.com</a>{" "}
         (&quot;Service&quot;), you agree to be bound by these Terms of Service
         (&quot;Terms&quot;). If you do not agree to these Terms, do not use the
@@ -56,11 +56,11 @@ function TermsOfService() {
 
       <h2>2. Description of Service</h2>
       <p>
-        SoulFire is an open-source Minecraft bot software project. The website
+        Soulfire is an open-source Minecraft bot software project. The website
         at soulfiremc.com provides:
       </p>
       <ul>
-        <li>Documentation for the SoulFire software</li>
+        <li>Documentation for the Soulfire software</li>
         <li>User accounts for community features</li>
         <li>Blog posts and guides</li>
         <li>Links to third-party account, proxy, and resource providers</li>
@@ -115,10 +115,10 @@ function TermsOfService() {
 
       <h2>5. Intellectual Property</h2>
       <p>
-        The SoulFire software is open-source and licensed under its respective
+        The Soulfire software is open-source and licensed under its respective
         open-source license. The website content, design, and branding
         (excluding user-generated content and open-source components) are the
-        property of SoulFire and its contributors.
+        property of Soulfire and its contributors.
       </p>
       <p>
         Third-party listings (accounts, proxies, resources) linked on the
@@ -221,7 +221,7 @@ function TermsOfService() {
 
       <h2>12. Indemnification</h2>
       <p>
-        You agree to indemnify and hold harmless SoulFire and its contributors
+        You agree to indemnify and hold harmless Soulfire and its contributors
         from and against any claims, liabilities, damages, losses, and expenses
         (including reasonable attorney fees) arising out of or in any way
         connected with your access to or use of the Service or your violation of
@@ -268,8 +268,8 @@ function TermsOfService() {
 export const Route = createFileRoute("/terms-of-service")({
   head: () => ({
     meta: getPageMeta({
-      title: "Terms of Service - SoulFire",
-      description: "SoulFire Terms of Service.",
+      title: "Terms of Service - Soulfire",
+      description: "Soulfire Terms of Service.",
       path: "/terms-of-service",
     }),
     links: getCanonicalLinks("/terms-of-service"),

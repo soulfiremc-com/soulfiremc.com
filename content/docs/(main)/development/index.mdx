@@ -1,7 +1,7 @@
 ---
 title: Development
 sidebarTitle: "Overview"
-description: Build a plugin when visual scripting cannot provide the Minecraft or SoulFire access that you need.
+description: Build a plugin when visual scripting cannot provide the Minecraft or Soulfire access that you need.
 icon: Code
 ---
 
@@ -22,9 +22,9 @@ Use plugins when visual scripting cannot provide the control that you need.
 Plugins can add low-level hooks, Mixins, packet handling, settings pages, and direct access to Minecraft objects.
 
 <Callout type="warning">
-  SoulFire plugins can access internal code.
-  A SoulFire update can break integrations that use this access.
-  Keep your plugin version, the current Javadocs, and the current SoulFire source tree aligned.
+  Soulfire plugins can access internal code.
+  A Soulfire update can break integrations that use this access.
+  Keep your plugin version, the current Javadocs, and the current Soulfire source tree aligned.
 </Callout>
 
 ## Choose the right tool
@@ -47,13 +47,13 @@ Move to plugin development when:
 
 For your first plugin, read these pages in order:
 
-1. [Build Your First Plugin](/docs/development/first-plugin) to get one jar loading inside SoulFire
+1. [Build Your First Plugin](/docs/development/first-plugin) to get one jar loading inside Soulfire
 2. [Environment Setup](/docs/development/environment-setup) to align Java, IntelliJ, and your local source checkout
 3. [Gradle And Project Layout](/docs/development/gradle-and-project-layout) when you start changing the template
 4. [Event System](/docs/development/event-system) and [Settings And Metadata](/docs/development/settings-and-metadata) for normal plugin work
 5. [Bot Control And Direct Access](/docs/development/bot-control-and-direct-access) only when you need real runtime objects or controlling tasks
 6. [Mixins And Access Wideners](/docs/development/mixins-and-access-wideners) only when the public API is not enough
-7. [Architecture And Protocols](/docs/development/architecture-and-protocols) when you need to trace how SoulFire wires the internals together
+7. [Architecture And Protocols](/docs/development/architecture-and-protocols) when you need to trace how Soulfire wires the internals together
 
 ## Development map
 
@@ -63,21 +63,21 @@ For your first plugin, read these pages in order:
     title="Build Your First Plugin"
     href="/docs/development/first-plugin"
   >
-    Start from the official template, register an `ExternalPlugin`, build the jar, and load it into SoulFire.
+    Start from the official template, register an `ExternalPlugin`, build the jar, and load it into Soulfire.
   </Card>
   <Card
     icon={<Wrench />}
     title="Environment Setup"
     href="/docs/development/environment-setup"
   >
-    Set up Java, Gradle, IntelliJ, and a local source checkout that matches the SoulFire version you target.
+    Set up Java, Gradle, IntelliJ, and a local source checkout that matches the Soulfire version you target.
   </Card>
   <Card
     icon={<GitBranchPlus />}
     title="Gradle And Project Layout"
     href="/docs/development/gradle-and-project-layout"
   >
-    Configure Loom, Maven repositories, SoulFire dependencies, and the Fabric project files your plugin needs.
+    Configure Loom, Maven repositories, Soulfire dependencies, and the Fabric project files your plugin needs.
   </Card>
   <Card
     icon={<Blocks />}
@@ -105,7 +105,7 @@ For your first plugin, read these pages in order:
     title="Mixins And Access Wideners"
     href="/docs/development/mixins-and-access-wideners"
   >
-    Inject into Minecraft or SoulFire code when no stable event or API is available.
+    Inject into Minecraft or Soulfire code when no stable event or API is available.
   </Card>
   <Card
     icon={<LibraryBig />}
@@ -127,15 +127,15 @@ For your first plugin, read these pages in order:
 
 Use these as your SoulFire-specific source of truth when writing or updating a plugin:
 
-- [SoulFire source repository](https://github.com/soulfiremc-com/SoulFire)
+- [Soulfire source repository](https://github.com/soulfiremc-com/SoulFire)
 - [SoulFirePluginExample template](https://github.com/soulfiremc-com/SoulFirePluginExample)
-- [Official SoulFire Javadocs](https://ci.codemc.io/job/AlexProgrammerDE/job/SoulFire/javadoc/)
+- [Official Soulfire Javadocs](https://ci.codemc.io/job/AlexProgrammerDE/job/SoulFire/javadoc/)
 - [Built-in plugin sources](https://github.com/soulfiremc-com/SoulFire/tree/main/mod/src/main/java/com/soulfiremc/server/plugins)
 - [Proto definitions for server, instance, bot, and scripting APIs](https://github.com/soulfiremc-com/SoulFire/tree/main/proto/src/main/proto/soulfire)
 
 ## Fabric and Mixin references
 
-SoulFire plugin development sits on top of Fabric, Loom, and Mixins.
+Soulfire plugin development sits on top of Fabric, Loom, and Mixins.
 These are the external references worth keeping open in another tab:
 
 | Topic | Link |
@@ -148,6 +148,6 @@ These are the external references worth keeping open in another tab:
 ## Related pages
 
 - [Plugins](/docs/concepts/plugins) for the high-level Fabric-based model
-- [Install Plugins](/docs/how-to/install-plugins) for loading a built jar into SoulFire
+- [Install Plugins](/docs/how-to/install-plugins) for loading a built jar into Soulfire
 - [Built-in Plugins](/docs/reference/built-in-plugins) for the currently shipped plugin list
 - [Scripting](/docs/scripting) if your use case can stay in the visual editor

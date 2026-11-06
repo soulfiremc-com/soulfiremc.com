@@ -5,7 +5,7 @@ description: Reuse named instances and accounts, authenticate Microsoft accounts
 icon: Search
 ---
 
-Use names for normal setup. Instance names belong to the authenticated SoulFire user; bot names belong to one instance.
+Use names for normal setup. Instance names belong to the authenticated Soulfire user; bot names belong to one instance.
 Repeated calls reuse saved accounts and preserve their configuration.
 Conflicting server addresses, usernames, or authentication methods fail explicitly.
 
@@ -70,7 +70,7 @@ export SOULFIRE_URL="http://127.0.0.1:38765"
 export SOULFIRE_TOKEN="YOUR_API_TOKEN"
 ```
 
-`SOULFIRE_URL` is the SoulFire API address. The `server` argument is the Minecraft address.
+`SOULFIRE_URL` is the Soulfire API address. The `server` argument is the Minecraft address.
 Use HTTPS for a remote backend. On PowerShell, use `$env:SOULFIRE_URL = "..."` and `$env:SOULFIRE_TOKEN = "..."`.
 
 The TypeScript client provides `createBot` after the connection handshake:

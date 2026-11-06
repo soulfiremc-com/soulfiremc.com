@@ -1,7 +1,7 @@
 ---
 title: Auto Register
 sidebarTitle: "Auto register"
-description: Configure SoulFire's auto-register plugin to respond to AuthMe-style register and login prompts automatically.
+description: Configure Soulfire's auto-register plugin to respond to AuthMe-style register and login prompts automatically.
 icon: KeyRound
 ---
 
@@ -14,8 +14,8 @@ Use `auto-register` when the target server expects players to register or log in
 
 The current built-in behavior is simple:
 
-- if a chat message contains `/register` or `/reg`, SoulFire sends the configured register command
-- if a chat message contains `/login` or `/l`, SoulFire sends the configured login command
+- if a chat message contains `/register` or `/reg`, Soulfire sends the configured register command
+- if a chat message contains `/login` or `/l`, Soulfire sends the configured login command
 - the command is sent after a random delay in milliseconds
 
 This works with AuthMe-style flows and similar chat login plugins.
@@ -124,7 +124,7 @@ Do not assume every server uses the same syntax.
 
 ## Delay guidance
 
-The delay controls when SoulFire sends the command after the prompt.
+The delay controls when Soulfire sends the command after the prompt.
 
 - Keep the delay low if the server expects a fast response and the chat prompt is reliable.
 - Increase it slightly if the server, proxy, or chat pipeline is noisy and immediate responses misfire.

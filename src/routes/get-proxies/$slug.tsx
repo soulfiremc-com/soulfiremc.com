@@ -324,7 +324,7 @@ function getProxyDetailPageData({
     "@context": "https://schema.org",
     "@type": "WebPage",
     "@id": `https://soulfiremc.com/get-proxies/${provider.slug}#webpage`,
-    name: `${provider.name} - Proxy Provider for SoulFire`,
+    name: `${provider.name} - Proxy Provider for Soulfire`,
     description: provider.summary,
     url: `https://soulfiremc.com/get-proxies/${provider.slug}`,
     inLanguage: "en-US",
@@ -336,7 +336,7 @@ function getProxyDetailPageData({
     },
     isPartOf: {
       "@type": "WebSite",
-      name: "SoulFire",
+      name: "Soulfire",
       url: "https://soulfiremc.com",
     },
   };
@@ -382,7 +382,7 @@ export const Route = createFileRoute("/get-proxies/$slug")({
 
     return {
       meta: getPageMeta({
-        title: `${data.provider.name} - Proxy Provider for SoulFire`,
+        title: `${data.provider.name} - Proxy Provider for Soulfire`,
         description: data.provider.summary,
         path: `/get-proxies/${data.provider.slug}`,
         imageUrl: getProxyPageImage(data.provider.slug).url,

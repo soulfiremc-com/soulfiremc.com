@@ -8,7 +8,7 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 ## Test without proxies first
 
-If SoulFire works without proxies, test the proxy pool first.
+If Soulfire works without proxies, test the proxy pool first.
 
 Do not keep changing unrelated settings before you test that simple split.
 
@@ -18,7 +18,7 @@ Compare your input against [Proxy Formats](/docs/reference/proxy-formats).
 
 Common mistakes:
 
-- using `https://` proxy URLs even though SoulFire expects HTTP, SOCKS4, SOCKS5, or matching URI forms
+- using `https://` proxy URLs even though Soulfire expects HTTP, SOCKS4, SOCKS5, or matching URI forms
 - mixing several proxy types in a file without using a format that supports that
 - importing username/password proxies with the wrong field order
 
@@ -38,7 +38,7 @@ If that fails, the pool is not good enough for production use yet.
 
 ## Separate gameplay proxies from account-auth proxies
 
-SoulFire can route account authentication through proxies.
+Soulfire can route account authentication through proxies.
 First, test account authentication without proxies.
 
 Start with:
@@ -52,7 +52,7 @@ This separates authentication problems from gameplay connection problems.
 
 ## Replace proxies that often time out
 
-If you see repeated proxy connect timeouts, especially on SOCKS pools, do not assume SoulFire is at fault first.
+If you see repeated proxy connect timeouts, especially on SOCKS pools, do not assume Soulfire is at fault first.
 
 Usually that means at least one of these:
 

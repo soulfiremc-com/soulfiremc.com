@@ -9,11 +9,11 @@ import { Callout } from 'fumadocs-ui/components/callout';
 import { Steps } from 'fumadocs-ui/components/steps';
 
 `@soulfiremc/beat-game` is a separate first-party package.
-It uses SoulFire observations, actions, pathfinding, control leases, tasks, and plugin APIs.
-SoulFire does not contain a beat-game planner.
+It uses Soulfire observations, actions, pathfinding, control leases, tasks, and plugin APIs.
+Soulfire does not contain a beat-game planner.
 
 <Callout type="info">
-  SoulFire handles Minecraft mechanics close to the connection. Your
+  Soulfire handles Minecraft mechanics close to the connection. Your
   TypeScript process owns goals, recovery policy, checkpoints, and team
   coordination.
 </Callout>
@@ -150,7 +150,7 @@ fails `awaitCompletion` with `BeatGameCancelled` and retains its checkpoint.
 
 ## What the server still does
 
-The runner deliberately uses SoulFire's durable generic tasks for work such as
+The runner deliberately uses Soulfire's durable generic tasks for work such as
 collecting blocks, attacking, crafting, building, smelting, exploring, and
 automatic equipment management. It uses direct actions and observations for
 game-specific workflows such as throwing an eye, casting a portal, and

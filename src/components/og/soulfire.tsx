@@ -34,7 +34,7 @@ export function BlogOgImage({
   logoSrc?: string;
 }) {
   const category = tags?.[0] ? labelize(tags[0]) : "Blog";
-  const byline = author || "SoulFire Team";
+  const byline = author || "Soulfire Team";
   const metadata = [date, readTime].filter(Boolean).join("  •  ");
   const titleSize = fitTitleSize(title, {
     base: 86,
@@ -102,7 +102,7 @@ export function BlogOgImage({
           }}
         >
           {description ||
-            "Fresh notes on Minecraft bot testing, operations, and SoulFire development."}
+            "Fresh notes on Minecraft bot testing, operations, and Soulfire development."}
         </div>
       </div>
 
@@ -110,7 +110,7 @@ export function BlogOgImage({
         {logoSrc ? (
           <img
             src={logoSrc}
-            alt="SoulFire logo"
+            alt="Soulfire logo"
             style={{
               width: 84,
               height: 84,
@@ -225,7 +225,7 @@ export function DocsOgImage({
             }}
           >
             {description ||
-              "Guides and reference material for using, extending, and operating SoulFire."}
+              "Guides and reference material for using, extending, and operating Soulfire."}
           </div>
         </div>
         <div
@@ -251,7 +251,7 @@ export function DocsOgImage({
             {logoSrc ? (
               <img
                 src={logoSrc}
-                alt="SoulFire logo"
+                alt="Soulfire logo"
                 style={{
                   width: 34,
                   height: 34,

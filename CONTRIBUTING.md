@@ -1,6 +1,6 @@
 # Contributing to soulfiremc.com
 
-This repository maintains the SoulFire website, documentation, and executable examples.
+This repository maintains the Soulfire website, documentation, and executable examples.
 This guide covers local development, validation, and pull requests.
 
 ## Before you start
@@ -54,7 +54,7 @@ prerequisites, and show how the reader can verify that the task worked.
 ## Choose the right page
 
 - **Get started:** guided tutorials with a small, repeatable result.
-- **Use SoulFire, testing, automation, scripting, and server guides:** procedures
+- **Use Soulfire, testing, automation, scripting, and server guides:** procedures
   for a specific task. Link to prerequisites instead of repeating installation.
 - **Reference:** exact names, formats, defaults, methods, and schemas.
 - **Concepts:** explain behavior and tradeoffs without turning into a procedure.
@@ -111,7 +111,7 @@ The existing `--check` mode compares saved pages with generated output.
 
 The full SDK references live at [ts.soulfiremc.com](https://ts.soulfiremc.com/)
 and [py.soulfiremc.com](https://py.soulfiremc.com/).
-TypeDoc and Sphinx with AutoAPI build these static sites from the SoulFire repository.
+TypeDoc and Sphinx with AutoAPI build these static sites from the Soulfire repository.
 Keep signatures, defaults, comments, and docstrings in the SDK source.
 See [the reference publishing instructions](https://github.com/soulfiremc-com/SoulFire/tree/main/sdk/reference).
 Keep tutorials, recipes, and explanations in this website.

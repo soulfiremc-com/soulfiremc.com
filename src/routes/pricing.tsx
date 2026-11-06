@@ -22,7 +22,7 @@ import {
 } from "@/lib/seo";
 
 const freeTierFeatures = [
-  "Full SoulFire bot framework",
+  "Full Soulfire bot framework",
   "All platforms supported",
   "Every Minecraft version",
   "Visual scripting system",
@@ -47,7 +47,7 @@ function PricingPageContent() {
           Simple, transparent pricing
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl">
-          SoulFire is and always will be free. If you love the project, consider
+          Soulfire is and always will be free. If you love the project, consider
           becoming a supporter.
         </p>
       </div>
@@ -152,7 +152,7 @@ function PricingPageContent() {
           One-time Donations
         </h2>
         <p className="text-lg text-muted-foreground max-w-2xl">
-          Want to support SoulFire without a recurring commitment? You can make
+          Want to support Soulfire without a recurring commitment? You can make
           a one-time donation via Ko-fi or cryptocurrency.
         </p>
         <p className="text-sm text-muted-foreground max-w-2xl">
@@ -208,12 +208,12 @@ function PricingPageContent() {
 export const Route = createFileRoute("/pricing")({
   head: () => ({
     meta: getPageMeta({
-      title: "Pricing - SoulFire",
+      title: "Pricing - Soulfire",
       description:
-        "SoulFire is free and open source. Support the project and get priority help.",
+        "Soulfire is free and open source. Support the project and get priority help.",
       path: "/pricing",
       imageUrl: "/og/site/pricing/image.webp",
-      imageAlt: "SoulFire pricing preview",
+      imageAlt: "Soulfire pricing preview",
     }),
     links: getCanonicalLinks("/pricing"),
     scripts: [
@@ -221,9 +221,9 @@ export const Route = createFileRoute("/pricing")({
         createStructuredDataGraph([
           createWebPageStructuredData({
             path: "/pricing",
-            title: "Pricing - SoulFire",
+            title: "Pricing - Soulfire",
             description:
-              "SoulFire is free and open source. Support the project and get priority help.",
+              "Soulfire is free and open source. Support the project and get priority help.",
             imageUrl: "/og/site/pricing/image.webp",
           }),
         ]),

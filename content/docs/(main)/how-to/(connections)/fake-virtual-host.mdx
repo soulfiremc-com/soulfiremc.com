@@ -14,7 +14,7 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
 
 That means:
 
-- SoulFire still connects to the address you configured
+- Soulfire still connects to the address you configured
 - but the server can be told that the client originally targeted a different hostname and port
 
 Use this on networks that route or authorize connections by the virtual host.
@@ -98,7 +98,7 @@ Connect to the shared IP and set the hostname that the proxy expects.
 ### Frontends or reverse proxies
 
 Some infrastructures preserve or inspect the original requested host during the handshake.
-If SoulFire reaches the frontend through a different address than normal players do, faking the virtual host can restore the expected login context.
+If Soulfire reaches the frontend through a different address than normal players do, faking the virtual host can restore the expected login context.
 
 ## Verification checklist
 
@@ -116,7 +116,7 @@ If the connection lands on the wrong backend or gets rejected immediately, the f
 - It does not emulate proxy forwarding.
 - It does not replace [Forwarding Bypass](/docs/how-to/forwarding-bypass).
 - It does not bypass anti-bot systems by itself.
-- It does not change the actual TCP destination SoulFire connects to.
+- It does not change the actual TCP destination Soulfire connects to.
 
 <Callout type="info">
   If the problem is about what hostname the server sees, use this page.

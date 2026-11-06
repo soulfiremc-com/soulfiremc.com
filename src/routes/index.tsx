@@ -29,12 +29,12 @@ const faqItems: {
   answerElement: React.ReactNode;
 }[] = [
   {
-    question: "What is SoulFire?",
+    question: "What is Soulfire?",
     answerHtml:
-      'SoulFire is a Minecraft bot framework built on Fabric. It runs Minecraft client code for server testing and automation. <a href="https://soulfiremc.com/docs">Read the docs</a>.',
+      'Soulfire is a Minecraft bot framework built on Fabric. It runs Minecraft client code for server testing and automation. <a href="https://soulfiremc.com/docs">Read the docs</a>.',
     answerElement: (
       <>
-        SoulFire is a Minecraft bot framework built on Fabric. It runs Minecraft
+        Soulfire is a Minecraft bot framework built on Fabric. It runs Minecraft
         client code for server testing and automation.{" "}
         <Link
           to="/docs/$"
@@ -48,11 +48,11 @@ const faqItems: {
     ),
   },
   {
-    question: "Is SoulFire free?",
-    answerHtml: `Yes. SoulFire is free to use and modify under AGPL-3.0. <a href="https://soulfiremc.com/download">Download it</a> or view the source on <a href="${githubLink}">GitHub</a>.`,
+    question: "Is Soulfire free?",
+    answerHtml: `Yes. Soulfire is free to use and modify under AGPL-3.0. <a href="https://soulfiremc.com/download">Download it</a> or view the source on <a href="${githubLink}">GitHub</a>.`,
     answerElement: (
       <>
-        Yes. SoulFire is free to use and modify under AGPL-3.0.{" "}
+        Yes. Soulfire is free to use and modify under AGPL-3.0.{" "}
         <Link to="/download" className="underline text-primary">
           Download it
         </Link>{" "}
@@ -70,12 +70,12 @@ const faqItems: {
     ),
   },
   {
-    question: "What Minecraft versions does SoulFire support?",
+    question: "What Minecraft versions does Soulfire support?",
     answerHtml:
-      'SoulFire supports Classic, Alpha, Beta, and current Java releases, plus Combat Snapshots, April Fools versions, and Bedrock Edition. Protocol translation is built in. See the <a href="https://soulfiremc.com/docs/reference/versions">full version list</a>.',
+      'Soulfire supports Classic, Alpha, Beta, and current Java releases, plus Combat Snapshots, April Fools versions, and Bedrock Edition. Protocol translation is built in. See the <a href="https://soulfiremc.com/docs/reference/versions">full version list</a>.',
     answerElement: (
       <>
-        SoulFire supports Classic, Alpha, Beta, and current Java releases, plus
+        Soulfire supports Classic, Alpha, Beta, and current Java releases, plus
         Combat Snapshots, April Fools versions, and Bedrock Edition. Protocol
         translation is built in. See the{" "}
         <Link
@@ -90,18 +90,18 @@ const faqItems: {
     ),
   },
   {
-    question: "Can servers detect SoulFire bots?",
+    question: "Can servers detect Soulfire bots?",
     answerHtml:
-      "Yes. SoulFire runs real client code, but servers can still detect bots. Use it to test your server's anti-bot and anti-cheat plugins.",
+      "Yes. Soulfire runs real client code, but servers can still detect bots. Use it to test your server's anti-bot and anti-cheat plugins.",
     answerElement: (
       <>
-        Yes. SoulFire runs real client code, but servers can still detect bots.
+        Yes. Soulfire runs real client code, but servers can still detect bots.
         Use it to test your server's anti-bot and anti-cheat plugins.
       </>
     ),
   },
   {
-    question: "How do I install SoulFire?",
+    question: "How do I install Soulfire?",
     answerHtml:
       '<a href="https://soulfiremc.com/download">Download</a> the installer for Windows, macOS, or Linux. It includes Java, so you do not need to install it separately. Follow the <a href="https://soulfiremc.com/docs/start-here">installation guide</a> for setup.',
     answerElement: (
@@ -123,7 +123,7 @@ const faqItems: {
     ),
   },
   {
-    question: "Does SoulFire support Bedrock Edition?",
+    question: "Does Soulfire support Bedrock Edition?",
     answerHtml:
       'Yes, through built-in protocol translation. Bots can join, move, and interact with Bedrock servers. Some features are still missing. See <a href="https://soulfiremc.com/docs/reference/versions">supported versions</a> for details.',
     answerElement: (
@@ -144,10 +144,10 @@ const faqItems: {
   {
     question: "Can I write custom plugins?",
     answerHtml:
-      'Yes. Plugins are Fabric mods with access to Minecraft and SoulFire internals. The <a href="https://soulfiremc.com/docs/development">development docs</a> cover low-level hooks, custom settings, Mixins, and direct bot control. Use scripting for high-level automation.',
+      'Yes. Plugins are Fabric mods with access to Minecraft and Soulfire internals. The <a href="https://soulfiremc.com/docs/development">development docs</a> cover low-level hooks, custom settings, Mixins, and direct bot control. Use scripting for high-level automation.',
     answerElement: (
       <>
-        Yes. Plugins are Fabric mods with access to Minecraft and SoulFire
+        Yes. Plugins are Fabric mods with access to Minecraft and Soulfire
         internals. The{" "}
         <Link
           to="/docs/$"
@@ -186,7 +186,7 @@ function HomePage() {
   const softwareJsonLd: WithContext<SoftwareApplication> = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    name: "SoulFire",
+    name: "Soulfire",
     description:
       "Minecraft bots for server testing, automation, and development.",
     applicationCategory: "DeveloperApplication",
@@ -200,7 +200,7 @@ function HomePage() {
     softwareVersion: "2.0",
     author: {
       "@type": "Organization",
-      name: "SoulFire",
+      name: "Soulfire",
       url: "https://soulfiremc.com",
     },
     featureList: [
@@ -256,11 +256,11 @@ function HomePage() {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: getPageMeta({
-      title: "SoulFire - Minecraft bots for testing and automation",
+      title: "Soulfire - Minecraft bots for testing and automation",
       description: siteDescription,
       path: "/",
       imageUrl: "/og/site/home/image.webp",
-      imageAlt: "SoulFire home page preview",
+      imageAlt: "Soulfire home page preview",
     }),
     links: getCanonicalLinks("/"),
     scripts: [
@@ -268,7 +268,7 @@ export const Route = createFileRoute("/")({
         createStructuredDataGraph([
           createWebPageStructuredData({
             path: "/",
-            title: "SoulFire - Minecraft bots for testing and automation",
+            title: "Soulfire - Minecraft bots for testing and automation",
             description: siteDescription,
             imageUrl: "/og/site/home/image.webp",
           }),

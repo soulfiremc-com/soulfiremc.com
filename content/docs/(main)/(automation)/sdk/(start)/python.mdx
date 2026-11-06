@@ -6,7 +6,7 @@ icon: Code
 ---
 
 This program creates a ready bot from a Minecraft server address and username.
-The SDK downloads SoulFire and Java when needed and manages setup and cleanup.
+The SDK downloads Soulfire and Java when needed and manages setup and cleanup.
 
 ## Prepare the Minecraft server
 
@@ -39,7 +39,7 @@ def program() -> EffectGen[None, SoulFireOperationError, Scope]:
         username="DocsBot_1",
         installation={"version": "2.10.2"},
     )
-    yield from bot.chat.send("Hello from SoulFire")
+    yield from bot.chat.send("Hello from Soulfire")
     yield from sync(lambda: print(bot.state.player))
 
 
@@ -47,7 +47,7 @@ asyncio.run(run_async(scoped(program).or_die()))
 ```
 
 `server` is the Minecraft address.
-The SDK supplies the local SoulFire API URL and token and creates or finds the instance and account.
+The SDK supplies the local Soulfire API URL and token and creates or finds the instance and account.
 
 ## Run and check the result
 

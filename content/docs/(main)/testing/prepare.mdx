@@ -17,14 +17,14 @@ Record who will stop the run if it exceeds that limit.
 2. Preserve its world and settings before a test that can change them.
 3. Record the server software, version, plugins, proxy topology, and authentication mode.
 4. Check player limits, allowlists, permissions, and account requirements.
-5. Connect one normal player and one SoulFire bot.
+5. Connect one normal player and one Soulfire bot.
 
 A rejected login must be resolved before it becomes part of a load test.
 Use [compatibility checks](/docs/testing/compatibility) for versions and authentication.
 
 ## Prepare the workload
 
-Create a dedicated SoulFire instance for the run.
+Create a dedicated Soulfire instance for the run.
 Record its target address, account count, account type, join timing, proxy routes, enabled plugins, and scripts.
 Disable behaviors unrelated to the question.
 
@@ -57,7 +57,7 @@ Result and artifact locations:
 ## Prepare observations
 
 Record Minecraft tick duration, CPU, memory, player count, and disconnect reasons.
-Record the same resource metrics on the SoulFire backend.
+Record the same resource metrics on the Soulfire backend.
 Use your server's metrics and profiling tools. For Spark, see the [official command guide](https://spark.lucko.me/docs/Command-Usage).
 
 Capture the baseline before the bot run.

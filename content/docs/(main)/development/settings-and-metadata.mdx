@@ -1,15 +1,15 @@
 ---
 title: Settings And Metadata
 sidebarTitle: "Settings and metadata"
-description: Add typed settings and UI pages, then store plugin data in SoulFire.
+description: Add typed settings and UI pages, then store plugin data in Soulfire.
 icon: Settings
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-SoulFire uses typed properties for settings.
+Soulfire uses typed properties for settings.
 The server sends these properties to the GUI and CLI as structured metadata.
-You define an option once, and SoulFire shows it in each client.
+You define an option once, and Soulfire shows it in each client.
 
 ## How the settings model works
 
@@ -24,11 +24,11 @@ The official example plugin uses this pattern.
 
 ## Scopes
 
-SoulFire uses three setting scopes:
+Soulfire uses three setting scopes:
 
 | Scope | Source type | Meaning |
 | --- | --- | --- |
-| server | `SettingsSource.Server` | one value for the whole SoulFire server |
+| server | `SettingsSource.Server` | one value for the whole Soulfire server |
 | instance | `SettingsSource.Instance` | one value for an instance |
 | bot | `SettingsSource.Bot` | one value per bot/account inside an instance |
 
@@ -70,7 +70,7 @@ public final class MySettings implements SettingsObject {
 }
 ```
 
-SoulFire discovers page properties by reflecting over `public static final` fields on the class you register.
+Soulfire discovers page properties by reflecting over `public static final` fields on the class you register.
 
 ## Registering a plugin page
 
@@ -91,7 +91,7 @@ public void onSettingsRegistryInit(InstanceSettingsRegistryInitEvent event) {
 ```
 
 That page definition is exported to the GUI and CLI.
-The `iconId` values are Lucide icon IDs, the same icon set SoulFire uses elsewhere.
+The `iconId` values are Lucide icon IDs, the same icon set Soulfire uses elsewhere.
 
 ## Reading settings
 
@@ -107,7 +107,7 @@ If you use a `ComboProperty`, you can map it to an enum:
 var mode = connection.settingsSource().get(MySettings.MODE, MyMode.class);
 ```
 
-If you use a `MinMaxProperty`, you can either read the full structure or ask SoulFire for a random value within the stored window.
+If you use a `MinMaxProperty`, you can either read the full structure or ask Soulfire for a random value within the stored window.
 
 ## Why the GUI and CLI can render your settings automatically
 
@@ -116,13 +116,13 @@ If you use a `MinMaxProperty`, you can either read the full structure or ask Sou
 - `SettingsDefinition`: the type, description, defaults, and validation rules for each property
 - `SettingsPage`: the grouping, ordering, icon, owning plugin, and optional enabled toggle
 
-SoulFire sends these definitions in the server and instance gRPC responses.
+Soulfire sends these definitions in the server and instance gRPC responses.
 The GUI and CLI use them to build your plugin page.
 
 ## Temporary and saved metadata
 
 Plugin state does not always belong in settings.
-SoulFire also gives you metadata holders.
+Soulfire also gives you metadata holders.
 
 Use:
 

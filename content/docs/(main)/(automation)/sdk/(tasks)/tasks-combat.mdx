@@ -41,7 +41,7 @@ result = yield from hunt.result()
 ```
 
 The selector must constrain a type, category, identity, tag, name,
-equipment, effect, or owner. SoulFire rejects an unconstrained selector.
+equipment, effect, or owner. Soulfire rejects an unconstrained selector.
 Combat selects and equips the strongest matching melee weapon.
 It respects attack cooldown and chases through Pathfinder v2.
 When the task stops, it restores the previous hotbar selection.
@@ -104,7 +104,7 @@ const escape = yield* bot.tasks.flee(
 );
 ```
 
-The trigger radius decides when SoulFire starts moving. The larger safe
+The trigger radius decides when Soulfire starts moving. The larger safe
 distance decides when the dynamic path is complete. `runFlee` and
 `run_flee` keep monitoring after an escape, while the bounded form completes
 after the area stays safe for the requested number of seconds.
@@ -112,7 +112,7 @@ after the area stays safe for the requested number of seconds.
 ## Guard a position or protect an entity
 
 Use `guard` for a fixed block position and `protect` for a live,
-connection-scoped entity. SoulFire searches around the protected subject,
+connection-scoped entity. Soulfire searches around the protected subject,
 intercepts matching threats, limits pursuit distance, and returns to the
 subject after combat.
 

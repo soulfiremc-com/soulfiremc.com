@@ -20,7 +20,7 @@ function PrivacyPolicy() {
       </p>
 
       <p>
-        This privacy notice for SoulFire (&quot;we,&quot; &quot;us,&quot; or
+        This privacy notice for Soulfire (&quot;we,&quot; &quot;us,&quot; or
         &quot;our&quot;) describes how and why we might collect, store, use,
         and/or share (&quot;process&quot;) your information when you use our
         services (&quot;Services&quot;), such as when you visit our website at{" "}
@@ -452,8 +452,8 @@ function PrivacyPolicy() {
 export const Route = createFileRoute("/privacy-policy")({
   head: () => ({
     meta: getPageMeta({
-      title: "Privacy Policy - SoulFire",
-      description: "SoulFire Privacy Policy.",
+      title: "Privacy Policy - Soulfire",
+      description: "Soulfire Privacy Policy.",
       path: "/privacy-policy",
     }),
     links: getCanonicalLinks("/privacy-policy"),

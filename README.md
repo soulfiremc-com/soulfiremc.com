@@ -1,6 +1,9 @@
 # soulfiremc.com
 
-The SoulFire website and documentation run on Cloudflare Workers with TanStack Start and D1.
+The Soulfire website and documentation run on Cloudflare Workers with TanStack Start and D1.
+
+Soulfire is the display name. Existing repository names, SDK exports, and download filenames keep their compatible spelling.
+Generated API and node snapshots retain the spelling of their pinned source revision.
 
 ## Local development
 
@@ -65,7 +68,7 @@ Documentation lives in `content/docs`, with downloadable recipes and images in
 `public/docs`. Read [CONTRIBUTING.md](CONTRIBUTING.md) for the writing workflow,
 source baseline, and example checks.
 
-Reference generators use the SoulFire revision pinned in `scripts/sdk-source.ts`.
+Reference generators use the Soulfire revision pinned in `scripts/sdk-source.ts`.
 They cache that checkout in the system's temporary directory. Documentation checks
 require Bun, Git, Python 3.14, and Java 25. Gradle downloads the backend's build
 dependencies on the first run.

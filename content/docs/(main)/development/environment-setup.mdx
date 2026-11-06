@@ -1,21 +1,21 @@
 ---
 title: Environment Setup
 sidebarTitle: "Environment setup"
-description: Set up Java, Gradle, IntelliJ, and a source checkout that matches the SoulFire version your plugin targets.
+description: Set up Java, Gradle, IntelliJ, and a source checkout that matches the Soulfire version your plugin targets.
 icon: Wrench
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-This page prepares a workspace for SoulFire plugin development.
+This page prepares a workspace for Soulfire plugin development.
 The finished workspace can build and debug a plugin and show the current API.
 
 ## Recommended stack
 
-- **Java 25**: SoulFire currently builds and generates Javadocs with JDK 25.
-- **Gradle Wrapper**: use the wrapper from your plugin project and from the SoulFire source checkout.
+- **Java 25**: Soulfire currently builds and generates Javadocs with JDK 25.
+- **Gradle Wrapper**: use the wrapper from your plugin project and from the Soulfire source checkout.
 - **IntelliJ IDEA**: recommended for Fabric Loom, Mixins, Lombok, and large Java source navigation.
-- **A local SoulFire checkout**: use it as the real reference, even if your plugin lives in a separate repository.
+- **A local Soulfire checkout**: use it as the real reference, even if your plugin lives in a separate repository.
 
 ## Keep these references open
 
@@ -24,7 +24,7 @@ The finished workspace can build and debug a plugin and show the current API.
 - [SpongePowered Mixin wiki](https://github.com/SpongePowered/Mixin/wiki) if you end up debugging low-level injection behavior
 
 <Callout type="info">
-  SoulFire's current build logic and aggregated Javadocs both target Java 25.
+  Soulfire's current build logic and aggregated Javadocs both target Java 25.
   An older JDK can cause build and toolchain errors.
 </Callout>
 
@@ -43,7 +43,7 @@ Use:
 - `SoulFirePluginExample` as the starting template for new plugins
 
 Use the template for project structure.
-Use the SoulFire repository and Javadocs for current API behavior.
+Use the Soulfire repository and Javadocs for current API behavior.
 
 ## Recommended IntelliJ setup
 
@@ -52,11 +52,11 @@ If you use IntelliJ IDEA:
 1. open the plugin project as a Gradle project
 2. let Loom finish dependency setup before judging the project state
 3. install Lombok support if IntelliJ prompts you
-4. if you also open the SoulFire repo, import its inspection profile from `config/intellij_inspections.xml`
+4. if you also open the Soulfire repo, import its inspection profile from `config/intellij_inspections.xml`
 
-You do not need to open the whole SoulFire repo as a second module in the same project, but it is often useful.
+You do not need to open the whole Soulfire repo as a second module in the same project, but it is often useful.
 
-## What to inspect in the SoulFire source tree
+## What to inspect in the Soulfire source tree
 
 | Source location | Why it matters |
 | --- | --- |
@@ -69,14 +69,14 @@ You do not need to open the whole SoulFire repo as a second module in the same p
 
 ## Keep versions aligned
 
-Keep the plugin and SoulFire versions aligned.
+Keep the plugin and Soulfire versions aligned.
 
-- Match your plugin dependency version to the SoulFire version you actually run.
+- Match your plugin dependency version to the Soulfire version you actually run.
 - Read the current [CodeMC Maven metadata](https://repo.codemc.org/repository/maven-public/com/soulfiremc/mod/maven-metadata.xml) before you select a version.
 - Use the example plugin as a starting template.
 - Use the current Javadocs for low-level API details.
 
-The current example repository pins an older SoulFire version than the latest CodeMC metadata.
+The current example repository pins an older Soulfire version than the latest CodeMC metadata.
 Before you copy low-level code, compare it with the current Javadocs and source.
 
 ## When another IDE is acceptable
@@ -88,7 +88,7 @@ Other IDEs can work if they handle:
 - Loom and Fabric dependency resolution
 - large Java projects with generated sources
 
-IntelliJ is still the easiest path when you start debugging Mixins or browsing Minecraft and SoulFire source at the same time.
+IntelliJ is still the easiest path when you start debugging Mixins or browsing Minecraft and Soulfire source at the same time.
 
 ## Next steps
 

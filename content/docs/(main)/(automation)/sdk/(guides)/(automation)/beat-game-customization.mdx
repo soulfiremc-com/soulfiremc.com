@@ -92,7 +92,7 @@ const run = yield* beatGame(bot, {
 ```
 
 The plugin owns the optional domain behavior. It can also expose a durable
-task when work must continue through an SDK disconnect. SoulFire core does not
+task when work must continue through an SDK disconnect. Soulfire core does not
 gain a dragon-specific RPC.
 
 Use `soulfire.plugins.reflective(pluginId)` when no generated companion package
@@ -136,7 +136,7 @@ timeouts, and path limits fail before the run starts.
 
 For a long-lived deployment:
 
-1. Place the worker close to SoulFire to reduce action latency.
+1. Place the worker close to Soulfire to reduce action latency.
 2. Use a durable checkpoint store.
 3. Use one shared coordinator for multi-process teams.
 4. Drain the event stream into structured logs or telemetry.

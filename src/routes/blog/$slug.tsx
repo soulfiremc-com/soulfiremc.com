@@ -79,8 +79,8 @@ export const Route = createFileRoute("/blog/$slug")({
   },
   head: ({ loaderData }) => {
     const data = loaderData;
-    const title = data ? `${data.post.title} - SoulFire` : "SoulFire Blog";
-    const description = data?.post.description ?? "SoulFire blog post";
+    const title = data ? `${data.post.title} - Soulfire` : "Soulfire Blog";
+    const description = data?.post.description ?? "Soulfire blog post";
     const path = data?.post.url ?? "/blog";
     const imageUrl = data
       ? getBlogPageImage({ slugs: [data.post.slug] }).url
@@ -94,7 +94,7 @@ export const Route = createFileRoute("/blog/$slug")({
         imageUrl,
         imageAlt: data
           ? `${data.post.title} blog preview`
-          : "SoulFire blog preview",
+          : "Soulfire blog preview",
         ogType: "article",
       }),
       links: getCanonicalLinks(path),
@@ -107,7 +107,7 @@ export const Route = createFileRoute("/blog/$slug")({
           images: [new URL(imageUrl, "https://soulfiremc.com").href],
           links: [
             {
-              label: "Download SoulFire",
+              label: "Download Soulfire",
               url: "https://soulfiremc.com/download",
             },
           ],

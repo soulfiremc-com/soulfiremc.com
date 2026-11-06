@@ -19,7 +19,7 @@ function CookiePolicy() {
       </p>
 
       <p>
-        This Cookie Policy explains how SoulFire (&quot;we,&quot;
+        This Cookie Policy explains how Soulfire (&quot;we,&quot;
         &quot;us,&quot; or &quot;our&quot;) uses cookies and similar tracking
         technologies on <a href="https://soulfiremc.com">soulfiremc.com</a>.
       </p>
@@ -108,7 +108,7 @@ function CookiePolicy() {
             <TableCell>
               <code>better-auth.session_token</code>
             </TableCell>
-            <TableCell>SoulFire (better-auth)</TableCell>
+            <TableCell>Soulfire (better-auth)</TableCell>
             <TableCell>
               Maintains your authenticated session after signing in
             </TableCell>
@@ -118,7 +118,7 @@ function CookiePolicy() {
             <TableCell>
               <code>discord_oauth_state</code>
             </TableCell>
-            <TableCell>SoulFire</TableCell>
+            <TableCell>Soulfire</TableCell>
             <TableCell>
               CSRF protection during Discord OAuth linked roles flow
             </TableCell>
@@ -396,8 +396,8 @@ function CookiePolicy() {
 export const Route = createFileRoute("/cookie-policy")({
   head: () => ({
     meta: getPageMeta({
-      title: "Cookie Policy - SoulFire",
-      description: "SoulFire Cookie Policy.",
+      title: "Cookie Policy - Soulfire",
+      description: "Soulfire Cookie Policy.",
       path: "/cookie-policy",
     }),
     links: getCanonicalLinks("/cookie-policy"),

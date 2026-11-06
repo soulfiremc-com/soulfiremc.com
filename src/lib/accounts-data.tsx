@@ -249,21 +249,21 @@ export const BADGE_CONFIG: Record<
     label: "Official Integration",
     className: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400",
     description:
-      "This provider is officially integrated into the SoulFire client. You can purchase and import accounts directly from within the app.",
+      "This provider is officially integrated into the Soulfire client. You can purchase and import accounts directly from within the app.",
     icon: <Plug className="h-3 w-3" />,
   },
   partner: {
     label: "Partner",
     className: "bg-amber-500/10 text-amber-700 dark:text-amber-400",
     description:
-      "This provider partners with SoulFire and supports the project.",
+      "This provider partners with Soulfire and supports the project.",
     icon: <Heart className="h-3 w-3 fill-current" />,
   },
   affiliate: {
     label: "Affiliate",
     className: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
     description:
-      "Buying with this provider's code or link supports SoulFire at no extra cost to you.",
+      "Buying with this provider's code or link supports Soulfire at no extra cost to you.",
     icon: <Handshake className="h-3 w-3" />,
   },
 };

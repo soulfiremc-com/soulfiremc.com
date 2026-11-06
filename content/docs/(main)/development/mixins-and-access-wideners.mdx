@@ -8,7 +8,7 @@ icon: Layers
 import { Callout } from 'fumadocs-ui/components/callout';
 
 Use Mixins and access wideners only when the public plugin APIs are not enough.
-SoulFire plugins can use these Fabric tools:
+Soulfire plugins can use these Fabric tools:
 
 - Mixins for behavior changes and hook injection
 - access wideners for changing member visibility
@@ -27,7 +27,7 @@ Use these references for low-level integration work:
 
 ## Use Mixins only when you need them
 
-Use the public SoulFire API first:
+Use the public Soulfire API first:
 
 - events
 - settings pages
@@ -38,13 +38,13 @@ Reach for Mixins when:
 
 - there is no event at the right timing point
 - you need to change or observe control flow inside Minecraft
-- you need access to data that SoulFire does not expose yet
+- you need access to data that Soulfire does not expose yet
 - you need a hook inside one specific Minecraft method
 
 <Callout type="info">
-  SoulFire itself uses Mixins heavily.
+  Soulfire itself uses Mixins heavily.
   Its own event hooks for chat, packets, ticks, client settings, and movement input are all implemented through Mixins.
-  Use the SoulFire source tree as an example for plugin Mixins.
+  Use the Soulfire source tree as an example for plugin Mixins.
 </Callout>
 
 ## Required resource files
@@ -95,10 +95,10 @@ A minimal Mixin config looks like this:
 }
 ```
 
-Follow the template and the SoulFire runtime you target.
+Follow the template and the Soulfire runtime you target.
 Do not invent your own compatibility level blindly.
 
-The current SoulFire source tree and official example template both use `compatibilityLevel: "JAVA_21"`.
+The current Soulfire source tree and official example template both use `compatibilityLevel: "JAVA_21"`.
 Keep that aligned with the runtime you actually target instead of forcing it to match your local JDK version.
 
 ## Loom wiring
@@ -115,7 +115,7 @@ If you do not use an access widener yet, you can still keep the empty file so th
 
 ## Current-safe pattern for bot-aware Mixins
 
-The example repository is useful, but low-level API details can drift between SoulFire versions.
+The example repository is useful, but low-level API details can drift between Soulfire versions.
 For current versions, prefer `currentOptional()` or `current()` instead of relying on old internal field access patterns.
 
 Example:
@@ -160,16 +160,16 @@ Many plugins need both.
 - Keep Mixins thin. Put the real logic in ordinary classes.
 - Prefer stable high-level targets over fragile local-variable-heavy injections.
 - Null-check runtime objects like `player`, `level`, and `gameMode`.
-- Test against the exact SoulFire version you ship for.
+- Test against the exact Soulfire version you ship for.
 - Recheck the current built-in mixins before copying old examples.
 
 ## Source trees worth reading
 
-- [SoulFire Fabric metadata](https://github.com/soulfiremc-com/SoulFire/blob/main/mod/src/main/resources/fabric.mod.json)
-- [SoulFire mixin config](https://github.com/soulfiremc-com/SoulFire/blob/main/mod/src/main/resources/soulfire.mixins.json)
-- [SoulFire event-emitting mixins](https://github.com/soulfiremc-com/SoulFire/tree/main/mod/src/main/java/com/soulfiremc/mod/mixin/soulfire/api/event)
+- [Soulfire Fabric metadata](https://github.com/soulfiremc-com/SoulFire/blob/main/mod/src/main/resources/fabric.mod.json)
+- [Soulfire mixin config](https://github.com/soulfiremc-com/SoulFire/blob/main/mod/src/main/resources/soulfire.mixins.json)
+- [Soulfire event-emitting mixins](https://github.com/soulfiremc-com/SoulFire/tree/main/mod/src/main/java/com/soulfiremc/mod/mixin/soulfire/api/event)
 - [Plugin example mixin](https://github.com/soulfiremc-com/SoulFirePluginExample/blob/main/src/main/java/com/soulfiremc/pluginexample/mixin/EntityEffectStateMixin.java)
-- [SoulFire access widener](https://github.com/soulfiremc-com/SoulFire/blob/main/mod/src/main/resources/soulfire.accesswidener)
+- [Soulfire access widener](https://github.com/soulfiremc-com/SoulFire/blob/main/mod/src/main/resources/soulfire.accesswidener)
 
 ## Next steps
 

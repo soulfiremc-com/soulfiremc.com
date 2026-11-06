@@ -17,7 +17,7 @@ import { Callout } from 'fumadocs-ui/components/callout';
 | **URI** | Depends on the scheme | Lets one file mix HTTP, SOCKS4, and SOCKS5 entries |
 
 <Callout type="info">
-  SoulFire does not accept `https://` proxy URLs.
+  Soulfire does not accept `https://` proxy URLs.
   Use HTTP, SOCKS4, SOCKS5, or URI entries with these schemes.
 </Callout>
 
@@ -104,10 +104,10 @@ socks5://root:PassW0rd@192.168.0.1:8080
 
 ## Bot distribution across proxies
 
-SoulFire defaults to `-1` bots per proxy, which means unlimited.
+Soulfire defaults to `-1` bots per proxy, which means unlimited.
 It still tries to distribute bots evenly across the available proxies.
 
-If you set a hard limit such as `10`, SoulFire only allows 10 bots per proxy.
+If you set a hard limit such as `10`, Soulfire only allows 10 bots per proxy.
 Bots that cannot lease proxy capacity remain queued until capacity becomes available.
 
 ## Proxy settings reference
@@ -118,4 +118,4 @@ Bots that cannot lease proxy capacity remain queued until capacity becomes avail
 | **Shuffle proxies** | `false` | Randomizes proxy order before bots join |
 | **Proxy check address** | `mc.hypixel.net` | The server address used for proxy validation |
 | **Proxy check concurrency** | `10` | How many proxy checks run at once |
-| **Proxy check timeout** | `30` | How many seconds SoulFire waits before a check fails |
+| **Proxy check timeout** | `30` | How many seconds Soulfire waits before a check fails |

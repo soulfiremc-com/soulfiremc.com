@@ -1,13 +1,13 @@
 ---
 title: Triggers
-description: Learn when each SoulFire scripting trigger runs and what data it provides.
+description: Learn when each Soulfire scripting trigger runs and what data it provides.
 icon: Zap
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-Triggers start SoulFire scripts.
-When a trigger fires, SoulFire runs the connected execution path.
+Triggers start Soulfire scripts.
+When a trigger fires, Soulfire runs the connected execution path.
 
 ## Before you pick a trigger
 
@@ -16,7 +16,7 @@ Keep these engine details in mind:
 - A script can contain multiple triggers.
 - Each trigger can fire many times.
 - Trigger runs are limited by script quotas. The current default is **1 concurrent run per script**.
-- Event triggers use a buffer. Under heavy load, SoulFire can discard extra events when the buffer is full.
+- Event triggers use a buffer. Under heavy load, Soulfire can discard extra events when the buffer is full.
 - `On Pre Entity Tick` and `On Post Entity Tick` run on the tick thread. Expensive nodes can delay the game loop.
 - `On Interval` does not output a bot. If you need to act on bots, use `Get Bots` and `For Each Bot`.
 
@@ -146,7 +146,7 @@ Fires once when the script is stopping.
 | `timestamp` | Number | Stop time in milliseconds |
 
 `On Script End` runs during shutdown.
-SoulFire waits up to **5 seconds** for this trigger, so keep cleanup work short.
+Soulfire waits up to **5 seconds** for this trigger, so keep cleanup work short.
 
 ## Tick triggers
 

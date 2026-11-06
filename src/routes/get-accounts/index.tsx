@@ -133,12 +133,12 @@ const accountFaqItems: {
     ),
   },
   {
-    question: "Which account type works with SoulFire?",
+    question: "Which account type works with Soulfire?",
     answerHtml:
-      'MFA accounts are fully supported by SoulFire. For NFA accounts, SoulFire supports refresh token, cookie, and access token auth. Read the <a href="https://soulfiremc.com/docs/how-to/import-accounts">Account Guide</a> for setup instructions.',
+      'MFA accounts are fully supported by Soulfire. For NFA accounts, Soulfire supports refresh token, cookie, and access token auth. Read the <a href="https://soulfiremc.com/docs/how-to/import-accounts">Account Guide</a> for setup instructions.',
     answerElement: (
       <>
-        MFA accounts are fully supported by SoulFire. For NFA accounts, SoulFire
+        MFA accounts are fully supported by Soulfire. For NFA accounts, Soulfire
         supports refresh token, cookie, and access token auth. Read the{" "}
         <Link
           to="/docs/$"
@@ -167,11 +167,11 @@ const accountFaqItems: {
   {
     question: "What are token and cookie accounts?",
     answerHtml:
-      "Token and cookie accounts are common delivery formats for lower-cost Minecraft alts. SoulFire supports refresh token, cookie, and access token auth for compatible NFA providers.",
+      "Token and cookie accounts are common delivery formats for lower-cost Minecraft alts. Soulfire supports refresh token, cookie, and access token auth for compatible NFA providers.",
     answerElement: (
       <>
         Token and cookie accounts are common delivery formats for lower-cost
-        Minecraft alts. SoulFire supports refresh token, cookie, and access
+        Minecraft alts. Soulfire supports refresh token, cookie, and access
         token auth for compatible NFA providers.
       </>
     ),
@@ -179,23 +179,23 @@ const accountFaqItems: {
   {
     question: "What does SFA mean?",
     answerHtml:
-      "In community jargon, SFA usually means Semi Full Access. The term is inconsistent across alt shops and some marketplaces treat it as misleading, so SoulFire uses the clearer MFA/full-access and NFA/temporary labels instead.",
+      "In community jargon, SFA usually means Semi Full Access. The term is inconsistent across alt shops and some marketplaces treat it as misleading, so Soulfire uses the clearer MFA/full-access and NFA/temporary labels instead.",
     answerElement: (
       <>
         In community jargon, SFA usually means Semi Full Access. The term is
         inconsistent across alt shops and some marketplaces treat it as
-        misleading, so SoulFire uses the clearer MFA/full-access and
+        misleading, so Soulfire uses the clearer MFA/full-access and
         NFA/temporary labels instead.
       </>
     ),
   },
   {
-    question: "Are these providers affiliated with SoulFire?",
+    question: "Are these providers affiliated with Soulfire?",
     answerHtml:
-      "This is still a community-curated list and SoulFire does not own or operate these providers. Partner, official integration, and affiliate relationships are labeled on the page.",
+      "This is still a community-curated list and Soulfire does not own or operate these providers. Partner, official integration, and affiliate relationships are labeled on the page.",
     answerElement: (
       <>
-        This is still a community-curated list and SoulFire does not own or
+        This is still a community-curated list and Soulfire does not own or
         operate these providers. Partner, official integration, and affiliate
         relationships are labeled on the page.
       </>
@@ -842,7 +842,7 @@ function MainContent() {
                     Prices shown are per account.
                   </p>
                   <p className="text-sm text-warning">
-                    <strong>Note:</strong> SoulFire supports refresh token,
+                    <strong>Note:</strong> Soulfire supports refresh token,
                     cookie, and access token auth for many NFA account formats.
                   </p>
                 </div>
@@ -876,12 +876,12 @@ function GetAccountsClient() {
           Get Minecraft Accounts
         </h1>
         <p className="text-lg text-muted-foreground">
-          Compare trusted Minecraft alt shops for SoulFire, including MFA
+          Compare trusted Minecraft alt shops for Soulfire, including MFA
           full-access accounts and NFA temporary accounts.
         </p>
         <p className="text-sm text-muted-foreground">
           <BookOpen className="inline h-4 w-4 align-text-bottom" /> For more
-          information on how to use accounts with SoulFire, read the{" "}
+          information on how to use accounts with Soulfire, read the{" "}
           <Link
             to="/docs/$"
             params={{ _splat: "how-to/import-accounts" }}
@@ -925,9 +925,9 @@ function GetAccountsClient() {
           alts.watchdog.gay. Rankings based on community feedback and value.
         </p>
         <p className="text-sm text-muted-foreground">
-          <strong>Disclaimer:</strong> SoulFire does not own or operate these
-          providers. Partner listings support SoulFire, and affiliate codes or
-          links marked with an Affiliate badge help support SoulFire at no extra
+          <strong>Disclaimer:</strong> Soulfire does not own or operate these
+          providers. Partner listings support Soulfire, and affiliate codes or
+          links marked with an Affiliate badge help support Soulfire at no extra
           cost to you. Always do your own research before making purchases.
         </p>
         <p className="text-sm text-muted-foreground">
@@ -998,12 +998,12 @@ const accountsPageJsonLd = JSON.stringify({
   "@type": "CollectionPage",
   name: "Minecraft Alts, MFA & NFA Accounts",
   description:
-    "Compare Minecraft alt shops and account providers for SoulFire. Browse MFA full-access accounts, NFA temporary accounts, and token or cookie alts with current pricing and delivery details.",
+    "Compare Minecraft alt shops and account providers for Soulfire. Browse MFA full-access accounts, NFA temporary accounts, and token or cookie alts with current pricing and delivery details.",
   url: "https://soulfiremc.com/get-accounts",
   inLanguage: "en-US",
   isPartOf: {
     "@type": "WebSite",
-    name: "SoulFire",
+    name: "Soulfire",
     url: "https://soulfiremc.com",
   },
   breadcrumb: {
@@ -1024,7 +1024,7 @@ function createAccountsItemListJsonLd(
     "@id": "https://soulfiremc.com/get-accounts#provider-list",
     name: "Minecraft Alt Shops and Account Providers",
     description:
-      "Trusted Minecraft alt shops for SoulFire bot testing. Compare MFA full-access accounts, NFA temporary accounts, and token or cookie account options.",
+      "Trusted Minecraft alt shops for Soulfire bot testing. Compare MFA full-access accounts, NFA temporary accounts, and token or cookie account options.",
     numberOfItems: accountProvidersBySlug.length,
     itemListElement: accountProvidersBySlug.map((provider, index) => {
       const reviewSummary = reviewSummaries?.[provider.slug];
@@ -1088,12 +1088,12 @@ export const Route = createFileRoute("/get-accounts/")({
   },
   head: () => ({
     meta: getPageMeta({
-      title: "Minecraft Alts, MFA & NFA Accounts - SoulFire",
+      title: "Minecraft Alts, MFA & NFA Accounts - Soulfire",
       description:
-        "Compare Minecraft alt shops and account providers for SoulFire. Browse MFA full-access accounts, NFA temporary accounts, and token or cookie alts with current pricing and delivery details.",
+        "Compare Minecraft alt shops and account providers for Soulfire. Browse MFA full-access accounts, NFA temporary accounts, and token or cookie alts with current pricing and delivery details.",
       path: "/get-accounts",
       imageUrl: "/og/site/get-accounts/image.webp",
-      imageAlt: "SoulFire account providers page preview",
+      imageAlt: "Soulfire account providers page preview",
     }),
     links: getCanonicalLinks("/get-accounts"),
   }),

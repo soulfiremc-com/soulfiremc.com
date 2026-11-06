@@ -12,7 +12,7 @@ Use world tasks when movement and block changes need to continue beside the game
 ## Excavate a cuboid
 
 Use `excavate` to clear every diggable block between two inclusive corners.
-SoulFire selects the nearest block and plans each route near the game loop.
+Soulfire selects the nearest block and plans each route near the game loop.
 The pathfinder selects tools and keeps mining inside the requested cuboid.
 
 <Tabs items={['TypeScript', 'Python']}>
@@ -57,14 +57,14 @@ The pathfinder selects tools and keeps mining inside the requested cuboid.
 The server rejects cuboids larger than 32,768 blocks.
 It also rejects areas with unloaded chunks.
 Use `maximumBlocks` or `maximum_blocks` to limit the number of blocks in one task.
-The result reports whether SoulFire cleared the area, reached the limit, or found no reachable blocks.
+The result reports whether Soulfire cleared the area, reached the limit, or found no reachable blocks.
 It also lists skipped and unreachable positions.
-If you stop or pause the task, SoulFire releases all bot controls that the task used.
+If you stop or pause the task, Soulfire releases all bot controls that the task used.
 
 ## Build an inline schematic
 
 `build` accepts a blueprint that contains block positions relative to an origin.
-SoulFire rotates or mirrors the blueprint on the server.
+Soulfire rotates or mirrors the blueprint on the server.
 It places blocks from the bottom up and selects the required materials.
 
 <Tabs items={['TypeScript', 'Python']}>
@@ -126,13 +126,13 @@ It places blocks from the bottom up and selects the required materials.
 </Tabs>
 
 Block positions and directions rotate or mirror together.
-SoulFire uses the first available material from the substitution list.
+Soulfire uses the first available material from the substitution list.
 It does not replace a block that already has the correct state.
 The result gives an outcome for every requested block.
 
 For a coordinated build, start the same blueprint on each bot with the same
 `partitionCount` or `partition_count` and a distinct zero-based partition
-index. SoulFire applies transforms and ordering before partitioning, which
+index. Soulfire applies transforms and ordering before partitioning, which
 makes every bot agree on ownership without a client-side coordinator.
 Pathfinding can place navigation scaffolds when `allowPlacing` or
 `allow_placing` is enabled. Task suspension preserves its current placement,

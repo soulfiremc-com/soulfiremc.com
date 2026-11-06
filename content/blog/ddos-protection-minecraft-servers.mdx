@@ -127,7 +127,7 @@ Setting it up is half the job. You need to make sure it actually works.
 
 **Test player experience.** Connect through the proxy and check that join times are reasonable, latency isn't excessive, plugins see the correct player IP, and Bedrock players can connect if you use Geyser.
 
-**Load test through the proxy.** Use [SoulFire](/download) to connect bots through the protection layer, not directly to your server. This tells you whether the service flags legitimate-looking bot traffic (which would also mean flagging real players during a busy event). Start with 20 bots and scale up, watching for connection failures or throttling.
+**Load test through the proxy.** Use [Soulfire](/download) to connect bots through the protection layer, not directly to your server. This tells you whether the service flags legitimate-looking bot traffic (which would also mean flagging real players during a busy event). Start with 20 bots and scale up, watching for connection failures or throttling.
 
 **Test failover.** What happens if the protection service goes down? Ideally your server becomes unreachable (because the firewall blocks direct connections) rather than exposed. That's the correct behavior. Downtime is better than unprotected exposure.
 

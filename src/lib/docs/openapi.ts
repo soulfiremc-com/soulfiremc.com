@@ -145,7 +145,7 @@ function getOpenApiSections(
     {
       content: page.data.description
         ? cleanText(page.data.description)
-        : "Generated SoulFire API reference page.",
+        : "Generated Soulfire API reference page.",
       heading: page.data.title,
       id: toHeadingId("page", page.slugs.join("/")),
     },

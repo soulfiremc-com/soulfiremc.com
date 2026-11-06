@@ -22,7 +22,7 @@ export const Route = createFileRoute("/og/accounts/{$}/image.webp")({
         );
         const description =
           Object.values(shop.listings)[0]?.summary ??
-          "Minecraft account provider for SoulFire bot testing.";
+          "Minecraft account provider for Soulfire bot testing.";
 
         return createOgImageResponse(
           <AccountOgImage

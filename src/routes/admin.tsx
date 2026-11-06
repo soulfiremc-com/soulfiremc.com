@@ -19,7 +19,7 @@ export const Route = createFileRoute("/admin")({
   },
   head: () => ({
     meta: [
-      { title: "Administration - SoulFire" },
+      { title: "Administration - Soulfire" },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),

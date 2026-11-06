@@ -195,9 +195,9 @@ export const Route = createFileRoute("/docs/$")({
   },
   head: ({ loaderData }) => {
     const title = loaderData
-      ? `${loaderData.title} - SoulFire`
-      : "Docs - SoulFire";
-    const description = loaderData?.description ?? "SoulFire documentation";
+      ? `${loaderData.title} - Soulfire`
+      : "Docs - Soulfire";
+    const description = loaderData?.description ?? "Soulfire documentation";
     const path = loaderData?.url ?? "/docs";
     const imageUrl = loaderData?.imageUrl ?? `${path}/image.webp`;
 
@@ -209,7 +209,7 @@ export const Route = createFileRoute("/docs/$")({
         imageUrl,
         imageAlt: loaderData
           ? `${loaderData.title} documentation preview`
-          : "SoulFire docs preview",
+          : "Soulfire docs preview",
       }),
       links: getCanonicalLinks(path),
       scripts: [
@@ -221,7 +221,7 @@ export const Route = createFileRoute("/docs/$")({
           images: [new URL(imageUrl, "https://soulfiremc.com").href],
           links: [
             {
-              label: "Download SoulFire",
+              label: "Download Soulfire",
               url: "https://soulfiremc.com/download",
             },
           ],

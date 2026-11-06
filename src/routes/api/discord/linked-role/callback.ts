@@ -57,7 +57,7 @@ export const Route = createFileRoute("/api/discord/linked-role/callback")({
 
         if (sfUser) {
           await pushLinkedRoleMetadata(tokens.access_token, {
-            platform_name: "SoulFire",
+            platform_name: "Soulfire",
             platform_username: sfUser.userName,
             metadata: {
               verified_account: 1,
@@ -67,7 +67,7 @@ export const Route = createFileRoute("/api/discord/linked-role/callback")({
           });
         } else {
           await pushLinkedRoleMetadata(tokens.access_token, {
-            platform_name: "SoulFire",
+            platform_name: "Soulfire",
             platform_username: null,
             metadata: {
               verified_account: 0,

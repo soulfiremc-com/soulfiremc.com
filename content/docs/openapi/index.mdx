@@ -4,7 +4,7 @@ description: Unary HTTP/JSON endpoints, authentication, requests, and responses 
 icon: Braces
 ---
 
-This section describes SoulFire's HTTP-accessible unary operations.
+This section describes Soulfire's HTTP-accessible unary operations.
 The checked-in [OpenAPI schema](/sf-openapi.json) reports version `2.11.0`.
 Fumadocs generates operation pages from that schema and groups them by service in the sidebar.
 
@@ -22,7 +22,7 @@ An absent streaming operation is not evidence that the server lacks it.
 
 ## Authenticate a request
 
-Generate a token with `generate-token api` in the SoulFire console.
+Generate a token with `generate-token api` in the Soulfire console.
 Send it in the HTTP header:
 
 ```http
@@ -34,7 +34,7 @@ Use an API-audience token. A WebDAV token has a different audience.
 `LoginService` is public. Other operations require an accepted API token and the relevant permissions.
 
 Use your own backend URL and HTTPS for remote requests.
-The schema's loopback server address is an example, not a hosted public SoulFire API.
+The schema's loopback server address is an example, not a hosted public Soulfire API.
 
 ## Read an operation
 
