@@ -1,6 +1,7 @@
+import { Effect } from "effect";
+import { reviewQuery, ReviewDatabase } from "@/lib/review-database";
 import { and, desc, eq, inArray, isNull, or, sql } from "drizzle-orm";
 import { getAvatarUrl } from "@/lib/avatar";
-import { db, reviewDb } from "@/lib/db";
 import { user } from "@/lib/db/auth-schema";
 import { review } from "@/lib/db/schema";
 import {
@@ -16,59 +17,62 @@ import {
 // Leave room for filters within D1's 100 bound parameters per statement.
 const REVIEW_SLUG_BATCH_SIZE = 90;
 
-export async function getReviewSummaries(
-  itemType: ItemType,
-  slugs: string[],
-): Promise<Record<string, ReviewSummary>> {
-  if (slugs.length === 0) return {};
+export const getReviewSummaries = Effect.fn("Reviews.getReviewSummaries")(
+  function* (itemType: ItemType, slugs: string[]) {
+    const { reviews: reviewDb } = yield* ReviewDatabase;
+    if (slugs.length === 0) return {};
 
-  const rows = [];
-  for (
-    let offset = 0;
-    offset < slugs.length;
-    offset += REVIEW_SLUG_BATCH_SIZE
-  ) {
-    rows.push(
-      ...(await reviewDb
-        .select({
-          itemSlug: review.itemSlug,
-          reviewCount: sql<number>`count(*)`,
-          averageRating: sql<number>`round(avg(${review.rating}), 2)`,
-        })
-        .from(review)
-        .where(
-          and(
-            eq(review.itemType, itemType),
-            inArray(
-              review.itemSlug,
-              slugs.slice(offset, offset + REVIEW_SLUG_BATCH_SIZE),
-            ),
-          ),
-        )
-        .groupBy(review.itemSlug)),
-    );
-  }
+    const rows = [];
+    for (
+      let offset = 0;
+      offset < slugs.length;
+      offset += REVIEW_SLUG_BATCH_SIZE
+    ) {
+      rows.push(
+        ...(yield* reviewQuery("getReviewSummaries", () =>
+          reviewDb
+            .select({
+              itemSlug: review.itemSlug,
+              reviewCount: sql<number>`count(*)`,
+              averageRating: sql<number>`round(avg(${review.rating}), 2)`,
+            })
+            .from(review)
+            .where(
+              and(
+                eq(review.itemType, itemType),
+                inArray(
+                  review.itemSlug,
+                  slugs.slice(offset, offset + REVIEW_SLUG_BATCH_SIZE),
+                ),
+              ),
+            )
+            .groupBy(review.itemSlug),
+        )),
+      );
+    }
 
-  const summaryMap: Record<string, ReviewSummary> = {};
-  for (const slug of slugs) {
-    summaryMap[slug] = emptyReviewSummary();
-  }
+    const summaryMap: Record<string, ReviewSummary> = {};
+    for (const slug of slugs) {
+      summaryMap[slug] = emptyReviewSummary();
+    }
 
-  for (const row of rows) {
-    summaryMap[row.itemSlug] = {
-      averageRating: row.averageRating,
-      reviewCount: row.reviewCount,
-    };
-  }
+    for (const row of rows) {
+      summaryMap[row.itemSlug] = {
+        averageRating: row.averageRating,
+        reviewCount: row.reviewCount,
+      };
+    }
 
-  return summaryMap;
-}
+    return summaryMap;
+  },
+);
 
-export async function getUserReviews(
+export const getUserReviews = Effect.fn("Reviews.getUserReviews")(function* (
   userId: string,
   itemType: ItemType,
   slugs: string[],
-): Promise<Record<string, UserReviewRecord>> {
+) {
+  const { primary: db } = yield* ReviewDatabase;
   if (slugs.length === 0) return {};
 
   const rows = [];
@@ -78,28 +82,30 @@ export async function getUserReviews(
     offset += REVIEW_SLUG_BATCH_SIZE
   ) {
     rows.push(
-      ...(await db
-        .select({
-          itemSlug: review.itemSlug,
-          rating: review.rating,
-          body: review.body,
-          commentStatus: review.commentStatus,
-        })
-        .from(review)
-        .where(
-          and(
-            eq(review.userId, userId),
-            eq(review.itemType, itemType),
-            inArray(
-              review.itemSlug,
-              slugs.slice(offset, offset + REVIEW_SLUG_BATCH_SIZE),
+      ...(yield* reviewQuery("getUserReviews", () =>
+        db
+          .select({
+            itemSlug: review.itemSlug,
+            rating: review.rating,
+            body: review.body,
+            commentStatus: review.commentStatus,
+          })
+          .from(review)
+          .where(
+            and(
+              eq(review.userId, userId),
+              eq(review.itemType, itemType),
+              inArray(
+                review.itemSlug,
+                slugs.slice(offset, offset + REVIEW_SLUG_BATCH_SIZE),
+              ),
             ),
           ),
-        )),
+      )),
     );
   }
 
-  return Object.fromEntries(
+  const result: Record<string, UserReviewRecord> = Object.fromEntries(
     rows.map((row) => [
       row.itemSlug,
       {
@@ -112,7 +118,8 @@ export async function getUserReviews(
       },
     ]),
   );
-}
+  return result;
+});
 
 function getEffectiveCommentStatus({
   body,
@@ -153,59 +160,66 @@ function getPublicComment({
   };
 }
 
-export async function getWrittenReviews(
-  itemType: ItemType,
-  slug: string,
-  options?: {
-    page?: number;
-    pageSize?: number;
-  },
-): Promise<PublicReviewRecord[]> {
-  const page = Math.max(1, options?.page ?? 1);
-  const pageSize = Math.max(1, options?.pageSize ?? 8);
-  const offset = (page - 1) * pageSize;
+export const getWrittenReviews = Effect.fn("Reviews.getWrittenReviews")(
+  function* (
+    itemType: ItemType,
+    slug: string,
+    options?: {
+      page?: number;
+      pageSize?: number;
+    },
+  ) {
+    const { reviews: reviewDb } = yield* ReviewDatabase;
+    const page = Math.max(1, options?.page ?? 1);
+    const pageSize = Math.max(1, options?.pageSize ?? 8);
+    const offset = (page - 1) * pageSize;
 
-  const rows = await reviewDb
-    .select({
-      id: review.id,
-      itemSlug: review.itemSlug,
-      rating: review.rating,
-      body: review.body,
-      commentStatus: review.commentStatus,
-      createdAt: review.createdAt,
-      username: user.username,
-      displayUsername: user.displayUsername,
-      userEmail: user.email,
-      userImage: user.image,
-    })
-    .from(review)
-    .leftJoin(user, eq(review.userId, user.id))
-    .where(and(eq(review.itemType, itemType), eq(review.itemSlug, slug)))
-    .orderBy(desc(review.createdAt))
-    .limit(pageSize)
-    .offset(offset);
+    const rows = yield* reviewQuery("getWrittenReviews", () =>
+      reviewDb
+        .select({
+          id: review.id,
+          itemSlug: review.itemSlug,
+          rating: review.rating,
+          body: review.body,
+          commentStatus: review.commentStatus,
+          createdAt: review.createdAt,
+          username: user.username,
+          displayUsername: user.displayUsername,
+          userEmail: user.email,
+          userImage: user.image,
+        })
+        .from(review)
+        .leftJoin(user, eq(review.userId, user.id))
+        .where(and(eq(review.itemType, itemType), eq(review.itemSlug, slug)))
+        .orderBy(desc(review.createdAt))
+        .limit(pageSize)
+        .offset(offset),
+    );
 
-  return rows.map((row) => {
-    const authorName = row.displayUsername ?? row.username ?? "User";
-    const publicComment = getPublicComment({
-      body: row.body,
-      commentStatus: row.commentStatus,
+    return rows.map((row): PublicReviewRecord => {
+      const authorName = row.displayUsername ?? row.username ?? "User";
+      const publicComment = getPublicComment({
+        body: row.body,
+        commentStatus: row.commentStatus,
+      });
+
+      return {
+        id: row.id,
+        itemSlug: row.itemSlug,
+        rating: row.rating,
+        body: publicComment.body,
+        commentStatus: publicComment.commentStatus,
+        createdAt: row.createdAt.toISOString(),
+        authorName,
+        authorImage: getAvatarUrl(row.userImage, row.userEmail),
+      };
     });
+  },
+);
 
-    return {
-      id: row.id,
-      itemSlug: row.itemSlug,
-      rating: row.rating,
-      body: publicComment.body,
-      commentStatus: publicComment.commentStatus,
-      createdAt: row.createdAt.toISOString(),
-      authorName,
-      authorImage: getAvatarUrl(row.userImage, row.userEmail),
-    };
-  });
-}
-
-export async function getPaginatedWrittenReviews(
+export const getPaginatedWrittenReviews = Effect.fn(
+  "Reviews.getPaginatedWrittenReviews",
+)(function* (
   itemType: ItemType,
   slug: string,
   totalCount: number,
@@ -213,7 +227,7 @@ export async function getPaginatedWrittenReviews(
     page?: number;
     pageSize?: number;
   },
-): Promise<PaginatedPublicReviewRecords> {
+) {
   const pageSize = Math.max(1, options?.pageSize ?? 8);
   const totalPages =
     totalCount === 0 ? 0 : Math.max(1, Math.ceil(totalCount / pageSize));
@@ -224,7 +238,7 @@ export async function getPaginatedWrittenReviews(
   const entries =
     totalCount === 0
       ? []
-      : await getWrittenReviews(itemType, slug, {
+      : yield* getWrittenReviews(itemType, slug, {
           page,
           pageSize,
         });
@@ -235,8 +249,8 @@ export async function getPaginatedWrittenReviews(
     pageSize,
     totalCount,
     totalPages,
-  };
-}
+  } satisfies PaginatedPublicReviewRecords;
+});
 
 export type PendingReviewCommentRecord = {
   id: string;
@@ -250,32 +264,35 @@ export type PendingReviewCommentRecord = {
   authorImage: string | null;
 };
 
-export async function getPendingReviewComments(): Promise<
-  PendingReviewCommentRecord[]
-> {
-  const rows = await db
-    .select({
-      id: review.id,
-      itemType: review.itemType,
-      itemSlug: review.itemSlug,
-      rating: review.rating,
-      body: review.body,
-      createdAt: review.createdAt,
-      username: user.username,
-      displayUsername: user.displayUsername,
-      userEmail: user.email,
-      userImage: user.image,
-    })
-    .from(review)
-    .leftJoin(user, eq(review.userId, user.id))
-    .where(
-      and(
-        or(eq(review.commentStatus, "pending"), isNull(review.commentStatus)),
-        sql`${review.body} IS NOT NULL`,
-        sql`trim(${review.body}) <> ''`,
-      ),
-    )
-    .orderBy(desc(review.createdAt));
+export const getPendingReviewComments = Effect.fn(
+  "Reviews.getPendingReviewComments",
+)(function* () {
+  const { primary: db } = yield* ReviewDatabase;
+  const rows = yield* reviewQuery("getPendingReviewComments", () =>
+    db
+      .select({
+        id: review.id,
+        itemType: review.itemType,
+        itemSlug: review.itemSlug,
+        rating: review.rating,
+        body: review.body,
+        createdAt: review.createdAt,
+        username: user.username,
+        displayUsername: user.displayUsername,
+        userEmail: user.email,
+        userImage: user.image,
+      })
+      .from(review)
+      .leftJoin(user, eq(review.userId, user.id))
+      .where(
+        and(
+          or(eq(review.commentStatus, "pending"), isNull(review.commentStatus)),
+          sql`${review.body} IS NOT NULL`,
+          sql`trim(${review.body}) <> ''`,
+        ),
+      )
+      .orderBy(desc(review.createdAt)),
+  );
 
   return rows.flatMap((row) => {
     const body = row.body?.trim();
@@ -297,14 +314,19 @@ export async function getPendingReviewComments(): Promise<
       },
     ];
   });
-}
+});
 
-export async function updateReviewCommentStatus(
+export const updateReviewCommentStatus = Effect.fn(
+  "Reviews.updateReviewCommentStatus",
+)(function* (
   reviewId: string,
   commentStatus: Extract<ReviewCommentStatus, "approved" | "rejected">,
 ) {
-  await reviewDb
-    .update(review)
-    .set({ commentStatus })
-    .where(eq(review.id, reviewId));
-}
+  const { reviews: reviewDb } = yield* ReviewDatabase;
+  yield* reviewQuery("moderate", () =>
+    reviewDb
+      .update(review)
+      .set({ commentStatus })
+      .where(eq(review.id, reviewId)),
+  );
+});

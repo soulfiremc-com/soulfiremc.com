@@ -1,86 +1,69 @@
 import { queryOptions } from "@tanstack/react-query";
 import { createServerFn } from "@tanstack/react-start";
-import { getDiscordInviteUrl, getShopBySlug, SHOPS } from "@/lib/accounts-data";
-import { getLiveShopData } from "@/lib/accounts-offers";
-import { type DiscordInviteResponse, fetchDiscordInvite } from "@/lib/discord";
+import { getRequest } from "@tanstack/react-start/server";
+import { Effect } from "effect";
+import { runWebsiteEffect } from "@/lib/effect-runtime";
+import {
+  AccountProviderSources,
+  accountProviderSources,
+  loadAccountInvite,
+  loadAccountStock,
+  loadAllAccountInvites,
+  loadAllAccountStock,
+} from "@/lib/account-provider-workflows";
+export type {
+  DiscordInvites,
+  LiveShopDataBySlug,
+} from "@/lib/account-provider-workflows";
 
-export type DiscordInvites = Record<string, DiscordInviteResponse | null>;
-
-export type LiveShopDataBySlug = Record<
-  string,
-  Awaited<ReturnType<typeof getLiveShopData>>
->;
+function runProviders<A, E>(
+  program: Effect.Effect<A, E, AccountProviderSources>,
+) {
+  return runWebsiteEffect(
+    program.pipe(
+      Effect.provideService(AccountProviderSources, accountProviderSources),
+    ),
+    getRequest().signal,
+  );
+}
 
 const getAllAccountLiveShopData = createServerFn({ method: "GET" }).handler(
-  async () => {
-    const entries = await Promise.all(
-      SHOPS.map(
-        async (shop) => [shop.slug, await getLiveShopData(shop)] as const,
-      ),
-    );
-
-    return Object.fromEntries(entries) as LiveShopDataBySlug;
-  },
+  () => runProviders(loadAllAccountStock()),
 );
-
 const getAccountLiveShopData = createServerFn({ method: "GET" })
   .validator((slug: string) => slug)
-  .handler(async ({ data: slug }) => {
-    const shop = getShopBySlug(slug);
-    return shop ? getLiveShopData(shop) : {};
-  });
-
+  .handler(({ data }) => runProviders(loadAccountStock(data)));
 const getAccountDiscordInvite = createServerFn({ method: "GET" })
   .validator((slug: string) => slug)
-  .handler(async ({ data: slug }) => {
-    const shop = getShopBySlug(slug);
-    const discordInviteUrl = shop ? getDiscordInviteUrl(shop) : null;
-    return discordInviteUrl
-      ? fetchDiscordInvite(discordInviteUrl).catch(() => null)
-      : null;
-  });
-
-const getAccountDiscordInvites = createServerFn({ method: "GET" }).handler(
-  async () =>
-    Object.fromEntries(
-      await Promise.all(
-        SHOPS.map(async (provider) => {
-          const discordInviteUrl = getDiscordInviteUrl(provider);
-          return [
-            provider.slug,
-            discordInviteUrl
-              ? await fetchDiscordInvite(discordInviteUrl).catch(() => null)
-              : null,
-          ] as const;
-        }),
-      ),
-    ) as DiscordInvites,
+  .handler(({ data }) => runProviders(loadAccountInvite(data)));
+const getAccountDiscordInvites = createServerFn({ method: "GET" }).handler(() =>
+  runProviders(loadAllAccountInvites()),
 );
 
 export function accountLiveShopDataQueryOptions(slug: string) {
   return queryOptions({
     queryKey: ["accounts", slug, "live-shop-data"],
-    queryFn: () => getAccountLiveShopData({ data: slug }),
+    queryFn: ({ signal }) => getAccountLiveShopData({ data: slug, signal }),
     staleTime: 60_000,
   });
 }
 
 export const allAccountLiveShopDataQueryOptions = queryOptions({
   queryKey: ["accounts", "live-shop-data"],
-  queryFn: () => getAllAccountLiveShopData(),
+  queryFn: ({ signal }) => getAllAccountLiveShopData({ signal }),
   staleTime: 60_000,
 });
 
 export function accountDiscordInviteQueryOptions(slug: string) {
   return queryOptions({
     queryKey: ["accounts", slug, "discord-invite"],
-    queryFn: () => getAccountDiscordInvite({ data: slug }),
+    queryFn: ({ signal }) => getAccountDiscordInvite({ data: slug, signal }),
     staleTime: 10 * 60_000,
   });
 }
 
 export const accountsDiscordInvitesQueryOptions = queryOptions({
   queryKey: ["accounts", "discord-invites"],
-  queryFn: () => getAccountDiscordInvites(),
+  queryFn: ({ signal }) => getAccountDiscordInvites({ signal }),
   staleTime: 10 * 60_000,
 });

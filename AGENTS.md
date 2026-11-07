@@ -69,3 +69,17 @@ Before naming features or changing user-facing text and visuals, read the [SoulF
 Use its terminology, naming, writing, and visual identity guides.
 Keep proposed renames separate from accepted guidance.
 Preserve public identifiers until the owning repository approves a migration.
+
+## Effect workflows
+
+Use Effect v4 for fallible application workflows. Keep framework rendering, pure helpers, and short SDK adapters direct.
+Compose native programs inside services. Run `runWebsiteEffect` only at HTTP, TanStack, or external SDK callbacks.
+The runtime boundary preserves public messages and removes internal error properties before framework serialization.
+
+Review queries use `ReviewDatabase` and `reviewQuery`. Preserve each query's primary or review session.
+Wait for submitted D1 statements before returning from cancellation so the response can publish its write bookmark.
+Provider and documentation aggregations use bounded concurrency. Preserve result order and unknown-stock fallbacks.
+The shared HTTP helper owns headers, response readers, deadlines, and late-response cleanup.
+Do not acquire a network wait through an interruption-masked resource acquisition.
+Email callbacks compose `authNotificationEffects` with `WebsiteMailer`. Finish each submitted email call before returning from cancellation.
+Never add automatic retries to email, writes, or authorization-code exchange.

@@ -9,7 +9,7 @@ export const Route = createFileRoute("/docs.mdx")({
             "Content-Type": "text/markdown; charset=utf-8",
           },
         }),
-      GET: async () => {
+      GET: async ({ request }) => {
         const [{ getLLMText }, { getSource }] = await Promise.all([
           import("@/lib/get-llm-text"),
           import("@/lib/source"),
@@ -19,7 +19,7 @@ export const Route = createFileRoute("/docs.mdx")({
           throw notFound();
         }
 
-        return new Response(await getLLMText(page), {
+        return new Response(await getLLMText(page, request.signal), {
           headers: {
             "Content-Type": "text/markdown; charset=utf-8",
           },

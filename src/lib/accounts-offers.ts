@@ -1,3 +1,6 @@
+import { Effect, Schema } from "effect";
+import { requestJson, type RequestOptions } from "@/lib/backend-http";
+import { runWebsiteEffect } from "@/lib/effect-runtime";
 import type { AggregateOffer, Offer } from "schema-dts";
 import type { Category, Shop } from "@/lib/accounts-data";
 
@@ -8,44 +11,39 @@ const LIVE_SHOP_REQUEST_TIMEOUT_MS = 5_000;
 
 type LiveStockByCategory = Partial<Record<Category, number>>;
 
-type LiveShopData = {
+export type LiveShopData = {
   stockByCategory?: LiveStockByCategory;
 };
 
-export async function getLiveShopData(shop: Shop): Promise<LiveShopData> {
-  if (shop.slug !== "ravealts" && shop.slug !== "localts") {
-    return {};
-  }
-
-  try {
-    const response = await fetch(
+export const getLiveShopDataEffect = Effect.fn("Providers.liveStock")(
+  function* (shop: Shop, options?: RequestOptions) {
+    if (shop.slug !== "ravealts" && shop.slug !== "localts") return {};
+    return yield* requestJson(
       shop.slug === "ravealts" ? RAVEALTS_STOCK_URL : LOCALTS_PRODUCTS_URL,
+      Schema.Unknown,
       {
-        headers: {
-          Accept: "application/json",
-        },
-        signal: AbortSignal.timeout(LIVE_SHOP_REQUEST_TIMEOUT_MS),
+        ...options,
+        timeoutMs: options?.timeoutMs ?? LIVE_SHOP_REQUEST_TIMEOUT_MS,
+        retries: 0,
+        init: { headers: { Accept: "application/json" } },
       },
+    ).pipe(
+      Effect.map((payload): LiveShopData => {
+        const stockByCategory =
+          shop.slug === "ravealts"
+            ? parseRavealtsStockByCategory(payload)
+            : parseLocaltsStockByCategory(payload);
+        return stockByCategory ? { stockByCategory } : {};
+      }),
+      // Missing live stock remains unknown, rather than implying availability.
+      Effect.orElseSucceed((): LiveShopData => ({})),
     );
+  },
+);
 
-    if (!response.ok) {
-      return {};
-    }
-
-    const payload: unknown = await response.json();
-    const stockByCategory =
-      shop.slug === "ravealts"
-        ? parseRavealtsStockByCategory(payload)
-        : parseLocaltsStockByCategory(payload);
-
-    if (!stockByCategory) {
-      return {};
-    }
-
-    return { stockByCategory };
-  } catch {
-    return {};
-  }
+/** Promise edge for external consumers; application programs use the native effect. */
+export function getLiveShopData(shop: Shop): Promise<LiveShopData> {
+  return runWebsiteEffect(getLiveShopDataEffect(shop));
 }
 
 function parseLocaltsStockByCategory(

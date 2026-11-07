@@ -4,7 +4,8 @@ import { EmailVerificationEmail } from "../components/auth/email/email-verificat
 import { OtpEmail } from "../components/auth/email/otp-email";
 import { ResetPasswordEmail } from "../components/auth/email/reset-password";
 import { AUTH_UI_BASE_PATHS, AUTH_UI_VIEW_PATHS } from "./auth-ui-config";
-import { sendEmail } from "./resend";
+import { Effect } from "effect";
+import { EmailDeliveryError, runEmailEffect, sendEmailEffect } from "./resend";
 
 interface BaseEmailParams {
   user: {
@@ -75,7 +76,7 @@ const emailOtpContent = {
   }
 >;
 
-async function sendOtpEmail({
+const sendOtpEmail = Effect.fn("Email.otp")(function* ({
   description,
   email,
   expirationMinutes,
@@ -90,7 +91,7 @@ async function sendOtpEmail({
   otp: string;
   subject: string;
 }) {
-  await sendEmail(
+  yield* sendEmailEffect(
     fromAddress,
     email,
     replyTo,
@@ -107,11 +108,14 @@ async function sendOtpEmail({
       verificationCode={otp}
     />,
   );
-}
+});
 
-export const authNotifications = {
-  async sendPasswordReset({ user, url }: EmailWithUrlParams) {
-    await sendEmail(
+export const authNotificationEffects = {
+  sendPasswordReset: Effect.fn("Email.sendPasswordReset")(function* ({
+    user,
+    url,
+  }: EmailWithUrlParams) {
+    yield* sendEmailEffect(
       fromAddress,
       user.email,
       replyTo,
@@ -124,10 +128,13 @@ export const authNotifications = {
         url={url}
       />,
     );
-  },
+  }),
 
-  async sendEmailVerification({ user, url }: EmailWithUrlParams) {
-    await sendEmail(
+  sendEmailVerification: Effect.fn("Email.sendEmailVerification")(function* ({
+    user,
+    url,
+  }: EmailWithUrlParams) {
+    yield* sendEmailEffect(
       fromAddress,
       user.email,
       replyTo,
@@ -140,31 +147,34 @@ export const authNotifications = {
         url={url}
       />,
     );
-  },
+  }),
 
-  async sendChangeEmailConfirmation({
-    user,
-    newEmail,
-    url,
-  }: ChangeEmailConfirmationParams) {
-    await sendEmail(
-      fromAddress,
-      user.email,
-      replyTo,
-      `Approve your email change for ${siteName}`,
-      <ChangeEmailConfirmationEmail
-        appName={siteName}
-        currentEmail={user.email}
-        expirationMinutes={60}
-        logoURL={logoUrl}
-        newEmail={newEmail}
-        url={url}
-      />,
-    );
-  },
+  sendChangeEmailConfirmation: Effect.fn("Email.sendChangeEmailConfirmation")(
+    function* ({ user, newEmail, url }: ChangeEmailConfirmationParams) {
+      yield* sendEmailEffect(
+        fromAddress,
+        user.email,
+        replyTo,
+        `Approve your email change for ${siteName}`,
+        <ChangeEmailConfirmationEmail
+          appName={siteName}
+          currentEmail={user.email}
+          expirationMinutes={60}
+          logoURL={logoUrl}
+          newEmail={newEmail}
+          url={url}
+        />,
+      );
+    },
+  ),
 
-  async sendDeleteAccountVerification({ user, url }: EmailWithUrlParams) {
-    const deleteUrl = new URL(url);
+  sendDeleteAccountVerification: Effect.fn(
+    "Email.sendDeleteAccountVerification",
+  )(function* ({ user, url }: EmailWithUrlParams) {
+    const deleteUrl = yield* Effect.try({
+      try: () => new URL(url),
+      catch: (cause) => new EmailDeliveryError({ reason: "prepare", cause }),
+    });
     const redirectUrl = new URL(
       `${AUTH_UI_BASE_PATHS.auth}/${AUTH_UI_VIEW_PATHS.auth.redirect}`,
       baseUrl,
@@ -175,7 +185,7 @@ export const authNotifications = {
       `${deleteUrl.pathname}${deleteUrl.search}${deleteUrl.hash}`,
     );
 
-    await sendEmail(
+    yield* sendEmailEffect(
       fromAddress,
       user.email,
       replyTo,
@@ -188,10 +198,13 @@ export const authNotifications = {
         url={redirectUrl.toString()}
       />,
     );
-  },
+  }),
 
-  async sendTwoFactorOTP({ user, otp }: OTPEmailParams) {
-    await sendOtpEmail({
+  sendTwoFactorOTP: Effect.fn("Email.sendTwoFactorOTP")(function* ({
+    user,
+    otp,
+  }: OTPEmailParams) {
+    yield* sendOtpEmail({
       description:
         "Use this code to complete sign-in to your {appName} account {email}.",
       email: user.email,
@@ -200,12 +213,16 @@ export const authNotifications = {
       otp,
       subject: `Your two-factor code for ${siteName}`,
     });
-  },
+  }),
 
-  async sendEmailOTP({ email, otp, type }: EmailOTPParams) {
+  sendEmailOTP: Effect.fn("Email.sendEmailOTP")(function* ({
+    email,
+    otp,
+    type,
+  }: EmailOTPParams) {
     const content = emailOtpContent[type];
 
-    await sendOtpEmail({
+    yield* sendOtpEmail({
       description: content.description,
       email,
       expirationMinutes: EMAIL_OTP_EXPIRATION_SECONDS / 60,
@@ -213,5 +230,36 @@ export const authNotifications = {
       otp,
       subject: content.subject,
     });
-  },
+  }),
+};
+
+export const authNotifications = {
+  sendPasswordReset: (
+    ...args: Parameters<typeof authNotificationEffects.sendPasswordReset>
+  ) => runEmailEffect(authNotificationEffects.sendPasswordReset(...args)),
+  sendEmailVerification: (
+    ...args: Parameters<typeof authNotificationEffects.sendEmailVerification>
+  ) => runEmailEffect(authNotificationEffects.sendEmailVerification(...args)),
+  sendChangeEmailConfirmation: (
+    ...args: Parameters<
+      typeof authNotificationEffects.sendChangeEmailConfirmation
+    >
+  ) =>
+    runEmailEffect(
+      authNotificationEffects.sendChangeEmailConfirmation(...args),
+    ),
+  sendDeleteAccountVerification: (
+    ...args: Parameters<
+      typeof authNotificationEffects.sendDeleteAccountVerification
+    >
+  ) =>
+    runEmailEffect(
+      authNotificationEffects.sendDeleteAccountVerification(...args),
+    ),
+  sendTwoFactorOTP: (
+    ...args: Parameters<typeof authNotificationEffects.sendTwoFactorOTP>
+  ) => runEmailEffect(authNotificationEffects.sendTwoFactorOTP(...args)),
+  sendEmailOTP: (
+    ...args: Parameters<typeof authNotificationEffects.sendEmailOTP>
+  ) => runEmailEffect(authNotificationEffects.sendEmailOTP(...args)),
 };

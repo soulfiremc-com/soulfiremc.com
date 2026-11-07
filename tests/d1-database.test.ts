@@ -1,3 +1,7 @@
+import {
+  ReviewDatabase,
+  reviewDatabaseLayer,
+} from "../src/lib/review-database";
 import assert from "node:assert/strict";
 import { readdir, readFile } from "node:fs/promises";
 import test from "node:test";
@@ -31,6 +35,9 @@ import {
   getWrittenReviews,
   updateReviewCommentStatus,
 } from "../src/lib/reviews";
+
+const runQuery = <A, E>(program: Effect.Effect<A, E, ReviewDatabase>) =>
+  Effect.runPromise(program.pipe(Effect.provide(reviewDatabaseLayer)));
 
 test("D1 supports auth, review queries, constraints, and request isolation", async (t) => {
   const runtime = new Miniflare({
@@ -163,7 +170,8 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
           assert.equal(result.summaries[slug].averageRating, 4);
           await run(deleteReview(input));
           assert.equal(
-            (await getReviewSummaries("account", [slug]))[slug].reviewCount,
+            (await runQuery(getReviewSummaries("account", [slug])))[slug]
+              .reviewCount,
             0,
           );
         },
@@ -259,20 +267,26 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
               commentStatus: "pending",
             });
           }
-          const summaries = await getReviewSummaries("account", slugs);
+          const summaries = await runQuery(
+            getReviewSummaries("account", slugs),
+          );
           assert.equal(Object.keys(summaries).length, 100);
           assert.equal(summaries[slugs[99]].reviewCount, 1);
           assert.equal(summaries[slugs[99]].averageRating, 5);
           assert.equal(
-            Object.keys(await getUserReviews(userId, "account", slugs)).length,
+            Object.keys(
+              await runQuery(getUserReviews(userId, "account", slugs)),
+            ).length,
             100,
           );
-          const [entry] = await getWrittenReviews("account", slugs[0]);
+          const [entry] = await runQuery(
+            getWrittenReviews("account", slugs[0]),
+          );
           assert.equal(entry.body, null);
           assert.ok(Number.isFinite(Date.parse(entry.createdAt)));
-          await updateReviewCommentStatus(entry.id, "approved");
+          await runQuery(updateReviewCommentStatus(entry.id, "approved"));
           assert.equal(
-            (await getWrittenReviews("account", slugs[0]))[0].body,
+            (await runQuery(getWrittenReviews("account", slugs[0])))[0].body,
             slugs[0],
           );
           await assert.rejects(
@@ -298,7 +312,8 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
           );
           await db.delete(user).where(eq(user.id, userId));
           assert.equal(
-            (await getReviewSummaries("account", slugs))[slugs[0]].reviewCount,
+            (await runQuery(getReviewSummaries("account", slugs)))[slugs[0]]
+              .reviewCount,
             0,
           );
         },

@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { getRequest, getRequestHost } from "@tanstack/react-start/server";
 import { Effect, Schema } from "effect";
+import { runWebsiteEffect } from "@/lib/effect-runtime";
 import { auth } from "@/lib/auth";
 import { reviewStore } from "@/lib/review-store";
 import {
@@ -79,7 +80,7 @@ function runReviewWorkflow<A, E>(
   program: Effect.Effect<A, E, ReviewSession | ReviewStore>,
   request: Request,
 ) {
-  return Effect.runPromise(
+  return runWebsiteEffect(
     program.pipe(
       Effect.provideService(ReviewStore, reviewStore),
       Effect.provideService(ReviewSession, {
@@ -87,9 +88,13 @@ function runReviewWorkflow<A, E>(
           try: () => auth.api.getSession({ headers: request.headers }),
           catch: (cause) =>
             new ReviewSessionError({ operation: "session", cause }),
-        }).pipe(Effect.map((session) => session?.user ?? null)),
+        }).pipe(
+          Effect.uninterruptible,
+          Effect.map((session) => session?.user ?? null),
+        ),
       }),
     ),
+    request.signal,
   );
 }
 
