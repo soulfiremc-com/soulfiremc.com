@@ -169,83 +169,114 @@ export function CreateApiKeyDialog({
 
                 {availableConfigurations.length > 0 && (
                   <form.AppField name="configId">
-                    {(field) => (
-                      <Field>
-                        <FieldLabel htmlFor="api-key-configuration">
-                          {apiKeyLocalization.configuration}
-                        </FieldLabel>
-                        <Select
-                          name={field.name}
-                          value={field.state.value}
-                          onValueChange={(value) => field.handleChange(value)}
-                          disabled={isCreating}
-                        >
-                          <SelectTrigger
-                            id="api-key-configuration"
-                            className="w-full"
+                    {(field) => {
+                      const configurationItems = availableConfigurations.map(
+                        (configuration) => ({
+                          value: configuration.id,
+                          label: configuration.label,
+                        }),
+                      );
+                      return (
+                        <Field>
+                          <FieldLabel htmlFor="api-key-configuration">
+                            {apiKeyLocalization.configuration}
+                          </FieldLabel>
+                          <Select
+                            items={configurationItems}
+                            name={field.name}
+                            value={field.state.value}
+                            onValueChange={(value) => {
+                              if (value !== null) field.handleChange(value);
+                            }}
+                            disabled={isCreating}
                           >
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectGroup>
-                              {availableConfigurations.map((configuration) => (
-                                <SelectItem
-                                  key={configuration.id}
-                                  value={configuration.id}
-                                >
-                                  {configuration.label}
-                                </SelectItem>
-                              ))}
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                      </Field>
-                    )}
+                            <SelectTrigger
+                              id="api-key-configuration"
+                              className="w-full"
+                            >
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectGroup>
+                                {configurationItems.map((item) => (
+                                  <SelectItem
+                                    key={item.value}
+                                    value={item.value}
+                                  >
+                                    {item.label}
+                                  </SelectItem>
+                                ))}
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                        </Field>
+                      );
+                    }}
                   </form.AppField>
                 )}
 
                 {keyExpiration ? (
                   <form.AppField name="expiration">
-                    {(field) => (
-                      <Field>
-                        <FieldLabel htmlFor="api-key-expiration">
-                          {apiKeyLocalization.expiration}
-                        </FieldLabel>
+                    {(field) => {
+                      const expirationItems = [
+                        ...(keyExpiration.intervals.map((days) => ({
+                          value: String(days),
+                          label: (
+                            <>
+                              {days.toLocaleString()}{" "}
+                              {days === 1
+                                ? apiKeyLocalization.day
+                                : apiKeyLocalization.days}
+                            </>
+                          ),
+                        })) ?? []),
+                        ...(keyExpiration.allowNever
+                          ? [
+                              {
+                                value: "never" as const,
+                                label: apiKeyLocalization.never,
+                              },
+                            ]
+                          : []),
+                      ];
+                      return (
+                        <Field>
+                          <FieldLabel htmlFor="api-key-expiration">
+                            {apiKeyLocalization.expiration}
+                          </FieldLabel>
 
-                        <Select
-                          name={field.name}
-                          value={field.state.value}
-                          onValueChange={(value) => field.handleChange(value)}
-                          disabled={isCreating}
-                        >
-                          <SelectTrigger
-                            id="api-key-expiration"
-                            className="w-full"
+                          <Select
+                            items={expirationItems}
+                            name={field.name}
+                            value={field.state.value}
+                            onValueChange={(value) => {
+                              if (value !== null) field.handleChange(value);
+                            }}
+                            disabled={isCreating}
                           >
-                            <SelectValue />
-                          </SelectTrigger>
+                            <SelectTrigger
+                              id="api-key-expiration"
+                              className="w-full"
+                            >
+                              <SelectValue />
+                            </SelectTrigger>
 
-                          <SelectContent>
-                            <SelectGroup>
-                              {keyExpiration.intervals.map((days) => (
-                                <SelectItem key={days} value={String(days)}>
-                                  {days.toLocaleString()}{" "}
-                                  {days === 1
-                                    ? apiKeyLocalization.day
-                                    : apiKeyLocalization.days}
-                                </SelectItem>
-                              ))}
-
-                              {keyExpiration.allowNever ? (
-                                <SelectItem value="never">
-                                  {apiKeyLocalization.never}
-                                </SelectItem>
-                              ) : null}
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                      </Field>
-                    )}
+                            <SelectContent>
+                              <SelectGroup>
+                                {expirationItems.map((item) => (
+                                  <SelectItem
+                                    key={item.value}
+                                    value={item.value}
+                                  >
+                                    {item.label}
+                                  </SelectItem>
+                                ))}
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                        </Field>
+                      );
+                    }}
                   </form.AppField>
                 ) : null}
               </FieldGroup>

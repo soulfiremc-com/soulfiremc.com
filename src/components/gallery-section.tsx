@@ -70,16 +70,18 @@ export function GallerySection({
                 fill
                 className="size-full object-contain"
               />
-              <DialogClose asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="absolute top-3 right-3 z-10 h-11 w-11 rounded-full border border-white/10 bg-black/65 text-white hover:bg-black/80 hover:text-white"
-                >
-                  <X className="h-5 w-5" />
-                  <span className="sr-only">Close gallery</span>
-                </Button>
-              </DialogClose>
+              <DialogClose
+                render={
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="absolute top-3 right-3 z-10 h-11 w-11 rounded-full border border-white/10 bg-black/65 text-white hover:bg-black/80 hover:text-white"
+                  >
+                    <X className="h-5 w-5" />
+                    <span className="sr-only">Close gallery</span>
+                  </Button>
+                }
+              />
               {images.length > 1 && (
                 <>
                   <Button

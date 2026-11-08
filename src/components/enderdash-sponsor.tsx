@@ -96,15 +96,16 @@ function SponsorButton({
 }) {
   return (
     <Button
-      asChild
+      render={
+        <a href={href}>
+          {label}
+          <ArrowUpRight />
+        </a>
+      }
+      nativeButton={false}
       size={size}
       className="w-fit gap-2 border border-white/10 bg-white text-zinc-950 shadow-none hover:bg-zinc-200"
-    >
-      <a href={href}>
-        {label}
-        <ArrowUpRight />
-      </a>
-    </Button>
+    />
   );
 }
 

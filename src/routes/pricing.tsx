@@ -79,12 +79,17 @@ function PricingPageContent() {
             </ul>
           </CardContent>
           <CardFooter>
-            <Button asChild variant="outline" className="w-full">
-              <a href="/download">
-                <Code className="h-4 w-4" />
-                Get Started
-              </a>
-            </Button>
+            <Button
+              render={
+                <a href="/download">
+                  <Code className="h-4 w-4" />
+                  Get Started
+                </a>
+              }
+              nativeButton={false}
+              variant="outline"
+              className="w-full"
+            />
           </CardFooter>
         </Card>
         <Card className="flex flex-col border-primary">
@@ -115,16 +120,20 @@ function PricingPageContent() {
             </ul>
           </CardContent>
           <CardFooter>
-            <Button asChild className="w-full">
-              <a
-                href="https://ko-fi.com/alexprogrammerde/tiers"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <SiKofi className="h-4 w-4" />
-                Become a Supporter
-              </a>
-            </Button>
+            <Button
+              render={
+                <a
+                  href="https://ko-fi.com/alexprogrammerde/tiers"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <SiKofi className="h-4 w-4" />
+                  Become a Supporter
+                </a>
+              }
+              nativeButton={false}
+              className="w-full"
+            />
           </CardFooter>
         </Card>
       </div>

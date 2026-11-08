@@ -77,6 +77,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectGroup,
 } from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
 import { Switch } from "@/components/ui/switch";
@@ -388,35 +389,51 @@ export function OAuthClients({
                   )}
                 </form.AppField>
                 <form.Field name="applicationType">
-                  {(field) => (
-                    <Field>
-                      <FieldLabel htmlFor="oauth-application-type">
-                        {oauthLocalization.applicationType}
-                      </FieldLabel>
-                      <Select
-                        name={field.name}
-                        onValueChange={(value) =>
-                          field.handleChange(value as "native" | "web")
-                        }
-                        value={field.state.value}
-                      >
-                        <SelectTrigger
-                          id="oauth-application-type"
-                          className="w-full"
+                  {(field) => {
+                    const applicationTypeItems = [
+                      {
+                        value: "web" as const,
+                        label: oauthLocalization.webApplication,
+                      },
+                      {
+                        value: "native" as const,
+                        label: oauthLocalization.nativeApplication,
+                      },
+                    ];
+                    return (
+                      <Field>
+                        <FieldLabel htmlFor="oauth-application-type">
+                          {oauthLocalization.applicationType}
+                        </FieldLabel>
+                        <Select
+                          items={applicationTypeItems}
+                          name={field.name}
+                          onValueChange={(value) => {
+                            if (value !== null) {
+                              field.handleChange(value);
+                            }
+                          }}
+                          value={field.state.value}
                         >
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="web">
-                            {oauthLocalization.webApplication}
-                          </SelectItem>
-                          <SelectItem value="native">
-                            {oauthLocalization.nativeApplication}
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </Field>
-                  )}
+                          <SelectTrigger
+                            id="oauth-application-type"
+                            className="w-full"
+                          >
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              {applicationTypeItems.map((item) => (
+                                <SelectItem key={item.value} value={item.value}>
+                                  {item.label}
+                                </SelectItem>
+                              ))}
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                      </Field>
+                    );
+                  }}
                 </form.Field>
                 <form.AppField
                   name="redirectUris"

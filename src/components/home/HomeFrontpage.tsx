@@ -68,19 +68,18 @@ function DemoVideo() {
   const [open, setOpen] = useState(false);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant="ghost" size="lg">
-          <Play data-icon="inline-start" />
-          Watch demo
-        </Button>
-      </DialogTrigger>
+      <DialogTrigger
+        render={
+          <Button variant="ghost" size="lg">
+            <Play data-icon="inline-start" />
+            Watch demo
+          </Button>
+        }
+      />
       <DialogContent
         ref={dialogRef}
         className="overflow-hidden sm:max-w-5xl"
-        onOpenAutoFocus={(event) => {
-          event.preventDefault();
-          dialogRef.current?.focus();
-        }}
+        initialFocus={dialogRef}
       >
         <DialogTitle className="sr-only">SoulFire walkthrough</DialogTitle>
         <DialogDescription className="sr-only">
@@ -376,13 +375,17 @@ export function HomeFrontpage({
                   scripting and SDKs.
                 </p>
                 <div className="home-hero-actions">
-                  <Button asChild size="lg">
-                    <Link to="/download">
-                      <Download data-icon="inline-start" />
-                      Download SoulFire
-                      <ArrowRight data-icon="inline-end" />
-                    </Link>
-                  </Button>
+                  <Button
+                    render={
+                      <Link to="/download">
+                        <Download data-icon="inline-start" />
+                        Download SoulFire
+                        <ArrowRight data-icon="inline-end" />
+                      </Link>
+                    }
+                    nativeButton={false}
+                    size="lg"
+                  />
                   <DemoVideo />
                 </div>
                 <p className="home-platforms">
@@ -455,24 +458,34 @@ export function HomeFrontpage({
                   bug or have a fix, head to GitHub.
                 </p>
                 <div className="home-community-actions">
-                  <Button asChild variant="outline" size="lg">
-                    <a href={githubLink}>
-                      <SiGithub data-icon="inline-start" />
-                      View on GitHub
-                      <ArrowUpRight data-icon="inline-end" />
-                    </a>
-                  </Button>
-                  <Button asChild variant="ghost" size="lg">
-                    <a
-                      href={getRequiredEnv(
-                        import.meta.env.VITE_DISCORD_LINK,
-                        "VITE_DISCORD_LINK",
-                      )}
-                    >
-                      <SiDiscord data-icon="inline-start" />
-                      Join Discord
-                    </a>
-                  </Button>
+                  <Button
+                    render={
+                      <a href={githubLink}>
+                        <SiGithub data-icon="inline-start" />
+                        View on GitHub
+                        <ArrowUpRight data-icon="inline-end" />
+                      </a>
+                    }
+                    nativeButton={false}
+                    variant="outline"
+                    size="lg"
+                  />
+                  <Button
+                    render={
+                      <a
+                        href={getRequiredEnv(
+                          import.meta.env.VITE_DISCORD_LINK,
+                          "VITE_DISCORD_LINK",
+                        )}
+                      >
+                        <SiDiscord data-icon="inline-start" />
+                        Join Discord
+                      </a>
+                    }
+                    nativeButton={false}
+                    variant="ghost"
+                    size="lg"
+                  />
                 </div>
                 <span className="home-mono">
                   Free and open source under AGPL-3.0
@@ -497,7 +510,7 @@ export function HomeFrontpage({
                   <ArrowUpRight className="size-4" />
                 </Link>
               </Reveal>
-              <Accordion type="single" collapsible>
+              <Accordion>
                 {faqItems.map(({ question, answerElement }) => (
                   <AccordionItem key={question} value={question}>
                     <AccordionTrigger>{question}</AccordionTrigger>
@@ -520,13 +533,17 @@ export function HomeFrontpage({
                   first session.
                 </h2>
                 <div className="home-final-actions">
-                  <Button asChild size="lg">
-                    <Link to="/download">
-                      <Download data-icon="inline-start" />
-                      Download SoulFire
-                      <ArrowRight data-icon="inline-end" />
-                    </Link>
-                  </Button>
+                  <Button
+                    render={
+                      <Link to="/download">
+                        <Download data-icon="inline-start" />
+                        Download SoulFire
+                        <ArrowRight data-icon="inline-end" />
+                      </Link>
+                    }
+                    nativeButton={false}
+                    size="lg"
+                  />
                   <Link
                     to="/docs/$"
                     params={{ _splat: "" }}

@@ -82,18 +82,20 @@ function ProviderBadge({ badge }: { badge: Badge }) {
   const config = BADGE_CONFIG[badge];
   return (
     <HoverCard>
-      <HoverCardTrigger asChild>
-        <UiBadge
-          variant="outline"
-          className={cn(
-            "cursor-help border-transparent",
-            config.className /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */,
-          )}
-        >
-          {config.icon}
-          {config.label}
-        </UiBadge>
-      </HoverCardTrigger>
+      <HoverCardTrigger
+        render={
+          <UiBadge
+            variant="outline"
+            className={cn(
+              "cursor-help border-transparent",
+              config.className /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */,
+            )}
+          >
+            {config.icon}
+            {config.label}
+          </UiBadge>
+        }
+      />
       <HoverCardContent className="w-64 text-sm">
         <p>{config.description}</p>
       </HoverCardContent>
@@ -211,16 +213,20 @@ function ProxyProviderPageContent({
             ) : null}
             <PaymentMethods methods={provider.paymentMethods} />
             <div className="flex flex-wrap gap-2">
-              <Button asChild size="lg">
-                <a
-                  href={provider.url}
-                  target="_blank"
-                  rel="noopener noreferrer nofollow"
-                >
-                  Get Proxies
-                  <ExternalLink data-icon="inline-end" />
-                </a>
-              </Button>
+              <Button
+                render={
+                  <a
+                    href={provider.url}
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                  >
+                    Get Proxies
+                    <ExternalLink data-icon="inline-end" />
+                  </a>
+                }
+                nativeButton={false}
+                size="lg"
+              />
               <ReviewSummaryBadge summary={reviewSummary} />
             </div>
             {provider.socialLinks?.length ? (
@@ -244,15 +250,16 @@ function ProxyProviderPageContent({
       ) : null}
 
       <Button
-        asChild
+        render={
+          <Link to="/get-proxies">
+            <ArrowLeft data-icon="inline-start" />
+            Browse all proxy providers
+          </Link>
+        }
+        nativeButton={false}
         variant="ghost"
         className="self-start text-muted-foreground"
-      >
-        <Link to="/get-proxies">
-          <ArrowLeft data-icon="inline-start" />
-          Browse all proxy providers
-        </Link>
-      </Button>
+      />
     </main>
   );
 }

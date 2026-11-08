@@ -106,6 +106,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectGroup,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -300,6 +301,20 @@ export function AdminUsers({
   const from = total ? pagination.pageIndex * pagination.pageSize + 1 : 0;
   const to = Math.min(total, (pagination.pageIndex + 1) * pagination.pageSize);
 
+  const searchFieldItems = [
+    { value: "email" as const, label: localization.email },
+    { value: "name" as const, label: localization.name },
+  ];
+  const searchOperatorItems = [
+    { value: "contains" as const, label: localization.searchContains },
+    { value: "starts_with" as const, label: localization.startsWith },
+    { value: "ends_with" as const, label: localization.endsWith },
+  ];
+  const statusItems = [
+    { value: "all" as const, label: localization.filterAllStatuses },
+    { value: "active" as const, label: localization.active },
+    { value: "banned" as const, label: localization.banned },
+  ];
   return (
     <section className={className}>
       <div className="flex flex-col gap-4">
@@ -324,9 +339,11 @@ export function AdminUsers({
 
         <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-[9rem_10rem_minmax(14rem,1fr)_10rem]">
           <Select
+            items={searchFieldItems}
             value={searchField}
             onValueChange={(value) => {
-              setSearchField(value as SearchField);
+              if (value === null) return;
+              setSearchField(value);
               table.setPageIndex(0);
             }}
           >
@@ -337,14 +354,21 @@ export function AdminUsers({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="email">{localization.email}</SelectItem>
-              <SelectItem value="name">{localization.name}</SelectItem>
+              <SelectGroup>
+                {searchFieldItems.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
             </SelectContent>
           </Select>
           <Select
+            items={searchOperatorItems}
             value={searchOperator}
             onValueChange={(value) => {
-              setSearchOperator(value as SearchOperator);
+              if (value === null) return;
+              setSearchOperator(value);
               table.setPageIndex(0);
             }}
           >
@@ -352,13 +376,13 @@ export function AdminUsers({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="contains">
-                {localization.searchContains}
-              </SelectItem>
-              <SelectItem value="starts_with">
-                {localization.startsWith}
-              </SelectItem>
-              <SelectItem value="ends_with">{localization.endsWith}</SelectItem>
+              <SelectGroup>
+                {searchOperatorItems.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
             </SelectContent>
           </Select>
           <InputGroup>
@@ -383,8 +407,10 @@ export function AdminUsers({
             />
           </InputGroup>
           <Select
+            items={statusItems}
             value={status}
             onValueChange={(value) => {
+              if (value === null) return;
               table
                 .getColumn("status")
                 ?.setFilterValue(value === "all" ? undefined : value);
@@ -397,11 +423,13 @@ export function AdminUsers({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">
-                {localization.filterAllStatuses}
-              </SelectItem>
-              <SelectItem value="active">{localization.active}</SelectItem>
-              <SelectItem value="banned">{localization.banned}</SelectItem>
+              <SelectGroup>
+                {statusItems.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
             </SelectContent>
           </Select>
         </div>
@@ -1228,15 +1256,17 @@ function UserInspector({
                       : config.localization.active}
                   </Badge>
                   <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        aria-label={config.localization.moreActions}
-                        size="icon-sm"
-                        variant="ghost"
-                      >
-                        <EllipsisIcon />
-                      </Button>
-                    </DropdownMenuTrigger>
+                    <DropdownMenuTrigger
+                      render={
+                        <Button
+                          aria-label={config.localization.moreActions}
+                          size="icon-sm"
+                          variant="ghost"
+                        >
+                          <EllipsisIcon />
+                        </Button>
+                      }
+                    />
                     <DropdownMenuContent align="end" className="w-48">
                       <DropdownMenuGroup>
                         <DropdownMenuItem
@@ -1248,7 +1278,7 @@ function UserInspector({
                                 !canImpersonateAdmins.data?.success)) ||
                             isSelf
                           }
-                          onSelect={() => setDangerousAction("impersonate")}
+                          onClick={() => setDangerousAction("impersonate")}
                         >
                           <LogInIcon />
                           {config.localization.impersonateUser}

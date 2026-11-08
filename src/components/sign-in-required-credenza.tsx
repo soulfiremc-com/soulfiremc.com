@@ -39,11 +39,13 @@ export function SignInRequiredCredenza({
           </div>
         </CredenzaBody>
         <CredenzaFooter>
-          <CredenzaClose asChild>
-            <Button type="button" variant="outline">
-              Cancel
-            </Button>
-          </CredenzaClose>
+          <CredenzaClose
+            render={
+              <Button type="button" variant="outline">
+                Cancel
+              </Button>
+            }
+          />
           <Button
             type="button"
             onClick={() => {

@@ -375,32 +375,42 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
               it useful, consider supporting the project:
             </p>
             <div className="mt-4 flex flex-col gap-3">
-              <Button asChild variant="outline" className="w-full gap-2">
-                <a
-                  href="https://ko-fi.com/alexprogrammerde"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Coffee className="h-4 w-4" />
-                  Buy me a coffee on Ko-fi
-                </a>
-              </Button>
-              <Button asChild variant="outline" className="w-full gap-2">
-                <a
-                  href={import.meta.env.VITE_GITHUB_LINK}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <SiGithub className="h-4 w-4" />
-                  Star on GitHub
-                </a>
-              </Button>
+              <Button
+                render={
+                  <a
+                    href="https://ko-fi.com/alexprogrammerde"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Coffee className="h-4 w-4" />
+                    Buy me a coffee on Ko-fi
+                  </a>
+                }
+                nativeButton={false}
+                variant="outline"
+                className="w-full gap-2"
+              />
+              <Button
+                render={
+                  <a
+                    href={import.meta.env.VITE_GITHUB_LINK}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <SiGithub className="h-4 w-4" />
+                    Star on GitHub
+                  </a>
+                }
+                nativeButton={false}
+                variant="outline"
+                className="w-full gap-2"
+              />
             </div>
           </CredenzaBody>
           <CredenzaFooter>
-            <CredenzaClose asChild>
-              <Button variant="secondary">Close</Button>
-            </CredenzaClose>
+            <CredenzaClose
+              render={<Button variant="secondary">Close</Button>}
+            />
           </CredenzaFooter>
         </CredenzaContent>
       </Credenza>
@@ -580,11 +590,15 @@ function DownloadPageContent({
               Follow the start-here docs for a full walkthrough, including
               account setup, plugins, and tuning tips for realistic bot testing.
             </p>
-            <Button asChild variant="outline">
-              <Link to="/docs/$" params={{ _splat: "start-here" }}>
-                Open the docs
-              </Link>
-            </Button>
+            <Button
+              render={
+                <Link to="/docs/$" params={{ _splat: "start-here" }}>
+                  Open the docs
+                </Link>
+              }
+              nativeButton={false}
+              variant="outline"
+            />
           </CardContent>
         </Card>
         <Card>
@@ -602,15 +616,18 @@ function DownloadPageContent({
               Explore every screen, test presets, and share the experience with
               your team by opening the fully interactive SoulFire demo.
             </p>
-            <Button asChild>
-              <a
-                href="https://demo.soulfiremc.com"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Visit the demo
-              </a>
-            </Button>
+            <Button
+              render={
+                <a
+                  href="https://demo.soulfiremc.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Visit the demo
+                </a>
+              }
+              nativeButton={false}
+            />
           </CardContent>
         </Card>
         <Card>
@@ -641,14 +658,15 @@ function DownloadPageContent({
                   </div>
                 </div>
                 <Button
-                  asChild
+                  render={
+                    <a href={item.url} download>
+                      Download
+                    </a>
+                  }
+                  nativeButton={false}
                   size="sm"
                   className="mt-2 w-full sm:mt-0 sm:w-auto"
-                >
-                  <a href={item.url} download>
-                    Download
-                  </a>
-                </Button>
+                />
               </div>
             ))}
           </CardContent>
@@ -669,15 +687,18 @@ function DownloadPageContent({
               consider buying the developer a coffee. Every contribution helps
               fund hosting, development, and new features.
             </p>
-            <Button asChild>
-              <a
-                href="https://ko-fi.com/alexprogrammerde"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Donate on Ko-fi
-              </a>
-            </Button>
+            <Button
+              render={
+                <a
+                  href="https://ko-fi.com/alexprogrammerde"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Donate on Ko-fi
+                </a>
+              }
+              nativeButton={false}
+            />
           </CardContent>
         </Card>
       </div>

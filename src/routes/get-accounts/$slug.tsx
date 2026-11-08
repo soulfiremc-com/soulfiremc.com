@@ -106,15 +106,17 @@ function DiscordMemberBadge({
 
   return (
     <HoverCard>
-      <HoverCardTrigger asChild>
-        <UiBadge
-          variant="outline"
-          className="cursor-help border-transparent bg-discord/10 text-discord"
-        >
-          <Users />
-          {formatNumber(info.approximate_member_count)}
-        </UiBadge>
-      </HoverCardTrigger>
+      <HoverCardTrigger
+        render={
+          <UiBadge
+            variant="outline"
+            className="cursor-help border-transparent bg-discord/10 text-discord"
+          >
+            <Users />
+            {formatNumber(info.approximate_member_count)}
+          </UiBadge>
+        }
+      />
       <HoverCardContent className="w-auto text-sm">
         {info.guild?.name && <p className="font-medium">{info.guild.name}</p>}
         <p>{info.approximate_member_count?.toLocaleString("en-US")} members</p>
@@ -276,20 +278,22 @@ function ProviderBadge({
   const config = BADGE_CONFIG[badge];
   return (
     <HoverCard>
-      <HoverCardTrigger asChild>
-        <UiBadge
-          variant="outline"
-          className={cn(
-            "cursor-help border-transparent",
-            /* oxlint-disable shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
-            classNameOverride ?? config.className,
-            /* oxlint-enable shadcn/require-static-classes */
-          )}
-        >
-          {config.icon}
-          {config.label}
-        </UiBadge>
-      </HoverCardTrigger>
+      <HoverCardTrigger
+        render={
+          <UiBadge
+            variant="outline"
+            className={cn(
+              "cursor-help border-transparent",
+              /* oxlint-disable shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
+              classNameOverride ?? config.className,
+              /* oxlint-enable shadcn/require-static-classes */
+            )}
+          >
+            {config.icon}
+            {config.label}
+          </UiBadge>
+        }
+      />
       <HoverCardContent className="w-64 text-sm">
         <p>{config.description}</p>
       </HoverCardContent>
@@ -522,77 +526,73 @@ function AccountDetailPage() {
 
               <div className="flex flex-wrap gap-2">
                 <Button
-                  asChild
-                  size="lg"
-                  className={
-                    theme?.primaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
-                  }
-                >
-                  <a
-                    href={data.shop.url}
-                    target="_blank"
-                    rel="noopener noreferrer nofollow"
-                  >
-                    Get Accounts
-                    <ExternalLink data-icon="inline-end" />
-                  </a>
-                </Button>
-                {data.shop.websiteUrl ? (
-                  <Button
-                    asChild
-                    variant="secondary"
-                    size="lg"
-                    className={
-                      theme?.secondaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
-                    }
-                  >
+                  render={
                     <a
-                      href={data.shop.websiteUrl}
+                      href={data.shop.url}
                       target="_blank"
                       rel="noopener noreferrer nofollow"
                     >
-                      Website
-                      <Globe data-icon="inline-end" />
+                      Get Accounts
+                      <ExternalLink data-icon="inline-end" />
                     </a>
-                  </Button>
+                  }
+                  nativeButton={false}
+                  size="lg"
+                  className={theme?.primaryButton}
+                />
+                {data.shop.websiteUrl ? (
+                  <Button
+                    render={
+                      <a
+                        href={data.shop.websiteUrl}
+                        target="_blank"
+                        rel="noopener noreferrer nofollow"
+                      >
+                        Website
+                        <Globe data-icon="inline-end" />
+                      </a>
+                    }
+                    nativeButton={false}
+                    variant="secondary"
+                    size="lg"
+                    className={theme?.secondaryButton}
+                  />
                 ) : null}
                 {discordInviteUrl ? (
                   <Button
-                    asChild
+                    render={
+                      <a
+                        href={discordInviteUrl}
+                        target="_blank"
+                        rel="noopener noreferrer nofollow"
+                      >
+                        Discord
+                        <SiDiscord data-icon="inline-end" />
+                      </a>
+                    }
+                    nativeButton={false}
                     variant="secondary"
                     size="lg"
-                    className={
-                      theme?.secondaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
-                    }
-                  >
-                    <a
-                      href={discordInviteUrl}
-                      target="_blank"
-                      rel="noopener noreferrer nofollow"
-                    >
-                      Discord
-                      <SiDiscord data-icon="inline-end" />
-                    </a>
-                  </Button>
+                    className={theme?.secondaryButton}
+                  />
                 ) : null}
                 {data.shop.trustpilotUrl ? (
                   <Button
-                    asChild
+                    render={
+                      <a
+                        href={data.shop.trustpilotUrl}
+                        target="_blank"
+                        rel="noopener noreferrer nofollow"
+                      >
+                        Trustpilot
+                        <SiTrustpilot data-icon="inline-end" />
+                      </a>
+                    }
+                    nativeButton={false}
                     variant="secondary"
                     size="lg"
-                    className={
-                      theme?.secondaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
-                    }
-                  >
-                    <a
-                      href={data.shop.trustpilotUrl}
-                      target="_blank"
-                      rel="noopener noreferrer nofollow"
-                    >
-                      Trustpilot
-                      <SiTrustpilot data-icon="inline-end" />
-                    </a>
-                  </Button>
+                    className={theme?.secondaryButton}
+                  />
                 ) : null}
                 <SocialLinks
                   links={data.shop.socialLinks}
@@ -671,16 +671,19 @@ function AccountDetailPage() {
                     "Check availability"
                   )}
                 </div>
-                <Button asChild>
-                  <a
-                    href={provider.url}
-                    target="_blank"
-                    rel="noopener noreferrer nofollow"
-                  >
-                    Buy {CATEGORY_CONFIG[provider.category].label}
-                    <ExternalLink data-icon="inline-end" />
-                  </a>
-                </Button>
+                <Button
+                  render={
+                    <a
+                      href={provider.url}
+                      target="_blank"
+                      rel="noopener noreferrer nofollow"
+                    >
+                      Buy {CATEGORY_CONFIG[provider.category].label}
+                      <ExternalLink data-icon="inline-end" />
+                    </a>
+                  }
+                  nativeButton={false}
+                />
               </Card>
             );
           })}
@@ -698,15 +701,16 @@ function AccountDetailPage() {
         ) : null}
 
         <Button
-          asChild
+          render={
+            <Link to="/get-accounts">
+              <ArrowLeft data-icon="inline-start" />
+              Browse all account providers
+            </Link>
+          }
+          nativeButton={false}
           variant="ghost"
           className="self-start text-muted-foreground"
-        >
-          <Link to="/get-accounts">
-            <ArrowLeft data-icon="inline-start" />
-            Browse all account providers
-          </Link>
-        </Button>
+        />
       </main>
     </SiteShell>
   );

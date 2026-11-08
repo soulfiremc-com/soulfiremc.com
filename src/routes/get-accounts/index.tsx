@@ -217,12 +217,14 @@ const accountFaqItems: {
 function PriceInfoBadge({ details }: { details: string }) {
   return (
     <HoverCard>
-      <HoverCardTrigger asChild>
-        <span className="inline-flex cursor-help items-center text-muted-foreground hover:text-foreground transition-colors">
-          <Info className="size-3.5" />
-          <span className="sr-only">Pricing details</span>
-        </span>
-      </HoverCardTrigger>
+      <HoverCardTrigger
+        render={
+          <span className="inline-flex cursor-help items-center text-muted-foreground hover:text-foreground transition-colors">
+            <Info className="size-3.5" />
+            <span className="sr-only">Pricing details</span>
+          </span>
+        }
+      />
       <HoverCardContent className="w-64 text-sm">
         <p className="font-medium mb-1">Pricing Details</p>
         <p className="text-muted-foreground">{details}</p>
@@ -258,15 +260,17 @@ function DiscordMemberBadge({ providerSlug }: { providerSlug: string }) {
 
   return (
     <HoverCard>
-      <HoverCardTrigger asChild>
-        <UiBadge
-          variant="outline"
-          className="cursor-help border-transparent bg-discord/10 text-discord"
-        >
-          <Users />
-          {formatNumber(info.approximate_member_count)}
-        </UiBadge>
-      </HoverCardTrigger>
+      <HoverCardTrigger
+        render={
+          <UiBadge
+            variant="outline"
+            className="cursor-help border-transparent bg-discord/10 text-discord"
+          >
+            <Users />
+            {formatNumber(info.approximate_member_count)}
+          </UiBadge>
+        }
+      />
       <HoverCardContent className="w-auto text-sm">
         {info.guild?.name && <p className="font-medium">{info.guild.name}</p>}
         <p>{info.approximate_member_count?.toLocaleString()} members</p>
@@ -329,20 +333,22 @@ function ProviderBadge({
   const config = BADGE_CONFIG[badge];
   return (
     <HoverCard>
-      <HoverCardTrigger asChild>
-        <UiBadge
-          variant="outline"
-          className={cn(
-            "cursor-help border-transparent",
-            /* oxlint-disable shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
-            classNameOverride ?? config.className,
-            /* oxlint-enable shadcn/require-static-classes */
-          )}
-        >
-          {config.icon}
-          {config.label}
-        </UiBadge>
-      </HoverCardTrigger>
+      <HoverCardTrigger
+        render={
+          <UiBadge
+            variant="outline"
+            className={cn(
+              "cursor-help border-transparent",
+              /* oxlint-disable shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
+              classNameOverride ?? config.className,
+              /* oxlint-enable shadcn/require-static-classes */
+            )}
+          >
+            {config.icon}
+            {config.label}
+          </UiBadge>
+        }
+      />
       <HoverCardContent className="w-64 text-sm">
         <p>{config.description}</p>
       </HoverCardContent>
@@ -486,69 +492,65 @@ function ProviderCard({
           <PaymentMethods methods={provider.paymentMethods} />
           <div className="flex flex-wrap gap-2">
             <Button
-              asChild
-              className={
-                theme?.primaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
+              render={
+                <a href={provider.url} target="_blank" rel="noopener nofollow">
+                  Get Accounts
+                  <ExternalLink data-icon="inline-end" />
+                </a>
               }
-            >
-              <a href={provider.url} target="_blank" rel="noopener nofollow">
-                Get Accounts
-                <ExternalLink data-icon="inline-end" />
-              </a>
-            </Button>
+              nativeButton={false}
+              className={theme?.primaryButton}
+            />
             {provider.websiteUrl && (
               <Button
-                asChild
-                variant="secondary"
-                className={
-                  theme?.secondaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
+                render={
+                  <a
+                    href={provider.websiteUrl}
+                    target="_blank"
+                    rel="noopener nofollow"
+                  >
+                    Website
+                    <Globe data-icon="inline-end" />
+                  </a>
                 }
-              >
-                <a
-                  href={provider.websiteUrl}
-                  target="_blank"
-                  rel="noopener nofollow"
-                >
-                  Website
-                  <Globe data-icon="inline-end" />
-                </a>
-              </Button>
+                nativeButton={false}
+                variant="secondary"
+                className={theme?.secondaryButton}
+              />
             )}
             {discordInviteUrl && (
               <Button
-                asChild
-                variant="secondary"
-                className={
-                  theme?.secondaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
+                render={
+                  <a
+                    href={discordInviteUrl}
+                    target="_blank"
+                    rel="noopener nofollow"
+                  >
+                    Discord
+                    <SiDiscord data-icon="inline-end" />
+                  </a>
                 }
-              >
-                <a
-                  href={discordInviteUrl}
-                  target="_blank"
-                  rel="noopener nofollow"
-                >
-                  Discord
-                  <SiDiscord data-icon="inline-end" />
-                </a>
-              </Button>
+                nativeButton={false}
+                variant="secondary"
+                className={theme?.secondaryButton}
+              />
             )}
             {provider.trustpilotUrl && (
               <Button
-                asChild
-                variant="secondary"
-                className={
-                  theme?.secondaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
+                render={
+                  <a
+                    href={provider.trustpilotUrl}
+                    target="_blank"
+                    rel="noopener nofollow"
+                  >
+                    Trustpilot
+                    <SiTrustpilot data-icon="inline-end" />
+                  </a>
                 }
-              >
-                <a
-                  href={provider.trustpilotUrl}
-                  target="_blank"
-                  rel="noopener nofollow"
-                >
-                  Trustpilot
-                  <SiTrustpilot data-icon="inline-end" />
-                </a>
-              </Button>
+                nativeButton={false}
+                variant="secondary"
+                className={theme?.secondaryButton}
+              />
             )}
             <SocialLinkButtons
               links={provider.socialLinks}
@@ -638,9 +640,8 @@ function MainContent() {
       <div className="flex flex-col gap-2">
         <span className="text-xs text-muted-foreground">Category:</span>
         <ToggleGroup
-          type="single"
-          value={category ?? ""}
-          onValueChange={(value) =>
+          value={category ? [category] : []}
+          onValueChange={([value]) =>
             void navigate({
               search: (previous) => ({
                 ...previous,
@@ -679,7 +680,7 @@ function MainContent() {
       <div className="flex flex-col gap-2">
         <span className="text-xs text-muted-foreground">Features:</span>
         <ToggleGroup
-          type="multiple"
+          multiple
           value={badges}
           onValueChange={(value) =>
             void navigate({
@@ -723,9 +724,8 @@ function MainContent() {
       <div className="flex flex-col gap-2">
         <span className="text-xs text-muted-foreground">Sort:</span>
         <ToggleGroup
-          type="single"
-          value={sort}
-          onValueChange={(value) => {
+          value={[sort]}
+          onValueChange={([value]) => {
             if (value) {
               void navigate({
                 search: (previous) => ({
@@ -913,7 +913,7 @@ function GetAccountsClient() {
             Common questions about Minecraft accounts
           </p>
         </div>
-        <Accordion type="single" collapsible className="w-full">
+        <Accordion className="w-full">
           {accountFaqItems.map((item, i) => (
             <AccordionItem key={item.question} value={`faq-${i}`}>
               <AccordionTrigger>{item.question}</AccordionTrigger>

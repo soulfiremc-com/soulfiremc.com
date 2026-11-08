@@ -182,18 +182,20 @@ function ProviderBadge({ badge }: { badge: Badge }) {
   const config = BADGE_CONFIG[badge];
   return (
     <HoverCard>
-      <HoverCardTrigger asChild>
-        <UiBadge
-          variant="outline"
-          className={cn(
-            "cursor-help border-transparent",
-            config.className /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */,
-          )}
-        >
-          {config.icon}
-          {config.label}
-        </UiBadge>
-      </HoverCardTrigger>
+      <HoverCardTrigger
+        render={
+          <UiBadge
+            variant="outline"
+            className={cn(
+              "cursor-help border-transparent",
+              config.className /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */,
+            )}
+          >
+            {config.icon}
+            {config.label}
+          </UiBadge>
+        }
+      />
       <HoverCardContent className="w-64 text-sm">
         <p>{config.description}</p>
       </HoverCardContent>
@@ -290,16 +292,19 @@ function ProviderCard({
           )}
           <PaymentMethods methods={provider.paymentMethods} />
           <div className="flex flex-wrap gap-2">
-            <Button asChild>
-              <a
-                href={provider.url}
-                target="_blank"
-                rel="noopener noreferrer nofollow"
-              >
-                Get Proxies
-                <ExternalLink data-icon="inline-end" />
-              </a>
-            </Button>
+            <Button
+              render={
+                <a
+                  href={provider.url}
+                  target="_blank"
+                  rel="noopener noreferrer nofollow"
+                >
+                  Get Proxies
+                  <ExternalLink data-icon="inline-end" />
+                </a>
+              }
+              nativeButton={false}
+            />
             <SocialLinkButtons links={provider.socialLinks} />
           </div>
           <ReviewInlineActions
@@ -371,9 +376,8 @@ function MainContent() {
       <div className="flex flex-col gap-2">
         <span className="text-xs text-muted-foreground">Sort:</span>
         <ToggleGroup
-          type="single"
-          value={sort}
-          onValueChange={(value) => {
+          value={[sort]}
+          onValueChange={([value]) => {
             if (value) {
               void navigate({
                 search: (previous) => ({
@@ -411,7 +415,7 @@ function MainContent() {
         </ToggleGroup>
       </div>
       <ToggleGroup
-        type="multiple"
+        multiple
         value={badges}
         onValueChange={(value) =>
           void navigate({
@@ -552,7 +556,7 @@ function GetProxiesClient() {
             Common questions about proxies for SoulFire
           </p>
         </div>
-        <Accordion type="single" collapsible className="w-full">
+        <Accordion className="w-full">
           {proxiesFaqItems.map((item, i) => (
             <AccordionItem key={item.question} value={`faq-${i}`}>
               <AccordionTrigger>{item.question}</AccordionTrigger>

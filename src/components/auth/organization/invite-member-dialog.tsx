@@ -272,6 +272,12 @@ export function InviteMemberDialog({
                         : [...selectedRoles, role],
                     );
 
+                  const roleItems = Object.entries(assignableRoles).map(
+                    ([key, label]) => ({
+                      value: key,
+                      label: label,
+                    }),
+                  );
                   return (
                     <Field
                       data-invalid={isAuthFormFieldInvalid(field.state.meta)}
@@ -302,7 +308,7 @@ export function InviteMemberDialog({
 
                           <DropdownMenuContent
                             align="start"
-                            className="w-(--radix-dropdown-menu-trigger-width)"
+                            className="w-(--anchor-width)"
                           >
                             {Object.entries(assignableRoles).map(
                               ([key, label]) => {
@@ -315,10 +321,8 @@ export function InviteMemberDialog({
                                     disabled={
                                       checked && selectedRoles.length === 1
                                     }
-                                    onSelect={(event) => {
-                                      event.preventDefault();
-                                      toggleRole(key);
-                                    }}
+                                    closeOnClick={false}
+                                    onCheckedChange={() => toggleRole(key)}
                                   >
                                     {label}
                                   </DropdownMenuCheckboxItem>
@@ -329,9 +333,12 @@ export function InviteMemberDialog({
                         </DropdownMenu>
                       ) : (
                         <Select
+                          items={roleItems}
                           disabled={isInviting}
-                          onValueChange={(role) => field.handleChange([role])}
-                          value={selectedRoles[0] ?? ""}
+                          onValueChange={(role) => {
+                            if (role !== null) field.handleChange([role]);
+                          }}
+                          value={selectedRoles[0] ?? null}
                         >
                           <SelectTrigger
                             id="invite-member-role"
@@ -343,13 +350,11 @@ export function InviteMemberDialog({
                           </SelectTrigger>
                           <SelectContent>
                             <SelectGroup>
-                              {Object.entries(assignableRoles).map(
-                                ([key, label]) => (
-                                  <SelectItem key={key} value={key}>
-                                    {label}
-                                  </SelectItem>
-                                ),
-                              )}
+                              {roleItems.map((item) => (
+                                <SelectItem key={item.value} value={item.value}>
+                                  {item.label}
+                                </SelectItem>
+                              ))}
                             </SelectGroup>
                           </SelectContent>
                         </Select>
@@ -362,36 +367,48 @@ export function InviteMemberDialog({
 
               {teamsEnabled && (
                 <form.AppField name="teamId">
-                  {(field) => (
-                    <Field>
-                      <FieldLabel htmlFor="invite-member-team">
-                        {organizationLocalization.team}
-                      </FieldLabel>
-                      <Select
-                        value={field.state.value}
-                        onValueChange={(value) =>
-                          field.handleChange(value ?? "")
-                        }
-                        disabled={isInviting}
-                      >
-                        <SelectTrigger
-                          id="invite-member-team"
-                          className="w-full"
+                  {(field) => {
+                    const teamItems =
+                      teams.data?.map((team) => ({
+                        value: team.id,
+                        label: team.name,
+                      })) ?? [];
+                    return (
+                      <Field>
+                        <FieldLabel htmlFor="invite-member-team">
+                          {organizationLocalization.team}
+                        </FieldLabel>
+                        <Select
+                          items={teamItems}
+                          value={field.state.value}
+                          onValueChange={(value) => {
+                            if (value !== null) {
+                              field.handleChange(value ?? "");
+                            }
+                          }}
+                          disabled={isInviting}
                         >
-                          <SelectValue
-                            placeholder={organizationLocalization.selectTeam}
-                          />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {teams.data?.map((team) => (
-                            <SelectItem key={team.id} value={team.id}>
-                              {team.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </Field>
-                  )}
+                          <SelectTrigger
+                            id="invite-member-team"
+                            className="w-full"
+                          >
+                            <SelectValue
+                              placeholder={organizationLocalization.selectTeam}
+                            />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              {teamItems.map((item) => (
+                                <SelectItem key={item.value} value={item.value}>
+                                  {item.label}
+                                </SelectItem>
+                              ))}
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                      </Field>
+                    );
+                  }}
                 </form.AppField>
               )}
 

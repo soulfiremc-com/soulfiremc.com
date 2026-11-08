@@ -116,21 +116,22 @@ export function SocialLinkButtons({
         return (
           <Button
             key={`${link.platform}-${link.url}`}
-            asChild
+            render={
+              <a
+                href={link.url}
+                target="_blank"
+                rel="noopener nofollow"
+                aria-label={label}
+                title={label}
+              >
+                <Icon />
+              </a>
+            }
+            nativeButton={false}
             variant="secondary"
             size="icon-sm"
             className={className}
-          >
-            <a
-              href={link.url}
-              target="_blank"
-              rel="noopener nofollow"
-              aria-label={label}
-              title={label}
-            >
-              <Icon />
-            </a>
-          </Button>
+          />
         );
       })}
     </>

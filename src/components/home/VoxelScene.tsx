@@ -132,9 +132,8 @@ export function VoxelScene() {
       </div>
       <div className="voxel-controls">
         <ToggleGroup
-          type="single"
-          value={formation}
-          onValueChange={(value) => {
+          value={[formation]}
+          onValueChange={([value]) => {
             if (value) setFormation(value as Formation);
           }}
           variant="outline"

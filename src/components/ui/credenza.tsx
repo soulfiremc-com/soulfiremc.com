@@ -25,7 +25,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 
 interface BaseProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 interface RootCredenzaProps extends BaseProps {
@@ -35,7 +35,8 @@ interface RootCredenzaProps extends BaseProps {
 
 interface CredenzaProps extends BaseProps {
   className?: string;
-  asChild?: true;
+  render?: React.ReactElement;
+  nativeButton?: boolean;
 }
 
 const CredenzaContext = React.createContext<{ isMobile: boolean }>({
@@ -58,9 +59,7 @@ const Credenza = ({ children, ...props }: RootCredenzaProps) => {
 
   return (
     <CredenzaContext.Provider value={{ isMobile }}>
-      <Credenza {...props} {...(isMobile && { autoFocus: true })}>
-        {children}
-      </Credenza>
+      <Credenza {...props}>{children}</Credenza>
     </CredenzaContext.Provider>
   );
 };

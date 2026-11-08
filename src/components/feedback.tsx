@@ -68,9 +68,8 @@ function FeedbackForm({ url }: { url: string }) {
       <div className="flex flex-row items-center gap-2">
         <p className="text-sm font-medium pe-2">How is this page?</p>
         <ToggleGroup
-          type="single"
-          value={activeOpinion ?? ""}
-          onValueChange={(value) => {
+          value={activeOpinion ? [activeOpinion] : []}
+          onValueChange={([value]) => {
             if (value && previous === null) {
               setOpinion(value as "good" | "bad");
             }
@@ -80,7 +79,7 @@ function FeedbackForm({ url }: { url: string }) {
           <ToggleGroupItem
             value="good"
             disabled={previous !== null}
-            className="rounded-full data-[state=on]:[&_svg]:fill-current"
+            className="rounded-full data-pressed:[&_svg]:fill-current"
           >
             <ThumbsUp data-icon="inline-start" />
             Good
@@ -88,7 +87,7 @@ function FeedbackForm({ url }: { url: string }) {
           <ToggleGroupItem
             value="bad"
             disabled={previous !== null}
-            className="rounded-full data-[state=on]:[&_svg]:fill-current"
+            className="rounded-full data-pressed:[&_svg]:fill-current"
           >
             <ThumbsDown data-icon="inline-start" />
             Bad

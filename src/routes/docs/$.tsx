@@ -148,9 +148,9 @@ const clientLoader = browserCollections.docs.createClientLoader<{
 
                 return (
                   <HoverCard>
-                    <HoverCardTrigger asChild>
-                      <Link to={href} {...anchorProps} />
-                    </HoverCardTrigger>
+                    <HoverCardTrigger
+                      render={<Link to={href} {...anchorProps} />}
+                    />
                     <HoverCardContent className="text-sm">
                       <p className="font-medium">{anchorProps.children}</p>
                       <p className="text-fd-muted-foreground">{href}</p>

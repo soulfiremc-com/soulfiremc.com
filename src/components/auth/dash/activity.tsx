@@ -76,6 +76,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectGroup,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -323,6 +324,11 @@ function ActivityFeed({
     () => null,
   );
 
+  const eventTypeItems = [
+    { value: "all" as const, label: localization.allEvents },
+    ...(eventOptions.map(([key, label]) => ({ value: key, label: label })) ??
+      []),
+  ];
   return (
     <Card
       className={cn("w-full", className)}
@@ -357,8 +363,10 @@ function ActivityFeed({
               {localization.eventType}
             </FieldLabel>
             <Select
+              items={eventTypeItems}
               value={eventType}
               onValueChange={(value) => {
+                if (value === null) return;
                 table
                   .getColumn("eventType")
                   ?.setFilterValue(value === "all" ? undefined : value);
@@ -368,12 +376,13 @@ function ActivityFeed({
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">{localization.allEvents}</SelectItem>
-                {eventOptions.map(([key, label]) => (
-                  <SelectItem key={key} value={key}>
-                    {label}
-                  </SelectItem>
-                ))}
+                <SelectGroup>
+                  {eventTypeItems.map((item) => (
+                    <SelectItem key={item.value} value={item.value}>
+                      {item.label}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
               </SelectContent>
             </Select>
           </Field>

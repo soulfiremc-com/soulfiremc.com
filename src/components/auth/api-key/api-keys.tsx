@@ -25,6 +25,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectGroup,
 } from "@/components/ui/select";
 import { apiKeyPlugin } from "@/lib/auth/api-key-plugin";
 import { cn } from "@/lib/utils";
@@ -143,6 +144,12 @@ export function ApiKeys({
 
   const [createOpen, setCreateOpen] = useState(false);
 
+  const sortItems = [
+    { value: "createdAt:desc" as const, label: apiKeyLocalization.newest },
+    { value: "createdAt:asc" as const, label: apiKeyLocalization.oldest },
+    { value: "name:asc" as const, label: apiKeyLocalization.nameAscending },
+    { value: "name:desc" as const, label: apiKeyLocalization.nameDescending },
+  ];
   return (
     <div className={cn("flex flex-col gap-3", className)}>
       <div className="flex items-end justify-between gap-3">
@@ -162,8 +169,10 @@ export function ApiKeys({
         )}
       </div>
       <Select
+        items={sortItems}
         value={sort}
         onValueChange={(value) => {
+          if (value === null) return;
           const [id, direction] = value.split(":");
           table.setSorting([{ id, desc: direction === "desc" }]);
         }}
@@ -172,18 +181,13 @@ export function ApiKeys({
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="createdAt:desc">
-            {apiKeyLocalization.newest}
-          </SelectItem>
-          <SelectItem value="createdAt:asc">
-            {apiKeyLocalization.oldest}
-          </SelectItem>
-          <SelectItem value="name:asc">
-            {apiKeyLocalization.nameAscending}
-          </SelectItem>
-          <SelectItem value="name:desc">
-            {apiKeyLocalization.nameDescending}
-          </SelectItem>
+          <SelectGroup>
+            {sortItems.map((item) => (
+              <SelectItem key={item.value} value={item.value}>
+                {item.label}
+              </SelectItem>
+            ))}
+          </SelectGroup>
         </SelectContent>
       </Select>
 

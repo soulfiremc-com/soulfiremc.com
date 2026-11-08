@@ -47,6 +47,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectGroup,
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
@@ -303,14 +304,24 @@ export function AdditionalField({
   }
 
   if (inputType === "select") {
+    const fieldItems =
+      field.options?.map((option) => ({
+        value: option.value,
+        label: option.label,
+      })) ?? [];
     return (
       <Field data-invalid={isInvalid}>
         <FieldLabel htmlFor={name}>{field.label}</FieldLabel>
 
         <Select
+          items={fieldItems}
           name={name}
-          value={valueToString(value) || undefined}
-          onValueChange={(nextValue) => onChange(nextValue)}
+          value={valueToString(value) || null}
+          onValueChange={(nextValue) => {
+            if (nextValue !== null) {
+              onChange(nextValue);
+            }
+          }}
           required={field.required}
           disabled={isPending || field.readOnly}
         >
@@ -324,11 +335,13 @@ export function AdditionalField({
           </SelectTrigger>
 
           <SelectContent>
-            {field.options?.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
+            <SelectGroup>
+              {fieldItems.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectGroup>
           </SelectContent>
         </Select>
 
@@ -512,9 +525,8 @@ function InputField({
 }
 
 /**
- * Slider field. Radix Slider doesn't render the current value, so we render
- * it next to the label and control the state to keep the displayed value in
- * sync. The selected value is submitted via the underlying Radix `name` prop.
+ * Display the formatted value beside the label. The slider submits its
+ * numeric value through the named input.
  */
 function SliderField({
   name,
@@ -548,10 +560,12 @@ function SliderField({
       <Slider
         id={name}
         name={name}
-        value={[numericValue]}
+        value={numericValue}
         onBlur={onBlur}
         onValueChange={(nextValue) =>
-          onChange((Array.isArray(nextValue) ? nextValue[0] : nextValue) ?? min)
+          onChange(
+            typeof nextValue === "number" ? nextValue : (nextValue[0] ?? min),
+          )
         }
         min={min}
         max={max}

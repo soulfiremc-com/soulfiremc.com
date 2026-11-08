@@ -49,6 +49,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectGroup,
 } from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
 import { billingPlugin } from "@/lib/auth/billing-plugin";
@@ -232,6 +233,15 @@ export function BillingSettings({
     });
   };
 
+  const intervalItems = intervals.map((entry) => ({
+    value: entry,
+    label:
+      entry === "month"
+        ? localization.perMonth
+        : entry === "year"
+          ? localization.perYear
+          : localization.oneTime,
+  }));
   return (
     <div className={cn("flex flex-col gap-6", className)}>
       <div className="flex flex-col gap-1">
@@ -367,22 +377,25 @@ export function BillingSettings({
           </h3>
           {intervals.length > 1 && (
             <Select
+              items={intervalItems}
               value={resolvedInterval}
-              onValueChange={(value) => setInterval(value as BillingInterval)}
+              onValueChange={(value) => {
+                if (value !== null) {
+                  setInterval(value);
+                }
+              }}
             >
               <SelectTrigger className="w-36" aria-label={localization.plans}>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {intervals.map((entry) => (
-                  <SelectItem key={entry} value={entry}>
-                    {entry === "month"
-                      ? localization.perMonth
-                      : entry === "year"
-                        ? localization.perYear
-                        : localization.oneTime}
-                  </SelectItem>
-                ))}
+                <SelectGroup>
+                  {intervalItems.map((item) => (
+                    <SelectItem key={item.value} value={item.value}>
+                      {item.label}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
               </SelectContent>
             </Select>
           )}

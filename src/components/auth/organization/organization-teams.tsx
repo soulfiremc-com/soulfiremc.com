@@ -62,6 +62,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectGroup,
 } from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
 import { organizationPlugin } from "@/lib/auth/organization-plugin";
@@ -314,6 +315,12 @@ function TeamDialog({
   const pending = createTeam.isPending || updateTeam.isPending;
   const canEdit = !team || canUpdate.data?.success === true;
 
+  const memberItems = organizationMembers
+    .filter((member) => !memberIds.has(member.userId))
+    .map((member) => ({
+      value: member.userId,
+      label: member.user.name || member.user.email,
+    }));
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-lg">
@@ -401,8 +408,13 @@ function TeamDialog({
                     <Field className="flex-1">
                       <FieldLabel>{localization.addTeamMember}</FieldLabel>
                       <Select
+                        items={memberItems}
                         disabled={canAddMember.isPending || memberLimitReached}
-                        onValueChange={(value) => setUserId(value ?? "")}
+                        onValueChange={(value) => {
+                          if (value !== null) {
+                            setUserId(value ?? "");
+                          }
+                        }}
                         value={userId}
                       >
                         <SelectTrigger className="w-full">
@@ -411,16 +423,13 @@ function TeamDialog({
                           />
                         </SelectTrigger>
                         <SelectContent>
-                          {organizationMembers
-                            .filter((member) => !memberIds.has(member.userId))
-                            .map((member) => (
-                              <SelectItem
-                                key={member.userId}
-                                value={member.userId}
-                              >
-                                {member.user.name || member.user.email}
+                          <SelectGroup>
+                            {memberItems.map((item) => (
+                              <SelectItem key={item.value} value={item.value}>
+                                {item.label}
                               </SelectItem>
                             ))}
+                          </SelectGroup>
                         </SelectContent>
                       </Select>
                     </Field>
@@ -508,20 +517,22 @@ function TeamDialog({
             <DialogFooter className="sm:justify-between">
               {team && (canDelete.isPending || canDelete.data?.success) && (
                 <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Button
-                      disabled={
-                        canDelete.isPending ||
-                        removeTeam.isPending ||
-                        !canRemoveTeam
-                      }
-                      type="button"
-                      variant="destructive"
-                    >
-                      <Trash2 data-icon="inline-start" />
-                      {localization.deleteTeam}
-                    </Button>
-                  </AlertDialogTrigger>
+                  <AlertDialogTrigger
+                    render={
+                      <Button
+                        disabled={
+                          canDelete.isPending ||
+                          removeTeam.isPending ||
+                          !canRemoveTeam
+                        }
+                        type="button"
+                        variant="destructive"
+                      >
+                        <Trash2 data-icon="inline-start" />
+                        {localization.deleteTeam}
+                      </Button>
+                    }
+                  />
                   <AlertDialogContent>
                     <AlertDialogHeader>
                       <AlertDialogTitle>

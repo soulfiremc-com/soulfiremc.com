@@ -59,7 +59,7 @@ export function ThemeToggleItem() {
 
   return (
     <DropdownMenuItem
-      onSelect={(e) => e.preventDefault()}
+      closeOnClick={false}
       onFocus={(e) => {
         // onFocus bubbles in React, so guard against re-entry from focus
         // events fired by the inner TabsTrigger.
