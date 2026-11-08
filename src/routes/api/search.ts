@@ -31,7 +31,7 @@ function hasStructuredDataLoader(
 export const Route = createFileRoute("/api/search")({
   server: {
     handlers: {
-      GET: async ({ request }) => {
+      GET: async () => {
         const [{ getOpenApiStructuredData, isOpenApiPage }, { getSource }] =
           await Promise.all([
             import("@/lib/docs/openapi"),
@@ -74,7 +74,7 @@ export const Route = createFileRoute("/api/search")({
             };
           },
           language: "english",
-        }).GET(request);
+        }).staticGET();
       },
     },
   },

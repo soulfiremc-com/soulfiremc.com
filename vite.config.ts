@@ -1,4 +1,7 @@
 import { readdirSync } from "node:fs";
+import { join, relative, resolve } from "node:path";
+import { createGetUrl, getSlugs } from "fumadocs-core/source";
+import { docsFunctionId, staticDocsMetadata } from "./scripts/static-docs.ts";
 import { execFileSync } from "node:child_process";
 import { cloudflare } from "@cloudflare/vite-plugin";
 import posthog from "@posthog/rollup-plugin";
@@ -21,6 +24,22 @@ const securityHeaders = {
   "X-Content-Type-Options": "nosniff",
 };
 const sitemapHost = "https://soulfiremc.com";
+function getDocsPrerenderPages() {
+  const directory = resolve(MdxConfig.docs.dir);
+  return readdirSync(directory, { recursive: true, withFileTypes: true })
+    .filter((entry) => entry.isFile() && /\.mdx?$/.test(entry.name))
+    .map((entry) => ({
+      path: createGetUrl("/docs")(
+        getSlugs(
+          relative(directory, join(entry.parentPath, entry.name)).replaceAll(
+            "\\",
+            "/",
+          ),
+        ),
+      ),
+    }));
+}
+
 export default defineConfig(({ command }) => ({
   define: {
     "import.meta.env.VITE_APP_VERSION": JSON.stringify(
@@ -51,11 +70,18 @@ export default defineConfig(({ command }) => ({
     cloudflare({ viteEnvironment: { name: "ssr" } }),
     tailwindcss(),
     tanstackStart({
+      serverFns: { generateFunctionId: docsFunctionId },
       sitemap: {
         enabled: true,
         host: sitemapHost,
       },
       pages: [
+        ...getDocsPrerenderPages(),
+        {
+          path: "/api/search",
+          prerender: { enabled: true, outputPath: "/api/search" },
+          sitemap: { exclude: true },
+        },
         ...getBlogSitemapPages(
           readdirSync(MdxConfig.blog.dir, { withFileTypes: true })
             .filter((entry) => entry.isFile())
@@ -73,18 +99,20 @@ export default defineConfig(({ command }) => ({
       ],
       prerender: {
         enabled: true,
+        failOnError: true,
         crawlLinks: true,
         autoSubfolderIndex: false,
         filter: (page) => {
           // Start retains skipped and failed pages in its sitemap input.
           page.sitemap = { ...page.sitemap, exclude: true };
-          return shouldPrerenderPage(page.path);
+          return page.path === "/api/search" || shouldPrerenderPage(page.path);
         },
         onSuccess: ({ page, html }) => ({
           sitemap: getRenderedPageSitemap(page.path, html, sitemapHost),
         }),
       },
     }),
+    staticDocsMetadata(),
     react(),
     ...(command === "build" && process.env.POSTHOG_PERSONAL_API_KEY
       ? [

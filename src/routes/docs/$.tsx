@@ -8,6 +8,7 @@ import {
   redirect,
 } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
+import { staticFunctionMiddleware } from "@tanstack/start-static-server-functions";
 import type { SerializedPageTree } from "fumadocs-core/source/client";
 import { useFumadocsLoader } from "fumadocs-core/source/client";
 import type { OpenAPIPageProps_Spec } from "fumadocs-openapi/ui";
@@ -71,6 +72,7 @@ const serverLoader = createServerFn({
   method: "GET",
 })
   .validator(Schema.toStandardSchemaV1(docsSlugsInputSchema))
+  .middleware([staticFunctionMiddleware])
   .handler(async ({ data: slugs }) => {
     const source = await getSource();
     const page = source.getPage(slugs);

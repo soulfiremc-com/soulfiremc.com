@@ -80,7 +80,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <PostHogProvider>
-        <RootProvider>
+        <RootProvider search={{ options: { type: "static" } }}>
           <AuthUIProviders>
             {children}
             {isPostHogConfigured && <CookieConsentBanner />}
