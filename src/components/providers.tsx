@@ -1,6 +1,7 @@
 import { captchaPlugin } from "@better-auth-ui/react/plugins/captcha";
 import { useNavigate } from "@tanstack/react-router";
 import { RootProvider } from "fumadocs-ui/provider/tanstack";
+import { ContentImage } from "@/components/content-image";
 import { ThemeProvider, useTheme } from "next-themes";
 import { AuthProvider } from "@/components/auth/auth-provider";
 import { AuthTurnstile } from "@/components/auth-turnstile";
@@ -80,7 +81,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <PostHogProvider>
-        <RootProvider search={{ options: { type: "static" } }}>
+        <RootProvider
+          components={{ Image: ContentImage }}
+          search={{ options: { type: "static" } }}
+        >
           <AuthUIProviders>
             {children}
             {isPostHogConfigured && <CookieConsentBanner />}

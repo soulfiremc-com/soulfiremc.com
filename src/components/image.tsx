@@ -1,30 +1,32 @@
-import {
-  Image as UnpicImage,
-  type ImageProps as UnpicImageProps,
-} from "@unpic/react";
-import { Image as BaseImage } from "@unpic/react/base";
+import { Image as UnpicImage } from "@unpic/react/base";
 import { cn } from "cn";
-import type { Ref } from "react";
-import { getProviderForUrl } from "unpic";
+import type { ComponentProps } from "react";
+import {
+  createStaticImageTransformer,
+  getStaticImage,
+  getStaticImageWidths,
+  type StaticImageManifest,
+} from "@/lib/static-images";
 import imageMetadata from "@/lib/image-metadata.json" with { type: "json" };
-import { siteUrl } from "@/lib/site";
 
-type ImageMetadata = { width: number; height: number; background?: string };
-const metadata: Record<string, ImageMetadata> = imageMetadata;
+const images: StaticImageManifest = imageMetadata;
+const transform = createStaticImageTransformer(images);
 
-type ImageProps = Omit<
-  UnpicImageProps,
-  "layout" | "width" | "height" | "aspectRatio"
+export type ImageProps = Omit<
+  ComponentProps<"img">,
+  "src" | "srcSet" | "width" | "height" | "style"
 > & {
+  src: string;
   width?: number;
   height?: number;
   fill?: boolean;
-  ref?: Ref<HTMLImageElement>;
+  objectFit?: "contain" | "cover" | "fill" | "none" | "scale-down";
+  breakpoints?: number[];
+  layout?: "fixed" | "constrained" | "fullWidth";
+  unoptimized?: boolean;
+  priority?: boolean;
+  background?: string;
 };
-
-function originalSource(src: string | URL) {
-  return src.toString();
-}
 
 export function Image({
   src,
@@ -32,78 +34,73 @@ export function Image({
   height,
   fill = false,
   objectFit = "contain",
+  breakpoints,
+  layout,
+  unoptimized = false,
+  priority,
   background,
   className,
-  cdn,
-  fallback,
-  operations,
-  options,
   ...props
 }: ImageProps) {
-  const image = metadata[src];
-  const aspectRatio = image ? image.width / image.height : undefined;
+  const metadata = getStaticImage(images, src);
+  const aspectRatio = metadata ? metadata.width / metadata.height : undefined;
   const resolvedWidth =
     width ??
-    (height && aspectRatio ? Math.round(height * aspectRatio) : image?.width);
+    (height && aspectRatio
+      ? Math.round(height * aspectRatio)
+      : metadata?.width);
   const resolvedHeight =
     height ??
-    (width && aspectRatio ? Math.round(width / aspectRatio) : image?.height);
-  const dimensions =
-    !fill && resolvedWidth && resolvedHeight
-      ? {
-          layout: "constrained" as const,
-          width: resolvedWidth,
-          height: resolvedHeight,
-        }
-      : { layout: "fullWidth" as const };
+    (width && aspectRatio ? Math.round(width / aspectRatio) : metadata?.height);
+  const classes = cn(
+    "bg-origin-content bg-clip-content",
+    {
+      contain: "object-contain",
+      cover: "object-cover",
+      fill: "object-fill",
+      none: "object-none",
+      "scale-down": "object-scale-down",
+    }[objectFit],
+    objectFit === "contain" && "bg-contain! bg-center",
+    fill && "h-full! w-full!",
+    className,
+  );
+  const pixelated = className?.includes("image-rendering:pixelated");
+  const variants = !unoptimized && !pixelated ? metadata?.variants : undefined;
+  const placeholder =
+    background ?? (variants?.length ? metadata?.background : undefined);
 
-  const imageProps = {
-    ...props,
-    ...dimensions,
-    src,
-    objectFit,
-    background: background ?? image?.background,
-    className: cn(
-      "bg-origin-content bg-clip-content",
-      objectFit === "contain" && "bg-contain! bg-center",
-      fill && "h-full!",
-      className,
-    ),
-  };
-  const useCloudflare =
-    !import.meta.env.DEV &&
-    src.startsWith("/") &&
-    !src.startsWith("//") &&
-    !/\.svg(?:[?#]|$)/i.test(src);
-  const provider =
-    cdn ??
-    (getProviderForUrl(src) ||
-      fallback ||
-      (useCloudflare ? "cloudflare" : undefined));
+  if (!metadata || !variants?.length) {
+    return (
+      <img
+        {...props}
+        src={src}
+        width={resolvedWidth}
+        height={resolvedHeight}
+        loading={priority ? "eager" : (props.loading ?? "lazy")}
+        fetchPriority={priority ? "high" : props.fetchPriority}
+        className={classes}
+      />
+    );
+  }
 
-  return provider ? (
+  return (
     <UnpicImage
-      {...imageProps}
-      cdn={provider}
-      operations={{
-        ...operations,
-        cloudflare: {
-          fit: objectFit === "cover" ? "cover" : "scale-down",
-          format: "auto",
-          onerror: "redirect",
-          ...operations?.cloudflare,
-        },
-      }}
-      options={{
-        ...options,
-        cloudflare: {
-          domain: new URL(siteUrl).host,
-          ...options?.cloudflare,
-        },
-      }}
+      {...props}
+      src={src}
+      {...(layout === "fullWidth" || fill || !resolvedWidth || !resolvedHeight
+        ? { layout: "fullWidth" as const, aspectRatio }
+        : {
+            layout: layout ?? "constrained",
+            width: resolvedWidth,
+            height: resolvedHeight,
+          })}
+      priority={priority}
+      objectFit={objectFit}
+      background={placeholder}
+      breakpoints={getStaticImageWidths(metadata, breakpoints)}
+      transformer={transform}
+      className={classes}
     />
-  ) : (
-    // Keep SVGs, development assets, and unsupported remote sources unchanged.
-    <BaseImage {...imageProps} transformer={originalSource} breakpoints={[]} />
   );
 }

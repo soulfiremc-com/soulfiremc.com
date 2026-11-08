@@ -116,7 +116,6 @@ function PaymentMethodLogo({ method }: { method: string }) {
         className="h-3.5 max-w-10 shrink-0 object-contain"
         src={logo.asset}
         height={14}
-        unstyled
       />
     );
   }
