@@ -78,7 +78,7 @@ const proxiesFaqItems: {
         bot a different IP address, avoiding rate limits and IP bans. Learn more
         in the{" "}
         <Link
-          to="/docs/$"
+          to="/{-$lang}/docs/$"
           params={{ _splat: "how-to/import-proxies" }}
           className="underline text-primary"
         >
@@ -98,7 +98,7 @@ const proxiesFaqItems: {
         proxies are faster and cheaper but easier to block. ISP proxies offer a
         middle ground. See the{" "}
         <Link
-          to="/docs/$"
+          to="/{-$lang}/docs/$"
           params={{ _splat: "how-to/import-proxies" }}
           className="underline text-primary"
         >
@@ -532,7 +532,7 @@ function GetProxiesClient() {
           <BookOpen className="inline h-4 w-4 align-text-bottom" /> For more
           information on how to use proxies with SoulFire, read the{" "}
           <Link
-            to="/docs/$"
+            to="/{-$lang}/docs/$"
             params={{ _splat: "how-to/import-proxies" }}
             className="underline hover:text-foreground"
           >

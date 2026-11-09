@@ -1,0 +1,49 @@
+---
+title: "SoulFire-Dokumentation"
+sidebarTitle: "Überblick"
+description: "Verbinde einen Bot, teste einen Minecraft-Server und entwickle wiederholbare Automatisierung."
+icon: Compass
+---
+
+import { Cards, Card } from 'fumadocs-ui/components/card';
+
+SoulFire führt Minecraft-Clients ohne Spielfenster aus. Du steuerst sie über die Desktop-App, visuelle Skripte oder ein SDK.
+Teste damit Server, die du betreibst, stelle Spielerabläufe nach und entwickle Bot-Verhalten.
+
+## Deinen ersten Bot verbinden [#connect-your-first-bot]
+
+[Installiere SoulFire](/docs/start-here) und folge der Anleitung [Deinen ersten Bot verbinden](/docs/start-here/gui-mode).
+Du erstellst ein Offline-Konto, verbindest es mit einem Testserver, sendest eine Chatnachricht und stoppst den Bot.
+Du brauchst weder Plugin- noch Programmierkenntnisse.
+
+## Was möchtest du tun? [#what-do-you-want-to-do]
+
+<Cards>
+<Card title="Benutzerhandbuch" href="/docs/how-to">Verwalte Instanzen, Konten, Proxys, Einstellungen, Befehle und die Bot-Ansicht.</Card>
+<Card title="Servertests" href="/docs/testing">Ermittle Ausgangswerte, füge Bots schrittweise hinzu, stelle Verhalten nach und zeichne Ergebnisse auf.</Card>
+<Card title="Automatisierung" href="/docs/automation">Wähle visuelle Skripte oder das SDK und erstelle wiederholbare Bot-Abläufe.</Card>
+<Card title="Serververwaltung" href="/docs/server">Stelle das Backend bereit, verwalte Zugriffe, sichere Daten und plane Updates mit Rückkehrmöglichkeit.</Card>
+<Card title="Plugin-Entwicklung" href="/docs/development">Entwickle ein Fabric-Plugin mit Ereignissen, Einstellungen und direktem Minecraft-Zugriff.</Card>
+<Card title="Konzepte" href="/docs/concepts">Verstehe Client-/Server-Modell, Bot-Lebenszyklus und Zuständigkeit für Aufgaben.</Card>
+<Card title="Referenz" href="/docs/reference">Schlage Befehle, Flags, Kontoformate und unterstützte Versionen nach.</Card>
+<Card title="Fehlerbehebung" href="/docs/troubleshooting">Untersuche Probleme mit Verbindungen, Anmeldung, Proxys, Skripten und Bereitstellung.</Card>
+</Cards>
+
+## Details nachschlagen oder ein Problem lösen [#look-up-a-detail-or-solve-a-problem]
+
+- [Referenz](/docs/reference): Befehle, Flags, Formate, Versionen und Begriffe.
+- [Knotenreferenz](/docs/scripting/node-reference): Integrierte Knoten und ihre Ports.
+- [SDK-Referenz](/docs/sdk/api): Methodensignaturen und Optionen mit Quellcode-Links.
+- [HTTP-API-Referenz](/docs/openapi): Unäre JSON-Endpunkte und ihre Verträge.
+- [Fehlerbehebung](/docs/troubleshooting): Symptome, Diagnoseschritte und Wiederherstellung.
+- [Konzepte](/docs/concepts): Client-/Server-Modell und Zuständigkeit für Bot-Aufgaben.
+
+## Zwei verschiedene Server [#two-different-servers]
+
+Der **SoulFire-Server** führt deine Bots aus und speichert Instanzdaten.
+Der **Minecraft-Server** ist das Ziel, dem diese Bots beitreten.
+Beim ersten lokalen Start übernimmt die Desktop-App den Start des SoulFire-Servers.
+Ein entfernter SoulFire-Server verwendet denselben Client und dieselben Abläufe.
+
+Nutze SoulFire auf Minecraft-Servern, die dir gehören oder deren Betreiber dir Tests erlauben.
+Halte für Support Versionen und relevante Fehler aus der [Diagnose-Checkliste](/docs/troubleshooting#collect-a-useful-report) bereit.

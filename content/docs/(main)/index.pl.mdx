@@ -1,0 +1,49 @@
+---
+title: "Dokumentacja SoulFire"
+sidebarTitle: "Przegląd"
+description: "Połącz bota, przetestuj serwer Minecraft i twórz powtarzalną automatyzację."
+icon: Compass
+---
+
+import { Cards, Card } from 'fumadocs-ui/components/card';
+
+SoulFire uruchamia klienty Minecraft bez okna gry. Sterujesz nimi z aplikacji komputerowej, skryptów wizualnych lub SDK.
+Używaj go do testowania swoich serwerów, odtwarzania działań graczy i rozwijania zachowań botów.
+
+## Połącz pierwszego bota [#connect-your-first-bot]
+
+[Zainstaluj SoulFire](/docs/start-here), a następnie wykonaj samouczek [Połącz pierwszego bota](/docs/start-here/gui-mode).
+Utworzysz jedno konto offline, połączysz je z serwerem testowym, wyślesz wiadomość i zatrzymasz bota.
+Nie potrzebujesz doświadczenia z wtyczkami ani programowaniem.
+
+## Co chcesz zrobić? [#what-do-you-want-to-do]
+
+<Cards>
+<Card title="Podręcznik użytkownika" href="/docs/how-to">Zarządzaj instancjami, kontami, proxy, ustawieniami, poleceniami i widokiem bota.</Card>
+<Card title="Testowanie serwerów" href="/docs/testing">Wyznacz stan początkowy, dodawaj boty etapami, odtwarzaj zachowania i zapisuj wyniki.</Card>
+<Card title="Automatyzacja" href="/docs/automation">Wybierz skrypty wizualne lub SDK i twórz powtarzalne procedury botów.</Card>
+<Card title="Administracja serwerem" href="/docs/server">Wdróż backend, zarządzaj dostępem, chroń dane i planuj aktualizacje z możliwością wycofania.</Card>
+<Card title="Tworzenie wtyczek" href="/docs/development">Napisz wtyczkę Fabric ze zdarzeniami, ustawieniami i bezpośrednim dostępem do Minecraft.</Card>
+<Card title="Pojęcia" href="/docs/concepts">Poznaj model klient-serwer, cykl życia bota i odpowiedzialność za zadania.</Card>
+<Card title="Dokumentacja techniczna" href="/docs/reference">Sprawdź polecenia, flagi, formaty kont i obsługiwane wersje.</Card>
+<Card title="Rozwiązywanie problemów" href="/docs/troubleshooting">Diagnozuj problemy z połączeniami, logowaniem, proxy, skryptami i wdrożeniem.</Card>
+</Cards>
+
+## Sprawdź szczegóły lub rozwiąż problem [#look-up-a-detail-or-solve-a-problem]
+
+- [Dokumentacja techniczna](/docs/reference): Polecenia, flagi, formaty, wersje i terminologia.
+- [Dokumentacja węzłów](/docs/scripting/node-reference): Wbudowane węzły i ich porty.
+- [Dokumentacja SDK](/docs/sdk/api): Sygnatury metod i opcje z odnośnikami do kodu.
+- [Dokumentacja HTTP API](/docs/openapi): Unarne endpointy JSON i ich kontrakty.
+- [Rozwiązywanie problemów](/docs/troubleshooting): Objawy, diagnostyka i odzyskiwanie działania.
+- [Pojęcia](/docs/concepts): Model klient-serwer i odpowiedzialność za zadania botów.
+
+## Dwa różne serwery [#two-different-servers]
+
+**Serwer SoulFire** uruchamia boty i przechowuje dane instancji.
+**Serwer Minecraft** to cel, z którym łączą się boty.
+Przy pierwszym lokalnym uruchomieniu aplikacja komputerowa uruchamia serwer SoulFire za Ciebie.
+Zdalny serwer SoulFire korzysta z tego samego klienta i tych samych procedur.
+
+Używaj SoulFire na własnych serwerach Minecraft lub za zgodą ich właścicieli.
+Prosząc o pomoc, podaj wersje i odpowiedni błąd według [listy diagnostycznej](/docs/troubleshooting#collect-a-useful-report).

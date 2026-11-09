@@ -56,7 +56,7 @@ export function BlogOgImage({
           "linear-gradient(135deg, #1a1a1a 0%, #000000 100%), radial-gradient(circle at top right, rgba(255,176,74,0.18), transparent 32%)",
         padding: "60px",
         justifyContent: "space-between",
-        fontFamily: "Geist",
+        fontFamily: "Geist, Geist Latin Extended, Geist Cyrillic",
       }}
     >
       <div style={{ display: "flex", alignItems: "flex-start" }}>
@@ -149,14 +149,18 @@ export function DocsOgImage({
   description,
   slugs,
   logoSrc,
+  section: sectionOverride,
+  siteLabel = "soulfiremc.com/docs",
 }: {
   title: string;
   description?: string | null;
   slugs?: string[];
   logoSrc?: string;
+  section?: string;
+  siteLabel?: string;
 }) {
-  const section = slugs?.[0] ? labelize(slugs[0]) : "Documentation";
-  const siteLabel = "soulfiremc.com/docs";
+  const section =
+    sectionOverride ?? (slugs?.[0] ? labelize(slugs[0]) : "Documentation");
   const titleSize = fitTitleSize(title, {
     base: 74,
     medium: 68,
@@ -177,7 +181,7 @@ export function DocsOgImage({
         color: "white",
         backgroundImage:
           "linear-gradient(to bottom right, rgba(76,201,255,0.22), transparent 38%), linear-gradient(135deg, #09111a 0%, #050505 100%)",
-        fontFamily: "Geist",
+        fontFamily: "Geist, Geist Latin Extended, Geist Cyrillic",
       }}
     >
       <div

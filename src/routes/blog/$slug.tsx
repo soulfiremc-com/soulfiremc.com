@@ -146,7 +146,10 @@ function BlogPostPage() {
       <main className="mx-auto flex w-full max-w-(--fd-layout-width) flex-col gap-10 px-4 py-8 sm:py-12">
         <div className="mx-auto flex max-w-3xl flex-col gap-4">
           <nav className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-            <Link to="/" className="transition-colors hover:text-foreground">
+            <Link
+              to="/{-$lang}"
+              className="transition-colors hover:text-foreground"
+            >
               Home
             </Link>
             <span>/</span>

@@ -1,5 +1,15 @@
+import {
+  isLocale,
+  locales,
+  localeNames,
+  localeDestination,
+  localizeHref,
+  splitLocalePath,
+} from "@/lib/i18n";
+import { LocaleProvider, useLocale } from "@/lib/i18n-react";
+import { fumadocsMessages } from "@/lib/messages/fumadocs";
 import { captchaPlugin } from "@better-auth-ui/react/plugins/captcha";
-import { useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { RootProvider } from "fumadocs-ui/provider/tanstack";
 import { ContentImage } from "@/components/content-image";
 import { ThemeProvider, useTheme } from "next-themes";
@@ -78,20 +88,62 @@ function AuthUIProviders({ children }: { children: React.ReactNode }) {
 }
 
 export function Providers({ children }: { children: React.ReactNode }) {
+  const location = useRouterState({ select: (state) => state.location });
+  const navigate = useNavigate();
+  const locale = splitLocalePath(location.pathname).locale;
   return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <PostHogProvider>
-        <RootProvider
-          components={{ Image: ContentImage }}
-          search={{ options: { type: "static" } }}
-        >
-          <AuthUIProviders>
-            {children}
-            {isPostHogConfigured && <CookieConsentBanner />}
-            <Toaster richColors />
-          </AuthUIProviders>
-        </RootProvider>
-      </PostHogProvider>
-    </ThemeProvider>
+    <LocaleProvider locale={locale}>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <PostHogProvider>
+          <RootProvider
+            components={{ Link: LocaleLink, Image: ContentImage }}
+            search={{
+              options: {
+                type: "static",
+                api:
+                  locale === "en"
+                    ? "/api/search"
+                    : `/api/search-index/${locale}`,
+              },
+            }}
+            i18n={{
+              locale,
+              locales: locales.map((code) => ({
+                locale: code,
+                name: localeNames[code],
+              })),
+              translations: fumadocsMessages(locale),
+              onLocaleChange: (next) => {
+                if (isLocale(next))
+                  void navigate({
+                    href: localeDestination(location.href, next),
+                  });
+              },
+            }}
+          >
+            <AuthUIProviders>
+              {children}
+              {isPostHogConfigured && <CookieConsentBanner />}
+              <Toaster richColors />
+            </AuthUIProviders>
+          </RootProvider>
+        </PostHogProvider>
+      </ThemeProvider>
+    </LocaleProvider>
+  );
+}
+
+function LocaleLink({
+  href = "",
+  prefetch = true,
+  ...props
+}: React.ComponentProps<"a"> & { prefetch?: boolean }) {
+  const locale = useLocale();
+  return (
+    <Link
+      to={localizeHref(href, locale)}
+      preload={prefetch ? "intent" : false}
+      {...props}
+    />
   );
 }

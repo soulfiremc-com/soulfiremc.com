@@ -1,3 +1,4 @@
+import { splitLocalePath } from "./i18n.ts";
 const DAILY_PAGES = new Set([
   "/",
   "/blog",
@@ -99,6 +100,7 @@ export function getRenderedPageSitemap(
 ) {
   if (!isIndexableCanonicalPage(path, html, host)) return { exclude: true };
 
+  path = splitLocalePath(path).path;
   let priority = 0.5;
   let changefreq: "daily" | "weekly" = "weekly";
   if (path === "/") {

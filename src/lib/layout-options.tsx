@@ -1,11 +1,14 @@
 import { SiDiscord, SiGithub, SiKofi } from "@icons-pack/react-simple-icons";
+import { localizePath, type Locale } from "./i18n";
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
 import { Image } from "@/components/image";
 import { getRequiredEnv } from "@/lib/env";
 
-export function getBaseLayoutOptions(): BaseLayoutProps {
+export function getBaseLayoutOptions(locale: Locale = "en"): BaseLayoutProps {
   return {
+    i18n: true,
     nav: {
+      url: localizePath("/", locale),
       title: (
         <>
           <Image

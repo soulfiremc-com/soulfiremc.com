@@ -1,3 +1,4 @@
+import { splitLocalePath } from "../src/lib/i18n";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { test } from "node:test";
@@ -29,11 +30,12 @@ void test(
       assert.equal(document.status, 200, path);
       path = new URL(document.url).pathname;
       await document.body?.cancel();
+      const { path: bare, locale } = splitLocalePath(path);
       const slugs =
-        path === "/docs"
+        bare === "/docs"
           ? []
-          : path.slice("/docs/".length).split("/").map(decodeURIComponent);
-      const hash = JSON.stringify(slugs)
+          : bare.slice("/docs/".length).split("/").map(decodeURIComponent);
+      const hash = JSON.stringify([locale, ...slugs])
         .replace(/[/\\?%*:|"<>]/g, "-")
         .replace(/\s+/g, "_");
       const key = createHash("sha1")
@@ -78,9 +80,36 @@ void test(
     assert.match(index.headers.get("content-type") ?? "", /application\/json/);
     const client = oramaStaticClient({
       from: new URL("/api/search", baseUrl).href,
+      locale: "en",
     });
     const results = await client.search("server");
     assert.ok(results.length > 0);
     assert.ok(results.every((result) => result.url.startsWith("/docs")));
+    for (const [locale, query] of [
+      ["de", "Erste"],
+      ["pl", "Pierwsze"],
+      ["ru", "Подключите"],
+    ]) {
+      assert.equal(
+        (await metadata(`/${locale}/docs/start-here/gui-mode`)).type,
+        "docs",
+      );
+      assert.equal(
+        (await metadata(`/${locale}/docs/server/docker`)).type,
+        "docs",
+      );
+      const localizedClient = oramaStaticClient({
+        from: new URL(`/api/search-index/${locale}`, baseUrl).href,
+        locale,
+      });
+      const localizedResults = await localizedClient.search(query);
+      assert.ok(localizedResults.length > 0, locale);
+      assert.ok(
+        localizedResults.every((result) =>
+          result.url.startsWith(`/${locale}/docs`),
+        ),
+        locale,
+      );
+    }
   },
 );

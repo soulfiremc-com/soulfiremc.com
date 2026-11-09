@@ -1,3 +1,5 @@
+import { translate } from "@/lib/messages";
+import { isLocale, localizePath } from "@/lib/i18n";
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { DocsOgImage } from "@/components/og/soulfire";
 import { stripOgSuffix } from "@/lib/og";
@@ -10,7 +12,9 @@ export const Route = createFileRoute("/og/docs/{$}/image.webp")({
       GET: async ({ params }) => {
         const slugs = params._splat?.split("/").filter(Boolean) ?? [];
         const source = await getSource();
-        const page = source.getPage(stripOgSuffix(slugs));
+        const locale = isLocale(slugs[0]) ? slugs[0] : "en";
+        if (isLocale(slugs[0])) slugs.shift();
+        const page = source.getPage(stripOgSuffix(slugs), locale);
 
         if (!page) throw notFound();
 
@@ -19,6 +23,14 @@ export const Route = createFileRoute("/og/docs/{$}/image.webp")({
             title={page.data.title ?? page.slugs.at(-1) ?? "Docs"}
             description={page.data.description}
             slugs={page.slugs}
+            section={
+              page.slugs.length === 0
+                ? translate(locale, "Documentation")
+                : page.slugs[0] === "start-here"
+                  ? translate(locale, "Get started")
+                  : undefined
+            }
+            siteLabel={`soulfiremc.com${localizePath("/docs", locale)}`}
             logoSrc={soulfireLogoDataUri}
           />,
         );

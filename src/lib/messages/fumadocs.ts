@@ -1,0 +1,66 @@
+import type { Translations } from "fumadocs-ui/i18n";
+import type { Locale } from "../i18n";
+import { translate } from ".";
+
+// Fumadocs qualifies message keys with their UI context.
+const keys: (keyof Translations)[] = [
+  "Ask AI(AI chat button)",
+  "Back to Home(404 not found page)",
+  "Choose a language(language switcher)",
+  "Choose a language(language switcher)(aria-label)",
+  "Close Banner(banner)(aria-label)",
+  "Close Search(search dialog)(aria-label)",
+  "Close Sidebar(aria-label)",
+  "Close Sidebar(sidebar)(aria-label)",
+  "Collapse Sidebar(sidebar)(aria-label)",
+  "Copied Text(code block)(aria-label)",
+  "Copied Anchor Link(heading anchor)(aria-label)",
+  "Copied Link(accordion)(aria-label)",
+  "Copied Markdown(page actions)",
+  "Copy Anchor Link(heading anchor)(aria-label)",
+  "Copy Link(accordion)(aria-label)",
+  "Copy Markdown(page actions)",
+  "Copy Text(code block)(aria-label)",
+  "Dark(theme switcher)(aria-label)",
+  "Default(type table)",
+  "Edit on GitHub(edit page)",
+  "Hide Sidebar(sidebar)",
+  "Last updated on(page footer)",
+  "Layout Tab(layout tab trigger)",
+  "Light(theme switcher)(aria-label)",
+  "Next Page(pagination)",
+  "No Headings(table of contents)",
+  "No results found(search dialog)",
+  "On this page(table of contents)",
+  "Open Search(search trigger)(aria-label)",
+  "Open Sidebar(aria-label)",
+  "Open Sidebar(sidebar)(aria-label)",
+  "Open in ChatGPT(page actions)",
+  "Open in Claude(page actions)",
+  "Open in Cursor(page actions)",
+  "Open in GitHub(page actions)",
+  "Open in Scira AI(page actions)",
+  "Open(page actions)",
+  "Page Not Found(404 not found page)",
+  "Parameters(type table)",
+  "Previous Page(pagination)",
+  "Prop(type table)",
+  "Read {url}, I want to ask questions about it.(page actions)",
+  "Returns(type table)",
+  "Search(search dialog)",
+  "Search(search trigger)",
+  "Show Sidebar(sidebar)",
+  "System(theme switcher)(aria-label)",
+  "Table of Contents(inline table of contents)",
+  "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.(404 not found page)",
+  "Toggle Menu(home layout header)(aria-label)",
+  "Toggle Theme(theme switcher)(aria-label)",
+  "Type(type table)",
+  "View as Markdown(page actions)",
+];
+
+export function fumadocsMessages(locale: Locale): Partial<Translations> {
+  return Object.fromEntries(
+    keys.map((key) => [key, translate(locale, key.replace(/\([^)]*\)/g, ""))]),
+  );
+}

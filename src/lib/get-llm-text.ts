@@ -12,7 +12,7 @@ import { runWebsiteEffect } from "@/lib/effect-runtime";
 
 const documentationSource: ContextShape = {
   pages: Effect.tryPromise({
-    try: async () => (await getSource()).getPages(),
+    try: async () => (await getSource()).getPages("en"),
     catch: (cause) => new DocumentationError({ operation: "source", cause }),
   }),
   openapi: (page) =>

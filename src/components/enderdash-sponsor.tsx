@@ -119,6 +119,7 @@ export function EnderDashSponsor({
   if (variant === "feature") {
     return (
       <section
+        lang="en"
         aria-label="Partnered with EnderDash"
         className={cn(
           "overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-950 text-zinc-50",
@@ -161,6 +162,7 @@ export function EnderDashSponsor({
 
   return (
     <aside
+      lang="en"
       aria-label="Partnered with EnderDash"
       className={cn(
         "overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 text-zinc-50",

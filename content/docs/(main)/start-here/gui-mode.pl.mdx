@@ -1,0 +1,95 @@
+---
+title: Połącz pierwszego bota
+sidebarTitle: Pierwszy bot
+description: Utwórz jedno konto, połącz się z serwerem testowym, wyślij wiadomość i zatrzymaj bota.
+icon: Bot
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+Ten samouczek korzysta z aplikacji komputerowej i jej zintegrowanego serwera SoulFire.
+Po instalacji zarezerwuj około dziesięciu minut.
+Na końcu otrzymasz jednego bota, którego możesz samodzielnie uruchamiać i zatrzymywać.
+
+## Zanim zaczniesz [#before-you-start]
+
+- [Zainstaluj aplikację komputerową](/docs/start-here).
+- Uruchom serwer Minecraft Java, którym zarządzasz.
+- Użyj lokalnego serwera testowego w trybie offline pod adresem `127.0.0.1:25565`.
+- Otwórz konsolę serwera Minecraft lub połącz zwykłego gracza, aby widzieć czat.
+
+<Callout type="info">
+Konto offline nie loguje się do Microsoft. Nie może dołączyć do serwera w trybie online.
+Dla takiego serwera [zaimportuj konto Microsoft](/docs/how-to/import-accounts) i użyj jego nazwy zamiast `DocsBot_1`.
+</Callout>
+
+## 1. Otwórz zintegrowany serwer [#1-open-the-integrated-server]
+
+Otwórz SoulFire. Wybierz **Integrated server (local)**.
+Poczekaj na wyświetlenie stron serwera i pozycji **Instances**.
+Opcja **Demo server** pokazuje tylko przykładowe dane. Nie łączy prawdziwych botów.
+
+## 2. Utwórz instancję do ćwiczeń [#2-create-a-tutorial-instance]
+
+Otwórz **Instances**. Wybierz **Create Instance**.
+Nadaj instancji nazwę `Docs tutorial` i otwórz ją.
+Instancja przechowuje konta, ustawienia celu, proxy, wtyczki i skrypty tego przebiegu.
+
+## 3. Ustaw docelowy serwer Minecraft [#3-set-the-minecraft-target]
+
+Otwórz **Bot Settings**. Ustaw adres serwera na `127.0.0.1:25565`.
+Wybierz wersję protokołu zgodną z serwerem Minecraft.
+W pierwszym przebiegu pozostaw domyślne opóźnienie dołączania i limit czasu.
+Nie importuj jeszcze proxy ani nie włączaj dodatkowej automatyzacji.
+
+`127.0.0.1` oznacza komputer, na którym działa backend SoulFire.
+Dla zdalnego backendu podaj adres Minecraft dostępny z tego zdalnego komputera.
+
+## 4. Dodaj dokładnie jedno konto offline [#4-add-exactly-one-offline-account]
+
+Otwórz **Account Settings** i okno generowania kont offline.
+Ustaw liczbę na `1`, a format nazwy na `DocsBot_%d`.
+Wygeneruj konto. Sprawdź, czy `DocsBot_1` pojawia się na liście kont.
+
+Jeśli klient otworzy generator po naciśnięciu **Start** przy pustej liście kont, podaj te same wartości.
+Okno jawnie tworzy konta. Format nazwy nie jest globalnym ustawieniem botów na serwerze.
+
+## 5. Połącz bota [#5-connect-the-bot]
+
+Wróć do **Overview**. Uruchom jednego zatrzymanego bota.
+Poczekaj, aż `DocsBot_1` pokaże stan połączenia.
+Sprawdź, czy serwer Minecraft wyświetla tego samego gracza.
+
+Jeśli bot się rozłączy, sprawdź powód przed ponownym uruchomieniem.
+Użyj [diagnostyki połączeń](/docs/troubleshooting/cannot-connect-or-times-out) przy limitach czasu, błędach wersji lub odrzuconym logowaniu.
+
+![Przegląd demo z liczbą połączonych botów i sterowaniem cyklem życia nad listą](/docs/images/instance-overview.jpg)
+
+Zrzut ekranu pokazuje elementy sterowania klienta demo 2.10.1.
+Twoja instancja ćwiczeniowa pokaże `DocsBot_1` zamiast konta demo.
+
+## 6. Wyślij wiadomość [#6-send-a-message]
+
+Otwórz **Terminal** instancji. Uruchom:
+
+```text
+bot DocsBot_1 say Hello from the SoulFire tutorial
+```
+
+Serwer Minecraft lub Twój zwykły gracz musi wyświetlić wiadomość od `DocsBot_1`.
+Terminal wykonuje polecenia SoulFire. `say` wysyła wiadomość czatu Minecraft przez wybranego bota.
+
+## 7. Zatrzymaj bota i sprawdź wynik [#7-stop-and-check-the-result]
+
+Wróć do **Overview**. Zatrzymaj `DocsBot_1`.
+Sprawdź, czy stan połączenia znika i bot opuszcza listę graczy Minecraft.
+Zachowaj instancję, jeśli chcesz przejść do samouczków SDK lub skryptów.
+
+Zamknięcie okna klienta nie gwarantuje zatrzymania bota na zdalnym backendzie.
+Żądany stan bota należy do serwera SoulFire.
+
+## Czego się nauczyłeś [#what-you-have-learned]
+
+Utworzyłeś instancję, dodałeś konto, ustawiłeś cel, uruchomiłeś bota, wysłałeś wiadomość i zatrzymałeś bota.
+Następnie [przeprowadź mały test serwera](/docs/testing) lub [utwórz pierwszy skrypt](/docs/scripting/first-script).
+Przeczytaj o [cyklu życia instancji](/docs/how-to/instances), aby zrozumieć ponowne połączenia i zapisany stan botów.

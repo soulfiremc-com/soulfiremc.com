@@ -1,6 +1,7 @@
+import { isLocale } from "@/lib/i18n";
 import { createFileRoute, notFound } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/docs/{$}.mdx")({
+export const Route = createFileRoute("/{-$lang}/docs.mdx")({
   server: {
     handlers: {
       HEAD: async () =>
@@ -10,12 +11,15 @@ export const Route = createFileRoute("/docs/{$}.mdx")({
           },
         }),
       GET: async ({ params, request }) => {
+        if (params.lang && !isLocale(params.lang)) throw notFound();
         const [{ getLLMText }, { getSource }] = await Promise.all([
           import("@/lib/get-llm-text"),
           import("@/lib/source"),
         ]);
-        const slugs = params._splat?.split("/").filter(Boolean) ?? [];
-        const page = (await getSource()).getPage(slugs);
+        const page = (await getSource()).getPage(
+          [],
+          isLocale(params.lang) ? params.lang : "en",
+        );
         if (!page) {
           throw notFound();
         }

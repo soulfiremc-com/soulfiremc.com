@@ -16,7 +16,7 @@ export const Route = createFileRoute("/llms.txt")({
         scanned.push("# Docs");
         const map = new Map<string, string[]>();
 
-        for (const page of source.getPages()) {
+        for (const page of source.getPages("en")) {
           const dir = page.slugs[0] ?? "overview";
           const list = map.get(dir) ?? [];
           list.push(

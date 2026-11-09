@@ -1,3 +1,5 @@
+import { TranslatedMessage } from "@/components/translated-message";
+import { useT } from "@/lib/i18n-react";
 import { Grid2X2, Pause, Play, ScatterChart, Circle } from "lucide-react";
 import { useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
@@ -66,6 +68,7 @@ function VoxelFallback({ formation }: { formation: Formation }) {
 }
 
 export function VoxelScene() {
+  const t = useT();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rendererRef = useRef<ReturnType<typeof createVoxelRenderer>>(null);
   const [formation, setFormation] = useState<Formation>("scatter");
@@ -127,8 +130,8 @@ export function VoxelScene() {
         />
       </div>
       <div className="voxel-caption">
-        <span>36 bots</span>
-        <span className="home-mono">Interactive preview</span>
+        <span>{t("36 bots")}</span>
+        <span className="home-mono">{t("Interactive preview")}</span>
       </div>
       <div className="voxel-controls">
         <ToggleGroup
@@ -138,16 +141,16 @@ export function VoxelScene() {
           }}
           variant="outline"
           size="sm"
-          aria-label="Bot formation"
+          aria-label={t("Bot formation")}
         >
           {formations.map(({ value, label, icon: Icon }) => (
             <ToggleGroupItem
               key={value}
               value={value}
-              aria-label={`${label} formation`}
+              aria-label={`${t(label)} formation`}
             >
               <Icon aria-hidden="true" />
-              {label}
+              {t(label)}
             </ToggleGroupItem>
           ))}
         </ToggleGroup>
@@ -155,7 +158,9 @@ export function VoxelScene() {
           variant="ghost"
           size="icon-sm"
           onClick={() => setPaused(!paused)}
-          aria-label={paused ? "Play scene animation" : "Pause scene animation"}
+          aria-label={t(
+            paused ? "Play scene animation" : "Pause scene animation",
+          )}
           aria-pressed={paused}
           disabled={reducedMotion === true || !ready}
         >
@@ -163,8 +168,10 @@ export function VoxelScene() {
         </Button>
       </div>
       <p className="sr-only" role="status">
-        Preview: 36 bots in {formation} formation. This illustration does not
-        connect to a server.
+        <TranslatedMessage
+          text="Preview: 36 bots in {formation} formation. This illustration does not connect to a server."
+          values={{ formation: t(formation) }}
+        />
       </p>
     </div>
   );

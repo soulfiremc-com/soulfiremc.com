@@ -1,6 +1,18 @@
+import latinExtendedFont from "@fontsource-variable/geist/files/geist-latin-ext-wght-normal.woff2?inline";
+import cyrillicFont from "@fontsource-variable/geist/files/geist-cyrillic-wght-normal.woff2?inline";
 import type { ReactElement } from "react";
 import { ImageResponse } from "takumi-js/response";
 import logoSvgUrl from "@/assets/logo-square.svg?inline";
+
+const cyrillic = Uint8Array.from(
+  atob(cyrillicFont.split(",")[1]),
+  (character) => character.charCodeAt(0),
+);
+
+const latinExtended = Uint8Array.from(
+  atob(latinExtendedFont.split(",")[1]),
+  (character) => character.charCodeAt(0),
+);
 
 const baseImageOptions = {
   format: "webp" as const,
@@ -16,6 +28,10 @@ const imageHeaders = {
 export function createOgImageResponse(element: ReactElement) {
   return new ImageResponse(element, {
     ...baseImageOptions,
+    fonts: [
+      { name: "Geist Cyrillic", data: cyrillic },
+      { name: "Geist Latin Extended", data: latinExtended },
+    ],
     headers: imageHeaders,
   });
 }

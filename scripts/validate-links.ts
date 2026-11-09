@@ -1,3 +1,4 @@
+import { docFileInfo, i18n, localizePath, locales } from "../src/lib/i18n";
 import { access, readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { docsRedirects } from "../src/lib/docs/redirects";
@@ -62,6 +63,12 @@ async function checkLinks() {
     scanned.urls.set(url, {});
   }
 
+  for (const file of files)
+    if (file.url) scanned.urls.set(file.url, { hashes: file.hashes });
+  for (const locale of locales)
+    for (const path of ["/", "/download", "/pricing"])
+      scanned.urls.set(localizePath(path, locale), {});
+
   for (const [slug, destination] of docsRedirects) {
     if (
       destination.startsWith("/docs/") &&
@@ -88,9 +95,8 @@ async function checkLinks() {
 }
 
 async function checkNavigation() {
-  const metadataFiles = await walkFiles(
-    DOCS_DIR,
-    (filePath) => path.basename(filePath) === "meta.json",
+  const metadataFiles = await walkFiles(DOCS_DIR, (filePath) =>
+    /^meta(?:\.(en|de|pl|ru))?\.json$/.test(path.basename(filePath)),
   );
   for (const filePath of metadataFiles) {
     const metadata = JSON.parse(await readFile(filePath, "utf8")) as {
@@ -144,7 +150,7 @@ async function checkNavigation() {
       data: JSON.parse(await readFile(filePath, "utf8")),
     });
   }
-  const source = loader({ baseUrl: "/docs", source: { files } });
+  const source = loader({ baseUrl: "/docs", i18n, source: { files } });
   const visible = new Set<string>();
   function collect(nodes: PageTreeNode[]) {
     for (const node of nodes) {
@@ -163,8 +169,8 @@ async function checkNavigation() {
       if (node.type === "folder") collect(node.children);
     }
   }
-  collect(source.getPageTree().children);
-  for (const page of source.getPages()) {
+  for (const locale of locales) collect(source.getPageTree(locale).children);
+  for (const page of source.getLanguages().flatMap(({ pages }) => pages)) {
     if (!visible.has(page.url)) {
       throw new Error(
         `Documentation page is missing from the sidebar: ${page.url}`,
@@ -204,7 +210,7 @@ async function getDocsFiles(): Promise<RouteFile[]> {
       return {
         path: filePath,
         content,
-        url: toDocsUrl(slugs),
+        url: localizePath(toDocsUrl(slugs), docFileInfo(filePath).locale),
         hashes: getHeadings(content),
         populateKey: "docs/[[..._splat]]",
         routeValue: { slug: slugs },
@@ -248,7 +254,8 @@ function getHeadings(content: string): string[] {
       return;
     }
 
-    headings.push(slugger.slug(text));
+    const explicit = /\s*\[#([^\]]+)\]$/.exec(text);
+    headings.push(explicit ? explicit[1] : slugger.slug(text));
   });
 
   return headings;
@@ -283,18 +290,7 @@ function walk(node: AstNode, visit: (node: AstNode) => void) {
 }
 
 function getDocsSlugs(filePath: string): string[] {
-  const relative = toPosixPath(path.relative(DOCS_DIR, filePath));
-  const withoutExtension = relative.replace(/\.mdx$/, "");
-  const segments = withoutExtension
-    .split("/")
-    .filter((segment) => segment.length > 0)
-    .filter((segment) => !/^\(.+\)$/.test(segment));
-
-  if (segments.at(-1) === "index") {
-    segments.pop();
-  }
-
-  return segments;
+  return docFileInfo(toPosixPath(path.relative(DOCS_DIR, filePath))).slugs;
 }
 
 function getBlogSlug(filePath: string): string {

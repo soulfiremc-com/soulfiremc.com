@@ -1,0 +1,95 @@
+---
+title: Deinen ersten Bot verbinden
+sidebarTitle: Erster Bot
+description: Erstelle ein Konto, verbinde dich mit einem Testserver, sende eine Chatnachricht und stoppe den Bot.
+icon: Bot
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+Diese Anleitung verwendet die Desktop-App und ihren integrierten SoulFire-Server.
+Plane nach der Installation etwa zehn Minuten ein.
+Am Ende hast du einen Bot, den du selbst starten und stoppen kannst.
+
+## Bevor du beginnst [#before-you-start]
+
+- [Installiere die Desktop-App](/docs/start-here).
+- Starte einen Java-Minecraft-Server, den du kontrollierst.
+- Verwende einen lokalen Testserver im Offline-Modus unter `127.0.0.1:25565`.
+- Halte die Minecraft-Serverkonsole oder einen normalen Spieler verbunden, um den Chat zu sehen.
+
+<Callout type="info">
+Ein Offline-Konto meldet sich nicht bei Microsoft an. Es kann keinem Server im Online-Modus beitreten.
+[Importiere dafür ein Microsoft-Konto](/docs/how-to/import-accounts) und verwende seinen Namen statt `DocsBot_1`.
+</Callout>
+
+## 1. Integrierten Server öffnen [#1-open-the-integrated-server]
+
+Öffne SoulFire. Wähle **Integrated server (local)**.
+Warte, bis die App die Serverseiten und den Eintrag **Instances** anzeigt.
+Die Option **Demo server** zeigt nur Beispieldaten. Sie kann keine echten Bots verbinden.
+
+## 2. Eine Übungsinstanz erstellen [#2-create-a-tutorial-instance]
+
+Öffne **Instances**. Wähle **Create Instance**.
+Nenne die Instanz `Docs tutorial` und öffne sie.
+Eine Instanz speichert Konten, Zieleinstellungen, Proxys, Plugins und Skripte für diesen Ablauf.
+
+## 3. Minecraft-Ziel festlegen [#3-set-the-minecraft-target]
+
+Öffne **Bot Settings**. Setze die Serveradresse auf `127.0.0.1:25565`.
+Wähle eine zu deinem Minecraft-Server passende Protokollversion.
+Behalte für diesen ersten Lauf die Standardwerte für Beitrittsverzögerung und Zeitlimit.
+Importiere noch keine Proxys und aktiviere keine zusätzliche Automatisierung.
+
+`127.0.0.1` bezeichnet den Computer, auf dem das SoulFire-Backend läuft.
+Gib bei einem entfernten Backend eine Minecraft-Adresse ein, die dieser Computer erreichen kann.
+
+## 4. Genau ein Offline-Konto hinzufügen [#4-add-exactly-one-offline-account]
+
+Öffne **Account Settings** und den Dialog zur Erstellung von Offline-Konten.
+Setze die Anzahl auf `1` und das Namensformat auf `DocsBot_%d`.
+Erstelle das Konto. Prüfe, ob `DocsBot_1` in der Kontoliste erscheint.
+
+Falls dein Client den Dialog nach **Start** mit leerer Kontoliste öffnet, gib dieselben Werte ein.
+Der Dialog erstellt Konten ausdrücklich. Ein Namensformat ist keine serverweite Bot-Einstellung.
+
+## 5. Bot verbinden [#5-connect-the-bot]
+
+Kehre zu **Overview** zurück. Starte einen gestoppten Bot.
+Warte, bis `DocsBot_1` als verbunden angezeigt wird.
+Prüfe, ob der Minecraft-Server denselben Spieler auflistet.
+
+Wenn der Bot die Verbindung trennt, untersuche vor einem Neustart den Grund.
+Nutze die [Verbindungsdiagnose](/docs/troubleshooting/cannot-connect-or-times-out) bei Zeitüberschreitungen, Versionsfehlern oder abgelehnten Anmeldungen.
+
+![Demo-Übersicht mit Online-Anzahl und Start-/Stopp-Steuerung über der Bot-Liste](/docs/images/instance-overview.jpg)
+
+Dieser Screenshot zeigt die Bedienelemente im Demo-Client 2.10.1.
+Deine Übungsinstanz zeigt `DocsBot_1` statt des Demo-Kontos.
+
+## 6. Nachricht senden [#6-send-a-message]
+
+Öffne das **Terminal** der Instanz. Führe aus:
+
+```text
+bot DocsBot_1 say Hello from the SoulFire tutorial
+```
+
+Der Minecraft-Server oder dein normaler Spieler muss die Nachricht von `DocsBot_1` anzeigen.
+Das Terminal führt SoulFire-Befehle aus. `say` sendet eine Minecraft-Chatnachricht über den gewählten Bot.
+
+## 7. Stoppen und Ergebnis prüfen [#7-stop-and-check-the-result]
+
+Kehre zu **Overview** zurück. Stoppe `DocsBot_1`.
+Prüfe, ob der Verbindungsstatus erlischt und der Bot die Minecraft-Spielerliste verlässt.
+Behalte die Instanz, wenn du als Nächstes SDK- oder Skript-Anleitungen nutzen möchtest.
+
+Das Schließen eines Client-Fensters stoppt Bots auf einem entfernten Backend nicht zuverlässig.
+Der gewünschte Bot-Zustand gehört zum SoulFire-Server.
+
+## Das hast du gelernt [#what-you-have-learned]
+
+Du hast eine Instanz erstellt, ein Konto hinzugefügt, ein Ziel festgelegt, einen Bot gestartet, eine Nachricht gesendet und ihn gestoppt.
+Führe als Nächstes einen [kleinen Servertest](/docs/testing) aus oder [erstelle dein erstes Skript](/docs/scripting/first-script).
+Lies zum Thema Wiederverbindungen und gespeicherter Bot-Zustand den [Instanz-Lebenszyklus](/docs/how-to/instances).

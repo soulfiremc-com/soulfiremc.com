@@ -168,7 +168,10 @@ function ProxyProviderPageContent({
       <JsonLd data={breadcrumbJsonLd} />
 
       <nav className="flex items-center gap-1.5 text-sm text-muted-foreground">
-        <Link to="/" className="transition-colors hover:text-foreground">
+        <Link
+          to="/{-$lang}"
+          className="transition-colors hover:text-foreground"
+        >
           Home
         </Link>
         <ChevronRight className="h-3.5 w-3.5" />

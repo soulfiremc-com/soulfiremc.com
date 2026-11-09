@@ -1,3 +1,5 @@
+import type { Locale } from "./i18n";
+
 const OG_FILE_NAME = "image.webp";
 
 function createOgImage(basePath: string, segments: string[]) {
@@ -13,8 +15,14 @@ export function stripOgSuffix(slug: string[]) {
   return slug.at(-1) === OG_FILE_NAME ? slug.slice(0, -1) : slug;
 }
 
-export function getDocsPageImage(page: { slugs: string[] }) {
-  return createOgImage("/og/docs", page.slugs);
+export function getDocsPageImage(
+  page: { slugs: string[] },
+  locale: Locale = "en",
+) {
+  return createOgImage(
+    "/og/docs",
+    locale === "en" ? page.slugs : [locale, ...page.slugs],
+  );
 }
 
 export function getBlogPageImage(page: { slugs: string[] }) {

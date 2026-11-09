@@ -1,3 +1,4 @@
+import { useT } from "@/lib/i18n-react";
 import { SiDiscord, SiGithub } from "@icons-pack/react-simple-icons";
 import { Link } from "@tanstack/react-router";
 import {
@@ -21,7 +22,7 @@ import {
   MotionConfig,
   useReducedMotion,
 } from "motion/react";
-import { useRef, useState, type ReactNode } from "react";
+import { Fragment, useRef, useState, type ReactNode } from "react";
 import { EnderDashSponsor } from "@/components/enderdash-sponsor";
 import { SdkCode } from "@/components/SdkCode";
 import {
@@ -41,6 +42,23 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getRequiredEnv } from "@/lib/env";
 import { VoxelScene } from "./VoxelScene";
+
+function TranslatedLines({
+  text,
+  accent = false,
+}: {
+  text: string;
+  accent?: boolean;
+}) {
+  const t = useT();
+  const lines = t(text).split("\n");
+  return lines.map((line) => (
+    <Fragment key={line}>
+      {line !== lines[0] && <br />}
+      {accent && line !== lines[0] ? <span>{line}</span> : line}
+    </Fragment>
+  ));
+}
 
 function Reveal({
   children,
@@ -64,6 +82,7 @@ function Reveal({
 }
 
 function DemoVideo() {
+  const t = useT();
   const dialogRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   return (
@@ -72,7 +91,7 @@ function DemoVideo() {
         render={
           <Button variant="ghost" size="lg">
             <Play data-icon="inline-start" />
-            Watch demo
+            {t("Watch demo")}
           </Button>
         }
       />
@@ -81,15 +100,17 @@ function DemoVideo() {
         className="overflow-hidden sm:max-w-5xl"
         initialFocus={dialogRef}
       >
-        <DialogTitle className="sr-only">SoulFire walkthrough</DialogTitle>
+        <DialogTitle className="sr-only">
+          {t("SoulFire walkthrough")}
+        </DialogTitle>
         <DialogDescription className="sr-only">
-          Watch the SoulFire demo on YouTube.
+          {t("Watch the SoulFire demo on YouTube.")}
         </DialogDescription>
         {open && (
           <iframe
             className="aspect-video w-full"
             src="https://www.youtube-nocookie.com/embed/BD-xE8vbHtQ"
-            title="SoulFire walkthrough"
+            title={t("SoulFire walkthrough")}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
@@ -125,16 +146,19 @@ const capabilities = [
 ];
 
 function ScriptPreview() {
+  const t = useT();
   return (
     <div
       className="workflow-preview"
       role="img"
-      aria-label="A visual script connects an On Chat trigger to a message check, then sends a reply when the message contains hello."
+      aria-label={t(
+        "A visual script connects an On Chat trigger to a message check, then sends a reply when the message contains hello.",
+      )}
     >
       <div className="workflow-title">
         <Workflow className="size-4" />
-        <span>hello-world.sfscript</span>
-        <span>Visual script</span>
+        <span>{t("hello-world.sfscript")}</span>
+        <span>{t("Visual script")}</span>
       </div>
       <div className="workflow-canvas">
         <svg
@@ -149,38 +173,39 @@ function ScriptPreview() {
           />
         </svg>
         <div className="workflow-node workflow-trigger">
-          <span>Trigger</span>
-          <strong>On Chat</strong>
+          <span>{t("Trigger")}</span>
+          <strong>{t("On Chat")}</strong>
           <p>
-            Message received <i />
+            {t("Message received")} <i />
           </p>
         </div>
         <div className="workflow-node workflow-condition">
-          <span>Condition</span>
-          <strong>Contains</strong>
+          <span>{t("Condition")}</span>
+          <strong>{t("Contains")}</strong>
           <p>
-            <i /> Message <code>hello</code>
+            <i /> {t("Message")} <code>hello</code>
             <i />
           </p>
         </div>
         <div className="workflow-node workflow-action">
-          <span>Action</span>
-          <strong>Send Chat</strong>
+          <span>{t("Action")}</span>
+          <strong>{t("Send Chat")}</strong>
           <p>
-            <i /> Hello, world!
+            <i /> {t("Hello, world!")}
           </p>
         </div>
       </div>
       <div className="workflow-result">
         <Check className="size-3.5" />
-        <span>Replies when someone says hello</span>
-        <code>No code needed</code>
+        <span>{t("Replies when someone says hello")}</span>
+        <code>{t("No code needed")}</code>
       </div>
     </div>
   );
 }
 
 function AutomationSection() {
+  const t = useT();
   return (
     <section
       className="home-section home-automation"
@@ -189,33 +214,32 @@ function AutomationSection() {
     >
       <Reveal className="home-section-copy">
         <h2 id="automation-title">
-          Give your bots
-          <br />
-          a job.
+          <TranslatedLines text={"Give your bots\na job."} />
         </h2>
         <p>
-          Connect events to actions in the visual editor to build a routine your
-          bots can follow. Use the CLI for commands across all connected bots.
+          {t(
+            "Connect events to actions in the visual editor to build a routine your bots can follow. Use the CLI for commands across all connected bots.",
+          )}
         </p>
         <Link
-          to="/docs/$"
+          to="/{-$lang}/docs/$"
           params={{ _splat: "scripting" }}
           className="home-text-link"
         >
-          Scripting guide
+          {t("Scripting guide")}
           <ArrowUpRight className="size-4" />
         </Link>
       </Reveal>
       <Reveal className="home-automation-demo">
         <Tabs defaultValue="visual">
-          <TabsList variant="line" aria-label="Automation examples">
+          <TabsList variant="line" aria-label={t("Automation examples")}>
             <TabsTrigger value="visual">
               <Workflow />
-              Visual scripting
+              {t("Visual scripting")}
             </TabsTrigger>
             <TabsTrigger value="terminal">
               <Terminal />
-              Terminal
+              {t("Terminal")}
             </TabsTrigger>
           </TabsList>
           <TabsContent value="visual">
@@ -225,8 +249,8 @@ function AutomationSection() {
             <div className="terminal-preview">
               <div className="workflow-title">
                 <Terminal className="size-4" />
-                <span>SoulFire CLI</span>
-                <span>Example session</span>
+                <span>{t("SoulFire CLI")}</span>
+                <span>{t("Example session")}</span>
               </div>
               <pre>
                 <code>
@@ -249,11 +273,11 @@ function AutomationSection() {
                 </code>
               </pre>
               <Link
-                to="/docs/$"
+                to="/{-$lang}/docs/$"
                 params={{ _splat: "reference/commands" }}
                 className="terminal-docs"
               >
-                Command reference
+                {t("Command reference")}
                 <ArrowUpRight className="size-3.5" />
               </Link>
             </div>
@@ -265,6 +289,7 @@ function AutomationSection() {
 }
 
 function SdkSection() {
+  const t = useT();
   return (
     <section
       className="home-section home-sdk"
@@ -275,39 +300,40 @@ function SdkSection() {
         <div>
           <Code2 className="home-section-icon" />
           <h2 id="sdk-title">
-            TypeScript and
-            <br />
-            Python SDKs
+            <TranslatedLines text={"TypeScript and\nPython SDKs"} />
           </h2>
         </div>
         <p>
-          Start with a server address and username. The SDK handles account
-          setup and state sync, so you can focus on what your bot does.
+          {t(
+            "Start with a server address and username. The SDK handles account setup and state sync, so you can focus on what your bot does.",
+          )}
         </p>
       </Reveal>
       <Reveal>
         <div className="home-code-tabs">
           <Tabs defaultValue="typescript">
             <div className="home-code-bar">
-              <TabsList variant="line" aria-label="SDK language">
-                <TabsTrigger value="typescript">TypeScript</TabsTrigger>
-                <TabsTrigger value="python">Python</TabsTrigger>
+              <TabsList variant="line" aria-label={t("SDK language")}>
+                <TabsTrigger value="typescript">{t("TypeScript")}</TabsTrigger>
+                <TabsTrigger value="python">{t("Python")}</TabsTrigger>
               </TabsList>
             </div>
             <TabsContent value="typescript">
               <div className="home-code-content">
                 <div className="home-code-info">
-                  <h3>TypeScript with Effect</h3>
+                  <h3>{t("TypeScript with Effect")}</h3>
                   <p>
-                    Effect scopes close bot connections when the workflow ends.
+                    {t(
+                      "Effect scopes close bot connections when the workflow ends.",
+                    )}
                   </p>
                   <code>bun add @soulfiremc/sdk effect</code>
                   <Link
-                    to="/docs/$"
+                    to="/{-$lang}/docs/$"
                     params={{ _splat: "sdk/typescript" }}
                     className="home-text-link"
                   >
-                    TypeScript docs
+                    {t("TypeScript docs")}
                     <ArrowUpRight className="size-4" />
                   </Link>
                 </div>
@@ -317,15 +343,17 @@ function SdkSection() {
             <TabsContent value="python">
               <div className="home-code-content">
                 <div className="home-code-info">
-                  <h3>Python with effect-py</h3>
-                  <p>Use effect-py for bot operations and scoped cleanup.</p>
+                  <h3>{t("Python with effect-py")}</h3>
+                  <p>
+                    {t("Use effect-py for bot operations and scoped cleanup.")}
+                  </p>
                   <code>pip install soulfire</code>
                   <Link
-                    to="/docs/$"
+                    to="/{-$lang}/docs/$"
                     params={{ _splat: "sdk/python" }}
                     className="home-text-link"
                   >
-                    Python docs
+                    {t("Python docs")}
                     <ArrowUpRight className="size-4" />
                   </Link>
                 </div>
@@ -346,6 +374,7 @@ export function HomeFrontpage({
   githubLink: string;
   faqItems: { question: string; answerElement: ReactNode }[];
 }) {
+  const t = useT();
   const reducedMotion = useReducedMotion();
   return (
     <LazyMotion features={domAnimation} strict>
@@ -361,25 +390,23 @@ export function HomeFrontpage({
               >
                 <a href={githubLink} className="home-source-link">
                   <SiGithub className="size-4" />
-                  Open source on GitHub
+                  {t("Open source on GitHub")}
                   <ArrowUpRight className="size-3.5" />
                 </a>
                 <h1 id="hero-title">
-                  Put bots
-                  <br />
-                  <span>to work.</span>
+                  <TranslatedLines text={"Put bots\nto work."} accent />
                 </h1>
                 <p>
-                  Stress test your Minecraft server or automate the repetitive
-                  work. SoulFire bots run real client code, with visual
-                  scripting and SDKs.
+                  {t(
+                    "Stress test your Minecraft server or automate the repetitive work. SoulFire bots run real client code, with visual scripting and SDKs.",
+                  )}
                 </p>
                 <div className="home-hero-actions">
                   <Button
                     render={
-                      <Link to="/download">
+                      <Link to="/{-$lang}/download">
                         <Download data-icon="inline-start" />
-                        Download SoulFire
+                        {t("Download SoulFire")}
                         <ArrowRight data-icon="inline-end" />
                       </Link>
                     }
@@ -389,15 +416,15 @@ export function HomeFrontpage({
                   <DemoVideo />
                 </div>
                 <p className="home-platforms">
-                  Free for Windows, macOS, and Linux.
+                  {t("Free for Windows, macOS, and Linux.")}
                 </p>
               </m.div>
               <VoxelScene />
             </div>
             <div className="home-hero-footer">
-              <span>Built on Fabric</span>
+              <span>{t("Built on Fabric")}</span>
               <a href="#features">
-                How it works
+                {t("How it works")}
                 <ArrowDown className="size-3.5" />
               </a>
             </div>
@@ -411,28 +438,27 @@ export function HomeFrontpage({
             >
               <Reveal className="home-section-heading">
                 <h2 id="intro-title">
-                  See how your
-                  <br />
-                  server holds up.
+                  <TranslatedLines text={"See how your\nserver holds up."} />
                 </h2>
                 <p>
-                  Find out how your server handles players joining and
-                  interacting before your next busy session.
+                  {t(
+                    "Find out how your server handles players joining and interacting before your next busy session.",
+                  )}
                 </p>
               </Reveal>
               <div className="home-capabilities">
                 {capabilities.map(({ icon: Icon, title, text, link, path }) => (
-                  <Reveal key={title}>
+                  <Reveal key={t(title)}>
                     <article>
                       <Icon className="home-capability-icon" />
-                      <h3>{title}</h3>
-                      <p>{text}</p>
+                      <h3>{t(title)}</h3>
+                      <p>{t(text)}</p>
                       <Link
-                        to="/docs/$"
+                        to="/{-$lang}/docs/$"
                         params={{ _splat: path }}
                         className="home-text-link"
                       >
-                        {link}
+                        {t(link)}
                         <ArrowUpRight className="size-4" />
                       </Link>
                     </article>
@@ -449,20 +475,19 @@ export function HomeFrontpage({
               <Reveal>
                 <SiGithub className="home-community-icon" />
                 <h2 id="community-title">
-                  Come build
-                  <br />
-                  with us.
+                  <TranslatedLines text={"Come build\nwith us."} />
                 </h2>
                 <p>
-                  Share your scripts and get help on Discord. If you've found a
-                  bug or have a fix, head to GitHub.
+                  {t(
+                    "Share your scripts and get help on Discord. If you've found a bug or have a fix, head to GitHub.",
+                  )}
                 </p>
                 <div className="home-community-actions">
                   <Button
                     render={
                       <a href={githubLink}>
                         <SiGithub data-icon="inline-start" />
-                        View on GitHub
+                        {t("View on GitHub")}
                         <ArrowUpRight data-icon="inline-end" />
                       </a>
                     }
@@ -479,7 +504,7 @@ export function HomeFrontpage({
                         )}
                       >
                         <SiDiscord data-icon="inline-start" />
-                        Join Discord
+                        {t("Join Discord")}
                       </a>
                     }
                     nativeButton={false}
@@ -488,7 +513,7 @@ export function HomeFrontpage({
                   />
                 </div>
                 <span className="home-mono">
-                  Free and open source under AGPL-3.0
+                  {t("Free and open source under AGPL-3.0")}
                 </span>
               </Reveal>
             </section>
@@ -497,16 +522,18 @@ export function HomeFrontpage({
               aria-labelledby="faq-title"
             >
               <Reveal className="home-section-copy">
-                <h2 id="faq-title">Common questions</h2>
+                <h2 id="faq-title">{t("Common questions")}</h2>
                 <p>
-                  The setup guide covers installation and your first connection.
+                  {t(
+                    "The setup guide covers installation and your first connection.",
+                  )}
                 </p>
                 <Link
-                  to="/docs/$"
+                  to="/{-$lang}/docs/$"
                   params={{ _splat: "start-here" }}
                   className="home-text-link"
                 >
-                  Installation guide
+                  {t("Installation guide")}
                   <ArrowUpRight className="size-4" />
                 </Link>
               </Reveal>
@@ -528,16 +555,14 @@ export function HomeFrontpage({
             >
               <Reveal>
                 <h2 id="final-title">
-                  Start your
-                  <br />
-                  first session.
+                  <TranslatedLines text={"Start your\nfirst session."} />
                 </h2>
                 <div className="home-final-actions">
                   <Button
                     render={
-                      <Link to="/download">
+                      <Link to="/{-$lang}/download">
                         <Download data-icon="inline-start" />
-                        Download SoulFire
+                        {t("Download SoulFire")}
                         <ArrowRight data-icon="inline-end" />
                       </Link>
                     }
@@ -545,11 +570,11 @@ export function HomeFrontpage({
                     size="lg"
                   />
                   <Link
-                    to="/docs/$"
+                    to="/{-$lang}/docs/$"
                     params={{ _splat: "" }}
                     className="home-text-link"
                   >
-                    Read the docs
+                    {t("Read the docs")}
                     <ArrowUpRight className="size-4" />
                   </Link>
                 </div>

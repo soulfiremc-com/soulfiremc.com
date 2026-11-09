@@ -1,5 +1,16 @@
 "use client";
 
+import { useLocale } from "@/lib/i18n-react";
+import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
+import de from "react-timeago/lib/language-strings/de";
+import pl from "react-timeago/lib/language-strings/pl";
+import ru from "react-timeago/lib/language-strings/ru";
+const formatters = {
+  de: buildFormatter(de),
+  pl: buildFormatter(pl),
+  ru: buildFormatter(ru),
+};
+
 import { useEffect, useState } from "react";
 import TimeAgo, { type Props } from "react-timeago";
 
@@ -13,6 +24,7 @@ function toDate(value: Props["date"]): Date | null {
 }
 
 export function CustomTimeAgo(props: Props) {
+  const locale = useLocale();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -27,7 +39,7 @@ export function CustomTimeAgo(props: Props) {
 
     return (
       <time dateTime={date.toISOString()}>
-        {new Intl.DateTimeFormat("en-US", {
+        {new Intl.DateTimeFormat(locale, {
           dateStyle: "medium",
           timeStyle: "short",
           timeZone: "UTC",
@@ -36,5 +48,10 @@ export function CustomTimeAgo(props: Props) {
     );
   }
 
-  return <TimeAgo {...props} />;
+  return (
+    <TimeAgo
+      {...props}
+      formatter={locale === "en" ? undefined : formatters[locale]}
+    />
+  );
 }

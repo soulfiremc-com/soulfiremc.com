@@ -1,3 +1,11 @@
+import {
+  docFileInfo,
+  isLocale,
+  localizePath,
+  localizeHref,
+  type Locale,
+} from "@/lib/i18n";
+import { useLocale, useT } from "@/lib/i18n-react";
 import { Schema } from "effect";
 import { discordEmbedScript } from "@/lib/discord-embed";
 import browserCollections from "fumadocs-mdx:collections/browser";
@@ -41,12 +49,15 @@ import {
   getPageMeta,
   jsonLdScript,
 } from "@/lib/seo";
-import { getSource } from "@/lib/source";
+import { getSource, getDocsLanguages } from "@/lib/source";
 import { getMDXComponents } from "@/mdx-components";
 
 const docsSlugsInputSchema = Schema.mutable(Schema.Array(Schema.String));
 
 type BaseDocsLoaderData = {
+  locale: Locale;
+  contentLocale: Locale;
+  languages: Locale[];
   description?: string;
   imageUrl: string;
   pageTree: SerializedPageTree;
@@ -73,20 +84,26 @@ const serverLoader = createServerFn({
 })
   .validator(Schema.toStandardSchemaV1(docsSlugsInputSchema))
   .middleware([staticFunctionMiddleware])
-  .handler(async ({ data: slugs }) => {
+  .handler(async ({ data: [locale, ...slugs] }) => {
+    if (!isLocale(locale)) throw notFound();
     const source = await getSource();
-    const page = source.getPage(slugs);
+    const page = source.getPage(slugs, locale);
     if (!page) {
       throw notFound();
     }
 
-    const pageTree = await source.serializePageTree(source.getPageTree());
+    const pageTree = await source.serializePageTree(source.getPageTree(locale));
+    const contentLocale = docFileInfo(page.path).locale;
+    const languages = await getDocsLanguages(slugs);
     const title = page.data.title ?? page.slugs.at(-1) ?? "Docs";
-    const imageUrl = getDocsPageImage(page).url;
+    const imageUrl = getDocsPageImage(page, contentLocale).url;
 
     if (isOpenApiPage(page)) {
       return {
         type: "openapi",
+        locale,
+        contentLocale,
+        languages,
         description: page.data.description,
         imageUrl,
         pageTree,
@@ -98,6 +115,9 @@ const serverLoader = createServerFn({
 
     return {
       type: "docs",
+      locale,
+      contentLocale,
+      languages,
       description: page.data.description,
       githubUrl: `https://github.com/soulfiremc-com/soulfiremc.com/blob/main/content/docs/${page.path}`,
       imageUrl,
@@ -112,16 +132,18 @@ const serverLoader = createServerFn({
 const clientLoader = browserCollections.docs.createClientLoader<{
   currentPath: string;
   markdownUrl: string;
+  contentLocale: Locale;
 }>({
   id: "docs-page",
   component({ default: MDX, toc, frontmatter, lastModified }, props) {
+    const locale = useLocale();
     return (
       <DocsPage
         toc={toc}
         lastUpdate={lastModified}
         tableOfContent={{ style: "clerk" }}
       >
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2" lang={props.contentLocale}>
           <DocsTitle>{frontmatter.title}</DocsTitle>
           <DocsDescription className="mb-2.5">
             {frontmatter.description}
@@ -134,7 +156,7 @@ const clientLoader = browserCollections.docs.createClientLoader<{
             />
           </div>
         </div>
-        <DocsBody>
+        <DocsBody lang={props.contentLocale}>
           <MDX
             components={getMDXComponents({
               a: ({ href, ...anchorProps }) => {
@@ -145,13 +167,20 @@ const clientLoader = browserCollections.docs.createClientLoader<{
                 const pathname = href.split("#")[0] ?? "";
 
                 if (!pathname.startsWith("/docs")) {
-                  return <a href={href} {...anchorProps} />;
+                  return (
+                    <a href={localizeHref(href, locale)} {...anchorProps} />
+                  );
                 }
 
                 return (
                   <HoverCard>
                     <HoverCardTrigger
-                      render={<Link to={href} {...anchorProps} />}
+                      render={
+                        <Link
+                          to={localizeHref(href, locale)}
+                          {...anchorProps}
+                        />
+                      }
                     />
                     <HoverCardContent className="text-sm">
                       <p className="font-medium">{anchorProps.children}</p>
@@ -174,20 +203,23 @@ const clientLoader = browserCollections.docs.createClientLoader<{
   },
 });
 
-export const Route = createFileRoute("/docs/$")({
+export const Route = createFileRoute("/{-$lang}/docs/$")({
   loader: async ({ params }) => {
+    const locale = isLocale(params.lang) ? params.lang : "en";
     const slugs = params._splat?.split("/").filter(Boolean) ?? [];
     const key = params._splat?.replace(/^\/+|\/+$/g, "") ?? "";
     const destination = docsRedirects.get(key);
 
     if (destination) {
       throw redirect({
-        href: destination,
+        href: localizePath(destination, locale),
         statusCode: 301,
       });
     }
 
-    const data = (await serverLoader({ data: slugs })) as DocsLoaderData;
+    const data = (await serverLoader({
+      data: [locale, ...slugs],
+    })) as DocsLoaderData;
 
     if (data.type === "docs") {
       await clientLoader.preload(data.path);
@@ -200,11 +232,15 @@ export const Route = createFileRoute("/docs/$")({
       ? `${loaderData.title} - SoulFire`
       : "Docs - SoulFire";
     const description = loaderData?.description ?? "SoulFire documentation";
-    const path = loaderData?.url ?? "/docs";
+    const path = localizePath(
+      loaderData?.url ?? "/docs",
+      loaderData?.contentLocale ?? "en",
+    );
     const imageUrl = loaderData?.imageUrl ?? `${path}/image.webp`;
 
     return {
       meta: getPageMeta({
+        locale: loaderData?.contentLocale ?? "en",
         title,
         description,
         path,
@@ -213,7 +249,11 @@ export const Route = createFileRoute("/docs/$")({
           ? `${loaderData.title} documentation preview`
           : "SoulFire docs preview",
       }),
-      links: getCanonicalLinks(path),
+      links: getCanonicalLinks(
+        path,
+        loaderData?.contentLocale ?? "en",
+        loaderData?.languages ?? ["en"],
+      ),
       scripts: [
         ...discordEmbedScript({
           title,
@@ -255,18 +295,27 @@ export const Route = createFileRoute("/docs/$")({
 function DocsMarkdownContent({
   markdownUrl,
   path,
-}: Pick<DocsPageLoaderData, "markdownUrl" | "path">) {
+  contentLocale,
+}: Pick<DocsPageLoaderData, "markdownUrl" | "path" | "contentLocale">) {
   return clientLoader.useContent(path, {
     currentPath: path,
+    contentLocale,
     markdownUrl,
   });
 }
 
 function DocsPageRoute() {
+  const locale = useLocale();
+  const t = useT();
   const page = useFumadocsLoader(Route.useLoaderData() as DocsLoaderData);
 
   return (
-    <DocsLayout tree={page.pageTree} {...getBaseLayoutOptions()}>
+    <DocsLayout tree={page.pageTree} {...getBaseLayoutOptions(locale)}>
+      {page.contentLocale !== locale && (
+        <p className="mx-auto w-full max-w-4xl px-6 pt-4 text-sm text-fd-muted-foreground">
+          {t("This guide is available in English.")}
+        </p>
+      )}
       <Suspense>
         {page.type === "openapi" ? (
           <DocsPage full>
@@ -274,7 +323,7 @@ function DocsPageRoute() {
               <DocsTitle>{page.title}</DocsTitle>
               <DocsDescription>{page.description}</DocsDescription>
             </div>
-            <DocsBody>
+            <DocsBody lang={page.contentLocale}>
               <APIPage {...page.props} />
             </DocsBody>
             <Feedback />
@@ -288,6 +337,7 @@ function DocsPageRoute() {
           <DocsMarkdownContent
             markdownUrl={page.markdownUrl}
             path={page.path}
+            contentLocale={page.contentLocale}
           />
         )}
       </Suspense>

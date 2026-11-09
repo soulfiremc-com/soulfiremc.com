@@ -1,6 +1,12 @@
 import { readdirSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
-import { createGetUrl, getSlugs } from "fumadocs-core/source";
+import {
+  docFileInfo,
+  locales,
+  localizePath,
+  type Locale,
+} from "./src/lib/i18n.ts";
+import { getSitemapLocalization } from "./src/lib/localized-sitemap.ts";
 import { docsFunctionId, staticDocsMetadata } from "./scripts/static-docs.ts";
 import { execFileSync } from "node:child_process";
 import { cloudflare } from "@cloudflare/vite-plugin";
@@ -24,20 +30,29 @@ const securityHeaders = {
   "X-Content-Type-Options": "nosniff",
 };
 const sitemapHost = "https://soulfiremc.com";
+const docLanguages: Record<string, Locale[]> = {};
 function getDocsPrerenderPages() {
   const directory = resolve(MdxConfig.docs.dir);
-  return readdirSync(directory, { recursive: true, withFileTypes: true })
+  const pages = readdirSync(directory, { recursive: true, withFileTypes: true })
     .filter((entry) => entry.isFile() && /\.mdx?$/.test(entry.name))
-    .map((entry) => ({
-      path: createGetUrl("/docs")(
-        getSlugs(
-          relative(directory, join(entry.parentPath, entry.name)).replaceAll(
-            "\\",
-            "/",
-          ),
+    .map((entry) => {
+      const file = docFileInfo(
+        relative(directory, join(entry.parentPath, entry.name)).replaceAll(
+          "\\",
+          "/",
         ),
-      ),
-    }));
+      );
+      (docLanguages[file.path] ??= []).push(file.locale);
+      return { path: localizePath(file.path, file.locale) };
+    });
+  return [
+    ...pages,
+    ...locales.flatMap((locale) =>
+      ["/", "/download", "/pricing"].map((path) => ({
+        path: localizePath(path, locale),
+      })),
+    ),
+  ];
 }
 
 export default defineConfig(({ command }) => ({
@@ -77,6 +92,16 @@ export default defineConfig(({ command }) => ({
       },
       pages: [
         ...getDocsPrerenderPages(),
+        ...locales
+          .filter((locale) => locale !== "en")
+          .map((locale) => ({
+            path: `/api/search-index/${locale}`,
+            prerender: {
+              enabled: true,
+              outputPath: `/api/search-index/${locale}`,
+            },
+            sitemap: { exclude: true },
+          })),
         {
           path: "/api/search",
           prerender: { enabled: true, outputPath: "/api/search" },
@@ -105,10 +130,19 @@ export default defineConfig(({ command }) => ({
         filter: (page) => {
           // Start retains skipped and failed pages in its sitemap input.
           page.sitemap = { ...page.sitemap, exclude: true };
-          return page.path === "/api/search" || shouldPrerenderPage(page.path);
+          return (
+            page.path === "/api/search" ||
+            page.path.startsWith("/api/search-index/") ||
+            (shouldPrerenderPage(page.path) &&
+              !getSitemapLocalization(page.path, docLanguages).exclude)
+          );
         },
         onSuccess: ({ page, html }) => ({
-          sitemap: getRenderedPageSitemap(page.path, html, sitemapHost),
+          sitemap: {
+            ...getRenderedPageSitemap(page.path, html, sitemapHost),
+            alternateRefs: getSitemapLocalization(page.path, docLanguages)
+              .alternateRefs,
+          },
         }),
       },
     }),

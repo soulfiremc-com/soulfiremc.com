@@ -96,3 +96,22 @@ The D1 tests run with Miniflare and do not use the remote database.
 Read [CONTRIBUTING.md](CONTRIBUTING.md) for local setup and review expectations.
 Use [SUPPORT.md](SUPPORT.md) for questions and issue routing.
 Follow the [community code of conduct](https://github.com/soulfiremc-com/.github/blob/main/CODE_OF_CONDUCT.md) and report vulnerabilities through the [private security contacts](https://github.com/soulfiremc-com/.github/blob/main/SECURITY.md).
+
+## Languages
+
+English URLs stay unchanged. German, Polish and Russian pages use `/de`, `/pl` and `/ru`.
+The homepage, downloads, pricing and getting-started guides have translations. Other guides fall back to English.
+Accounts, proxies, blog posts, legal pages and account settings keep their English URLs.
+
+Use Fumadocs' dot convention for docs: `page.de.mdx` and `meta.de.json`.
+Keep translated headings linked to their existing anchors with `## Translated heading [#original-anchor]`.
+Keep commands, code, product identifiers and quoted app controls unchanged.
+UI messages live in `src/lib/messages/`. Translate whole sentences and preserve named placeholders.
+
+A translated page has its own canonical URL, language alternatives and an English `x-default`.
+Only real translations belong in `hreflang` and the sitemap. An English fallback uses the English canonical URL.
+The URL controls the language for each request. Language changes preserve download choices and anchors.
+There are no automatic redirects based on browser language.
+
+Run `bun run test`, `bun run typecheck`, `bun run check` and `bun run validate-links` before building.
+Check translated pages, search, language switching and metadata against `bun run build` output.

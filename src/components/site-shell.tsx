@@ -1,3 +1,5 @@
+import { useT, useLocale } from "@/lib/i18n-react";
+import { localizeHref } from "@/lib/i18n";
 import { Link } from "@tanstack/react-router";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
 import type { ReactNode } from "react";
@@ -5,46 +7,48 @@ import { UserButton } from "@/components/auth/user/user-button";
 import { getBaseLayoutOptions } from "@/lib/layout-options";
 
 export function SiteShell({ children }: { children: ReactNode }) {
-  const baseOptions = getBaseLayoutOptions();
+  const t = useT();
+  const locale = useLocale();
+  const baseOptions = getBaseLayoutOptions(locale);
 
   return (
     <HomeLayout
       {...baseOptions}
       links={[
         {
-          text: "Docs",
-          url: "/docs",
-          description: "Learn how to use SoulFire",
+          text: t("Docs"),
+          url: localizeHref("/docs", locale),
+          description: t("Learn how to use SoulFire"),
         },
         {
-          text: "Downloads",
-          url: "/download",
-          description: "Download SoulFire",
+          text: t("Downloads"),
+          url: localizeHref("/download", locale),
+          description: t("Download SoulFire"),
         },
         {
-          text: "Accounts",
-          url: "/get-accounts",
-          description: "Find Minecraft accounts for your bots",
+          text: t("Accounts"),
+          url: localizeHref("/get-accounts", locale),
+          description: t("Find Minecraft accounts for your bots"),
         },
         {
-          text: "Proxies",
-          url: "/get-proxies",
-          description: "Find proxies for your bot sessions",
+          text: t("Proxies"),
+          url: localizeHref("/get-proxies", locale),
+          description: t("Find proxies for your bot sessions"),
         },
         {
-          text: "Blog",
+          text: t("Blog"),
           url: "/blog",
-          description: "News and guides from SoulFire",
+          description: t("News and guides from SoulFire"),
         },
         {
           type: "menu",
-          text: "More",
+          text: t("More"),
           secondary: true,
           items: [
             {
-              text: "Pricing",
-              url: "/pricing",
-              description: "Support SoulFire development",
+              text: t("Pricing"),
+              url: localizeHref("/pricing", locale),
+              description: t("Support SoulFire development"),
             },
           ],
         },
@@ -60,30 +64,30 @@ export function SiteShell({ children }: { children: ReactNode }) {
       <footer className="border-t py-6 text-sm text-fd-muted-foreground">
         <div className="mx-auto flex w-full max-w-(--fd-layout-width) flex-col items-center gap-2 px-4 sm:flex-row sm:justify-between">
           <p>&copy; {new Date().getFullYear()} SoulFire</p>
-          <nav className="flex gap-4">
+          <nav className="flex flex-wrap justify-center gap-x-4 gap-y-2">
             <Link
               to="/privacy-policy"
               className="hover:text-fd-foreground transition-colors"
             >
-              Privacy Policy
+              {t("Privacy Policy")}
             </Link>
             <Link
               to="/terms-of-service"
               className="hover:text-fd-foreground transition-colors"
             >
-              Terms of Service
+              {t("Terms of Service")}
             </Link>
             <Link
               to="/cookie-policy"
               className="hover:text-fd-foreground transition-colors"
             >
-              Cookie Policy
+              {t("Cookie Policy")}
             </Link>
             <Link
               to="/imprint"
               className="hover:text-fd-foreground transition-colors"
             >
-              Imprint
+              {t("Imprint")}
             </Link>
           </nav>
         </div>

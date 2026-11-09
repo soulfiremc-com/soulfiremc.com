@@ -1,4 +1,6 @@
 "use client";
+
+import { useT } from "@/lib/i18n-react";
 import { buttonVariants } from "fumadocs-ui/components/ui/button";
 import {
   Popover,
@@ -25,6 +27,7 @@ export function LLMCopyButton({
 }: {
   markdownUrl: string;
 }) {
+  const t = useT();
   const [isLoading, setLoading] = useState(false);
   const [checked, onClick] = useCopyButton(async () => {
     const cached = cache.get(markdownUrl);
@@ -60,7 +63,7 @@ export function LLMCopyButton({
       type="button"
     >
       {checked ? <Check /> : <Copy />}
-      Copy Page
+      {t("Copy Page")}
     </button>
   );
 }
@@ -82,6 +85,7 @@ export function ViewOptions({
    */
   githubUrl: string;
 }) {
+  const t = useT();
   const items = useMemo(() => {
     const fullMarkdownUrl =
       typeof window !== "undefined"
@@ -218,7 +222,7 @@ export function ViewOptions({
           className: "gap-2",
         })}
       >
-        Open Page In
+        {t("Open Page In")}
         <ChevronDown className="size-3.5 text-fd-muted-foreground" />
       </PopoverTrigger>
       <PopoverContent className="flex flex-col overflow-auto">
@@ -231,7 +235,7 @@ export function ViewOptions({
             className={optionClassName}
           >
             {item.icon}
-            {item.title}
+            {t(item.title)}
             <ExternalLinkIcon className="text-fd-muted-foreground size-3.5 ms-auto" />
           </a>
         ))}

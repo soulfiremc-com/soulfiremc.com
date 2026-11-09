@@ -1,3 +1,5 @@
+import { locales, splitLocalePath, localizePath, type Locale } from "./i18n";
+import { translate } from "./messages";
 import {
   absoluteUrl,
   defaultSocialImageUrl,
@@ -18,6 +20,7 @@ export function getPageMeta({
   imageUrl = defaultSocialImageUrl,
   imageAlt = `${siteName} social preview`,
   ogType = "website",
+  locale = splitLocalePath(path).locale,
 }: {
   title: string;
   description: string;
@@ -25,11 +28,26 @@ export function getPageMeta({
   imageAlt?: string;
   imageUrl?: string;
   ogType?: "article" | "website";
+  locale?: Locale;
 }) {
+  title = translate(locale, title);
+  description = translate(locale, description);
+  path = localizePath(path, locale);
+  imageAlt = translate(locale, imageAlt);
+  imageUrl = absoluteUrl(imageUrl);
+  const bare = splitLocalePath(path).path;
+  if (locale !== "en" && ["/", "/download", "/pricing"].includes(bare)) {
+    const name = bare === "/" ? "home" : bare.slice(1);
+    imageUrl = absoluteUrl(`/og/site/${locale}/${name}/image.webp`);
+  }
   return [
     { title },
     { name: "description", content: description },
     { property: "og:type", content: ogType },
+    {
+      property: "og:locale",
+      content: { en: "en_US", de: "de_DE", pl: "pl_PL", ru: "ru_RU" }[locale],
+    },
     { property: "og:site_name", content: siteName },
     { property: "og:title", content: title },
     { property: "og:description", content: description },
@@ -45,12 +63,40 @@ export function getPageMeta({
   ];
 }
 
-export function getCanonicalLinks(path: string) {
+export function getLanguageAlternates(
+  path: string,
+  languages: readonly Locale[],
+) {
+  return [
+    ...languages.map((language) => ({
+      language,
+      href: absoluteUrl(localizePath(path, language)),
+    })),
+    { language: "x-default", href: absoluteUrl(localizePath(path, "en")) },
+  ];
+}
+
+export function getCanonicalLinks(
+  path: string,
+  locale = splitLocalePath(path).locale,
+  languages?: readonly Locale[],
+) {
+  const bare = splitLocalePath(path.split(/[?#]/)[0]).path;
+  const available =
+    languages ??
+    (["/", "/download", "/pricing"].includes(bare) ? locales : ["en"]);
   return [
     {
       rel: "canonical" as const,
-      href: absoluteUrl(path),
+      href: absoluteUrl(localizePath(bare, locale)),
     },
+    ...(available.length > 1
+      ? getLanguageAlternates(bare, available).map(({ language, href }) => ({
+          rel: "alternate" as const,
+          hrefLang: language,
+          href,
+        }))
+      : []),
   ];
 }
 
@@ -91,6 +137,7 @@ export function createWebPageStructuredData({
   type = "WebPage",
   imageUrl,
   withBreadcrumb = false,
+  locale = splitLocalePath(path).locale,
 }: {
   path: string;
   title: string;
@@ -98,13 +145,16 @@ export function createWebPageStructuredData({
   type?: string;
   imageUrl?: string;
   withBreadcrumb?: boolean;
+  locale?: Locale;
 }) {
+  path = localizePath(path, locale);
   return {
+    inLanguage: locale,
     "@type": type,
     "@id": `${absoluteUrl(path)}#webpage`,
     url: absoluteUrl(path),
-    name: title,
-    description,
+    name: translate(locale, title),
+    description: translate(locale, description),
     isPartOf: { "@id": `${siteUrl}/#website` },
     breadcrumb: withBreadcrumb
       ? { "@id": `${absoluteUrl(path)}#breadcrumb` }
@@ -112,7 +162,7 @@ export function createWebPageStructuredData({
     primaryImageOfPage: imageUrl
       ? {
           "@type": "ImageObject",
-          url: imageUrl,
+          url: absoluteUrl(imageUrl),
         }
       : undefined,
   };
@@ -145,7 +195,7 @@ export function getWebsiteStructuredData() {
     name: siteName,
     description: siteDescription,
     publisher: { "@id": `${siteUrl}/#organization` },
-    inLanguage: "en",
+    inLanguage: [...locales],
   };
 }
 

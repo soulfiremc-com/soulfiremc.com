@@ -1,3 +1,8 @@
+import { isLocale, localizePath } from "@/lib/i18n";
+import { translate } from "@/lib/messages";
+import { DocsOgImage } from "@/components/og/soulfire";
+import { soulfireLogoDataUri } from "@/lib/og-image";
+import { siteDescription } from "@/lib/site";
 import { createFileRoute } from "@tanstack/react-router";
 import type { ReactElement } from "react";
 import {
@@ -16,10 +21,46 @@ export const Route = createFileRoute("/og/site/{$}/image.webp")({
     handlers: {
       GET: async ({ params }) => {
         const slugs = params._splat?.split("/").filter(Boolean) ?? [];
+        const locale = isLocale(slugs[0]) ? slugs[0] : "en";
+        if (isLocale(slugs[0])) slugs.shift();
         const [page] = stripOgSuffix(slugs);
 
         if (!page) return new Response(null, { status: 404 });
 
+        if (
+          (locale !== "en" && ["home", "download", "pricing"].includes(page)) ||
+          page === "pricing"
+        ) {
+          const title =
+            page === "home"
+              ? "SoulFire - Minecraft bots for testing and automation"
+              : page === "download"
+                ? "Download SoulFire"
+                : "Pricing - SoulFire";
+          const description =
+            page === "home"
+              ? siteDescription
+              : page === "download"
+                ? "Pick your OS and CPU to grab the right SoulFire build."
+                : "SoulFire is free and open source. Support the project and get priority help.";
+          return createOgImageResponse(
+            <DocsOgImage
+              title={translate(locale, title)}
+              description={translate(locale, description)}
+              slugs={[]}
+              section={translate(
+                locale,
+                page === "home"
+                  ? "SoulFire"
+                  : page === "download"
+                    ? "Downloads"
+                    : "Pricing",
+              )}
+              siteLabel={`soulfiremc.com${localizePath(page === "home" ? "/" : `/${page}`, locale)}`}
+              logoSrc={soulfireLogoDataUri}
+            />,
+          );
+        }
         let image: ReactElement;
 
         switch (page) {
