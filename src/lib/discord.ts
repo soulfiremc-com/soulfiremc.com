@@ -1,4 +1,5 @@
 import { Deferred, Effect, Schema } from "effect";
+import { AsyncLocalStorage } from "node:async_hooks";
 import { requestJson, requestVoid } from "@/lib/backend-http";
 
 const DISCORD_API_BASE = "https://discord.com/api/v10";
@@ -49,14 +50,22 @@ type LinkedRoleMetadata = {
   metadata: Record<string, string | number | boolean>;
 };
 
-const pendingInviteResolutions = new Map<
-  string,
-  Deferred.Deferred<string | null>
+function createLookupScope() {
+  return {
+    resolutions: new Map<string, Deferred.Deferred<string | null>>(),
+    invites: new Map<string, Deferred.Deferred<DiscordInviteResponse | null>>(),
+  };
+}
+
+const lookupStorage = new AsyncLocalStorage<
+  ReturnType<typeof createLookupScope>
 >();
-const pendingInviteLookups = new Map<
-  string,
-  Deferred.Deferred<DiscordInviteResponse | null>
->();
+
+// Workers cannot share pending I/O between requests. Only completed cache
+// entries may be shared; coalesce lookups within the current request instead.
+export function runWithDiscordLookupScope<T>(callback: () => T): T {
+  return lookupStorage.run(createLookupScope(), callback);
+}
 
 export function exchangeDiscordCodeEffect(code: string, redirectUri: string) {
   return requestJson(
@@ -294,7 +303,7 @@ function resolveDiscordInviteCodeEffect(
       `${maxRedirects}:${initialUrl}`,
     ),
     load: followInviteRedirects(initialUrl, maxRedirects),
-    pendingLoads: pendingInviteResolutions,
+    pendingLoads: lookupStorage.getStore()?.resolutions ?? new Map(),
     successTtlSeconds: DISCORD_INVITE_RESOLUTION_CACHE_TTL_SECONDS,
     schema: Schema.String,
   });
@@ -329,7 +338,7 @@ export const fetchDiscordInviteEffect = Effect.fn("fetchDiscordInvite")(
           },
         );
       }).pipe(Effect.orElseSucceed(() => null)),
-      pendingLoads: pendingInviteLookups,
+      pendingLoads: lookupStorage.getStore()?.invites ?? new Map(),
       successTtlSeconds: DISCORD_INVITE_CACHE_TTL_SECONDS,
       schema: discordInviteSchema,
     });

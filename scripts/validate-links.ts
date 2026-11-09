@@ -1,4 +1,6 @@
 import { docFileInfo, i18n, localizePath, locales } from "../src/lib/i18n";
+import { SHOPS } from "../src/lib/accounts-data";
+import { PROVIDERS as proxyProviders } from "../src/lib/proxies-data";
 import { access, readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { docsRedirects } from "../src/lib/docs/redirects";
@@ -66,7 +68,15 @@ async function checkLinks() {
   for (const file of files)
     if (file.url) scanned.urls.set(file.url, { hashes: file.hashes });
   for (const locale of locales)
-    for (const path of ["/", "/download", "/pricing"])
+    for (const path of [
+      "/",
+      "/download",
+      "/pricing",
+      "/get-accounts",
+      "/get-proxies",
+      ...SHOPS.map((shop) => `/get-accounts/${shop.slug}`),
+      ...proxyProviders.map((provider) => `/get-proxies/${provider.slug}`),
+    ])
       scanned.urls.set(localizePath(path, locale), {});
 
   for (const [slug, destination] of docsRedirects) {

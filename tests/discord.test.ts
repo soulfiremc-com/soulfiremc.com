@@ -8,6 +8,7 @@ import {
   getDiscordUser,
   pushLinkedRoleMetadata,
   resolveDiscordInviteCode,
+  runWithDiscordLookupScope,
 } from "@/lib/discord";
 
 await test("Discord validates OAuth responses and never retries a token exchange", async (t) => {
@@ -111,59 +112,63 @@ await test("Discord resolves relative redirects, bounds redirect loops, and acce
   assert.equal(fetch.mock.callCount(), 5);
 });
 
-await test("concurrent Discord lookups share a request and release the slot after failure", async (t) => {
-  let finish!: (response: Response) => void;
-  const fetch = t.mock.method(
-    globalThis,
-    "fetch",
-    () =>
-      new Promise<Response>((resolve) => {
-        finish = resolve;
-      }),
-  );
-  const code = crypto.randomUUID();
-  const lookups = [fetchDiscordInvite(code), fetchDiscordInvite(code)];
-  finish(Response.json({ code, approximate_member_count: 42 }));
-  assert.deepEqual(await Promise.all(lookups), [
-    { code, approximate_member_count: 42 },
-    { code, approximate_member_count: 42 },
-  ]);
-  assert.equal(fetch.mock.callCount(), 1);
+await test("concurrent Discord lookups share a request and release the slot after failure", (t) =>
+  runWithDiscordLookupScope(async () => {
+    let finish!: (response: Response) => void;
+    const fetch = t.mock.method(
+      globalThis,
+      "fetch",
+      () =>
+        new Promise<Response>((resolve) => {
+          finish = resolve;
+        }),
+    );
+    const code = crypto.randomUUID();
+    const lookups = [fetchDiscordInvite(code), fetchDiscordInvite(code)];
+    finish(Response.json({ code, approximate_member_count: 42 }));
+    assert.deepEqual(await Promise.all(lookups), [
+      { code, approximate_member_count: 42 },
+      { code, approximate_member_count: 42 },
+    ]);
+    assert.equal(fetch.mock.callCount(), 1);
 
-  fetch.mock.mockImplementation(
-    async () => new Response(null, { status: 404 }),
-  );
-  assert.deepEqual(
-    await Promise.all([fetchDiscordInvite(code), fetchDiscordInvite(code)]),
-    [null, null],
-  );
-  assert.equal(fetch.mock.callCount(), 2);
-  fetch.mock.mockImplementation(async () => Response.json({ code }));
-  assert.deepEqual(await fetchDiscordInvite(code), { code });
-  assert.equal(fetch.mock.callCount(), 3);
-});
+    fetch.mock.mockImplementation(
+      async () => new Response(null, { status: 404 }),
+    );
+    assert.deepEqual(
+      await Promise.all([fetchDiscordInvite(code), fetchDiscordInvite(code)]),
+      [null, null],
+    );
+    assert.equal(fetch.mock.callCount(), 2);
+    fetch.mock.mockImplementation(async () => Response.json({ code }));
+    assert.deepEqual(await fetchDiscordInvite(code), { code });
+    assert.equal(fetch.mock.callCount(), 3);
+  }));
 
-await test("interrupted Discord lookups release waiters and allow the next request", async (t) => {
-  let signal: AbortSignal | undefined;
-  const fetch = t.mock.method(
-    globalThis,
-    "fetch",
-    (_url: string, init: RequestInit) => {
-      signal = init.signal ?? undefined;
-      return new Promise<Response>(() => {});
-    },
-  );
-  const code = crypto.randomUUID();
-  const leader = Effect.runFork(fetchDiscordInviteEffect(code));
-  const waiter = Effect.runPromise(Effect.exit(fetchDiscordInviteEffect(code)));
-  await Effect.runPromise(Fiber.interrupt(leader));
-  assert.equal(Exit.isFailure(await waiter), true);
-  assert.equal(signal?.aborted, true);
-  assert.equal(fetch.mock.callCount(), 1);
-  fetch.mock.mockImplementation(async () => Response.json({ code }));
-  assert.deepEqual(await fetchDiscordInvite(code), { code });
-  assert.equal(fetch.mock.callCount(), 2);
-});
+await test("interrupted Discord lookups release waiters and allow the next request", (t) =>
+  runWithDiscordLookupScope(async () => {
+    let signal: AbortSignal | undefined;
+    const fetch = t.mock.method(
+      globalThis,
+      "fetch",
+      (_url: string, init: RequestInit) => {
+        signal = init.signal ?? undefined;
+        return new Promise<Response>(() => {});
+      },
+    );
+    const code = crypto.randomUUID();
+    const leader = Effect.runFork(fetchDiscordInviteEffect(code));
+    const waiter = Effect.runPromise(
+      Effect.exit(fetchDiscordInviteEffect(code)),
+    );
+    await Effect.runPromise(Fiber.interrupt(leader));
+    assert.equal(Exit.isFailure(await waiter), true);
+    assert.equal(signal?.aborted, true);
+    assert.equal(fetch.mock.callCount(), 1);
+    fetch.mock.mockImplementation(async () => Response.json({ code }));
+    assert.deepEqual(await fetchDiscordInvite(code), { code });
+    assert.equal(fetch.mock.callCount(), 2);
+  }));
 
 await test("Discord retains Cloudflare cache TTLs, negative entries, and cache failure fallbacks", async (t) => {
   const original = Object.getOwnPropertyDescriptor(globalThis, "caches");
@@ -242,4 +247,21 @@ await test("Discord retains Cloudflare cache TTLs, negative entries, and cache f
     Response.json({ code: "no-cache" }),
   );
   assert.deepEqual(await fetchDiscordInvite("no-cache"), { code: "no-cache" });
+});
+
+await test("Discord pending lookups stay within their request scope", async (t) => {
+  const code = crypto.randomUUID();
+  const fetch = t.mock.method(globalThis, "fetch", async () =>
+    Response.json({ code }),
+  );
+  const requests = Array.from({ length: 2 }, () =>
+    runWithDiscordLookupScope(() =>
+      Promise.all([fetchDiscordInvite(code), fetchDiscordInvite(code)]),
+    ),
+  );
+  assert.deepEqual(await Promise.all(requests), [
+    [{ code }, { code }],
+    [{ code }, { code }],
+  ]);
+  assert.equal(fetch.mock.callCount(), 2);
 });

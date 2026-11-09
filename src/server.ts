@@ -1,6 +1,7 @@
 import handler from "@tanstack/react-start/server-entry";
 import { runWithD1Database } from "@/lib/db";
 import { createReviewSession, setReviewBookmark } from "@/lib/db/replication";
+import { runWithDiscordLookupScope } from "@/lib/discord";
 
 const securityHeaders = [
   ["X-DNS-Prefetch-Control", "on"],
@@ -15,7 +16,7 @@ export default {
     const originalResponse = await runWithD1Database(
       env.DB,
       reviewSession,
-      () => handler.fetch(request),
+      () => runWithDiscordLookupScope(() => handler.fetch(request)),
     );
     const response = new Response(originalResponse.body, originalResponse);
     setReviewBookmark(request, response, reviewSession);

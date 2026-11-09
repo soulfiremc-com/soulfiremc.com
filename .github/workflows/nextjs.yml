@@ -50,3 +50,8 @@ jobs:
         env:
           POSTHOG_PERSONAL_API_KEY: ${{ github.event_name == 'push' && secrets.POSTHOG_PERSONAL_API_KEY || '' }}
         run: bun run build
+
+      - name: Test concurrent provider rendering in Workers runtime
+        env:
+          PROVIDER_WORKER_BUNDLE: .cloudflare/output/v0/workers/default/bundle
+        run: bunx tsx --test tests/provider-worker.test.ts
