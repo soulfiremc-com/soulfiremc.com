@@ -1,132 +1,58 @@
 import {
-  BOT_COUNT,
-  getFormation,
-  terrain,
-  type Formation,
-  type Point,
-} from "./voxel-world";
+  createActorGeometry,
+  createTerrainGeometry,
+  VERTEX_STRIDE,
+  type RenderPosition,
+} from "./voxel-geometry";
+import {
+  createSimulation,
+  getSimulationSummary,
+  INITIAL_SIMULATION_SEED,
+  setSelectionPressure,
+  stepSimulation,
+} from "./voxel-simulation";
+import type {
+  Point,
+  SelectionPressure,
+  SimulationSummary,
+} from "./voxel-simulation-types";
 
 const vertexSource = `
 precision highp float;
 attribute vec3 a_position;
+attribute vec3 a_color;
 attribute vec2 a_uv;
-attribute float a_face;
-attribute float a_bot;
-uniform float u_progress;
 uniform float u_aspect;
 uniform vec2 u_pointer;
-uniform vec2 u_from[${BOT_COUNT}];
-uniform vec2 u_to[${BOT_COUNT}];
+varying mediump vec3 v_color;
 varying mediump vec2 v_uv;
-varying mediump vec3 v_world;
-varying mediump float v_face;
-varying mediump float v_bot;
 void main() {
   vec3 p = a_position;
-  if (a_bot >= 0.0) {
-    int id = int(a_bot);
-    vec2 start = vec2(0.0);
-    vec2 target = vec2(0.0);
-    for (int i = 0; i < ${BOT_COUNT}; i++) {
-      if (i == id) { start = u_from[i]; target = u_to[i]; }
-    }
-    vec2 position = mix(start, target, u_progress);
-    vec2 tile = floor(position + 0.5);
-    float h = 1.0 + max(0.0, floor((length(tile) - 4.0) * 0.45 + sin(tile.x * 0.7) * cos(tile.y * 0.6)));
-    p += vec3(position.x, h + 0.04, position.y);
-  }
-  v_world = p;
-  float angle = u_pointer.x * 0.12;
+  float angle = u_pointer.x * 0.14;
   p.xz = mat2(cos(angle), -sin(angle), sin(angle), cos(angle)) * p.xz;
   float x = (p.x - p.z) * 0.7071;
-  float y = p.y * 0.84 - (p.x + p.z) * (0.39 + u_pointer.y * 0.025) - 0.35;
-  gl_Position = vec4(x * 0.104 / u_aspect, y * 0.104, -(p.x + p.z + p.y) * 0.025, 1.0);
+  float y = p.y * 0.84 - (p.x + p.z) * (0.39 + u_pointer.y * 0.025) - 0.6;
+  gl_Position = vec4(x * 0.109 / u_aspect, y * 0.109, -(p.x + p.z + p.y) * 0.025, 1.0);
+  v_color = a_color;
   v_uv = a_uv;
-  v_face = a_face;
-  v_bot = a_bot;
 }`;
 
 const fragmentSource = `
 precision mediump float;
-uniform float u_time;
+varying mediump vec3 v_color;
 varying mediump vec2 v_uv;
-varying mediump vec3 v_world;
-varying mediump float v_face;
-varying mediump float v_bot;
 void main() {
   float edge = min(min(v_uv.x, 1.0 - v_uv.x), min(v_uv.y, 1.0 - v_uv.y));
-  float face = v_face;
-  vec3 color = vec3(0.035, 0.13, 0.17);
-  if (face > 1.5) color = vec3(0.075, 0.24, 0.28);
-  if (face > 2.5) {
-    float variation = sin(floor(v_world.x) * 7.3 + floor(v_world.z) * 4.7) * 0.035;
-    color = vec3(0.12, 0.36, 0.40) + variation;
-    float ring = abs(length(v_world.xz) - mod(u_time * 0.8, 13.0));
-    color += vec3(0.07, 0.37, 0.42) * exp(-ring * ring * 2.0);
-    color *= mix(0.68, 1.0, smoothstep(0.0, 0.035, edge));
-  } else {
-    color *= 0.65 + 0.35 * smoothstep(0.0, 2.5, v_world.y);
-    color *= mix(0.6, 1.0, smoothstep(0.0, 0.02, edge));
-  }
-  if (v_bot >= 0.0) {
-    color = mix(vec3(0.25, 0.70, 0.79), vec3(0.77, 0.98, 0.96), face / 3.0);
-  }
-  gl_FragColor = vec4(color, 1.0);
+  float border = mix(0.65, 1.0, smoothstep(0.0, 0.025, edge));
+  gl_FragColor = vec4(v_color * border, 1.0);
 }`;
 
-function createGeometry() {
-  const vertices: number[] = [];
-  function cube(
-    x: number,
-    z: number,
-    bottom: number,
-    top: number,
-    half: number,
-    bot = -1,
-  ) {
-    const faces = [
-      [
-        [x - half, bottom, z + half],
-        [x + half, bottom, z + half],
-        [x + half, top, z + half],
-        [x - half, top, z + half],
-      ],
-      [
-        [x + half, bottom, z - half],
-        [x + half, bottom, z + half],
-        [x + half, top, z + half],
-        [x + half, top, z - half],
-      ],
-      [
-        [x - half, top, z - half],
-        [x + half, top, z - half],
-        [x + half, top, z + half],
-        [x - half, top, z + half],
-      ],
-    ];
-    const uv = [
-      [0, 0],
-      [1, 0],
-      [1, 1],
-      [0, 1],
-    ];
-    for (const [face, corners] of faces.entries()) {
-      for (const index of [0, 1, 2, 0, 2, 3]) {
-        vertices.push(...corners[index], ...uv[index], face + 1, bot);
-      }
-    }
-  }
-  for (const block of terrain) cube(block.x, block.z, -0.7, block.height, 0.49);
-  for (let id = 0; id < BOT_COUNT; id++) {
-    cube(0, 0, 0, 0.42, 0.12, id);
-    cube(0, 0, 0.42, 0.68, 0.17, id);
-  }
-  return new Float32Array(vertices);
-}
+const TICK_SECONDS = 0.1;
 
 export function createVoxelRenderer(
   canvas: HTMLCanvasElement,
   onUnavailable: () => void,
+  onUpdate: (summary: SimulationSummary) => void,
 ) {
   const gl = canvas.getContext("webgl", {
     alpha: true,
@@ -136,13 +62,18 @@ export function createVoxelRenderer(
   if (!gl) return null;
   const shaders: WebGLShader[] = [];
   const program = gl.createProgram();
-  const buffer = gl.createBuffer();
+  const terrainBuffer = gl.createBuffer();
+  const actorBuffer = gl.createBuffer();
+  let disposed = false;
   function dispose() {
-    if (buffer) gl?.deleteBuffer(buffer);
+    if (disposed) return;
+    disposed = true;
+    if (terrainBuffer) gl?.deleteBuffer(terrainBuffer);
+    if (actorBuffer) gl?.deleteBuffer(actorBuffer);
     if (program) gl?.deleteProgram(program);
     for (const shader of shaders) gl?.deleteShader(shader);
   }
-  if (!program || !buffer) {
+  if (!program || !terrainBuffer || !actorBuffer) {
     dispose();
     return null;
   }
@@ -169,76 +100,124 @@ export function createVoxelRenderer(
     dispose();
     return null;
   }
-  gl.useProgram(program);
-  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-  const geometry = createGeometry();
-  gl.bufferData(gl.ARRAY_BUFFER, geometry, gl.STATIC_DRAW);
-  for (const [name, size, offset] of [
-    ["a_position", 3, 0],
-    ["a_uv", 2, 3],
-    ["a_face", 1, 5],
-    ["a_bot", 1, 6],
-  ] as const) {
-    const location = gl.getAttribLocation(program, name);
-    gl.enableVertexAttribArray(location);
-    gl.vertexAttribPointer(location, size, gl.FLOAT, false, 7 * 4, offset * 4);
-  }
-  const uniforms = Object.fromEntries(
-    [
-      "u_time",
-      "u_progress",
-      "u_aspect",
-      "u_pointer",
-      "u_from[0]",
-      "u_to[0]",
-    ].map((name) => [name, gl.getUniformLocation(program, name)]),
-  );
+  const attributes = [
+    [gl.getAttribLocation(program, "a_position"), 3, 0],
+    [gl.getAttribLocation(program, "a_color"), 3, 3],
+    [gl.getAttribLocation(program, "a_uv"), 2, 6],
+  ] as const;
+  const aspectUniform = gl.getUniformLocation(program, "u_aspect");
+  const pointerUniform = gl.getUniformLocation(program, "u_pointer");
   gl.enable(gl.DEPTH_TEST);
   gl.clearColor(0, 0, 0, 0);
-  let from = getFormation("scatter");
-  let to = from;
-  let transitionElapsed = 1400;
+
+  let state = createSimulation(INITIAL_SIMULATION_SEED);
+  let previous = new Map<string, RenderPosition>();
+  let terrainVersion = -1;
+  let terrainVertices = 0;
   let frame = 0;
   let lastFrame = 0;
-  let time = 4;
-  let paused = false;
+  let lastUpdate = 0;
+  let publishedGeneration = 0;
+  let accumulator = 0;
+  let time = 0;
+  let speed: 1 | 3 = 1;
+  let paused = true;
+  let reducedMotion = true;
   let visible = true;
-  let reducedMotion = false;
   let destroyed = false;
   let pointer: Point = [0, 0];
-  const ease = (value: number) => {
-    const t = Math.min(1, Math.max(0, value));
-    return t * t * (3 - 2 * t);
-  };
-  function updatePositions() {
-    gl?.uniform2fv(uniforms["u_from[0]"], new Float32Array(from.flat()));
-    gl?.uniform2fv(uniforms["u_to[0]"], new Float32Array(to.flat()));
+  let targetPointer: Point = [0, 0];
+
+  function publish() {
+    publishedGeneration = state.generation;
+    onUpdate(getSimulationSummary(state));
   }
+
+  function tick() {
+    previous = new Map(
+      state.bots.map((bot) => [bot.id, { x: bot.x, z: bot.z }]),
+    );
+    stepSimulation(state, TICK_SECONDS);
+  }
+
+  function bindGeometry(buffer: WebGLBuffer) {
+    if (!gl) return;
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    for (const [location, size, offset] of attributes) {
+      gl.enableVertexAttribArray(location);
+      gl.vertexAttribPointer(
+        location,
+        size,
+        gl.FLOAT,
+        false,
+        VERTEX_STRIDE * 4,
+        offset * 4,
+      );
+    }
+  }
+
   function draw(now: number) {
     frame = 0;
     if (destroyed || !gl || !visible || document.hidden) {
       lastFrame = 0;
       return;
     }
-    if (lastFrame && !paused && !reducedMotion) {
-      const elapsed = Math.min(now - lastFrame, 50);
-      time += elapsed / 1000;
-      transitionElapsed += elapsed;
-    }
+    const elapsed = lastFrame ? Math.min((now - lastFrame) / 1000, 0.1) : 0;
     lastFrame = now;
-    const progress = reducedMotion ? 1 : ease(transitionElapsed / 1400);
-    gl.uniform1f(uniforms.u_time, time);
-    gl.uniform1f(uniforms.u_progress, progress);
-    gl.uniform1f(uniforms.u_aspect, canvas.width / canvas.height);
-    gl.uniform2f(uniforms.u_pointer, ...pointer);
+    const playing = !paused && !reducedMotion;
+    if (playing) {
+      time += elapsed * speed;
+      accumulator += elapsed * speed;
+      while (accumulator >= TICK_SECONDS) {
+        tick();
+        accumulator -= TICK_SECONDS;
+      }
+      const blend = 1 - Math.exp(-elapsed * 9);
+      pointer = [
+        pointer[0] + (targetPointer[0] - pointer[0]) * blend,
+        pointer[1] + (targetPointer[1] - pointer[1]) * blend,
+      ];
+    }
+    gl.useProgram(program);
+    gl.uniform1f(aspectUniform, canvas.width / canvas.height);
+    gl.uniform2f(pointerUniform, ...pointer);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    gl.drawArrays(gl.TRIANGLES, 0, geometry.length / 7);
-    if (!paused && !reducedMotion) frame = requestAnimationFrame(draw);
+    bindGeometry(terrainBuffer);
+    if (terrainVersion !== state.terrainVersion) {
+      const geometry = createTerrainGeometry(state);
+      gl.bufferData(gl.ARRAY_BUFFER, geometry, gl.STATIC_DRAW);
+      terrainVertices = geometry.length / VERTEX_STRIDE;
+      terrainVersion = state.terrainVersion;
+    }
+    gl.drawArrays(gl.TRIANGLES, 0, terrainVertices);
+    const alpha = playing ? accumulator / TICK_SECONDS : 1;
+    const positions = new Map<string, RenderPosition>();
+    const moving = new Set<string>();
+    for (const bot of state.bots) {
+      const from = previous.get(bot.id) ?? bot;
+      positions.set(bot.id, {
+        x: from.x + (bot.x - from.x) * alpha,
+        z: from.z + (bot.z - from.z) * alpha,
+      });
+      if (Math.hypot(bot.x - from.x, bot.z - from.z) > 0.001)
+        moving.add(bot.id);
+    }
+    const actors = createActorGeometry(state, positions, time, moving);
+    bindGeometry(actorBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, actors, gl.DYNAMIC_DRAW);
+    gl.drawArrays(gl.TRIANGLES, 0, actors.length / VERTEX_STRIDE);
+    if (now - lastUpdate >= 500 || publishedGeneration !== state.generation) {
+      publish();
+      lastUpdate = now;
+    }
+    if (playing) frame = requestAnimationFrame(draw);
   }
+
   function requestDraw() {
     if (!frame && !destroyed && visible && !document.hidden)
       frame = requestAnimationFrame(draw);
   }
+
   function resize() {
     const { width, height } = canvas.getBoundingClientRect();
     const ratio = Math.min(
@@ -251,63 +230,81 @@ export function createVoxelRenderer(
     gl?.viewport(0, 0, canvas.width, canvas.height);
     requestDraw();
   }
+
   function contextLost(event: Event) {
     event.preventDefault();
-    cancelAnimationFrame(frame);
-    destroyed = true;
+    destroy();
     onUnavailable();
   }
+
   function visibilityChanged() {
+    cancelAnimationFrame(frame);
+    frame = 0;
     lastFrame = 0;
     requestDraw();
   }
+
   const resizeObserver = new ResizeObserver(resize);
-  const intersectionObserver = new IntersectionObserver(([entry]) => {
+  const intersectionObserver = new IntersectionObserver((entries) => {
+    const entry = entries.at(-1);
+    if (!entry) return;
     visible = entry.isIntersecting;
-    lastFrame = 0;
-    if (!visible) {
-      cancelAnimationFrame(frame);
-      frame = 0;
-    } else requestDraw();
+    visibilityChanged();
   });
+  function destroy() {
+    destroyed = true;
+    cancelAnimationFrame(frame);
+    resizeObserver.disconnect();
+    intersectionObserver.disconnect();
+    canvas.removeEventListener("webglcontextlost", contextLost);
+    document.removeEventListener("visibilitychange", visibilityChanged);
+    dispose();
+  }
   resizeObserver.observe(canvas);
   intersectionObserver.observe(canvas);
   canvas.addEventListener("webglcontextlost", contextLost);
   document.addEventListener("visibilitychange", visibilityChanged);
-  updatePositions();
+  publish();
   resize();
+
   return {
-    setFormation(formation: Formation) {
-      const progress = reducedMotion ? 1 : ease(transitionElapsed / 1400);
-      from = from.map((point, id) => [
-        point[0] + (to[id][0] - point[0]) * progress,
-        point[1] + (to[id][1] - point[1]) * progress,
-      ]);
-      to = getFormation(formation);
-      transitionElapsed = paused || reducedMotion ? 1400 : 0;
-      updatePositions();
-      requestDraw();
-    },
     setMotion(nextPaused: boolean, nextReducedMotion: boolean) {
       paused = nextPaused;
       reducedMotion = nextReducedMotion;
-      if (reducedMotion) transitionElapsed = 1400;
-      if (paused || reducedMotion) pointer = [0, 0];
+      lastFrame = 0;
+      if (reducedMotion) pointer = targetPointer = [0, 0];
       requestDraw();
     },
     setPointer(x: number, y: number) {
       if (paused || reducedMotion) return;
-      pointer = [x, y];
+      targetPointer = [x, y];
       requestDraw();
     },
-    destroy() {
-      destroyed = true;
-      cancelAnimationFrame(frame);
-      resizeObserver.disconnect();
-      intersectionObserver.disconnect();
-      canvas.removeEventListener("webglcontextlost", contextLost);
-      document.removeEventListener("visibilitychange", visibilityChanged);
-      dispose();
+    setSpeed(nextSpeed: 1 | 3) {
+      speed = nextSpeed;
     },
+    setPressure(pressure: SelectionPressure) {
+      setSelectionPressure(state, pressure);
+      publish();
+      requestDraw();
+    },
+    reset() {
+      state = createSimulation((state.seed + 1) >>> 0, state.pressure);
+      previous.clear();
+      terrainVersion = -1;
+      accumulator = time = 0;
+      lastFrame = 0;
+      publish();
+      requestDraw();
+    },
+    step() {
+      if (!paused && !reducedMotion) return;
+      for (let index = 0; index < 10; index++) tick();
+      time += 1;
+      accumulator = 0;
+      publish();
+      requestDraw();
+    },
+    destroy,
   };
 }

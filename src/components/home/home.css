@@ -32,11 +32,6 @@
   font-size: 11px;
 }
 @utility home-hero {
-  --voxel-line: #0b2831;
-  --voxel-front: #123b45;
-  --voxel-side: #19505b;
-  --voxel-top: #347b82;
-  --voxel-bot: #b8f2ee;
   --background: #0a1318;
   --foreground: #edf7f7;
   --primary: #a0e5e7;
@@ -142,13 +137,14 @@
   position: relative;
   width: calc(100% + 64px);
   margin-left: -32px;
-  aspect-ratio: 1.15;
+  aspect-ratio: 1.3;
 }
 @utility voxel-fallback {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+  color: #122a2d;
 }
 @utility voxel-canvas {
   position: absolute;
@@ -161,17 +157,6 @@
 .voxel-canvas[data-ready="true"] {
   opacity: 1;
 }
-@utility voxel-orbit {
-  position: absolute;
-  width: 84%;
-  height: 59%;
-  top: 24%;
-  left: 8%;
-  border: 1px solid #29464e;
-  border-radius: 50%;
-  transform: rotate(-10deg);
-  opacity: 0.5;
-}
 @utility voxel-caption {
   display: flex;
   justify-content: space-between;
@@ -179,23 +164,128 @@
   gap: 12px;
   color: #b8ced4;
   font-size: 12px;
-  margin: -18px 6px 15px;
+  margin: -12px 6px 12px;
   z-index: 1;
 }
-.voxel-caption .home-mono {
+.voxel-caption > span:last-child {
   color: #819ea8;
-  font-size: 10px;
 }
 @utility voxel-controls {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
   gap: 12px;
   margin: 0 6px;
 }
+.voxel-camps {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0 6px;
+  font-size: 12px;
+}
+.voxel-team {
+  border-left: 3px solid #65d9d4;
+  padding-left: 8px;
+  color: #d0e2e5;
+}
+.voxel-team[data-team="amber"] {
+  border-color: #edb175;
+}
+.voxel-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  padding-block: 12px;
+  margin: 0 6px 12px;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+}
+.voxel-metrics > div {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+}
+.voxel-metrics dt {
+  color: #a2b7bf;
+}
+.voxel-metrics dd {
+  font-variant-numeric: tabular-nums;
+}
+.voxel-pressure [data-slot="field-label"] {
+  color: #b8ced4;
+  font-size: 12px;
+  font-weight: 400;
+}
+.voxel-playback {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.voxel-note,
+.voxel-local {
+  margin: 12px 6px 0;
+  color: #a2b7bf;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.voxel-local {
+  margin-top: 3px;
+  color: #819ea8;
+}
+.voxel-traits {
+  margin: 10px 6px 0;
+  color: #b8ced4;
+  font-size: 12px;
+}
+.voxel-traits summary {
+  width: fit-content;
+  cursor: pointer;
+}
+.voxel-traits summary:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+.voxel-trait-grid {
+  display: grid;
+  grid-template-columns: minmax(100px, 1.3fr) repeat(2, minmax(0, 1fr));
+  align-items: center;
+  gap: 10px 16px;
+  padding-block: 12px;
+}
+.voxel-trait-row {
+  display: contents;
+}
+.voxel-traits meter {
+  width: 100%;
+  height: 12px;
+  appearance: none;
+  background: #24363b;
+  border-radius: 2px;
+  border: 0;
+}
+.voxel-traits meter::-webkit-meter-bar {
+  background: #24363b;
+  border: 0;
+  border-radius: 2px;
+}
+.voxel-traits meter::-webkit-meter-optimum-value {
+  background: #65d9d4;
+}
+.voxel-traits meter:last-child::-webkit-meter-optimum-value {
+  background: #edb175;
+}
+.voxel-traits meter::-moz-meter-bar {
+  background: #65d9d4;
+}
+.voxel-traits meter:last-child::-moz-meter-bar {
+  background: #edb175;
+}
 .voxel-controls [data-slot="toggle-group"] {
-  --accent: #284952;
-  --accent-foreground: #d7f6f4;
+  --muted: #284952;
   --background: #101f26;
   --border: #34505a;
 }
@@ -632,11 +722,6 @@
     font-size: 12px;
     padding-inline: 14px;
   }
-  .voxel-caption {
-    flex-direction: column;
-    align-items: start;
-    gap: 6px;
-  }
   .voxel-controls [data-slot="toggle-group-item"] {
     padding-inline: 9px;
     gap: 5px;
@@ -730,10 +815,14 @@
     margin: -10px 0 13px;
     font-size: 11px;
   }
-  .voxel-caption .home-mono {
-    font-size: 9px;
-  }
   .voxel-controls {
+    margin-inline: 0;
+  }
+  .voxel-camps,
+  .voxel-metrics,
+  .voxel-note,
+  .voxel-local,
+  .voxel-traits {
     margin-inline: 0;
   }
   .voxel-controls [data-slot="toggle-group-item"] {
