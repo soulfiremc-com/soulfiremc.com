@@ -1,3 +1,11 @@
+import {
+  createAdventure,
+  decorateAdventure,
+  primeBreach,
+  stepAdventure,
+  summonStorm,
+  type AdventureHost,
+} from "./voxel-adventure";
 import type {
   Genome,
   Point,
@@ -195,12 +203,14 @@ export function getTile(
 }
 
 function isWalkable(tile: SimulationTile) {
+  if (tile.hazard === "lava" || (tile.fire ?? 0) > 0) return false;
   if (tile.resource) return false;
   if (tile.structure) return tile.structure.kind === "bridge";
   return tile.material !== "water";
 }
 
 function isPassable(tile: SimulationTile, team: TeamId, breakWalls: boolean) {
+  if (tile.hazard === "lava" || (tile.fire ?? 0) > 0) return false;
   if (isWalkable(tile)) return true;
   return (
     breakWalls &&
@@ -478,6 +488,7 @@ function isPressure(value: unknown): value is SelectionPressure {
 export function createSimulation(
   seed?: number,
   pressure: SelectionPressure = "balanced",
+  options: { spectacle?: boolean } = {},
 ): SimulationState {
   const normalized = normalizeSeed(seed);
   const rand = createRandom(mixSeed(normalized, 0x6e6f6d65));
@@ -502,7 +513,9 @@ export function createSimulation(
     events: [],
     metrics: emptyMetrics(),
     terrainVersion: 1,
+    adventure: createAdventure(normalized, 1, options.spectacle !== false),
   };
+  decorateAdventure(state);
   internals.set(state, {
     rng: mixSeed(normalized, 0x62726169),
     nextEventId: 1,
@@ -558,8 +571,17 @@ function addEvent(
   x: number,
   z: number,
   team: TeamId,
+  power?: number,
 ) {
-  state.events.push({ id: internal.nextEventId++, kind, x, z, team, age: 0 });
+  state.events.push({
+    id: internal.nextEventId++,
+    kind,
+    x,
+    z,
+    team,
+    age: 0,
+    power,
+  });
   if (state.events.length > MAX_EVENTS)
     state.events.splice(0, state.events.length - MAX_EVENTS);
 }
@@ -660,6 +682,7 @@ function canPlace(
   index: number,
 ): boolean {
   const tile = state.tiles[index];
+  if (tile.hazard === "lava" || (tile.fire ?? 0) > 0) return false;
   if (tile.resource || tile.structure || isOccupied(state, tile)) return false;
   if (kind === "bridge") {
     if (
@@ -1007,6 +1030,53 @@ function updateAttack(
   } else if (result === "blocked") brain.path = [];
 }
 
+function updateDefense(
+  state: SimulationState,
+  internal: Internal,
+  bot: SimulationBot,
+  brain: Brain,
+  dt: number,
+) {
+  const target = state.adventure.mobs.find(
+    (mob) => `mob:${mob.id}` === brain.enemy && mob.health > 0,
+  );
+  if (!target) return decide(state, internal, bot);
+  const distance = Math.hypot(target.x - bot.x, target.z - bot.z);
+  face(bot, target.x, target.z);
+  if (distance <= 1.3) {
+    brain.path = [];
+    if (brain.cooldown <= 0) {
+      const amount = bot.tool === "sword" ? 2.5 : 1.5;
+      target.health = Math.max(0, target.health - amount);
+      target.hurt = HURT_SECONDS;
+      bot.action = ACTION_SECONDS;
+      brain.cooldown = bot.tool === "sword" ? 0.7 : 0.85;
+      state.metrics.hits++;
+      reward(state, bot, "combat", amount);
+      addEvent(state, internal, "hit", target.x, target.z, bot.team);
+      if (target.health <= 0) {
+        reward(state, bot, "combat", 4);
+        addEvent(state, internal, "defeat", target.x, target.z, bot.team);
+      }
+    }
+    return;
+  }
+  brain.repath -= dt;
+  if (!brain.path.length || brain.repath <= 0) {
+    const tile = getTile(state, target.x, target.z);
+    if (!tile) return decide(state, internal, bot);
+    brain.path =
+      findPath(
+        state.tiles,
+        indexOf(bot.x, bot.z),
+        (index) => chebyshev(state.tiles[index], tile) <= 1,
+        isWalkable,
+      ) ?? [];
+    brain.repath = 0.5;
+  }
+  if (move(state, bot, brain, WALK_SPEED, dt) === "blocked") brain.path = [];
+}
+
 function updateBot(
   state: SimulationState,
   internal: Internal,
@@ -1017,6 +1087,40 @@ function updateBot(
   brain.cooldown = Math.max(0, brain.cooldown - dt);
   const team = state.teams[bot.team];
   const genome = traits(state, bot);
+
+  if (state.adventure.enabled && bot.task !== "retreat") {
+    const threat =
+      state.adventure.charges.some(
+        (charge) =>
+          charge.fuse < 2 &&
+          Math.hypot(charge.x - bot.x, charge.z - bot.z) < 2.6,
+      ) ||
+      state.adventure.mobs.some(
+        (mob) =>
+          mob.kind === "creeper" &&
+          mob.fuse >= 0 &&
+          Math.hypot(mob.x - bot.x, mob.z - bot.z) < 2.7,
+      );
+    if (threat && genome.caution > 0.3) setTask(bot, brain, "retreat");
+    else {
+      const mob = state.adventure.mobs
+        .filter(
+          (mob) =>
+            mob.health > 0 &&
+            Math.hypot(mob.x - bot.x, mob.z - bot.z) <
+              2.5 + genome.aggression * 2,
+        )
+        .sort(
+          (a, b) =>
+            Math.hypot(a.x - bot.x, a.z - bot.z) -
+            Math.hypot(b.x - bot.x, b.z - bot.z),
+        )[0];
+      if (mob && brain.enemy !== `mob:${mob.id}`) {
+        setTask(bot, brain, "defend");
+        brain.enemy = `mob:${mob.id}`;
+      }
+    }
+  }
 
   if (bot.task !== "retreat" && bot.health < 2 + genome.caution * 5)
     setTask(bot, brain, "retreat");
@@ -1154,6 +1258,8 @@ function updateBot(
     }
     case "attack":
       return updateAttack(state, internal, bot, brain, dt);
+    case "defend":
+      return updateDefense(state, internal, bot, brain, dt);
     case "dead":
       return;
   }
@@ -1204,7 +1310,13 @@ function regrow(state: SimulationState, internal: Internal, dt: number) {
   for (const site of internal.sites) {
     const tile = state.tiles[site.index];
     const max = RESOURCE_QUANTITY[site.kind];
-    if (tile.quantity >= max || tile.structure || isOccupied(state, tile))
+    if (
+      tile.quantity >= max ||
+      tile.structure ||
+      tile.hazard === "lava" ||
+      (tile.fire ?? 0) > 0 ||
+      isOccupied(state, tile)
+    )
       continue;
     if (tile.resource === null && tile.quantity === 0) {
       tile.resource = site.kind;
@@ -1277,9 +1389,74 @@ function nextGeneration(state: SimulationState, internal: Internal) {
   state.events = [];
   state.metrics = emptyMetrics();
   state.terrainVersion++;
+  state.adventure = createAdventure(
+    state.seed,
+    state.generation,
+    state.adventure.enabled,
+  );
+  decorateAdventure(state);
   internal.sites = world.sites;
   internal.brains = new Map(state.bots.map((bot) => [bot.id, newBrain()]));
   internal.regrow = REGROW_SECONDS;
+}
+
+function adventureHost(
+  state: SimulationState,
+  internal: Internal,
+): AdventureHost {
+  return {
+    tile: (x, z) => getTile(state, x, z),
+    walkable: isWalkable,
+    emit: (kind, x, z, power) =>
+      addEvent(state, internal, kind, x, z, 0, power),
+    reward: (bot, kind, amount) => reward(state, bot, kind, amount),
+    hurt(bot, amount, owner) {
+      if (bot.health <= 0) return;
+      const dealt = Math.min(bot.health, amount);
+      bot.health = Math.max(0, bot.health - amount);
+      bot.hurt = HURT_SECONDS;
+      state.metrics.hits++;
+      addEvent(state, internal, "hit", bot.x, bot.z, bot.team);
+      const source = state.bots.find((candidate) => candidate.id === owner);
+      if (source) {
+        if (source.team !== bot.team) reward(state, source, "combat", dealt);
+        else source.fitness -= dealt * 0.5;
+      }
+      if (bot.health <= 0) {
+        kill(state, internal, bot);
+        if (source && source.team !== bot.team)
+          reward(state, source, "combat", 4);
+      }
+    },
+    settle() {
+      for (const bot of state.bots) {
+        if (bot.health <= 0) continue;
+        const tile = getTile(state, bot.x, bot.z);
+        if (tile && isWalkable(tile)) continue;
+        const safe = state.tiles
+          .filter(isWalkable)
+          .sort(
+            (a, b) =>
+              Math.hypot(a.x - bot.x, a.z - bot.z) -
+              Math.hypot(b.x - bot.x, b.z - bot.z),
+          )[0];
+        if (!safe) continue;
+        bot.x = safe.x;
+        bot.z = safe.z;
+        const brain = brainOf(internal, bot);
+        brain.path = [];
+        brain.repath = 0;
+      }
+    },
+  };
+}
+
+export function triggerBreach(state: SimulationState) {
+  return primeBreach(state);
+}
+
+export function triggerStorm(state: SimulationState) {
+  return summonStorm(state);
 }
 
 function tick(state: SimulationState, internal: Internal, dt: number) {
@@ -1295,6 +1472,7 @@ function tick(state: SimulationState, internal: Internal, dt: number) {
     if (bot.health > 0) updateBot(state, internal, bot, dt);
   separate(state);
   regrow(state, internal, dt);
+  stepAdventure(state, adventureHost(state, internal), dt);
 
   const eliminated = [0, 1].some((team) =>
     state.bots.every((bot) => bot.team !== team || bot.health <= 0),
@@ -1349,5 +1527,13 @@ export function getSimulationSummary(
     traits: [meanGenome(teams[0]), meanGenome(teams[1])],
     metrics: { ...state.metrics },
     pressure: state.pressure,
+    night: state.adventure.night,
+    storm: state.adventure.storm > 0,
+    canBreach:
+      state.adventure.enabled &&
+      state.elapsed >= state.adventure.breachReadyAt &&
+      state.adventure.charges.length < 4,
+    canStorm:
+      state.adventure.enabled && state.elapsed >= state.adventure.stormReadyAt,
   };
 }

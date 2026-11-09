@@ -137,7 +137,8 @@
   position: relative;
   width: calc(100% + 64px);
   margin-left: -32px;
-  aspect-ratio: 1.3;
+  aspect-ratio: 1.08;
+  pointer-events: none;
 }
 @utility voxel-fallback {
   position: absolute;
@@ -164,91 +165,63 @@
   gap: 12px;
   color: #b8ced4;
   font-size: 12px;
-  margin: -12px 6px 12px;
+  margin: -48px 6px 12px;
   z-index: 1;
 }
 .voxel-caption > span:last-child {
   color: #819ea8;
 }
+.voxel-weather {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.voxel-weather svg {
+  width: 12px;
+  height: 12px;
+}
+.voxel-scores {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-variant-numeric: tabular-nums;
+}
+.voxel-scores > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.voxel-scores svg {
+  width: 14px;
+  height: 14px;
+  color: #65d9d4;
+}
+.voxel-scores [data-team="amber"] svg {
+  color: #edb175;
+}
 @utility voxel-controls {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 12px;
   margin: 0 6px;
 }
-.voxel-camps {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin: 0 6px;
-  font-size: 12px;
-}
-.voxel-team {
-  border-left: 3px solid #65d9d4;
-  padding-left: 8px;
-  color: #d0e2e5;
-}
-.voxel-team[data-team="amber"] {
-  border-color: #edb175;
-}
-.voxel-metrics {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 18px;
-  padding-block: 12px;
-  margin: 0 6px 12px;
-  border-bottom: 1px solid var(--border);
-  font-size: 12px;
-}
-.voxel-metrics > div {
-  display: flex;
-  align-items: baseline;
-  gap: 7px;
-}
-.voxel-metrics dt {
-  color: #a2b7bf;
-}
-.voxel-metrics dd {
-  font-variant-numeric: tabular-nums;
-}
-.voxel-pressure [data-slot="field-label"] {
-  color: #b8ced4;
-  font-size: 12px;
-  font-weight: 400;
-}
+
 .voxel-playback {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 8px;
 }
-.voxel-note,
-.voxel-local {
+.voxel-note {
   margin: 12px 6px 0;
   color: #a2b7bf;
   font-size: 12px;
   line-height: 1.6;
 }
-.voxel-local {
-  margin-top: 3px;
-  color: #819ea8;
-}
-.voxel-traits {
-  margin: 10px 6px 0;
-  color: #b8ced4;
-  font-size: 12px;
-}
-.voxel-traits summary {
-  width: fit-content;
-  cursor: pointer;
-}
-.voxel-traits summary:focus-visible {
-  outline: 2px solid var(--ring);
-  outline-offset: 4px;
-}
+
 .voxel-trait-grid {
   display: grid;
   grid-template-columns: minmax(100px, 1.3fr) repeat(2, minmax(0, 1fr));
@@ -259,7 +232,7 @@
 .voxel-trait-row {
   display: contents;
 }
-.voxel-traits meter {
+.voxel-genome-meter {
   width: 100%;
   height: 12px;
   appearance: none;
@@ -267,37 +240,24 @@
   border-radius: 2px;
   border: 0;
 }
-.voxel-traits meter::-webkit-meter-bar {
+.voxel-genome-meter::-webkit-meter-bar {
   background: #24363b;
   border: 0;
   border-radius: 2px;
 }
-.voxel-traits meter::-webkit-meter-optimum-value {
+.voxel-genome-meter::-webkit-meter-optimum-value {
   background: #65d9d4;
 }
-.voxel-traits meter:last-child::-webkit-meter-optimum-value {
+.voxel-genome-meter:last-child::-webkit-meter-optimum-value {
   background: #edb175;
 }
-.voxel-traits meter::-moz-meter-bar {
+.voxel-genome-meter::-moz-meter-bar {
   background: #65d9d4;
 }
-.voxel-traits meter:last-child::-moz-meter-bar {
+.voxel-genome-meter:last-child::-moz-meter-bar {
   background: #edb175;
 }
-.voxel-controls [data-slot="toggle-group"] {
-  --muted: #284952;
-  --background: #101f26;
-  --border: #34505a;
-}
-.voxel-controls [data-slot="toggle-group-item"] {
-  gap: 7px;
-  padding-inline: 13px;
-  font-size: 11px;
-}
-.voxel-controls [data-slot="toggle-group-item"] svg {
-  width: 13px;
-  height: 13px;
-}
+
 @utility home-body {
   max-width: 1224px;
   margin: 0 auto;
@@ -722,13 +682,7 @@
     font-size: 12px;
     padding-inline: 14px;
   }
-  .voxel-controls [data-slot="toggle-group-item"] {
-    padding-inline: 9px;
-    gap: 5px;
-  }
-  .voxel-controls [data-slot="toggle-group-item"] svg {
-    display: none;
-  }
+
   .home-section {
     padding-block: 76px;
   }
@@ -806,30 +760,20 @@
   .voxel-stage {
     width: calc(100% + 32px);
     margin-left: -16px;
-    aspect-ratio: 1.3;
+    aspect-ratio: 1.1;
     max-height: 400px;
   }
   .voxel-caption {
     flex-direction: row;
     align-items: center;
-    margin: -10px 0 13px;
+    margin: -26px 0 13px;
     font-size: 11px;
   }
   .voxel-controls {
     margin-inline: 0;
   }
-  .voxel-camps,
-  .voxel-metrics,
-  .voxel-note,
-  .voxel-local,
-  .voxel-traits {
+  .voxel-note {
     margin-inline: 0;
-  }
-  .voxel-controls [data-slot="toggle-group-item"] {
-    padding-inline: 13px;
-  }
-  .voxel-controls [data-slot="toggle-group-item"] svg {
-    display: block;
   }
   .home-hero-footer {
     margin-inline: 24px;

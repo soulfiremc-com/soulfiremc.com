@@ -3,6 +3,7 @@ import {
   createTerrainGeometry,
   VERTEX_STRIDE,
 } from "./voxel-geometry";
+import { createEffectsGeometry } from "./voxel-effects-geometry";
 import {
   createSimulation,
   getSimulationSummary,
@@ -14,6 +15,7 @@ export const fallbackSummary = getSimulationSummary(state);
 const vertices = [
   ...createTerrainGeometry(state),
   ...createActorGeometry(state, new Map(), 0, new Set()),
+  ...createEffectsGeometry(state, 0),
 ];
 const faces: { id: string; points: string; depth: number; color: string }[] =
   [];

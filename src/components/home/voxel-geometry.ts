@@ -4,9 +4,9 @@ import type {
   SimulationTile,
 } from "./voxel-simulation-types";
 
-type Color = readonly [number, number, number];
+export type Color = readonly [number, number, number];
 type Vertex = readonly [number, number, number];
-export const VERTEX_STRIDE = 8;
+export const VERTEX_STRIDE = 9;
 const campColors: readonly Color[] = [
   [0.4, 0.85, 0.83],
   [0.93, 0.69, 0.46],
@@ -17,7 +17,7 @@ const timber: Color = [0.5, 0.34, 0.22];
 const leaves: Color = [0.21, 0.43, 0.3];
 const planks: Color = [0.64, 0.47, 0.3];
 
-class Geometry {
+export class Geometry {
   vertices: number[] = [];
 
   cube(
@@ -30,6 +30,7 @@ class Geometry {
     color: Color,
     angle = 0,
     faceMask = 7,
+    glow = 0,
   ) {
     const halfX = width / 2;
     const halfZ = depth / 2;
@@ -74,6 +75,7 @@ class Geometry {
           color[1] * shade,
           color[2] * shade,
           ...uv[index],
+          glow,
         );
       }
     }
@@ -81,6 +83,42 @@ class Geometry {
 
   finish() {
     return new Float32Array(this.vertices);
+  }
+
+  beam(from: Vertex, to: Vertex, width: number, color: Color, glow = 0) {
+    const dx = to[0] - from[0],
+      dy = to[1] - from[1],
+      dz = to[2] - from[2];
+    const horizontal = Math.hypot(dx, dz);
+    const right: Vertex =
+      horizontal > 0.0001 ? [-dz / horizontal, 0, dx / horizontal] : [1, 0, 0];
+    const upRaw = [
+      dy * right[2],
+      dz * right[0] - dx * right[2],
+      -dy * right[0],
+    ];
+    const length = Math.hypot(...upRaw) || 1;
+    const up: Vertex = [
+      upRaw[0] / length,
+      upRaw[1] / length,
+      upRaw[2] / length,
+    ];
+    const uv = [
+      [0, 0],
+      [1, 0],
+      [1, 1],
+      [0, 1],
+    ];
+    for (const normal of [right, up]) {
+      const corners = [from, to, to, from].map((point, index) =>
+        point.map(
+          (value, axis) =>
+            value + normal[axis] * width * (index < 2 ? -0.5 : 0.5),
+        ),
+      );
+      for (const index of [0, 1, 2, 0, 2, 3])
+        this.vertices.push(...corners[index], ...color, ...uv[index], glow);
+    }
   }
 }
 
@@ -108,13 +146,17 @@ export function createTerrainGeometry(state: SimulationState) {
         faceMask |= mask;
     }
     const color =
-      tile.material === "water"
-        ? ([0.12, 0.29, 0.36] as const)
-        : tile.material === "sand"
-          ? ([0.57, 0.52, 0.37] as const)
-          : tile.material === "stone"
-            ? rock
-            : grass;
+      tile.hazard === "lava"
+        ? ([1, 0.25, 0.025] as const)
+        : tile.hazard === "scorch"
+          ? ([0.22, 0.24, 0.24] as const)
+          : tile.material === "water"
+            ? ([0.12, 0.29, 0.36] as const)
+            : tile.material === "sand"
+              ? ([0.57, 0.52, 0.37] as const)
+              : tile.material === "stone"
+                ? rock
+                : grass;
     const variation = Math.sin(tile.x * 7.3 + tile.z * 4.7) * 0.025;
     geometry.cube(
       tile.x,
@@ -126,6 +168,7 @@ export function createTerrainGeometry(state: SimulationState) {
       [color[0] + variation, color[1] + variation, color[2] + variation],
       0,
       faceMask,
+      tile.hazard === "lava" ? 1 : 0,
     );
     if (tile.resource === "wood" && tile.quantity > 0) {
       const height = 0.75 + Math.min(tile.quantity, 4) * 0.14;
@@ -175,22 +218,47 @@ export function createTerrainGeometry(state: SimulationState) {
         tile.height,
         tile.z,
         0.92,
-        bridge ? 0.15 : 0.8,
+        bridge ? 0.15 : 1.05,
         0.92,
         bridge ? planks : rock,
       );
       if (!bridge) {
         geometry.cube(
           tile.x,
-          tile.height + 0.78,
+          tile.height + 1.03,
           tile.z,
           0.94,
           0.07,
           0.94,
           campColors[tile.structure.team],
         );
+        for (const [dx, dz] of [
+          [-0.3, -0.3],
+          [-0.3, 0.3],
+          [0.3, -0.3],
+          [0.3, 0.3],
+        ])
+          geometry.cube(
+            tile.x + dx,
+            tile.height + 1.1,
+            tile.z + dz,
+            0.23,
+            0.22,
+            0.23,
+            rock,
+          );
       }
     }
+    if (tile.torch)
+      geometry.cube(
+        tile.x + 0.22,
+        tile.height,
+        tile.z + 0.2,
+        0.09,
+        0.65,
+        0.09,
+        timber,
+      );
   }
   for (const team of state.teams) {
     const [x, z] = team.home;
@@ -302,12 +370,14 @@ export function createActorGeometry(
   moving: ReadonlySet<string>,
 ) {
   const geometry = new Geometry();
+  const tiles = new Map(
+    state.tiles.map((tile) => [`${tile.x}:${tile.z}`, tile]),
+  );
   for (const bot of state.bots) {
     if (bot.health <= 0) continue;
     const position = positions.get(bot.id) ?? bot;
-    const tile = state.tiles.find(
-      (tile) =>
-        tile.x === Math.round(position.x) && tile.z === Math.round(position.z),
+    const tile = tiles.get(
+      `${Math.round(position.x)}:${Math.round(position.z)}`,
     );
     addBot(
       geometry,
@@ -319,12 +389,10 @@ export function createActorGeometry(
     );
   }
   for (const event of state.events) {
+    if (event.kind === "explode" || event.kind === "lightning") continue;
     const life = Math.max(0, 1 - event.age / 0.65);
     if (!life) continue;
-    const tile = state.tiles.find(
-      (tile) =>
-        tile.x === Math.round(event.x) && tile.z === Math.round(event.z),
-    );
+    const tile = tiles.get(`${Math.round(event.x)}:${Math.round(event.z)}`);
     const height = tileSurface(tile);
     const color =
       event.kind === "hit" || event.kind === "defeat"

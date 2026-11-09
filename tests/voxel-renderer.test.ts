@@ -21,6 +21,7 @@ function rendererHarness() {
   let id = 0;
   let now = 100;
   let summary: SimulationSummary;
+  const uniforms = new Map<string, number | number[]>();
   const gl = {
     VERTEX_SHADER: 1,
     FRAGMENT_SHADER: 2,
@@ -49,16 +50,20 @@ function rendererHarness() {
     linkProgram: () => {},
     getProgramParameter: () => true,
     getAttribLocation: () => 0,
-    getUniformLocation: () => ({}),
+    getUniformLocation: (_program: unknown, name: string) => ({ name }),
     enable: () => {},
     clearColor: () => {},
     bindBuffer: () => {},
     enableVertexAttribArray: () => {},
     vertexAttribPointer: () => {},
     useProgram: () => {},
-    uniform1f: () => {},
-    uniform2f: (_location: unknown, x: number, y: number) => {
-      pointer = [x, y];
+    uniform1f: (location: { name: string }, value: number) => {
+      uniforms.set(location.name, value);
+    },
+    uniform3fv: () => {},
+    uniform2f: (location: { name: string }, x: number, y: number) => {
+      uniforms.set(location.name, [x, y]);
+      if (location.name === "u_pointer") pointer = [x, y];
     },
     clear: () => {},
     bufferData: () => {},
@@ -132,6 +137,7 @@ function rendererHarness() {
     get pointer() {
       return [...pointer];
     },
+    uniform: (name: string) => uniforms.get(name),
     get unavailable() {
       return unavailable;
     },
@@ -244,6 +250,33 @@ void test("pause preserves the camera and reduced motion uses explicit steps", (
   }
 });
 
+void test("manual chaos inputs obey pause and reduced motion disables active flashes and shake", () => {
+  const h = rendererHarness();
+  try {
+    assert.equal(h.renderer.breach(), true);
+    assert.equal(h.renderer.breach(), false);
+    assert.equal(h.renderer.storm(), true);
+    const before = h.summary().remaining;
+    h.advance(20);
+    assert.equal(h.summary().remaining, before);
+    h.renderer.setMotion(false, false);
+    h.advance(2);
+    assert.ok((h.uniform("u_flash") as number) > 0);
+    h.renderer.setMotion(false, true);
+    h.advance(1);
+    assert.equal(h.uniform("u_flash"), 0);
+    assert.ok((h.uniform("u_shake") as number[]).every((value) => value === 0));
+    const stopped = h.summary().remaining;
+    h.advance(20);
+    assert.equal(h.summary().remaining, stopped);
+    h.renderer.step();
+    h.advance(1);
+    assert.ok(Math.abs(h.summary().remaining - (stopped - 1)) < 1e-8);
+  } finally {
+    h.cleanup();
+  }
+});
+
 void test("context loss disposes resources and publishes unavailable only once", () => {
   const h = rendererHarness();
   try {
@@ -251,7 +284,7 @@ void test("context loss disposes resources and publishes unavailable only once",
     h.canvas.dispatchEvent(lost);
     assert.equal(lost.defaultPrevented, true);
     assert.equal(h.unavailable, 1);
-    assert.equal(h.deletedBuffers, 2);
+    assert.equal(h.deletedBuffers, 3);
     assert.equal(h.observersDisconnected, 2);
     assert.equal(h.pendingFrames, 0);
     h.canvas.dispatchEvent(new Event("webglcontextlost"));

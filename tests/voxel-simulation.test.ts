@@ -9,7 +9,7 @@ import {
   RECIPES,
   ROUND_SECONDS,
   STRUCTURE_COSTS,
-  createSimulation,
+  createSimulation as createLiveSimulation,
   getSimulationSummary,
   getTile,
   setSelectionPressure,
@@ -20,6 +20,14 @@ import {
 } from "@/components/home/voxel-simulation";
 
 const SEEDS = [1, 2, 3, 4, 5, 6];
+
+// Isolate the resource and genetics rules from the separately tested world hazards.
+function createSimulation(
+  seed?: number,
+  pressure: SelectionPressure = "balanced",
+) {
+  return createLiveSimulation(seed, pressure, { spectacle: false });
+}
 
 function run(
   state: SimulationState,
@@ -176,7 +184,7 @@ void test("bots move smoothly on walkable tiles and resources are fully accounte
   }
 });
 
-void test("gathering, crafting, building and fighting all start early in ordinary runs", () => {
+void test("core gathering, crafting, building and fighting all start early", () => {
   for (const seed of SEEDS) {
     const state = createSimulation(seed);
     run(state, 6);

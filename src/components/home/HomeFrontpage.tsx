@@ -398,7 +398,7 @@ export function HomeFrontpage({
                 </h1>
                 <p>
                   {t(
-                    "Stress test your Minecraft server or automate the repetitive work. SoulFire bots run real client code, with visual scripting and SDKs.",
+                    "Stress test your Minecraft server. Automate tasks with real clients, visual scripts, and SDKs.",
                   )}
                 </p>
                 <div className="home-hero-actions">
