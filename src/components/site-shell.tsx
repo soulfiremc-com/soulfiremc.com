@@ -26,31 +26,30 @@ export function SiteShell({ children }: { children: ReactNode }) {
           description: t("Download SoulFire"),
         },
         {
-          text: t("Accounts"),
-          url: localizeHref("/get-accounts", locale),
-          description: t("Find Minecraft accounts for your bots"),
-        },
-        {
-          text: t("Proxies"),
-          url: localizeHref("/get-proxies", locale),
-          description: t("Find proxies for your bot sessions"),
-        },
-        {
-          text: t("Blog"),
-          url: "/blog",
-          description: t("News and guides from SoulFire"),
-        },
-        {
           type: "menu",
-          text: t("More"),
-          secondary: true,
+          text: t("Resources"),
           items: [
             {
-              text: t("Pricing"),
-              url: localizeHref("/pricing", locale),
-              description: t("Support SoulFire development"),
+              text: t("Accounts"),
+              url: localizeHref("/get-accounts", locale),
+              description: t("Find Minecraft accounts for your bots"),
+            },
+            {
+              text: t("Proxies"),
+              url: localizeHref("/get-proxies", locale),
+              description: t("Find proxies for your bot sessions"),
+            },
+            {
+              text: t("Blog"),
+              url: "/blog",
+              description: t("News and guides from SoulFire"),
             },
           ],
+        },
+        {
+          text: t("Support"),
+          url: localizeHref("/pricing", locale),
+          description: t("Support SoulFire development"),
         },
         ...(baseOptions.links || []),
         {
