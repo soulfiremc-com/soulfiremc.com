@@ -29,12 +29,18 @@ export function getBlogPageImage(page: { slugs: string[] }) {
   return createOgImage("/og/blog", page.slugs);
 }
 
-export function getProxyPageImage(slug: string) {
-  return createOgImage("/og/proxies", [slug]);
+export function getProxyPageImage(slug: string, locale: Locale = "en") {
+  return createOgImage(
+    "/og/proxies",
+    locale === "en" ? [slug] : [locale, slug],
+  );
 }
 
-export function getAccountPageImage(slug: string) {
-  return createOgImage("/og/accounts", [slug]);
+export function getAccountPageImage(slug: string, locale: Locale = "en") {
+  return createOgImage(
+    "/og/accounts",
+    locale === "en" ? [slug] : [locale, slug],
+  );
 }
 
 export function labelize(value: string) {

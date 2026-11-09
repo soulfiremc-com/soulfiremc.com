@@ -38,13 +38,18 @@ export function localizePath(path: string, locale: Locale): string {
   return `${localized}${url.search}${url.hash}`;
 }
 
+export function isProviderPath(path: string) {
+  return /^\/get-(accounts|proxies)(?:\/|$)/.test(path);
+}
+
 /** Legal text and service endpoints remain at their existing English URLs. */
 export function localizeHref(href: string, locale: Locale): string {
   if (!href.startsWith("/") || href.startsWith("//")) return href;
   const path = splitLocalePath(href.split(/[?#]/)[0]).path;
   return path === "/" ||
     ["/download", "/pricing", "/docs"].includes(path) ||
-    path.startsWith("/docs/")
+    path.startsWith("/docs/") ||
+    isProviderPath(path)
     ? localizePath(href, locale)
     : href;
 }
@@ -67,11 +72,13 @@ export function docFileInfo(file: string) {
 /** English-only pages switch to the chosen language's home page. */
 export function localeDestination(href: string, locale: Locale) {
   const target = localizeHref(href, locale);
+  const path = splitLocalePath(href.split(/[?#]/)[0]).path;
   return target === href &&
     !["/", "/download", "/pricing", "/docs"].includes(
       splitLocalePath(href.split(/[?#]/)[0]).path,
     ) &&
-    !splitLocalePath(href).path.startsWith("/docs/")
+    !path.startsWith("/docs/") &&
+    !isProviderPath(path)
     ? localizePath("/", locale)
     : target;
 }

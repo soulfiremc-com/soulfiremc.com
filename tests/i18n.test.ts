@@ -33,7 +33,6 @@ void test("locale links preserve download choices and anchors without changing s
     "/account/settings",
     "/admin",
     "/blog",
-    "/get-accounts",
     "/privacy-policy",
     "https://example.com/docs",
     "//example.com/docs",
@@ -45,6 +44,26 @@ void test("locale links preserve download choices and anchors without changing s
     "/de/docs/start-here#1-install-the-app",
   );
   assert.equal(localeDestination("/blog?tag=release", "pl"), "/pl");
+  for (const path of [
+    "/get-accounts",
+    "/get-accounts/localts",
+    "/get-proxies",
+    "/get-proxies/webshare",
+  ]) {
+    const href = `${path}?sort=best-rated#reviews`;
+    assert.equal(localizeHref(href, "ru"), `/ru${href}`);
+    assert.equal(localeDestination(`/de${href}`, "pl"), `/pl${href}`);
+    assert.equal(localeDestination(`/de${href}`, "en"), href);
+    assert.equal(
+      getCanonicalLinks(path, "pl").filter((link) => "hrefLang" in link).length,
+      5,
+    );
+    assert.equal(getSitemapLocalization(`/ru${path}`, {}).exclude, false);
+    assert.equal(
+      getSitemapLocalization(`/ru${path}`, {}).alternateRefs?.length,
+      5,
+    );
+  }
   assert.deepEqual(splitLocalePath("/pl/docs/"), {
     locale: "pl",
     path: "/docs",

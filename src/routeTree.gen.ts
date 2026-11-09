@@ -29,10 +29,6 @@ import { Route as AuthPathRouteImport } from './routes/auth/$path'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 import { Route as BlogFeedDotxmlRouteImport } from './routes/blog/feed[.]xml'
-import { Route as GetAccountsIndexRouteImport } from './routes/get-accounts/index'
-import { Route as GetAccountsSlugRouteImport } from './routes/get-accounts/$slug'
-import { Route as GetProxiesIndexRouteImport } from './routes/get-proxies/index'
-import { Route as GetProxiesSlugRouteImport } from './routes/get-proxies/$slug'
 import { Route as Char123LangChar125IndexRouteImport } from './routes/{-$lang}/index'
 import { Route as Char123LangChar125DocsDotmdxRouteImport } from './routes/{-$lang}/docs[.]mdx'
 import { Route as Char123LangChar125DownloadRouteImport } from './routes/{-$lang}/download'
@@ -42,6 +38,10 @@ import { Route as ApiSearchIndexLangRouteImport } from './routes/api/search-inde
 import { Route as OgDocsImageDotwebpRouteImport } from './routes/og/docs/image[.]webp'
 import { Route as Char123LangChar125DocsSplatRouteImport } from './routes/{-$lang}/docs/$'
 import { Route as Char123LangChar125DocsChar123Char125DotmdxRouteImport } from './routes/{-$lang}/docs/{$}[.]mdx'
+import { Route as Char123LangChar125GetAccountsIndexRouteImport } from './routes/{-$lang}/get-accounts/index'
+import { Route as Char123LangChar125GetAccountsSlugRouteImport } from './routes/{-$lang}/get-accounts/$slug'
+import { Route as Char123LangChar125GetProxiesIndexRouteImport } from './routes/{-$lang}/get-proxies/index'
+import { Route as Char123LangChar125GetProxiesSlugRouteImport } from './routes/{-$lang}/get-proxies/$slug'
 import { Route as ApiDiscordLinkedRoleIndexRouteImport } from './routes/api/discord/linked-role/index'
 import { Route as ApiDiscordLinkedRoleCallbackRouteImport } from './routes/api/discord/linked-role/callback'
 import { Route as OgAccountsChar123Char125ImageDotwebpRouteImport } from './routes/og/accounts/{$}/image[.]webp'
@@ -150,26 +150,6 @@ const BlogFeedDotxmlRoute = BlogFeedDotxmlRouteImport.update({
   path: '/blog/feed.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
-const GetAccountsIndexRoute = GetAccountsIndexRouteImport.update({
-  id: '/get-accounts/',
-  path: '/get-accounts/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GetAccountsSlugRoute = GetAccountsSlugRouteImport.update({
-  id: '/get-accounts/$slug',
-  path: '/get-accounts/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GetProxiesIndexRoute = GetProxiesIndexRouteImport.update({
-  id: '/get-proxies/',
-  path: '/get-proxies/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GetProxiesSlugRoute = GetProxiesSlugRouteImport.update({
-  id: '/get-proxies/$slug',
-  path: '/get-proxies/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const Char123LangChar125IndexRoute = Char123LangChar125IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -218,6 +198,30 @@ const Char123LangChar125DocsChar123Char125DotmdxRoute =
   Char123LangChar125DocsChar123Char125DotmdxRouteImport.update({
     id: '/docs/{$}.mdx',
     path: '/docs/{$}.mdx',
+    getParentRoute: () => Char123LangChar125RouteRoute,
+  } as any)
+const Char123LangChar125GetAccountsIndexRoute =
+  Char123LangChar125GetAccountsIndexRouteImport.update({
+    id: '/get-accounts/',
+    path: '/get-accounts/',
+    getParentRoute: () => Char123LangChar125RouteRoute,
+  } as any)
+const Char123LangChar125GetAccountsSlugRoute =
+  Char123LangChar125GetAccountsSlugRouteImport.update({
+    id: '/get-accounts/$slug',
+    path: '/get-accounts/$slug',
+    getParentRoute: () => Char123LangChar125RouteRoute,
+  } as any)
+const Char123LangChar125GetProxiesIndexRoute =
+  Char123LangChar125GetProxiesIndexRouteImport.update({
+    id: '/get-proxies/',
+    path: '/get-proxies/',
+    getParentRoute: () => Char123LangChar125RouteRoute,
+  } as any)
+const Char123LangChar125GetProxiesSlugRoute =
+  Char123LangChar125GetProxiesSlugRouteImport.update({
+    id: '/get-proxies/$slug',
+    path: '/get-proxies/$slug',
     getParentRoute: () => Char123LangChar125RouteRoute,
   } as any)
 const ApiDiscordLinkedRoleIndexRoute =
@@ -282,21 +286,21 @@ export interface FileRoutesByFullPath {
   '/auth/$path': typeof AuthPathRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/feed.xml': typeof BlogFeedDotxmlRoute
-  '/get-accounts/$slug': typeof GetAccountsSlugRoute
-  '/get-proxies/$slug': typeof GetProxiesSlugRoute
   '/{-$lang}/docs.mdx': typeof Char123LangChar125DocsDotmdxRoute
   '/{-$lang}/download': typeof Char123LangChar125DownloadRoute
   '/{-$lang}/pricing': typeof Char123LangChar125PricingRoute
   '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
-  '/get-accounts/': typeof GetAccountsIndexRoute
-  '/get-proxies/': typeof GetProxiesIndexRoute
   '/{-$lang}/': typeof Char123LangChar125IndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/search-index/$lang': typeof ApiSearchIndexLangRoute
   '/og/docs/image.webp': typeof OgDocsImageDotwebpRoute
   '/{-$lang}/docs/$': typeof Char123LangChar125DocsSplatRoute
   '/{-$lang}/docs/{$}.mdx': typeof Char123LangChar125DocsChar123Char125DotmdxRoute
+  '/{-$lang}/get-accounts/$slug': typeof Char123LangChar125GetAccountsSlugRoute
+  '/{-$lang}/get-proxies/$slug': typeof Char123LangChar125GetProxiesSlugRoute
+  '/{-$lang}/get-accounts/': typeof Char123LangChar125GetAccountsIndexRoute
+  '/{-$lang}/get-proxies/': typeof Char123LangChar125GetProxiesIndexRoute
   '/api/discord/linked-role/callback': typeof ApiDiscordLinkedRoleCallbackRoute
   '/og/accounts/{$}/image.webp': typeof OgAccountsChar123Char125ImageDotwebpRoute
   '/og/blog/{$}/image.webp': typeof OgBlogChar123Char125ImageDotwebpRoute
@@ -322,21 +326,21 @@ export interface FileRoutesByTo {
   '/auth/$path': typeof AuthPathRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/feed.xml': typeof BlogFeedDotxmlRoute
-  '/get-accounts/$slug': typeof GetAccountsSlugRoute
-  '/get-proxies/$slug': typeof GetProxiesSlugRoute
   '/{-$lang}/docs.mdx': typeof Char123LangChar125DocsDotmdxRoute
   '/{-$lang}/download': typeof Char123LangChar125DownloadRoute
   '/{-$lang}/pricing': typeof Char123LangChar125PricingRoute
   '/admin': typeof AdminIndexRoute
   '/blog': typeof BlogIndexRoute
-  '/get-accounts': typeof GetAccountsIndexRoute
-  '/get-proxies': typeof GetProxiesIndexRoute
   '/{-$lang}': typeof Char123LangChar125IndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/search-index/$lang': typeof ApiSearchIndexLangRoute
   '/og/docs/image.webp': typeof OgDocsImageDotwebpRoute
   '/{-$lang}/docs/$': typeof Char123LangChar125DocsSplatRoute
   '/{-$lang}/docs/{$}.mdx': typeof Char123LangChar125DocsChar123Char125DotmdxRoute
+  '/{-$lang}/get-accounts/$slug': typeof Char123LangChar125GetAccountsSlugRoute
+  '/{-$lang}/get-proxies/$slug': typeof Char123LangChar125GetProxiesSlugRoute
+  '/{-$lang}/get-accounts': typeof Char123LangChar125GetAccountsIndexRoute
+  '/{-$lang}/get-proxies': typeof Char123LangChar125GetProxiesIndexRoute
   '/api/discord/linked-role/callback': typeof ApiDiscordLinkedRoleCallbackRoute
   '/og/accounts/{$}/image.webp': typeof OgAccountsChar123Char125ImageDotwebpRoute
   '/og/blog/{$}/image.webp': typeof OgBlogChar123Char125ImageDotwebpRoute
@@ -365,21 +369,21 @@ export interface FileRoutesById {
   '/auth/$path': typeof AuthPathRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/feed.xml': typeof BlogFeedDotxmlRoute
-  '/get-accounts/$slug': typeof GetAccountsSlugRoute
-  '/get-proxies/$slug': typeof GetProxiesSlugRoute
   '/{-$lang}/docs.mdx': typeof Char123LangChar125DocsDotmdxRoute
   '/{-$lang}/download': typeof Char123LangChar125DownloadRoute
   '/{-$lang}/pricing': typeof Char123LangChar125PricingRoute
   '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
-  '/get-accounts/': typeof GetAccountsIndexRoute
-  '/get-proxies/': typeof GetProxiesIndexRoute
   '/{-$lang}/': typeof Char123LangChar125IndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/search-index/$lang': typeof ApiSearchIndexLangRoute
   '/og/docs/image.webp': typeof OgDocsImageDotwebpRoute
   '/{-$lang}/docs/$': typeof Char123LangChar125DocsSplatRoute
   '/{-$lang}/docs/{$}.mdx': typeof Char123LangChar125DocsChar123Char125DotmdxRoute
+  '/{-$lang}/get-accounts/$slug': typeof Char123LangChar125GetAccountsSlugRoute
+  '/{-$lang}/get-proxies/$slug': typeof Char123LangChar125GetProxiesSlugRoute
+  '/{-$lang}/get-accounts/': typeof Char123LangChar125GetAccountsIndexRoute
+  '/{-$lang}/get-proxies/': typeof Char123LangChar125GetProxiesIndexRoute
   '/api/discord/linked-role/callback': typeof ApiDiscordLinkedRoleCallbackRoute
   '/og/accounts/{$}/image.webp': typeof OgAccountsChar123Char125ImageDotwebpRoute
   '/og/blog/{$}/image.webp': typeof OgBlogChar123Char125ImageDotwebpRoute
@@ -409,21 +413,21 @@ export interface FileRouteTypes {
     | '/auth/$path'
     | '/blog/$slug'
     | '/blog/feed.xml'
-    | '/get-accounts/$slug'
-    | '/get-proxies/$slug'
     | '/{-$lang}/docs.mdx'
     | '/{-$lang}/download'
     | '/{-$lang}/pricing'
     | '/admin/'
     | '/blog/'
-    | '/get-accounts/'
-    | '/get-proxies/'
     | '/{-$lang}/'
     | '/api/auth/$'
     | '/api/search-index/$lang'
     | '/og/docs/image.webp'
     | '/{-$lang}/docs/$'
     | '/{-$lang}/docs/{$}.mdx'
+    | '/{-$lang}/get-accounts/$slug'
+    | '/{-$lang}/get-proxies/$slug'
+    | '/{-$lang}/get-accounts/'
+    | '/{-$lang}/get-proxies/'
     | '/api/discord/linked-role/callback'
     | '/og/accounts/{$}/image.webp'
     | '/og/blog/{$}/image.webp'
@@ -449,21 +453,21 @@ export interface FileRouteTypes {
     | '/auth/$path'
     | '/blog/$slug'
     | '/blog/feed.xml'
-    | '/get-accounts/$slug'
-    | '/get-proxies/$slug'
     | '/{-$lang}/docs.mdx'
     | '/{-$lang}/download'
     | '/{-$lang}/pricing'
     | '/admin'
     | '/blog'
-    | '/get-accounts'
-    | '/get-proxies'
     | '/{-$lang}'
     | '/api/auth/$'
     | '/api/search-index/$lang'
     | '/og/docs/image.webp'
     | '/{-$lang}/docs/$'
     | '/{-$lang}/docs/{$}.mdx'
+    | '/{-$lang}/get-accounts/$slug'
+    | '/{-$lang}/get-proxies/$slug'
+    | '/{-$lang}/get-accounts'
+    | '/{-$lang}/get-proxies'
     | '/api/discord/linked-role/callback'
     | '/og/accounts/{$}/image.webp'
     | '/og/blog/{$}/image.webp'
@@ -491,21 +495,21 @@ export interface FileRouteTypes {
     | '/auth/$path'
     | '/blog/$slug'
     | '/blog/feed.xml'
-    | '/get-accounts/$slug'
-    | '/get-proxies/$slug'
     | '/{-$lang}/docs.mdx'
     | '/{-$lang}/download'
     | '/{-$lang}/pricing'
     | '/admin/'
     | '/blog/'
-    | '/get-accounts/'
-    | '/get-proxies/'
     | '/{-$lang}/'
     | '/api/auth/$'
     | '/api/search-index/$lang'
     | '/og/docs/image.webp'
     | '/{-$lang}/docs/$'
     | '/{-$lang}/docs/{$}.mdx'
+    | '/{-$lang}/get-accounts/$slug'
+    | '/{-$lang}/get-proxies/$slug'
+    | '/{-$lang}/get-accounts/'
+    | '/{-$lang}/get-proxies/'
     | '/api/discord/linked-role/callback'
     | '/og/accounts/{$}/image.webp'
     | '/og/blog/{$}/image.webp'
@@ -533,11 +537,7 @@ export interface RootRouteChildren {
   AuthPathRoute: typeof AuthPathRoute
   BlogSlugRoute: typeof BlogSlugRoute
   BlogFeedDotxmlRoute: typeof BlogFeedDotxmlRoute
-  GetAccountsSlugRoute: typeof GetAccountsSlugRoute
-  GetProxiesSlugRoute: typeof GetProxiesSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
-  GetAccountsIndexRoute: typeof GetAccountsIndexRoute
-  GetProxiesIndexRoute: typeof GetProxiesIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiSearchIndexLangRoute: typeof ApiSearchIndexLangRoute
   OgDocsImageDotwebpRoute: typeof OgDocsImageDotwebpRoute
@@ -692,34 +692,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogFeedDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/get-accounts/': {
-      id: '/get-accounts/'
-      path: '/get-accounts'
-      fullPath: '/get-accounts/'
-      preLoaderRoute: typeof GetAccountsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/get-accounts/$slug': {
-      id: '/get-accounts/$slug'
-      path: '/get-accounts/$slug'
-      fullPath: '/get-accounts/$slug'
-      preLoaderRoute: typeof GetAccountsSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/get-proxies/': {
-      id: '/get-proxies/'
-      path: '/get-proxies'
-      fullPath: '/get-proxies/'
-      preLoaderRoute: typeof GetProxiesIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/get-proxies/$slug': {
-      id: '/get-proxies/$slug'
-      path: '/get-proxies/$slug'
-      fullPath: '/get-proxies/$slug'
-      preLoaderRoute: typeof GetProxiesSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/{-$lang}/': {
       id: '/{-$lang}/'
       path: '/'
@@ -783,6 +755,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char123LangChar125DocsChar123Char125DotmdxRouteImport
       parentRoute: typeof Char123LangChar125RouteRoute
     }
+    '/{-$lang}/get-accounts/': {
+      id: '/{-$lang}/get-accounts/'
+      path: '/get-accounts'
+      fullPath: '/{-$lang}/get-accounts/'
+      preLoaderRoute: typeof Char123LangChar125GetAccountsIndexRouteImport
+      parentRoute: typeof Char123LangChar125RouteRoute
+    }
+    '/{-$lang}/get-accounts/$slug': {
+      id: '/{-$lang}/get-accounts/$slug'
+      path: '/get-accounts/$slug'
+      fullPath: '/{-$lang}/get-accounts/$slug'
+      preLoaderRoute: typeof Char123LangChar125GetAccountsSlugRouteImport
+      parentRoute: typeof Char123LangChar125RouteRoute
+    }
+    '/{-$lang}/get-proxies/': {
+      id: '/{-$lang}/get-proxies/'
+      path: '/get-proxies'
+      fullPath: '/{-$lang}/get-proxies/'
+      preLoaderRoute: typeof Char123LangChar125GetProxiesIndexRouteImport
+      parentRoute: typeof Char123LangChar125RouteRoute
+    }
+    '/{-$lang}/get-proxies/$slug': {
+      id: '/{-$lang}/get-proxies/$slug'
+      path: '/get-proxies/$slug'
+      fullPath: '/{-$lang}/get-proxies/$slug'
+      preLoaderRoute: typeof Char123LangChar125GetProxiesSlugRouteImport
+      parentRoute: typeof Char123LangChar125RouteRoute
+    }
     '/api/discord/linked-role/': {
       id: '/api/discord/linked-role/'
       path: '/api/discord/linked-role'
@@ -842,6 +842,10 @@ interface Char123LangChar125RouteRouteChildren {
   Char123LangChar125IndexRoute: typeof Char123LangChar125IndexRoute
   Char123LangChar125DocsSplatRoute: typeof Char123LangChar125DocsSplatRoute
   Char123LangChar125DocsChar123Char125DotmdxRoute: typeof Char123LangChar125DocsChar123Char125DotmdxRoute
+  Char123LangChar125GetAccountsSlugRoute: typeof Char123LangChar125GetAccountsSlugRoute
+  Char123LangChar125GetProxiesSlugRoute: typeof Char123LangChar125GetProxiesSlugRoute
+  Char123LangChar125GetAccountsIndexRoute: typeof Char123LangChar125GetAccountsIndexRoute
+  Char123LangChar125GetProxiesIndexRoute: typeof Char123LangChar125GetProxiesIndexRoute
 }
 
 const Char123LangChar125RouteRouteChildren: Char123LangChar125RouteRouteChildren =
@@ -853,6 +857,14 @@ const Char123LangChar125RouteRouteChildren: Char123LangChar125RouteRouteChildren
     Char123LangChar125DocsSplatRoute: Char123LangChar125DocsSplatRoute,
     Char123LangChar125DocsChar123Char125DotmdxRoute:
       Char123LangChar125DocsChar123Char125DotmdxRoute,
+    Char123LangChar125GetAccountsSlugRoute:
+      Char123LangChar125GetAccountsSlugRoute,
+    Char123LangChar125GetProxiesSlugRoute:
+      Char123LangChar125GetProxiesSlugRoute,
+    Char123LangChar125GetAccountsIndexRoute:
+      Char123LangChar125GetAccountsIndexRoute,
+    Char123LangChar125GetProxiesIndexRoute:
+      Char123LangChar125GetProxiesIndexRoute,
   }
 
 const Char123LangChar125RouteRouteWithChildren =
@@ -890,11 +902,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthPathRoute: AuthPathRoute,
   BlogSlugRoute: BlogSlugRoute,
   BlogFeedDotxmlRoute: BlogFeedDotxmlRoute,
-  GetAccountsSlugRoute: GetAccountsSlugRoute,
-  GetProxiesSlugRoute: GetProxiesSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
-  GetAccountsIndexRoute: GetAccountsIndexRoute,
-  GetProxiesIndexRoute: GetProxiesIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiSearchIndexLangRoute: ApiSearchIndexLangRoute,
   OgDocsImageDotwebpRoute: OgDocsImageDotwebpRoute,

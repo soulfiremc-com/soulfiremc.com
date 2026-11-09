@@ -1,5 +1,7 @@
 "use client";
 
+import { useT, useLocale } from "@/lib/i18n-react";
+
 import { Star } from "lucide-react";
 import type { CSSProperties } from "react";
 import { cn, generateN } from "@/lib/utils";
@@ -26,12 +28,19 @@ export function ReviewStars({
   size?: Size;
   className?: string;
 }) {
+  const t = useT();
+  const locale = useLocale();
   const width = `${Math.max(0, Math.min(5, value)) * 20}%`;
 
   return (
     <div
       className={cn("relative inline-flex items-center", className)}
-      title={`${value.toFixed(1)} out of 5 stars`}
+      title={t("{rating} out of 5 stars", {
+        rating: value.toLocaleString(locale, {
+          minimumFractionDigits: 1,
+          maximumFractionDigits: 1,
+        }),
+      })}
     >
       <div className="flex items-center gap-0.5 text-rating-muted/70">
         {generateN(5).map((i) => (
@@ -65,6 +74,7 @@ export function ReviewStarInput({
   size?: Size;
   className?: string;
 }) {
+  const t = useT();
   return (
     <div className={cn("inline-flex items-center gap-0.5", className)}>
       {Array.from({ length: 5 }, (_, index) => {
@@ -81,7 +91,7 @@ export function ReviewStarInput({
               "rounded-sm text-rating transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-50",
               !active && "text-rating-muted/70",
             )}
-            aria-label={`Set rating to ${starValue} star${starValue === 1 ? "" : "s"}`}
+            aria-label={t("Set rating: {count}/5", { count: starValue })}
             aria-pressed={value === starValue}
           >
             <Star className={cn(sizeClass(size), active && "fill-current")} />

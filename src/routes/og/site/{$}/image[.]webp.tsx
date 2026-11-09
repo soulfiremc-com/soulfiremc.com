@@ -27,6 +27,29 @@ export const Route = createFileRoute("/og/site/{$}/image.webp")({
 
         if (!page) return new Response(null, { status: 404 });
 
+        if (locale !== "en" && ["get-accounts", "get-proxies"].includes(page)) {
+          const accounts = page === "get-accounts";
+          return createOgImageResponse(
+            <DocsOgImage
+              title={translate(
+                locale,
+                accounts
+                  ? "Minecraft Alts, MFA & NFA Accounts"
+                  : "Proxy Providers for SoulFire",
+              )}
+              description={translate(
+                locale,
+                accounts
+                  ? "Compare trusted Minecraft alt shops for SoulFire, including MFA full-access accounts and NFA temporary accounts."
+                  : "Trusted proxy providers for Minecraft bot testing with SoulFire. Compare residential, datacenter, ISP, and mobile proxies.",
+              )}
+              section={translate(locale, accounts ? "Accounts" : "Proxies")}
+              slugs={[]}
+              siteLabel={`soulfiremc.com${localizePath(`/${page}`, locale)}`}
+              logoSrc={soulfireLogoDataUri}
+            />,
+          );
+        }
         if (
           (locale !== "en" && ["home", "download", "pricing"].includes(page)) ||
           page === "pricing"

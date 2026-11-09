@@ -1,3 +1,4 @@
+import { useT, useLocale } from "@/lib/i18n-react";
 import { MessageSquareText } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import type { ReviewSummary } from "@/lib/review-core";
@@ -13,6 +14,8 @@ export function ReviewSummaryBadge({
   className?: string;
   compact?: boolean;
 }) {
+  const t = useT();
+  const locale = useLocale();
   if (summary.reviewCount === 0 || summary.averageRating === null) {
     return (
       <Badge
@@ -23,7 +26,7 @@ export function ReviewSummaryBadge({
         )}
       >
         <MessageSquareText className="size-3.5" />
-        No ratings yet
+        {t("No ratings yet")}
       </Badge>
     );
   }
@@ -38,10 +41,15 @@ export function ReviewSummaryBadge({
     >
       <ReviewStars value={summary.averageRating} size={compact ? "sm" : "md"} />
       <span className="font-semibold tabular-nums">
-        {summary.averageRating.toFixed(1)}
+        {summary.averageRating.toLocaleString(locale, {
+          minimumFractionDigits: 1,
+          maximumFractionDigits: 1,
+        })}
       </span>
       <span className="text-muted-foreground">
-        {summary.reviewCount} rating{summary.reviewCount === 1 ? "" : "s"}
+        {t("Ratings: {count}", {
+          count: summary.reviewCount.toLocaleString(locale),
+        })}
       </span>
     </Badge>
   );

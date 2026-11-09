@@ -1,5 +1,7 @@
 "use client";
 
+import { useT } from "@/lib/i18n-react";
+
 import { useState } from "react";
 import { toast } from "sonner";
 import type { ReviewSummary } from "@/lib/review-core";
@@ -15,6 +17,7 @@ type MutationResult =
 function handleMutationError(
   error: "unauthorized" | "verification" | null,
   onUnauthorized: () => void,
+  t: ReturnType<typeof useT>,
 ) {
   if (error === "unauthorized") {
     onUnauthorized();
@@ -22,9 +25,10 @@ function handleMutationError(
   }
 
   if (error === "verification") {
-    toast("Verification failed", {
-      description:
+    toast(t("Verification failed"), {
+      description: t(
         "Cloudflare Turnstile could not verify this rating. Please try again.",
+      ),
     });
   }
 }
@@ -42,17 +46,26 @@ export function ReviewInlineActions({
   onRate: (rating: number) => MutationResult;
   onClear?: () => MutationResult;
 }) {
+  const t = useT();
   const [showSignInPrompt, setShowSignInPrompt] = useState(false);
 
   const handleRate = async (rating: number) => {
     const result = await onRate(rating);
-    handleMutationError(result?.error ?? null, () => setShowSignInPrompt(true));
+    handleMutationError(
+      result?.error ?? null,
+      () => setShowSignInPrompt(true),
+      t,
+    );
   };
 
   const handleClear = async () => {
     if (!onClear) return;
     const result = await onClear();
-    handleMutationError(result?.error ?? null, () => setShowSignInPrompt(true));
+    handleMutationError(
+      result?.error ?? null,
+      () => setShowSignInPrompt(true),
+      t,
+    );
   };
 
   return (
@@ -69,13 +82,13 @@ export function ReviewInlineActions({
               disabled={pending}
               className="h-8 px-2 text-xs text-muted-foreground"
             >
-              Remove
+              {t("Remove")}
             </Button>
           ) : null}
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-xs font-medium text-muted-foreground">
-            Your rating
+            {t("Your rating")}
           </span>
           <ReviewStarInput
             value={currentRating ?? 0}
@@ -87,8 +100,8 @@ export function ReviewInlineActions({
       <SignInRequiredCredenza
         open={showSignInPrompt}
         onOpenChange={setShowSignInPrompt}
-        title="Sign in to leave a rating"
-        description="You need to be signed in to rate this listing."
+        title={t("Sign in to leave a rating")}
+        description={t("You need to be signed in to rate this listing.")}
       />
     </>
   );

@@ -1,5 +1,7 @@
 "use client";
 
+import { useT } from "@/lib/i18n-react";
+
 import { useRouter } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,25 +26,26 @@ export function SignInRequiredCredenza({
   title: string;
   description: string;
 }) {
+  const t = useT();
   const router = useRouter();
 
   return (
     <Credenza open={open} onOpenChange={onOpenChange}>
-      <CredenzaContent className="sm:max-w-md">
+      <CredenzaContent className="sm:max-w-md" closeLabel={t("Close")}>
         <CredenzaHeader>
           <CredenzaTitle>{title}</CredenzaTitle>
           <CredenzaDescription>{description}</CredenzaDescription>
         </CredenzaHeader>
         <CredenzaBody>
           <div className="rounded-xl border border-border/70 bg-muted/30 px-4 py-3 text-sm text-muted-foreground">
-            Sign in to your account to submit ratings and reviews.
+            {t("Sign in to your account to submit ratings and reviews.")}
           </div>
         </CredenzaBody>
         <CredenzaFooter>
           <CredenzaClose
             render={
               <Button type="button" variant="outline">
-                Cancel
+                {t("Cancel")}
               </Button>
             }
           />
@@ -58,7 +61,7 @@ export function SignInRequiredCredenza({
               void router.navigate({ href: target });
             }}
           >
-            Sign In
+            {t("Sign In")}
           </Button>
         </CredenzaFooter>
       </CredenzaContent>

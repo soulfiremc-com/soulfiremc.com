@@ -48,9 +48,11 @@ function getDocsPrerenderPages() {
   return [
     ...pages,
     ...locales.flatMap((locale) =>
-      ["/", "/download", "/pricing"].map((path) => ({
-        path: localizePath(path, locale),
-      })),
+      ["/", "/download", "/pricing", "/get-accounts", "/get-proxies"].map(
+        (path) => ({
+          path: localizePath(path, locale),
+        }),
+      ),
     ),
   ];
 }

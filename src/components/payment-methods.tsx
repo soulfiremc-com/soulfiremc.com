@@ -1,3 +1,4 @@
+import { useT } from "@/lib/i18n-react";
 import {
   SiAlipay,
   SiAmericanexpress,
@@ -148,6 +149,7 @@ function PaymentMethodLogo({ method }: { method: string }) {
 }
 
 export function PaymentMethods({ methods }: { methods?: string[] }) {
+  const t = useT();
   if (!methods?.length) {
     return null;
   }
@@ -156,7 +158,7 @@ export function PaymentMethods({ methods }: { methods?: string[] }) {
     <div className="flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
       <span className="inline-flex items-center gap-1 font-medium text-foreground">
         <CreditCard className="h-3.5 w-3.5" />
-        Payments
+        {t("Payments")}
       </span>
       {methods.map((method) => (
         <span
@@ -164,7 +166,7 @@ export function PaymentMethods({ methods }: { methods?: string[] }) {
           className="inline-flex items-center gap-1 rounded-md border bg-background px-1.5 py-0.5"
         >
           <PaymentMethodLogo method={method} />
-          {method}
+          {t(method)}
         </span>
       ))}
     </div>

@@ -1,4 +1,10 @@
-import { locales, splitLocalePath, localizePath, type Locale } from "./i18n";
+import {
+  locales,
+  splitLocalePath,
+  localizePath,
+  isProviderPath,
+  type Locale,
+} from "./i18n";
 import { translate } from "./messages";
 import {
   absoluteUrl,
@@ -36,7 +42,12 @@ export function getPageMeta({
   imageAlt = translate(locale, imageAlt);
   imageUrl = absoluteUrl(imageUrl);
   const bare = splitLocalePath(path).path;
-  if (locale !== "en" && ["/", "/download", "/pricing"].includes(bare)) {
+  if (
+    locale !== "en" &&
+    ["/", "/download", "/pricing", "/get-accounts", "/get-proxies"].includes(
+      bare,
+    )
+  ) {
     const name = bare === "/" ? "home" : bare.slice(1);
     imageUrl = absoluteUrl(`/og/site/${locale}/${name}/image.webp`);
   }
@@ -84,7 +95,9 @@ export function getCanonicalLinks(
   const bare = splitLocalePath(path.split(/[?#]/)[0]).path;
   const available =
     languages ??
-    (["/", "/download", "/pricing"].includes(bare) ? locales : ["en"]);
+    (["/", "/download", "/pricing"].includes(bare) || isProviderPath(bare)
+      ? locales
+      : ["en"]);
   return [
     {
       rel: "canonical" as const,

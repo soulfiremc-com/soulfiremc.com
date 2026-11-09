@@ -86,12 +86,21 @@ const CredenzaClose = ({ className, children, ...props }: CredenzaProps) => {
   );
 };
 
-const CredenzaContent = ({ className, children, ...props }: CredenzaProps) => {
+const CredenzaContent = ({
+  className,
+  children,
+  closeLabel,
+  ...props
+}: CredenzaProps & { closeLabel?: string }) => {
   const { isMobile } = useCredenzaContext();
   const CredenzaContent = isMobile ? DrawerContent : DialogContent;
 
   return (
-    <CredenzaContent className={className} {...props}>
+    <CredenzaContent
+      className={className}
+      {...(!isMobile ? { closeLabel } : {})}
+      {...props}
+    >
       {children}
     </CredenzaContent>
   );

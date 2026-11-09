@@ -1,13 +1,20 @@
-import { locales, localizePath, splitLocalePath, type Locale } from "./i18n.ts";
+import {
+  locales,
+  localizePath,
+  splitLocalePath,
+  isProviderPath,
+  type Locale,
+} from "./i18n.ts";
 
 export function getSitemapLocalization(
   path: string,
   docs: Record<string, Locale[]>,
 ) {
   const { path: bare, locale } = splitLocalePath(path);
-  const languages = ["/", "/download", "/pricing"].includes(bare)
-    ? [...locales]
-    : (docs[bare] ?? ["en"]);
+  const languages =
+    ["/", "/download", "/pricing"].includes(bare) || isProviderPath(bare)
+      ? [...locales]
+      : (docs[bare] ?? ["en"]);
   return {
     exclude: locale !== "en" && !languages.includes(locale),
     alternateRefs:

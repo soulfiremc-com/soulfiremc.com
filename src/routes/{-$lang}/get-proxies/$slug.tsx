@@ -1,3 +1,7 @@
+import { isLocale, localizePath, type Locale } from "@/lib/i18n";
+import { translate } from "@/lib/messages";
+import { formatProviderSince, localizeProviderData } from "@/lib/provider-i18n";
+import { useT, useLocale } from "@/lib/i18n-react";
 import { Schema } from "effect";
 import { discordEmbedScript } from "@/lib/discord-embed";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
@@ -59,11 +63,12 @@ type ProxyDetailPageData = {
 };
 
 function ProviderLogo({ provider }: { provider: Provider }) {
+  const t = useT();
   if (provider.logo) {
     return (
       <Image
         src={provider.logo}
-        alt={`${provider.name} logo`}
+        alt={t("{provider} logo", { provider: provider.name })}
         fill
         sizes="56px"
         breakpoints={[56, 112, 168]}
@@ -79,6 +84,7 @@ function ProviderLogo({ provider }: { provider: Provider }) {
 }
 
 function ProviderBadge({ badge }: { badge: Badge }) {
+  const t = useT();
   const config = BADGE_CONFIG[badge];
   return (
     <HoverCard>
@@ -92,12 +98,12 @@ function ProviderBadge({ badge }: { badge: Badge }) {
             )}
           >
             {config.icon}
-            {config.label}
+            {t(config.label)}
           </UiBadge>
         }
       />
       <HoverCardContent className="w-64 text-sm">
-        <p>{config.description}</p>
+        <p>{t(config.description)}</p>
       </HoverCardContent>
     </HoverCard>
   );
@@ -137,6 +143,8 @@ function ProxyProviderPageContent({
   provider,
   reviewsPage,
 }: ProxyDetailPageData) {
+  const t = useT();
+  const locale = useLocale();
   const navigate = Route.useNavigate();
   const setReviewPage = (reviewsPage: number) => {
     void navigate({
@@ -172,14 +180,14 @@ function ProxyProviderPageContent({
           to="/{-$lang}"
           className="transition-colors hover:text-foreground"
         >
-          Home
+          {t("Home")}
         </Link>
         <ChevronRight className="h-3.5 w-3.5" />
         <Link
-          to="/get-proxies"
+          to="/{-$lang}/get-proxies"
           className="transition-colors hover:text-foreground"
         >
-          Get Proxies
+          {t("Get Proxies")}
         </Link>
         <ChevronRight className="h-3.5 w-3.5" />
         <span className="truncate text-foreground">{provider.name}</span>
@@ -198,7 +206,9 @@ function ProxyProviderPageContent({
               {provider.startDate ? (
                 <span className="inline-flex items-center gap-1 text-sm text-muted-foreground">
                   <Calendar className="h-3.5 w-3.5" />
-                  Since {provider.startDate}
+                  {t("Since {date}", {
+                    date: formatProviderSince(provider.startDate, locale),
+                  })}
                 </span>
               ) : null}
               <div className="flex flex-wrap gap-2">
@@ -207,7 +217,9 @@ function ProxyProviderPageContent({
                 ))}
               </div>
             </div>
-            <p className="text-lg text-muted-foreground">{provider.summary}</p>
+            <p className="text-lg text-muted-foreground">
+              {t(provider.summary)}
+            </p>
             {provider.couponCode ? (
               <CouponCode
                 code={provider.couponCode}
@@ -223,7 +235,7 @@ function ProxyProviderPageContent({
                     target="_blank"
                     rel="noopener noreferrer nofollow"
                   >
-                    Get Proxies
+                    {t("Get Proxies")}
                     <ExternalLink data-icon="inline-end" />
                   </a>
                 }
@@ -254,9 +266,9 @@ function ProxyProviderPageContent({
 
       <Button
         render={
-          <Link to="/get-proxies">
+          <Link to="/{-$lang}/get-proxies">
             <ArrowLeft data-icon="inline-start" />
-            Browse all proxy providers
+            {t("Browse all proxy providers")}
           </Link>
         }
         nativeButton={false}
@@ -270,9 +282,11 @@ function ProxyProviderPageContent({
 function getProxyDetailPageData({
   reviewsPage,
   slug,
+  locale,
 }: {
   reviewsPage: number;
   slug: string;
+  locale: Locale;
 }): ProxyDetailPageData {
   const provider = getProviderBySlug(slug);
   if (!provider) {
@@ -335,7 +349,9 @@ function getProxyDetailPageData({
     "@context": "https://schema.org",
     "@type": "WebPage",
     "@id": `https://soulfiremc.com/get-proxies/${provider.slug}#webpage`,
-    name: `${provider.name} - Proxy Provider for SoulFire`,
+    name: translate(locale, "{provider} - Proxy Provider for SoulFire", {
+      provider: provider.name,
+    }),
     description: provider.summary,
     url: `https://soulfiremc.com/get-proxies/${provider.slug}`,
     inLanguage: "en-US",
@@ -353,15 +369,24 @@ function getProxyDetailPageData({
   };
 
   return {
-    breadcrumbJsonLd: JSON.parse(JSON.stringify(breadcrumbJsonLd)),
-    pageJsonLd: JSON.parse(JSON.stringify(pageJsonLd)),
-    productJsonLd: JSON.parse(JSON.stringify(productJsonLd)),
+    breadcrumbJsonLd: localizeProviderData(
+      JSON.parse(JSON.stringify(breadcrumbJsonLd)),
+      locale,
+    ),
+    pageJsonLd: localizeProviderData(
+      JSON.parse(JSON.stringify(pageJsonLd)),
+      locale,
+    ),
+    productJsonLd: localizeProviderData(
+      JSON.parse(JSON.stringify(productJsonLd)),
+      locale,
+    ),
     provider,
     reviewsPage,
   };
 }
 
-export const Route = createFileRoute("/get-proxies/$slug")({
+export const Route = createFileRoute("/{-$lang}/get-proxies/$slug")({
   validateSearch: Schema.toStandardSchemaV1(reviewsSearchSchema),
   search: {
     middlewares: [stripSearchParams({ reviewsPage: 1 })],
@@ -373,6 +398,7 @@ export const Route = createFileRoute("/get-proxies/$slug")({
     const data = getProxyDetailPageData({
       reviewsPage: deps.reviewsPage,
       slug: params.slug,
+      locale: isLocale(params.lang) ? params.lang : "en",
     });
     void context.queryClient.prefetchQuery(
       reviewsQueryOptions({
@@ -384,7 +410,10 @@ export const Route = createFileRoute("/get-proxies/$slug")({
     );
     return data;
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData, params }) => {
+    const locale = isLocale(params.lang) ? params.lang : "en";
+    const t = (message: string, values?: Record<string, string | number>) =>
+      translate(locale, message, values);
     const data = loaderData;
 
     if (!data) {
@@ -393,22 +422,25 @@ export const Route = createFileRoute("/get-proxies/$slug")({
 
     return {
       meta: getPageMeta({
-        title: `${data.provider.name} - Proxy Provider for SoulFire`,
-        description: data.provider.summary,
+        title: t("{provider} - Proxy Provider for SoulFire", {
+          provider: data.provider.name,
+        }),
+        description: t(data.provider.summary),
         path: `/get-proxies/${data.provider.slug}`,
-        imageUrl: getProxyPageImage(data.provider.slug).url,
-        imageAlt: `${data.provider.name} preview`,
+        locale,
+        imageUrl: getProxyPageImage(data.provider.slug, locale).url,
+        imageAlt: t("{provider} preview", { provider: data.provider.name }),
       }),
-      links: getCanonicalLinks(`/get-proxies/${data.provider.slug}`),
+      links: getCanonicalLinks(`/get-proxies/${data.provider.slug}`, locale),
       scripts: discordEmbedScript({
         title: data.provider.name,
-        description: `${data.provider.summary}${data.provider.couponCode ? `\nCoupon: ${data.provider.couponCode}` : ""}`,
-        url: `https://soulfiremc.com/get-proxies/${data.provider.slug}`,
-        label: "View provider",
+        description: `${t(data.provider.summary)}${data.provider.couponCode ? `\n${t("Coupon: {code}", { code: data.provider.couponCode })}` : ""}`,
+        url: `https://soulfiremc.com${localizePath(`/get-proxies/${data.provider.slug}`, locale)}`,
+        label: t("View provider"),
         thumbnail: data.provider.logo
           ? new URL(data.provider.logo, "https://soulfiremc.com").href
           : undefined,
-        links: [{ label: "Visit provider", url: data.provider.url }],
+        links: [{ label: t("Visit provider"), url: data.provider.url }],
       }),
     };
   },

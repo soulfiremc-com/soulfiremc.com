@@ -1,3 +1,7 @@
+import { isLocale, localizePath, type Locale } from "@/lib/i18n";
+import { translate } from "@/lib/messages";
+import { formatProviderSince, localizeProviderData } from "@/lib/provider-i18n";
+import { useT, useLocale } from "@/lib/i18n-react";
 import { Schema } from "effect";
 import { discordEmbedScript } from "@/lib/discord-embed";
 import { SiDiscord, SiTrustpilot } from "@icons-pack/react-simple-icons";
@@ -69,13 +73,6 @@ import { useHydratedQueryResult } from "@/hooks/use-hydrated-query-result";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
-function formatNumber(num: number): string {
-  if (num >= 1000) {
-    return `${(num / 1000).toFixed(1).replace(/\.0$/, "")}k`;
-  }
-  return num.toString();
-}
-
 function DiscordMemberBadge({
   info,
   pending,
@@ -83,10 +80,12 @@ function DiscordMemberBadge({
   info: DiscordInviteResponse | null | undefined;
   pending: boolean;
 }) {
+  const t = useT();
+  const locale = useLocale();
   if (pending) {
     return (
       <Skeleton
-        aria-label="Loading Discord member count"
+        aria-label={t("Loading Discord member count")}
         className="h-5 w-16"
       />
     );
@@ -99,7 +98,7 @@ function DiscordMemberBadge({
         className="border-transparent bg-discord/10 text-discord/50"
       >
         <Users />
-        unknown
+        {t("unknown")}
       </UiBadge>
     );
   }
@@ -113,16 +112,25 @@ function DiscordMemberBadge({
             className="cursor-help border-transparent bg-discord/10 text-discord"
           >
             <Users />
-            {formatNumber(info.approximate_member_count)}
+            {new Intl.NumberFormat(locale, {
+              notation: "compact",
+              maximumFractionDigits: 1,
+            }).format(info.approximate_member_count)}
           </UiBadge>
         }
       />
       <HoverCardContent className="w-auto text-sm">
         {info.guild?.name && <p className="font-medium">{info.guild.name}</p>}
-        <p>{info.approximate_member_count?.toLocaleString("en-US")} members</p>
+        <p>
+          {t("Members: {count}", {
+            count: info.approximate_member_count.toLocaleString(locale),
+          })}
+        </p>
         {info.approximate_presence_count && (
           <p className="text-success">
-            {info.approximate_presence_count.toLocaleString("en-US")} online
+            {t("Online: {count}", {
+              count: info.approximate_presence_count.toLocaleString(locale),
+            })}
           </p>
         )}
       </HoverCardContent>
@@ -131,9 +139,10 @@ function DiscordMemberBadge({
 }
 
 function LinkDiscountNotice({ message }: { message: string }) {
+  const t = useT();
   return (
     <div className="rounded-lg bg-offer/10 p-3">
-      <p className="text-sm font-medium text-offer">{message}</p>
+      <p className="text-sm font-medium text-offer">{t(message)}</p>
     </div>
   );
 }
@@ -150,9 +159,11 @@ type AccountDetailPageData = {
 function getAccountDetailPageData({
   reviewsPage,
   slug,
+  locale,
 }: {
   reviewsPage: number;
   slug: string;
+  locale: Locale;
 }): AccountDetailPageData {
   const shop = getShopBySlug(slug);
   if (!shop) {
@@ -165,7 +176,9 @@ function getAccountDetailPageData({
     "@type": "Product",
     "@id": `https://soulfiremc.com/get-accounts/${shop.slug}#product`,
     name: shop.name,
-    description: providers.map((provider) => provider.summary).join(" "),
+    description: providers
+      .map((provider) => translate(locale, provider.summary))
+      .join(" "),
     image: shop.logo
       ? `https://soulfiremc.com${shop.logo}`
       : "https://soulfiremc.com/logo.png",
@@ -208,8 +221,12 @@ function getAccountDetailPageData({
     "@context": "https://schema.org",
     "@type": "WebPage",
     "@id": `https://soulfiremc.com/get-accounts/${shop.slug}#webpage`,
-    name: `${shop.name} - Minecraft Alt Shop`,
-    description: providers.map((provider) => provider.summary).join(" "),
+    name: translate(locale, "{provider} - Minecraft Alt Shop", {
+      provider: shop.name,
+    }),
+    description: providers
+      .map((provider) => translate(locale, provider.summary))
+      .join(" "),
     url: `https://soulfiremc.com/get-accounts/${shop.slug}`,
     inLanguage: "en-US",
     breadcrumb: {
@@ -226,9 +243,18 @@ function getAccountDetailPageData({
   };
 
   return {
-    breadcrumbJsonLd: JSON.parse(JSON.stringify(breadcrumbJsonLd)),
-    pageJsonLd: JSON.parse(JSON.stringify(pageJsonLd)),
-    productJsonLd: JSON.parse(JSON.stringify(productJsonLd)),
+    breadcrumbJsonLd: localizeProviderData(
+      JSON.parse(JSON.stringify(breadcrumbJsonLd)),
+      locale,
+    ),
+    pageJsonLd: localizeProviderData(
+      JSON.parse(JSON.stringify(pageJsonLd)),
+      locale,
+    ),
+    productJsonLd: localizeProviderData(
+      JSON.parse(JSON.stringify(productJsonLd)),
+      locale,
+    ),
     providers,
     reviewsPage,
     shop,
@@ -240,6 +266,7 @@ function AccountProductSeoEnrichment({
 }: {
   data: AccountDetailPageData;
 }) {
+  const locale = useLocale();
   const { data: reviews } = useSuspenseQuery(
     reviewsQueryOptions({
       itemType: "account",
@@ -262,7 +289,9 @@ function AccountProductSeoEnrichment({
     ...data.productJsonLd,
     ...(aggregateRating ? { aggregateRating } : {}),
     ...(reviewJsonLd ? { review: reviewJsonLd } : {}),
-    ...(aggregateOffer ? { aggregateOffer } : {}),
+    ...(aggregateOffer
+      ? { aggregateOffer: localizeProviderData(aggregateOffer, locale) }
+      : {}),
   } satisfies WithContext<Product>;
 
   return <JsonLd data={enrichedProductJsonLd} />;
@@ -275,6 +304,7 @@ function ProviderBadge({
   badge: Badge;
   classNameOverride?: string;
 }) {
+  const t = useT();
   const config = BADGE_CONFIG[badge];
   return (
     <HoverCard>
@@ -290,23 +320,24 @@ function ProviderBadge({
             )}
           >
             {config.icon}
-            {config.label}
+            {t(config.label)}
           </UiBadge>
         }
       />
       <HoverCardContent className="w-64 text-sm">
-        <p>{config.description}</p>
+        <p>{t(config.description)}</p>
       </HoverCardContent>
     </HoverCard>
   );
 }
 
 function ShopLogo({ src, name }: { src?: string; name: string }) {
+  const t = useT();
   if (src) {
     return (
       <Image
         src={src}
-        alt={`${name} logo`}
+        alt={t("{provider} logo", { provider: name })}
         fill
         sizes="56px"
         breakpoints={[56, 112, 168]}
@@ -339,7 +370,7 @@ function SocialLinks({
   );
 }
 
-export const Route = createFileRoute("/get-accounts/$slug")({
+export const Route = createFileRoute("/{-$lang}/get-accounts/$slug")({
   validateSearch: Schema.toStandardSchemaV1(reviewsSearchSchema),
   search: {
     middlewares: [stripSearchParams({ reviewsPage: 1 })],
@@ -351,6 +382,7 @@ export const Route = createFileRoute("/get-accounts/$slug")({
     const data = getAccountDetailPageData({
       reviewsPage: deps.reviewsPage,
       slug: params.slug,
+      locale: isLocale(params.lang) ? params.lang : "en",
     });
     void context.queryClient.prefetchQuery(
       accountLiveShopDataQueryOptions(data.shop.slug),
@@ -368,7 +400,10 @@ export const Route = createFileRoute("/get-accounts/$slug")({
     );
     return data;
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData, params }) => {
+    const locale = isLocale(params.lang) ? params.lang : "en";
+    const t = (message: string, values?: Record<string, string | number>) =>
+      translate(locale, message, values);
     const data = loaderData;
 
     if (!data) {
@@ -377,30 +412,33 @@ export const Route = createFileRoute("/get-accounts/$slug")({
 
     return {
       meta: getPageMeta({
-        title: `${data.shop.name} - Minecraft Alt Shop`,
+        title: t("{provider} - Minecraft Alt Shop", {
+          provider: data.shop.name,
+        }),
         description: data.providers
-          .map((provider) => provider.summary)
+          .map((provider) => t(provider.summary))
           .join(" "),
         path: `/get-accounts/${data.shop.slug}`,
-        imageUrl: getAccountPageImage(data.shop.slug).url,
-        imageAlt: `${data.shop.name} preview`,
+        locale,
+        imageUrl: getAccountPageImage(data.shop.slug, locale).url,
+        imageAlt: t("{provider} preview", { provider: data.shop.name }),
       }),
-      links: getCanonicalLinks(`/get-accounts/${data.shop.slug}`),
+      links: getCanonicalLinks(`/get-accounts/${data.shop.slug}`, locale),
       scripts: discordEmbedScript({
         title: data.shop.name,
         description: data.providers
           .map(
             (provider) =>
-              `${provider.summary} · ${provider.price}${provider.couponCode ? ` · Coupon: ${provider.couponCode}` : ""}`,
+              `${t(provider.summary)} · ${t(provider.price)}${provider.couponCode ? ` · ${t("Coupon: {code}", { code: provider.couponCode })}` : ""}`,
           )
           .join("\n"),
-        url: `https://soulfiremc.com/get-accounts/${data.shop.slug}`,
-        label: "View provider",
+        url: `https://soulfiremc.com${localizePath(`/get-accounts/${data.shop.slug}`, locale)}`,
+        label: t("View provider"),
         thumbnail: data.shop.logo
           ? new URL(data.shop.logo, "https://soulfiremc.com").href
           : undefined,
         links: [
-          { label: "Visit shop", url: data.shop.url },
+          { label: t("Visit shop"), url: data.shop.url },
           ...(data.shop.discordUrl
             ? [{ label: "Discord", url: data.shop.discordUrl }]
             : []),
@@ -412,6 +450,8 @@ export const Route = createFileRoute("/get-accounts/$slug")({
 });
 
 function AccountDetailPage() {
+  const t = useT();
+  const locale = useLocale();
   const data = Route.useLoaderData();
   const navigate = Route.useNavigate();
   const setReviewPage = (reviewsPage: number) => {
@@ -457,14 +497,14 @@ function AccountDetailPage() {
             to="/{-$lang}"
             className="transition-colors hover:text-foreground"
           >
-            Home
+            {t("Home")}
           </Link>
           <ChevronRight className="h-3.5 w-3.5" />
           <Link
-            to="/get-accounts"
+            to="/{-$lang}/get-accounts"
             className="transition-colors hover:text-foreground"
           >
-            Get Accounts
+            {t("Get Accounts")}
           </Link>
           <ChevronRight className="h-3.5 w-3.5" />
           <span className="truncate text-foreground">{data.shop.name}</span>
@@ -496,7 +536,9 @@ function AccountDetailPage() {
                 {data.shop.startDate ? (
                   <span className="inline-flex items-center gap-1 text-sm text-muted-foreground">
                     <Calendar className="h-3.5 w-3.5" />
-                    Since {data.shop.startDate}
+                    {t("Since {date}", {
+                      date: formatProviderSince(data.shop.startDate, locale),
+                    })}
                   </span>
                 ) : null}
                 <DiscordMemberBadge
@@ -505,7 +547,9 @@ function AccountDetailPage() {
                 />
               </div>
               <p className="text-lg text-muted-foreground">
-                {data.providers.map((provider) => provider.summary).join(" ")}
+                {data.providers
+                  .map((provider) => t(provider.summary))
+                  .join(" ")}
               </p>
 
               <div className="flex flex-wrap gap-2">
@@ -535,7 +579,7 @@ function AccountDetailPage() {
                       target="_blank"
                       rel="noopener noreferrer nofollow"
                     >
-                      Get Accounts
+                      {t("Get Accounts")}
                       <ExternalLink data-icon="inline-end" />
                     </a>
                   }
@@ -551,7 +595,7 @@ function AccountDetailPage() {
                         target="_blank"
                         rel="noopener noreferrer nofollow"
                       >
-                        Website
+                        {t("Website")}
                         <Globe data-icon="inline-end" />
                       </a>
                     }
@@ -627,16 +671,16 @@ function AccountDetailPage() {
               <Card key={provider.category} className="gap-4 p-6">
                 <div className="flex flex-col gap-2">
                   <h2 className="text-2xl font-semibold">
-                    {CATEGORY_CONFIG[provider.category].label}
+                    {t(CATEGORY_CONFIG[provider.category].label)}
                   </h2>
                   <p className="text-sm text-muted-foreground">
-                    {CATEGORY_CONFIG[provider.category].description}
+                    {t(CATEGORY_CONFIG[provider.category].description)}
                   </p>
                 </div>
-                <div className="text-3xl font-bold">{provider.price}</div>
+                <div className="text-3xl font-bold">{t(provider.price)}</div>
                 {provider.priceDetails ? (
                   <p className="text-sm text-muted-foreground">
-                    {provider.priceDetails}
+                    {t(provider.priceDetails)}
                   </p>
                 ) : null}
                 <div className="flex flex-wrap gap-2">
@@ -662,7 +706,7 @@ function AccountDetailPage() {
                   <LinkDiscountNotice message={provider.linkDiscountMessage} />
                 ) : null}
                 <div className="text-sm text-muted-foreground">
-                  Availability:{" "}
+                  {t("Availability:")}{" "}
                   {liveShopDataQuery.isPending ? (
                     <Skeleton className="inline-block h-4 w-20 align-middle" />
                   ) : liveOffer.availability ===
@@ -681,7 +725,9 @@ function AccountDetailPage() {
                       target="_blank"
                       rel="noopener noreferrer nofollow"
                     >
-                      Buy {CATEGORY_CONFIG[provider.category].label}
+                      {t("Buy {category}", {
+                        category: t(CATEGORY_CONFIG[provider.category].label),
+                      })}
                       <ExternalLink data-icon="inline-end" />
                     </a>
                   }
@@ -705,9 +751,9 @@ function AccountDetailPage() {
 
         <Button
           render={
-            <Link to="/get-accounts">
+            <Link to="/{-$lang}/get-accounts">
               <ArrowLeft data-icon="inline-start" />
-              Browse all account providers
+              {t("Browse all account providers")}
             </Link>
           }
           nativeButton={false}
