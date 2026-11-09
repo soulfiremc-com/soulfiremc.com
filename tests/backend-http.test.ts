@@ -2,7 +2,12 @@ import { TestClock } from "effect/testing";
 import assert from "node:assert/strict";
 import test from "node:test";
 import { Effect, Fiber, Result, Schema } from "effect";
-import { requestJson, requestText, requestVoid } from "@/lib/backend-http";
+import {
+  requestJson,
+  requestText,
+  requestVoid,
+  type RequestFetch,
+} from "@/lib/backend-http";
 
 await test("HTTP timeouts abort the transport without starting another attempt", async (t) => {
   let signal: AbortSignal | undefined;
@@ -130,7 +135,7 @@ await test("HTTP retries a broken response stream and preserves status errors wh
 await test("Effect-clock deadlines release pending headers even if transport ignores abort", async () => {
   let signal: AbortSignal | null | undefined;
   let calls = 0;
-  const fetcher: typeof fetch = (_url, init) => {
+  const fetcher: RequestFetch = (_url, init) => {
     calls++;
     signal = init?.signal;
     return new Promise(() => undefined);

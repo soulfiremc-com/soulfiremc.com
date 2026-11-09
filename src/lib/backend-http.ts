@@ -10,12 +10,17 @@ export class ExternalRequestError extends Data.TaggedError(
   readonly cause?: unknown;
 }> {}
 
+/** The injected transport needs the fetch call signature, not runtime-specific helpers. */
+export type RequestFetch = (
+  ...args: Parameters<typeof fetch>
+) => ReturnType<typeof fetch>;
+
 export type RequestOptions = {
   init?: Omit<RequestInit, "signal">;
   timeoutMs?: number;
   retries?: number;
   maxBytes?: number;
-  fetch?: typeof fetch;
+  fetch?: RequestFetch;
 };
 
 // Register ownership before the interruptible header wait. Late responses must
