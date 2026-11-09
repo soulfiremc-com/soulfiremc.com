@@ -12,16 +12,15 @@ attribute vec3 a_position;
 attribute vec2 a_uv;
 attribute float a_face;
 attribute float a_bot;
-uniform float u_time;
 uniform float u_progress;
 uniform float u_aspect;
 uniform vec2 u_pointer;
 uniform vec2 u_from[${BOT_COUNT}];
 uniform vec2 u_to[${BOT_COUNT}];
-varying vec2 v_uv;
-varying vec3 v_world;
-varying float v_face;
-varying float v_bot;
+varying mediump vec2 v_uv;
+varying mediump vec3 v_world;
+varying mediump float v_face;
+varying mediump float v_bot;
 void main() {
   vec3 p = a_position;
   if (a_bot >= 0.0) {
@@ -50,10 +49,10 @@ void main() {
 const fragmentSource = `
 precision mediump float;
 uniform float u_time;
-varying vec2 v_uv;
-varying vec3 v_world;
-varying float v_face;
-varying float v_bot;
+varying mediump vec2 v_uv;
+varying mediump vec3 v_world;
+varying mediump float v_face;
+varying mediump float v_bot;
 void main() {
   float edge = min(min(v_uv.x, 1.0 - v_uv.x), min(v_uv.y, 1.0 - v_uv.y));
   float face = v_face;
