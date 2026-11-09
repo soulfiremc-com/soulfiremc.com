@@ -17,15 +17,15 @@ import type {
 } from "./voxel-simulation-types";
 
 export const selectionOptions = [
-  { value: "balanced", label: "Balanced", icon: Scale },
-  { value: "build", label: "Building", icon: Blocks },
-  { value: "battle", label: "Combat", icon: Swords },
+  { value: "balanced", label: "simulation.balanced", icon: Scale },
+  { value: "build", label: "simulation.building", icon: Blocks },
+  { value: "battle", label: "simulation.combat", icon: Swords },
 ] as const;
 
 const traits = [
-  { value: "aggression", label: "Aggression" },
-  { value: "building", label: "Building preference" },
-  { value: "caution", label: "Caution" },
+  { value: "aggression", label: "simulation.aggression" },
+  { value: "building", label: "simulation.buildingPreference" },
+  { value: "caution", label: "simulation.caution" },
 ] as const;
 
 export function VoxelSettings({
@@ -48,7 +48,7 @@ export function VoxelSettings({
           <Button
             variant="ghost"
             size="icon-sm"
-            aria-label={t("Simulation settings")}
+            aria-label={t("simulation.simulationSettings")}
           />
         }
       >
@@ -61,10 +61,10 @@ export function VoxelSettings({
       >
         <div className="flex flex-col gap-5">
           <PopoverHeader>
-            <PopoverTitle>{t("Simulation settings")}</PopoverTitle>
+            <PopoverTitle>{t("simulation.simulationSettings")}</PopoverTitle>
           </PopoverHeader>
           <Field>
-            <FieldLabel id={goalId}>{t("Reward")}</FieldLabel>
+            <FieldLabel id={goalId}>{t("simulation.reward")}</FieldLabel>
             <ToggleGroup
               className="flex-wrap"
               value={[pressure]}
@@ -90,9 +90,9 @@ export function VoxelSettings({
           <dl className="grid grid-cols-3 gap-3 text-xs">
             {(
               [
-                ["gathered", "Gathered"],
-                ["crafted", "Crafted"],
-                ["built", "Built"],
+                ["gathered", "simulation.gathered"],
+                ["crafted", "simulation.crafted"],
+                ["built", "simulation.built"],
               ] as const
             ).map(([key, label]) => (
               <div key={key} className="flex flex-col gap-1">
@@ -104,11 +104,13 @@ export function VoxelSettings({
             ))}
           </dl>
           <div>
-            <p className="text-sm font-medium">{t("Inherited traits")}</p>
+            <p className="text-sm font-medium">
+              {t("simulation.inheritedTraits")}
+            </p>
             <div className="voxel-trait-grid text-xs">
               <span />
-              <span>{t("Cyan camp")}</span>
-              <span>{t("Amber camp")}</span>
+              <span>{t("simulation.cyanCamp2")}</span>
+              <span>{t("simulation.amberCamp2")}</span>
               {traits.map(({ value, label }) => (
                 <div className="voxel-trait-row" key={value}>
                   <span>{t(label)}</span>
@@ -117,7 +119,7 @@ export function VoxelSettings({
                     min={0}
                     max={1}
                     value={summary.traits[0][value]}
-                    aria-label={t("Cyan camp: {trait}", { trait: t(label) })}
+                    aria-label={t("simulation.cyanCamp3", { trait: t(label) })}
                   >
                     {Math.round(summary.traits[0][value] * 100)}%
                   </meter>
@@ -126,7 +128,7 @@ export function VoxelSettings({
                     min={0}
                     max={1}
                     value={summary.traits[1][value]}
-                    aria-label={t("Amber camp: {trait}", { trait: t(label) })}
+                    aria-label={t("simulation.amberCamp3", { trait: t(label) })}
                   >
                     {Math.round(summary.traits[1][value] * 100)}%
                   </meter>

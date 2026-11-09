@@ -69,7 +69,7 @@ function FeedbackForm({ url }: { url: string }) {
       className="border-y py-3"
     >
       <div className="flex flex-row items-center gap-2">
-        <p className="text-sm font-medium pe-2">{t("How is this page?")}</p>
+        <p className="text-sm font-medium pe-2">{t("common.howIsThisPage")}</p>
         <ToggleGroup
           value={activeOpinion ? [activeOpinion] : []}
           onValueChange={([value]) => {
@@ -85,7 +85,7 @@ function FeedbackForm({ url }: { url: string }) {
             className="rounded-full data-pressed:[&_svg]:fill-current"
           >
             <ThumbsUp data-icon="inline-start" />
-            {t("Good")}
+            {t("common.good")}
           </ToggleGroupItem>
           <ToggleGroupItem
             value="bad"
@@ -93,14 +93,14 @@ function FeedbackForm({ url }: { url: string }) {
             className="rounded-full data-pressed:[&_svg]:fill-current"
           >
             <ThumbsDown data-icon="inline-start" />
-            {t("Bad")}
+            {t("common.bad")}
           </ToggleGroupItem>
         </ToggleGroup>
       </div>
       <CollapsibleContent className="mt-3">
         {previous ? (
           <div className="px-3 py-6 flex flex-col items-center gap-3 bg-fd-card text-fd-muted-foreground text-sm text-center rounded-xl">
-            <p>{t("Thank you for your feedback!")}</p>
+            <p>{t("common.thankYouForYourFeedback")}</p>
             <div className="flex flex-row items-center gap-2">
               <Button
                 type="button"
@@ -116,7 +116,7 @@ function FeedbackForm({ url }: { url: string }) {
                   }
                 }}
               >
-                {t("Submit Again")}
+                {t("common.submitAgain")}
               </Button>
             </div>
           </div>
@@ -128,7 +128,7 @@ function FeedbackForm({ url }: { url: string }) {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               className="min-h-24 resize-none bg-fd-secondary text-fd-secondary-foreground placeholder:text-fd-muted-foreground"
-              placeholder={t("Leave your feedback...")}
+              placeholder={t("common.leaveYourFeedback")}
               onKeyDown={(e) => {
                 if (!e.shiftKey && e.key === "Enter") {
                   e.preventDefault();
@@ -137,7 +137,7 @@ function FeedbackForm({ url }: { url: string }) {
               }}
             />
             <Button type="submit" variant="outline" className="w-fit">
-              {t("Submit")}
+              {t("common.submit")}
             </Button>
           </form>
         )}

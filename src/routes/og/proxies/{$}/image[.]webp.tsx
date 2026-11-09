@@ -28,7 +28,7 @@ export const Route = createFileRoute("/og/proxies/{$}/image.webp")({
               title={provider.name}
               description={translate(locale, provider.summary)}
               slugs={[]}
-              section={translate(locale, "Get Proxies")}
+              section={translate(locale, "common.getProxies")}
               siteLabel={`soulfiremc.com${localizePath(`/get-proxies/${provider.slug}`, locale)}`}
               logoSrc={getEmbeddedLogo(provider.logo) || soulfireLogoDataUri}
             />,
@@ -36,7 +36,7 @@ export const Route = createFileRoute("/og/proxies/{$}/image.webp")({
         return createOgImageResponse(
           <ProxyOgImage
             name={provider.name}
-            summary={provider.summary}
+            summary={translate(locale, provider.summary)}
             badges={provider.badges}
             logoSrc={getEmbeddedLogo(provider.logo)}
           />,

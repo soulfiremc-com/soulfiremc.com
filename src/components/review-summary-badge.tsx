@@ -26,7 +26,7 @@ export function ReviewSummaryBadge({
         )}
       >
         <MessageSquareText className="size-3.5" />
-        {t("No ratings yet")}
+        {t("reviews.noRatingsYet")}
       </Badge>
     );
   }
@@ -47,7 +47,7 @@ export function ReviewSummaryBadge({
         })}
       </span>
       <span className="text-muted-foreground">
-        {t("Ratings: {count}", {
+        {t("reviews.ratings", {
           count: summary.reviewCount.toLocaleString(locale),
         })}
       </span>

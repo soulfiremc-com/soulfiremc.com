@@ -25,9 +25,9 @@ export const Route = createFileRoute("/og/docs/{$}/image.webp")({
             slugs={page.slugs}
             section={
               page.slugs.length === 0
-                ? translate(locale, "Documentation")
+                ? translate(locale, "common.documentation")
                 : page.slugs[0] === "start-here"
-                  ? translate(locale, "Get started")
+                  ? translate(locale, "docs.getStarted")
                   : undefined
             }
             siteLabel={`soulfiremc.com${localizePath("/docs", locale)}`}

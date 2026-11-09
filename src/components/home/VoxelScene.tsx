@@ -42,7 +42,11 @@ export function VoxelScene() {
       ? Moon
       : Sun;
   const weatherLabel = t(
-    summary.storm ? "Storm" : summary.night > 0.4 ? "Night" : "Day",
+    summary.storm
+      ? "simulation.storm"
+      : summary.night > 0.4
+        ? "simulation.night"
+        : "simulation.day",
   );
 
   useEffect(() => {
@@ -110,7 +114,7 @@ export function VoxelScene() {
   return (
     <section
       className="voxel-experience"
-      aria-label={t("Evolving bot simulation")}
+      aria-label={t("simulation.evolvingBotSimulation")}
     >
       <div className="voxel-stage">
         {!ready && <VoxelFallback />}
@@ -122,12 +126,12 @@ export function VoxelScene() {
         />
       </div>
       <div className="voxel-caption">
-        <span>{t("Gen {generation}", { generation: summary.generation })}</span>
+        <span>{t("simulation.gen", { generation: summary.generation })}</span>
         <div className="voxel-scores">
           <span
             role="img"
             data-team="cyan"
-            aria-label={t("Cyan camp: {count}", { count: summary.alive[0] })}
+            aria-label={t("simulation.cyanCamp", { count: summary.alive[0] })}
           >
             <FlagTriangleRight aria-hidden="true" />
             {summary.alive[0]}
@@ -135,7 +139,7 @@ export function VoxelScene() {
           <span
             role="img"
             data-team="amber"
-            aria-label={t("Amber camp: {count}", { count: summary.alive[1] })}
+            aria-label={t("simulation.amberCamp", { count: summary.alive[1] })}
           >
             <FlagTriangleRight aria-hidden="true" />
             {summary.alive[1]}
@@ -144,7 +148,7 @@ export function VoxelScene() {
         <span className="voxel-weather" title={weatherLabel}>
           <WeatherIcon aria-hidden="true" />
           <span className="sr-only">{weatherLabel}: </span>
-          {t("{seconds}s left", { seconds: Math.ceil(summary.remaining) })}
+          {t("simulation.sLeft", { seconds: Math.ceil(summary.remaining) })}
         </span>
       </div>
       <div className="voxel-controls">
@@ -154,10 +158,10 @@ export function VoxelScene() {
               size="sm"
               onClick={() => {
                 if (rendererRef.current?.breach())
-                  setAnnouncement(t("TNT armed."));
+                  setAnnouncement(t("simulation.tntArmed"));
               }}
               disabled={!ready || !summary.canBreach}
-              aria-label={t("Trigger a TNT breach")}
+              aria-label={t("simulation.triggerATntBreach")}
             >
               <Bomb data-icon="inline-start" />
               TNT
@@ -167,11 +171,11 @@ export function VoxelScene() {
               size="icon-sm"
               onClick={() => {
                 if (rendererRef.current?.storm())
-                  setAnnouncement(t("Storm incoming."));
+                  setAnnouncement(t("simulation.stormIncoming"));
               }}
               disabled={!ready || !summary.canStorm}
-              aria-label={t("Summon a storm")}
-              title={t("Summon a storm")}
+              aria-label={t("simulation.summonAStorm")}
+              title={t("simulation.summonAStorm")}
             >
               <CloudLightning />
             </Button>
@@ -180,7 +184,9 @@ export function VoxelScene() {
               size="icon-sm"
               onClick={() => setPaused(!paused)}
               aria-label={t(
-                paused ? "Play scene animation" : "Pause scene animation",
+                paused
+                  ? "simulation.playSceneAnimation"
+                  : "simulation.pauseSceneAnimation",
               )}
               disabled={reducedMotion !== false || !ready}
             >
@@ -192,8 +198,8 @@ export function VoxelScene() {
                 size="icon-sm"
                 onClick={() => rendererRef.current?.step()}
                 disabled={!ready}
-                aria-label={t("Advance simulation by one second")}
-                title={t("Step")}
+                aria-label={t("simulation.advanceSimulationByOneSecond")}
+                title={t("simulation.step")}
               >
                 <StepForward />
               </Button>
@@ -202,7 +208,7 @@ export function VoxelScene() {
               variant="ghost"
               size="sm"
               onClick={() => setSpeed(speed === 1 ? 3 : 1)}
-              aria-label={t("Simulation speed: {speed}×", { speed })}
+              aria-label={t("simulation.simulationSpeed", { speed })}
               disabled={!ready || reducedMotion !== false}
             >
               {speed}×
@@ -212,7 +218,7 @@ export function VoxelScene() {
               size="icon-sm"
               onClick={() => rendererRef.current?.reset()}
               disabled={!ready}
-              aria-label={t("Reset")}
+              aria-label={t("simulation.reset")}
             >
               <RotateCcw />
             </Button>
@@ -228,20 +234,20 @@ export function VoxelScene() {
       {(status === "unavailable" || reducedMotion === true) && (
         <p className="voxel-note">
           {status === "unavailable"
-            ? t("3D animation is unavailable. Showing a still scene.")
-            : t("Reduced motion is on. Use Step to advance.")}
+            ? t("simulation.3dAnimationIsUnavailableShowingAStillScene")
+            : t("simulation.reducedMotionIsOnUseStepToAdvance")}
         </p>
       )}
       <p className="sr-only">
-        {t("Local simulation. No Minecraft server connection.")}
+        {t("simulation.localSimulationNoMinecraftServerConnection")}
       </p>
       <p className="sr-only" role="status">
         {announcement}
-        {t("Generation {generation}. Reward: {reward}.", {
+        {t("simulation.generationReward", {
           generation: summary.generation,
           reward: t(
             selectionOptions.find((option) => option.value === pressure)
-              ?.label ?? "Balanced",
+              ?.label ?? "simulation.balanced",
           ),
         })}
       </p>

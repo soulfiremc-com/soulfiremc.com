@@ -1,3 +1,4 @@
+import { translate, resolveMessage, type MessageKey } from "@/lib/messages";
 import { isLocale } from "@/lib/i18n";
 import {
   formatProviderSince,
@@ -90,7 +91,7 @@ import { reviewsQueryOptions } from "@/lib/reviews-query";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
-function PriceInfoBadge({ details }: { details: string }) {
+function PriceInfoBadge({ details }: { details: MessageKey }) {
   const t = useT();
   return (
     <HoverCard>
@@ -98,12 +99,16 @@ function PriceInfoBadge({ details }: { details: string }) {
         render={
           <span className="inline-flex cursor-help items-center text-muted-foreground hover:text-foreground transition-colors">
             <Info className="size-3.5" />
-            <span className="sr-only">{t("Pricing details")}</span>
+            <span className="sr-only">
+              {t("providers.accounts.pricingDetails.label")}
+            </span>
           </span>
         }
       />
       <HoverCardContent className="w-64 text-sm">
-        <p className="font-medium mb-1">{t("Pricing Details")}</p>
+        <p className="font-medium mb-1">
+          {t("providers.accounts.pricingDetails.heading")}
+        </p>
         <p className="text-muted-foreground">{t(details)}</p>
       </HoverCardContent>
     </HoverCard>
@@ -125,7 +130,7 @@ function DiscordMemberBadge({ providerSlug }: { providerSlug: string }) {
         className="border-transparent bg-discord/10 text-discord/50"
       >
         <Users />
-        {t("unknown")}
+        {t("providers.accounts.unknown")}
       </UiBadge>
     );
   }
@@ -149,13 +154,13 @@ function DiscordMemberBadge({ providerSlug }: { providerSlug: string }) {
       <HoverCardContent className="w-auto text-sm">
         {info.guild?.name && <p className="font-medium">{info.guild.name}</p>}
         <p>
-          {t("Members: {count}", {
+          {t("providers.accounts.members", {
             count: info.approximate_member_count.toLocaleString(locale),
           })}
         </p>
         {info.approximate_presence_count && (
           <p className="text-success">
-            {t("Online: {count}", {
+            {t("providers.accounts.online", {
               count: info.approximate_presence_count.toLocaleString(locale),
             })}
           </p>
@@ -165,7 +170,7 @@ function DiscordMemberBadge({ providerSlug }: { providerSlug: string }) {
   );
 }
 
-function LinkDiscountNotice({ message }: { message: string }) {
+function LinkDiscountNotice({ message }: { message: MessageKey }) {
   const t = useT();
   return (
     <div className="rounded-lg bg-offer/10 p-3">
@@ -245,7 +250,7 @@ function ProviderLogo({ provider }: { provider: Provider }) {
     return (
       <Image
         src={provider.logo}
-        alt={t("{provider} logo", { provider: provider.name })}
+        alt={t("providers.accounts.logo", { provider: provider.name })}
         fill
         sizes="48px"
         breakpoints={[48, 96, 144]}
@@ -318,7 +323,7 @@ function ProviderCard({
             {provider.startDate && (
               <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
                 <Calendar className="h-3 w-3" />
-                {t("Since {date}", {
+                {t("providers.accounts.since", {
                   date: formatProviderSince(provider.startDate, locale),
                 })}
               </span>
@@ -330,7 +335,7 @@ function ProviderCard({
                 theme?.price /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */,
               )}
             >
-              {t(provider.price)}
+              {resolveMessage(locale, provider.price)}
               {provider.priceDetails && (
                 <PriceInfoBadge details={provider.priceDetails} />
               )}
@@ -338,7 +343,7 @@ function ProviderCard({
             <Suspense
               fallback={
                 <Skeleton
-                  aria-label={t("Loading Discord member count")}
+                  aria-label={t("providers.accounts.loadingDiscordMemberCount")}
                   className="h-5 w-16"
                 />
               }
@@ -365,7 +370,9 @@ function ProviderCard({
               className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
             >
               <ImageIcon className="h-3 w-3" />
-              {t("Photos: {count}", { count: provider.gallery.length })}
+              {t("providers.accounts.photos", {
+                count: provider.gallery.length,
+              })}
             </Link>
           )}
           {provider.couponCode ? (
@@ -381,7 +388,7 @@ function ProviderCard({
             <Button
               render={
                 <a href={provider.url} target="_blank" rel="noopener nofollow">
-                  {t("Get Accounts")}
+                  {t("common.getAccounts")}
                   <ExternalLink data-icon="inline-end" />
                 </a>
               }
@@ -396,7 +403,7 @@ function ProviderCard({
                     target="_blank"
                     rel="noopener nofollow"
                   >
-                    {t("Website")}
+                    {t("providers.website")}
                     <Globe data-icon="inline-end" />
                   </a>
                 }
@@ -510,7 +517,9 @@ function MainContent() {
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-2">
         <Filter className="size-4 text-muted-foreground" />
-        <span className="text-sm font-medium">{t("Filters")}</span>
+        <span className="text-sm font-medium">
+          {t("providers.accounts.filters")}
+        </span>
         {hasActiveFilters && (
           <Button
             type="button"
@@ -519,14 +528,16 @@ function MainContent() {
             onClick={clearFilters}
             className="ml-auto h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
           >
-            {t("Clear")}
+            {t("providers.accounts.clear")}
           </Button>
         )}
       </div>
 
       {/* Category Filter */}
       <div className="flex flex-col gap-2">
-        <span className="text-xs text-muted-foreground">{t("Category:")}</span>
+        <span className="text-xs text-muted-foreground">
+          {t("providers.accounts.category")}
+        </span>
         <ToggleGroup
           value={category ? [category] : []}
           onValueChange={([value]) =>
@@ -566,7 +577,9 @@ function MainContent() {
 
       {/* Badge Filter */}
       <div className="flex flex-col gap-2">
-        <span className="text-xs text-muted-foreground">{t("Features:")}</span>
+        <span className="text-xs text-muted-foreground">
+          {t("providers.accounts.features")}
+        </span>
         <ToggleGroup
           multiple
           value={badges}
@@ -610,7 +623,9 @@ function MainContent() {
 
       {/* Sort */}
       <div className="flex flex-col gap-2">
-        <span className="text-xs text-muted-foreground">{t("Sort:")}</span>
+        <span className="text-xs text-muted-foreground">
+          {t("providers.accounts.sort")}
+        </span>
         <ToggleGroup
           value={[sort]}
           onValueChange={([value]) => {
@@ -664,7 +679,7 @@ function MainContent() {
         className="self-start lg:hidden"
       >
         <Filter data-icon="inline-start" />
-        {t("Filters")}
+        {t("providers.accounts.filters")}
         {hasActiveFilters && (
           <span className="inline-flex items-center justify-center rounded-full bg-primary px-1.5 text-xs text-primary-foreground">
             {badges.length + (category ? 1 : 0) + (sort !== "default" ? 1 : 0)}
@@ -687,11 +702,11 @@ function MainContent() {
         {filteredProviders.length === 0 ? (
           <Empty className="border">
             <EmptyHeader>
-              <EmptyTitle>{t("No providers found")}</EmptyTitle>
+              <EmptyTitle>
+                {t("providers.accounts.noProvidersFound")}
+              </EmptyTitle>
               <EmptyDescription>
-                {t(
-                  "No providers match the selected filters. Try removing some filters.",
-                )}
+                {t("providers.filters.emptyDescription")}
               </EmptyDescription>
             </EmptyHeader>
           </Empty>
@@ -702,12 +717,10 @@ function MainContent() {
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-1">
                   <h2 className="text-2xl font-semibold">
-                    {t("MFA Accounts (Full Access / Permanent)")}
+                    {t("providers.accounts.mfaAccountsFullAccessPermanent")}
                   </h2>
                   <p className="text-sm text-muted-foreground">
-                    {t(
-                      "Permanent full-access Minecraft accounts. Change email, password, and username as needed.",
-                    )}
+                    {t("providers.accounts.mfa.description")}
                   </p>
                 </div>
                 <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
@@ -731,18 +744,14 @@ function MainContent() {
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-1">
                   <h2 className="text-2xl font-semibold">
-                    {t("NFA Accounts (Temporary / Non-Full Access)")}
+                    {t("providers.accounts.nfaAccountsTemporaryNonFullAccess")}
                   </h2>
                   <p className="text-sm text-muted-foreground">
-                    {t(
-                      "Temporary Minecraft alts that may stop working over time. Prices shown are per account.",
-                    )}
+                    {t("providers.accounts.nfa.description")}
                   </p>
                   <p className="text-sm text-warning">
-                    <strong>{t("Note:")}</strong>{" "}
-                    {t(
-                      "SoulFire supports refresh token, cookie, and access token auth for many NFA account formats.",
-                    )}
+                    <strong>{t("providers.accounts.note")}</strong>{" "}
+                    {t("providers.accounts.nfa.authentication")}
                   </p>
                 </div>
                 <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
@@ -774,17 +783,15 @@ function GetAccountsClient() {
     <main className="mx-auto flex w-full max-w-(--fd-layout-width) flex-col gap-10 px-4 py-12">
       <div className="mx-auto flex max-w-5xl flex-col gap-4 text-center">
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-          {t("Get Minecraft Accounts")}
+          {t("providers.accounts.getMinecraftAccounts")}
         </h1>
         <p className="text-lg text-muted-foreground">
-          {t(
-            "Compare trusted Minecraft alt shops for SoulFire, including MFA full-access accounts and NFA temporary accounts.",
-          )}
+          {t("providers.accounts.social.description")}
         </p>
         <p className="text-sm text-muted-foreground">
           <BookOpen className="inline h-4 w-4 align-text-bottom" />{" "}
           <TranslatedMessage
-            text="For more information on how to use accounts with SoulFire, read the {guide}."
+            text="providers.accounts.guide.description"
             values={{
               guide: (
                 <Link
@@ -795,7 +802,7 @@ function GetAccountsClient() {
                   }}
                   className="underline hover:text-foreground"
                 >
-                  {t("Account Guide")}
+                  {t("faq.accountGuide")}
                 </Link>
               ),
             }}
@@ -813,20 +820,16 @@ function GetAccountsClient() {
 
       <div className="mx-auto flex max-w-5xl flex-col gap-2 border-t pt-6 text-center">
         <p className="text-sm text-muted-foreground">
-          <strong>{t("Source:")}</strong>{" "}
-          {t(
-            "Provider list originally curated from alts.watchdog.gay. Rankings based on community feedback and value.",
-          )}
+          <strong>{t("providers.accounts.source")}</strong>{" "}
+          {t("providers.accounts.attribution")}
         </p>
         <p className="text-sm text-muted-foreground">
-          <strong>{t("Disclaimer:")}</strong>{" "}
-          {t(
-            "SoulFire does not own or operate these providers. Partner listings support SoulFire, and affiliate codes or links marked with an Affiliate badge help support SoulFire at no extra cost to you. Always do your own research before making purchases.",
-          )}
+          <strong>{t("providers.accounts.disclaimer")}</strong>{" "}
+          {t("providers.accounts.disclosure")}
         </p>
         <p className="text-sm text-muted-foreground">
           <TranslatedMessage
-            text="Inaccurate information or broken links? Submit a pull request on {github} or contact us in our {discord}."
+            text="providers.corrections.description"
             values={{
               github: (
                 <a
@@ -868,13 +871,13 @@ const accountsBreadcrumbJsonLd = JSON.stringify({
     {
       "@type": "ListItem",
       position: 1,
-      name: "Home",
+      name: "nav.home",
       item: "https://soulfiremc.com",
     },
     {
       "@type": "ListItem",
       position: 2,
-      name: "Get Accounts",
+      name: "common.getAccounts",
       item: "https://soulfiremc.com/get-accounts",
     },
   ],
@@ -883,9 +886,8 @@ const accountsBreadcrumbJsonLd = JSON.stringify({
 const accountsPageJsonLd = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  name: "Minecraft Alts, MFA & NFA Accounts",
-  description:
-    "Compare Minecraft alt shops and account providers for SoulFire. Browse MFA full-access accounts, NFA temporary accounts, and token or cookie alts with current pricing and delivery details.",
+  name: "common.minecraftAltsMfaNfaAccounts",
+  description: "providers.accounts.meta.description",
   url: "https://soulfiremc.com/get-accounts",
   inLanguage: "en-US",
   isPartOf: {
@@ -909,9 +911,8 @@ function createAccountsItemListJsonLd(
     "@context": "https://schema.org",
     "@type": "ItemList",
     "@id": "https://soulfiremc.com/get-accounts#provider-list",
-    name: "Minecraft Alt Shops and Account Providers",
-    description:
-      "Trusted Minecraft alt shops for SoulFire bot testing. Compare MFA full-access accounts, NFA temporary accounts, and token or cookie account options.",
+    name: "providers.accounts.minecraftAltShopsAndAccountProviders",
+    description: "providers.accounts.directory.description",
     numberOfItems: accountProvidersBySlug.length,
     itemListElement: accountProvidersBySlug.map((provider, index) => {
       const reviewSummary = reviewSummaries?.[provider.slug];
@@ -932,8 +933,8 @@ function createAccountsItemListJsonLd(
           url: `https://soulfiremc.com/get-accounts/${provider.slug}`,
           category:
             provider.category === "mfa-accounts"
-              ? "MFA full-access Minecraft accounts"
-              : "NFA temporary Minecraft accounts",
+              ? "providers.accounts.mfaFullAccessMinecraftAccounts"
+              : "providers.accounts.nfaTemporaryMinecraftAccounts",
           ...(shop && liveShopData && provider.priceValue !== undefined
             ? {
                 aggregateOffer: getShopAggregateOffer(shop, liveShopData),
@@ -988,12 +989,14 @@ export const Route = createFileRoute("/{-$lang}/get-accounts/")({
     return {
       meta: getPageMeta({
         locale,
-        title: "Minecraft Alts, MFA & NFA Accounts - SoulFire",
-        description:
-          "Compare Minecraft alt shops and account providers for SoulFire. Browse MFA full-access accounts, NFA temporary accounts, and token or cookie alts with current pricing and delivery details.",
+        title: translate(locale, "providers.accounts.meta.title"),
+        description: translate(locale, "providers.accounts.meta.description"),
         path: "/get-accounts",
         imageUrl: "/og/site/get-accounts/image.webp",
-        imageAlt: "SoulFire account providers page preview",
+        imageAlt: translate(
+          locale,
+          "providers.accounts.soulfireAccountProvidersPagePreview",
+        ),
       }),
       links: getCanonicalLinks("/get-accounts", locale),
     };

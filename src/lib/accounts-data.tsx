@@ -1,3 +1,4 @@
+import type { MessageKey } from "@/lib/messages";
 import {
   ArrowDownNarrowWide,
   ArrowUpNarrowWide,
@@ -51,15 +52,15 @@ export type Category = "nfa-accounts" | "mfa-accounts";
 export type SortOption = "default" | "best-rated" | "price-asc" | "price-desc";
 
 export type Listing = {
-  summary: string;
+  summary: MessageKey;
   badges: Badge[];
   price: string;
   // USD catalog price, when a comparable account price is available.
   priceValue?: number;
   couponCode?: string;
-  couponDiscount?: string;
-  linkDiscountMessage?: string;
-  priceDetails?: string;
+  couponDiscount?: MessageKey;
+  linkDiscountMessage?: MessageKey;
+  priceDetails?: MessageKey;
 };
 
 export type Shop = {
@@ -75,7 +76,7 @@ export type Shop = {
   socialLinks?: SocialLink[];
   paymentMethods?: string[];
   startDate?: string;
-  gallery?: { src: string; alt: string }[];
+  gallery?: { src: string; alt: MessageKey }[];
   promotedUntil?: string;
   listings: Partial<Record<Category, Listing>>;
 };
@@ -86,7 +87,7 @@ export type Provider = {
   logo?: string;
   logoUnoptimized?: boolean;
   theme?: ProviderThemeName;
-  summary: string;
+  summary: MessageKey;
   url: string;
   websiteUrl?: string;
   discordUrl?: string;
@@ -94,16 +95,16 @@ export type Provider = {
   socialLinks?: SocialLink[];
   paymentMethods?: string[];
   startDate?: string;
-  gallery?: { src: string; alt: string }[];
+  gallery?: { src: string; alt: MessageKey }[];
   promotedUntil?: string;
   badges: Badge[];
   category: Category;
   price: string;
   priceValue?: number;
   couponCode?: string;
-  couponDiscount?: string;
-  linkDiscountMessage?: string;
-  priceDetails?: string;
+  couponDiscount?: MessageKey;
+  linkDiscountMessage?: MessageKey;
+  priceDetails?: MessageKey;
 };
 
 export function isProviderPromoted(
@@ -190,117 +191,106 @@ export const PROVIDER_THEMES: Record<ProviderThemeName, ProviderTheme> = {
 export const BADGE_CONFIG: Record<
   Badge,
   {
-    label: string;
+    label: MessageKey;
     className: string;
-    description: string;
+    description: MessageKey;
     icon: React.ReactNode;
   }
 > = {
   free: {
-    label: "Free",
+    label: "common.free",
     className: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
-    description:
-      "Accounts are available completely for free - no purchase required.",
+    description: "providers.accounts.badges.free.description",
     icon: <Gift className="h-3 w-3" />,
   },
   "high-quality": {
-    label: "High Quality",
+    label: "providers.badges.high-quality.label",
     className: "bg-blue-500/10 text-blue-600 dark:text-blue-400",
-    description:
-      "Premium accounts with high reliability and low ban rates. Best for demanding use cases.",
+    description: "providers.accounts.badges.high-quality.description",
     icon: <Star className="h-3 w-3" />,
   },
   "instant-delivery": {
-    label: "Instant Delivery",
+    label: "providers.badges.instant-delivery.label",
     className: "bg-purple-500/10 text-purple-600 dark:text-purple-400",
-    description:
-      "Accounts are delivered automatically and instantly after purchase - no waiting required.",
+    description: "providers.accounts.badges.instant-delivery.description",
     icon: <Zap className="h-3 w-3" />,
   },
   "replacement-warranty": {
-    label: "Replacement Warranty",
+    label: "providers.badges.replacement-warranty.label",
     className: "bg-success/10 text-success",
-    description:
-      "Replacement coverage is available if an account stops working, subject to the shop's warranty terms.",
+    description: "providers.accounts.badges.replacement-warranty.description",
     icon: <Shield className="h-3 w-3" />,
   },
   "lifetime-warranty": {
-    label: "Lifetime Warranty",
+    label: "providers.badges.lifetime-warranty.label",
     className: "bg-success/10 text-success",
-    description:
-      "Accounts come with lifetime warranty - get a replacement if your account stops working.",
+    description: "providers.accounts.badges.lifetime-warranty.description",
     icon: <Shield className="h-3 w-3" />,
   },
   "12h-warranty": {
-    label: "Fair Warranty",
+    label: "providers.badges.12h-warranty.label",
     className: "bg-yellow-500/10 text-warning dark:text-yellow-400",
-    description:
-      "Accounts come with a 12 hour warranty - get a replacement if your account stops working within 12 hours of purchase.",
+    description: "providers.accounts.badges.12h-warranty.description",
     icon: <Shield className="h-3 w-3" />,
   },
   "bulk-discount": {
-    label: "Bulk Discount",
+    label: "providers.badges.bulk-discount.label",
     className: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
-    description:
-      "Significant discounts available when purchasing accounts in bulk quantities.",
+    description: "providers.accounts.badges.bulk-discount.description",
     icon: <Package className="h-3 w-3" />,
   },
   "official-integration": {
-    label: "Official Integration",
+    label: "providers.badges.official-integration.label",
     className: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400",
-    description:
-      "This provider is officially integrated into the SoulFire client. You can purchase and import accounts directly from within the app.",
+    description: "providers.accounts.badges.official-integration.description",
     icon: <Plug className="h-3 w-3" />,
   },
   partner: {
-    label: "Partner",
+    label: "providers.badges.partner.label",
     className: "bg-amber-500/10 text-amber-700 dark:text-amber-400",
-    description:
-      "This provider partners with SoulFire and supports the project.",
+    description: "providers.accounts.badges.partner.description",
     icon: <Heart className="h-3 w-3 fill-current" />,
   },
   affiliate: {
-    label: "Affiliate",
+    label: "providers.badges.affiliate.label",
     className: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
-    description:
-      "Buying with this provider's code or link supports SoulFire at no extra cost to you.",
+    description: "providers.accounts.badges.affiliate.description",
     icon: <Handshake className="h-3 w-3" />,
   },
 };
 
 export const CATEGORY_CONFIG: Record<
   Category,
-  { label: string; description: string }
+  { label: MessageKey; description: MessageKey }
 > = {
   "nfa-accounts": {
-    label: "NFA Accounts",
-    description:
-      "Temporary Minecraft alts, often sold as token or cookie accounts",
+    label: "providers.accounts.categories.nfa-accounts.label",
+    description: "providers.accounts.categories.nfa-accounts.description",
   },
   "mfa-accounts": {
-    label: "MFA Accounts",
-    description: "Full-access permanent Minecraft accounts you own long-term",
+    label: "providers.accounts.categories.mfa-accounts.label",
+    description: "providers.accounts.categories.mfa-accounts.description",
   },
 };
 
 export const SORT_CONFIG: Record<
   SortOption,
-  { label: string; icon?: React.ReactNode }
+  { label: MessageKey; icon?: React.ReactNode }
 > = {
   default: {
-    label: "Most Rated",
+    label: "providers.sort.default",
     icon: <Star className="h-3 w-3" />,
   },
   "best-rated": {
-    label: "Best Rated",
+    label: "providers.sort.best-rated",
     icon: <Star className="h-3 w-3 fill-current" />,
   },
   "price-asc": {
-    label: "Price: Low to High",
+    label: "providers.sort.price-asc",
     icon: <ArrowUpNarrowWide className="h-3 w-3" />,
   },
   "price-desc": {
-    label: "Price: High to Low",
+    label: "providers.sort.price-desc",
     icon: <ArrowDownNarrowWide className="h-3 w-3" />,
   },
 };
@@ -357,8 +347,7 @@ export const SHOPS: Shop[] = [
     startDate: "Jul 2025",
     listings: {
       "nfa-accounts": {
-        summary:
-          "Credit-based dashboard with instant delivery, live validation, API access, and public credit packs. Also sells Dispenser keys for automated bulk generation.",
+        summary: "providers.accounts.ravealts.nfa.summary",
         badges: [
           "affiliate",
           "official-integration",
@@ -369,13 +358,11 @@ export const SHOPS: Shop[] = [
         price: "10-15¢",
         priceValue: 0.1,
         couponCode: "SOULFIRE",
-        couponDiscount: "10% off",
-        priceDetails:
-          "Public checkout currently sells 500 credits for $4.99, 1000 for $8.99, 2000 for $15.99, plus a $5 VIP key. Dispenser keys are $19.99 (1 month), $44.99 (3 months), $69.99 (6 months), and $99.99 (1 year). Invalid accounts are auto-refunded when precheck fails.",
+        couponDiscount: "offers.tenPercentOff",
+        priceDetails: "providers.accounts.ravealts.nfa.priceDetails",
       },
       "mfa-accounts": {
-        summary:
-          "Permanent accounts with full access. Change email, password and username. Also sells Microsoft/Xbox accounts with Game Pass and Bedrock. Accepts crypto, card, Klarna and more.",
+        summary: "providers.accounts.ravealts.mfa.summary",
         badges: [
           "affiliate",
           "official-integration",
@@ -385,7 +372,7 @@ export const SHOPS: Shop[] = [
         price: "$5.67",
         priceValue: 5.67,
         couponCode: "SOULFIRE",
-        couponDiscount: "10% off",
+        couponDiscount: "offers.tenPercentOff",
       },
     },
   },
@@ -411,26 +398,22 @@ export const SHOPS: Shop[] = [
     startDate: "Jul 2025",
     listings: {
       "nfa-accounts": {
-        summary:
-          "Cookie NFAs for Hypixel, DonutSMP, and GommeHD, with live stock, server-specific tiers, and API access for automated purchases.",
+        summary: "providers.accounts.fernan.nfa.summary",
         badges: ["affiliate", "instant-delivery"],
         price: "5¢+",
         priceValue: 0.05,
         couponCode: "SOULFIRE",
-        couponDiscount: "10% off",
-        priceDetails:
-          "Current cookie prices start at 5¢ for generic Hypixel-banned accounts, 10¢ for DonutSMP or GommeHD unbanned, and 15¢ for Hypixel level 1-9. Higher-level, ranked, Bedwars, Skyblock, and DonutSMP balance tiers are also available. Eligible unused cookie products have a 24-hour refund window.",
+        couponDiscount: "offers.tenPercentOff",
+        priceDetails: "providers.accounts.fernan.nfa.priceDetails",
       },
       "mfa-accounts": {
-        summary:
-          "Full-access Minecraft credentials and game codes, including Hypixel fresh, unbanned, banned, and ranked account tiers.",
+        summary: "providers.accounts.fernan.mfa.summary",
         badges: ["affiliate", "instant-delivery"],
         price: "$4.00+",
         priceValue: 4,
         couponCode: "SOULFIRE",
-        couponDiscount: "10% off",
-        priceDetails:
-          "MFA credentials currently start at $4 for Hypixel-banned accounts, $5.50 for Hypixel-unbanned, and $6.50 for fresh Hypixel status. Game codes cost $7.50, low-rank accounts cost $8.50, and high-rank accounts cost $15. MFA products include lifetime coverage for Microsoft compliance locks, subject to the shop's warranty terms.",
+        couponDiscount: "offers.tenPercentOff",
+        priceDetails: "providers.accounts.fernan.mfa.priceDetails",
       },
     },
   },
@@ -444,15 +427,13 @@ export const SHOPS: Shop[] = [
     startDate: "Jan 2026",
     listings: {
       "nfa-accounts": {
-        summary:
-          "Credit packs and timed generator access for inexpensive NFAs, delivered through a SellAuth storefront with live stock.",
+        summary: "providers.accounts.atomic-nfas.nfa.summary",
         badges: ["instant-delivery", "bulk-discount"],
-        price: "0.8-1¢/credit",
+        price: "providers.accounts.atomic-nfas.nfa.price",
         priceValue: 0.008,
         couponCode: "SOULFIRE",
-        couponDiscount: "10% off",
-        priceDetails:
-          "Credit packs currently cost $1 for 100, $2 for 200, $4 for 500, or $8 for 1,000. Generator access costs $3 for one week, $4 for one month, $10 for three months, or $20 for one year.",
+        couponDiscount: "offers.tenPercentOff",
+        priceDetails: "providers.accounts.atomic-nfas.nfa.priceDetails",
       },
     },
   },
@@ -465,13 +446,12 @@ export const SHOPS: Shop[] = [
     startDate: "Nov 2025",
     listings: {
       "mfa-accounts": {
-        summary:
-          "Full access accounts that work well as mains or long-term alts. Over 100 accounts sold since launch.",
+        summary: "providers.accounts.luma-mfa.mfa.summary",
         badges: ["high-quality", "instant-delivery", "12h-warranty"],
         price: "$5.00",
         priceValue: 4.5,
         couponCode: "SOULFIRE",
-        couponDiscount: "5% off",
+        couponDiscount: "offers.fivePercentOff",
       },
     },
   },
@@ -493,8 +473,7 @@ export const SHOPS: Shop[] = [
     startDate: "Mar 2025",
     listings: {
       "nfa-accounts": {
-        summary:
-          "Multiple tiers from budget tokens to high-quality cookies. Responsive support.",
+        summary: "providers.accounts.nicealts.nfa.summary",
         badges: ["high-quality", "instant-delivery", "bulk-discount"],
         price: "5-10¢",
         priceValue: 0.05,
@@ -510,13 +489,12 @@ export const SHOPS: Shop[] = [
     startDate: "Aug 2025",
     listings: {
       "mfa-accounts": {
-        summary:
-          "Cheap MFA accounts with instant delivery, lifetime warranty, and over 825 accounts sold.",
+        summary: "providers.accounts.aqua-mfa.mfa.summary",
         badges: ["high-quality", "instant-delivery", "lifetime-warranty"],
         price: "$4.00-$5.50",
         priceValue: 4.0,
         couponCode: "SOULFIRE",
-        couponDiscount: "5% off",
+        couponDiscount: "offers.fivePercentOff",
       },
     },
   },
@@ -539,15 +517,13 @@ export const SHOPS: Shop[] = [
     startDate: "Jan 2019",
     listings: {
       "mfa-accounts": {
-        summary:
-          "Full-access Minecraft account store operating since 2019 with Hypixel and DonutSMP unbanned accounts, Hypixel ranked accounts, rare cape accounts, and 4-letter usernames. Public feedback shows 600+ customer reviews, and orders advertise instant automated delivery plus lifetime warranty.",
+        summary: "providers.accounts.4d4p-shop.mfa.summary",
         badges: ["high-quality", "instant-delivery", "lifetime-warranty"],
         price: "$7.50+",
         priceValue: 7.5,
         couponCode: "SOULFIRE",
-        couponDiscount: "5% off",
-        priceDetails:
-          "Public Minecraft catalog lists Hypixel and DonutSMP full-access accounts from $7.50, Hypixel ranked accounts from $11-$20, 4-letter usernames from $15, and cape accounts from $8.50+.",
+        couponDiscount: "offers.fivePercentOff",
+        priceDetails: "providers.accounts.4d4p-shop.mfa.priceDetails",
       },
     },
   },
@@ -571,15 +547,13 @@ export const SHOPS: Shop[] = [
     startDate: "May 2026",
     listings: {
       "mfa-accounts": {
-        summary:
-          "Full-access accounts pre-checked on Hypixel and DonutSMP before delivery, with a 7-day replacement warranty (permanent against locks) and automated instant delivery. Also offers Hypixel ranked, DonutSMP playtime, and caped accounts.",
+        summary: "providers.accounts.alts-fast.mfa.summary",
         badges: ["affiliate", "high-quality", "instant-delivery"],
         price: "$7.99+",
         priceValue: 7.99,
         linkDiscountMessage:
-          "Register using the link below for a 10% discount at checkout",
-        priceDetails:
-          "Regular alts start at $7.99 (clean or Hypixel-banned tiers), Hypixel ranked from $13.99, caped accounts from $11.00, and DonutSMP playtime accounts from $3.00. Every order includes a 7-day replacement warranty with free replacements and no forms, plus permanent warranty against account locks. Card and Apple Pay deliver in seconds, crypto confirms within minutes.",
+          "providers.accounts.alts-fast.mfa.linkDiscountMessage",
+        priceDetails: "providers.accounts.alts-fast.mfa.priceDetails",
       },
     },
   },
@@ -594,22 +568,18 @@ export const SHOPS: Shop[] = [
     startDate: "Dec 2025",
     listings: {
       "nfa-accounts": {
-        summary:
-          "Public website now sells Discord bot token packs rather than listing individual alts directly. Landing page advertises instant delivery, crypto payments, and premium stock redeemed through the server bot.",
+        summary: "providers.accounts.zzxgp.nfa.summary",
         badges: ["instant-delivery"],
-        price: "1¢/token",
+        price: "providers.accounts.zzxgp.nfa.price",
         priceValue: 0.01,
-        priceDetails:
-          "Current public shop lists 100 tokens for $1, 200 for $2, and 500 for $5. Terms advertise replacements for invalid or banned-on-delivery alts, with 10 minute NFA warranty and 1-2 hour MC token warranties.",
+        priceDetails: "providers.accounts.zzxgp.nfa.priceDetails",
       },
       "mfa-accounts": {
-        summary:
-          "Public WooCommerce shop currently lists a dedicated MFA SKU (`mfa 1+ no ban check`) at $4.50.",
+        summary: "providers.accounts.zzxgp.mfa.summary",
         badges: ["instant-delivery"],
         price: "$4.50",
         priceValue: 4.5,
-        priceDetails:
-          "Current public sale price is $4.50, down from $5. Terms say invalid or banned-on-delivery alts are replaced if stock is available, and XGP alts have a 24 hour warranty.",
+        priceDetails: "providers.accounts.zzxgp.mfa.priceDetails",
       },
     },
   },
@@ -622,7 +592,7 @@ export const SHOPS: Shop[] = [
     startDate: "Apr 2025",
     listings: {
       "nfa-accounts": {
-        summary: "Cookie and token accounts with their own delivery platform.",
+        summary: "providers.accounts.yyy.nfa.summary",
         badges: ["high-quality", "instant-delivery"],
         price: "12¢",
         priceValue: 0.12,
@@ -649,13 +619,11 @@ export const SHOPS: Shop[] = [
     startDate: "Nov 2025",
     listings: {
       "nfa-accounts": {
-        summary:
-          "Credit-based storefront with Discord redemption, live stock, 24/7 support, and card plus crypto payments.",
+        summary: "providers.accounts.mog-alts.nfa.summary",
         badges: ["instant-delivery", "bulk-discount"],
-        price: "0.80-1.29¢/credit",
+        price: "providers.accounts.mog-alts.nfa.price",
         priceValue: 0.008,
-        priceDetails:
-          "Current public tiers are 100 credits for $1.29, 200 for $2.09, 500 for $4.79, 1K for $8.79, and 2.5K for $19.99. Site advertises instant delivery, Discord redemption, Apple Pay/Google Pay, and BTC/LTC.",
+        priceDetails: "providers.accounts.mog-alts.nfa.priceDetails",
       },
     },
   },
@@ -680,26 +648,22 @@ export const SHOPS: Shop[] = [
     startDate: "Jun 2023",
     listings: {
       "nfa-accounts": {
-        summary:
-          "Cookie NFAs with multiple Hypixel tiers, random rank options, and no-VPN-detection variants on higher levels.",
+        summary: "providers.accounts.localts.nfa.summary",
         badges: ["partner", "affiliate", "high-quality", "instant-delivery"],
         price: "12-16¢",
         priceValue: 0.12,
         linkDiscountMessage:
-          "Register using the link below for a 5% discount on checkout",
-        priceDetails:
-          "Cookie NFAs cost 12-16¢. Higher Hypixel tiers and ranked variants cost more. Terms advertise replacements within 24 hours.",
+          "providers.accounts.localts.nfa.linkDiscountMessage",
+        priceDetails: "providers.accounts.localts.nfa.priceDetails",
       },
       "mfa-accounts": {
-        summary:
-          "Full-access accounts with instant delivery, 7+ day age, and OTP secret included. Ranked variants are available above the base tier.",
+        summary: "providers.accounts.localts.mfa.summary",
         badges: ["partner", "affiliate", "high-quality", "instant-delivery"],
         price: "$5.99+",
         priceValue: 5.99,
         linkDiscountMessage:
-          "Register using the link below for a 5% discount on checkout",
-        priceDetails:
-          "Base no-rank full access starts at $5.99. Fresh Hypixel stats is $7.49, ranked variants start at $8.49, and their Terms advertise replacements within 24 hours.",
+          "providers.accounts.localts.nfa.linkDiscountMessage",
+        priceDetails: "providers.accounts.localts.mfa.priceDetails",
       },
     },
   },
@@ -714,15 +678,13 @@ export const SHOPS: Shop[] = [
     startDate: "Feb 2026",
     listings: {
       "nfa-accounts": {
-        summary:
-          "Discord bot-based NFA generator with Hypixel, DonutSMP, Minemen, GommeHD, and CubeCraft unbans plus banned alts. Short cooldowns keep generation moving.",
+        summary: "providers.accounts.skycron.nfa.summary",
         badges: ["instant-delivery"],
-        price: "Subscription",
+        price: "common.subscription",
         priceValue: 0,
         couponCode: "SOULFIRE",
-        couponDiscount: "5% off",
-        priceDetails:
-          "Generator access runs through the Discord bot. Includes Hypixel, DonutSMP, Minemen, GommeHD, and CubeCraft unbans.",
+        couponDiscount: "offers.fivePercentOff",
+        priceDetails: "providers.accounts.skycron.nfa.priceDetails",
       },
     },
   },
@@ -737,13 +699,11 @@ export const SHOPS: Shop[] = [
     startDate: "May 2026",
     listings: {
       "nfa-accounts": {
-        summary:
-          "Premium cookie NFAs with multiple ban-check tiers, from Hypixel-banned budget alts up to Hypixel-unbanned accounts. Instant delivery through a SellAuth checkout.",
+        summary: "providers.accounts.lunaralts.nfa.summary",
         badges: ["high-quality", "instant-delivery"],
         price: "2-10¢",
         priceValue: 0.02,
-        priceDetails:
-          "Prices range from 2¢ for Hypixel-banned alts up to 10¢ for Hypixel-unbanned accounts, with various ban checks available. Accounts are delivered instantly after checkout.",
+        priceDetails: "providers.accounts.lunaralts.nfa.priceDetails",
       },
     },
   },
@@ -757,8 +717,7 @@ export const SHOPS: Shop[] = [
     paymentMethods: ["Crypto (LTC, BTC, SOL)", "Card"],
     listings: {
       "nfa-accounts": {
-        summary:
-          "Budget Minecraft NFA alts with instant automated delivery (<30s). Pre-checked Hypixel, Donut unban guarantee, replacement warranty, and 24/7 support.",
+        summary: "providers.accounts.kynoselling.nfa.summary",
         badges: [
           "affiliate",
           "instant-delivery",
@@ -768,13 +727,11 @@ export const SHOPS: Shop[] = [
         price: "8¢",
         priceValue: 0.08,
         couponCode: "SOULFIRE10",
-        couponDiscount: "10% off",
-        priceDetails:
-          "Shop pricing ranges from $0.08 to $5.99 across budget NFA alts and full-email-access MFA accounts.",
+        couponDiscount: "offers.tenPercentOff",
+        priceDetails: "providers.accounts.kynoselling.nfa.priceDetails",
       },
       "mfa-accounts": {
-        summary:
-          "Verified Minecraft MFAs (Full Email Access) with instant automated delivery (<30s). Pre-checked Hypixel, Donut unban guarantee, replacement warranty, and 24/7 support.",
+        summary: "providers.accounts.kynoselling.mfa.summary",
         badges: [
           "affiliate",
           "instant-delivery",
@@ -784,9 +741,8 @@ export const SHOPS: Shop[] = [
         price: "$5.99",
         priceValue: 5.99,
         couponCode: "SOULFIRE10",
-        couponDiscount: "10% off",
-        priceDetails:
-          "Shop pricing ranges from $0.08 to $5.99 across budget NFA alts and full-email-access MFA accounts.",
+        couponDiscount: "offers.tenPercentOff",
+        priceDetails: "providers.accounts.kynoselling.nfa.priceDetails",
       },
     },
   },
@@ -801,13 +757,11 @@ export const SHOPS: Shop[] = [
     paymentMethods: ["Card", "Crypto"],
     listings: {
       "mfa-accounts": {
-        summary:
-          "Full-access Java and Bedrock accounts, including Hypixel ranked, Bedwars, Skyblock, DonutSMP, and cape listings. Several account purchase buttons lead to Eldorado checkout, so review the linked offer's seller, price, and terms.",
+        summary: "providers.accounts.altsgreat.mfa.summary",
         badges: [],
         price: "$6.99+",
         priceValue: 6.99,
-        priceDetails:
-          "The catalog advertises Hypixel-unbanned full-access accounts at $6.99, DonutSMP-unbanned at $8.99, fresh Java + Bedrock at $9.99, VIP at $10.49, and MVP+ at $25.99. Confirm the final price and delivery terms on the linked checkout. Warranties vary by product. The refund policy requests reports of technical problems within 24 hours and offers a refund if support cannot fix or replace a faulty product.",
+        priceDetails: "providers.accounts.altsgreat.mfa.priceDetails",
       },
     },
   },
@@ -822,13 +776,11 @@ export const SHOPS: Shop[] = [
     socialLinks: [{ platform: "email", url: "mailto:support@fastalts.com" }],
     listings: {
       "mfa-accounts": {
-        summary:
-          "Full-access Minecraft accounts with the linked email inbox, including Java + Bedrock and specific cape pools. Advertises automatic delivery after payment, escrow, and a 30-day replacement guarantee for defects present at delivery.",
+        summary: "providers.accounts.fastalts.mfa.summary",
         badges: ["instant-delivery", "replacement-warranty"],
         price: "$18.99+",
         priceValue: 18.99,
-        priceDetails:
-          "The standard full-access listing publishes a USD price of $18.99; the storefront can display local currencies. Cape listings include Migrator, Vanilla, Followers, Purple Heart, Pan, and multiple-cape options. Only explicitly listed account traits are guaranteed. Report problems from the order page before confirming receipt. The 30-day guarantee covers defects present at delivery, with replacement first and a refund if no valid replacement exists.",
+        priceDetails: "providers.accounts.fastalts.mfa.priceDetails",
       },
     },
   },
@@ -871,12 +823,10 @@ export const SHOPS: Shop[] = [
     startDate: "2018",
     listings: {
       "mfa-accounts": {
-        summary:
-          "Marketplace for full-access Minecraft accounts, including Java + Bedrock, Hypixel ranked, Skyblock, Bedwars, and cape listings. Compare each seller's account details and delivery time. TradeShield holds payment through the order protection period.",
+        summary: "providers.accounts.eldorado.mfa.summary",
         badges: [],
-        price: "Varies by seller",
-        priceDetails:
-          "Prices vary by seller, edition, account progress, and capes. The category also contains temporary Game Pass offers and cape codes, so confirm that the listing includes a permanent Microsoft account with full email access. Standard account protection lasts 5 days after the order is marked received. Eligible offers have paid 3- or 6-month warranty extensions. The published buyer payment fee is 8% + $0.30. Payment options depend on country, currency, and device; delivery can be instant or manual.",
+        price: "common.variesBySeller",
+        priceDetails: "providers.accounts.eldorado.mfa.priceDetails",
       },
     },
   },
@@ -906,12 +856,10 @@ export const SHOPS: Shop[] = [
     startDate: "2013",
     listings: {
       "mfa-accounts": {
-        summary:
-          "Marketplace with full-access Microsoft Java and Bedrock accounts, Hypixel ranks, server progress, and capes. Seller ratings, delivery estimates, and account details vary by offer. GamerProtect provides a 14-day insurance period for game accounts.",
+        summary: "providers.accounts.g2g.mfa.summary",
         badges: ["replacement-warranty"],
-        price: "Varies by seller",
-        priceDetails:
-          "Compare full-access Microsoft account offers rather than the category's lowest advertised price, which can include offline accounts or other products. Check permanent ownership, full email access, edition, and server status in the individual listing. GamerProtect covers eligible account issues for 14 days from delivery, with a refund or replacement depending on the case. Report problems before confirming receipt. Delivery times and payment fees vary by seller and payment method; local payment availability depends on currency and region.",
+        price: "common.variesBySeller",
+        priceDetails: "providers.accounts.g2g.mfa.priceDetails",
       },
     },
   },
@@ -953,12 +901,10 @@ export const SHOPS: Shop[] = [
     ],
     listings: {
       "mfa-accounts": {
-        summary:
-          "Marketplace for full-access Java and Bedrock accounts, Hypixel ranks, Bedwars and Skyblock profiles, and capes. Offers seller chat, 24/7 support, and a free 14-day account warranty. Instant and manual delivery options depend on the listing.",
+        summary: "providers.accounts.gameboost.mfa.summary",
         badges: ["replacement-warranty"],
-        price: "Varies by seller",
-        priceDetails:
-          "Prices vary by seller, account features, and display currency. The category also includes Game Pass access, cape codes, and name-only offers, so confirm that the product includes the permanent account and email access you need. Accounts include a free 14-day warranty; lifetime coverage is an optional paid upgrade. Contact the seller first, then open a support ticket for unresolved problems. Refunds can use store credit or the original payment method under the warranty policy. Payment fees and regional availability can affect checkout.",
+        price: "common.variesBySeller",
+        priceDetails: "providers.accounts.gameboost.mfa.priceDetails",
       },
     },
   },

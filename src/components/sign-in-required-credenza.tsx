@@ -31,21 +31,21 @@ export function SignInRequiredCredenza({
 
   return (
     <Credenza open={open} onOpenChange={onOpenChange}>
-      <CredenzaContent className="sm:max-w-md" closeLabel={t("Close")}>
+      <CredenzaContent className="sm:max-w-md" closeLabel={t("common.close")}>
         <CredenzaHeader>
           <CredenzaTitle>{title}</CredenzaTitle>
           <CredenzaDescription>{description}</CredenzaDescription>
         </CredenzaHeader>
         <CredenzaBody>
           <div className="rounded-xl border border-border/70 bg-muted/30 px-4 py-3 text-sm text-muted-foreground">
-            {t("Sign in to your account to submit ratings and reviews.")}
+            {t("common.signInToYourAccountToSubmitRatingsAnd")}
           </div>
         </CredenzaBody>
         <CredenzaFooter>
           <CredenzaClose
             render={
               <Button type="button" variant="outline">
-                {t("Cancel")}
+                {t("common.cancel")}
               </Button>
             }
           />
@@ -61,7 +61,7 @@ export function SignInRequiredCredenza({
               void router.navigate({ href: target });
             }}
           >
-            {t("Sign In")}
+            {t("common.signIn")}
           </Button>
         </CredenzaFooter>
       </CredenzaContent>

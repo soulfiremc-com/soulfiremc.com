@@ -1,3 +1,5 @@
+import { translate } from "@/lib/messages";
+import type { MessageKey } from "@/lib/messages";
 import { useLocale, useT } from "@/lib/i18n-react";
 import { localizeHref } from "@/lib/i18n";
 import { isLocale } from "@/lib/i18n";
@@ -18,7 +20,6 @@ import {
   getCanonicalLinks,
   getPageMeta,
   jsonLdScript,
-  siteDescription,
 } from "@/lib/seo";
 
 const githubLink = getRequiredEnv(
@@ -27,47 +28,40 @@ const githubLink = getRequiredEnv(
 );
 
 const faqItems: {
-  question: string;
-  answerHtml: string;
+  question: MessageKey;
+  answerHtml: MessageKey;
 }[] = [
   {
-    question: "What is SoulFire?",
-    answerHtml:
-      'SoulFire is a Minecraft bot framework built on Fabric. It runs Minecraft client code for server testing and automation. <a href="https://soulfiremc.com/docs">Read the docs</a>.',
+    question: "home.whatIsSoulfire",
+    answerHtml: "home.soulfireIsAMinecraftBotFrameworkBuiltOnFabric",
   },
   {
-    question: "Is SoulFire free?",
-    answerHtml: `Yes. SoulFire is free to use and modify under AGPL-3.0. <a href="https://soulfiremc.com/download">Download it</a> or view the source on <a href="{github}">GitHub</a>.`,
+    question: "home.isSoulfireFree",
+    answerHtml: "home.yesSoulfireIsFreeToUseAndModifyUnder",
   },
   {
-    question: "What Minecraft versions does SoulFire support?",
-    answerHtml:
-      'SoulFire supports Classic, Alpha, Beta, and current Java releases, plus Combat Snapshots, April Fools versions, and Bedrock Edition. Protocol translation is built in. See the <a href="https://soulfiremc.com/docs/reference/versions">full version list</a>.',
+    question: "home.whatMinecraftVersionsDoesSoulfireSupport",
+    answerHtml: "home.soulfireSupportsClassicAlphaBetaAndCurrentJavaReleases",
   },
   {
-    question: "Can servers detect SoulFire bots?",
-    answerHtml:
-      "Yes. SoulFire runs real client code, but servers can still detect bots. Use it to test your server's anti-bot and anti-cheat plugins.",
+    question: "home.canServersDetectSoulfireBots",
+    answerHtml: "home.yesSoulfireRunsRealClientCodeButServersCan",
   },
   {
-    question: "How do I install SoulFire?",
-    answerHtml:
-      '<a href="https://soulfiremc.com/download">Download</a> the installer for Windows, macOS, or Linux. It includes Java, so you do not need to install it separately. Follow the <a href="https://soulfiremc.com/docs/start-here">installation guide</a> for setup.',
+    question: "home.howDoIInstallSoulfire",
+    answerHtml: "home.downloadTheInstallerForWindowsMacosOrLinuxIt",
   },
   {
-    question: "Does SoulFire support Bedrock Edition?",
-    answerHtml:
-      'Yes, through built-in protocol translation. Bots can join, move, and interact with Bedrock servers. Some features are still missing. See <a href="https://soulfiremc.com/docs/reference/versions">supported versions</a> for details.',
+    question: "home.doesSoulfireSupportBedrockEdition",
+    answerHtml: "home.yesThroughBuiltInProtocolTranslationBotsCanJoin",
   },
   {
-    question: "Can I write custom plugins?",
-    answerHtml:
-      'Yes. Plugins are Fabric mods with access to Minecraft and SoulFire internals. The <a href="https://soulfiremc.com/docs/development">development docs</a> cover low-level hooks, custom settings, Mixins, and direct bot control. Use scripting for high-level automation.',
+    question: "home.canIWriteCustomPlugins",
+    answerHtml: "home.yesPluginsAreFabricModsWithAccessToMinecraft",
   },
   {
-    question: "Can I automate bots without writing code?",
-    answerHtml:
-      'Yes. Connect triggers, actions, and logic nodes in the visual editor. It supports real-time debugging and AI/LLM integration. See the <a href="https://soulfiremc.com/docs/scripting">scripting docs</a>.',
+    question: "home.canIAutomateBotsWithoutWritingCode",
+    answerHtml: "home.yesConnectTriggersActionsAndLogicNodesInThe",
   },
 ];
 
@@ -89,8 +83,9 @@ function HomePage() {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     name: "SoulFire",
-    description:
-      "Minecraft bots for server testing, automation, and development.",
+    description: t(
+      "home.minecraftBotsForServerTestingAutomationAndDevelopment",
+    ),
     applicationCategory: "DeveloperApplication",
     operatingSystem: "Windows, macOS, Linux",
     offers: {
@@ -119,7 +114,6 @@ function HomePage() {
     url: `https://soulfiremc.com${localizeHref("/", locale)}`,
   };
 
-  softwareJsonLd.description = t(softwareJsonLd.description as string);
   const faqJsonLd: WithContext<FAQPage> = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -160,11 +154,20 @@ export const Route = createFileRoute("/{-$lang}/")({
   head: ({ params }) => ({
     meta: getPageMeta({
       locale: isLocale(params.lang) ? params.lang : "en",
-      title: "SoulFire - Minecraft bots for testing and automation",
-      description: siteDescription,
+      title: translate(
+        isLocale(params.lang) ? params.lang : "en",
+        "home.meta.title",
+      ),
+      description: translate(
+        isLocale(params.lang) ? params.lang : "en",
+        "home.meta.description",
+      ),
       path: "/",
       imageUrl: "/og/site/home/image.webp",
-      imageAlt: "SoulFire home page preview",
+      imageAlt: translate(
+        isLocale(params.lang) ? params.lang : "en",
+        "home.soulfireHomePagePreview",
+      ),
     }),
     links: getCanonicalLinks("/", isLocale(params.lang) ? params.lang : "en"),
     scripts: [
@@ -173,8 +176,14 @@ export const Route = createFileRoute("/{-$lang}/")({
           createWebPageStructuredData({
             locale: isLocale(params.lang) ? params.lang : "en",
             path: "/",
-            title: "SoulFire - Minecraft bots for testing and automation",
-            description: siteDescription,
+            title: translate(
+              isLocale(params.lang) ? params.lang : "en",
+              "home.meta.title",
+            ),
+            description: translate(
+              isLocale(params.lang) ? params.lang : "en",
+              "home.meta.description",
+            ),
             imageUrl: "/og/site/home/image.webp",
           }),
         ]),

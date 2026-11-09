@@ -1,5 +1,5 @@
 import { isLocale, localizePath } from "@/lib/i18n";
-import { translate } from "@/lib/messages";
+import { translate, resolveMessage } from "@/lib/messages";
 import { DocsOgImage } from "@/components/og/soulfire";
 import { soulfireLogoDataUri } from "@/lib/og-image";
 import { createFileRoute, notFound } from "@tanstack/react-router";
@@ -23,12 +23,13 @@ export const Route = createFileRoute("/og/accounts/{$}/image.webp")({
         const listings = Object.entries(shop.listings).map(
           ([category, listing]) => ({
             label: category === "mfa-accounts" ? "MFA" : "NFA",
-            price: listing.price,
+            price: resolveMessage(locale, listing.price),
           }),
         );
         const description =
-          Object.values(shop.listings)[0]?.summary ??
-          "Minecraft account provider for SoulFire bot testing.";
+          Object.values(shop.listings).map((listing) =>
+            translate(locale, listing.summary),
+          )[0] ?? "Minecraft account provider for SoulFire bot testing.";
 
         if (locale !== "en")
           return createOgImageResponse(
@@ -38,7 +39,7 @@ export const Route = createFileRoute("/og/accounts/{$}/image.webp")({
                 .map((listing) => translate(locale, listing.summary))
                 .join(" ")}
               slugs={[]}
-              section={translate(locale, "Get Accounts")}
+              section={translate(locale, "common.getAccounts")}
               siteLabel={`soulfiremc.com${localizePath(`/get-accounts/${shop.slug}`, locale)}`}
               logoSrc={getEmbeddedLogo(shop.logo) || soulfireLogoDataUri}
             />,

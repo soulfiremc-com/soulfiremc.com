@@ -1,3 +1,4 @@
+import type { MessageKey } from "@/lib/messages";
 import { Fragment, type ReactNode } from "react";
 import { useT } from "@/lib/i18n-react";
 
@@ -5,7 +6,7 @@ export function TranslatedMessage({
   text,
   values,
 }: {
-  text: string;
+  text: MessageKey;
   values: Record<string, ReactNode>;
 }) {
   const t = useT();

@@ -68,7 +68,7 @@ void test("provider metadata localizes IDs, navigation and descriptions while re
     inLanguage: "en-US",
     itemListElement: [
       {
-        name: "Home",
+        name: "nav.home",
         item: "https://soulfiremc.com",
       },
       {
@@ -161,12 +161,15 @@ void test("localized catalog and provider previews have distinct image URLs", ()
       `/og/proxies/${locale}/webshare/image.webp`,
     );
     const meta = getPageMeta({
-      title: "Get Proxies - SoulFire",
-      description: "Get Proxies",
+      title: translate(locale, "providers.proxies.meta.title"),
+      description: translate(locale, "common.getProxies"),
       path: "/get-proxies",
       locale,
     });
-    assert.equal(meta[0].title, translate(locale, "Get Proxies - SoulFire"));
+    assert.equal(
+      meta[0].title,
+      translate(locale, "providers.proxies.meta.title"),
+    );
     assert.equal(
       meta.find((m) => m.property === "og:image")?.content,
       `https://soulfiremc.com/og/site/${locale}/get-proxies/image.webp`,

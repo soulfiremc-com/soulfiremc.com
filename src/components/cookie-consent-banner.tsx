@@ -44,17 +44,15 @@ const CookieConsentBanner = () => {
     <div className="fixed bottom-0 left-0 z-50 sm:bottom-4 sm:left-4">
       <Card className="m-3 shadow-lg sm:max-w-md">
         <CardHeader className="flex flex-row items-center justify-between gap-2 pb-2">
-          <CardTitle className="text-lg">{t("We use cookies")}</CardTitle>
+          <CardTitle className="text-lg">{t("cookies.title")}</CardTitle>
           <Cookie className="size-5" />
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
           <CardDescription className="text-sm">
-            {t(
-              "We use tracking cookies to understand how you use the product and help us improve it. Please accept cookies to help us improve.",
-            )}
+            {t("cookies.description")}
           </CardDescription>
           <p className="text-xs text-muted-foreground">
-            {t("By clicking Accept, you agree to our use of cookies.")}
+            {t("cookies.acceptanceNotice")}
           </p>
         </CardContent>
         <CardFooter className="flex gap-2 pt-2">
@@ -64,14 +62,14 @@ const CookieConsentBanner = () => {
             variant="secondary"
             className="flex-1"
           >
-            {t("Decline")}
+            {t("cookies.decline")}
           </Button>
           <Button
             type="button"
             onClick={handleAcceptCookies}
             className="flex-1"
           >
-            {t("Accept")}
+            {t("cookies.accept")}
           </Button>
         </CardFooter>
       </Card>

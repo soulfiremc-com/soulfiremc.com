@@ -1,5 +1,5 @@
 import { isLocale, localizePath, type Locale } from "@/lib/i18n";
-import { translate } from "@/lib/messages";
+import { translate, type MessageKey } from "@/lib/messages";
 import { formatProviderSince, localizeProviderData } from "@/lib/provider-i18n";
 import { useT, useLocale } from "@/lib/i18n-react";
 import { Schema } from "effect";
@@ -68,7 +68,7 @@ function ProviderLogo({ provider }: { provider: Provider }) {
     return (
       <Image
         src={provider.logo}
-        alt={t("{provider} logo", { provider: provider.name })}
+        alt={t("providers.accounts.logo", { provider: provider.name })}
         fill
         sizes="56px"
         breakpoints={[56, 112, 168]}
@@ -180,14 +180,14 @@ function ProxyProviderPageContent({
           to="/{-$lang}"
           className="transition-colors hover:text-foreground"
         >
-          {t("Home")}
+          {t("nav.home")}
         </Link>
         <ChevronRight className="h-3.5 w-3.5" />
         <Link
           to="/{-$lang}/get-proxies"
           className="transition-colors hover:text-foreground"
         >
-          {t("Get Proxies")}
+          {t("common.getProxies")}
         </Link>
         <ChevronRight className="h-3.5 w-3.5" />
         <span className="truncate text-foreground">{provider.name}</span>
@@ -206,7 +206,7 @@ function ProxyProviderPageContent({
               {provider.startDate ? (
                 <span className="inline-flex items-center gap-1 text-sm text-muted-foreground">
                   <Calendar className="h-3.5 w-3.5" />
-                  {t("Since {date}", {
+                  {t("providers.accounts.since", {
                     date: formatProviderSince(provider.startDate, locale),
                   })}
                 </span>
@@ -235,7 +235,7 @@ function ProxyProviderPageContent({
                     target="_blank"
                     rel="noopener noreferrer nofollow"
                   >
-                    {t("Get Proxies")}
+                    {t("common.getProxies")}
                     <ExternalLink data-icon="inline-end" />
                   </a>
                 }
@@ -268,7 +268,7 @@ function ProxyProviderPageContent({
         render={
           <Link to="/{-$lang}/get-proxies">
             <ArrowLeft data-icon="inline-start" />
-            {t("Browse all proxy providers")}
+            {t("providers.proxies.browseAllProxyProviders")}
           </Link>
         }
         nativeButton={false}
@@ -307,7 +307,7 @@ function getProxyDetailPageData({
       name: provider.name,
     },
     url: `https://soulfiremc.com/get-proxies/${provider.slug}`,
-    category: "Proxy Service",
+    category: "providers.proxies.proxyService",
     ...(provider.startDate && { dateCreated: provider.startDate }),
     ...(provider.gallery &&
       provider.gallery.length > 0 && {
@@ -327,13 +327,13 @@ function getProxyDetailPageData({
       {
         "@type": "ListItem",
         position: 1,
-        name: "Home",
+        name: "nav.home",
         item: "https://soulfiremc.com",
       },
       {
         "@type": "ListItem",
         position: 2,
-        name: "Get Proxies",
+        name: "common.getProxies",
         item: "https://soulfiremc.com/get-proxies",
       },
       {
@@ -349,7 +349,7 @@ function getProxyDetailPageData({
     "@context": "https://schema.org",
     "@type": "WebPage",
     "@id": `https://soulfiremc.com/get-proxies/${provider.slug}#webpage`,
-    name: translate(locale, "{provider} - Proxy Provider for SoulFire", {
+    name: translate(locale, "providers.proxies.proxyProviderForSoulfire", {
       provider: provider.name,
     }),
     description: provider.summary,
@@ -412,7 +412,7 @@ export const Route = createFileRoute("/{-$lang}/get-proxies/$slug")({
   },
   head: ({ loaderData, params }) => {
     const locale = isLocale(params.lang) ? params.lang : "en";
-    const t = (message: string, values?: Record<string, string | number>) =>
+    const t = (message: MessageKey, values?: Record<string, string | number>) =>
       translate(locale, message, values);
     const data = loaderData;
 
@@ -422,25 +422,32 @@ export const Route = createFileRoute("/{-$lang}/get-proxies/$slug")({
 
     return {
       meta: getPageMeta({
-        title: t("{provider} - Proxy Provider for SoulFire", {
+        title: t("providers.proxies.proxyProviderForSoulfire", {
           provider: data.provider.name,
         }),
         description: t(data.provider.summary),
         path: `/get-proxies/${data.provider.slug}`,
         locale,
         imageUrl: getProxyPageImage(data.provider.slug, locale).url,
-        imageAlt: t("{provider} preview", { provider: data.provider.name }),
+        imageAlt: t("providers.accounts.preview", {
+          provider: data.provider.name,
+        }),
       }),
       links: getCanonicalLinks(`/get-proxies/${data.provider.slug}`, locale),
       scripts: discordEmbedScript({
         title: data.provider.name,
-        description: `${t(data.provider.summary)}${data.provider.couponCode ? `\n${t("Coupon: {code}", { code: data.provider.couponCode })}` : ""}`,
+        description: `${t(data.provider.summary)}${data.provider.couponCode ? `\n${t("providers.accounts.coupon", { code: data.provider.couponCode })}` : ""}`,
         url: `https://soulfiremc.com${localizePath(`/get-proxies/${data.provider.slug}`, locale)}`,
-        label: t("View provider"),
+        label: t("providers.accounts.viewProvider"),
         thumbnail: data.provider.logo
           ? new URL(data.provider.logo, "https://soulfiremc.com").href
           : undefined,
-        links: [{ label: t("Visit provider"), url: data.provider.url }],
+        links: [
+          {
+            label: t("providers.proxies.visitProvider"),
+            url: data.provider.url,
+          },
+        ],
       }),
     };
   },

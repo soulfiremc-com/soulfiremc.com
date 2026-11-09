@@ -14,7 +14,9 @@ import {
   splitLocalePath,
 } from "../src/lib/i18n";
 import { getSitemapLocalization } from "../src/lib/localized-sitemap";
-import { translate } from "../src/lib/messages";
+import { isMessageKey, resolveMessage, translate } from "../src/lib/messages";
+import en from "../src/lib/messages/en.json";
+import { fumadocsMessages } from "../src/lib/messages/fumadocs";
 import { getCanonicalLinks, getPageMeta } from "../src/lib/seo";
 
 void test("locale links preserve download choices and anchors without changing service URLs", () => {
@@ -153,12 +155,12 @@ void test("canonical and reciprocal hreflang links omit query data and use Engli
 void test("localized metadata includes translated titles, descriptions and OG locale", () => {
   for (const locale of ["de", "pl", "ru"] as const) {
     const meta = getPageMeta({
-      title: "Download SoulFire",
-      description: "Pick your OS and CPU to grab the right SoulFire build.",
+      title: translate(locale, "download.title"),
+      description: translate(locale, "download.meta.description"),
       path: "/download",
       locale,
     });
-    assert.equal(meta[0].title, translate(locale, "Download SoulFire"));
+    assert.equal(meta[0].title, translate(locale, "download.title"));
     assert.notEqual(
       meta.find((value) => value.name === "description")?.content,
       "Pick your OS and CPU to grab the right SoulFire build.",
@@ -194,7 +196,7 @@ void test("sitemap excludes fallback clones and advertises only real translation
   );
 });
 
-void test("translation catalogs keep the same complete messages and interpolation tokens", () => {
+void test("translation catalogs use stable keys and preserve English interpolation tokens", () => {
   const catalogs = ["de", "pl", "ru"].map(
     (locale) =>
       JSON.parse(
@@ -207,21 +209,50 @@ void test("translation catalogs keep the same complete messages and interpolatio
       Object.keys(catalogs[0]).sort(),
     );
     for (const [key, value] of Object.entries(catalog)) {
+      assert.ok(isMessageKey(key), key);
+      assert.match(key, /^[a-z][a-zA-Z0-9-]*(\.[a-zA-Z0-9-]+)+$/);
       assert.ok(value.trim());
       assert.deepEqual(
-        (key.match(/\{\w+\}/g) ?? []).sort(),
+        (en[key as keyof typeof en].match(/\{\w+\}/g) ?? []).sort(),
         (value.match(/\{\w+\}/g) ?? []).sort(),
         key,
       );
     }
   }
   assert.equal(
-    translate("pl", "Selected: {os} · {cpu}", { os: "Linux", cpu: "ARM64" }),
+    translate("pl", "download.selection.summary", {
+      os: "Linux",
+      cpu: "ARM64",
+    }),
     "Wybrano: Linux · ARM64",
   );
+});
+
+void test("translation keys resolve in English and fall back without displaying identifiers", () => {
   assert.equal(
-    translate("de", "An untranslated identifier"),
-    "An untranslated identifier",
+    translate("en", "nav.support.description"),
+    "Support SoulFire development",
+  );
+  assert.equal(translate("de", "docs.copiedAnchorLink"), "Copied Anchor Link");
+  assert.equal(isMessageKey("Support SoulFire development"), false);
+  assert.equal(isMessageKey("constructor"), false);
+  assert.equal(isMessageKey("toString"), false);
+  assert.equal(isMessageKey("nav.support.description"), true);
+  assert.equal(resolveMessage("de", "Localts"), "Localts");
+  assert.equal(resolveMessage("ru", "$4.50"), "$4.50");
+  assert.equal(resolveMessage("de", "common.free"), "Kostenlos");
+});
+
+void test("Fumadocs external identifiers map to application keys", () => {
+  const messages = fumadocsMessages("de");
+  assert.equal(messages["Search(search dialog)"], "Suchen");
+  assert.equal(
+    messages["Copied Anchor Link(heading anchor)(aria-label)"],
+    "Copied Anchor Link",
+  );
+  assert.equal(
+    messages["Choose a language(language switcher)(aria-label)"],
+    translate("de", "docs.chooseALanguage"),
   );
 });
 

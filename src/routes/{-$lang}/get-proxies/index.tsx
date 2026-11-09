@@ -1,3 +1,4 @@
+import { translate } from "@/lib/messages";
 import { isLocale } from "@/lib/i18n";
 import {
   formatProviderSince,
@@ -93,11 +94,11 @@ const proxiesSearchSchema = Schema.Struct({
 
 const SORT_CONFIG = {
   default: {
-    label: "Most Rated",
+    label: "providers.sort.default",
     icon: <ArrowDownWideNarrow className="h-3 w-3" />,
   },
   "best-rated": {
-    label: "Best Rated",
+    label: "providers.sort.best-rated",
     icon: <Star className="h-3 w-3 fill-current" />,
   },
 } as const;
@@ -134,7 +135,7 @@ function ProviderLogo({ provider }: { provider: Provider }) {
     return (
       <Image
         src={provider.logo}
-        alt={t("{provider} logo", { provider: provider.name })}
+        alt={t("providers.accounts.logo", { provider: provider.name })}
         fill
         sizes="48px"
         breakpoints={[48, 96, 144]}
@@ -191,7 +192,7 @@ function ProviderCard({
             {provider.startDate && (
               <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
                 <Calendar className="h-3 w-3" />
-                {t("Since {date}", {
+                {t("providers.accounts.since", {
                   date: formatProviderSince(provider.startDate, locale),
                 })}
               </span>
@@ -210,7 +211,9 @@ function ProviderCard({
               className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
             >
               <ImageIcon className="h-3 w-3" />
-              {t("Photos: {count}", { count: provider.gallery.length })}
+              {t("providers.accounts.photos", {
+                count: provider.gallery.length,
+              })}
             </Link>
           )}
           {provider.couponCode && (
@@ -228,7 +231,7 @@ function ProviderCard({
                   target="_blank"
                   rel="noopener noreferrer nofollow"
                 >
-                  {t("Get Proxies")}
+                  {t("common.getProxies")}
                   <ExternalLink data-icon="inline-end" />
                 </a>
               }
@@ -290,7 +293,9 @@ function MainContent() {
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-2">
         <Filter className="size-4 text-muted-foreground" />
-        <span className="text-sm font-medium">{t("Filter by type")}</span>
+        <span className="text-sm font-medium">
+          {t("providers.proxies.filterByType")}
+        </span>
         {(badges.length > 0 || sort !== "default") && (
           <Button
             type="button"
@@ -299,12 +304,14 @@ function MainContent() {
             onClick={clearFilters}
             className="ml-auto h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
           >
-            {t("Clear")}
+            {t("providers.accounts.clear")}
           </Button>
         )}
       </div>
       <div className="flex flex-col gap-2">
-        <span className="text-xs text-muted-foreground">{t("Sort:")}</span>
+        <span className="text-xs text-muted-foreground">
+          {t("providers.accounts.sort")}
+        </span>
         <ToggleGroup
           value={[sort]}
           onValueChange={([value]) => {
@@ -397,7 +404,7 @@ function MainContent() {
         className="self-start lg:hidden"
       >
         <Filter data-icon="inline-start" />
-        {t("Filters")}
+        {t("providers.accounts.filters")}
         {(badges.length > 0 || sort !== "default") && (
           <span className="inline-flex items-center justify-center rounded-full bg-primary px-1.5 text-xs text-primary-foreground">
             {badges.length + (sort !== "default" ? 1 : 0)}
@@ -420,11 +427,11 @@ function MainContent() {
         {filteredProviders.length === 0 ? (
           <Empty className="border">
             <EmptyHeader>
-              <EmptyTitle>{t("No providers found")}</EmptyTitle>
+              <EmptyTitle>
+                {t("providers.accounts.noProvidersFound")}
+              </EmptyTitle>
               <EmptyDescription>
-                {t(
-                  "No providers match the selected filters. Try removing some filters.",
-                )}
+                {t("providers.filters.emptyDescription")}
               </EmptyDescription>
             </EmptyHeader>
           </Empty>
@@ -455,17 +462,15 @@ function GetProxiesClient() {
     <main className="mx-auto flex w-full max-w-(--fd-layout-width) flex-col gap-10 px-4 py-12">
       <div className="mx-auto flex max-w-5xl flex-col gap-4 text-center">
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-          {t("Get Proxies")}
+          {t("common.getProxies")}
         </h1>
         <p className="text-lg text-muted-foreground">
-          {t(
-            "High-quality proxies help distribute your load tests and avoid rate limits. Here are trusted providers we recommend.",
-          )}
+          {t("providers.proxies.introduction")}
         </p>
         <p className="text-sm text-muted-foreground">
           <BookOpen className="inline h-4 w-4 align-text-bottom" />{" "}
           <TranslatedMessage
-            text="For more information on how to use proxies with SoulFire, read the {guide}."
+            text="providers.proxies.forMoreInformationOnHowToUseProxiesWith"
             values={{
               guide: (
                 <Link
@@ -476,7 +481,7 @@ function GetProxiesClient() {
                   }}
                   className="underline hover:text-foreground"
                 >
-                  {t("Proxy Guide")}
+                  {t("faq.proxyGuide")}
                 </Link>
               ),
             }}
@@ -494,14 +499,12 @@ function GetProxiesClient() {
 
       <div className="mx-auto flex max-w-5xl flex-col gap-2 border-t pt-6 text-center">
         <p className="text-sm text-muted-foreground">
-          <strong>{t("Disclosure:")}</strong>{" "}
-          {t(
-            "This page contains affiliate links. When you purchase through these links, we may earn a commission at no extra cost to you. These commissions help fund the development of SoulFire.",
-          )}
+          <strong>{t("providers.proxies.disclosure")}</strong>{" "}
+          {t("providers.proxies.disclosure.description")}
         </p>
         <p className="text-sm text-muted-foreground">
           <TranslatedMessage
-            text="Inaccurate information or broken links? Submit a pull request on {github} or contact us in our {discord}."
+            text="providers.corrections.description"
             values={{
               github: (
                 <a
@@ -539,9 +542,8 @@ function createProxiesItemListJsonLd(
     "@context": "https://schema.org",
     "@type": "ItemList",
     "@id": "https://soulfiremc.com/get-proxies#provider-list",
-    name: "Proxy Providers for SoulFire",
-    description:
-      "Trusted proxy providers for Minecraft bot testing with SoulFire. Compare residential, datacenter, ISP, and mobile proxies.",
+    name: "common.proxyProvidersForSoulfire",
+    description: "providers.proxies.social.description",
     numberOfItems: PROVIDERS.length,
     itemListElement: PROVIDERS.map((provider, index) => {
       const reviewSummary = reviewSummaries?.[provider.slug];
@@ -591,13 +593,13 @@ const proxiesPageData = (() => {
       {
         "@type": "ListItem",
         position: 1,
-        name: "Home",
+        name: "nav.home",
         item: "https://soulfiremc.com",
       },
       {
         "@type": "ListItem",
         position: 2,
-        name: "Get Proxies",
+        name: "common.getProxies",
         item: "https://soulfiremc.com/get-proxies",
       },
     ],
@@ -606,9 +608,8 @@ const proxiesPageData = (() => {
   const pageJsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "Get Proxies",
-    description:
-      "Best proxy providers for Minecraft bot testing. Compare residential, datacenter, ISP, and mobile proxies.",
+    name: "common.getProxies",
+    description: "providers.proxies.directory.description",
     url: "https://soulfiremc.com/get-proxies",
     inLanguage: "en-US",
     isPartOf: {
@@ -642,12 +643,14 @@ export const Route = createFileRoute("/{-$lang}/get-proxies/")({
     return {
       meta: getPageMeta({
         locale,
-        title: "Get Proxies - SoulFire",
-        description:
-          "Best proxy providers for Minecraft bot testing. Compare residential, datacenter, ISP, and mobile proxies. Free tiers available, with coupon codes and bulk pricing from top providers.",
+        title: translate(locale, "providers.proxies.meta.title"),
+        description: translate(locale, "providers.proxies.meta.description"),
         path: "/get-proxies",
         imageUrl: "/og/site/get-proxies/image.webp",
-        imageAlt: "SoulFire proxy providers page preview",
+        imageAlt: translate(
+          locale,
+          "providers.proxies.soulfireProxyProvidersPagePreview",
+        ),
       }),
       links: getCanonicalLinks("/get-proxies", locale),
     };

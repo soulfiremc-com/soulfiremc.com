@@ -1,3 +1,4 @@
+import { translate } from "@/lib/messages";
 import { TranslatedMessage } from "@/components/translated-message";
 import { useLocale } from "@/lib/i18n-react";
 import { localizePath } from "@/lib/i18n";
@@ -27,22 +28,22 @@ import {
 } from "@/lib/seo";
 
 const freeTierFeatures = [
-  "Full SoulFire bot framework",
-  "All platforms supported",
-  "Every Minecraft version",
-  "Visual scripting system",
-  "Plugin system",
-  "Community support",
-  "Open source (AGPL-3.0)",
-];
+  "support.fullSoulfireBotFramework",
+  "support.allPlatformsSupported",
+  "support.everyMinecraftVersion",
+  "support.visualScriptingSystem",
+  "home.pluginSystem",
+  "support.communitySupport",
+  "support.openSourceAgpl30",
+] as const;
 
 const supporterTierFeatures = [
-  "Priority support via Discord",
-  "Priority with feature requests",
-  "Supporter role in Discord",
-  "Support ongoing development",
-  "Help keep the project alive",
-];
+  "support.prioritySupportViaDiscord",
+  "support.priorityWithFeatureRequests",
+  "support.supporterRoleInDiscord",
+  "support.supportOngoingDevelopment",
+  "support.helpKeepTheProjectAlive",
+] as const;
 
 function PricingPageContent() {
   const locale = useLocale();
@@ -51,12 +52,10 @@ function PricingPageContent() {
     <main className="px-4 py-12 w-full max-w-(--fd-layout-width) mx-auto">
       <div className="flex flex-col items-center text-center gap-4 mb-12">
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-          {t("Simple, transparent pricing")}
+          {t("support.simpleTransparentPricing")}
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl">
-          {t(
-            "SoulFire is and always will be free. If you love the project, consider becoming a supporter.",
-          )}
+          {t("support.soulfireIsAndAlwaysWillBeFreeIfYou")}
         </p>
       </div>
       <div className="grid gap-8 md:grid-cols-2 max-w-4xl mx-auto">
@@ -66,20 +65,22 @@ function PricingPageContent() {
               <div className="rounded-lg bg-muted p-2">
                 <Users className="h-5 w-5" />
               </div>
-              <CardTitle className="text-xl">{t("Free")}</CardTitle>
+              <CardTitle className="text-xl">{t("common.free")}</CardTitle>
             </div>
             <div className="flex items-baseline gap-1">
               <span className="text-4xl font-bold">0€</span>
-              <span className="text-muted-foreground">{t("/month")}</span>
+              <span className="text-muted-foreground">
+                {t("support.month")}
+              </span>
             </div>
             <CardDescription>
-              {t("Everything you need to run bots on your server")}
+              {t("support.everythingYouNeedToRunBotsOnYourServer")}
             </CardDescription>
           </CardHeader>
           <CardContent className="flex-1">
             <ul className="flex flex-col gap-3">
               {freeTierFeatures.map((feature) => (
-                <li key={t(feature)} className="flex items-start gap-3">
+                <li key={feature} className="flex items-start gap-3">
                   <Check className="h-5 w-5 shrink-0 text-primary mt-0.5" />
                   <span className="text-sm">{t(feature)}</span>
                 </li>
@@ -91,7 +92,7 @@ function PricingPageContent() {
               render={
                 <a href={localizePath("/download", locale)}>
                   <Code className="h-4 w-4" />
-                  {t("Get Started")}
+                  {t("support.getStarted")}
                 </a>
               }
               nativeButton={false}
@@ -106,21 +107,25 @@ function PricingPageContent() {
               <div className="rounded-lg bg-primary/10 p-2">
                 <Heart className="h-5 w-5 text-primary" />
               </div>
-              <CardTitle className="text-xl">{t("Supporter")}</CardTitle>
-              <Badge>{t("Popular")}</Badge>
+              <CardTitle className="text-xl">
+                {t("support.supporter")}
+              </CardTitle>
+              <Badge>{t("support.popular")}</Badge>
             </div>
             <div className="flex items-baseline gap-1">
               <span className="text-4xl font-bold">5€</span>
-              <span className="text-muted-foreground">{t("/month")}</span>
+              <span className="text-muted-foreground">
+                {t("support.month")}
+              </span>
             </div>
             <CardDescription>
-              {t("Support the project and get priority help when you need it")}
+              {t("support.supportTheProjectAndGetPriorityHelpWhenYou")}
             </CardDescription>
           </CardHeader>
           <CardContent className="flex-1">
             <ul className="flex flex-col gap-3">
               {supporterTierFeatures.map((feature) => (
-                <li key={t(feature)} className="flex items-start gap-3">
+                <li key={feature} className="flex items-start gap-3">
                   <Check className="h-5 w-5 shrink-0 text-primary mt-0.5" />
                   <span className="text-sm">{t(feature)}</span>
                 </li>
@@ -136,7 +141,7 @@ function PricingPageContent() {
                   rel="noopener noreferrer"
                 >
                   <SiKofi className="h-4 w-4" />
-                  {t("Become a Supporter")}
+                  {t("support.becomeASupporter")}
                 </a>
               }
               nativeButton={false}
@@ -147,7 +152,7 @@ function PricingPageContent() {
       </div>
       <p className="text-center text-sm text-muted-foreground mt-8 max-w-2xl mx-auto">
         <TranslatedMessage
-          text="Supporter perks are delivered through our {discord}. After subscribing on Ko-fi, you'll receive your supporter role and access to priority support channels."
+          text="support.perks.delivery"
           values={{
             discord: (
               <a
@@ -159,7 +164,7 @@ function PricingPageContent() {
                 rel="noopener noreferrer"
                 className="underline text-primary"
               >
-                {t("Discord server")}
+                {t("support.discordServer")}
               </a>
             ),
           }}
@@ -170,17 +175,13 @@ function PricingPageContent() {
           <Gift className="h-6 w-6" />
         </div>
         <h2 className="text-3xl font-bold tracking-tight">
-          {t("One-time Donations")}
+          {t("support.oneTimeDonations")}
         </h2>
         <p className="text-lg text-muted-foreground max-w-2xl">
-          {t(
-            "Want to support SoulFire without a recurring commitment? You can make a one-time donation via Ko-fi or cryptocurrency.",
-          )}
+          {t("support.donation.description")}
         </p>
         <p className="text-sm text-muted-foreground max-w-2xl">
-          {t(
-            "Only the Ko-fi membership grants supporter perks. One-time payments via Ko-fi or NOWPayments do not grant any perks.",
-          )}
+          {t("support.onlyTheKoFiMembershipGrantsSupporterPerksOne")}
         </p>
       </div>
       <div className="grid gap-8 md:grid-cols-2 max-w-4xl mx-auto">
@@ -188,12 +189,10 @@ function PricingPageContent() {
           <CardHeader>
             <CardTitle className="text-xl flex items-center gap-2">
               <SiKofi className="h-5 w-5" />
-              {t("Ko-fi")}
+              {"Ko-fi"}
             </CardTitle>
             <CardDescription>
-              {t(
-                "Donate via PayPal or card. Membership and one-time options available.",
-              )}
+              {t("support.donateViaPaypalOrCardMembershipAndOneTime")}
             </CardDescription>
           </CardHeader>
           <CardContent className="flex-1">
@@ -201,17 +200,17 @@ function PricingPageContent() {
               src="https://ko-fi.com/alexprogrammerde/?hidefeed=true&widget=true&embed=true&preview=true"
               className="border-none w-full"
               height="712"
-              title={t("alexprogrammerde")}
+              title={"alexprogrammerde"}
             />
           </CardContent>
         </Card>
         <Card className="flex flex-col">
           <CardHeader>
             <CardTitle className="text-xl flex items-center gap-2">
-              {t("💰 Crypto")}
+              {t("support.crypto")}
             </CardTitle>
             <CardDescription>
-              {t("Donate with cryptocurrency via NOWPayments")}
+              {t("support.donateWithCryptocurrencyViaNowpayments")}
             </CardDescription>
           </CardHeader>
           <CardContent className="flex-1">
@@ -220,7 +219,7 @@ function PricingPageContent() {
               width="346"
               height="623"
               className="border-none overflow-y-hidden mx-auto"
-              title={t("NOWPayments Donation Widget")}
+              title={t("support.nowpaymentsDonationWidget")}
             />
           </CardContent>
         </Card>
@@ -233,12 +232,20 @@ export const Route = createFileRoute("/{-$lang}/pricing")({
   head: ({ params }) => ({
     meta: getPageMeta({
       locale: isLocale(params.lang) ? params.lang : "en",
-      title: "Pricing - SoulFire",
-      description:
-        "SoulFire is free and open source. Support the project and get priority help.",
+      title: translate(
+        isLocale(params.lang) ? params.lang : "en",
+        "support.meta.title",
+      ),
+      description: translate(
+        isLocale(params.lang) ? params.lang : "en",
+        "support.meta.description",
+      ),
       path: "/pricing",
       imageUrl: "/og/site/pricing/image.webp",
-      imageAlt: "SoulFire pricing preview",
+      imageAlt: translate(
+        isLocale(params.lang) ? params.lang : "en",
+        "support.soulfirePricingPreview",
+      ),
     }),
     links: getCanonicalLinks(
       "/pricing",
@@ -250,9 +257,14 @@ export const Route = createFileRoute("/{-$lang}/pricing")({
           createWebPageStructuredData({
             locale: isLocale(params.lang) ? params.lang : "en",
             path: "/pricing",
-            title: "Pricing - SoulFire",
-            description:
-              "SoulFire is free and open source. Support the project and get priority help.",
+            title: translate(
+              isLocale(params.lang) ? params.lang : "en",
+              "support.meta.title",
+            ),
+            description: translate(
+              isLocale(params.lang) ? params.lang : "en",
+              "support.meta.description",
+            ),
             imageUrl: "/og/site/pricing/image.webp",
           }),
         ]),

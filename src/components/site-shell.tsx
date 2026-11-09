@@ -16,40 +16,40 @@ export function SiteShell({ children }: { children: ReactNode }) {
       {...baseOptions}
       links={[
         {
-          text: t("Docs"),
+          text: t("nav.docs"),
           url: localizeHref("/docs", locale),
-          description: t("Learn how to use SoulFire"),
+          description: t("nav.docs.description"),
         },
         {
-          text: t("Downloads"),
+          text: t("nav.downloads"),
           url: localizeHref("/download", locale),
-          description: t("Download SoulFire"),
+          description: t("download.title"),
         },
         {
           type: "menu",
-          text: t("Resources"),
+          text: t("nav.resources"),
           items: [
             {
-              text: t("Accounts"),
+              text: t("nav.accounts"),
               url: localizeHref("/get-accounts", locale),
-              description: t("Find Minecraft accounts for your bots"),
+              description: t("nav.accounts.description"),
             },
             {
-              text: t("Proxies"),
+              text: t("nav.proxies"),
               url: localizeHref("/get-proxies", locale),
-              description: t("Find proxies for your bot sessions"),
+              description: t("nav.proxies.description"),
             },
             {
-              text: t("Blog"),
+              text: t("nav.blog"),
               url: "/blog",
-              description: t("News and guides from SoulFire"),
+              description: t("nav.blog.description"),
             },
           ],
         },
         {
-          text: t("Support"),
+          text: t("nav.support"),
           url: localizeHref("/pricing", locale),
-          description: t("Support SoulFire development"),
+          description: t("nav.support.description"),
         },
         ...(baseOptions.links || []),
         {
@@ -68,25 +68,25 @@ export function SiteShell({ children }: { children: ReactNode }) {
               to="/privacy-policy"
               className="hover:text-fd-foreground transition-colors"
             >
-              {t("Privacy Policy")}
+              {t("legal.privacyPolicy")}
             </Link>
             <Link
               to="/terms-of-service"
               className="hover:text-fd-foreground transition-colors"
             >
-              {t("Terms of Service")}
+              {t("legal.termsOfService")}
             </Link>
             <Link
               to="/cookie-policy"
               className="hover:text-fd-foreground transition-colors"
             >
-              {t("Cookie Policy")}
+              {t("legal.cookiePolicy")}
             </Link>
             <Link
               to="/imprint"
               className="hover:text-fd-foreground transition-colors"
             >
-              {t("Imprint")}
+              {t("legal.imprint")}
             </Link>
           </nav>
         </div>

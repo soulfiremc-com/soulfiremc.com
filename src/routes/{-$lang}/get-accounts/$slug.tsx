@@ -1,5 +1,5 @@
+import { translate, resolveMessage, type MessageKey } from "@/lib/messages";
 import { isLocale, localizePath, type Locale } from "@/lib/i18n";
-import { translate } from "@/lib/messages";
 import { formatProviderSince, localizeProviderData } from "@/lib/provider-i18n";
 import { useT, useLocale } from "@/lib/i18n-react";
 import { Schema } from "effect";
@@ -85,7 +85,7 @@ function DiscordMemberBadge({
   if (pending) {
     return (
       <Skeleton
-        aria-label={t("Loading Discord member count")}
+        aria-label={t("providers.accounts.loadingDiscordMemberCount")}
         className="h-5 w-16"
       />
     );
@@ -98,7 +98,7 @@ function DiscordMemberBadge({
         className="border-transparent bg-discord/10 text-discord/50"
       >
         <Users />
-        {t("unknown")}
+        {t("providers.accounts.unknown")}
       </UiBadge>
     );
   }
@@ -122,13 +122,13 @@ function DiscordMemberBadge({
       <HoverCardContent className="w-auto text-sm">
         {info.guild?.name && <p className="font-medium">{info.guild.name}</p>}
         <p>
-          {t("Members: {count}", {
+          {t("providers.accounts.members", {
             count: info.approximate_member_count.toLocaleString(locale),
           })}
         </p>
         {info.approximate_presence_count && (
           <p className="text-success">
-            {t("Online: {count}", {
+            {t("providers.accounts.online", {
               count: info.approximate_presence_count.toLocaleString(locale),
             })}
           </p>
@@ -138,7 +138,7 @@ function DiscordMemberBadge({
   );
 }
 
-function LinkDiscountNotice({ message }: { message: string }) {
+function LinkDiscountNotice({ message }: { message: MessageKey }) {
   const t = useT();
   return (
     <div className="rounded-lg bg-offer/10 p-3">
@@ -187,7 +187,7 @@ function getAccountDetailPageData({
       name: shop.name,
     },
     url: `https://soulfiremc.com/get-accounts/${shop.slug}`,
-    category: "Minecraft Accounts",
+    category: "providers.accounts.minecraftAccounts",
     ...(shop.startDate && { dateCreated: shop.startDate }),
   };
 
@@ -199,13 +199,13 @@ function getAccountDetailPageData({
       {
         "@type": "ListItem",
         position: 1,
-        name: "Home",
+        name: "nav.home",
         item: "https://soulfiremc.com",
       },
       {
         "@type": "ListItem",
         position: 2,
-        name: "Get Accounts",
+        name: "common.getAccounts",
         item: "https://soulfiremc.com/get-accounts",
       },
       {
@@ -221,7 +221,7 @@ function getAccountDetailPageData({
     "@context": "https://schema.org",
     "@type": "WebPage",
     "@id": `https://soulfiremc.com/get-accounts/${shop.slug}#webpage`,
-    name: translate(locale, "{provider} - Minecraft Alt Shop", {
+    name: translate(locale, "providers.accounts.minecraftAltShop", {
       provider: shop.name,
     }),
     description: providers
@@ -337,7 +337,7 @@ function ShopLogo({ src, name }: { src?: string; name: string }) {
     return (
       <Image
         src={src}
-        alt={t("{provider} logo", { provider: name })}
+        alt={t("providers.accounts.logo", { provider: name })}
         fill
         sizes="56px"
         breakpoints={[56, 112, 168]}
@@ -402,7 +402,7 @@ export const Route = createFileRoute("/{-$lang}/get-accounts/$slug")({
   },
   head: ({ loaderData, params }) => {
     const locale = isLocale(params.lang) ? params.lang : "en";
-    const t = (message: string, values?: Record<string, string | number>) =>
+    const t = (message: MessageKey, values?: Record<string, string | number>) =>
       translate(locale, message, values);
     const data = loaderData;
 
@@ -412,7 +412,7 @@ export const Route = createFileRoute("/{-$lang}/get-accounts/$slug")({
 
     return {
       meta: getPageMeta({
-        title: t("{provider} - Minecraft Alt Shop", {
+        title: t("providers.accounts.minecraftAltShop", {
           provider: data.shop.name,
         }),
         description: data.providers
@@ -421,7 +421,7 @@ export const Route = createFileRoute("/{-$lang}/get-accounts/$slug")({
         path: `/get-accounts/${data.shop.slug}`,
         locale,
         imageUrl: getAccountPageImage(data.shop.slug, locale).url,
-        imageAlt: t("{provider} preview", { provider: data.shop.name }),
+        imageAlt: t("providers.accounts.preview", { provider: data.shop.name }),
       }),
       links: getCanonicalLinks(`/get-accounts/${data.shop.slug}`, locale),
       scripts: discordEmbedScript({
@@ -429,18 +429,18 @@ export const Route = createFileRoute("/{-$lang}/get-accounts/$slug")({
         description: data.providers
           .map(
             (provider) =>
-              `${t(provider.summary)} · ${t(provider.price)}${provider.couponCode ? ` · ${t("Coupon: {code}", { code: provider.couponCode })}` : ""}`,
+              `${t(provider.summary)} · ${resolveMessage(locale, provider.price)}${provider.couponCode ? ` · ${t("providers.accounts.coupon", { code: provider.couponCode })}` : ""}`,
           )
           .join("\n"),
         url: `https://soulfiremc.com${localizePath(`/get-accounts/${data.shop.slug}`, locale)}`,
-        label: t("View provider"),
+        label: t("providers.accounts.viewProvider"),
         thumbnail: data.shop.logo
           ? new URL(data.shop.logo, "https://soulfiremc.com").href
           : undefined,
         links: [
-          { label: t("Visit shop"), url: data.shop.url },
+          { label: t("providers.accounts.visitShop"), url: data.shop.url },
           ...(data.shop.discordUrl
-            ? [{ label: "Discord", url: data.shop.discordUrl }]
+            ? [{ label: "social.discord", url: data.shop.discordUrl }]
             : []),
         ],
       }),
@@ -497,14 +497,14 @@ function AccountDetailPage() {
             to="/{-$lang}"
             className="transition-colors hover:text-foreground"
           >
-            {t("Home")}
+            {t("nav.home")}
           </Link>
           <ChevronRight className="h-3.5 w-3.5" />
           <Link
             to="/{-$lang}/get-accounts"
             className="transition-colors hover:text-foreground"
           >
-            {t("Get Accounts")}
+            {t("common.getAccounts")}
           </Link>
           <ChevronRight className="h-3.5 w-3.5" />
           <span className="truncate text-foreground">{data.shop.name}</span>
@@ -536,7 +536,7 @@ function AccountDetailPage() {
                 {data.shop.startDate ? (
                   <span className="inline-flex items-center gap-1 text-sm text-muted-foreground">
                     <Calendar className="h-3.5 w-3.5" />
-                    {t("Since {date}", {
+                    {t("providers.accounts.since", {
                       date: formatProviderSince(data.shop.startDate, locale),
                     })}
                   </span>
@@ -579,7 +579,7 @@ function AccountDetailPage() {
                       target="_blank"
                       rel="noopener noreferrer nofollow"
                     >
-                      {t("Get Accounts")}
+                      {t("common.getAccounts")}
                       <ExternalLink data-icon="inline-end" />
                     </a>
                   }
@@ -595,7 +595,7 @@ function AccountDetailPage() {
                         target="_blank"
                         rel="noopener noreferrer nofollow"
                       >
-                        {t("Website")}
+                        {t("providers.website")}
                         <Globe data-icon="inline-end" />
                       </a>
                     }
@@ -677,7 +677,9 @@ function AccountDetailPage() {
                     {t(CATEGORY_CONFIG[provider.category].description)}
                   </p>
                 </div>
-                <div className="text-3xl font-bold">{t(provider.price)}</div>
+                <div className="text-3xl font-bold">
+                  {resolveMessage(locale, provider.price)}
+                </div>
                 {provider.priceDetails ? (
                   <p className="text-sm text-muted-foreground">
                     {t(provider.priceDetails)}
@@ -706,7 +708,7 @@ function AccountDetailPage() {
                   <LinkDiscountNotice message={provider.linkDiscountMessage} />
                 ) : null}
                 <div className="text-sm text-muted-foreground">
-                  {t("Availability:")}{" "}
+                  {t("providers.accounts.availability")}{" "}
                   {liveShopDataQuery.isPending ? (
                     <Skeleton className="inline-block h-4 w-20 align-middle" />
                   ) : liveOffer.availability ===
@@ -725,7 +727,7 @@ function AccountDetailPage() {
                       target="_blank"
                       rel="noopener noreferrer nofollow"
                     >
-                      {t("Buy {category}", {
+                      {t("providers.accounts.buy", {
                         category: t(CATEGORY_CONFIG[provider.category].label),
                       })}
                       <ExternalLink data-icon="inline-end" />
@@ -753,7 +755,7 @@ function AccountDetailPage() {
           render={
             <Link to="/{-$lang}/get-accounts">
               <ArrowLeft data-icon="inline-start" />
-              {t("Browse all account providers")}
+              {t("providers.accounts.browseAllAccountProviders")}
             </Link>
           }
           nativeButton={false}

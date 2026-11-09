@@ -1,3 +1,4 @@
+import type { MessageKey } from "@/lib/messages";
 import { useT } from "@/lib/i18n-react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useState } from "react";
@@ -14,7 +15,7 @@ import {
 export function GallerySection({
   images,
 }: {
-  images: { src: string; alt: string }[];
+  images: { src: string; alt: MessageKey }[];
 }) {
   const t = useT();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -28,7 +29,7 @@ export function GallerySection({
 
   return (
     <section className="flex flex-col gap-4">
-      <h2 className="text-2xl font-semibold">{t("Gallery")}</h2>
+      <h2 className="text-2xl font-semibold">{t("gallery.title")}</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {images.map((img, i) => (
           <button
@@ -58,10 +59,10 @@ export function GallerySection({
           className="flex h-[calc(100vh-1rem)] max-h-[calc(100vh-1rem)] w-[calc(100vw-1rem)] max-w-[calc(100vw-1rem)] flex-col gap-0 overflow-hidden border-white/10 bg-black/90 p-2 shadow-2xl sm:h-[calc(100vh-3rem)] sm:max-h-[calc(100vh-3rem)] sm:w-[calc(100vw-3rem)] sm:max-w-[calc(100vw-3rem)] sm:p-4"
         >
           <DialogTitle className="sr-only">
-            {t(openIndex !== null ? images[openIndex].alt : "Gallery image")}
+            {t(openIndex !== null ? images[openIndex].alt : "gallery.image")}
           </DialogTitle>
           <DialogDescription className="sr-only">
-            {t("Image {current} of {count}", {
+            {t("gallery.position", {
               current: openIndex !== null ? openIndex + 1 : 0,
               count: images.length,
             })}
@@ -83,7 +84,7 @@ export function GallerySection({
                     className="absolute top-3 right-3 z-10 h-11 w-11 rounded-full border border-white/10 bg-black/65 text-white hover:bg-black/80 hover:text-white"
                   >
                     <X className="h-5 w-5" />
-                    <span className="sr-only">{t("Close gallery")}</span>
+                    <span className="sr-only">{t("gallery.closeGallery")}</span>
                   </Button>
                 }
               />
@@ -96,7 +97,9 @@ export function GallerySection({
                     className="absolute left-3 top-1/2 z-10 h-11 w-11 -translate-y-1/2 rounded-full border border-white/10 bg-black/65 text-white hover:bg-black/80 hover:text-white"
                   >
                     <ChevronLeft className="h-5 w-5" />
-                    <span className="sr-only">{t("Previous image")}</span>
+                    <span className="sr-only">
+                      {t("gallery.previousImage")}
+                    </span>
                   </Button>
                   <Button
                     variant="ghost"
@@ -105,7 +108,7 @@ export function GallerySection({
                     className="absolute right-3 top-1/2 z-10 h-11 w-11 -translate-y-1/2 rounded-full border border-white/10 bg-black/65 text-white hover:bg-black/80 hover:text-white"
                   >
                     <ChevronRight className="h-5 w-5" />
-                    <span className="sr-only">{t("Next image")}</span>
+                    <span className="sr-only">{t("gallery.nextImage")}</span>
                   </Button>
                 </>
               )}

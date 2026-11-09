@@ -54,10 +54,8 @@ function handleMutationError(
   }
 
   if (error === "verification") {
-    toast(t("Verification failed"), {
-      description: t(
-        "Cloudflare Turnstile could not verify this review. Please try again.",
-      ),
+    toast(t("reviews.verificationFailed"), {
+      description: t("reviews.errors.reviewVerification"),
     });
   }
 }
@@ -141,8 +139,8 @@ function ItemReviewsSectionContent({
       : visibleRangeStart + visibleReviews.length - 1;
   const reviewCountLabel =
     summary.reviewCount === 0
-      ? t("No ratings yet")
-      : t("Ratings collected: {count}", {
+      ? t("reviews.noRatingsYet")
+      : t("reviews.ratingsCollected", {
           count: summary.reviewCount.toLocaleString(locale),
         });
 
@@ -161,10 +159,10 @@ function ItemReviewsSectionContent({
       toast(
         t(
           submittedForReview
-            ? "Review submitted for moderation"
+            ? "reviews.reviewSubmittedForModeration"
             : currentReview
-              ? "Review updated"
-              : "Review saved",
+              ? "reviews.reviewUpdated"
+              : "reviews.reviewSaved",
         ),
       );
     }
@@ -174,7 +172,7 @@ function ItemReviewsSectionContent({
     const result = await deleteReview(slug);
     handleMutationError(result.error, () => setShowSignInPrompt(true), t);
     if (!result.error) {
-      toast(t("Review removed"));
+      toast(t("reviews.reviewRemoved"));
     }
   };
 
@@ -182,11 +180,11 @@ function ItemReviewsSectionContent({
     <>
       <section className="flex flex-col gap-6" id={reviewsId}>
         <div className="flex flex-col gap-1">
-          <h2 className="text-2xl font-semibold">{t("Ratings & reviews")}</h2>
+          <h2 className="text-2xl font-semibold">
+            {t("reviews.ratingsReviews")}
+          </h2>
           <p className="text-sm text-muted-foreground">
-            {t(
-              "Ratings affect the average immediately. Written comments are reviewed before publication.",
-            )}
+            {t("reviews.moderation.description")}
           </p>
         </div>
 
@@ -226,7 +224,7 @@ function ItemReviewsSectionContent({
                 <div className="grid grid-cols-2 gap-3 sm:min-w-64">
                   <div className="rounded-xl border border-border/70 bg-muted/20 px-4 py-3">
                     <div className="text-xs uppercase tracking-review text-muted-foreground">
-                      {t("Average")}
+                      {t("reviews.average")}
                     </div>
                     <div className="mt-1 text-2xl font-semibold tabular-nums">
                       {summary.averageRating.toLocaleString(locale, {
@@ -237,7 +235,7 @@ function ItemReviewsSectionContent({
                   </div>
                   <div className="rounded-xl border border-border/70 bg-muted/20 px-4 py-3">
                     <div className="text-xs uppercase tracking-review text-muted-foreground">
-                      {t("Total Ratings")}
+                      {t("reviews.totalRatings")}
                     </div>
                     <div className="mt-1 text-2xl font-semibold tabular-nums">
                       {summary.reviewCount}
@@ -249,17 +247,15 @@ function ItemReviewsSectionContent({
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex flex-col gap-1">
                   <div className="text-lg font-semibold">
-                    {t("No ratings yet")}
+                    {t("reviews.noRatingsYet")}
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    {t(
-                      "Be the first person to leave a rating and written review.",
-                    )}
+                    {t("reviews.beTheFirstPersonToLeaveARatingAnd")}
                   </p>
                 </div>
                 <div className="inline-flex items-center gap-2 rounded-full border border-dashed px-4 py-2 text-sm text-muted-foreground">
                   <MessageSquareText className="size-4" />
-                  {t("Waiting for the first rating")}
+                  {t("reviews.waitingForTheFirstRating")}
                 </div>
               </div>
             )}
@@ -268,17 +264,15 @@ function ItemReviewsSectionContent({
 
         <Card className="gap-5 p-6">
           <CardHeader className="px-0">
-            <CardTitle>{t("Your review")}</CardTitle>
+            <CardTitle>{t("reviews.yourReview")}</CardTitle>
             <CardDescription>
-              {t(
-                "Leave a star rating and optionally add context. Your profile is shown with your review.",
-              )}
+              {t("reviews.leaveAStarRatingAndOptionallyAddContextYour")}
             </CardDescription>
           </CardHeader>
 
           <CardContent className="grid gap-5 px-0 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)]">
             <Field>
-              <FieldLabel>{t("Rating")}</FieldLabel>
+              <FieldLabel>{t("reviews.rating")}</FieldLabel>
               <div className="rounded-xl border border-border/70 bg-muted/20 px-4 py-3">
                 <ReviewStarInput
                   value={rating}
@@ -291,10 +285,10 @@ function ItemReviewsSectionContent({
 
             <Field>
               <FieldLabel htmlFor={`review-body-${slug}`}>
-                {t("Written review")}
+                {t("reviews.writtenReview")}
               </FieldLabel>
               <FieldDescription>
-                {t("Optional, and reviewed before publication.")}
+                {t("reviews.optionalAndReviewedBeforePublication")}
               </FieldDescription>
               <Textarea
                 id={`review-body-${slug}`}
@@ -303,9 +297,7 @@ function ItemReviewsSectionContent({
                 disabled={pending}
                 rows={6}
                 maxLength={2000}
-                placeholder={t(
-                  "What stood out? Delivery speed, support quality, stability, setup experience...",
-                )}
+                placeholder={t("reviews.comment.placeholder")}
                 className="min-h-40 resize-y"
               />
               <div className="flex justify-end text-xs text-muted-foreground">
@@ -320,7 +312,9 @@ function ItemReviewsSectionContent({
               onClick={saveReview}
               disabled={pending || loading}
             >
-              {currentReview ? t("Update review") : t("Submit review")}
+              {currentReview
+                ? t("reviews.updateReview")
+                : t("reviews.submitReview")}
             </Button>
             {currentReview ? (
               <Button
@@ -329,7 +323,7 @@ function ItemReviewsSectionContent({
                 onClick={removeReview}
                 disabled={pending}
               >
-                {t("Remove review")}
+                {t("reviews.removeReview")}
               </Button>
             ) : null}
           </CardFooter>
@@ -338,10 +332,12 @@ function ItemReviewsSectionContent({
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div className="flex flex-col gap-1">
-              <h3 className="text-lg font-semibold">{t("Latest reviews")}</h3>
+              <h3 className="text-lg font-semibold">
+                {t("reviews.latestReviews")}
+              </h3>
               {reviewPageData.totalCount > 0 ? (
                 <p className="text-sm text-muted-foreground">
-                  {t("Showing reviews {start}-{end} of {count}.", {
+                  {t("reviews.showingReviewsOf", {
                     start: visibleRangeStart,
                     end: visibleRangeEnd,
                     count: reviewPageData.totalCount,
@@ -352,14 +348,14 @@ function ItemReviewsSectionContent({
 
             {reviewPageData.totalPages > 1 ? (
               <Pagination
-                aria-label={t("Review pages")}
+                aria-label={t("reviews.reviewPages")}
                 className="mx-0 w-auto justify-start sm:justify-end"
               >
                 <PaginationContent>
                   <PaginationItem>
                     <PaginationLink
                       size="default"
-                      aria-label={t("Previous page")}
+                      aria-label={t("reviews.previousPage")}
                       href={`#${reviewsId}`}
                       aria-disabled={!hasPreviousPage || loading}
                       className={cn(
@@ -373,12 +369,14 @@ function ItemReviewsSectionContent({
                       }}
                     >
                       <ChevronLeft />
-                      <span className="hidden sm:block">{t("Previous")}</span>
+                      <span className="hidden sm:block">
+                        {t("common.previous")}
+                      </span>
                     </PaginationLink>
                   </PaginationItem>
                   <PaginationItem>
                     <span className="flex h-9 min-w-24 items-center justify-center px-2 text-sm text-muted-foreground">
-                      {t("Page {page} of {pages}", {
+                      {t("reviews.pageOf", {
                         page: reviewPageData.page,
                         pages: reviewPageData.totalPages,
                       })}
@@ -387,7 +385,7 @@ function ItemReviewsSectionContent({
                   <PaginationItem>
                     <PaginationLink
                       size="default"
-                      aria-label={t("Next page")}
+                      aria-label={t("reviews.nextPage")}
                       href={`#${reviewsId}`}
                       aria-disabled={!hasNextPage || loading}
                       className={cn(
@@ -400,7 +398,9 @@ function ItemReviewsSectionContent({
                         }
                       }}
                     >
-                      <span className="hidden sm:block">{t("Next")}</span>
+                      <span className="hidden sm:block">
+                        {t("common.next")}
+                      </span>
                       <ChevronRight />
                     </PaginationLink>
                   </PaginationItem>
@@ -464,7 +464,7 @@ function ItemReviewsSectionContent({
                     </p>
                   ) : entry.commentStatus === "pending" ? (
                     <p className="text-sm italic text-muted-foreground/80">
-                      {t("Review pending.")}
+                      {t("reviews.reviewPending")}
                     </p>
                   ) : null}
                 </Card>
@@ -476,10 +476,10 @@ function ItemReviewsSectionContent({
                 <EmptyMedia variant="icon">
                   <MessageSquareText />
                 </EmptyMedia>
-                <EmptyTitle>{t("No reviews yet")}</EmptyTitle>
+                <EmptyTitle>{t("reviews.noReviewsYet")}</EmptyTitle>
                 <EmptyDescription>
                   {t(
-                    "Ratings without comments will still appear here and count toward the average above.",
+                    "reviews.ratingsWithoutCommentsWillStillAppearHereAndCount",
                   )}
                 </EmptyDescription>
               </EmptyHeader>
@@ -490,10 +490,8 @@ function ItemReviewsSectionContent({
       <SignInRequiredCredenza
         open={showSignInPrompt}
         onOpenChange={setShowSignInPrompt}
-        title={t("Sign in to leave a review")}
-        description={t(
-          "You need to be signed in to rate and review this listing.",
-        )}
+        title={t("reviews.signInToLeaveAReview")}
+        description={t("reviews.youNeedToBeSignedInToRateAnd")}
       />
     </>
   );

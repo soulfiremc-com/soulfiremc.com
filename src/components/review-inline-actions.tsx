@@ -25,10 +25,8 @@ function handleMutationError(
   }
 
   if (error === "verification") {
-    toast(t("Verification failed"), {
-      description: t(
-        "Cloudflare Turnstile could not verify this rating. Please try again.",
-      ),
+    toast(t("reviews.verificationFailed"), {
+      description: t("reviews.errors.ratingVerification"),
     });
   }
 }
@@ -82,13 +80,13 @@ export function ReviewInlineActions({
               disabled={pending}
               className="h-8 px-2 text-xs text-muted-foreground"
             >
-              {t("Remove")}
+              {t("common.remove")}
             </Button>
           ) : null}
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-xs font-medium text-muted-foreground">
-            {t("Your rating")}
+            {t("reviews.yourRating")}
           </span>
           <ReviewStarInput
             value={currentRating ?? 0}
@@ -100,8 +98,8 @@ export function ReviewInlineActions({
       <SignInRequiredCredenza
         open={showSignInPrompt}
         onOpenChange={setShowSignInPrompt}
-        title={t("Sign in to leave a rating")}
-        description={t("You need to be signed in to rate this listing.")}
+        title={t("reviews.signInToLeaveARating")}
+        description={t("reviews.youNeedToBeSignedInToRateThis")}
       />
     </>
   );

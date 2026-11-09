@@ -3,6 +3,9 @@ import { readFile, readdir } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import test from "node:test";
 import { convertV4MiniflareOptions, Miniflare } from "miniflare";
+import { locales, localizePath } from "@/lib/i18n";
+import { translate } from "@/lib/messages";
+import en from "@/lib/messages/en.json";
 
 const workerBundle = process.env.PROVIDER_WORKER_BUNDLE;
 
@@ -100,6 +103,66 @@ void test(
               `${phase}: ${path}: ${html.slice(0, 500)}`,
             );
             assert.ok(html.includes("Localts"), `${phase}: ${path}`);
+          }),
+        );
+      }
+
+      // Exercise SSR, not prerendered files, so dynamic catalog values and head
+      // metadata must resolve correctly in the deployed runtime too.
+      for (const locale of locales) {
+        await Promise.all(
+          (
+            [
+              ["/", "home.meta.title"],
+              ["/download", "download.downloadSoulfireSoulfire"],
+              ["/pricing", "support.meta.title"],
+              ["/get-accounts", "providers.accounts.meta.title"],
+              ["/get-proxies", "providers.proxies.meta.title"],
+              ["/get-accounts/localts", null],
+              ["/get-proxies/webshare", null],
+            ] as const
+          ).map(async ([path, titleKey]) => {
+            const localizedPath = localizePath(path, locale);
+            const response = await mf.dispatchFetch(
+              `https://soulfiremc.com${localizedPath}`,
+            );
+            const html = await response.text();
+            assert.equal(response.status, 200, localizedPath);
+            if (titleKey) {
+              const title = translate(locale, titleKey);
+              assert.ok(
+                html.includes(
+                  `<title>${title.replaceAll("&", "&amp;")}</title>`,
+                ),
+                `${localizedPath}: translated page title`,
+              );
+            }
+            const document = html.replace(
+              /<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi,
+              "",
+            );
+            for (const key of Object.keys(en)) {
+              assert.ok(
+                !document.includes(key),
+                `${localizedPath}: unresolved visible message ${key}`,
+              );
+            }
+            for (const [, json] of html.matchAll(
+              /<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g,
+            )) {
+              const structuredData = JSON.parse(json);
+              const values: string[] = [];
+              JSON.stringify(structuredData, (_, value) => {
+                if (typeof value === "string") values.push(value);
+                return value;
+              });
+              for (const value of values) {
+                assert.ok(
+                  !Object.keys(en).some((key) => value.includes(key)),
+                  `${localizedPath}: unresolved structured message ${value}`,
+                );
+              }
+            }
           }),
         );
       }

@@ -67,14 +67,14 @@ void test(
           );
           assert.ok(
             html.includes(
-              translate(
-                locale,
-                suffix ? "Written review" : "Frequently Asked Questions",
-              ),
+              translate(locale, suffix ? "reviews.writtenReview" : "faq.title"),
             ),
             path,
           );
-          assert.ok(html.includes(translate(locale, "Payments")), path);
+          assert.ok(
+            html.includes(translate(locale, "payments.payments")),
+            path,
+          );
           const schema = [
             ...html.matchAll(
               /<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g,

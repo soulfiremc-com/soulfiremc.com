@@ -1,3 +1,4 @@
+import { translate } from "@/lib/messages";
 import { TranslatedMessage } from "@/components/translated-message";
 import { useT } from "@/lib/i18n-react";
 import { isLocale } from "@/lib/i18n";
@@ -62,21 +63,21 @@ import { cn, generateN } from "@/lib/utils";
 const FALLBACK_CPU = {
   id: "x64",
   label: "x86_64 / AMD64",
-  detail: "Intel or AMD processors",
+  detail: "download.intelOrAmdProcessors",
   icon: "cpu",
 } as const;
 
 const ARM_CPU = {
   id: "arm64",
   label: "AArch64 / ARM64",
-  detail: "Apple Silicon or ARM servers",
+  detail: "download.appleSiliconOrArmServers",
   icon: "circuit",
 } as const;
 
 const WINDOWS_OPTION = {
   id: "windows",
   label: "Windows",
-  detail: "Windows 10 or newer",
+  detail: "download.windows10OrNewer",
   iconSrc: "/platform/windows.png",
   iconAlt: "Windows",
   preferredCpuId: FALLBACK_CPU.id,
@@ -87,7 +88,7 @@ const OS_OPTIONS = [
   {
     id: "macos",
     label: "macOS",
-    detail: "Apple Silicon & Intel",
+    detail: "download.appleSiliconIntel",
     iconSrc: "/platform/macos.png",
     iconAlt: "macOS",
     preferredCpuId: ARM_CPU.id,
@@ -95,7 +96,7 @@ const OS_OPTIONS = [
   {
     id: "linux",
     label: "Linux",
-    detail: "Most distros supported",
+    detail: "download.mostDistrosSupported",
     iconSrc: "/platform/linux.png",
     iconAlt: "Linux",
     preferredCpuId: FALLBACK_CPU.id,
@@ -210,27 +211,25 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
   return (
     <Card className="max-w-4xl mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl">{t("Choose your build")}</CardTitle>
+        <CardTitle className="text-2xl">
+          {t("download.chooseYourBuild")}
+        </CardTitle>
         <CardDescription>
-          {t(
-            "SoulFire is multi-platform. Tell us what you are running and we will point you to the best download.",
-          )}
+          {t("download.soulfireIsMultiPlatformTellUsWhatYouAre")}
         </CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-8">
         {isMobile && (
           <Alert>
-            <AlertTitle>{t("Download on a computer")}</AlertTitle>
+            <AlertTitle>{t("download.downloadOnAComputer")}</AlertTitle>
             <AlertDescription>
-              {t(
-                "SoulFire desktop downloads require Windows, macOS, or Linux. Choose the computer you want to install it on below.",
-              )}
+              {t("download.mobile.description")}
             </AlertDescription>
           </Alert>
         )}
         <div className="flex flex-col gap-3">
           <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-            {t("Operating system")}
+            {t("download.operatingSystem")}
           </p>
           <div className="grid gap-4 sm:grid-cols-3">
             {OS_OPTIONS.map((option) => (
@@ -270,7 +269,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
         </div>
         <div className="flex flex-col gap-3">
           <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-            {t("CPU architecture")}
+            {t("download.cpuArchitecture")}
           </p>
           <div className="grid gap-4 sm:grid-cols-2">
             {CPU_OPTIONS.map((option) => (
@@ -330,7 +329,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
             }}
           >
             <Download className="h-5 w-5" />
-            {t("Download for {os}", {
+            {t("download.downloadFor", {
               os:
                 OS_OPTIONS.find((option) => option.id === selection.os)
                   ?.label ?? selection.os,
@@ -343,7 +342,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
             disabled
           >
             <Download className="h-5 w-5" />
-            {t("Coming soon")}
+            {t("download.comingSoon")}
           </Button>
         )}
       </CardContent>
@@ -352,11 +351,11 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
           <CredenzaHeader>
             <CredenzaTitle className="flex items-center gap-2">
               <Heart className="h-5 w-5 text-destructive" />
-              {t("Thank you for downloading!")}
+              {t("download.thankYouForDownloading")}
             </CredenzaTitle>
             <CredenzaDescription>
               <TranslatedMessage
-                text="Your download should start shortly. If it doesn't, {retry}."
+                text="download.yourDownloadShouldStartShortlyIfItDoesnT"
                 values={{
                   retry: (
                     <a
@@ -375,7 +374,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
                         ? { download: "" }
                         : { target: "_blank", rel: "noopener noreferrer" })}
                     >
-                      {t("retry the download")}
+                      {t("download.retryTheDownload")}
                     </a>
                   ),
                 }}
@@ -384,9 +383,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
           </CredenzaHeader>
           <CredenzaBody>
             <p className="text-sm text-muted-foreground">
-              {t(
-                "SoulFire is free, open-source, and community-driven. If you find it useful, consider supporting the project:",
-              )}
+              {t("download.soulfireIsFreeOpenSourceAndCommunityDrivenIf")}
             </p>
             <div className="mt-4 flex flex-col gap-3">
               <Button
@@ -397,7 +394,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
                     rel="noopener noreferrer"
                   >
                     <Coffee className="h-4 w-4" />
-                    {t("Buy me a coffee on Ko-fi")}
+                    {t("download.buyMeACoffeeOnKoFi")}
                   </a>
                 }
                 nativeButton={false}
@@ -412,7 +409,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
                     rel="noopener noreferrer"
                   >
                     <SiGithub className="h-4 w-4" />
-                    {t("Star on GitHub")}
+                    {t("download.starOnGithub")}
                   </a>
                 }
                 nativeButton={false}
@@ -423,7 +420,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
           </CredenzaBody>
           <CredenzaFooter>
             <CredenzaClose
-              render={<Button variant="secondary">{t("Close")}</Button>}
+              render={<Button variant="secondary">{t("common.close")}</Button>}
             />
           </CredenzaFooter>
         </CredenzaContent>
@@ -442,15 +439,13 @@ function DownloadTip(props: { selection: DownloadSelection }) {
 
   return (
     <div className="rounded-xl border bg-muted/30 p-4 text-sm">
-      <p className="font-semibold text-primary">{t("Tip")}</p>
+      <p className="font-semibold text-primary">{t("download.tip")}</p>
       <p className="text-muted-foreground">
-        {t(
-          "x86_64 means Intel and AMD CPUs. AArch64 refers to ARM processors like Apple Silicon or Snapdragon laptops.",
-        )}
+        {t("download.x8664MeansIntelAndAmdCpusAarch64Refers")}
       </p>
       <p className="mt-2 text-xs text-muted-foreground">
         <TranslatedMessage
-          text="Selected: {os} · {cpu}"
+          text="download.selection.summary"
           values={{
             os: (
               <span className="font-medium text-foreground">
@@ -471,17 +466,17 @@ function DownloadSelectionSkeleton() {
     <>
       <Card className="max-w-(--fd-layout-width) mx-auto">
         <CardHeader>
-          <CardTitle className="text-2xl">{t("Choose your build")}</CardTitle>
+          <CardTitle className="text-2xl">
+            {t("download.chooseYourBuild")}
+          </CardTitle>
           <CardDescription>
-            {t(
-              "SoulFire is multi-platform. Tell us what you are running and we will point you to the best download.",
-            )}
+            {t("download.soulfireIsMultiPlatformTellUsWhatYouAre")}
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-8">
           <div className="flex flex-col gap-3">
             <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-              {t("Operating system")}
+              {t("download.operatingSystem")}
             </p>
             <div className="grid gap-4 sm:grid-cols-3">
               {generateN(3).map((skeletonId) => (
@@ -502,7 +497,7 @@ function DownloadSelectionSkeleton() {
           </div>
           <div className="flex flex-col gap-3">
             <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-              {t("CPU architecture")}
+              {t("download.cpuArchitecture")}
             </p>
             <div className="grid gap-4 sm:grid-cols-2">
               {generateN(2).map((skeletonId) => (
@@ -525,14 +520,12 @@ function DownloadSelectionSkeleton() {
         </CardContent>
       </Card>
       <div className="rounded-xl border bg-muted/30 p-4 text-sm">
-        <p className="font-semibold text-primary">{t("Tip")}</p>
+        <p className="font-semibold text-primary">{t("download.tip")}</p>
         <p className="text-muted-foreground">
-          {t(
-            "x86_64 means Intel and AMD CPUs. AArch64 refers to ARM processors like Apple Silicon or Snapdragon laptops.",
-          )}
+          {t("download.x8664MeansIntelAndAmdCpusAarch64Refers")}
         </p>
         <div className="mt-2 text-xs text-muted-foreground">
-          {t("Currently set to")}{" "}
+          {t("download.currentlySetTo")}{" "}
           <Skeleton className="inline-block h-3 w-16 align-middle" /> •{" "}
           <Skeleton className="inline-block h-3 w-24 align-middle" />
         </div>
@@ -568,29 +561,27 @@ function DownloadPageContent({
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-              {t("Download SoulFire")}
+              {t("download.title")}
             </h1>
             <p className="max-w-2xl text-lg text-muted-foreground">
-              {t(
-                "Pick your operating system and CPU architecture. We'll give you the right download plus links to help you learn how everything works.",
-              )}
+              {t("download.pickYourOperatingSystemAndCpuArchitectureWeLl")}
             </p>
           </div>
           <div className="text-sm text-muted-foreground">
-            {t("Latest release:")}{" "}
+            {t("download.latestRelease")}{" "}
             {releasePending ? (
               <Skeleton className="inline-block h-4 w-24 align-middle" />
             ) : (
               <span className="font-medium text-foreground">
                 {releaseName === "latest"
-                  ? t("Latest version")
-                  : t("Version {version}", { version: releaseName })}
+                  ? t("download.latestVersion")
+                  : t("download.version", { version: releaseName })}
               </span>
             )}
             {releaseDate ? (
               <>
                 {" "}
-                {t("· Updated")}{" "}
+                {t("download.updated")}{" "}
                 <Suspense
                   fallback={
                     <Skeleton className="inline-block h-4 w-20 align-middle" />
@@ -611,24 +602,18 @@ function DownloadPageContent({
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-xl">
               <BookOpen className="h-5 w-5 text-primary" />
-              {t("Learn the workflow")}
+              {t("download.learnTheWorkflow")}
             </CardTitle>
-            <CardDescription>
-              {t(
-                "Understand how SoulFire operates before launching your first test.",
-              )}
-            </CardDescription>
+            <CardDescription>{t("download.learn.description")}</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <p className="text-muted-foreground">
-              {t(
-                "Follow the start-here docs for a full walkthrough, including account setup, plugins, and tuning tips for realistic bot testing.",
-              )}
+              {t("download.followTheStartHereDocsForAFullWalkthrough")}
             </p>
             <Button
               render={
                 <Link to="/{-$lang}/docs/$" params={{ _splat: "start-here" }}>
-                  {t("Open the docs")}
+                  {t("download.openTheDocs")}
                 </Link>
               }
               nativeButton={false}
@@ -640,19 +625,15 @@ function DownloadPageContent({
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-xl">
               <PlayCircle className="h-5 w-5 text-primary" />
-              {t("Watch it in action")}
+              {t("download.watchItInAction")}
             </CardTitle>
             <CardDescription>
-              {t(
-                "Prefer to learn visually? Use the live GUI demo in your browser.",
-              )}
+              {t("download.preferToLearnVisuallyUseTheLiveGuiDemo")}
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <p className="text-muted-foreground">
-              {t(
-                "Explore every screen, test presets, and share the experience with your team by opening the fully interactive SoulFire demo.",
-              )}
+              {t("download.demo.description")}
             </p>
             <Button
               render={
@@ -661,7 +642,7 @@ function DownloadPageContent({
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {t("Visit the demo")}
+                  {t("download.visitTheDemo")}
                 </a>
               }
               nativeButton={false}
@@ -671,12 +652,10 @@ function DownloadPageContent({
         <Card>
           <CardHeader>
             <CardTitle className="text-xl">
-              {t("Server & CLI builds")}
+              {t("download.serverCliBuilds")}
             </CardTitle>
             <CardDescription>
-              {t(
-                "Download the dedicated controller or command line client for advanced automations.",
-              )}
+              {t("download.server.description")}
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
@@ -701,7 +680,7 @@ function DownloadPageContent({
                 <Button
                   render={
                     <a href={item.url} download>
-                      {t("Download")}
+                      {t("download.download")}
                     </a>
                   }
                   nativeButton={false}
@@ -716,19 +695,15 @@ function DownloadPageContent({
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-xl">
               <Heart className="h-5 w-5 text-primary" />
-              {t("Support the project")}
+              {t("download.supportTheProject")}
             </CardTitle>
             <CardDescription>
-              {t(
-                "SoulFire is free and open source. Donations help keep it that way.",
-              )}
+              {t("download.soulfireIsFreeAndOpenSourceDonationsHelpKeep")}
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <p className="text-muted-foreground">
-              {t(
-                "If SoulFire saves you time or you just want to say thanks, consider buying the developer a coffee. Every contribution helps fund hosting, development, and new features.",
-              )}
+              {t("download.ifSoulfireSavesYouTimeOrYouJustWant")}
             </p>
             <Button
               render={
@@ -737,7 +712,7 @@ function DownloadPageContent({
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {t("Donate on Ko-fi")}
+                  {t("download.donateOnKoFi")}
                 </a>
               }
               nativeButton={false}
@@ -792,11 +767,20 @@ export const Route = createFileRoute("/{-$lang}/download")({
   head: ({ params }) => ({
     meta: getPageMeta({
       locale: isLocale(params.lang) ? params.lang : "en",
-      title: "Download SoulFire - SoulFire",
-      description: "Pick your OS and CPU to grab the right SoulFire build.",
+      title: translate(
+        isLocale(params.lang) ? params.lang : "en",
+        "download.downloadSoulfireSoulfire",
+      ),
+      description: translate(
+        isLocale(params.lang) ? params.lang : "en",
+        "download.meta.description",
+      ),
       path: "/download",
       imageUrl: "/og/site/download/image.webp",
-      imageAlt: "SoulFire download page preview",
+      imageAlt: translate(
+        isLocale(params.lang) ? params.lang : "en",
+        "download.soulfireDownloadPagePreview",
+      ),
     }),
     links: getCanonicalLinks(
       "/download",

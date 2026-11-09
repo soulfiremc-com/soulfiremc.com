@@ -35,7 +35,7 @@ export function ReviewStars({
   return (
     <div
       className={cn("relative inline-flex items-center", className)}
-      title={t("{rating} out of 5 stars", {
+      title={t("reviews.outOf5Stars", {
         rating: value.toLocaleString(locale, {
           minimumFractionDigits: 1,
           maximumFractionDigits: 1,
@@ -91,7 +91,7 @@ export function ReviewStarInput({
               "rounded-sm text-rating transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-50",
               !active && "text-rating-muted/70",
             )}
-            aria-label={t("Set rating: {count}/5", { count: starValue })}
+            aria-label={t("reviews.setRating5", { count: starValue })}
             aria-pressed={value === starValue}
           >
             <Star className={cn(sizeClass(size), active && "fill-current")} />

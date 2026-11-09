@@ -1,3 +1,4 @@
+import type { MessageKey } from "@/lib/messages";
 import {
   Building2,
   Gift,
@@ -28,13 +29,13 @@ export type Provider = {
   slug: string;
   name: string;
   logo?: string;
-  summary: string;
+  summary: MessageKey;
   url: string;
   badges: Badge[];
   couponCode?: string;
-  couponDiscount?: string;
+  couponDiscount?: MessageKey;
   startDate?: string;
-  gallery?: { src: string; alt: string }[];
+  gallery?: { src: string; alt: MessageKey }[];
   paymentMethods?: string[];
   socialLinks?: SocialLink[];
 };
@@ -42,80 +43,70 @@ export type Provider = {
 export const BADGE_CONFIG: Record<
   Badge,
   {
-    label: string;
+    label: MessageKey;
     className: string;
-    description: string;
+    description: MessageKey;
     icon: React.ReactNode;
   }
 > = {
   "free-tier": {
-    label: "Free Tier",
+    label: "providers.badges.free-tier.label",
     className: "bg-success/10 text-success",
-    description:
-      "This provider offers a free tier, allowing you to test their service before committing to a paid plan.",
+    description: "providers.proxies.badges.free-tier.description",
     icon: <Gift className="h-3 w-3" />,
   },
   "high-quality": {
-    label: "High Quality",
+    label: "providers.badges.high-quality.label",
     className: "bg-blue-500/10 text-blue-600 dark:text-blue-400",
-    description:
-      "Premium proxies with high reliability, fast speeds, and excellent uptime. Best for demanding use cases.",
+    description: "providers.proxies.badges.high-quality.description",
     icon: <Star className="h-3 w-3" />,
   },
   residential: {
-    label: "Residential",
+    label: "providers.badges.residential.label",
     className: "bg-purple-500/10 text-purple-600 dark:text-purple-400",
-    description:
-      "Real residential IP addresses from ISPs. Harder to detect and block, ideal for realistic testing scenarios.",
+    description: "providers.proxies.badges.residential.description",
     icon: <Home className="h-3 w-3" />,
   },
   datacenter: {
-    label: "Datacenter",
+    label: "providers.badges.datacenter.label",
     className: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
-    description:
-      "Fast and affordable proxies from data centers. Great for high-volume testing where speed matters most.",
+    description: "providers.proxies.badges.datacenter.description",
     icon: <Building2 className="h-3 w-3" />,
   },
   "unlimited-bandwidth": {
-    label: "Unlimited Bandwidth",
+    label: "providers.badges.unlimited-bandwidth.label",
     className: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400",
-    description:
-      "No data caps or bandwidth limits. Perfect for extensive bot testing without worrying about usage.",
+    description: "providers.proxies.badges.unlimited-bandwidth.description",
     icon: <InfinityIcon className="h-3 w-3" />,
   },
   "bedrock-udp": {
-    label: "Bedrock / UDP",
+    label: "providers.badges.bedrock-udp.label",
     className: "bg-sky-500/10 text-sky-600 dark:text-sky-400",
-    description:
-      "This provider offers UDP-capable proxies, which are required for Minecraft Bedrock connections through SOCKS5.",
+    description: "providers.proxies.badges.bedrock-udp.description",
     icon: <Network className="h-3 w-3" />,
   },
   "budget-friendly": {
-    label: "Budget Friendly",
+    label: "providers.badges.budget-friendly.label",
     className: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
-    description:
-      "Affordable pricing with good value for money. Great for smaller projects or those on a tight budget.",
+    description: "providers.proxies.badges.budget-friendly.description",
     icon: <Globe className="h-3 w-3" />,
   },
   enterprise: {
-    label: "Enterprise",
+    label: "providers.badges.enterprise.label",
     className: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400",
-    description:
-      "Enterprise-grade solution with advanced features, compliance certifications, and dedicated support.",
+    description: "providers.proxies.badges.enterprise.description",
     icon: <Building2 className="h-3 w-3" />,
   },
   isp: {
-    label: "ISP",
+    label: "providers.badges.isp.label",
     className: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
-    description:
-      "Static ISP proxies that combine datacenter speed with residential trust levels.",
+    description: "providers.proxies.badges.isp.description",
     icon: <Wifi className="h-3 w-3" />,
   },
   mobile: {
-    label: "Mobile",
+    label: "providers.badges.mobile.label",
     className: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
-    description:
-      "Mobile carrier IP addresses. Highest trust level, ideal for mobile app testing.",
+    description: "providers.proxies.badges.mobile.description",
     icon: <Smartphone className="h-3 w-3" />,
   },
 };
@@ -141,8 +132,7 @@ export const PROVIDERS: Provider[] = [
     slug: "legionproxy",
     name: "LegionProxy",
     logo: "/providers/legionproxy.png",
-    summary:
-      "74M+ IPs across 195+ countries with residential, static ISP, datacenter, and IPv6 proxies. Proxy from $0.6/GB. GB credits never expire, unlimited daily plans available, and crypto payments are supported.",
+    summary: "providers.proxies.legionproxy.summary",
     url: "https://legionproxy.io/?utm_source=github&utm_campaign=soulfire",
     badges: [
       "bedrock-udp",
@@ -162,13 +152,11 @@ export const PROVIDERS: Provider[] = [
     slug: "proxy-seller",
     name: "Proxy-Seller",
     logo: "/providers/proxyseller.png",
-    summary:
-      "Dedicated datacenter proxies in 40+ countries. Unlimited bandwidth with 72-hour refund policy. From $0.9/IP.",
+    summary: "providers.proxies.proxy-seller.summary",
     url: "https://proxy-seller.com/?utm_source=soulfiremc&utm_medium=referral&utm_campaign=partner_promo&utm_term=soulfiremc&partner=GRJY71PA3XWPPP",
     badges: ["budget-friendly", "datacenter", "isp", "mobile", "residential"],
     couponCode: "SOULFIREMC",
-    couponDiscount:
-      "15% off IPv4/IPv6/ISP - 39% off Residential - 10% off Mobile proxies",
+    couponDiscount: "providers.proxies.proxy-seller.couponDiscount",
     paymentMethods: ["PayPal", "Visa", "Mastercard", "Crypto"],
     socialLinks: [
       {
@@ -201,12 +189,11 @@ export const PROVIDERS: Provider[] = [
     slug: "thordata",
     name: "Thordata",
     logo: "/providers/thordata.png",
-    summary:
-      "60M+ residential IPs across 190+ countries with 99.9% uptime. Offers residential, mobile, datacenter, and static ISP proxies.",
+    summary: "providers.proxies.thordata.summary",
     url: "https://affiliate.thordata.com/soulfire?utm_source=get-proxies&utm_campaign=soulfire",
     badges: ["bedrock-udp", "high-quality", "residential", "mobile", "isp"],
     couponCode: "THORDATA",
-    couponDiscount: "20% off",
+    couponDiscount: "offers.twentyPercentOff",
     paymentMethods: ["Wallet", "Card", "Crypto", "PayPal", "Alipay"],
     socialLinks: [
       { platform: "whatsapp", url: "https://wa.me/qr/6G5OORTHEZC2I1" },
@@ -232,8 +219,7 @@ export const PROVIDERS: Provider[] = [
     slug: "webshare",
     name: "Webshare",
     logo: "/providers/webshare.svg",
-    summary:
-      "80M+ rotating residential IPs from 195 countries, plus fast datacenter proxies. Offers 10 free proxies to get started.",
+    summary: "providers.proxies.webshare.summary",
     url: "https://www.webshare.io/?referral_code=36gneippfiwt&utm_source=get-proxies&utm_campaign=soulfire",
     badges: ["free-tier", "residential", "datacenter", "budget-friendly"],
     paymentMethods: ["Card", "Apple Pay", "Google Pay"],
@@ -250,8 +236,7 @@ export const PROVIDERS: Provider[] = [
     slug: "proxyscrape",
     name: "ProxyScrape",
     logo: "/providers/proxyscrape.svg",
-    summary:
-      "55M+ residential IPs with 99.9% success rate. Unlimited bandwidth plans available for high-volume bot testing.",
+    summary: "providers.proxies.proxyscrape.summary",
     url: "https://proxyscrape.com/?ref=mge4mtc&utm_source=get-proxies&utm_campaign=soulfire",
     badges: ["bedrock-udp", "unlimited-bandwidth", "residential"],
     paymentMethods: ["Card", "PayPal", "Alipay", "Crypto", "Local methods"],
@@ -273,8 +258,7 @@ export const PROVIDERS: Provider[] = [
     slug: "plainproxies",
     name: "PlainProxies",
     logo: "/providers/plainproxies.png",
-    summary:
-      "German provider with 10M+ IPs. 10Gbps datacenter proxies and unlimited residential options with rate-limit free rotation.",
+    summary: "providers.proxies.plainproxies.summary",
     url: "https://dashboard.plainproxies.com/?ref=wTOIS7dS&utm_source=get-proxies&utm_campaign=soulfire",
     badges: [
       "bedrock-udp",
@@ -299,8 +283,7 @@ export const PROVIDERS: Provider[] = [
     slug: "flameproxies",
     name: "FlameProxies",
     logo: "/providers/flameproxies.svg",
-    summary:
-      "81M+ residential IPs across 180+ countries, plus mobile, datacenter, and rotating ISP options. Pay-as-you-go from $0.50/GB with sticky sessions and SOCKS5 support.",
+    summary: "providers.proxies.flameproxies.summary",
     url: "https://flameproxies.com/register?referral=42M1SH76&utm_source=get-proxies&utm_campaign=soulfire",
     badges: [
       "bedrock-udp",
@@ -321,8 +304,7 @@ export const PROVIDERS: Provider[] = [
     slug: "flashproxy",
     name: "FlashProxy",
     logo: "/providers/flashproxy.png",
-    summary:
-      "100M+ residential IPs across 195+ countries, plus datacenter, ISP, mobile, and IPv6 proxies. Pay-as-you-go from $0.10/GB with HTTP/SOCKS5/UDP support and unlimited bandwidth options.",
+    summary: "providers.proxies.flashproxy.summary",
     url: "https://flashproxy.com/auth/register?r=3iBXdeFq44ez75bmNsOr6P04l4x1&utm_source=get-proxies&utm_campaign=soulfire",
     badges: [
       "bedrock-udp",
@@ -344,8 +326,7 @@ export const PROVIDERS: Provider[] = [
     slug: "loopway",
     name: "Loopway",
     logo: "/providers/loopway.svg",
-    summary:
-      "50M+ residential IPs across 195+ countries, plus mobile, static ISP, datacenter, and IPv6 proxies. HTTP(S) and SOCKS5 on all products, with UDP on UDP Residential and Static ISP. Rotating and sticky sessions, country/city targeting, non-expiring credit, and unlimited-bandwidth plans. UDP Residential starts at $1.10/GB for 10 GB and drops to $0.49/GB at 1.5 TB. A 250 MB trial requires joining Discord and linking it on the Rewards page; no card required. Includes 24/7 live chat support.",
+    summary: "providers.proxies.loopway.summary",
     url: "https://app.loopway.io/sign-up?ref=soulfire",
     badges: [
       "bedrock-udp",
@@ -374,8 +355,7 @@ export const PROVIDERS: Provider[] = [
     slug: "serpproxies",
     name: "SerpProxies",
     logo: "/providers/serpproxies.svg",
-    summary:
-      "50M+ residential IPs across 195+ countries, plus mobile, static ISP, datacenter, and IPv6 proxies. HTTP(S) and SOCKS5 on all products, with UDP on UDP Residential and Static ISP. Rotating and sticky sessions, country/city targeting, non-expiring credit, and unlimited-bandwidth plans. UDP Residential starts at $1.15/GB for 10 GB and drops to $0.52/GB at 1.5 TB. Up to 1.75 GB of free residential samples through Discord, Telegram, and Trustpilot review reward tasks; no card required. Includes 24/7 live support.",
+    summary: "providers.proxies.serpproxies.summary",
     url: "https://app.serpproxies.com/sign-up?ref=soulfire",
     badges: [
       "bedrock-udp",
@@ -407,8 +387,7 @@ export const PROVIDERS: Provider[] = [
     slug: "bright-data",
     name: "Bright Data",
     logo: "/providers/brightdata.png",
-    summary:
-      "Market leader with 770K+ datacenter IPs and massive residential network. ISO 27001 & SOC 2 certified with 99.99% uptime.",
+    summary: "providers.proxies.bright-data.summary",
     url: "https://brightdata.com/?utm_source=get-proxies&utm_campaign=soulfire",
     badges: [
       "bedrock-udp",
@@ -445,8 +424,7 @@ export const PROVIDERS: Provider[] = [
     slug: "oxylabs",
     name: "Oxylabs",
     logo: "/providers/oxylabs.png",
-    summary:
-      "175M+ residential IPs across 195+ countries. Largest proxy network globally with 99.95% success rate and 0.6s avg response time.",
+    summary: "providers.proxies.oxylabs.summary",
     url: "https://oxylabs.go2cloud.org/aff_c?offer_id=7&aff_id=1896&url_id=144&utm_source=get-proxies&utm_campaign=soulfire",
     badges: [
       "bedrock-udp",
@@ -482,8 +460,7 @@ export const PROVIDERS: Provider[] = [
     slug: "decodo",
     name: "Decodo (formerly Smartproxy)",
     logo: "/providers/decodo.svg",
-    summary:
-      "115M+ ethically-sourced residential IPs across 195+ locations. User-friendly with 99.86% success rate. Great for SMBs.",
+    summary: "providers.proxies.decodo.summary",
     url: "https://visit.decodo.com/K0rr7e?utm_source=get-proxies&utm_campaign=soulfire",
     badges: ["bedrock-udp", "high-quality", "residential", "datacenter"],
     paymentMethods: [
@@ -510,8 +487,7 @@ export const PROVIDERS: Provider[] = [
     slug: "iproyal",
     name: "IPRoyal",
     logo: "/providers/iproyal.svg",
-    summary:
-      "32M+ residential IPs across 195+ countries. Non-expiring traffic with unlimited bandwidth and threads. Great value.",
+    summary: "providers.proxies.iproyal.summary",
     url: "https://iproyal.com/?r=soulfire&utm_source=get-proxies&utm_campaign=soulfire",
     badges: [
       "bedrock-udp",

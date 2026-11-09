@@ -1,4 +1,5 @@
-"use client";
+import type { MessageKey } from "@/lib/messages";
+("use client");
 
 import { useT } from "@/lib/i18n-react";
 import { buttonVariants } from "fumadocs-ui/components/ui/button";
@@ -63,7 +64,7 @@ export function LLMCopyButton({
       type="button"
     >
       {checked ? <Check /> : <Copy />}
-      {t("Copy Page")}
+      {t("docs.copyPage")}
     </button>
   );
 }
@@ -95,7 +96,7 @@ export function ViewOptions({
 
     return [
       {
-        title: "Open in GitHub",
+        title: "docs.openInGithub",
         href: githubUrl,
         icon: (
           <svg fill="currentColor" role="img" viewBox="0 0 24 24">
@@ -105,7 +106,7 @@ export function ViewOptions({
         ),
       },
       {
-        title: "Open in Scira AI",
+        title: "docs.openInSciraAi",
         href: `https://scira.ai/?${new URLSearchParams({
           q,
         })}`,
@@ -169,7 +170,7 @@ export function ViewOptions({
         ),
       },
       {
-        title: "Open in ChatGPT",
+        title: "docs.openInChatgpt",
         href: `https://chatgpt.com/?${new URLSearchParams({
           hints: "search",
           q,
@@ -187,7 +188,7 @@ export function ViewOptions({
         ),
       },
       {
-        title: "Open in Claude",
+        title: "docs.openInClaude",
         href: `https://claude.ai/new?${new URLSearchParams({
           q,
         })}`,
@@ -204,13 +205,13 @@ export function ViewOptions({
         ),
       },
       {
-        title: "Open in T3 Chat",
+        title: "docs.openInT3Chat",
         href: `https://t3.chat/new?${new URLSearchParams({
           q,
         })}`,
         icon: <MessageCircleIcon />,
       },
-    ];
+    ] satisfies { title: MessageKey; href: string; icon: React.ReactNode }[];
   }, [githubUrl, markdownUrl]);
 
   return (
@@ -222,7 +223,7 @@ export function ViewOptions({
           className: "gap-2",
         })}
       >
-        {t("Open Page In")}
+        {t("docs.openPageIn")}
         <ChevronDown className="size-3.5 text-fd-muted-foreground" />
       </PopoverTrigger>
       <PopoverContent className="flex flex-col overflow-auto">

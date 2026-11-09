@@ -1,3 +1,4 @@
+import type { MessageKey } from "@/lib/messages";
 export type ClientDownloadOs = "windows" | "macos" | "linux";
 export type ClientDownloadArch = "x64" | "arm64";
 export type DownloadLinkMap = Record<
@@ -12,7 +13,7 @@ export type ClientReleaseManifest = {
 
 export type ServerDownload = {
   name: string;
-  description: string;
+  description: MessageKey;
   url: string;
 };
 
@@ -63,12 +64,12 @@ export function createServerDownloads(version: string): ServerDownload[] {
   return [
     {
       name: "SoulFire CLI",
-      description: "Headless command-line client",
+      description: "download.headlessCommandLineClient",
       url: `${GH_SERVER_BASE}/${version}/SoulFireCLI-${version}.jar`,
     },
     {
       name: "SoulFire Dedicated",
-      description: "Dedicated server controller",
+      description: "download.dedicatedServerController",
       url: `${GH_SERVER_BASE}/${version}/SoulFireDedicated-${version}.jar`,
     },
   ];

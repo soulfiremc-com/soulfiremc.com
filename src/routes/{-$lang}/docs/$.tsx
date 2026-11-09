@@ -95,7 +95,7 @@ const serverLoader = createServerFn({
     const pageTree = await source.serializePageTree(source.getPageTree(locale));
     const contentLocale = docFileInfo(page.path).locale;
     const languages = await getDocsLanguages(slugs);
-    const title = page.data.title ?? page.slugs.at(-1) ?? "Docs";
+    const title = page.data.title ?? page.slugs.at(-1) ?? "nav.docs";
     const imageUrl = getDocsPageImage(page, contentLocale).url;
 
     if (isOpenApiPage(page)) {
@@ -263,7 +263,7 @@ export const Route = createFileRoute("/{-$lang}/docs/$")({
           images: [new URL(imageUrl, "https://soulfiremc.com").href],
           links: [
             {
-              label: "Download SoulFire",
+              label: "download.title",
               url: "https://soulfiremc.com/download",
             },
           ],
@@ -313,7 +313,7 @@ function DocsPageRoute() {
     <DocsLayout tree={page.pageTree} {...getBaseLayoutOptions(locale)}>
       {page.contentLocale !== locale && (
         <p className="mx-auto w-full max-w-4xl px-6 pt-4 text-sm text-fd-muted-foreground">
-          {t("This guide is available in English.")}
+          {t("docs.thisGuideIsAvailableInEnglish")}
         </p>
       )}
       <Suspense>

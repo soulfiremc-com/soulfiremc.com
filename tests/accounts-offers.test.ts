@@ -59,15 +59,15 @@ await test("aggregate prices exclude categories without a numeric price", () => 
     url: "https://example.com/accounts",
     listings: {
       "nfa-accounts": {
-        summary: "A free account.",
+        summary: "providers.accounts.localts.nfa.summary",
         badges: [],
-        price: "Free",
+        price: "common.free",
         priceValue: 0,
       },
       "mfa-accounts": {
-        summary: "Accounts priced by individual sellers.",
+        summary: "providers.accounts.localts.mfa.summary",
         badges: [],
-        price: "Varies by seller",
+        price: "common.variesBySeller",
       },
     },
   };

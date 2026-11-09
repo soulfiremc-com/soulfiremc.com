@@ -2,7 +2,6 @@ import { isLocale, localizePath } from "@/lib/i18n";
 import { translate } from "@/lib/messages";
 import { DocsOgImage } from "@/components/og/soulfire";
 import { soulfireLogoDataUri } from "@/lib/og-image";
-import { siteDescription } from "@/lib/site";
 import { createFileRoute } from "@tanstack/react-router";
 import type { ReactElement } from "react";
 import {
@@ -34,16 +33,19 @@ export const Route = createFileRoute("/og/site/{$}/image.webp")({
               title={translate(
                 locale,
                 accounts
-                  ? "Minecraft Alts, MFA & NFA Accounts"
-                  : "Proxy Providers for SoulFire",
+                  ? "common.minecraftAltsMfaNfaAccounts"
+                  : "common.proxyProvidersForSoulfire",
               )}
               description={translate(
                 locale,
                 accounts
-                  ? "Compare trusted Minecraft alt shops for SoulFire, including MFA full-access accounts and NFA temporary accounts."
-                  : "Trusted proxy providers for Minecraft bot testing with SoulFire. Compare residential, datacenter, ISP, and mobile proxies.",
+                  ? "providers.accounts.social.description"
+                  : "providers.proxies.social.description",
               )}
-              section={translate(locale, accounts ? "Accounts" : "Proxies")}
+              section={translate(
+                locale,
+                accounts ? "nav.accounts" : "nav.proxies",
+              )}
               slugs={[]}
               siteLabel={`soulfiremc.com${localizePath(`/${page}`, locale)}`}
               logoSrc={soulfireLogoDataUri}
@@ -56,16 +58,16 @@ export const Route = createFileRoute("/og/site/{$}/image.webp")({
         ) {
           const title =
             page === "home"
-              ? "SoulFire - Minecraft bots for testing and automation"
+              ? "home.meta.title"
               : page === "download"
-                ? "Download SoulFire"
-                : "Pricing - SoulFire";
+                ? "download.title"
+                : "support.meta.title";
           const description =
             page === "home"
-              ? siteDescription
+              ? "home.meta.description"
               : page === "download"
-                ? "Pick your OS and CPU to grab the right SoulFire build."
-                : "SoulFire is free and open source. Support the project and get priority help.";
+                ? "download.meta.description"
+                : "support.meta.description";
           return createOgImageResponse(
             <DocsOgImage
               title={translate(locale, title)}
@@ -74,10 +76,10 @@ export const Route = createFileRoute("/og/site/{$}/image.webp")({
               section={translate(
                 locale,
                 page === "home"
-                  ? "SoulFire"
+                  ? "common.brand"
                   : page === "download"
-                    ? "Downloads"
-                    : "Pricing",
+                    ? "nav.downloads"
+                    : "nav.pricing",
               )}
               siteLabel={`soulfiremc.com${localizePath(page === "home" ? "/" : `/${page}`, locale)}`}
               logoSrc={soulfireLogoDataUri}

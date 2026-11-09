@@ -1,5 +1,5 @@
-import { useT } from "@/lib/i18n-react";
-import { translate } from "@/lib/messages";
+import { translate, resolveMessage, type MessageKey } from "@/lib/messages";
+import { useT, useLocale } from "@/lib/i18n-react";
 import { splitLocalePath } from "@/lib/i18n";
 import "@fontsource-variable/geist";
 import "@fontsource-variable/geist-mono";
@@ -74,11 +74,11 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
   errorComponent: ({ error }) => (
     <Providers>
       <MessagePage
-        title="Something went wrong"
+        title="errors.somethingWentWrong"
         text={
           error instanceof Error
             ? error.message
-            : "An unexpected error occurred."
+            : "errors.anUnexpectedErrorOccurred"
         }
       />
     </Providers>
@@ -86,8 +86,8 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
   notFoundComponent: () => (
     <Providers>
       <MessagePage
-        title="Page not found"
-        text="The page you requested does not exist."
+        title="errors.pageNotFound"
+        text="errors.thePageYouRequestedDoesNotExist"
       />
     </Providers>
   ),
@@ -124,7 +124,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                 if (window.kofiWidgetOverlay) {
                   kofiWidgetOverlay.draw('alexprogrammerde', {
                     'type': 'floating-chat',
-                    'floating-chat.donateButton.text': ${JSON.stringify(translate(locale, "Support me"))},
+                    'floating-chat.donateButton.text': ${JSON.stringify(translate(locale, "errors.supportMe"))},
                     'floating-chat.donateButton.background-color': '#794bc4',
                     'floating-chat.donateButton.text-color': '#fff'
                   });
@@ -140,13 +140,14 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   );
 }
 
-function MessagePage({ title, text }: { title: string; text: string }) {
+function MessagePage({ title, text }: { title: MessageKey; text: string }) {
   const t = useT();
+  const locale = useLocale();
   return (
     <main className="flex min-h-dvh items-center justify-center p-6">
       <div className="flex max-w-lg flex-col gap-3 text-center">
         <h1 className="text-3xl font-semibold">{t(title)}</h1>
-        <p className="text-muted-foreground">{t(text)}</p>
+        <p className="text-muted-foreground">{resolveMessage(locale, text)}</p>
       </div>
     </main>
   );

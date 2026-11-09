@@ -5,7 +5,6 @@ import {
   isProviderPath,
   type Locale,
 } from "./i18n";
-import { translate } from "./messages";
 import {
   absoluteUrl,
   defaultSocialImageUrl,
@@ -36,10 +35,7 @@ export function getPageMeta({
   ogType?: "article" | "website";
   locale?: Locale;
 }) {
-  title = translate(locale, title);
-  description = translate(locale, description);
   path = localizePath(path, locale);
-  imageAlt = translate(locale, imageAlt);
   imageUrl = absoluteUrl(imageUrl);
   const bare = splitLocalePath(path).path;
   if (
@@ -166,8 +162,8 @@ export function createWebPageStructuredData({
     "@type": type,
     "@id": `${absoluteUrl(path)}#webpage`,
     url: absoluteUrl(path),
-    name: translate(locale, title),
-    description: translate(locale, description),
+    name: title,
+    description,
     isPartOf: { "@id": `${siteUrl}/#website` },
     breadcrumb: withBreadcrumb
       ? { "@id": `${absoluteUrl(path)}#breadcrumb` }

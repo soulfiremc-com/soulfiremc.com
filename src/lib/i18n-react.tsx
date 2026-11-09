@@ -1,6 +1,6 @@
 import { createContext, useContext, useMemo, type ReactNode } from "react";
 import type { Locale } from "./i18n";
-import { translate } from "./messages";
+import { translate, type MessageKey, type MessageValues } from "./messages";
 
 const LocaleContext = createContext<Locale>("en");
 
@@ -21,8 +21,8 @@ export function useLocale() {
 export function useT() {
   const locale = useLocale();
   return useMemo(
-    () => (message: string, values?: Record<string, string | number>) =>
-      translate(locale, message, values),
+    () => (key: MessageKey, values?: MessageValues) =>
+      translate(locale, key, values),
     [locale],
   );
 }

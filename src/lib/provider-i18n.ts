@@ -1,5 +1,5 @@
 import { isProviderPath, localizePath, type Locale } from "./i18n";
-import { translate } from "./messages";
+import { resolveMessage } from "./messages";
 
 export function formatProviderSince(date: string, locale: Locale) {
   const match =
@@ -40,7 +40,7 @@ export function localizeProviderData<T>(data: T, locale: Locale): T {
     if (typeof value !== "string") return value;
     if (key === "inLanguage") return locale;
     if (["name", "description", "category", "text"].includes(key))
-      return translate(locale, value);
+      return resolveMessage(locale, value);
     if (value.startsWith("https://soulfiremc.com")) {
       const path = value.slice("https://soulfiremc.com".length) || "/";
       if (

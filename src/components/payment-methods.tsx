@@ -1,3 +1,4 @@
+import type { MessageKey } from "@/lib/messages";
 import { useT } from "@/lib/i18n-react";
 import {
   SiAlipay,
@@ -148,6 +149,22 @@ function PaymentMethodLogo({ method }: { method: string }) {
   );
 }
 
+const paymentLabelKeys: Partial<Record<string, MessageKey>> = {
+  banktransfer: "common.bankTransfer",
+  wiretransfer: "common.wireTransfer",
+  card: "common.card",
+  creditcard: "common.creditCard",
+  crypto: "common.crypto",
+  cryptoltcbtcsol: "common.cryptoLtcBtcSol",
+  checkoutvaries: "common.checkoutVaries",
+  localmethods: "common.localMethods",
+  wallet: "common.wallet",
+  discordcheckout: "common.discordCheckout",
+  binancegiftcardpaypalpaysafecardskrill:
+    "common.binanceGiftCardPaypalPaysafecardSkrill",
+  rewarblegiftcardcard: "common.rewarbleGiftCardCard",
+};
+
 export function PaymentMethods({ methods }: { methods?: string[] }) {
   const t = useT();
   if (!methods?.length) {
@@ -158,17 +175,21 @@ export function PaymentMethods({ methods }: { methods?: string[] }) {
     <div className="flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
       <span className="inline-flex items-center gap-1 font-medium text-foreground">
         <CreditCard className="h-3.5 w-3.5" />
-        {t("Payments")}
+        {t("payments.payments")}
       </span>
-      {methods.map((method) => (
-        <span
-          key={method}
-          className="inline-flex items-center gap-1 rounded-md border bg-background px-1.5 py-0.5"
-        >
-          <PaymentMethodLogo method={method} />
-          {t(method)}
-        </span>
-      ))}
+      {methods.map((method) => {
+        const labelKey =
+          paymentLabelKeys[method.toLowerCase().replace(/[^a-z0-9]/g, "")];
+        return (
+          <span
+            key={method}
+            className="inline-flex items-center gap-1 rounded-md border bg-background px-1.5 py-0.5"
+          >
+            <PaymentMethodLogo method={method} />
+            {labelKey ? t(labelKey) : method}
+          </span>
+        );
+      })}
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import type { MessageKey } from "@/lib/messages";
 import { useT } from "@/lib/i18n-react";
 import { useCopyButton } from "fumadocs-ui/utils/use-copy-button";
 import { Check, Copy } from "lucide-react";
@@ -8,7 +9,7 @@ export function CouponCode({
   discount,
 }: {
   code: string;
-  discount?: string;
+  discount?: MessageKey;
 }) {
   const t = useT();
   const [copied, handleCopy] = useCopyButton(() =>
@@ -20,8 +21,8 @@ export function CouponCode({
       <div className="flex-1">
         <p className="text-xs text-muted-foreground">
           {discount
-            ? t("Use code for {discount}", { discount: t(discount) })
-            : t("Coupon code")}
+            ? t("offers.useCodeFor", { discount: t(discount) })
+            : t("offers.couponCode")}
         </p>
         <p className="font-mono font-semibold text-offer">{code}</p>
       </div>
@@ -31,7 +32,7 @@ export function CouponCode({
         size="icon"
         onClick={handleCopy}
         className="text-muted-foreground hover:bg-offer/10"
-        aria-label={t("Copy coupon code")}
+        aria-label={t("offers.copyCouponCode")}
       >
         {copied ? <Check className="text-success" /> : <Copy />}
       </Button>
