@@ -186,3 +186,9 @@ Respond to review comments and rerun affected checks after revisions.
 Update documentation and examples with behavior changes. Remove obsolete code rather than leaving placeholders or shims.
 Do not commit credentials, private logs, dependency directories, or generated build artifacts.
 Respect existing license notices and submit only material that you have the right to contribute.
+
+## Git hooks
+
+`bun install` installs Lefthook for this checkout and preserves the existing preparation steps.
+Run `bun run pre-commit` to run the commit checks manually.
+The hooks use the existing project tools. Before pushing, they run the relevant project checks for changed files.

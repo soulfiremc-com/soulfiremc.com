@@ -1,0 +1,20 @@
+lefthook: bunx --no-install lefthook
+min_version: 2.2.2
+
+pre-commit:
+  piped: true
+  jobs:
+    - name: lint
+      glob: "*.{js,jsx,ts,tsx,mjs,cjs,mts,cts}"
+      run: bunx --no-install oxlint --type-aware --fix --no-error-on-unmatched-pattern {staged_files}
+      stage_fixed: true
+    - name: format
+      glob: "*.{js,jsx,ts,tsx,mjs,cjs,mts,cts,json,jsonc,css,scss,md,mdx,yml,yaml,toml}"
+      run: bunx --no-install oxfmt --no-error-on-unmatched-pattern {staged_files}
+      stage_fixed: true
+
+pre-push:
+  commands:
+    types:
+      glob: "*.{ts,tsx,mts,cts,json,jsonc}"
+      run: bun run typecheck
