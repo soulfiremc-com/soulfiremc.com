@@ -112,7 +112,7 @@ export function GallerySection({
                   </Button>
                 </>
               )}
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 bg-gradient-to-t from-black/85 via-black/30 to-transparent p-3 sm:p-4">
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 bg-linear-to-t from-black/85 via-black/30 to-transparent p-3 sm:p-4">
                 <p className="max-w-[75%] text-sm text-white/80">
                   {t(images[openIndex].alt)}
                 </p>

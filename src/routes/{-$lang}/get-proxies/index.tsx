@@ -144,7 +144,7 @@ function ProviderLogo({ provider }: { provider: Provider }) {
     );
   }
   return (
-    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-primary/20 to-primary/5 text-2xl font-bold text-primary">
+    <div className="flex h-full w-full items-center justify-center bg-linear-to-br from-primary/20 to-primary/5 text-2xl font-bold text-primary">
       {provider.name.charAt(0).toUpperCase()}
     </div>
   );
