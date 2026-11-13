@@ -347,7 +347,7 @@ function ShopLogo({ src, name }: { src?: string; name: string }) {
   }
 
   return (
-    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-primary/20 to-primary/5 text-4xl font-bold text-primary">
+    <div className="flex h-full w-full items-center justify-center bg-linear-to-br from-primary/20 to-primary/5 text-4xl font-bold text-primary">
       {name.charAt(0).toUpperCase()}
     </div>
   );

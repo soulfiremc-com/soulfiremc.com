@@ -37,6 +37,8 @@ function MermaidContent({ chart }: { chart: string }) {
 
   mermaid.initialize({
     startOnLoad: false,
+    layout: "dagre",
+    look: "classic",
     securityLevel: "loose",
     fontFamily: "inherit",
     themeCSS: "margin: 1.5rem auto 0;",
