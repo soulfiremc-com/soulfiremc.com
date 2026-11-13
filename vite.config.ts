@@ -65,7 +65,14 @@ export default defineConfig(({ command }) => ({
     ),
   },
   build: { sourcemap: true },
-  environments: { ssr: { build: { sourcemap: true } } },
+  environments: {
+    ssr: {
+      build: {
+        sourcemap: true,
+        rolldownOptions: { output: { sourcemapExcludeSources: true } },
+      },
+    },
+  },
   envPrefix: ["VITE_"],
   resolve: {
     dedupe: [
