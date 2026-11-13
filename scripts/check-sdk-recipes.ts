@@ -86,6 +86,7 @@ try {
     "bunx",
     [
       "tsc",
+      "--ignoreConfig",
       "--noEmit",
       "--target",
       "esnext",
