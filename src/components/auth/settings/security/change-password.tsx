@@ -39,6 +39,7 @@ import { cn } from "@/lib/utils";
 import { isAuthFormFieldInvalid, useAuthForm } from "../../auth-form";
 import { OpenEmailButton } from "../../open-email-button";
 import { PasswordStrengthMeter } from "../../password-strength-meter";
+import { useFocusRejectedPassword } from "../../use-focus-rejected-password";
 
 export type ChangePasswordProps = {
   className?: string;
@@ -230,6 +231,10 @@ function ChangePasswordForm({
     useState(false);
 
   const [isCompromised, setIsCompromised] = useState(false);
+  const newPasswordInputRef = useFocusRejectedPassword(
+    isCompromised,
+    isPending,
+  );
 
   const form = useAuthForm({
     defaultValues: {
@@ -363,6 +368,7 @@ function ChangePasswordForm({
                       {session ? (
                         <InputGroup>
                           <InputGroupInput
+                            ref={newPasswordInputRef}
                             id="newPassword"
                             name={field.name}
                             type={isNewPasswordVisible ? "text" : "password"}
@@ -381,6 +387,9 @@ function ChangePasswordForm({
                             disabled={isPending}
                             required
                             aria-invalid={isInvalid}
+                            aria-describedby={
+                              isCompromised ? "newPassword-error" : undefined
+                            }
                           />
 
                           <InputGroupAddon align="inline-end">
@@ -406,7 +415,7 @@ function ChangePasswordForm({
                       )}
 
                       {isCompromised ? (
-                        <FieldError>
+                        <FieldError id="newPassword-error">
                           {localization.auth.passwordCompromised}
                         </FieldError>
                       ) : (

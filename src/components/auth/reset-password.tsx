@@ -28,6 +28,7 @@ import {
 import { cn } from "@/lib/utils";
 import { isAuthFormFieldInvalid, useAuthForm } from "./auth-form";
 import { PasswordStrengthMeter } from "./password-strength-meter";
+import { useFocusRejectedPassword } from "./use-focus-rejected-password";
 
 export type ResetPasswordProps = {
   className?: string;
@@ -77,6 +78,7 @@ export function ResetPassword({ className }: ResetPasswordProps) {
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
     useState(false);
   const [isCompromised, setIsCompromised] = useState(false);
+  const passwordInputRef = useFocusRejectedPassword(isCompromised, isPending);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -151,6 +153,7 @@ export function ResetPassword({ className }: ResetPasswordProps) {
 
                       <InputGroup>
                         <InputGroupInput
+                          ref={passwordInputRef}
                           id="password"
                           type={isPasswordVisible ? "text" : "password"}
                           autoComplete="new-password"
@@ -166,6 +169,9 @@ export function ResetPassword({ className }: ResetPasswordProps) {
                             setIsCompromised(false);
                           }}
                           aria-invalid={isInvalid}
+                          aria-describedby={
+                            isCompromised ? "password-error" : undefined
+                          }
                           value={field.state.value}
                         />
 
@@ -192,7 +198,7 @@ export function ResetPassword({ className }: ResetPasswordProps) {
                       </InputGroup>
 
                       {isCompromised ? (
-                        <FieldError>
+                        <FieldError id="password-error">
                           {localization.auth.passwordCompromised}
                         </FieldError>
                       ) : (

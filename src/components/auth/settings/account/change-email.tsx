@@ -46,9 +46,11 @@ export function ChangeEmail({ className }: ChangeEmailProps) {
       }),
   });
 
+  // Depend on the email itself so a session refetch keeps unsaved edits.
+  const currentEmail = session?.user.email;
   useEffect(() => {
-    if (session) form.reset({ email: session.user.email });
-  }, [form, session]);
+    if (currentEmail) form.reset({ email: currentEmail });
+  }, [form, currentEmail]);
 
   return (
     <div>

@@ -13,7 +13,7 @@ import {
   useHasPermission,
   useUpdateOrganization,
 } from "@better-auth-ui/react/plugins/organization";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { toast } from "sonner";
 
 import { Card, CardContent } from "@/components/ui/card";
@@ -82,9 +82,12 @@ export function OrganizationProfile({
     },
   });
 
+  // Refetches return new objects with the same values. Reset only when the
+  // saved values change, so unsaved edits survive a refetch.
+  const appliedValuesKey = useRef<string>(undefined);
   useEffect(() => {
     if (!activeOrganization) return;
-    form.reset({
+    const savedValues = {
       additionalFields: getAdditionalFieldDefaultValues(
         fieldsWithModelValues(
           additionalFields,
@@ -93,7 +96,11 @@ export function OrganizationProfile({
       ),
       name: activeOrganization.name,
       slug: activeOrganization.slug,
-    });
+    };
+    const savedValuesKey = JSON.stringify(savedValues);
+    if (appliedValuesKey.current === savedValuesKey) return;
+    appliedValuesKey.current = savedValuesKey;
+    form.reset(savedValues);
   }, [activeOrganization, additionalFields, form]);
 
   const nameInputId = `${activeOrganization?.id ?? "org"}-name`;

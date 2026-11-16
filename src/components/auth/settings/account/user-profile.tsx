@@ -8,7 +8,7 @@ import {
 } from "@better-auth-ui/core";
 import type { UsernameAuthClient } from "@better-auth-ui/core/plugins/username";
 import { useAuth, useSession, useUpdateUser } from "@better-auth-ui/react";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { toast } from "sonner";
 
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
@@ -46,11 +46,27 @@ export function UserProfile({ className }: UserProfileProps) {
     () => additionalFields?.filter((field) => field.profile !== false) ?? [],
     [additionalFields],
   );
+  // Seed the fields with the saved values so the current username counts as
+  // unchanged instead of showing a pending availability check.
+  const sessionUser = session?.user as Record<string, unknown> | undefined;
+  const modelFields = useMemo(
+    () =>
+      sessionUser
+        ? fieldsWithModelValues(profileFields, sessionUser)
+        : profileFields,
+    [profileFields, sessionUser],
+  );
+  const savedValues = useMemo(
+    () => ({
+      additionalFields: getAdditionalFieldDefaultValues(modelFields),
+      name: typeof sessionUser?.name === "string" ? sessionUser.name : "",
+    }),
+    [modelFields, sessionUser],
+  );
+  const savedValuesKey = JSON.stringify(savedValues);
+
   const form = useAuthForm({
-    defaultValues: {
-      additionalFields: getAdditionalFieldDefaultValues(profileFields),
-      name: "",
-    },
+    defaultValues: savedValues,
     onSubmit: async ({ value }) => {
       await updateUser({
         name: value.name,
@@ -62,18 +78,15 @@ export function UserProfile({ className }: UserProfileProps) {
     },
   });
 
+  // Session refetches (for example on window focus) return new objects with
+  // the same values. Reset only when the saved values change, so unsaved
+  // edits survive a refetch.
+  const appliedValuesKey = useRef(savedValuesKey);
   useEffect(() => {
-    if (!session) return;
-    form.reset({
-      additionalFields: getAdditionalFieldDefaultValues(
-        fieldsWithModelValues(
-          profileFields,
-          session.user as Record<string, unknown>,
-        ),
-      ),
-      name: session.user.name,
-    });
-  }, [form, profileFields, session]);
+    if (appliedValuesKey.current === savedValuesKey) return;
+    appliedValuesKey.current = savedValuesKey;
+    form.reset(savedValues);
+  }, [form, savedValues, savedValuesKey]);
 
   return (
     <div>
@@ -132,7 +145,7 @@ export function UserProfile({ className }: UserProfileProps) {
                 }}
               </form.AppField>
 
-              {profileFields.map((configuredField) => {
+              {modelFields.map((configuredField) => {
                 if (!session) {
                   if (configuredField.inputType === "hidden") {
                     return null;

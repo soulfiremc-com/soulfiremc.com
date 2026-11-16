@@ -211,7 +211,7 @@ export function SignInUsername({
                       return (
                         <Field data-invalid={isInvalid}>
                           <FieldLabel htmlFor="email">
-                            {usernameLocalization.username}
+                            {usernameLocalization.usernameOrEmailPlaceholder}
                           </FieldLabel>
 
                           <Input

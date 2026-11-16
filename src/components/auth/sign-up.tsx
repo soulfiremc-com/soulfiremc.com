@@ -43,6 +43,7 @@ import {
 } from "./auth-form"
 import { PasswordStrengthMeter } from "./password-strength-meter"
 import { ProviderButtons, type SocialLayout } from "./provider-buttons"
+import { useFocusRejectedPassword } from "./use-focus-rejected-password"
 
 export type SignUpProps = {
   className?: string
@@ -135,6 +136,7 @@ export function SignUp({
     useState(false)
 
   const [isCompromised, setIsCompromised] = useState(false)
+  const passwordInputRef = useFocusRejectedPassword(isCompromised, isPending)
   const signUpFields = useMemo(
     () => additionalFields?.filter((field) => field.signUp) ?? [],
     [additionalFields]
@@ -337,6 +339,7 @@ export function SignUp({
 
                           <InputGroup>
                             <InputGroupInput
+                              ref={passwordInputRef}
                               id="password"
                               name={field.name}
                               type={isPasswordVisible ? "text" : "password"}
@@ -355,6 +358,9 @@ export function SignUp({
                               maxLength={emailAndPassword?.maxPasswordLength}
                               disabled={isPending}
                               aria-invalid={isInvalid}
+                              aria-describedby={
+                                isCompromised ? "password-error" : undefined
+                              }
                             />
 
                             <InputGroupAddon align="inline-end">
@@ -380,7 +386,7 @@ export function SignUp({
                           </InputGroup>
 
                           {isCompromised ? (
-                            <FieldError>
+                            <FieldError id="password-error">
                               {localization.auth.passwordCompromised}
                             </FieldError>
                           ) : (
