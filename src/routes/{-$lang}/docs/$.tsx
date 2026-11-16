@@ -37,6 +37,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { setDocsContentPreloader } from "@/lib/docs/hydration";
 import { isOpenApiPage } from "@/lib/docs/openapi";
 import { docsRedirects } from "@/lib/docs/redirects";
 import { getBaseLayoutOptions } from "@/lib/layout-options";
@@ -156,7 +157,10 @@ const clientLoader = browserCollections.docs.createClientLoader<{
             />
           </div>
         </div>
-        <DocsBody lang={props.contentLocale}>
+        <DocsBody
+          lang={props.contentLocale}
+          data-docs-content-path={props.currentPath}
+        >
           <MDX
             components={getMDXComponents({
               a: ({ href, ...anchorProps }) => {
@@ -202,6 +206,8 @@ const clientLoader = browserCollections.docs.createClientLoader<{
     );
   },
 });
+
+setDocsContentPreloader(clientLoader.preload);
 
 export const Route = createFileRoute("/{-$lang}/docs/$")({
   loader: async ({ params }) => {

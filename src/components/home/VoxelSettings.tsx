@@ -49,6 +49,7 @@ export function VoxelSettings({
             variant="ghost"
             size="icon-sm"
             aria-label={t("simulation.simulationSettings")}
+            title={t("simulation.simulationSettings")}
           />
         }
       >

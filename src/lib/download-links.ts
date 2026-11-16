@@ -26,6 +26,13 @@ const GH_SERVER_BASE =
 const CLIENT_RELEASE_DOWNLOAD_BASE =
   "https://github.com/soulfiremc-com/SoulFireClient/releases/download";
 
+export function getClientReleaseNotesUrl(version: string | undefined): string {
+  const tag = version?.trim();
+  return tag && tag !== "latest"
+    ? `https://github.com/soulfiremc-com/SoulFireClient/releases/tag/${encodeURIComponent(tag)}`
+    : CLIENT_RELEASES_URL;
+}
+
 function buildClientInstallerUrl(
   version: string | undefined,
   os: Exclude<ClientDownloadOs, "linux">,

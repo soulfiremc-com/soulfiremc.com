@@ -54,6 +54,7 @@ function SponsorLogo({
     return (
       <a
         href={href}
+        rel="sponsored"
         className="flex size-32 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-black p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] sm:size-36"
       >
         <span className="flex size-full items-center justify-center rounded-xl bg-zinc-950 p-4">
@@ -72,6 +73,7 @@ function SponsorLogo({
   return (
     <a
       href={href}
+      rel="sponsored"
       className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-black p-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
     >
       <Image
@@ -97,7 +99,7 @@ function SponsorButton({
   return (
     <Button
       render={
-        <a href={href}>
+        <a href={href} rel="sponsored">
           {label}
           <ArrowUpRight />
         </a>

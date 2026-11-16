@@ -12,7 +12,7 @@ import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 
 function CookiePolicy() {
   return (
-    <main className="px-4 py-12 w-full max-w-(--fd-layout-width) mx-auto prose">
+    <main className="px-4 py-12 w-full max-w-3xl mx-auto prose">
       <h1>Cookie Policy</h1>
       <p>
         <strong>Last updated:</strong> February 25, 2026
@@ -94,7 +94,7 @@ function CookiePolicy() {
         switched off. They are set in response to actions you take, such as
         signing in or filling in forms.
       </p>
-      <Table>
+      <Table className="[&_td]:min-w-32 [&_td]:whitespace-normal">
         <TableHeader>
           <TableRow>
             <TableHead>Cookie / Storage</TableHead>
@@ -144,7 +144,7 @@ function CookiePolicy() {
         <strong>after you accept analytics cookies</strong> via our cookie
         consent banner.
       </p>
-      <Table>
+      <Table className="[&_td]:min-w-32 [&_td]:whitespace-normal">
         <TableHeader>
           <TableRow>
             <TableHead>Cookie / Storage</TableHead>
@@ -183,7 +183,7 @@ function CookiePolicy() {
         These cookies are used for website performance monitoring and SEO
         analysis.
       </p>
-      <Table>
+      <Table className="[&_td]:min-w-32 [&_td]:whitespace-normal">
         <TableHeader>
           <TableRow>
             <TableHead>Cookie / Storage</TableHead>
@@ -217,7 +217,7 @@ function CookiePolicy() {
         The following third-party services embedded on our website may set their
         own cookies:
       </p>
-      <Table>
+      <Table className="[&_td]:min-w-32 [&_td]:whitespace-normal">
         <TableHeader>
           <TableRow>
             <TableHead>Service</TableHead>
@@ -265,7 +265,7 @@ function CookiePolicy() {
       <p>
         In addition to cookies, we use browser local storage for the following:
       </p>
-      <Table>
+      <Table className="[&_td]:min-w-32 [&_td]:whitespace-normal">
         <TableHeader>
           <TableRow>
             <TableHead>Key</TableHead>

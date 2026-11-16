@@ -26,7 +26,8 @@ export function VoxelScene() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rendererRef = useRef<ReturnType<typeof createVoxelRenderer>>(null);
   const [pressure, setPressure] = useState<SelectionPressure>("balanced");
-  const [paused, setPaused] = useState(false);
+  // null follows the reduced motion preference until the visitor chooses.
+  const [paused, setPaused] = useState<boolean | null>(null);
   const [speed, setSpeed] = useState<1 | 3>(1);
   const [status, setStatus] = useState<"loading" | "ready" | "unavailable">(
     "loading",
@@ -35,7 +36,13 @@ export function VoxelScene() {
   const [announcement, setAnnouncement] = useState("");
   const reducedMotion = useReducedMotion();
   const ready = status === "ready";
-  const stopped = paused || reducedMotion !== false;
+  const stopped = paused ?? reducedMotion !== false;
+  const playbackLabel = t(
+    stopped
+      ? "simulation.playSceneAnimation"
+      : "simulation.pauseSceneAnimation",
+  );
+  const speedLabel = t("simulation.simulationSpeed", { speed });
   const WeatherIcon = summary.storm
     ? CloudLightning
     : summary.night > 0.4
@@ -77,8 +84,8 @@ export function VoxelScene() {
   }, []);
 
   useEffect(() => {
-    rendererRef.current?.setMotion(paused, reducedMotion !== false);
-  }, [paused, reducedMotion, ready]);
+    rendererRef.current?.setMotion(stopped, reducedMotion !== false);
+  }, [stopped, reducedMotion, ready]);
 
   useEffect(() => {
     rendererRef.current?.setPressure(pressure);
@@ -182,34 +189,30 @@ export function VoxelScene() {
             <Button
               variant="outline"
               size="icon-sm"
-              onClick={() => setPaused(!paused)}
-              aria-label={t(
-                paused
-                  ? "simulation.playSceneAnimation"
-                  : "simulation.pauseSceneAnimation",
-              )}
-              disabled={reducedMotion !== false || !ready}
+              onClick={() => setPaused(!stopped)}
+              aria-label={playbackLabel}
+              title={playbackLabel}
+              disabled={!ready}
             >
-              {paused ? <Play /> : <Pause />}
+              {stopped ? <Play /> : <Pause />}
             </Button>
-            {stopped && (
-              <Button
-                variant="outline"
-                size="icon-sm"
-                onClick={() => rendererRef.current?.step()}
-                disabled={!ready}
-                aria-label={t("simulation.advanceSimulationByOneSecond")}
-                title={t("simulation.step")}
-              >
-                <StepForward />
-              </Button>
-            )}
             <Button
-              variant="ghost"
+              variant="outline"
+              size="icon-sm"
+              onClick={() => rendererRef.current?.step()}
+              disabled={!ready || !stopped}
+              aria-label={t("simulation.advanceSimulationByOneSecond")}
+              title={t("simulation.step")}
+            >
+              <StepForward />
+            </Button>
+            <Button
+              variant={speed === 3 ? "secondary" : "ghost"}
               size="sm"
               onClick={() => setSpeed(speed === 1 ? 3 : 1)}
-              aria-label={t("simulation.simulationSpeed", { speed })}
-              disabled={!ready || reducedMotion !== false}
+              aria-label={speedLabel}
+              title={speedLabel}
+              disabled={!ready}
             >
               {speed}×
             </Button>
@@ -219,6 +222,7 @@ export function VoxelScene() {
               onClick={() => rendererRef.current?.reset()}
               disabled={!ready}
               aria-label={t("simulation.reset")}
+              title={t("simulation.reset")}
             >
               <RotateCcw />
             </Button>
@@ -231,11 +235,12 @@ export function VoxelScene() {
           />
         </div>
       </div>
-      {(status === "unavailable" || reducedMotion === true) && (
+      {(status === "unavailable" ||
+        (reducedMotion === true && paused === null)) && (
         <p className="voxel-note">
           {status === "unavailable"
             ? t("simulation.3dAnimationIsUnavailableShowingAStillScene")
-            : t("simulation.reducedMotionIsOnUseStepToAdvance")}
+            : t("simulation.reducedMotionIsOnPressPlayOrUseStep")}
         </p>
       )}
       <p className="sr-only">

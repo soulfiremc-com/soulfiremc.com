@@ -38,7 +38,9 @@ export function CustomTimeAgo(props: Props) {
     }
 
     return (
-      <time dateTime={date.toISOString()}>
+      // Server and browser ICU data can format the same date with different
+      // whitespace. The relative time replaces this text after mount anyway.
+      <time dateTime={date.toISOString()} suppressHydrationWarning>
         {new Intl.DateTimeFormat(locale, {
           dateStyle: "medium",
           timeStyle: "short",

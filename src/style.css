@@ -156,6 +156,11 @@
     @apply border-border outline-ring/50;
   }
 
+  /* Links and controls without their own focus style get a visible ring. */
+  :where(a, button, summary, [tabindex]:not([tabindex="-1"])):focus-visible {
+    @apply outline-2 outline-offset-2 outline-fd-primary;
+  }
+
   body {
     @apply bg-background text-foreground;
   }

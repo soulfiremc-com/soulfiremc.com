@@ -32,6 +32,8 @@ import { SocialLinkButtons } from "@/components/social-link-buttons";
 import { Badge as UiBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useHydratedQueryResult } from "@/hooks/use-hydrated-query-result";
 import {
   HoverCard,
   HoverCardContent,
@@ -152,13 +154,17 @@ function ProxyProviderPageContent({
       resetScroll: false,
     });
   };
-  const reviewsQuery = useQuery(
-    reviewsQueryOptions({
-      itemType: "proxy",
-      slugs: [provider.slug],
-      includeWrittenReviews: true,
-      reviewsPage,
-    }),
+  // The streamed review data can reach the client before hydration. Wait for
+  // hydration so the server and client render the same summary.
+  const reviewsQuery = useHydratedQueryResult(
+    useQuery(
+      reviewsQueryOptions({
+        itemType: "proxy",
+        slugs: [provider.slug],
+        includeWrittenReviews: true,
+        reviewsPage,
+      }),
+    ),
   );
   const reviewSummary =
     reviewsQuery.data?.summaries[provider.slug] ?? emptyReviewSummary();
@@ -242,7 +248,14 @@ function ProxyProviderPageContent({
                 nativeButton={false}
                 size="lg"
               />
-              <ReviewSummaryBadge summary={reviewSummary} />
+              {reviewsQuery.isPending ? (
+                <Skeleton
+                  aria-label={t("reviews.loadingRatings")}
+                  className="h-5 w-32"
+                />
+              ) : (
+                <ReviewSummaryBadge summary={reviewSummary} />
+              )}
             </div>
             {provider.socialLinks?.length ? (
               <div className="flex flex-wrap gap-2">

@@ -26,28 +26,36 @@ const CookieConsentBanner = () => {
     setConsentState(posthog.get_explicit_consent_status());
   }, []);
 
-  const handleAcceptCookies = () => {
-    posthog.opt_in_capturing();
-    setConsentState("granted");
+  const respond = (status: "granted" | "denied") => {
+    if (status === "granted") posthog.opt_in_capturing();
+    else posthog.opt_out_capturing();
+    // React commits this click's update before PostHog's document click
+    // listener records the click, so its dead-click check never sees the
+    // banner close. Closing in the next task keeps the response measurable.
+    setTimeout(() => setConsentState(status), 0);
   };
 
-  const handleDeclineCookies = () => {
-    posthog.opt_out_capturing();
-    setConsentState("denied");
-  };
+  const handleAcceptCookies = () => respond("granted");
+  const handleDeclineCookies = () => respond("denied");
 
   if (consentState !== "pending") {
     return null;
   }
 
   return (
-    <div className="fixed bottom-0 left-0 z-50 sm:bottom-4 sm:left-4">
+    <section
+      aria-labelledby="cookie-consent-title"
+      className="fixed bottom-0 left-0 z-50 sm:bottom-4 sm:left-4"
+    >
+      {/* Tighter side padding on phones leaves more room for page actions. */}
       <Card className="m-3 shadow-lg sm:max-w-md">
-        <CardHeader className="flex flex-row items-center justify-between gap-2 pb-2">
-          <CardTitle className="text-lg">{t("cookies.title")}</CardTitle>
-          <Cookie className="size-5" />
+        <CardHeader className="flex flex-row items-center justify-between gap-2 px-4 sm:px-6">
+          <CardTitle id="cookie-consent-title" className="text-lg">
+            {t("cookies.title")}
+          </CardTitle>
+          <Cookie aria-hidden="true" className="size-5" />
         </CardHeader>
-        <CardContent className="flex flex-col gap-2">
+        <CardContent className="flex flex-col gap-2 px-4 sm:px-6">
           <CardDescription className="text-sm">
             {t("cookies.description")}
           </CardDescription>
@@ -55,7 +63,7 @@ const CookieConsentBanner = () => {
             {t("cookies.acceptanceNotice")}
           </p>
         </CardContent>
-        <CardFooter className="flex gap-2 pt-2">
+        <CardFooter className="flex gap-2 px-4 sm:px-6">
           <Button
             type="button"
             onClick={handleDeclineCookies}
@@ -73,7 +81,7 @@ const CookieConsentBanner = () => {
           </Button>
         </CardFooter>
       </Card>
-    </div>
+    </section>
   );
 };
 

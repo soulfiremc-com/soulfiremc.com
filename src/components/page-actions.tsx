@@ -1,7 +1,7 @@
-import type { MessageKey } from "@/lib/messages";
-("use client");
+"use client";
 
 import { useT } from "@/lib/i18n-react";
+import type { MessageKey } from "@/lib/messages";
 import { buttonVariants } from "fumadocs-ui/components/ui/button";
 import {
   Popover,
@@ -20,6 +20,17 @@ import { useMemo, useState } from "react";
 
 const cache = new Map<string, string>();
 
+async function fetchMarkdown(markdownUrl: string) {
+  const response = await fetch(markdownUrl);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch ${markdownUrl}: ${response.status}`);
+  }
+
+  const content = await response.text();
+  cache.set(markdownUrl, content);
+  return content;
+}
+
 export function LLMCopyButton({
   /**
    * A URL to fetch the raw Markdown/MDX content of page
@@ -35,18 +46,17 @@ export function LLMCopyButton({
     if (cached) return navigator.clipboard.writeText(cached);
 
     setLoading(true);
+    const content = fetchMarkdown(markdownUrl);
 
     try {
+      // Safari only keeps the user gesture when the clipboard write starts
+      // before the fetch finishes.
       await navigator.clipboard.write([
-        new ClipboardItem({
-          "text/plain": fetch(markdownUrl).then(async (res) => {
-            const content = await res.text();
-            cache.set(markdownUrl, content);
-
-            return content;
-          }),
-        }),
+        new ClipboardItem({ "text/plain": content }),
       ]);
+    } catch {
+      // Older browsers reject a pending ClipboardItem value.
+      await navigator.clipboard.writeText(await content);
     } finally {
       setLoading(false);
     }
@@ -55,6 +65,7 @@ export function LLMCopyButton({
   return (
     <button
       disabled={isLoading}
+      aria-busy={isLoading}
       className={buttonVariants({
         color: "secondary",
         size: "sm",
@@ -64,7 +75,9 @@ export function LLMCopyButton({
       type="button"
     >
       {checked ? <Check /> : <Copy />}
-      {t("docs.copyPage")}
+      <span aria-live="polite">
+        {checked ? t("docs.copiedPage") : t("docs.copyPage")}
+      </span>
     </button>
   );
 }
@@ -88,10 +101,7 @@ export function ViewOptions({
 }) {
   const t = useT();
   const items = useMemo(() => {
-    const fullMarkdownUrl =
-      typeof window !== "undefined"
-        ? new URL(markdownUrl, window.location.origin)
-        : "loading";
+    const fullMarkdownUrl = new URL(markdownUrl, "https://soulfiremc.com");
     const q = `Read ${fullMarkdownUrl}, I want to ask questions about it.`;
 
     return [

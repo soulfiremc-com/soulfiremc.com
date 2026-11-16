@@ -1,7 +1,7 @@
 import type { MessageKey } from "@/lib/messages";
 import { useT } from "@/lib/i18n-react";
 import { useCopyButton } from "fumadocs-ui/utils/use-copy-button";
-import { Check, Copy } from "lucide-react";
+import { Check, Copy, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function CouponCode({
@@ -36,6 +36,31 @@ export function CouponCode({
       >
         {copied ? <Check className="text-success" /> : <Copy />}
       </Button>
+      <span className="sr-only" aria-live="polite">
+        {copied ? t("offers.couponCopied") : ""}
+      </span>
     </div>
+  );
+}
+
+/** A discount that applies when the visitor registers through the provider link. */
+export function LinkDiscountNotice({
+  message,
+  href,
+}: {
+  message: MessageKey;
+  href: string;
+}) {
+  const t = useT();
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer nofollow"
+      className="flex items-center justify-between gap-2 rounded-lg bg-offer/10 p-3 text-sm font-medium text-offer transition-colors hover:bg-offer/15 outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+    >
+      {t(message)}
+      <ExternalLink aria-hidden="true" className="size-4 shrink-0" />
+    </a>
   );
 }

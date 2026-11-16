@@ -3,6 +3,7 @@ import test from "node:test";
 import {
   type ClientReleaseManifest,
   createClientDownloads,
+  getClientReleaseNotesUrl,
 } from "@/lib/download-links";
 
 test("createClientDownloads builds desktop installer URLs and keeps Linux on Flathub", () => {
@@ -36,5 +37,20 @@ test("createClientDownloads builds desktop installer URLs and keeps Linux on Fla
   assert.equal(
     downloads.linux.arm64,
     "https://flathub.org/apps/com.soulfiremc.soulfire",
+  );
+});
+
+test("getClientReleaseNotesUrl links the release tag or falls back to the latest release", () => {
+  assert.equal(
+    getClientReleaseNotesUrl(" 2.10.7 "),
+    "https://github.com/soulfiremc-com/SoulFireClient/releases/tag/2.10.7",
+  );
+  assert.equal(
+    getClientReleaseNotesUrl("latest"),
+    "https://github.com/soulfiremc-com/SoulFireClient/releases/latest",
+  );
+  assert.equal(
+    getClientReleaseNotesUrl(undefined),
+    "https://github.com/soulfiremc-com/SoulFireClient/releases/latest",
   );
 });

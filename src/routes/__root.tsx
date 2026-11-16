@@ -1,5 +1,4 @@
-import { translate, resolveMessage, type MessageKey } from "@/lib/messages";
-import { useT, useLocale } from "@/lib/i18n-react";
+import { translate } from "@/lib/messages";
 import { splitLocalePath } from "@/lib/i18n";
 import "@fontsource-variable/geist";
 import "@fontsource-variable/geist-mono";
@@ -13,6 +12,7 @@ import {
   useRouterState,
 } from "@tanstack/react-router";
 import { Providers } from "@/components/providers";
+import { NotFoundPage, RouteErrorPage } from "@/components/route-status-page";
 import {
   createStructuredDataGraph,
   getOrganizationStructuredData,
@@ -71,26 +71,13 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
   }),
   component: RootComponent,
   shellComponent: RootDocument,
-  errorComponent: ({ error }) => (
+  errorComponent: (props) => (
     <Providers>
-      <MessagePage
-        title="errors.somethingWentWrong"
-        text={
-          error instanceof Error
-            ? error.message
-            : "errors.anUnexpectedErrorOccurred"
-        }
-      />
+      <RouteErrorPage {...props} />
     </Providers>
   ),
-  notFoundComponent: () => (
-    <Providers>
-      <MessagePage
-        title="errors.pageNotFound"
-        text="errors.thePageYouRequestedDoesNotExist"
-      />
-    </Providers>
-  ),
+  // Not-found content renders inside RootComponent's Outlet, which already has Providers.
+  notFoundComponent: NotFoundPage,
 });
 
 function RootComponent() {
@@ -137,18 +124,5 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <Scripts />
       </body>
     </html>
-  );
-}
-
-function MessagePage({ title, text }: { title: MessageKey; text: string }) {
-  const t = useT();
-  const locale = useLocale();
-  return (
-    <main className="flex min-h-dvh items-center justify-center p-6">
-      <div className="flex max-w-lg flex-col gap-3 text-center">
-        <h1 className="text-3xl font-semibold">{t(title)}</h1>
-        <p className="text-muted-foreground">{resolveMessage(locale, text)}</p>
-      </div>
-    </main>
   );
 }

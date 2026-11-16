@@ -109,7 +109,7 @@ function DemoVideo() {
         </DialogDescription>
         {open && (
           <iframe
-            className="aspect-video w-full"
+            className="mt-6 aspect-video w-full"
             src="https://www.youtube-nocookie.com/embed/BD-xE8vbHtQ"
             title={t("home.soulfireWalkthrough")}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

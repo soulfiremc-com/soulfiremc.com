@@ -2,8 +2,9 @@
 
 import { useT, useLocale } from "@/lib/i18n-react";
 
+import { useLocation } from "@tanstack/react-router";
 import { ChevronLeft, ChevronRight, MessageSquareText } from "lucide-react";
-import { useEffect, useId, useMemo, useState } from "react";
+import { type ReactNode, useEffect, useId, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { ReviewTurnstileProvider } from "@/components/review-turnstile-provider";
 import { SignInRequiredCredenza } from "@/components/sign-in-required-credenza";
@@ -39,6 +40,8 @@ import type { ItemType } from "@/lib/review-core";
 import { cn, generateN } from "@/lib/utils";
 import { ReviewStarInput, ReviewStars } from "./review-stars";
 
+const REVIEWS_SECTION_ID = "reviews";
+
 function initial(name: string) {
   return name.trim().charAt(0).toUpperCase() || "?";
 }
@@ -58,6 +61,44 @@ function handleMutationError(
       description: t("reviews.errors.reviewVerification"),
     });
   }
+}
+
+function ReviewPageLink({
+  children,
+  href,
+  label,
+  onNavigate,
+}: {
+  children: ReactNode;
+  href: string | undefined;
+  label: string;
+  onNavigate: () => void;
+}) {
+  if (!href) {
+    return (
+      <Button type="button" variant="ghost" aria-label={label} disabled>
+        {children}
+      </Button>
+    );
+  }
+
+  return (
+    <PaginationLink
+      size="default"
+      aria-label={label}
+      href={href}
+      onClick={(event) => {
+        // Let modified clicks open the page URL in a new tab or window.
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+          return;
+        }
+        event.preventDefault();
+        onNavigate();
+      }}
+    >
+      {children}
+    </PaginationLink>
+  );
 }
 
 export function ItemReviewsSection({
@@ -102,6 +143,7 @@ function ItemReviewsSectionContent({
     userReviews,
     writtenReviews,
     loading,
+    refreshing,
     pendingBySlug,
     upsertReview,
     deleteReview,
@@ -119,7 +161,24 @@ function ItemReviewsSectionContent({
   const [rating, setRating] = useState(currentReview?.rating ?? 5);
   const [body, setBody] = useState(currentReview?.body ?? "");
   const [showSignInPrompt, setShowSignInPrompt] = useState(false);
-  const reviewsId = useId();
+  const ratingLabelId = useId();
+  const location = useLocation();
+  const reviewPageHref = (page: number) => {
+    const search = new URLSearchParams(location.searchStr);
+    if (page > 1) {
+      search.set("reviewsPage", String(page));
+    } else {
+      search.delete("reviewsPage");
+    }
+    const query = search.toString();
+    // A real URL keeps pagination working before hydration and in new tabs.
+    return `${location.pathname}${query ? `?${query}` : ""}#${REVIEWS_SECTION_ID}`;
+  };
+  const changeReviewPage = (page: number) => {
+    if (!loading && !refreshing) {
+      onReviewPageChange(page);
+    }
+  };
 
   useEffect(() => {
     setRating(currentReview?.rating ?? 5);
@@ -178,7 +237,10 @@ function ItemReviewsSectionContent({
 
   return (
     <>
-      <section className="flex flex-col gap-6" id={reviewsId}>
+      <section
+        className="flex scroll-mt-20 flex-col gap-6"
+        id={REVIEWS_SECTION_ID}
+      >
         <div className="flex flex-col gap-1">
           <h2 className="text-2xl font-semibold">
             {t("reviews.ratingsReviews")}
@@ -238,7 +300,7 @@ function ItemReviewsSectionContent({
                       {t("reviews.totalRatings")}
                     </div>
                     <div className="mt-1 text-2xl font-semibold tabular-nums">
-                      {summary.reviewCount}
+                      {summary.reviewCount.toLocaleString(locale)}
                     </div>
                   </div>
                 </div>
@@ -272,13 +334,14 @@ function ItemReviewsSectionContent({
 
           <CardContent className="grid gap-5 px-0 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)]">
             <Field>
-              <FieldLabel>{t("reviews.rating")}</FieldLabel>
+              <FieldLabel id={ratingLabelId}>{t("reviews.rating")}</FieldLabel>
               <div className="rounded-xl border border-border/70 bg-muted/20 px-4 py-3">
                 <ReviewStarInput
                   value={rating}
                   onChange={setRating}
                   disabled={pending}
                   size="lg"
+                  labelledBy={ratingLabelId}
                 />
               </div>
             </Field>
@@ -310,7 +373,7 @@ function ItemReviewsSectionContent({
             <Button
               type="button"
               onClick={saveReview}
-              disabled={pending || loading}
+              disabled={pending || loading || refreshing}
             >
               {currentReview
                 ? t("reviews.updateReview")
@@ -321,7 +384,7 @@ function ItemReviewsSectionContent({
                 type="button"
                 variant="outline"
                 onClick={removeReview}
-                disabled={pending}
+                disabled={pending || refreshing}
               >
                 {t("reviews.removeReview")}
               </Button>
@@ -338,9 +401,9 @@ function ItemReviewsSectionContent({
               {reviewPageData.totalCount > 0 ? (
                 <p className="text-sm text-muted-foreground">
                   {t("reviews.showingReviewsOf", {
-                    start: visibleRangeStart,
-                    end: visibleRangeEnd,
-                    count: reviewPageData.totalCount,
+                    start: visibleRangeStart.toLocaleString(locale),
+                    end: visibleRangeEnd.toLocaleString(locale),
+                    count: reviewPageData.totalCount.toLocaleString(locale),
                   })}
                 </p>
               ) : null}
@@ -353,29 +416,28 @@ function ItemReviewsSectionContent({
               >
                 <PaginationContent>
                   <PaginationItem>
-                    <PaginationLink
-                      size="default"
-                      aria-label={t("reviews.previousPage")}
-                      href={`#${reviewsId}`}
-                      aria-disabled={!hasPreviousPage || loading}
-                      className={cn(
-                        (!hasPreviousPage || loading) && "pointer-events-none",
-                      )}
-                      onClick={(event) => {
-                        event.preventDefault();
-                        if (hasPreviousPage && !loading) {
-                          onReviewPageChange(reviewPageData.page - 1);
-                        }
-                      }}
+                    <ReviewPageLink
+                      label={t("reviews.previousPage")}
+                      href={
+                        hasPreviousPage && !refreshing
+                          ? reviewPageHref(reviewPageData.page - 1)
+                          : undefined
+                      }
+                      onNavigate={() =>
+                        changeReviewPage(reviewPageData.page - 1)
+                      }
                     >
                       <ChevronLeft />
                       <span className="hidden sm:block">
                         {t("common.previous")}
                       </span>
-                    </PaginationLink>
+                    </ReviewPageLink>
                   </PaginationItem>
                   <PaginationItem>
-                    <span className="flex h-9 min-w-24 items-center justify-center px-2 text-sm text-muted-foreground">
+                    <span
+                      aria-current="page"
+                      className="flex h-9 min-w-24 items-center justify-center px-2 text-sm text-muted-foreground tabular-nums"
+                    >
                       {t("reviews.pageOf", {
                         page: reviewPageData.page,
                         pages: reviewPageData.totalPages,
@@ -383,26 +445,22 @@ function ItemReviewsSectionContent({
                     </span>
                   </PaginationItem>
                   <PaginationItem>
-                    <PaginationLink
-                      size="default"
-                      aria-label={t("reviews.nextPage")}
-                      href={`#${reviewsId}`}
-                      aria-disabled={!hasNextPage || loading}
-                      className={cn(
-                        (!hasNextPage || loading) && "pointer-events-none",
-                      )}
-                      onClick={(event) => {
-                        event.preventDefault();
-                        if (hasNextPage && !loading) {
-                          onReviewPageChange(reviewPageData.page + 1);
-                        }
-                      }}
+                    <ReviewPageLink
+                      label={t("reviews.nextPage")}
+                      href={
+                        hasNextPage && !refreshing
+                          ? reviewPageHref(reviewPageData.page + 1)
+                          : undefined
+                      }
+                      onNavigate={() =>
+                        changeReviewPage(reviewPageData.page + 1)
+                      }
                     >
                       <span className="hidden sm:block">
                         {t("common.next")}
                       </span>
                       <ChevronRight />
-                    </PaginationLink>
+                    </ReviewPageLink>
                   </PaginationItem>
                 </PaginationContent>
               </Pagination>
@@ -426,7 +484,13 @@ function ItemReviewsSectionContent({
               ))}
             </div>
           ) : hasWrittenReviews ? (
-            <div className="grid gap-4">
+            <div
+              aria-busy={refreshing}
+              className={cn(
+                "grid gap-4 transition-opacity",
+                refreshing && "opacity-60",
+              )}
+            >
               {visibleReviews.map((entry) => (
                 <Card key={entry.id} className="gap-4 p-5">
                   <div className="flex flex-wrap items-start justify-between gap-3">
@@ -452,7 +516,7 @@ function ItemReviewsSectionContent({
                               maximumFractionDigits: 1,
                             })}
                           </span>
-                          <span>·</span>
+                          <span aria-hidden>·</span>
                           <CustomTimeAgo date={entry.createdAt} />
                         </div>
                       </div>

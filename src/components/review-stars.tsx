@@ -31,16 +31,19 @@ export function ReviewStars({
   const t = useT();
   const locale = useLocale();
   const width = `${Math.max(0, Math.min(5, value)) * 20}%`;
+  const label = t("reviews.outOf5Stars", {
+    rating: value.toLocaleString(locale, {
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1,
+    }),
+  });
 
   return (
     <div
+      role="img"
+      aria-label={label}
       className={cn("relative inline-flex items-center", className)}
-      title={t("reviews.outOf5Stars", {
-        rating: value.toLocaleString(locale, {
-          minimumFractionDigits: 1,
-          maximumFractionDigits: 1,
-        }),
-      })}
+      title={label}
     >
       <div className="flex items-center gap-0.5 text-rating-muted/70">
         {generateN(5).map((i) => (
@@ -67,16 +70,22 @@ export function ReviewStarInput({
   disabled,
   size = "sm",
   className,
+  labelledBy,
 }: {
   value: number;
   onChange: (value: number) => void;
   disabled?: boolean;
   size?: Size;
   className?: string;
+  labelledBy?: string;
 }) {
   const t = useT();
   return (
-    <div className={cn("inline-flex items-center gap-0.5", className)}>
+    <div
+      role="group"
+      aria-labelledby={labelledBy}
+      className={cn("inline-flex items-center gap-0.5", className)}
+    >
       {Array.from({ length: 5 }, (_, index) => {
         const starValue = index + 1;
         const active = starValue <= value;
@@ -88,7 +97,7 @@ export function ReviewStarInput({
             onClick={() => onChange(starValue)}
             disabled={disabled}
             className={cn(
-              "rounded-sm text-rating transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-50",
+              "rounded-sm text-rating outline-none transition-transform hover:scale-105 focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50",
               !active && "text-rating-muted/70",
             )}
             aria-label={t("reviews.setRating5", { count: starValue })}

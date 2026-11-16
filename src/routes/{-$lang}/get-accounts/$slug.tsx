@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 import { Suspense } from "react";
 import type { BreadcrumbList, Product, WebPage, WithContext } from "schema-dts";
-import { CouponCode } from "@/components/coupon-code";
+import { CouponCode, LinkDiscountNotice } from "@/components/coupon-code";
 import { GallerySection } from "@/components/gallery-section";
 import { Image } from "@/components/image";
 import { ItemReviewsSection } from "@/components/item-reviews-section";
@@ -85,6 +85,7 @@ function DiscordMemberBadge({
   if (pending) {
     return (
       <Skeleton
+        role="status"
         aria-label={t("providers.accounts.loadingDiscordMemberCount")}
         className="h-5 w-16"
       />
@@ -135,15 +136,6 @@ function DiscordMemberBadge({
         )}
       </HoverCardContent>
     </HoverCard>
-  );
-}
-
-function LinkDiscountNotice({ message }: { message: MessageKey }) {
-  const t = useT();
-  return (
-    <div className="rounded-lg bg-offer/10 p-3">
-      <p className="text-sm font-medium text-offer">{t(message)}</p>
-    </div>
   );
 }
 
@@ -495,6 +487,7 @@ function AccountDetailPage() {
         <nav className="flex items-center gap-1.5 text-sm text-muted-foreground">
           <Link
             to="/{-$lang}"
+            activeOptions={{ exact: true }}
             className="transition-colors hover:text-foreground"
           >
             {t("nav.home")}
@@ -502,12 +495,15 @@ function AccountDetailPage() {
           <ChevronRight className="h-3.5 w-3.5" />
           <Link
             to="/{-$lang}/get-accounts"
+            activeOptions={{ exact: true }}
             className="transition-colors hover:text-foreground"
           >
             {t("common.getAccounts")}
           </Link>
           <ChevronRight className="h-3.5 w-3.5" />
-          <span className="truncate text-foreground">{data.shop.name}</span>
+          <span aria-current="page" className="truncate text-foreground">
+            {data.shop.name}
+          </span>
         </nav>
 
         <Card
@@ -677,14 +673,24 @@ function AccountDetailPage() {
                     {t(CATEGORY_CONFIG[provider.category].description)}
                   </p>
                 </div>
-                <div className="text-3xl font-bold">
-                  {resolveMessage(locale, provider.price)}
-                </div>
-                {provider.priceDetails ? (
-                  <p className="text-sm text-muted-foreground">
-                    {t(provider.priceDetails)}
-                  </p>
-                ) : null}
+                {/* Visitors click the price notes to compare tiers, so they
+                    open the same shop page as the buy button. */}
+                <a
+                  href={provider.url}
+                  target="_blank"
+                  rel="noopener noreferrer nofollow"
+                  tabIndex={-1}
+                  className="group/price flex flex-col gap-4"
+                >
+                  <span className="text-3xl font-bold">
+                    {resolveMessage(locale, provider.price)}
+                  </span>
+                  {provider.priceDetails ? (
+                    <span className="text-sm text-muted-foreground underline-offset-4 group-hover/price:text-foreground group-hover/price:underline">
+                      {t(provider.priceDetails)}
+                    </span>
+                  ) : null}
+                </a>
                 <div className="flex flex-wrap gap-2">
                   {listing.badges.map((badge) => (
                     <ProviderBadge
@@ -705,7 +711,10 @@ function AccountDetailPage() {
                   />
                 ) : null}
                 {provider.linkDiscountMessage ? (
-                  <LinkDiscountNotice message={provider.linkDiscountMessage} />
+                  <LinkDiscountNotice
+                    message={provider.linkDiscountMessage}
+                    href={provider.url}
+                  />
                 ) : null}
                 <div className="text-sm text-muted-foreground">
                   {t("providers.accounts.availability")}{" "}
@@ -713,11 +722,11 @@ function AccountDetailPage() {
                     <Skeleton className="inline-block h-4 w-20 align-middle" />
                   ) : liveOffer.availability ===
                     "https://schema.org/OutOfStock" ? (
-                    "Out of stock"
+                    t("providers.accounts.outOfStock")
                   ) : liveOffer.availability ? (
-                    "In stock"
+                    t("providers.accounts.inStock")
                   ) : (
-                    "Check availability"
+                    t("providers.accounts.checkAvailability")
                   )}
                 </div>
                 <Button

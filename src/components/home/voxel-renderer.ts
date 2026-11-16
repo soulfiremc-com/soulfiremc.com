@@ -195,7 +195,7 @@ export function createVoxelRenderer(
     }
     const elapsed = lastFrame ? Math.min((now - lastFrame) / 1000, 0.1) : 0;
     lastFrame = now;
-    const playing = !paused && !reducedMotion;
+    const playing = !paused;
     if (playing) {
       time += elapsed * speed;
       accumulator += elapsed * speed;
@@ -363,7 +363,7 @@ export function createVoxelRenderer(
       requestDraw();
     },
     step() {
-      if (!paused && !reducedMotion) return;
+      if (!paused) return;
       for (let index = 0; index < 10; index++) tick();
       time += 1;
       night = state.adventure.night;

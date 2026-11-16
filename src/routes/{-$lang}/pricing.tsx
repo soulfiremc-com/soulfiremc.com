@@ -1,15 +1,13 @@
 import { translate } from "@/lib/messages";
 import { TranslatedMessage } from "@/components/translated-message";
-import { useLocale } from "@/lib/i18n-react";
-import { localizePath } from "@/lib/i18n";
 import { useT } from "@/lib/i18n-react";
 import { isLocale } from "@/lib/i18n";
 import { SiKofi } from "@icons-pack/react-simple-icons";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Check, Code, Gift, Heart, Users } from "lucide-react";
 import { SiteShell } from "@/components/site-shell";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -19,6 +17,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { getRequiredEnv } from "@/lib/env";
+import { cn } from "@/lib/utils";
 import {
   createStructuredDataGraph,
   createWebPageStructuredData,
@@ -46,7 +45,6 @@ const supporterTierFeatures = [
 ] as const;
 
 function PricingPageContent() {
-  const locale = useLocale();
   const t = useT();
   return (
     <main className="px-4 py-12 w-full max-w-(--fd-layout-width) mx-auto">
@@ -88,17 +86,13 @@ function PricingPageContent() {
             </ul>
           </CardContent>
           <CardFooter>
-            <Button
-              render={
-                <a href={localizePath("/download", locale)}>
-                  <Code className="h-4 w-4" />
-                  {t("support.getStarted")}
-                </a>
-              }
-              nativeButton={false}
-              variant="outline"
-              className="w-full"
-            />
+            <Link
+              to="/{-$lang}/download"
+              className={cn(buttonVariants({ variant: "outline" }), "w-full")}
+            >
+              <Code className="h-4 w-4" />
+              {t("support.getStarted")}
+            </Link>
           </CardFooter>
         </Card>
         <Card className="flex flex-col border-primary">
@@ -133,20 +127,15 @@ function PricingPageContent() {
             </ul>
           </CardContent>
           <CardFooter>
-            <Button
-              render={
-                <a
-                  href="https://ko-fi.com/alexprogrammerde/tiers"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <SiKofi className="h-4 w-4" />
-                  {t("support.becomeASupporter")}
-                </a>
-              }
-              nativeButton={false}
-              className="w-full"
-            />
+            <a
+              href="https://ko-fi.com/alexprogrammerde/tiers"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(buttonVariants(), "w-full")}
+            >
+              <SiKofi className="h-4 w-4" />
+              {t("support.becomeASupporter")}
+            </a>
           </CardFooter>
         </Card>
       </div>
@@ -200,7 +189,7 @@ function PricingPageContent() {
               src="https://ko-fi.com/alexprogrammerde/?hidefeed=true&widget=true&embed=true&preview=true"
               className="border-none w-full"
               height="712"
-              title={"alexprogrammerde"}
+              title="Ko-fi"
             />
           </CardContent>
         </Card>
@@ -216,9 +205,8 @@ function PricingPageContent() {
           <CardContent className="flex-1">
             <iframe
               src="https://nowpayments.io/embeds/donation-widget?api_key=99dbdb4c-b2d7-4470-a0d9-b8bb978c4881"
-              width="346"
               height="623"
-              className="border-none overflow-y-hidden mx-auto"
+              className="mx-auto block w-full max-w-[346px] overflow-y-hidden border-none"
               title={t("support.nowpaymentsDonationWidget")}
             />
           </CardContent>

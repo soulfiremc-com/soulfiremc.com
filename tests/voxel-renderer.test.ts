@@ -221,7 +221,7 @@ void test("the latest visibility entry wins and hidden time is not simulated", (
   }
 });
 
-void test("pause preserves the camera and reduced motion uses explicit steps", () => {
+void test("pause preserves the camera and reduced motion keeps playback without pointer motion", () => {
   const h = rendererHarness();
   try {
     h.renderer.setMotion(false, false);
@@ -236,8 +236,12 @@ void test("pause preserves the camera and reduced motion uses explicit steps", (
     h.advance(1);
     assert.deepEqual(h.pointer, [0, 0]);
     h.renderer.setPointer(1, 1);
-    h.advance(1);
+    const playing = h.summary().remaining;
+    h.advance(10);
     assert.deepEqual(h.pointer, [0, 0]);
+    assert.ok(h.summary().remaining < playing);
+    h.renderer.setMotion(true, true);
+    h.advance(1);
     assert.equal(h.pendingFrames, 0);
     const before = h.summary().remaining;
     h.renderer.step();
@@ -266,6 +270,8 @@ void test("manual chaos inputs obey pause and reduced motion disables active fla
     h.advance(1);
     assert.equal(h.uniform("u_flash"), 0);
     assert.ok((h.uniform("u_shake") as number[]).every((value) => value === 0));
+    h.renderer.setMotion(true, true);
+    h.advance(1);
     const stopped = h.summary().remaining;
     h.advance(20);
     assert.equal(h.summary().remaining, stopped);

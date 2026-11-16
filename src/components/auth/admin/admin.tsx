@@ -39,7 +39,10 @@ export function Admin({ className, hideNav, path, view }: AdminProps) {
   return (
     <div className={cn("flex w-full flex-col gap-6", className)}>
       {!hideNav && (
-        <nav aria-label={localization.admin} className="flex gap-1 border-b">
+        <nav
+          aria-label={localization.admin}
+          className="flex gap-1 overflow-x-auto border-b"
+        >
           <Button
             aria-current={currentView === "users" ? "page" : undefined}
             render={

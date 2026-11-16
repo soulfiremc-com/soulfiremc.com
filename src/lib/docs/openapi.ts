@@ -59,9 +59,23 @@ type OpenApiInputDocument = Exclude<
   string | (() => unknown)
 >;
 
+/** Splits a service tag such as `MCAuthService` into `MC Auth Service`. */
+export function formatOpenApiTagName(name: string) {
+  return name
+    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+    .replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2");
+}
+
 export const openapi = createOpenAPI({
   input: {
-    sf: openApiDocument as unknown as OpenApiInputDocument,
+    sf: {
+      ...openApiDocument,
+      // Fumadocs splits every capital letter, which turns `MC` into `M C`.
+      tags: openApiDocument.tags.map((tag) => ({
+        ...tag,
+        "x-displayName": formatOpenApiTagName(tag.name),
+      })),
+    } as unknown as OpenApiInputDocument,
   },
 });
 

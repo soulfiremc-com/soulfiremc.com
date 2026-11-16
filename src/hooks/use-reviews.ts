@@ -12,7 +12,9 @@ import { useReviewTurnstile } from "@/components/review-turnstile-provider";
 import { useSession } from "@/lib/auth-hooks";
 import {
   emptyReviewSummary,
+  isSameReviewItems,
   type ItemType,
+  normalizeReviewSlugs,
   type PaginatedPublicReviewRecords,
   type ReviewSummary,
 } from "@/lib/review-core";
@@ -27,7 +29,7 @@ import {
   deleteReviewServerFn,
   submitReviewServerFn,
 } from "@/lib/reviews-actions";
-import { normalizeReviewSlugs, reviewsQueryOptions } from "@/lib/reviews-query";
+import { reviewsQueryOptions } from "@/lib/reviews-query";
 
 type UseReviewsOptions = {
   includeWrittenReviews?: boolean;
@@ -74,9 +76,17 @@ export function useReviews(
   const reviewsQuery = useQuery({
     ...queryOptions,
     enabled: normalizedSlugs.length > 0,
+    // Keep the current reviews visible while another page or the signed-in
+    // view of the same items loads. Never reuse data from other items.
+    placeholderData: (previousData, previousQuery) =>
+      previousQuery &&
+      isSameReviewItems(previousQuery.queryKey, queryOptions.queryKey)
+        ? previousData
+        : undefined,
   });
   const { data: reviewsData, isPending: loading } =
     useHydratedQueryResult(reviewsQuery);
+  const refreshing = !loading && reviewsQuery.isPlaceholderData;
   const mutationKey = reviewMutationKey(itemType, session?.user.id);
   const { mutateAsync } = useMutation(
     reviewMutationOptions({
@@ -132,6 +142,7 @@ export function useReviews(
 
     if (
       loading ||
+      refreshing ||
       queryClient.isMutating({
         mutationKey,
         exact: true,
@@ -164,6 +175,7 @@ export function useReviews(
     userReviews: reviewsData?.userReviews ?? {},
     writtenReviews,
     loading,
+    refreshing,
     pendingBySlug,
     upsertReview,
     deleteReview,

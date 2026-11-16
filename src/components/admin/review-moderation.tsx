@@ -261,14 +261,14 @@ export function ReviewModeration() {
                       </div>
                     </div>
 
-                    <div className="flex flex-wrap items-center gap-2">
+                    <div className="flex min-w-0 flex-wrap items-center gap-2">
                       <Badge variant="secondary">
                         {getItemTypeLabel(comment.itemType)}
                       </Badge>
                       {itemPath ? (
                         <a
                           href={itemPath}
-                          className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                          className="inline-flex min-w-0 items-center gap-1 text-sm break-all text-muted-foreground transition-colors hover:text-foreground"
                         >
                           {comment.itemSlug}
                           <ExternalLink className="size-3" />
@@ -291,7 +291,7 @@ export function ReviewModeration() {
                     <span aria-hidden="true">·</span>
                     <CustomTimeAgo date={comment.createdAt} />
                   </div>
-                  <p className="rounded-md border bg-muted/20 p-3 text-sm leading-6">
+                  <p className="rounded-md border bg-muted/20 p-3 text-sm leading-6 break-words">
                     {comment.body}
                   </p>
                 </CardContent>

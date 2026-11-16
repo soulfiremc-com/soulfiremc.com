@@ -69,25 +69,25 @@ export const BADGE_CONFIG: Record<
   },
   datacenter: {
     label: "providers.badges.datacenter.label",
-    className: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
+    className: "bg-orange-500/10 text-orange-700 dark:text-orange-400",
     description: "providers.proxies.badges.datacenter.description",
     icon: <Building2 className="h-3 w-3" />,
   },
   "unlimited-bandwidth": {
     label: "providers.badges.unlimited-bandwidth.label",
-    className: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400",
+    className: "bg-cyan-500/10 text-cyan-700 dark:text-cyan-400",
     description: "providers.proxies.badges.unlimited-bandwidth.description",
     icon: <InfinityIcon className="h-3 w-3" />,
   },
   "bedrock-udp": {
     label: "providers.badges.bedrock-udp.label",
-    className: "bg-sky-500/10 text-sky-600 dark:text-sky-400",
+    className: "bg-sky-500/10 text-sky-700 dark:text-sky-400",
     description: "providers.proxies.badges.bedrock-udp.description",
     icon: <Network className="h-3 w-3" />,
   },
   "budget-friendly": {
     label: "providers.badges.budget-friendly.label",
-    className: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+    className: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400",
     description: "providers.proxies.badges.budget-friendly.description",
     icon: <Globe className="h-3 w-3" />,
   },
@@ -99,7 +99,7 @@ export const BADGE_CONFIG: Record<
   },
   isp: {
     label: "providers.badges.isp.label",
-    className: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+    className: "bg-amber-500/10 text-amber-700 dark:text-amber-400",
     description: "providers.proxies.badges.isp.description",
     icon: <Wifi className="h-3 w-3" />,
   },

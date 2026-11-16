@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
+  countAccountFilterOptions,
   filterAccountProviders,
   sortAccountProviders,
 } from "@/lib/account-provider-list";
@@ -76,5 +77,35 @@ await test("promotion affects default ordering but not an explicit rating sort",
     sortAccountProviders([promoted, free], "best-rated", summaries, now)[0]
       .slug,
     "free",
+  );
+});
+
+await test("filter option counts show the results each option would give", () => {
+  const mfa: Provider = {
+    ...paid,
+    slug: "mfa",
+    category: "mfa-accounts",
+    badges: ["instant-delivery", "bulk-discount"],
+  };
+  const providers = [promoted, free, paid, mfa];
+  const categories = ["mfa-accounts", "nfa-accounts"] as const;
+  const badges = ["free", "instant-delivery", "bulk-discount"] as const;
+
+  assert.deepEqual(
+    countAccountFilterOptions(providers, categories, badges, undefined, []),
+    {
+      categories: { "mfa-accounts": 1, "nfa-accounts": 3 },
+      badges: { free: 1, "instant-delivery": 3, "bulk-discount": 1 },
+    },
+  );
+  // Categories keep the selected features. Features combine with them.
+  assert.deepEqual(
+    countAccountFilterOptions(providers, categories, badges, "nfa-accounts", [
+      "instant-delivery",
+    ]),
+    {
+      categories: { "mfa-accounts": 1, "nfa-accounts": 2 },
+      badges: { free: 0, "instant-delivery": 2, "bulk-discount": 0 },
+    },
   );
 });

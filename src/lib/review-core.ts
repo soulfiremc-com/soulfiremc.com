@@ -2,6 +2,46 @@ import type { AggregateRating, Review as SchemaReview } from "schema-dts";
 
 export type ItemType = "account" | "proxy" | "resource";
 
+export function normalizeReviewSlugs(slugs: string[]) {
+  return [...new Set(slugs.map((slug) => slug.trim()).filter(Boolean))].sort();
+}
+
+/** Build the cache key for review data. Inputs must already be normalized. */
+export function reviewsQueryKey({
+  itemType,
+  slugs,
+  includeWrittenReviews,
+  reviewsPage,
+  viewerId,
+}: {
+  itemType: ItemType;
+  slugs: string[];
+  includeWrittenReviews: boolean;
+  reviewsPage: number;
+  viewerId?: string;
+}) {
+  return [
+    "reviews",
+    itemType,
+    slugs,
+    includeWrittenReviews,
+    reviewsPage,
+    viewerId ?? "anonymous",
+  ] as const;
+}
+
+/** Whether two review query keys load the same items, ignoring page and viewer. */
+export function isSameReviewItems(
+  previousKey: readonly unknown[],
+  nextKey: readonly unknown[],
+) {
+  return (
+    previousKey[1] === nextKey[1] &&
+    JSON.stringify(previousKey[2]) === JSON.stringify(nextKey[2]) &&
+    previousKey[3] === nextKey[3]
+  );
+}
+
 export type ReviewCommentStatus = "approved" | "pending" | "rejected";
 
 export type ReviewSummary = {

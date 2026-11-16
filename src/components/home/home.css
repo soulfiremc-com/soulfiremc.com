@@ -850,35 +850,51 @@
   .workflow-title span:last-child {
     font-size: 8px;
   }
+  /* Stack the nodes so their text stays readable on narrow screens. */
+  .workflow-canvas {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    aspect-ratio: auto;
+    padding: 20px 16px;
+  }
+  .workflow-wires {
+    display: none;
+  }
   .workflow-node {
-    padding: 7px;
+    position: relative;
+    inset: auto;
+    width: 100%;
+    padding: 10px 12px;
+  }
+  .workflow-node + .workflow-node::before {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 24px;
+    height: 21px;
+    border-left: 2px dashed var(--home-accent);
   }
   .workflow-node > span {
-    font-size: 6px;
+    font-size: 10px;
   }
   .workflow-node strong {
-    font-size: 8px;
+    font-size: 13px;
   }
   .workflow-node p {
-    font-size: 5px;
-    gap: 2px;
-    margin-top: 4px;
-    padding-top: 4px;
-  }
-  .workflow-node i {
-    width: 3px;
-    height: 3px;
+    font-size: 11px;
   }
   .workflow-result {
+    flex-wrap: wrap;
     padding: 12px;
-    font-size: 9px;
+    font-size: 11px;
   }
   .workflow-result code {
-    font-size: 7px;
+    font-size: 10px;
   }
   .terminal-preview pre {
     padding: 20px 16px;
-    font-size: 9px;
+    font-size: 11px;
     min-height: 210px;
   }
   .home-code-bar {

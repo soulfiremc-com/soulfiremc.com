@@ -17,6 +17,7 @@ import {
   createFileRoute,
   Link,
   stripSearchParams,
+  useHydrated,
 } from "@tanstack/react-router";
 import {
   ArrowDownWideNarrow,
@@ -27,7 +28,7 @@ import {
   ImageIcon,
   Star,
 } from "lucide-react";
-import { Suspense, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { CouponCode } from "@/components/coupon-code";
 import { Image } from "@/components/image";
 import { PaymentMethods } from "@/components/payment-methods";
@@ -91,6 +92,14 @@ const proxiesSearchSchema = Schema.Struct({
     .pipe(Schema.catchDecoding(() => Effect.succeed(Option.some("default"))))
     .pipe(Schema.withDecodingDefaultType(Effect.succeed("default"))),
 });
+
+const PENDING_SEARCH_STYLE_ID = "get-proxies-pending-search";
+
+// The prerendered HTML always lists every provider in the default order. When
+// the URL has filters, hide that list before the first paint so applying the
+// filters after hydration does not shift the page. The animation reveals the
+// list if the app never hydrates.
+const hidePrerenderedResultsScript = `(()=>{const s=new URLSearchParams(location.search);if(!s.has("badges")&&!s.has("sort"))return;const e=document.createElement("style");e.id="${PENDING_SEARCH_STYLE_ID}";e.textContent="[data-provider-results]{visibility:hidden;animation:provider-results-reveal 0s 5s forwards}@keyframes provider-results-reveal{to{visibility:visible}}";document.head.append(e)})()`;
 
 const SORT_CONFIG = {
   default: {
@@ -262,6 +271,13 @@ function MainContent() {
     Schema.decodeUnknownSync(proxiesSearchSchema)({}),
   );
   const navigate = Route.useNavigate();
+  const hydrated = useHydrated();
+
+  useEffect(() => {
+    if (hydrated) {
+      document.getElementById(PENDING_SEARCH_STYLE_ID)?.remove();
+    }
+  }, [hydrated]);
 
   const clearFilters = () => {
     void navigate({
@@ -331,18 +347,12 @@ function MainContent() {
         >
           {SORT_OPTIONS.map((option) => {
             const config = SORT_CONFIG[option];
-            const isActive = sort === option;
             return (
               <ToggleGroupItem
                 key={option}
                 value={option}
                 size="sm"
-                className={cn(
-                  "rounded-full px-3 py-1.5 text-xs",
-                  isActive
-                    ? "bg-primary text-primary-foreground ring-2 ring-offset-2 ring-offset-background ring-primary"
-                    : "bg-muted text-muted-foreground hover:bg-muted/80",
-                )}
+                className="rounded-full bg-muted px-3 py-1.5 text-xs text-muted-foreground hover:bg-muted/80 data-pressed:bg-primary data-pressed:text-primary-foreground data-pressed:ring-2 data-pressed:ring-primary data-pressed:ring-offset-2 data-pressed:ring-offset-background"
               >
                 {config.icon}
                 {t(config.label)}
@@ -401,6 +411,8 @@ function MainContent() {
         variant="outline"
         size="sm"
         onClick={() => setFiltersOpen(!filtersOpen)}
+        aria-expanded={filtersOpen}
+        aria-controls="proxy-filters-mobile"
         className="self-start lg:hidden"
       >
         <Filter data-icon="inline-start" />
@@ -414,7 +426,12 @@ function MainContent() {
 
       {/* Mobile filter panel */}
       {filtersOpen && (
-        <div className="lg:hidden rounded-lg border p-4">{filterContent}</div>
+        <div
+          id="proxy-filters-mobile"
+          className="lg:hidden rounded-lg border p-4"
+        >
+          {filterContent}
+        </div>
       )}
 
       {/* Desktop sidebar */}
@@ -423,7 +440,10 @@ function MainContent() {
       </aside>
 
       {/* Main content */}
-      <div className="flex-1">
+      <script
+        dangerouslySetInnerHTML={{ __html: hidePrerenderedResultsScript }}
+      />
+      <div className="flex-1" data-provider-results>
         {filteredProviders.length === 0 ? (
           <Empty className="border">
             <EmptyHeader>
@@ -439,7 +459,7 @@ function MainContent() {
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
             {filteredProviders.map((provider) => (
               <ProviderCard
-                key={provider.name}
+                key={provider.slug}
                 provider={provider}
                 reviewSummary={summaries[provider.slug]}
                 userReview={userReviews[provider.slug]}

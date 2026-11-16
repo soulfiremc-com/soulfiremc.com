@@ -1,6 +1,7 @@
 import { QueryClient } from "@tanstack/react-query";
 import { createRouter, deepEqual } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
+import { preloadDocsContentForHydration } from "@/lib/docs/hydration";
 import { routeTree } from "./routeTree.gen";
 
 export function getRouter() {
@@ -24,6 +25,7 @@ export function getRouter() {
     context: {
       queryClient,
     },
+    hydrate: () => preloadDocsContentForHydration(),
   });
 
   setupRouterSsrQueryIntegration({

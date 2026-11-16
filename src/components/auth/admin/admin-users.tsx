@@ -458,7 +458,9 @@ export function AdminUsers({
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>
+                  <TableHead
+                    aria-sort={getAriaSort(table.getColumn("name")?.getIsSorted())}
+                  >
                     <SortButton
                       onClick={table
                         .getColumn("name")
@@ -472,7 +474,12 @@ export function AdminUsers({
                     {localization.role}
                   </TableHead>
                   <TableHead>{localization.status}</TableHead>
-                  <TableHead className="hidden lg:table-cell">
+                  <TableHead
+                    aria-sort={getAriaSort(
+                      table.getColumn("createdAt")?.getIsSorted(),
+                    )}
+                    className="hidden lg:table-cell"
+                  >
                     <SortButton
                       onClick={table
                         .getColumn("createdAt")
@@ -623,9 +630,17 @@ function SortButton({
       type="button"
     >
       {children}
-      {sorted ? (sorted === "asc" ? "↑" : "↓") : null}
+      {sorted ? (
+        <span aria-hidden="true">{sorted === "asc" ? "↑" : "↓"}</span>
+      ) : null}
     </button>
   );
+}
+
+function getAriaSort(sorted: false | "asc" | "desc" | undefined) {
+  if (sorted === "asc") return "ascending";
+  if (sorted === "desc") return "descending";
+  return "none";
 }
 
 function AdminState({

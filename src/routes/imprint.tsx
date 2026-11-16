@@ -4,7 +4,7 @@ import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 
 function Imprint() {
   return (
-    <main className="px-4 py-12 w-full max-w-(--fd-layout-width) mx-auto prose">
+    <main className="px-4 py-12 w-full max-w-3xl mx-auto prose">
       <h1>Imprint (Impressum)</h1>
       <p>
         <strong>Last updated:</strong> November 5, 2026

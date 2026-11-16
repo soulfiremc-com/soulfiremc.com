@@ -1,5 +1,9 @@
 import { queryOptions } from "@tanstack/react-query";
-import type { ItemType } from "@/lib/review-core";
+import {
+  type ItemType,
+  normalizeReviewSlugs,
+  reviewsQueryKey,
+} from "@/lib/review-core";
 import { getReviewsServerFn } from "@/lib/reviews-actions";
 
 type ReviewsQueryInput = {
@@ -9,10 +13,6 @@ type ReviewsQueryInput = {
   slugs: string[];
   viewerId?: string;
 };
-
-export function normalizeReviewSlugs(slugs: string[]) {
-  return [...new Set(slugs.map((slug) => slug.trim()).filter(Boolean))].sort();
-}
 
 export function reviewsQueryOptions({
   includeWrittenReviews = false,
@@ -27,14 +27,13 @@ export function reviewsQueryOptions({
     includeWrittenReviews && normalizedSlugs.length === 1;
 
   return queryOptions({
-    queryKey: [
-      "reviews",
+    queryKey: reviewsQueryKey({
       itemType,
-      normalizedSlugs,
-      includesWrittenReviews,
-      normalizedPage,
-      viewerId ?? "anonymous",
-    ],
+      slugs: normalizedSlugs,
+      includeWrittenReviews: includesWrittenReviews,
+      reviewsPage: normalizedPage,
+      viewerId,
+    }),
     queryFn: () =>
       getReviewsServerFn({
         data: {

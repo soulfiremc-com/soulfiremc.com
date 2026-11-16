@@ -40,3 +40,38 @@ export function sortAccountProviders(
     );
   });
 }
+
+export type AccountFilterCounts = {
+  categories: Record<Category, number>;
+  badges: Record<FilterableBadge, number>;
+};
+
+/**
+ * Count the results each filter option would show, given the other active
+ * filters. Category options keep the selected features, and feature options
+ * add to them, because features combine with AND.
+ */
+export function countAccountFilterOptions(
+  providers: Provider[],
+  categories: readonly Category[],
+  filterBadges: readonly FilterableBadge[],
+  category: Category | undefined,
+  badges: FilterableBadge[],
+): AccountFilterCounts {
+  return {
+    categories: Object.fromEntries(
+      categories.map((option) => [
+        option,
+        filterAccountProviders(providers, option, badges).length,
+      ]),
+    ) as Record<Category, number>,
+    badges: Object.fromEntries(
+      filterBadges.map((badge) => [
+        badge,
+        filterAccountProviders(providers, category, [
+          ...new Set([...badges, badge]),
+        ]).length,
+      ]),
+    ) as Record<FilterableBadge, number>,
+  };
+}

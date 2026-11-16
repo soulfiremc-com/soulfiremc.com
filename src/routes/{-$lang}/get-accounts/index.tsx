@@ -30,8 +30,8 @@ import {
   Info,
   Users,
 } from "lucide-react";
-import { Suspense, useMemo, useState } from "react";
-import { CouponCode } from "@/components/coupon-code";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { CouponCode, LinkDiscountNotice } from "@/components/coupon-code";
 import { Image } from "@/components/image";
 import { PaymentMethods } from "@/components/payment-methods";
 import { ProviderThemeDecoration } from "@/components/provider-theme-decoration";
@@ -44,6 +44,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
   Empty,
+  EmptyContent,
   EmptyDescription,
   EmptyHeader,
   EmptyTitle,
@@ -73,6 +74,7 @@ import {
   type SortOption,
 } from "@/lib/accounts-data";
 import {
+  countAccountFilterOptions,
   filterAccountProviders,
   sortAccountProviders,
 } from "@/lib/account-provider-list";
@@ -170,15 +172,6 @@ function DiscordMemberBadge({ providerSlug }: { providerSlug: string }) {
   );
 }
 
-function LinkDiscountNotice({ message }: { message: MessageKey }) {
-  const t = useT();
-  return (
-    <div className="rounded-lg bg-offer/10 p-3">
-      <p className="text-sm font-medium text-offer">{t(message)}</p>
-    </div>
-  );
-}
-
 const CATEGORIES = ["nfa-accounts", "mfa-accounts"] as const;
 
 const BADGES = [
@@ -209,6 +202,32 @@ const accountsSearchSchema = Schema.Struct({
     .pipe(Schema.catchDecoding(() => Effect.succeed(Option.some("default"))))
     .pipe(Schema.withDecodingDefaultType(Effect.succeed("default"))),
 });
+
+type AccountsSearch = typeof accountsSearchSchema.Type;
+
+const PENDING_SEARCH_STYLE_ID = "get-accounts-pending-search";
+
+// The prerendered HTML always lists every provider in the default order. When
+// the URL has filters, hide that list before the first paint so applying the
+// filters after hydration does not shift the page. The animation reveals the
+// list if the app never hydrates.
+const hidePrerenderedResultsScript = `(()=>{const s=new URLSearchParams(location.search);if(!s.has("category")&&!s.has("badges")&&!s.has("sort"))return;const e=document.createElement("style");e.id="${PENDING_SEARCH_STYLE_ID}";e.textContent="[data-provider-results]{visibility:hidden;animation:provider-results-reveal 0s 5s forwards}@keyframes provider-results-reveal{to{visibility:visible}}";document.head.append(e)})()`;
+
+// Features that at least one listing offers. The page hides the others, such
+// as "Free" while every shop is paid, unless a shared link selected them.
+const OFFERED_FILTER_BADGES = new Set(
+  FILTER_BADGES.filter((badge) =>
+    PROVIDERS.some((provider) => provider.badges.includes(badge)),
+  ),
+);
+
+function FilterOptionCount({ count }: { count: number }) {
+  return (
+    <span aria-hidden="true" className="tabular-nums opacity-70">
+      {count}
+    </span>
+  );
+}
 
 function ProviderBadge({
   badge,
@@ -312,10 +331,11 @@ function ProviderCard({
         <div className="flex flex-1 flex-col gap-3">
           <div className="flex flex-wrap items-center gap-3">
             <h3 className="text-xl font-semibold">
+              {/* The overlay makes the whole card open the provider page. */}
               <Link
                 to="/{-$lang}/get-accounts/$slug"
                 params={{ slug: provider.slug }}
-                className="hover:underline"
+                className="rounded-sm outline-none after:absolute after:inset-0 after:content-[''] hover:underline focus-visible:ring-2 focus-visible:ring-ring"
               >
                 {provider.name}
               </Link>
@@ -331,7 +351,7 @@ function ProviderCard({
             <UiBadge
               variant="outline"
               className={cn(
-                "border-transparent bg-primary/10 text-sm text-primary",
+                "relative z-10 border-transparent bg-primary/10 text-sm text-primary",
                 theme?.price /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */,
               )}
             >
@@ -340,17 +360,21 @@ function ProviderCard({
                 <PriceInfoBadge details={provider.priceDetails} />
               )}
             </UiBadge>
-            <Suspense
-              fallback={
-                <Skeleton
-                  aria-label={t("providers.accounts.loadingDiscordMemberCount")}
-                  className="h-5 w-16"
-                />
-              }
-            >
-              <DiscordMemberBadge providerSlug={provider.slug} />
-            </Suspense>
-            <div className="flex flex-wrap gap-2">
+            <span className="relative z-10 inline-flex">
+              <Suspense
+                fallback={
+                  <Skeleton
+                    aria-label={t(
+                      "providers.accounts.loadingDiscordMemberCount",
+                    )}
+                    className="h-5 w-16"
+                  />
+                }
+              >
+                <DiscordMemberBadge providerSlug={provider.slug} />
+              </Suspense>
+            </span>
+            <div className="relative z-10 flex flex-wrap gap-2">
               {provider.badges.map((badge) => (
                 <ProviderBadge
                   key={badge}
@@ -367,7 +391,7 @@ function ProviderCard({
             <Link
               to="/{-$lang}/get-accounts/$slug"
               params={{ slug: provider.slug }}
-              className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+              className="relative z-10 inline-flex w-fit items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
             >
               <ImageIcon className="h-3 w-3" />
               {t("providers.accounts.photos", {
@@ -376,15 +400,24 @@ function ProviderCard({
             </Link>
           )}
           {provider.couponCode ? (
-            <CouponCode
-              code={provider.couponCode}
-              discount={provider.couponDiscount}
-            />
+            <div className="relative z-10">
+              <CouponCode
+                code={provider.couponCode}
+                discount={provider.couponDiscount}
+              />
+            </div>
           ) : provider.linkDiscountMessage ? (
-            <LinkDiscountNotice message={provider.linkDiscountMessage} />
+            <div className="relative z-10">
+              <LinkDiscountNotice
+                message={provider.linkDiscountMessage}
+                href={provider.url}
+              />
+            </div>
           ) : null}
-          <PaymentMethods methods={provider.paymentMethods} />
-          <div className="flex flex-wrap gap-2">
+          <div className="relative z-10 w-fit">
+            <PaymentMethods methods={provider.paymentMethods} />
+          </div>
+          <div className="relative z-10 flex flex-wrap gap-2">
             <Button
               render={
                 <a href={provider.url} target="_blank" rel="noopener nofollow">
@@ -421,7 +454,7 @@ function ProviderCard({
                     rel="noopener nofollow"
                   >
                     Discord
-                    <SiDiscord data-icon="inline-end" />
+                    <SiDiscord aria-hidden="true" data-icon="inline-end" />
                   </a>
                 }
                 nativeButton={false}
@@ -438,7 +471,7 @@ function ProviderCard({
                     rel="noopener nofollow"
                   >
                     Trustpilot
-                    <SiTrustpilot data-icon="inline-end" />
+                    <SiTrustpilot aria-hidden="true" data-icon="inline-end" />
                   </a>
                 }
                 nativeButton={false}
@@ -453,13 +486,15 @@ function ProviderCard({
               }
             />
           </div>
-          <ReviewInlineActions
-            summary={reviewSummary}
-            currentRating={userReview?.rating}
-            pending={reviewPending}
-            onRate={(rating) => onRate(provider.slug, rating)}
-            onClear={() => onClearRating(provider.slug)}
-          />
+          <div className="relative z-10">
+            <ReviewInlineActions
+              summary={reviewSummary}
+              currentRating={userReview?.rating}
+              pending={reviewPending}
+              onRate={(rating) => onRate(provider.slug, rating)}
+              onClear={() => onClearRating(provider.slug)}
+            />
+          </div>
         </div>
       </div>
     </Card>
@@ -469,7 +504,8 @@ function ProviderCard({
 function MainContent() {
   const t = useT();
   const { renderedAt } = Route.useLoaderData();
-  const now = useHydrated() ? Date.now() : renderedAt;
+  const hydrated = useHydrated();
+  const now = hydrated ? Date.now() : renderedAt;
   const providers = PROVIDERS;
   const slugs = useMemo(() => [...new Set(providers.map((p) => p.slug))], []);
   const { summaries, userReviews, pendingBySlug, upsertReview, deleteReview } =
@@ -479,21 +515,50 @@ function MainContent() {
     Schema.decodeUnknownSync(accountsSearchSchema)({}),
   );
   const navigate = Route.useNavigate();
+  const resultsRef = useRef<HTMLDivElement>(null);
 
-  const clearFilters = () => {
-    void navigate({
-      search: (previous) => ({
-        ...previous,
-        category: undefined,
-        badges: [],
-        sort: "default",
-      }),
-      replace: true,
-      resetScroll: false,
+  useEffect(() => {
+    if (hydrated) {
+      document.getElementById(PENDING_SEARCH_STYLE_ID)?.remove();
+    }
+  }, [hydrated]);
+
+  const updateSearch = (
+    search: (previous: AccountsSearch) => AccountsSearch,
+  ) => {
+    void navigate({ search, replace: true, resetScroll: false }).then(() => {
+      // Scroll anchoring keeps the visible cards in place when sections above
+      // them change, so bring the start of the results back into view.
+      const results = resultsRef.current;
+      if (results && results.getBoundingClientRect().top < 0) {
+        results.scrollIntoView({
+          block: "start",
+          behavior: window.matchMedia("(prefers-reduced-motion: reduce)")
+            .matches
+            ? "auto"
+            : "smooth",
+        });
+      }
     });
   };
 
+  const clearFilters = () => {
+    updateSearch((previous) => ({
+      ...previous,
+      category: undefined,
+      badges: [],
+      sort: "default",
+    }));
+  };
+
   const filteredProviders = filterAccountProviders(providers, category, badges);
+  const optionCounts = countAccountFilterOptions(
+    providers,
+    FILTER_CATEGORIES,
+    FILTER_BADGES,
+    category,
+    badges,
+  );
 
   const nfaProviders = sortAccountProviders(
     filteredProviders.filter((p) => p.category === "nfa-accounts"),
@@ -513,24 +578,32 @@ function MainContent() {
 
   const [filtersOpen, setFiltersOpen] = useState(false);
 
+  const resultCount = t("providers.accounts.resultCount", {
+    count: filteredProviders.length,
+    total: providers.length,
+  });
+
   const filterContent = (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center gap-2">
-        <Filter className="size-4 text-muted-foreground" />
-        <span className="text-sm font-medium">
-          {t("providers.accounts.filters")}
-        </span>
-        {hasActiveFilters && (
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            onClick={clearFilters}
-            className="ml-auto h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
-          >
-            {t("providers.accounts.clear")}
-          </Button>
-        )}
+      <div className="flex flex-col gap-1">
+        <div className="flex min-h-7 items-center gap-2">
+          <Filter className="size-4 text-muted-foreground" />
+          <span className="text-sm font-medium">
+            {t("providers.accounts.filters")}
+          </span>
+          {hasActiveFilters && (
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={clearFilters}
+              className="ml-auto h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
+            >
+              {t("providers.accounts.clear")}
+            </Button>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground">{resultCount}</p>
       </div>
 
       {/* Category Filter */}
@@ -541,14 +614,10 @@ function MainContent() {
         <ToggleGroup
           value={category ? [category] : []}
           onValueChange={([value]) =>
-            void navigate({
-              search: (previous) => ({
-                ...previous,
-                category: value ? (value as Category) : undefined,
-              }),
-              replace: true,
-              resetScroll: false,
-            })
+            updateSearch((previous) => ({
+              ...previous,
+              category: value ? (value as Category) : undefined,
+            }))
           }
           spacing={2}
           className="flex-wrap"
@@ -556,19 +625,17 @@ function MainContent() {
           {FILTER_CATEGORIES.map((cat) => {
             const config = CATEGORY_CONFIG[cat];
             const isActive = category === cat;
+            const count = optionCounts.categories[cat];
             return (
               <ToggleGroupItem
                 key={cat}
                 value={cat}
                 size="sm"
-                className={cn(
-                  "rounded-full px-3 py-1.5 text-xs",
-                  isActive
-                    ? "bg-primary text-primary-foreground ring-2 ring-offset-2 ring-offset-background ring-primary"
-                    : "bg-muted text-muted-foreground hover:bg-muted/80",
-                )}
+                disabled={count === 0 && !isActive}
+                className="rounded-full bg-muted px-3 py-1.5 text-xs text-muted-foreground hover:bg-muted/80 data-pressed:bg-primary data-pressed:text-primary-foreground data-pressed:ring-2 data-pressed:ring-primary data-pressed:ring-offset-2 data-pressed:ring-offset-background"
               >
                 {t(config.label)}
+                <FilterOptionCount count={count} />
               </ToggleGroupItem>
             );
           })}
@@ -584,26 +651,27 @@ function MainContent() {
           multiple
           value={badges}
           onValueChange={(value) =>
-            void navigate({
-              search: (previous) => ({
-                ...previous,
-                badges: value as FilterableBadge[],
-              }),
-              replace: true,
-              resetScroll: false,
-            })
+            updateSearch((previous) => ({
+              ...previous,
+              badges: value as FilterableBadge[],
+            }))
           }
           spacing={2}
           className="flex-wrap"
         >
-          {FILTER_BADGES.map((badge) => {
+          {FILTER_BADGES.filter(
+            (badge) =>
+              OFFERED_FILTER_BADGES.has(badge) || badges.includes(badge),
+          ).map((badge) => {
             const config = BADGE_CONFIG[badge];
             const isActive = badges.includes(badge);
+            const count = optionCounts.badges[badge];
             return (
               <ToggleGroupItem
                 key={badge}
                 value={badge}
                 size="sm"
+                disabled={count === 0 && !isActive}
                 className={cn(
                   "rounded-full px-3 py-1.5 text-xs",
                   isActive
@@ -615,6 +683,7 @@ function MainContent() {
                 )}
               >
                 {t(config.label)}
+                <FilterOptionCount count={count} />
               </ToggleGroupItem>
             );
           })}
@@ -628,35 +697,24 @@ function MainContent() {
         </span>
         <ToggleGroup
           value={[sort]}
-          onValueChange={([value]) => {
-            if (value) {
-              void navigate({
-                search: (previous) => ({
-                  ...previous,
-                  sort: value as SortOption,
-                }),
-                replace: true,
-                resetScroll: false,
-              });
-            }
-          }}
+          onValueChange={([value]) =>
+            // Pressing the active sort again returns to the default order.
+            updateSearch((previous) => ({
+              ...previous,
+              sort: (value as SortOption | undefined) ?? "default",
+            }))
+          }
           spacing={2}
           className="flex-wrap"
         >
           {SORT_OPTIONS.map((option) => {
             const config = SORT_CONFIG[option];
-            const isActive = sort === option;
             return (
               <ToggleGroupItem
                 key={option}
                 value={option}
                 size="sm"
-                className={cn(
-                  "rounded-full px-3 py-1.5 text-xs",
-                  isActive
-                    ? "bg-primary text-primary-foreground ring-2 ring-offset-2 ring-offset-background ring-primary"
-                    : "bg-muted text-muted-foreground hover:bg-muted/80",
-                )}
+                className="rounded-full bg-muted px-3 py-1.5 text-xs text-muted-foreground hover:bg-muted/80 data-pressed:bg-primary data-pressed:text-primary-foreground data-pressed:ring-2 data-pressed:ring-primary data-pressed:ring-offset-2 data-pressed:ring-offset-background"
               >
                 {config.icon}
                 {t(config.label)}
@@ -676,6 +734,8 @@ function MainContent() {
         variant="outline"
         size="sm"
         onClick={() => setFiltersOpen(!filtersOpen)}
+        aria-expanded={filtersOpen}
+        aria-controls={filtersOpen ? "account-filters-mobile" : undefined}
         className="self-start lg:hidden"
       >
         <Filter data-icon="inline-start" />
@@ -689,7 +749,12 @@ function MainContent() {
 
       {/* Mobile filter panel */}
       {filtersOpen && (
-        <div className="lg:hidden rounded-lg border p-4">{filterContent}</div>
+        <div
+          id="account-filters-mobile"
+          className="lg:hidden rounded-lg border p-4"
+        >
+          {filterContent}
+        </div>
       )}
 
       {/* Desktop sidebar */}
@@ -698,7 +763,17 @@ function MainContent() {
       </aside>
 
       {/* Main content */}
-      <div className="flex flex-1 flex-col gap-10">
+      <script
+        dangerouslySetInnerHTML={{ __html: hidePrerenderedResultsScript }}
+      />
+      <div
+        ref={resultsRef}
+        data-provider-results
+        className="flex min-w-0 flex-1 scroll-mt-20 flex-col gap-10"
+      >
+        <p role="status" className="sr-only">
+          {resultCount}
+        </p>
         {filteredProviders.length === 0 ? (
           <Empty className="border">
             <EmptyHeader>
@@ -709,6 +784,11 @@ function MainContent() {
                 {t("providers.filters.emptyDescription")}
               </EmptyDescription>
             </EmptyHeader>
+            <EmptyContent>
+              <Button type="button" variant="outline" onClick={clearFilters}>
+                {t("providers.accounts.clearFilters")}
+              </Button>
+            </EmptyContent>
           </Empty>
         ) : (
           <>
@@ -978,10 +1058,15 @@ export const Route = createFileRoute("/{-$lang}/get-accounts/")({
   search: {
     middlewares: [stripSearchParams({ badges: [], sort: "default" })],
   },
-  loader: ({ context }) => {
+  loader: async ({ context }) => {
     void context.queryClient.prefetchQuery(allAccountLiveShopDataQueryOptions);
-    void context.queryClient.prefetchQuery(accountsDiscordInvitesQueryOptions);
+    const discordInvites = context.queryClient.prefetchQuery(
+      accountsDiscordInvitesQueryOptions,
+    );
     void context.queryClient.prefetchQuery(accountReviewsQueryOptions);
+    // The prerendered page must include the member badges. A streamed
+    // fallback swaps in late in the large document and shifts each card.
+    if (import.meta.env.SSR) await discordInvites;
     return { renderedAt: Date.now() };
   },
   head: ({ params }) => {

@@ -16,6 +16,7 @@ import {
 import { createServerFn } from "@tanstack/react-start";
 import {
   BookOpen,
+  Check,
   CircuitBoard,
   Coffee,
   Cpu,
@@ -29,7 +30,7 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import { Image } from "@/components/image";
 import { SiteShell } from "@/components/site-shell";
 import { CustomTimeAgo } from "@/components/time-ago";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -55,6 +56,8 @@ import {
   createClientDownloads,
   createServerDownloads,
   type DownloadLinkMap,
+  FLATHUB_URL,
+  getClientReleaseNotesUrl,
 } from "@/lib/download-links";
 import { getClientReleaseManifest, getServerVersion } from "@/lib/releases";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
@@ -79,7 +82,6 @@ const WINDOWS_OPTION = {
   label: "Windows",
   detail: "download.windows10OrNewer",
   iconSrc: "/platform/windows.png",
-  iconAlt: "Windows",
   preferredCpuId: FALLBACK_CPU.id,
 } as const;
 
@@ -90,7 +92,6 @@ const OS_OPTIONS = [
     label: "macOS",
     detail: "download.appleSiliconIntel",
     iconSrc: "/platform/macos.png",
-    iconAlt: "macOS",
     preferredCpuId: ARM_CPU.id,
   },
   {
@@ -98,7 +99,6 @@ const OS_OPTIONS = [
     label: "Linux",
     detail: "download.mostDistrosSupported",
     iconSrc: "/platform/linux.png",
-    iconAlt: "Linux",
     preferredCpuId: FALLBACK_CPU.id,
   },
 ] as const;
@@ -137,6 +137,20 @@ const downloadSearchSchema = Schema.Struct({
 });
 
 type DownloadSelection = (typeof downloadSearchSchema)["Type"];
+
+function ignoreAbortError(error: unknown) {
+  // A newer search update cancels the previous navigation. That is expected.
+  if (error instanceof DOMException && error.name === "AbortError") return;
+  throw error;
+}
+
+function SelectedMark() {
+  return (
+    <span className="absolute top-3 right-3 flex size-5 items-center justify-center rounded-full bg-primary text-primary-foreground">
+      <Check className="size-3.5" aria-hidden="true" />
+    </span>
+  );
+}
 
 function DownloadSelectionComponent({
   clientDownloads,
@@ -186,18 +200,24 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
       }),
       replace: true,
       resetScroll: false,
-    });
+    }).catch(ignoreAbortError);
   }, [hasExplicitParams, navigate]);
 
   const downloadHref = links[selection.os]?.[selection.cpu];
   const isDirectGithubDownload = downloadHref?.includes("github.com") ?? false;
+  const downloadLinkProps = isDirectGithubDownload
+    ? { download: "" }
+    : { target: "_blank", rel: "noopener noreferrer" };
+  const selectedOsLabel =
+    OS_OPTIONS.find((option) => option.id === selection.os)?.label ??
+    selection.os;
 
   const handleOsChange = (os: DownloadSelection["os"]) => {
     void navigate({
       search: (previous) => ({ ...previous, os, cpu: PREFERRED_CPU_BY_OS[os] }),
       replace: true,
       resetScroll: false,
-    });
+    }).catch(ignoreAbortError);
   };
 
   const handleCpuChange = (cpu: DownloadSelection["cpu"]) => {
@@ -205,11 +225,11 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
       search: (previous) => ({ ...previous, cpu }),
       replace: true,
       resetScroll: false,
-    });
+    }).catch(ignoreAbortError);
   };
 
   return (
-    <Card className="max-w-4xl mx-auto">
+    <Card>
       <CardHeader>
         <CardTitle className="text-2xl">
           {t("download.chooseYourBuild")}
@@ -236,9 +256,10 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
               <button
                 key={option.id}
                 type="button"
+                aria-pressed={selection.os === option.id}
                 onClick={() => handleOsChange(option.id)}
                 className={cn(
-                  "rounded-xl border p-4 text-left transition hover:border-primary/60",
+                  "relative rounded-xl border p-4 pr-10 text-left transition outline-none hover:border-primary/60 focus-visible:ring-3 focus-visible:ring-ring/50",
                   selection.os === option.id
                     ? "border-primary bg-primary/10"
                     : "bg-background",
@@ -248,7 +269,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
                   <div className="rounded-lg bg-primary/10 p-2 text-primary">
                     <Image
                       src={option.iconSrc}
-                      alt={option.iconAlt}
+                      alt=""
                       width={28}
                       height={28}
                       className="size-7"
@@ -263,6 +284,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
                     </p>
                   </div>
                 </div>
+                {selection.os === option.id && <SelectedMark />}
               </button>
             ))}
           </div>
@@ -276,9 +298,10 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
               <button
                 key={option.id}
                 type="button"
+                aria-pressed={selection.cpu === option.id}
                 onClick={() => handleCpuChange(option.id)}
                 className={cn(
-                  "rounded-xl border p-4 text-left transition hover:border-primary/60",
+                  "relative rounded-xl border p-4 pr-10 text-left transition outline-none hover:border-primary/60 focus-visible:ring-3 focus-visible:ring-ring/50",
                   selection.cpu === option.id
                     ? "border-primary bg-primary/10"
                     : "bg-background",
@@ -301,14 +324,16 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
                     </p>
                   </div>
                 </div>
+                {selection.cpu === option.id && <SelectedMark />}
               </button>
             ))}
           </div>
         </div>
         {downloadHref ? (
-          <Button
-            size="lg"
-            className="w-full gap-2 text-xs sm:text-sm"
+          // A real link starts the download even before hydration finishes.
+          <a
+            href={downloadHref}
+            {...downloadLinkProps}
             onClick={() => {
               trackClientDownload({
                 os: selection.os,
@@ -316,25 +341,17 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
                 href: downloadHref,
               });
               setShowThankYou(true);
-              // Trigger the download programmatically
-              const link = document.createElement("a");
-              link.href = downloadHref;
-              if (isDirectGithubDownload) {
-                link.download = "";
-              } else {
-                link.target = "_blank";
-                link.rel = "noopener noreferrer";
-              }
-              link.click();
             }}
+            className={cn(
+              buttonVariants({ size: "lg" }),
+              "w-full gap-2 text-xs sm:text-sm",
+            )}
           >
             <Download className="h-5 w-5" />
-            {t("download.downloadFor", {
-              os:
-                OS_OPTIONS.find((option) => option.id === selection.os)
-                  ?.label ?? selection.os,
-            })}
-          </Button>
+            {downloadHref === FLATHUB_URL
+              ? t("download.getOnFlathub")
+              : t("download.downloadFor", { os: selectedOsLabel })}
+          </a>
         ) : (
           <Button
             size="lg"
@@ -370,9 +387,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
                           });
                       }}
                       className="underline text-primary"
-                      {...(isDirectGithubDownload
-                        ? { download: "" }
-                        : { target: "_blank", rel: "noopener noreferrer" })}
+                      {...downloadLinkProps}
                     >
                       {t("download.retryTheDownload")}
                     </a>
@@ -386,36 +401,30 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
               {t("download.soulfireIsFreeOpenSourceAndCommunityDrivenIf")}
             </p>
             <div className="mt-4 flex flex-col gap-3">
-              <Button
-                render={
-                  <a
-                    href="https://ko-fi.com/alexprogrammerde"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Coffee className="h-4 w-4" />
-                    {t("download.buyMeACoffeeOnKoFi")}
-                  </a>
-                }
-                nativeButton={false}
-                variant="outline"
-                className="w-full gap-2"
-              />
-              <Button
-                render={
-                  <a
-                    href={import.meta.env.VITE_GITHUB_LINK}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <SiGithub className="h-4 w-4" />
-                    {t("download.starOnGithub")}
-                  </a>
-                }
-                nativeButton={false}
-                variant="outline"
-                className="w-full gap-2"
-              />
+              <a
+                href="https://ko-fi.com/alexprogrammerde"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  buttonVariants({ variant: "outline" }),
+                  "w-full gap-2",
+                )}
+              >
+                <Coffee className="h-4 w-4" />
+                {t("download.buyMeACoffeeOnKoFi")}
+              </a>
+              <a
+                href={import.meta.env.VITE_GITHUB_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  buttonVariants({ variant: "outline" }),
+                  "w-full gap-2",
+                )}
+              >
+                <SiGithub className="h-4 w-4" />
+                {t("download.starOnGithub")}
+              </a>
             </div>
           </CredenzaBody>
           <CredenzaFooter>
@@ -464,7 +473,7 @@ function DownloadSelectionSkeleton() {
   const t = useT();
   return (
     <>
-      <Card className="max-w-(--fd-layout-width) mx-auto">
+      <Card>
         <CardHeader>
           <CardTitle className="text-2xl">
             {t("download.chooseYourBuild")}
@@ -591,6 +600,19 @@ function DownloadPageContent({
                 </Suspense>
               </>
             ) : null}
+            {releasePending ? null : (
+              <>
+                {" · "}
+                <a
+                  href={getClientReleaseNotesUrl(releaseName)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium text-primary underline-offset-4 hover:underline"
+                >
+                  {t("download.releaseNotes")}
+                </a>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -610,15 +632,13 @@ function DownloadPageContent({
             <p className="text-muted-foreground">
               {t("download.followTheStartHereDocsForAFullWalkthrough")}
             </p>
-            <Button
-              render={
-                <Link to="/{-$lang}/docs/$" params={{ _splat: "start-here" }}>
-                  {t("download.openTheDocs")}
-                </Link>
-              }
-              nativeButton={false}
-              variant="outline"
-            />
+            <Link
+              to="/{-$lang}/docs/$"
+              params={{ _splat: "start-here" }}
+              className={buttonVariants({ variant: "outline" })}
+            >
+              {t("download.openTheDocs")}
+            </Link>
           </CardContent>
         </Card>
         <Card>
@@ -635,18 +655,14 @@ function DownloadPageContent({
             <p className="text-muted-foreground">
               {t("download.demo.description")}
             </p>
-            <Button
-              render={
-                <a
-                  href="https://demo.soulfiremc.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {t("download.visitTheDemo")}
-                </a>
-              }
-              nativeButton={false}
-            />
+            <a
+              href="https://demo.soulfiremc.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={buttonVariants()}
+            >
+              {t("download.visitTheDemo")}
+            </a>
           </CardContent>
         </Card>
         <Card>
@@ -671,22 +687,28 @@ function DownloadPageContent({
                     )}
                   </div>
                   <div>
-                    <p className="font-medium">{item.name}</p>
+                    <p
+                      id={`server-download-${item.name.toLowerCase().replaceAll(" ", "-")}`}
+                      className="font-medium"
+                    >
+                      {item.name}
+                    </p>
                     <p className="text-sm text-muted-foreground">
                       {t(item.description)}
                     </p>
                   </div>
                 </div>
-                <Button
-                  render={
-                    <a href={item.url} download>
-                      {t("download.download")}
-                    </a>
-                  }
-                  nativeButton={false}
-                  size="sm"
-                  className="mt-2 w-full sm:mt-0 sm:w-auto"
-                />
+                <a
+                  href={item.url}
+                  download
+                  aria-describedby={`server-download-${item.name.toLowerCase().replaceAll(" ", "-")}`}
+                  className={cn(
+                    buttonVariants({ size: "sm" }),
+                    "w-full sm:w-auto",
+                  )}
+                >
+                  {t("download.download")}
+                </a>
               </div>
             ))}
           </CardContent>
@@ -705,18 +727,14 @@ function DownloadPageContent({
             <p className="text-muted-foreground">
               {t("download.ifSoulfireSavesYouTimeOrYouJustWant")}
             </p>
-            <Button
-              render={
-                <a
-                  href="https://ko-fi.com/alexprogrammerde"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {t("download.donateOnKoFi")}
-                </a>
-              }
-              nativeButton={false}
-            />
+            <a
+              href="https://ko-fi.com/alexprogrammerde"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={buttonVariants()}
+            >
+              {t("download.donateOnKoFi")}
+            </a>
           </CardContent>
         </Card>
       </div>
