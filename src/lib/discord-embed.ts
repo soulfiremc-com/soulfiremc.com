@@ -1,8 +1,21 @@
-import {
+import type {
+  APIContainerComponent,
   ButtonStyle,
   ComponentType,
-  type APIContainerComponent,
 } from "discord-api-types/v10";
+
+// Route heads run in the browser too. The discord-api-types runtime is a
+// CommonJS barrel that bundles every enum, so keep it out of the client.
+const componentType = {
+  ActionRow: 1 as ComponentType.ActionRow,
+  Button: 2 as ComponentType.Button,
+  Section: 9 as ComponentType.Section,
+  TextDisplay: 10 as ComponentType.TextDisplay,
+  Thumbnail: 11 as ComponentType.Thumbnail,
+  MediaGallery: 12 as ComponentType.MediaGallery,
+  Container: 17 as ComponentType.Container,
+};
+const linkButtonStyle = 5 as ButtonStyle.Link;
 
 export interface DiscordEmbedOptions {
   title: string;
@@ -76,19 +89,19 @@ export function createDiscordEmbed(
 
   for (;;) {
     const text = {
-      type: ComponentType.TextDisplay,
+      type: componentType.TextDisplay,
       content: `## [${markdown(title)}](${url})${description ? `\n${markdown(description)}` : ""}`,
     } as const;
     const component: APIContainerComponent = {
-      type: ComponentType.Container,
+      type: componentType.Container,
       ...(options.color === undefined ? {} : { accent_color: options.color }),
       components: [
         thumbnail
           ? {
-              type: ComponentType.Section,
+              type: componentType.Section,
               components: [text],
               accessory: {
-                type: ComponentType.Thumbnail,
+                type: componentType.Thumbnail,
                 media: { url: thumbnail },
               },
             }
@@ -96,16 +109,16 @@ export function createDiscordEmbed(
         ...(images.length
           ? [
               {
-                type: ComponentType.MediaGallery as const,
+                type: componentType.MediaGallery,
                 items: images.map((image) => ({ media: { url: image } })),
               },
             ]
           : []),
         {
-          type: ComponentType.ActionRow,
+          type: componentType.ActionRow,
           components: links.map((link) => ({
-            type: ComponentType.Button,
-            style: ButtonStyle.Link,
+            type: componentType.Button,
+            style: linkButtonStyle,
             ...link,
           })),
         },

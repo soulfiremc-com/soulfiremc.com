@@ -8,3 +8,11 @@
 
 /_images/*
   Cache-Control: public, max-age=31536000, immutable
+
+# Vite emits content-hashed bundles here.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Unhashed file copied from public/assets keeps the revalidating default.
+/assets/powered-by-vercel.svg
+  ! Cache-Control

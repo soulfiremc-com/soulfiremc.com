@@ -51,3 +51,48 @@ test("omits unsupported URLs instead of creating unsafe buttons", () => {
     1,
   );
 });
+
+void test("uses the Discord API component and button values", async () => {
+  const { ButtonStyle, ComponentType } = await import("discord-api-types/v10");
+  assert.deepEqual(
+    createDiscordEmbed({
+      title: "Guide",
+      url: "https://example.com/guide",
+      thumbnail: "https://example.com/thumb.png",
+      images: ["https://example.com/image.png"],
+    }),
+    {
+      type: ComponentType.Container,
+      components: [
+        {
+          type: ComponentType.Section,
+          components: [
+            {
+              type: ComponentType.TextDisplay,
+              content: "## [Guide](https://example.com/guide)",
+            },
+          ],
+          accessory: {
+            type: ComponentType.Thumbnail,
+            media: { url: "https://example.com/thumb.png" },
+          },
+        },
+        {
+          type: ComponentType.MediaGallery,
+          items: [{ media: { url: "https://example.com/image.png" } }],
+        },
+        {
+          type: ComponentType.ActionRow,
+          components: [
+            {
+              type: ComponentType.Button,
+              style: ButtonStyle.Link,
+              label: "View page",
+              url: "https://example.com/guide",
+            },
+          ],
+        },
+      ],
+    },
+  );
+});
