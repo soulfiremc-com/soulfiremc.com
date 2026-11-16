@@ -1,0 +1,105 @@
+---
+title: Режим CLI
+sidebarTitle: "CLI"
+description: "Запускайте SoulFire из терминала для автоматизации, по SSH или на сервере без рабочего стола."
+icon: Terminal
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+## Когда использовать CLI [#when-to-use-the-cli]
+
+<Callout type="info" emoji="ℹ️">
+  Если вы не знакомы с инструментами командной строки, начните с урока [Подключите первого бота](/docs/start-here/gui-mode).
+</Callout>
+
+Используйте CLI для автоматизации в терминале, сеансов SSH или систем без рабочего стола.
+GUI поддерживает больше функций, но CLI покрывает самые частые задачи.
+
+Дистрибутив CLI работает без рабочего стола и дисплея.
+Если нужен графический интерфейс, используйте отдельный клиент GUI.
+
+## Настройка CLI [#set-up-the-cli]
+
+Установите Java 25, затем скачайте `.jar` CLI со страницы [релизов SoulFire](https://github.com/soulfiremc-com/SoulFire/releases).
+Команды ниже используют имя `SoulFireCLI.jar`. Замените его именем скачанного файла.
+
+Сохраните флаги JVM в переменной оболочки, чтобы следующие команды оставались короткими:
+
+```bash
+SF_JVM_FLAGS="-Djava.awt.headless=true -Xmx2G -XX:+EnableDynamicAgentLoading -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -XX:+UseCompactObjectHeaders -XX:+AlwaysActAsServerClassMachine -XX:+UseNUMA -XX:+UseFastUnorderedTimeStamps -XX:+UseVectorCmov -XX:+UseCriticalJavaThreadPriority -Dsf.flags.v2=true"
+```
+
+Базовая команда выглядит так:
+
+```bash
+java $SF_JVM_FLAGS -jar SoulFireCLI.jar
+```
+
+Этот синтаксис подходит для Bash и похожих оболочек. В другой оболочке подставьте флаги вместо `$SF_JVM_FLAGS`.
+
+| Флаг | Назначение |
+| --- | --- |
+| `-Djava.awt.headless=true` | Запускает Java без дисплея |
+| `-Xmx2G` | Задаёт лимит памяти для процесса CLI |
+| Флаги `-XX:...` | Настройки производительности, которые SoulFire рекомендует при запуске |
+| `-Dsf.flags.v2=true` | Подтверждает, что вы задали флаги настройки. Скрывает предупреждение при запуске, но сам флаги не применяет. |
+
+Измените `-Xmx2G` под свою нагрузку. Например, `-Xmx120G` задаёт лимит 120 ГБ.
+Без `-Xmx` Java использует до 25 % всей памяти системы.
+Если боты работают на удалённом сервере, локальному CLI обычно хватает `-Xmx1G`.
+
+Затем выберите, где будут работать боты.
+Для локального сервера переходите к разделу [Флаги CLI](#cli-flags).
+Для удалённого выделенного сервера задайте эти свойства JVM:
+
+| Свойство           | Описание                               |
+|--------------------|----------------------------------------|
+| `sf.remoteAddress` | Адрес для подключения                  |
+| `sf.remoteToken`   | Токен для входа                        |
+
+Укажите свойства перед `-jar`:
+
+```bash
+java -Dsf.remoteAddress=domain.com -Dsf.remoteToken=abcdefg $SF_JVM_FLAGS -jar SoulFireCLI.jar
+```
+
+## Флаги CLI [#cli-flags]
+
+После подключения CLI получает список доступных флагов от сервера.
+Полный список приведён на странице [Флаги CLI](/docs/reference/cli-flags).
+
+Этот пример импортирует аккаунты и запускает ботов:
+
+```bash
+java $SF_JVM_FLAGS -jar SoulFireCLI.jar \
+  --account-file accounts.txt \
+  --account-type OFFLINE \
+  --bot-address 127.0.0.1:25565 \
+  --bot-protocol-version "RELEASE|777" \
+  --bot-join-delay-min 1000 \
+  --bot-join-delay-max 3000 \
+  --start
+```
+
+Команда импортирует аккаунты из `accounts.txt` и подключает их к `127.0.0.1:25565`.
+Каждый бот запускается после случайной задержки от одной до трёх секунд.
+`RELEASE|777` это идентификатор Minecraft 26.3. Другие идентификаторы указаны в списке [поддерживаемых версий](/docs/reference/versions).
+Сохраните кавычки, потому что `|` имеет особое значение в оболочке.
+
+## Флаги терминала [#terminal-flags]
+
+Задайте `-Dterminal.jline=true` или `-Dterminal.jline=false`, чтобы включить или отключить интерактивный терминал.
+Интерактивный терминал использует JLine, ту же библиотеку, что Minecraft и Velocity.
+Задайте `-Dterminal.ansi=true` или `-Dterminal.ansi=false`, чтобы включить или отключить цвета в терминале.
+
+## Импорт данных [#importing-data]
+
+С помощью флагов CLI можно импортировать профили, аккаунты и прокси.
+При импорте аккаунтов нужно выбрать тип аккаунта.
+Тип прокси необязателен. Без типа SoulFire считает файл универсальным файлом прокси.
+
+## Выполнение команд [#run-commands]
+
+Интерактивная оболочка принимает те же команды, что и режим GUI.
+Подробности приведены в [справочнике команд](/docs/reference/commands).

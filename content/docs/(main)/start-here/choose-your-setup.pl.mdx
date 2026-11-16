@@ -1,0 +1,69 @@
+---
+title: Wybierz konfigurację
+sidebarTitle: "Wybierz konfigurację"
+description: "Wybierz lokalne GUI, automatyzację w CLI lub zdalny serwer dedykowany."
+icon: Map
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+<Callout type="info">
+  Jeśli nie masz pewności, wybierz GUI z opcją **Serwer zintegrowany (lokalny)**. Angielska aplikacja nazywa tę opcję **Run on this computer**.
+  To zalecany wybór dla nowych użytkowników.
+</Callout>
+
+## W skrócie [#the-short-version]
+
+| Jeśli chcesz... | Zacznij od... | Dlaczego |
+| --- | --- | --- |
+| Poznać SoulFire przy minimalnej konfiguracji | [Połącz pierwszego bota](/docs/start-here/gui-mode) | Wymaga najmniej kroków konfiguracji |
+| Utrzymywać boty na VPS lub współdzielonym komputerze | [Serwer dedykowany](/docs/server/automated-setup) | Backend działa dalej, nawet gdy GUI jest zamknięte |
+| Automatyzować z terminala lub używać systemu bez pulpitu | [Tryb CLI](/docs/start-here/cli-mode) | Dobrze sprawdza się w skryptach i sesjach SSH |
+| Udostępnić jeden backend wielu użytkownikom lub klientom | [Serwer dedykowany](/docs/server/automated-setup) | Klienty GUI i CLI mogą łączyć się z tym samym zdalnym serwerem |
+
+## Co oznacza każda część [#what-each-part-means]
+
+### Klient GUI [#gui-client]
+
+GUI to aplikacja komputerowa.
+Służy do tworzenia instancji, zmiany ustawień, podglądu stanu botów oraz zarządzania wtyczkami i skryptami.
+
+### Klient CLI [#cli-client]
+
+CLI to klient terminalowy.
+Używaj go do automatyzacji, sesji SSH lub systemów bez pulpitu.
+
+### Serwer zintegrowany [#integrated-server]
+
+GUI i CLI zawierają serwer SoulFire.
+Możesz uruchamiać boty na swoim komputerze bez osobnego serwera.
+
+### Serwer dedykowany [#dedicated-server]
+
+Serwer dedykowany uruchamia SoulFire osobno, zwykle na innym komputerze.
+Klienty GUI i CLI łączą się z nim przez sieć.
+
+## Zalecane ścieżki [#recommended-paths]
+
+### Nowy użytkownik [#new-user]
+
+1. [Zainstaluj SoulFire](/docs/start-here)
+2. [Uruchom pierwsze boty w trybie GUI](/docs/start-here/gui-mode)
+3. Korzystaj z [Podręcznika użytkownika](/docs/how-to), aby skonfigurować konta, proxy, wtyczki i integracje
+
+### Praca ze zdalnym serwerem [#remote-operator]
+
+1. [Wdróż serwer dedykowany](/docs/server/automated-setup)
+2. Połącz się w GUI, podając adres URL serwera i token dostępu
+3. Korzystaj z [Podręcznika użytkownika](/docs/how-to) przy bieżącej administracji
+
+### Automatyzacja [#automation-user]
+
+1. Zdecyduj, czy CLI będzie korzystać z lokalnego, czy zdalnego serwera
+2. Przeczytaj [Tryb CLI](/docs/start-here/cli-mode)
+3. Przeczytaj [Automatyzacja](/docs/automation) i wybierz metodę automatyzacji
+4. Trzymaj [flagi CLI](/docs/reference/cli-flags) pod ręką jako ściągę
+
+## Dowiedz się więcej [#learn-more]
+
+Szczegółowe wyjaśnienie architektury znajdziesz w artykule [Tryby działania](/docs/concepts/operation-modes).

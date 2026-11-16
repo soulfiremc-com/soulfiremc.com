@@ -1,0 +1,105 @@
+---
+title: CLI-Modus
+sidebarTitle: "CLI"
+description: "Betreibe SoulFire aus einem Terminal für Automatisierung, SSH oder einen Server ohne Desktop."
+icon: Terminal
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+## Wann du die CLI nutzt [#when-to-use-the-cli]
+
+<Callout type="info" emoji="ℹ️">
+  Wenn du dich mit Kommandozeilen-Tools nicht auskennst, beginne mit [Deinen ersten Bot verbinden](/docs/start-here/gui-mode).
+</Callout>
+
+Nutze die CLI für Automatisierung im Terminal, SSH-Sitzungen oder Systeme ohne Desktop.
+Die GUI bietet mehr Funktionen, aber die CLI deckt die häufigsten Aufgaben ab.
+
+Die CLI-Distribution läuft ohne Desktop oder Bildschirm.
+Nutze den separaten GUI-Client, wenn du die Desktop-Oberfläche möchtest.
+
+## CLI einrichten [#set-up-the-cli]
+
+Installiere Java 25 und lade dann die CLI-`.jar` aus den [SoulFire-Releases](https://github.com/soulfiremc-com/SoulFire/releases) herunter.
+Die Befehle unten verwenden `SoulFireCLI.jar`. Ersetze den Namen durch den Namen deiner heruntergeladenen Datei.
+
+Speichere die JVM-Flags in einer Shell-Variable, damit die späteren Befehle kurz bleiben:
+
+```bash
+SF_JVM_FLAGS="-Djava.awt.headless=true -Xmx2G -XX:+EnableDynamicAgentLoading -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -XX:+UseCompactObjectHeaders -XX:+AlwaysActAsServerClassMachine -XX:+UseNUMA -XX:+UseFastUnorderedTimeStamps -XX:+UseVectorCmov -XX:+UseCriticalJavaThreadPriority -Dsf.flags.v2=true"
+```
+
+Der Basisbefehl lautet:
+
+```bash
+java $SF_JVM_FLAGS -jar SoulFireCLI.jar
+```
+
+Diese Syntax gilt für Bash und ähnliche Shells. Setze in einer anderen Shell die Flags anstelle von `$SF_JVM_FLAGS` ein.
+
+| Flag | Zweck |
+| --- | --- |
+| `-Djava.awt.headless=true` | Startet Java ohne Bildschirm |
+| `-Xmx2G` | Legt das Speicherlimit für den CLI-Prozess fest |
+| `-XX:...`-Flags | Leistungsoptimierung, die SoulFire beim Start empfiehlt |
+| `-Dsf.flags.v2=true` | Bestätigt, dass du die Optimierungsflags gesetzt hast. Es blendet die Startwarnung aus und wendet die Flags nicht selbst an. |
+
+Passe `-Xmx2G` an deine Last an. `-Xmx120G` setzt zum Beispiel ein Limit von 120 GB.
+Ohne `-Xmx` nutzt Java bis zu 25 % des gesamten Arbeitsspeichers.
+Wenn die Bots auf einem entfernten Server laufen, reicht für die lokale CLI meist `-Xmx1G`.
+
+Wähle als Nächstes, wo die Bots laufen.
+Für einen lokalen Server geht es weiter mit [CLI-Flags](#cli-flags).
+Für einen entfernten dedizierten Server setzt du diese JVM-Eigenschaften:
+
+| Eigenschaft        | Beschreibung                                 |
+|--------------------|----------------------------------------------|
+| `sf.remoteAddress` | Die Adresse, mit der sich die CLI verbindet  |
+| `sf.remoteToken`   | Das Token für die Anmeldung                  |
+
+Setze die Eigenschaften vor `-jar`:
+
+```bash
+java -Dsf.remoteAddress=domain.com -Dsf.remoteToken=abcdefg $SF_JVM_FLAGS -jar SoulFireCLI.jar
+```
+
+## CLI-Flags [#cli-flags]
+
+Sobald die CLI verbunden ist, lädt sie die verfügbaren Flags vom Server.
+Die vollständige Liste findest du unter [CLI-Flags](/docs/reference/cli-flags).
+
+Dieses Beispiel importiert Konten und startet die Bots:
+
+```bash
+java $SF_JVM_FLAGS -jar SoulFireCLI.jar \
+  --account-file accounts.txt \
+  --account-type OFFLINE \
+  --bot-address 127.0.0.1:25565 \
+  --bot-protocol-version "RELEASE|777" \
+  --bot-join-delay-min 1000 \
+  --bot-join-delay-max 3000 \
+  --start
+```
+
+Der Befehl importiert die Konten aus `accounts.txt` und verbindet sie mit `127.0.0.1:25565`.
+Jeder Bot startet nach einer zufälligen Verzögerung von einer bis drei Sekunden.
+`RELEASE|777` ist die ID von Minecraft 26.3. Weitere IDs findest du unter [Unterstützte Versionen](/docs/reference/versions).
+Behalte die Anführungszeichen, weil `|` in der Shell eine Bedeutung hat.
+
+## Terminal-Flags [#terminal-flags]
+
+Setze `-Dterminal.jline=true` oder `-Dterminal.jline=false`, um das interaktive Terminal ein- oder auszuschalten.
+Das interaktive Terminal nutzt JLine, dieselbe Bibliothek wie Minecraft und Velocity.
+Setze `-Dterminal.ansi=true` oder `-Dterminal.ansi=false`, um Terminalfarben ein- oder auszuschalten.
+
+## Daten importieren [#importing-data]
+
+Mit CLI-Flags importierst du Profile, Konten und Proxys.
+Beim Import von Konten musst du einen Kontotyp wählen.
+Der Proxytyp ist optional. Ohne Typ behandelt SoulFire die Datei als universelle Proxy-Datei.
+
+## Befehle ausführen [#run-commands]
+
+Die interaktive Shell akzeptiert dieselben Befehle wie der GUI-Modus.
+Details findest du in der [Befehlsreferenz](/docs/reference/commands).

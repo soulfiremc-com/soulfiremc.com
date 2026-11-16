@@ -1,5 +1,5 @@
 ---
-title: Pre-Launch Server Validation - Preparing for Opening Day
+title: Minecraft Server Pre-Launch Checklist
 description: Checklist for validating your Minecraft server before launch, from performance testing to spawn optimization and player experience
 author: Pistonmaster
 date: 2026-02-12
@@ -32,8 +32,8 @@ Players who hit lag or broken features on day one don't come back. And the "lagg
     Run baseline checks on your hardware before anything else:
 
     ```bash
-    # Disk I/O speed: target >200 MB/s for SSD
-    dd if=/dev/zero of=/tmp/test bs=1G count=1 oflag=direct
+    # Disk I/O speed: target >200 MB/s for SSD (run in the server directory)
+    dd if=/dev/zero of=./ddtest bs=1G count=1 oflag=direct && rm ./ddtest
 
     # Network bandwidth
     iperf3 -c speedtest.server.com
@@ -163,9 +163,9 @@ During the first week, dig into what actually happened. Which plugins threw erro
 
 ## Using SoulFire for Load Testing
 
-Testing features by hand is fine, but it won't tell you the one thing that actually matters: can your server survive 100 players joining at once? SoulFire runs actual Fabric client code, so bots behave like real players at the protocol level. Your server can't tell the difference.
+Testing features by hand is fine, but it won't tell you the one thing that actually matters: can your server survive 100 players joining at once? [SoulFire](/download) runs actual Fabric client code, so bots behave like real players at the protocol level.
 
-Configure a launch simulation: 100 bots joining over 10 minutes (10 per minute), with Auto-Respawn, Anti-AFK, and Auto-Reconnect enabled. Let it run for 2 hours while monitoring with Spark and watching the console for errors.
+Configure a launch simulation: 100 bots joining over 10 minutes (a join delay of about 6 seconds), with **Auto respawn**, **Anti AFK**, and **Auto reconnect** enabled. Let it run for 2 hours while monitoring with Spark and watching the console for errors.
 
 ```bash
 # Monitor during the test
@@ -181,4 +181,4 @@ tail -f logs/latest.log | grep -E "(ERROR|WARN|Exception)"
 
 If you're hitting less than 85% connection success, TPS drops below 15, or memory usage exceeds 90%, you need to optimize your configuration, fix plugin errors, or upgrade hardware before going live.
 
-Launch day isn't the time to discover your server buckles at 50 players. Test with 100 before you advertise for 50.
+Launch day isn't the time to discover your server buckles at 50 players. Test with 100 before you advertise for 50. The [SoulFire testing guide](/docs/testing) shows how to prepare the run, add load in stages, and record the results.

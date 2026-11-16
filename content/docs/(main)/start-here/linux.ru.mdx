@@ -1,0 +1,46 @@
+---
+title: Установка в Linux (.flatpak)
+sidebarTitle: "Linux"
+description: "Установите приложение SoulFire для компьютера в Linux через Flatpak."
+icon: Binary
+---
+
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+Если вы ещё не выбрали конфигурацию, начните со страницы [Выбор конфигурации](/docs/start-here/choose-your-setup).
+
+## Установка SoulFire [#install-soulfire]
+
+Выполните эти шаги, чтобы установить SoulFire в Linux.
+
+<Steps>
+  <Step>
+    ### Установите Flatpak [#install-flatpak]
+    Установите `flatpak` по [официальной инструкции](https://flathub.org/setup).
+  </Step>
+
+  <Step>
+    ### Установите SoulFire [#install-soulfire-1]
+    Выполните эту команду в терминале:
+    ```bash
+    flatpak install flathub com.soulfiremc.soulfire
+    ```
+
+    Скриншоты и сведения о выпусках доступны на странице [SoulFire на Flathub](https://flathub.org/apps/com.soulfiremc.soulfire).
+  </Step>
+
+  <Step>
+    ### Завершите установку [#complete-the-installation]
+    Подтвердите запросы установки.
+  </Step>
+
+  <Step>
+    ### Запустите SoulFire [#start-soulfire]
+    Откройте SoulFire из меню приложений.
+    Также можно выполнить в терминале `flatpak run com.soulfiremc.soulfire{:bash}`.
+  </Step>
+</Steps>
+
+## Что дальше [#next-steps]
+
+После установки переходите к уроку [Подключите первого бота](/docs/start-here/gui-mode).

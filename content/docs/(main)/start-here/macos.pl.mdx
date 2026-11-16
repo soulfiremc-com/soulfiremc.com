@@ -1,0 +1,54 @@
+---
+title: Instalacja w systemie macOS (.dmg)
+sidebarTitle: "macOS"
+description: "Zainstaluj aplikację komputerową SoulFire w systemie macOS."
+icon: Apple
+---
+
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+Jeśli nie masz jeszcze wybranej konfiguracji, zacznij od strony [Wybierz konfigurację](/docs/start-here/choose-your-setup).
+
+## Zainstaluj SoulFire [#install-soulfire]
+
+Wykonaj te kroki, aby zainstalować SoulFire w systemie macOS.
+
+<Steps>
+  <Step>
+    ### Pobierz SoulFire [#download-soulfire]
+    Otwórz [stronę pobierania](/download).
+    Wybierz macOS i architekturę procesora, a następnie pobierz najnowszy plik `.dmg`.
+  </Step>
+
+  <Step>
+    ### Skopiuj SoulFire do Aplikacji [#copy-soulfire-to-applications]
+    Otwórz pobrany plik `.dmg`.
+    Przeciągnij **SoulFire** do folderu **Aplikacje** (**Applications**), a następnie wysuń obraz dysku.
+  </Step>
+
+  <Step>
+    ### Zezwól na pierwsze uruchomienie [#allow-the-first-start]
+    Otwórz SoulFire z folderu Aplikacje.
+    macOS blokuje pierwsze uruchomienie, ponieważ aplikacja nie jest notaryzowana przez Apple.
+
+    W macOS 15 lub nowszym:
+
+    1. Zamknij ostrzeżenie.
+    2. Otwórz **Ustawienia systemowe**, a następnie **Prywatność i ochrona**.
+    3. Przewiń do sekcji **Ochrona** i wybierz **Otwórz mimo to** obok komunikatu o SoulFire.
+    4. Potwierdź hasłem, a następnie ponownie wybierz **Otwórz mimo to**.
+
+    W macOS 14 lub starszym przytrzymaj `Control`, kliknij aplikację i dwukrotnie wybierz **Otwórz**.
+    Robisz to tylko raz dla każdej zainstalowanej wersji.
+  </Step>
+
+  <Step>
+    ### Uruchom SoulFire [#start-soulfire]
+    Otwórz SoulFire z folderu Aplikacje lub z Launchpada.
+    Pojawi się ekran **Połącz z serwerem SoulFire** (po angielsku **Choose where SoulFire runs**).
+  </Step>
+</Steps>
+
+## Następne kroki [#next-steps]
+
+Po instalacji przejdź do samouczka [Połącz pierwszego bota](/docs/start-here/gui-mode).

@@ -1,5 +1,5 @@
 ---
-title: AI Chatbot Integration in Minecraft - Testing and Implementation
+title: Testing AI Chatbots on Minecraft Servers
 description: Learn how to integrate AI chatbots like GPT and Ollama into Minecraft servers, test chat systems, and create intelligent NPC interactions
 author: Pistonmaster
 date: 2026-02-11
@@ -15,16 +15,16 @@ Instead of static signs and pre-written FAQs, you can give players a server assi
 
 ### Choosing an LLM Provider
 
-The first decision is where your AI runs. The trade-offs come down to cost, quality, and privacy -- but the real question is how many players you're serving.
+The first decision is where your AI runs. The trade-offs come down to cost, quality, and privacy, but the real question is how many players you're serving.
 
 **For public servers with large player counts**, go with something cheap or self-hosted. GPT-4.1-mini, GPT-4.1-nano, or a local model through Ollama are the right picks. When you've got hundreds of players hitting the AI daily, premium API costs add up shockingly fast. The quality difference between GPT-4.1-mini and a frontier model doesn't matter when the question is "how do I claim land?"
 
-**For smaller or private servers**, use the best model you can afford. With 10-30 active players, the per-query cost is negligible, and the quality jump from a cheap model to Claude Sonnet or GPT-4.1 is genuinely noticeable -- especially for NPC roleplay where staying in character matters.
+**For smaller or private servers**, use the best model you can afford. With 10-30 active players, the per-query cost is negligible, and the quality jump from a cheap model to Claude Sonnet or GPT-4.1 is noticeable, especially for NPC roleplay where staying in character matters.
 
 <Tabs items={["OpenAI GPT", "Anthropic Claude", "Ollama (Self-Hosted)"]}>
   <Tab value="OpenAI GPT">
 
-The most established option and the one I'd recommend for most public servers. The GPT-4.1 family hits a good balance of cost and quality -- GPT-4.1-mini is the sweet spot, and GPT-4.1-nano is dirt cheap at $0.10/million input tokens if you want to go even leaner. GPT-5 exists but it's overkill for server assistants.
+The most established option and the one I'd recommend for most public servers. The GPT-4.1 family hits a good balance of cost and quality. GPT-4.1-mini is the sweet spot, and GPT-4.1-nano is dirt cheap at $0.10/million input tokens if you want to go even leaner. GPT-5 exists but it's overkill for server assistants.
 
 You're sending player chat data to OpenAI's servers, which may matter depending on your server's privacy stance. You'll also need an API key and a stable internet connection.
 
@@ -52,14 +52,14 @@ public class GPTChatBot {
 }
 ```
 
-Learn more: [OpenAI API Documentation](https://platform.openai.com/docs/api-reference)
+Learn more: [OpenAI API documentation](https://developers.openai.com/api/reference/overview)
   </Tab>
 
   <Tab value="Anthropic Claude">
 
-Claude is worth considering if you're running NPC-heavy setups. In our testing, it holds character noticeably better over long conversations -- it's less likely to break persona mid-dialogue than GPT. That makes it a strong pick for servers where roleplay is the main draw.
+Claude is worth considering if you're running NPC-heavy setups. In our testing, it holds character noticeably better over long conversations. It's less likely to break persona mid-dialogue than GPT. That makes it a strong pick for servers where roleplay is the main draw.
 
-The downside is cost. Claude Sonnet 4.5 runs $3/million input tokens and $15/million output, which is fine for a small server but gets expensive at scale. Haiku 4.5 ($1/$5) is a more budget-friendly option, though at that price point you might as well compare it against GPT-4.1-mini too.
+The downside is cost. Claude Sonnet 5.5 runs $2/million input tokens and $10/million output, which is fine for a small server but gets expensive at scale. Claude Haiku 5.5 costs $0.10/million input and $0.50/million output for prompts up to 100K tokens, so compare it against GPT-4.1-nano for high-volume servers.
 
 ```java title="ClaudeChatBot.java"
 public class ClaudeChatBot {
@@ -67,7 +67,7 @@ public class ClaudeChatBot {
 
     public String askClaude(String question) {
         JSONObject requestBody = new JSONObject();
-        requestBody.put("model", "claude-sonnet-4-5-20250929");
+        requestBody.put("model", "claude-sonnet-5-5");
         requestBody.put("max_tokens", 1024);
 
         JSONArray messages = new JSONArray();
@@ -82,22 +82,21 @@ public class ClaudeChatBot {
 }
 ```
 
-Learn more: [Anthropic Claude Documentation](https://docs.anthropic.com/)
+Learn more: [Claude API documentation](https://platform.claude.com/docs/en/home)
   </Tab>
 
   <Tab value="Ollama (Self-Hosted)">
 
 No API costs, no rate limits, and player data never leaves your machine. If you've got the hardware, this is the obvious choice for public servers.
 
-You'll need a capable machine -- an 8B parameter model needs at least 8GB of RAM and benefits from a GPU. Response quality is lower than the cloud APIs, but honestly it's good enough for answering server questions and running basic NPC dialogue. The big recent addition here is [GPT-OSS](https://github.com/openai/gpt-oss), OpenAI's open-weight model that runs locally and punches well above its weight class.
+You'll need a capable machine. An 8B parameter model needs at least 8GB of RAM and benefits from a GPU. Response quality is lower than the cloud APIs, but honestly it's good enough for answering server questions and running basic NPC dialogue. The big recent addition here is [GPT-OSS](https://github.com/openai/gpt-oss), OpenAI's open-weight model that runs locally and punches well above its weight class.
 
 Here's the quick setup:
 
 ```bash title="Terminal"
-# Install and start Ollama
+# Install Ollama (on Linux the installer also starts it as a service)
 curl -fsSL https://ollama.com/install.sh | sh
 ollama pull gpt-oss:20b
-ollama serve
 ```
 
 ```java title="OllamaChatBot.java"
@@ -117,7 +116,7 @@ public class OllamaChatBot {
 | Model | Parameters | Min RAM | GPU |
 |-------|------------|---------|-----|
 | GPT-OSS 20B | 21B (3.6B active) | 16GB | Optional |
-| Llama 4 8B | 8B | 8GB | Optional |
+| Llama 3.1 8B | 8B | 8GB | Optional |
 | Qwen3 8B | 8B | 8GB | Optional |
 | Gemma 3 4B | 4B | 6GB | Optional |
 
@@ -155,7 +154,7 @@ content-filter:
   response: "I'm here to help with server questions only!"
 ```
 
-The system prompt is where most of the value lies. A specific prompt that includes your server's IP, rules, economy system, and custom commands produces an assistant that actually helps -- a generic "You are a helpful assistant" prompt produces generic answers.
+The system prompt is where most of the value lies. A specific prompt that includes your server's IP, rules, economy system, and custom commands produces an assistant that actually helps. A generic "You are a helpful assistant" prompt produces generic answers.
 
 ### Crafting System Prompts
 
@@ -200,18 +199,19 @@ For NPC interactions, mods like CreatureChat (Fabric/Forge) let you assign AI pe
 
 ### AI-Assisted Moderation
 
-AI can also pull its weight as a moderator. Keyword filters are easy to dodge -- AI catches patterns they can't:
+AI can also pull its weight as a moderator. Keyword filters are easy to dodge. AI catches patterns they can't:
 
 ```java title="ChatModerationPlugin.java"
 @EventHandler
 public void onChat(AsyncPlayerChatEvent event) {
+    Player player = event.getPlayer();
     String message = event.getMessage();
-    String analysis = analyzeChatMessage(message);
 
-    // AI returns structured analysis:
+    // Your own method that asks the LLM for a JSON verdict like
     // { "toxic": false, "spam": false, "scam": false, "confidence": 0.95 }
+    ModerationResult analysis = analyzeChatMessage(message);
 
-    if (analysis.toxic && confidence > 0.8) {
+    if (analysis.toxic() && analysis.confidence() > 0.8) {
         event.setCancelled(true);
         player.sendMessage("Please keep chat respectful!");
         logToModerators(player, message, "Toxic language detected");
@@ -235,7 +235,7 @@ Start with the basics: does the AI respond at all, and are the responses useful?
 
 - **Trigger recognition**: Send `@ai hello` and make sure a response arrives within a reasonable window (under 5 seconds for cloud, under 10 for self-hosted).
 - **Response quality**: Ask server-specific questions ("How do I claim land?", "What's the server IP?") and check that the answers match your system prompt's knowledge.
-- **Context persistence**: Send a multi-turn conversation and see if follow-up questions reference previous answers correctly. Ask "What biomes are near spawn?", then "Which has the best resources?" -- the AI should connect these.
+- **Context persistence**: Send a multi-turn conversation and see if follow-up questions reference previous answers correctly. Ask "What biomes are near spawn?", then "Which has the best resources?" The AI should connect these.
 - **Multi-language**: If your server is international, confirm the AI responds in the player's language.
 
 If any of these fail, the issue is almost always in the system prompt or the provider configuration, not the plugin itself.
@@ -256,7 +256,7 @@ Functional testing tells you it works. It doesn't tell you what happens when 50 
 
 **What to measure:**
 
-Connect 10-50 bots using a tool like [SoulFire](https://soulfiremc.com) and have them send AI queries simultaneously. Track:
+Connect 10-50 bots using a tool like [SoulFire](/download) and have them send AI queries simultaneously. SoulFire's **Auto chat** plugin repeats configured messages after a delay, so you can fill it with your trigger keyword and test questions. Track:
 
 - **Response time distribution**: Average, median, 95th percentile, and maximum. Target under 5 seconds average, under 10 for 95th percentile.
 - **Success rate**: What percentage of queries actually get answered? Anything below 95% means you've got a queueing or timeout problem.
@@ -269,7 +269,7 @@ If all queries are answered but response times climb linearly with bot count, th
 
 ### Regression Testing
 
-Every time you update a system prompt, swap models, or upgrade the plugin, re-run your test suite. AI doesn't give the same answer twice, so you're not looking for identical responses -- you're looking for consistent quality. Keep a list of 20-30 representative questions and spot-check the answers after each change.
+Every time you update a system prompt, swap models, or upgrade the plugin, re-run your test suite. AI doesn't give the same answer twice, so you're not looking for identical responses. You're looking for consistent quality. Keep a list of 20-30 representative questions and spot-check the answers after each change.
 
 ## Production Considerations
 
@@ -280,4 +280,4 @@ A few things that are easy to overlook before going live:
 - **Cost monitoring**: For cloud LLMs, set up billing alerts. A popular server can generate thousands of queries per day.
 - **Prompt iteration**: Your first system prompt won't be your best. Review logs regularly and refine based on what players actually ask versus what the AI actually answers.
 
-Plan on rewriting your system prompt at least a few times in the first month. The real tuning starts once you've got actual player data to work with -- that's when you'll see the questions you didn't anticipate and the edge cases your prompt doesn't cover yet.
+Plan on rewriting your system prompt at least a few times in the first month. The real tuning starts once you've got actual player data to work with. That's when you'll see the questions you didn't anticipate and the edge cases your prompt doesn't cover yet.

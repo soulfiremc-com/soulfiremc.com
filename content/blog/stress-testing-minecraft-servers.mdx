@@ -15,6 +15,16 @@ Stress testing simulates high player loads so you can find performance problems 
 
 A new plugin might work fine with 10 players and tank the server at 50. A VPS upgrade might not deliver the improvement you were hoping for. Stress testing gives you hard numbers instead of guesses.
 
+**The short version:**
+
+1. Install [Spark](https://spark.lucko.me/) and record TPS and MSPT on an empty server.
+2. [Optimize first](#optimize-before-testing): Paper, lower simulation distance, tighter entity limits, and a pregenerated world.
+3. [Add bots in steps](#conducting-the-stress-test) (10, 25, 50, 100, then more) and hold each step for 10-15 minutes.
+4. Run a Spark profile at each step and stop when MSPT passes 50ms.
+5. Fix what the profile shows, then run the same test again.
+
+You need a bot tool for steps 3 and 4. [SoulFire](/download) is free and open source, and the rest of this guide shows how to use it.
+
 ### Key Performance Metrics
 
 Minecraft servers have two numbers you need to watch: TPS and MSPT.
@@ -69,9 +79,9 @@ Every chunk within simulation distance requires entity processing, crop growth, 
 
 ### Entity Limits
 
-Mob AI is one of the most expensive operations on any Minecraft server. Tighten the defaults in `paper-world-defaults.yml`:
+Mob AI is one of the most expensive operations on any Minecraft server. Tighten the defaults in `config/paper-world-defaults.yml`:
 
-```yaml title="paper-world-defaults.yml"
+```yaml title="config/paper-world-defaults.yml"
 entities:
   spawning:
     spawn-limits:
@@ -85,8 +95,8 @@ entities:
       creature: 400
       water_creature: 400
       ambient: 400
-  behavior:
-    max-entity-collisions: 2  # Down from 8
+collisions:
+  max-entity-collisions: 2  # Down from 8
 ```
 
 ### Pregenerate Chunks
@@ -103,7 +113,7 @@ Run this overnight or on a separate server, then copy the world files to product
 
 ### Java Flags
 
-The right JVM flags depend on your Java version and hardware. Java 25 brought production-ready [ZGC](https://wiki.openjdk.org/display/zgc) and [Compact Object Headers (JEP 519)](https://openjdk.org/jeps/519), which together are now the recommended choice for servers with sufficient hardware. For older Java versions or smaller setups, [Aikar's G1GC flags](https://aikar.co/2018/07/02/tuning-the-jvm-g1gc-garbage-collector-flags-for-minecraft/) remain solid.
+The right JVM flags depend on your Java version and hardware. [ZGC](https://wiki.openjdk.org/display/zgc) has been production-ready since Java 15, and Java 25 made [Compact Object Headers (JEP 519)](https://openjdk.org/jeps/519) a standard feature. Together they are now the recommended choice for servers with sufficient hardware. For older Java versions or smaller setups, [Aikar's G1GC flags](https://aikar.co/2018/07/02/tuning-the-jvm-g1gc-garbage-collector-flags-for-minecraft/) remain solid.
 
 Replace the memory values with your available RAM (Xms and Xmx should match):
 
@@ -122,7 +132,7 @@ ZGC is self-tuning, so you don't need to hand-tune GC parameters. Compact Object
 **Requirements:** 8+ CPU cores and 6GB+ allocated RAM. On smaller hardware, use G1GC instead.
 
 </Tab>
-<Tab value="g1gc" label="Java 21 and below (Aikar's G1GC)">
+<Tab value="g1gc" label="Smaller servers (Aikar's G1GC)">
 
 ```bash title="start-server.sh"
 java -Xms10G -Xmx10G -XX:+UseG1GC -XX:+ParallelRefProcEnabled \
@@ -226,13 +236,15 @@ It also supports multiple Minecraft versions through ViaFabricPlus, so you can t
 **Here's how I usually run a test:**
 
 1. Set your target server and bot count in the SoulFire interface
-2. Stagger the joins (1-3 seconds between bots) so you don't flood the login server
-3. Turn on the movement and activity plugins so bots aren't just standing there
+2. Set the join delay to 1-3 seconds between bots so you don't flood the login server
+3. Turn on **Anti AFK** or **Random jump**, or use a [visual script](/docs/scripting/first-script) for a fixed route, so bots aren't just standing there
 4. Keep Spark running on the server the whole time
-5. Hold each load level for 15-30 minutes before bumping it up
+5. Hold each load level for 10-15 minutes before bumping it up
+
+The [SoulFire testing guide](/docs/testing) walks through the same run step by step, including what to record at each stage.
 
 ## When to Test
 
 Don't just test once. Run tests before launches, after major plugin updates, before events with expected high turnout, and after hardware changes. A monthly baseline test catches gradual degradation from accumulating data and slow memory leaks that daily monitoring misses.
 
-The process is: optimize first, monitor with Spark, test incrementally with realistic behavior, fix what the profiles reveal, and retest. That's really all there is to it.
+The process is: optimize first, monitor with Spark, test incrementally with realistic behavior, fix what the profiles reveal, and retest. To run your first test, [download SoulFire](/download) and follow the [load testing steps](/docs/testing/load-test) in the docs.

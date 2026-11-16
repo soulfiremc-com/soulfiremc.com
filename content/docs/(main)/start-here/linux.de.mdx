@@ -1,0 +1,46 @@
+---
+title: Installation unter Linux (.flatpak)
+sidebarTitle: "Linux"
+description: "Installiere die SoulFire-Desktop-App unter Linux mit Flatpak."
+icon: Binary
+---
+
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+Wenn du dich noch nicht für eine Einrichtung entschieden hast, beginne mit [Einrichtung wählen](/docs/start-here/choose-your-setup).
+
+## SoulFire installieren [#install-soulfire]
+
+Mit diesen Schritten installierst du SoulFire unter Linux.
+
+<Steps>
+  <Step>
+    ### Flatpak installieren [#install-flatpak]
+    Installiere `flatpak` mit der [offiziellen Installationsanleitung](https://flathub.org/setup).
+  </Step>
+
+  <Step>
+    ### SoulFire installieren [#install-soulfire-1]
+    Führe diesen Befehl in einem Terminal aus:
+    ```bash
+    flatpak install flathub com.soulfiremc.soulfire
+    ```
+
+    Screenshots und Release-Details findest du unter [SoulFire auf Flathub](https://flathub.org/apps/com.soulfiremc.soulfire).
+  </Step>
+
+  <Step>
+    ### Installation abschließen [#complete-the-installation]
+    Bestätige die Installationsabfragen.
+  </Step>
+
+  <Step>
+    ### SoulFire starten [#start-soulfire]
+    Öffne SoulFire über das Anwendungsmenü.
+    Du kannst auch `flatpak run com.soulfiremc.soulfire{:bash}` in einem Terminal ausführen.
+  </Step>
+</Steps>
+
+## Nächste Schritte [#next-steps]
+
+Fahre nach der Installation mit [Deinen ersten Bot verbinden](/docs/start-here/gui-mode) fort.

@@ -1,5 +1,5 @@
 ---
-title: Testing Minecraft Authentication Systems - Security and Login Flow
+title: Testing Minecraft Login and AuthMe Security
 description: Learn how to test authentication plugins like AuthMe, validate Microsoft/Mojang auth, and ensure secure login flows on your Minecraft server
 author: Pistonmaster
 date: 2026-02-08
@@ -16,7 +16,7 @@ Minecraft has two authentication modes built in. Plugins bolt password-based sec
 
 **Online mode** (`online-mode=true` in `server.properties`) is the default and the one you want. The server talks to Mojang/Microsoft, confirms the player actually owns the account, and assigns real UUIDs. No plugins needed, no impersonation possible. The only downside: Mojang's servers have to be reachable.
 
-**Offline mode** (`online-mode=false`) skips all of that. Anyone can connect with any username -- there's zero verification. That's fine for local dev or behind a proxy like BungeeCord that handles auth upstream, but it's a disaster on a public server. Without verification, UUIDs are generated from the username alone, meaning anyone who types "Notch" gets Notch's UUID. Permissions, inventories, OP status -- all of it is tied to that UUID.
+**Offline mode** (`online-mode=false`) skips all of that. Anyone can connect with any username, with zero verification. That's fine for local dev or behind a proxy like BungeeCord that handles auth upstream, but it's a disaster on a public server. Without verification, UUIDs are generated from the username alone, meaning anyone who types "Notch" gets Notch's UUID. Permissions, inventories, and OP status are all tied to that UUID.
 
 <Callout type="danger">
 **Never run offline mode on a public server without an authentication plugin.** Without one, any player can join as any username, including admin accounts. This is the single most common way servers get compromised.
@@ -29,7 +29,7 @@ For offline mode servers, authentication plugins add password-based login:
 | Plugin | Approach | Best For |
 |--------|----------|----------|
 | [AuthMe](https://github.com/AuthMe/AuthMeReloaded) | Password registration/login | Public offline servers |
-| [FastLogin](https://github.com/games647/FastLogin) | Hybrid online/offline detection | Mixed premium + cracked players |
+| [FastLogin](https://github.com/TuxCoding/FastLogin) | Hybrid online/offline detection | Mixed premium + cracked players |
 | nLogin | Simple password auth | Small servers |
 
 ## AuthMe Configuration
@@ -41,40 +41,43 @@ For offline mode servers, authentication plugins add password-based login:
 ```yaml title="plugins/AuthMe/config.yml"
 settings:
   sessions:
+    enabled: true          # Skip /login on rejoin from the same IP
+    timeout: 10            # Minutes; a new IP also ends the session
+  restrictions:
+    allowChat: false
+    allowMovement: false
+    allowCommands:
+      - /login
+      - /l
+      - /register
+      - /reg
+    maxRegPerIp: 1         # Prevent spam accounts
+    kickOnWrongPassword: true
+    loginTimeout: 30       # Seconds before kicking players who don't log in
+    registerTimeout: 30
+  security:
+    minPasswordLength: 5
+    passwordMaxLength: 30
+    passwordHash: BCRYPT2Y
+    unsafePasswords:
+      - '123456'
+      - password
+      - qwerty
+      - help
+  registration:
     enabled: true
-    timeout: 10        # Minutes before requiring re-login
-    ipCheck: true      # Bind sessions to IP
+    force: true
+    messageInterval: 5
+  preventOtherCase: true
 
-registration:
-  enabled: true
-  force: true
-  messageInterval: 5
-  maxRegPerIp: 1       # Prevent spam accounts
-
-security:
-  minPasswordLength: 5
-  maxPasswordLength: 30
-  passwordHash: 'BCRYPT2Y'
-  bCryptLog2Rounds: 10
-  maxLoginTries: 3
-  tempBanLength: 5     # Minutes after max failed attempts
-  unsafePasswords:
-    - '123456'
-    - 'password'
-    - 'qwerty'
-
-timeout:
-  kick: 30             # Seconds before kicking unauthenticated players
-
-restrictions:
-  allowCommands:
-    - '/login'
-    - '/register'
-    - '/l'
-    - '/reg'
-  allowMovement: false
-  allowChat: false
+Security:
+  tempban:
+    enableTempban: true    # Off by default
+    maxLoginTries: 3
+    tempbanLength: 5       # Minutes
 ```
+
+AuthMe nests most options under `settings`. The `Security` section with a capital S is a separate top-level section.
 
 <Callout type="warning">
 **Always use BCRYPT or BCRYPT2Y for password hashing.** SHA256 is vulnerable to rainbow table attacks and should never be used for password storage.
@@ -82,7 +85,7 @@ restrictions:
 
 ### Database Backend
 
-SQLite will choke on concurrent logins -- use MySQL for anything real. Even 20 players logging in after a restart can saturate SQLite's single-writer lock.
+SQLite will choke on concurrent logins, so use MySQL for anything real. Even 20 players logging in after a restart can saturate SQLite's single-writer lock.
 
 ```yaml title="plugins/AuthMe/config.yml"
 DataSource:
@@ -109,19 +112,19 @@ Here's how to make sure your auth setup actually works.
 
 ### Registration and Login
 
-Connect with a fresh account. You'll land frozen in place -- no movement, no chat, no commands except `/register` and `/login`. That's the baseline. Run `/register <password> <password>`, and now you can move and interact normally. Disconnect, reconnect, and you're frozen again until you `/login`.
+Connect with a fresh account. You'll land frozen in place: no movement, no chat, and no commands except `/register` and `/login`. That's the baseline. Run `/register <password> <password>`, and now you can move and interact normally. Disconnect, reconnect, and you're frozen again until you `/login`.
 
 If sessions are enabled, reconnecting within the timeout window (default 10 minutes) auto-logs you in. Wait longer than that, and it'll ask for your password again.
 
 ### Password Validation
 
-Try the obvious bad passwords first. `123456`, `password`, `qwerty` -- anything on your `unsafePasswords` list gets rejected. Same for using your username as your password; AuthMe blocks that too. Anything shorter than `minPasswordLength` also fails.
+Try the obvious bad passwords first. `123456`, `password`, `qwerty`, and anything else on your `unsafePasswords` list gets rejected. Same for using your username as your password; AuthMe blocks that too. Anything shorter than `minPasswordLength` also fails.
 
 Then test the change flow: register, run `/changepassword oldpass newpass`, disconnect, reconnect, and confirm the old password no longer works. Only the new one gets you in.
 
 ### Brute Force Protection
 
-This one's straightforward. Enter the wrong password three times with `maxLoginTries: 3`. On the third failure, the server kicks you with a "too many attempts" message. Try connecting again during the `tempBanLength` window -- you'll get rejected before you even see the login prompt.
+With `kickOnWrongPassword: true`, each wrong password kicks you. With `enableTempban: true` and `maxLoginTries: 3`, the third failure from the same IP also bans that IP for `tempbanLength` minutes. Try connecting again during that window. The server should reject you before you see the login prompt.
 
 ### Restriction Enforcement
 
@@ -131,52 +134,48 @@ Before logging in, check that all of these are blocked:
 - Chat messages (if `allowChat: false`)
 - Commands other than those in `allowCommands`
 
-Also test the kick timeout: join, sit there doing nothing, and after the configured seconds the server boots you. If it doesn't, your `timeout.kick` value isn't being applied.
+Also test the kick timeout: join, sit there doing nothing, and after the configured seconds the server boots you. If it doesn't, check `settings.restrictions.loginTimeout` and `registerTimeout`.
 
 ### Database Persistence
 
 Register an account, stop the server, restart it, and log in. The account persists across restarts. Verify the entry in your database:
 
 ```sql title="verify.sql"
-SELECT username, ip, regdate FROM authme WHERE username = 'TestPlayer';
+-- AuthMe stores the lowercase name in username and the original case in realname
+SELECT realname, ip, regdate FROM authme WHERE username = 'testplayer';
 ```
 
-If the row's missing, your database backend isn't configured correctly -- check that AuthMe is actually writing to MySQL and not falling back to SQLite.
+If the row's missing, your database backend isn't configured correctly. Check that AuthMe is actually writing to MySQL and not falling back to SQLite.
 
 ### Case-Sensitivity and Impersonation
 
-Here's one people miss: if a player registers as "Notch", can someone else join as "notch"? Without `preventOtherCase: true`, AuthMe treats them as separate accounts -- which means impersonation is wide open. Turn it on:
-
-```yaml title="plugins/AuthMe/config.yml"
-settings:
-  preventOtherCase: true
-```
-
-With this set, "notch" gets rejected when "Notch" is already registered.
+Here's one people miss: if a player registers as "Notch", can someone else join as "notch"? AuthMe enables `settings.preventOtherCase` by default, so "notch" gets rejected when "Notch" is already registered. Confirm that nobody turned it off. Without it, different capitalizations act as separate accounts, which leaves impersonation wide open.
 
 ## Hybrid Authentication with FastLogin
 
-[FastLogin](https://github.com/games647/FastLogin) sits in front of AuthMe and automatically detects premium accounts. Premium players skip the password flow entirely; cracked players fall through to AuthMe's `/register` and `/login`.
+[FastLogin](https://github.com/TuxCoding/FastLogin) sits in front of AuthMe and automatically detects premium accounts. Premium players skip the password flow entirely; cracked players fall through to AuthMe's `/register` and `/login`.
 
 Test three scenarios:
 
-1. **Premium account** -- auto-logs in with no password prompt
-2. **Cracked account** -- goes through the normal AuthMe registration and login
-3. **Cracked client using a premium username** -- gets rejected to prevent impersonation
+1. **Premium account:** auto-logs in with no password prompt
+2. **Cracked account:** goes through the normal AuthMe registration and login
+3. **Cracked client using a premium username:** gets rejected to prevent impersonation
+
+Recent AuthMe releases also have a built-in premium mode (`settings.enablePremium`). Players opt in with `/premium`. Test the same three scenarios if you use it instead of FastLogin.
 
 ## Security Testing
 
 ### SQL Injection
 
-On your own test server, try registering with payloads like `/register ' OR '1'='1 password`. AuthMe escapes these. If any succeed, you're running a dangerously outdated version -- update immediately.
+On your own test server, try registering with payloads like `/register ' OR '1'='1 password`. AuthMe escapes these. If any succeed, you're running a dangerously outdated version. Update immediately.
 
-### Timing Attacks
+### Account Enumeration
 
-Run `/login ExistingUser wrongpass` and `/login FakeUser wrongpass` and compare response times. Modern AuthMe uses constant-time comparison, so both respond in roughly the same time. A measurable difference leaks whether an account exists.
+AuthMe tells every joining player whether to `/register` or `/login`, so anyone can find out whether a name is registered. That is expected for password-based login. Don't treat usernames as secret. Rely on strong passwords, `maxRegPerIp`, and the tempban settings instead.
 
 ### Session Security
 
-With `ipCheck: true`, a session token from one IP can't be reused from a different one. Log in, note the session, then try to resume it from a different address. The server forces re-authentication. Without this, stolen session tokens work from anywhere -- which is how account hijacking happens on poorly configured servers.
+AuthMe sessions remember the player's name and IP. A session ends when the timeout runs out or the IP changes. Log in, disconnect, and rejoin from a different address within the timeout. The server should ask for the password again. If it doesn't, someone who joins with that name could skip the login.
 
 ## Load Testing with Bots
 
@@ -184,11 +183,11 @@ Manual testing covers correctness, but concurrency bugs and performance problems
 
 ### What to Test
 
-**Mass registration**: Connect 50 bots at once, each registering a unique account. Every one of them needs to succeed -- no race conditions, no duplicate key errors in the database.
+**Mass registration**: Connect 50 bots at once, each registering a unique account. Every one of them needs to succeed, with no race conditions and no duplicate key errors in the database.
 
 **Login throughput**: Disconnect all 50, then reconnect them simultaneously. Each runs `/login`. Watch for timeouts, failed logins, or "too many connections" errors from your database.
 
-**Session timeout accuracy**: Log in a bot, disconnect, reconnect within the session window, and confirm it auto-logs in. Reconnect after the window expires -- this time it asks for a password.
+**Session timeout accuracy**: Log in a bot, disconnect, reconnect within the session window, and confirm it auto-logs in. Reconnect after the window expires. This time it asks for a password.
 
 ### What to Monitor
 
@@ -199,22 +198,24 @@ tail -f logs/latest.log | grep -i "authme\|login\|register"
 # Database connection count (MySQL)
 mysql -e "SHOW PROCESSLIST;"
 
-# Server TPS under load
-/spark tps
+# Server TPS under load (run in the server console)
+spark tps
 ```
+
+[SoulFire](/download) can run these bot tests. Its **Auto login and register** plugin sends `/register` and `/login` for each bot. See the [auto-register guide](/docs/how-to/auto-register) for setup.
 
 If your auth system handles 100 concurrent logins without noticeable TPS drops, you're in good shape. If you see timeouts or "too many connections" errors, bump your connection pool or switch from SQLite to MySQL.
 
 ## Things People Get Wrong
 
-**Running offline mode "just for now."** There's no such thing as temporary on a public server. Someone will find it. Stick with online mode if you can -- it's simpler, more secure, and you don't have to maintain an auth plugin at all. If you genuinely need offline mode (proxy setups, cracked player support), lock it down with AuthMe before you open the port.
+**Running offline mode "just for now."** There's no such thing as temporary on a public server. Someone will find it. Stick with online mode if you can. It's simpler, more secure, and you don't have to maintain an auth plugin at all. If you genuinely need offline mode (proxy setups, cracked player support), lock it down with AuthMe before you open the port.
 
-**Using SHA256 for password hashing.** BCRYPT2Y exists. Use it. SHA256 is fast by design, which is exactly what you don't want for password storage -- it makes brute forcing trivial.
+**Using SHA256 for password hashing.** BCRYPT2Y exists. Use it. SHA256 is fast by design, which is exactly what you don't want for password storage. It makes brute forcing trivial. SHA256 is also AuthMe's default, so change `passwordHash` before the first player registers. Use `legacyHashes` to migrate existing accounts.
 
-**Leaving `ipCheck` off.** Session tokens without IP binding are reusable from anywhere. Turn it on. The only reason to leave it off is if your players are on connections that change IP constantly, and even then you're making a tradeoff.
+**Leaving tempbans off.** `Security.tempban.enableTempban` is `false` by default, so an attacker can keep guessing passwords from the same IP. Turn it on and set `maxLoginTries` to a small number.
 
 **No registration cap per IP.** Without `maxRegPerIp`, a single person can create hundreds of accounts. Set it to 1 or 2. If someone legitimately needs more, you can whitelist them.
 
 **Skipping load testing.** Everything works fine with 5 players. Then 50 log in after a restart and your SQLite database locks up, AuthMe starts timing out, and half your players get kicked. Test under load before you go live. Race conditions and connection pool exhaustion only show up when it matters.
 
-Test your auth the way an attacker would -- with automation, edge cases, and bad input -- and you'll know it holds up before your players find out the hard way.
+Test your auth the way an attacker would, with automation, edge cases, and bad input. Then you'll know it holds up before your players find out the hard way. Next, check your [anti-bot protection](/blog/anti-bot-systems-testing-guide), which covers the join floods that often come with brute-force attempts.

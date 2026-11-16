@@ -1,5 +1,5 @@
 ---
-title: Making Money on DonutSMP with SoulFire's Node Scripting
+title: DonutSMP Money-Making Guide with SoulFire Scripts
 description: A practical breakdown of DonutSMP's economy and how SoulFire's visual scripting system can automate farming, trading, and shard generation at scale
 author: Pistonmaster
 date: 2026-02-24
@@ -136,7 +136,7 @@ SoulFire isn't a simple autoclicker. It runs actual Minecraft client code built 
 
 The node editor gives you 179+ nodes across categories like bot control, inventory management, chat interaction, world queries, and even external API calls. You connect them visually, like wiring up a circuit.
 
-Here's what matters for DonutSMP farming:
+Here's what matters for DonutSMP farming. SoulFire 2.10.8 renamed some nodes, so older releases show **On Join** for **On player ready** and **Pathfind To** for **Go to position**.
 
 | Capability | Relevant Nodes | Use Case |
 |-----------|---------------|----------|
@@ -144,10 +144,10 @@ Here's what matters for DonutSMP farming:
 | **Read chat** | On Chat, String Contains, Regex Match | Parse sell confirmations, order notifications |
 | **Manage inventory** | Open Inventory, Click Slot, Get Inventory | Interact with shop GUIs, collect order deliveries |
 | **Stay alive** | On Damage, Get Health, Use Item | Eat food when low, equip armor |
-| **Navigate** | Pathfind To, Get Position | Walk to AFK zone, move between farm and sell point |
-| **Query APIs** | Web Fetch, Parse JSON | Check live market prices from donut.auction |
-| **Reconnect** | On Disconnect, On Join | Auto-rejoin after kicks or network drops |
-| **Track state** | Persistent Variables, Session Variables | Remember sell multiplier progress, earnings |
+| **Navigate** | Go to position, Get Position | Walk to AFK zone, move between farm and sell point |
+| **Query APIs** | Web Fetch, JSON Parse | Check live market prices from donut.auction |
+| **Reconnect** | On Disconnect, On player ready | Auto-rejoin after kicks or network drops |
+| **Track state** | Persistent bot variable, Connection variable | Remember sell multiplier progress, earnings |
 | **Alert you** | Discord Webhook | Notify on death, ban, or earnings milestones |
 
 ### Example: AFK Shard Farmer Script
@@ -159,14 +159,14 @@ A basic shard farming setup only needs a handful of nodes:
 
 ### Connect and Navigate
 
-Use the **On Join** trigger to detect when the bot enters the server. Connect it to a **Send Chat** node that runs `/afk 1` to teleport to the AFK lobby. Add a short **Wait** node before the command to let the connection stabilize.
+Use the **On player ready** trigger to detect when the bot enters the server. Connect it to a **Send Chat** node that runs `/afk 1` to teleport to the AFK lobby. Add a short **Wait** node before the command to let the connection stabilize.
 
 </Step>
 <Step>
 
 ### Handle Disconnects
 
-Add an **On Disconnect** trigger that connects to a **Wait** node (30 seconds to avoid rapid reconnection loops), then the bot automatically reconnects. SoulFire handles the actual reconnection logic. The script just needs to re-run the `/afk` command on the next **On Join** event.
+Add an **On Disconnect** trigger that connects to a **Wait** node (30 seconds to avoid rapid reconnection loops), then the bot reconnects. The **Auto reconnect** plugin handles the actual reconnection. The script just needs to re-run the `/afk` command on the next **On player ready** event.
 
 </Step>
 <Step>
@@ -182,13 +182,13 @@ Wire an **On Interval** trigger (every hour) to a **Discord Webhook** node that 
 
 This one's more involved. The bot needs to stand near the farm, periodically open collection chests, grab items, and sell them.
 
-```
+```text
 On Interval (every 5 min)
   → Get Position (verify bot is at farm)
   → Branch (at farm?)
     → Yes: Open Inventory → Click Slot (collect items) → Close Inventory
            → Wait (1s) → Send Chat ("/sell all")
-    → No: Pathfind To (farm coordinates)
+    → No: Go to position (farm coordinates)
            → loop back to collect step
 
 On Damage
@@ -204,10 +204,10 @@ On Death
 
 This is the most advanced setup, combining external API calls with in-game actions:
 
-```
+```text
 On Interval (every 30s)
   → Web Fetch (donut.auction API for current prices)
-  → Parse JSON (extract item prices into variables)
+  → JSON Parse (extract item prices into variables)
   → Send Chat ("/ah") → parse results from chat
   → For Each (listed item)
     → Compare (listed price < market price * 0.7?)
@@ -224,7 +224,7 @@ Running one bot is a proof of concept. Running 10+ is where things get interesti
 
 ### Multi-Account Management
 
-SoulFire is designed to run many bots simultaneously from a single instance. Each bot runs its own script independently. You can assign different scripts to different bots, so some farm shards while others operate spawner farms.
+SoulFire is designed to run many bots simultaneously from a single SoulFire server. Each bot runs its own script independently. You can assign different scripts to different bots, so some farm shards while others operate spawner farms.
 
 ### Proxy Rotation
 

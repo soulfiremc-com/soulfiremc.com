@@ -1,0 +1,105 @@
+---
+title: Tryb CLI
+sidebarTitle: "CLI"
+description: "Uruchamiaj SoulFire z terminala do automatyzacji, przez SSH lub na serwerze bez pulpitu."
+icon: Terminal
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+## Kiedy używać CLI [#when-to-use-the-cli]
+
+<Callout type="info" emoji="ℹ️">
+  Jeśli nie znasz narzędzi wiersza poleceń, zacznij od samouczka [Połącz pierwszego bota](/docs/start-here/gui-mode).
+</Callout>
+
+Używaj CLI do automatyzacji w terminalu, sesji SSH lub systemów bez pulpitu.
+GUI ma więcej funkcji, ale CLI obsługuje najczęstsze zadania.
+
+Dystrybucja CLI działa bez pulpitu i ekranu.
+Jeśli chcesz korzystać z interfejsu graficznego, użyj osobnego klienta GUI.
+
+## Skonfiguruj CLI [#set-up-the-cli]
+
+Zainstaluj Javę 25, a następnie pobierz plik `.jar` CLI z [wydań SoulFire](https://github.com/soulfiremc-com/SoulFire/releases).
+Poniższe polecenia używają nazwy `SoulFireCLI.jar`. Zastąp ją nazwą pobranego pliku.
+
+Zapisz flagi JVM w zmiennej powłoki, aby kolejne polecenia były krótkie:
+
+```bash
+SF_JVM_FLAGS="-Djava.awt.headless=true -Xmx2G -XX:+EnableDynamicAgentLoading -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -XX:+UseCompactObjectHeaders -XX:+AlwaysActAsServerClassMachine -XX:+UseNUMA -XX:+UseFastUnorderedTimeStamps -XX:+UseVectorCmov -XX:+UseCriticalJavaThreadPriority -Dsf.flags.v2=true"
+```
+
+Podstawowe polecenie wygląda tak:
+
+```bash
+java $SF_JVM_FLAGS -jar SoulFireCLI.jar
+```
+
+Ta składnia dotyczy Basha i podobnych powłok. W innej powłoce wpisz flagi w miejsce `$SF_JVM_FLAGS`.
+
+| Flaga | Przeznaczenie |
+| --- | --- |
+| `-Djava.awt.headless=true` | Uruchamia Javę bez ekranu |
+| `-Xmx2G` | Ustawia limit pamięci procesu CLI |
+| Flagi `-XX:...` | Optymalizacja wydajności zalecana przez SoulFire przy starcie |
+| `-Dsf.flags.v2=true` | Potwierdza, że flagi optymalizacji są ustawione. Ukrywa ostrzeżenie przy starcie i sama nie stosuje flag. |
+
+Dostosuj `-Xmx2G` do obciążenia. Na przykład `-Xmx120G` ustawia limit 120 GB.
+Bez `-Xmx` Java używa do 25% całej pamięci systemu.
+Gdy boty działają na zdalnym serwerze, lokalnemu CLI zwykle wystarcza `-Xmx1G`.
+
+Następnie wybierz, gdzie będą działać boty.
+W przypadku serwera lokalnego przejdź do sekcji [Flagi CLI](#cli-flags).
+W przypadku zdalnego serwera dedykowanego ustaw te właściwości JVM:
+
+| Właściwość         | Opis                                   |
+|--------------------|----------------------------------------|
+| `sf.remoteAddress` | Adres, z którym CLI ma się połączyć    |
+| `sf.remoteToken`   | Token używany do logowania             |
+
+Umieść właściwości przed `-jar`:
+
+```bash
+java -Dsf.remoteAddress=domain.com -Dsf.remoteToken=abcdefg $SF_JVM_FLAGS -jar SoulFireCLI.jar
+```
+
+## Flagi CLI [#cli-flags]
+
+Po połączeniu CLI pobiera dostępne flagi z serwera.
+Pełną listę znajdziesz na stronie [Flagi CLI](/docs/reference/cli-flags).
+
+Ten przykład importuje konta i uruchamia boty:
+
+```bash
+java $SF_JVM_FLAGS -jar SoulFireCLI.jar \
+  --account-file accounts.txt \
+  --account-type OFFLINE \
+  --bot-address 127.0.0.1:25565 \
+  --bot-protocol-version "RELEASE|777" \
+  --bot-join-delay-min 1000 \
+  --bot-join-delay-max 3000 \
+  --start
+```
+
+Polecenie importuje konta z pliku `accounts.txt` i łączy je z `127.0.0.1:25565`.
+Każdy bot startuje po losowym opóźnieniu od jednej do trzech sekund.
+`RELEASE|777` to identyfikator Minecrafta 26.3. Inne identyfikatory znajdziesz na liście [obsługiwanych wersji](/docs/reference/versions).
+Zachowaj cudzysłowy, ponieważ `|` ma w powłoce specjalne znaczenie.
+
+## Flagi terminala [#terminal-flags]
+
+Ustaw `-Dterminal.jline=true` lub `-Dterminal.jline=false`, aby włączyć lub wyłączyć interaktywny terminal.
+Interaktywny terminal korzysta z JLine, tej samej biblioteki co Minecraft i Velocity.
+Ustaw `-Dterminal.ansi=true` lub `-Dterminal.ansi=false`, aby włączyć lub wyłączyć kolory w terminalu.
+
+## Importowanie danych [#importing-data]
+
+Flagi CLI pozwalają importować profile, konta i proxy.
+Przy imporcie kont musisz wybrać typ konta.
+Typ proxy jest opcjonalny. Bez typu SoulFire traktuje plik jako uniwersalny plik proxy.
+
+## Uruchamianie poleceń [#run-commands]
+
+Interaktywna powłoka przyjmuje te same polecenia co tryb GUI.
+Szczegóły znajdziesz w [dokumentacji poleceń](/docs/reference/commands).

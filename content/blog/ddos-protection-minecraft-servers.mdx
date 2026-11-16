@@ -20,7 +20,7 @@ DDoS protection works by sitting in front of your server, soaking up all the gar
 
 Most Minecraft DDoS protection services work as TCP reverse proxies:
 
-```
+```text
 Player → Protection Service (filters traffic) → Your Server
          [Public IP]                              [Hidden IP]
 ```
@@ -110,7 +110,13 @@ Your service will publish its IP ranges. Use those. This ensures that even if so
 
 PROXY protocol lets the protection service pass the original player IP to your server. Without it, every player appears to connect from the proxy's IP, which breaks IP bans, geolocation, and per-IP rate limiting.
 
-Most Minecraft proxies (Velocity, BungeeCord) and some server software support PROXY protocol. Check your service's documentation for the specific configuration.
+Velocity, BungeeCord, and Paper all support PROXY protocol. Enable it only on the server that receives traffic from the protection service, and only after the firewall from step 2 is in place. Otherwise anyone can fake their IP.
+
+- **Velocity:** set `haproxy-protocol = true` in the `[advanced]` section of `velocity.toml`.
+- **BungeeCord:** set `proxy_protocol: true` on the listener in `config.yml`.
+- **Paper without a proxy:** set `proxies.proxy-protocol: true` in `config/paper-global.yml`.
+
+Check your service's documentation for which PROXY protocol version it sends.
 
 ### 4. Confirm player IPs work
 
