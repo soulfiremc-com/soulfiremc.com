@@ -24,6 +24,15 @@ export const defaultColors = {
 };
 
 /**
+ * Inline light colors for the primary button. Some clients drop the style
+ * element; elsewhere its `!important` rules still apply the theme colors.
+ */
+export const primaryButtonFallbackStyle = {
+  backgroundColor: defaultColors.light.primary,
+  color: defaultColors.light.primaryForeground,
+};
+
+/**
  * Custom CSS class names for styling different parts of email templates.
  *
  * Allows fine-grained control over the appearance of email components.

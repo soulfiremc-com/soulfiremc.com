@@ -51,19 +51,19 @@ export const BADGE_CONFIG: Record<
 > = {
   "free-tier": {
     label: "providers.badges.free-tier.label",
-    className: "bg-success/10 text-success",
+    className: "bg-success/10 text-green-800 dark:text-success",
     description: "providers.proxies.badges.free-tier.description",
     icon: <Gift className="h-3 w-3" />,
   },
   "high-quality": {
     label: "providers.badges.high-quality.label",
-    className: "bg-blue-500/10 text-blue-600 dark:text-blue-400",
+    className: "bg-blue-500/10 text-blue-700 dark:text-blue-400",
     description: "providers.proxies.badges.high-quality.description",
     icon: <Star className="h-3 w-3" />,
   },
   residential: {
     label: "providers.badges.residential.label",
-    className: "bg-purple-500/10 text-purple-600 dark:text-purple-400",
+    className: "bg-purple-500/10 text-purple-700 dark:text-purple-400",
     description: "providers.proxies.badges.residential.description",
     icon: <Home className="h-3 w-3" />,
   },
@@ -93,19 +93,19 @@ export const BADGE_CONFIG: Record<
   },
   enterprise: {
     label: "providers.badges.enterprise.label",
-    className: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400",
+    className: "bg-indigo-500/10 text-indigo-700 dark:text-indigo-400",
     description: "providers.proxies.badges.enterprise.description",
     icon: <Building2 className="h-3 w-3" />,
   },
   isp: {
     label: "providers.badges.isp.label",
-    className: "bg-amber-500/10 text-amber-700 dark:text-amber-400",
+    className: "bg-amber-500/10 text-amber-800 dark:text-amber-400",
     description: "providers.proxies.badges.isp.description",
     icon: <Wifi className="h-3 w-3" />,
   },
   mobile: {
     label: "providers.badges.mobile.label",
-    className: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
+    className: "bg-rose-500/10 text-rose-700 dark:text-rose-400",
     description: "providers.proxies.badges.mobile.description",
     icon: <Smartphone className="h-3 w-3" />,
   },
@@ -191,7 +191,7 @@ export const PROVIDERS: Provider[] = [
     logo: "/providers/thordata.png",
     summary: "providers.proxies.thordata.summary",
     url: "https://affiliate.thordata.com/soulfire?utm_source=get-proxies&utm_campaign=soulfire",
-    badges: ["bedrock-udp", "high-quality", "residential", "mobile", "isp"],
+    badges: ["high-quality", "residential", "datacenter", "mobile", "isp"],
     couponCode: "THORDATA",
     couponDiscount: "offers.twentyPercentOff",
     paymentMethods: ["Wallet", "Card", "Crypto", "PayPal", "Alipay"],
@@ -221,7 +221,13 @@ export const PROVIDERS: Provider[] = [
     logo: "/providers/webshare.svg",
     summary: "providers.proxies.webshare.summary",
     url: "https://www.webshare.io/?referral_code=36gneippfiwt&utm_source=get-proxies&utm_campaign=soulfire",
-    badges: ["free-tier", "residential", "datacenter", "budget-friendly"],
+    badges: [
+      "free-tier",
+      "residential",
+      "datacenter",
+      "isp",
+      "budget-friendly",
+    ],
     paymentMethods: ["Card", "Apple Pay", "Google Pay"],
     socialLinks: [
       { platform: "email", url: "mailto:support@webshare.io" },
@@ -238,7 +244,14 @@ export const PROVIDERS: Provider[] = [
     logo: "/providers/proxyscrape.svg",
     summary: "providers.proxies.proxyscrape.summary",
     url: "https://proxyscrape.com/?ref=mge4mtc&utm_source=get-proxies&utm_campaign=soulfire",
-    badges: ["bedrock-udp", "unlimited-bandwidth", "residential"],
+    badges: [
+      "bedrock-udp",
+      "unlimited-bandwidth",
+      "residential",
+      "datacenter",
+      "isp",
+      "mobile",
+    ],
     paymentMethods: ["Card", "PayPal", "Alipay", "Crypto", "Local methods"],
     socialLinks: [
       {
@@ -287,13 +300,14 @@ export const PROVIDERS: Provider[] = [
     url: "https://flameproxies.com/register?referral=42M1SH76&utm_source=get-proxies&utm_campaign=soulfire",
     badges: [
       "bedrock-udp",
+      "free-tier",
       "budget-friendly",
       "residential",
       "datacenter",
       "mobile",
       "isp",
     ],
-    paymentMethods: ["Checkout varies"],
+    paymentMethods: ["Card", "Apple Pay", "Alipay", "Crypto"],
     socialLinks: [
       { platform: "email", url: "mailto:support@flameproxies.com" },
       { platform: "x", url: "https://x.com/flameproxies_" },
@@ -396,6 +410,7 @@ export const PROVIDERS: Provider[] = [
       "residential",
       "datacenter",
       "mobile",
+      "isp",
     ],
     paymentMethods: [
       "Credit card",
@@ -432,6 +447,8 @@ export const PROVIDERS: Provider[] = [
       "high-quality",
       "residential",
       "datacenter",
+      "mobile",
+      "isp",
     ],
     paymentMethods: [
       "Credit card",
@@ -462,7 +479,14 @@ export const PROVIDERS: Provider[] = [
     logo: "/providers/decodo.svg",
     summary: "providers.proxies.decodo.summary",
     url: "https://visit.decodo.com/K0rr7e?utm_source=get-proxies&utm_campaign=soulfire",
-    badges: ["bedrock-udp", "high-quality", "residential", "datacenter"],
+    badges: [
+      "bedrock-udp",
+      "high-quality",
+      "residential",
+      "datacenter",
+      "mobile",
+      "isp",
+    ],
     paymentMethods: [
       "Card",
       "PayPal",
@@ -495,6 +519,7 @@ export const PROVIDERS: Provider[] = [
       "residential",
       "datacenter",
       "isp",
+      "mobile",
     ],
     paymentMethods: ["Credit card", "PayPal", "Google Pay", "Alipay", "Crypto"],
     socialLinks: [

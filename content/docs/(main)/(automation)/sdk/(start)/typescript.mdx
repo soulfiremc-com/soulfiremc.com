@@ -33,7 +33,7 @@ const program = Effect.scoped(
     const bot = yield* SoulFire.createBot({
       server: "localhost:25565",
       username: "DocsBot_1",
-      installation: { version: "2.10.2" },
+      installation: { version: "%SOULFIRE_SDK_VERSION%" },
     });
 
     yield* bot.chat.send("Hello from SoulFire");
@@ -59,7 +59,7 @@ Expect `Hello from SoulFire` in Minecraft chat and a health value in the program
 The scope closes subscriptions and the managed backend when the program finishes.
 
 Use `installation.directory` to choose another data directory.
-The example pins the backend to `2.10.2`; omit `installation.version` to select the latest release.
+The example pins the backend to `%SOULFIRE_SDK_VERSION%`; omit `installation.version` to select the latest release.
 
 ## Read the code
 

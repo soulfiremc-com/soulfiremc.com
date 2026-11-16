@@ -84,7 +84,7 @@ export function ForgotPassword({ className }: ForgotPasswordProps) {
     <Card className={cn("w-full max-w-sm", className)}>
       <CardHeader>
         <CardTitle className="text-xl font-semibold">
-          {localization.auth.forgotPassword}
+          <h1>{localization.auth.forgotPassword}</h1>
         </CardTitle>
       </CardHeader>
 

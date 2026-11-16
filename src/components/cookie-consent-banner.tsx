@@ -3,8 +3,7 @@
 import { useT } from "@/lib/i18n-react";
 
 import { Cookie } from "lucide-react";
-import posthog from "posthog-js";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,73 +14,144 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  type AnalyticsConsent,
+  loadPostHog,
+  readAnalyticsConsent,
+} from "@/lib/integrations/posthog";
+
+const REOPEN_EVENT = "soulfire:cookie-consent-open";
+const CONSENT_CHANGE_EVENT = "soulfire:cookie-consent-change";
+
+/** Shows the consent banner again so a visitor can change their choice. */
+export function reopenCookieConsent() {
+  window.dispatchEvent(new Event(REOPEN_EVENT));
+}
+
+/** Reads the current choice after hydration. Null until then. */
+export function useAnalyticsConsent() {
+  const [consent, setConsent] = useState<AnalyticsConsent | null>(null);
+  useEffect(() => {
+    const update = () => setConsent(readAnalyticsConsent());
+    update();
+    window.addEventListener(CONSENT_CHANGE_EVENT, update);
+    return () => window.removeEventListener(CONSENT_CHANGE_EVENT, update);
+  }, []);
+  return consent;
+}
 
 const CookieConsentBanner = () => {
   const t = useT();
-  const [consentState, setConsentState] = useState<
-    ReturnType<typeof posthog.get_explicit_consent_status> | ""
-  >("");
+  const [open, setOpen] = useState(false);
+  const [reopened, setReopened] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const returnFocusRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    setConsentState(posthog.get_explicit_consent_status());
+    setOpen(readAnalyticsConsent() === "pending");
+    const show = () => {
+      if (document.activeElement instanceof HTMLElement) {
+        returnFocusRef.current = document.activeElement;
+      }
+      setOpen(true);
+      setReopened(true);
+    };
+    window.addEventListener(REOPEN_EVENT, show);
+    return () => window.removeEventListener(REOPEN_EVENT, show);
   }, []);
 
+  // A reopened banner takes focus so keyboard users land on the choices.
+  useEffect(() => {
+    if (open && reopened) sectionRef.current?.focus();
+  }, [open, reopened]);
+
+  // Publish the banner height so the page can scroll its last content and
+  // focused fields clear of it.
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!open || !section) return;
+    const root = document.documentElement;
+    const observer = new ResizeObserver(() => {
+      root.style.setProperty(
+        "--cookie-banner-height",
+        `${section.offsetHeight}px`,
+      );
+    });
+    observer.observe(section);
+    return () => {
+      observer.disconnect();
+      root.style.removeProperty("--cookie-banner-height");
+    };
+  }, [open]);
+
   const respond = (status: "granted" | "denied") => {
-    if (status === "granted") posthog.opt_in_capturing();
-    else posthog.opt_out_capturing();
+    void loadPostHog().then((posthog) => {
+      if (!posthog) return;
+      if (status === "granted") posthog.opt_in_capturing();
+      else posthog.opt_out_capturing();
+      window.dispatchEvent(new Event(CONSENT_CHANGE_EVENT));
+    });
     // React commits this click's update before PostHog's document click
     // listener records the click, so its dead-click check never sees the
     // banner close. Closing in the next task keeps the response measurable.
-    setTimeout(() => setConsentState(status), 0);
+    // A reopened banner hands focus back to the control that opened it.
+    setTimeout(() => {
+      setOpen(false);
+      returnFocusRef.current?.focus();
+      returnFocusRef.current = null;
+    }, 0);
   };
 
-  const handleAcceptCookies = () => respond("granted");
-  const handleDeclineCookies = () => respond("denied");
-
-  if (consentState !== "pending") {
+  if (!open) {
     return null;
   }
 
   return (
-    <section
-      aria-labelledby="cookie-consent-title"
-      className="fixed bottom-0 left-0 z-50 sm:bottom-4 sm:left-4"
-    >
-      {/* Tighter side padding on phones leaves more room for page actions. */}
-      <Card className="m-3 shadow-lg sm:max-w-md">
-        <CardHeader className="flex flex-row items-center justify-between gap-2 px-4 sm:px-6">
-          <CardTitle id="cookie-consent-title" className="text-lg">
-            {t("cookies.title")}
-          </CardTitle>
-          <Cookie aria-hidden="true" className="size-5" />
-        </CardHeader>
-        <CardContent className="flex flex-col gap-2 px-4 sm:px-6">
-          <CardDescription className="text-sm">
-            {t("cookies.description")}
-          </CardDescription>
-          <p className="text-xs text-muted-foreground">
-            {t("cookies.acceptanceNotice")}
-          </p>
-        </CardContent>
-        <CardFooter className="flex gap-2 px-4 sm:px-6">
-          <Button
-            type="button"
-            onClick={handleDeclineCookies}
-            variant="secondary"
-            className="flex-1"
-          >
-            {t("cookies.decline")}
-          </Button>
-          <Button
-            type="button"
-            onClick={handleAcceptCookies}
-            className="flex-1"
-          >
-            {t("cookies.accept")}
-          </Button>
-        </CardFooter>
-      </Card>
-    </section>
+    <>
+      <div aria-hidden="true" className="h-(--cookie-banner-height)" />
+      <section
+        ref={sectionRef}
+        tabIndex={-1}
+        aria-labelledby="cookie-consent-title"
+        className="fixed bottom-0 left-0 z-45 outline-none sm:bottom-4 sm:left-4 short:right-0 short:bottom-0 short:left-0"
+      >
+        {/* Tighter side padding on phones leaves more room for page actions. */}
+        {/* Short landscape screens get one row so forms stay visible. */}
+        <Card className="m-3 shadow-lg sm:max-w-md short:m-2 short:max-w-none short:flex-row short:items-center">
+          <CardHeader className="flex flex-row items-center justify-between gap-2 px-4 sm:px-6 short:sr-only">
+            <CardTitle id="cookie-consent-title" className="text-lg">
+              {t("cookies.title")}
+            </CardTitle>
+            <Cookie aria-hidden="true" className="size-5" />
+          </CardHeader>
+          <CardContent className="flex flex-1 flex-col gap-2 px-4 sm:px-6 short:pr-0">
+            <CardDescription className="text-sm">
+              {t("cookies.description")}
+            </CardDescription>
+            <p className="text-xs text-muted-foreground">
+              {t("cookies.acceptanceNotice")}
+            </p>
+          </CardContent>
+          <CardFooter className="flex gap-2 px-4 sm:px-6 short:shrink-0 short:pl-0">
+            <Button
+              type="button"
+              onClick={() => respond("denied")}
+              variant="secondary"
+              className="flex-1"
+            >
+              {t("cookies.decline")}
+            </Button>
+            <Button
+              type="button"
+              onClick={() => respond("granted")}
+              className="flex-1"
+            >
+              {t("cookies.accept")}
+            </Button>
+          </CardFooter>
+        </Card>
+      </section>
+    </>
   );
 };
 

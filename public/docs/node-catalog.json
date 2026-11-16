@@ -1,5 +1,5 @@
 {
-  "revision": "878ba24b85ee4a1ec170ed738b7664b61ace1a2d",
+  "revision": "eb2b29fb0a4190d759135270a63344d53fdcf819",
   "categories": [
     {
       "constant": "TRIGGERS",
@@ -100,6 +100,15 @@
       "description": "Fires before entity physics each tick (synchronous on tick thread)",
       "trigger": true,
       "expensive": false,
+      "keywords": [
+        "tick",
+        "update",
+        "loop",
+        "pre",
+        "entity",
+        "before",
+        "rotation"
+      ],
       "inputs": [],
       "outputs": [
         {
@@ -124,7 +133,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnPreEntityTickNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnPreEntityTickNode.java"
     },
     {
       "type": "trigger.on_post_entity_tick",
@@ -133,6 +142,15 @@
       "description": "Fires after entity physics each tick (synchronous on tick thread)",
       "trigger": true,
       "expensive": false,
+      "keywords": [
+        "tick",
+        "update",
+        "loop",
+        "post",
+        "entity",
+        "after",
+        "attack"
+      ],
       "inputs": [],
       "outputs": [
         {
@@ -157,15 +175,24 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnPostEntityTickNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnPostEntityTickNode.java"
     },
     {
       "type": "trigger.on_join",
-      "name": "On Join",
+      "name": "On player ready",
       "category": "triggers",
       "description": "Fires when the bot has fully joined and the player is ready to interact",
       "trigger": true,
       "expensive": false,
+      "keywords": [
+        "On Join",
+        "join",
+        "connect",
+        "login",
+        "server",
+        "spawn",
+        "ready"
+      ],
       "inputs": [],
       "outputs": [
         {
@@ -197,15 +224,23 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnJoinNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnJoinNode.java"
     },
     {
       "type": "trigger.on_bot_init",
-      "name": "On Bot Init",
+      "name": "On connection created",
       "category": "triggers",
       "description": "Fires early when the bot connection is initialized (before player is ready)",
       "trigger": true,
       "expensive": false,
+      "keywords": [
+        "On Bot Init",
+        "init",
+        "initialize",
+        "start",
+        "connect",
+        "early"
+      ],
       "inputs": [],
       "outputs": [
         {
@@ -237,7 +272,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnBotInitNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnBotInitNode.java"
     },
     {
       "type": "trigger.on_chat",
@@ -246,6 +281,14 @@
       "description": "Fires when a chat message is received",
       "trigger": true,
       "expensive": false,
+      "keywords": [
+        "chat",
+        "message",
+        "text",
+        "say",
+        "talk",
+        "receive"
+      ],
       "inputs": [],
       "outputs": [
         {
@@ -284,7 +327,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnChatNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnChatNode.java"
     },
     {
       "type": "trigger.on_damage",
@@ -293,6 +336,13 @@
       "description": "Fires when the bot takes damage (health decreases)",
       "trigger": true,
       "expensive": false,
+      "keywords": [
+        "damage",
+        "hurt",
+        "health",
+        "attack",
+        "hit"
+      ],
       "inputs": [],
       "outputs": [
         {
@@ -331,7 +381,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnDamageNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnDamageNode.java"
     },
     {
       "type": "trigger.on_death",
@@ -340,6 +390,13 @@
       "description": "Fires when the bot dies",
       "trigger": true,
       "expensive": false,
+      "keywords": [
+        "death",
+        "die",
+        "dead",
+        "killed",
+        "respawn"
+      ],
       "inputs": [],
       "outputs": [
         {
@@ -364,7 +421,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnDeathNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnDeathNode.java"
     },
     {
       "type": "trigger.on_interval",
@@ -373,6 +430,13 @@
       "description": "Fires at a configurable interval. Does not provide a bot — use GetBots + ForEachBot downstream for bot actions.",
       "trigger": true,
       "expensive": false,
+      "keywords": [
+        "interval",
+        "timer",
+        "repeat",
+        "periodic",
+        "schedule"
+      ],
       "inputs": [
         {
           "id": "intervalMs",
@@ -399,7 +463,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnIntervalNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnIntervalNode.java"
     },
     {
       "type": "trigger.on_script_init",
@@ -408,6 +472,13 @@
       "description": "Fires once when the script is started",
       "trigger": true,
       "expensive": false,
+      "keywords": [
+        "init",
+        "start",
+        "begin",
+        "script",
+        "launch"
+      ],
       "inputs": [],
       "outputs": [
         {
@@ -425,7 +496,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnScriptInitNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnScriptInitNode.java"
     },
     {
       "type": "trigger.on_script_end",
@@ -434,6 +505,14 @@
       "description": "Fires once when the script is being stopped",
       "trigger": true,
       "expensive": false,
+      "keywords": [
+        "end",
+        "stop",
+        "finish",
+        "script",
+        "cleanup",
+        "shutdown"
+      ],
       "inputs": [],
       "outputs": [
         {
@@ -451,7 +530,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnScriptEndNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnScriptEndNode.java"
     },
     {
       "type": "trigger.on_disconnect",
@@ -460,6 +539,13 @@
       "description": "Fires when the bot is disconnected from the server",
       "trigger": true,
       "expensive": false,
+      "keywords": [
+        "disconnect",
+        "leave",
+        "kick",
+        "timeout",
+        "connection"
+      ],
       "inputs": [],
       "outputs": [
         {
@@ -484,7 +570,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnDisconnectNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnDisconnectNode.java"
     },
     {
       "type": "trigger.on_container_open",
@@ -493,6 +579,12 @@
       "description": "Fires when a any container has been opened",
       "trigger": true,
       "expensive": false,
+      "keywords": [
+        "inventory",
+        "container",
+        "menu",
+        "open"
+      ],
       "inputs": [],
       "outputs": [
         {
@@ -531,7 +623,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnContainerOpenNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnContainerOpenNode.java"
     },
     {
       "type": "math.add",
@@ -540,6 +632,12 @@
       "description": "Adds two numbers together",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "add",
+        "plus",
+        "sum",
+        "arithmetic"
+      ],
       "inputs": [
         {
           "id": "a",
@@ -567,7 +665,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/AddNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/AddNode.java"
     },
     {
       "type": "math.subtract",
@@ -576,6 +674,12 @@
       "description": "Subtracts B from A",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "subtract",
+        "minus",
+        "difference",
+        "arithmetic"
+      ],
       "inputs": [
         {
           "id": "a",
@@ -603,7 +707,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/SubtractNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/SubtractNode.java"
     },
     {
       "type": "math.multiply",
@@ -612,6 +716,12 @@
       "description": "Multiplies two numbers together",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "multiply",
+        "times",
+        "product",
+        "arithmetic"
+      ],
       "inputs": [
         {
           "id": "a",
@@ -639,7 +749,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/MultiplyNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/MultiplyNode.java"
     },
     {
       "type": "math.divide",
@@ -648,6 +758,12 @@
       "description": "Divides A by B",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "divide",
+        "quotient",
+        "fraction",
+        "arithmetic"
+      ],
       "inputs": [
         {
           "id": "a",
@@ -675,7 +791,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/DivideNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/DivideNode.java"
     },
     {
       "type": "math.modulo",
@@ -684,6 +800,12 @@
       "description": "Computes the remainder of A divided by B",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "modulo",
+        "mod",
+        "remainder",
+        "arithmetic"
+      ],
       "inputs": [
         {
           "id": "a",
@@ -711,7 +833,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/ModuloNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/ModuloNode.java"
     },
     {
       "type": "math.formula",
@@ -720,6 +842,12 @@
       "description": "Evaluates a custom mathematical expression",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "formula",
+        "expression",
+        "evaluate",
+        "math"
+      ],
       "inputs": [
         {
           "id": "expression",
@@ -794,7 +922,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/FormulaNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/FormulaNode.java"
     },
     {
       "type": "math.random",
@@ -803,6 +931,12 @@
       "description": "Generates a random number within a range",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "random",
+        "rand",
+        "chance",
+        "dice"
+      ],
       "inputs": [
         {
           "id": "min",
@@ -830,7 +964,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/RandomNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/RandomNode.java"
     },
     {
       "type": "math.clamp",
@@ -839,6 +973,12 @@
       "description": "Constrains a value within a range",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "clamp",
+        "constrain",
+        "limit",
+        "bound"
+      ],
       "inputs": [
         {
           "id": "value",
@@ -874,7 +1014,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/ClampNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/ClampNode.java"
     },
     {
       "type": "math.lerp",
@@ -883,6 +1023,12 @@
       "description": "Linearly interpolates between two values",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "lerp",
+        "interpolate",
+        "blend",
+        "mix"
+      ],
       "inputs": [
         {
           "id": "a",
@@ -918,7 +1064,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/LerpNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/LerpNode.java"
     },
     {
       "type": "math.bspline",
@@ -927,6 +1073,12 @@
       "description": "Performs cubic B-spline curve interpolation",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "bspline",
+        "spline",
+        "curve",
+        "interpolate"
+      ],
       "inputs": [
         {
           "id": "p0",
@@ -978,7 +1130,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/BSplineNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/BSplineNode.java"
     },
     {
       "type": "math.abs",
@@ -987,6 +1139,12 @@
       "description": "Returns the absolute value of a number",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "abs",
+        "absolute",
+        "positive",
+        "magnitude"
+      ],
       "inputs": [
         {
           "id": "value",
@@ -1006,7 +1164,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/AbsNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/AbsNode.java"
     },
     {
       "type": "math.floor",
@@ -1015,6 +1173,12 @@
       "description": "Rounds a number down to the nearest integer",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "floor",
+        "round",
+        "down",
+        "integer"
+      ],
       "inputs": [
         {
           "id": "value",
@@ -1034,7 +1198,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/FloorNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/FloorNode.java"
     },
     {
       "type": "math.ceil",
@@ -1043,6 +1207,13 @@
       "description": "Rounds a number up to the nearest integer",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "ceil",
+        "ceiling",
+        "round",
+        "up",
+        "integer"
+      ],
       "inputs": [
         {
           "id": "value",
@@ -1062,7 +1233,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/CeilNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/CeilNode.java"
     },
     {
       "type": "math.round",
@@ -1071,6 +1242,11 @@
       "description": "Rounds a number to the nearest integer",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "round",
+        "nearest",
+        "integer"
+      ],
       "inputs": [
         {
           "id": "value",
@@ -1090,7 +1266,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/RoundNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/RoundNode.java"
     },
     {
       "type": "math.min",
@@ -1099,6 +1275,12 @@
       "description": "Returns the smaller of two numbers",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "min",
+        "minimum",
+        "smaller",
+        "least"
+      ],
       "inputs": [
         {
           "id": "a",
@@ -1126,7 +1308,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/MinNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/MinNode.java"
     },
     {
       "type": "math.max",
@@ -1135,6 +1317,12 @@
       "description": "Returns the larger of two numbers",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "max",
+        "maximum",
+        "larger",
+        "greatest"
+      ],
       "inputs": [
         {
           "id": "a",
@@ -1162,7 +1350,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/MaxNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/MaxNode.java"
     },
     {
       "type": "math.pow",
@@ -1171,6 +1359,12 @@
       "description": "Raises a number to a power",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "pow",
+        "power",
+        "exponent",
+        "raise"
+      ],
       "inputs": [
         {
           "id": "base",
@@ -1198,7 +1392,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/PowNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/PowNode.java"
     },
     {
       "type": "math.sqrt",
@@ -1207,6 +1401,11 @@
       "description": "Calculates the square root of a number",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "sqrt",
+        "square",
+        "root"
+      ],
       "inputs": [
         {
           "id": "value",
@@ -1226,7 +1425,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/SqrtNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/SqrtNode.java"
     },
     {
       "type": "math.sin",
@@ -1235,6 +1434,12 @@
       "description": "Calculates the sine of an angle in degrees",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "sin",
+        "sine",
+        "trig",
+        "trigonometry"
+      ],
       "inputs": [
         {
           "id": "angle",
@@ -1254,7 +1459,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/SinNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/SinNode.java"
     },
     {
       "type": "math.cos",
@@ -1263,6 +1468,12 @@
       "description": "Calculates the cosine of an angle in degrees",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "cos",
+        "cosine",
+        "trig",
+        "trigonometry"
+      ],
       "inputs": [
         {
           "id": "angle",
@@ -1282,7 +1493,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/CosNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/CosNode.java"
     },
     {
       "type": "math.tan",
@@ -1291,6 +1502,12 @@
       "description": "Calculates the tangent of an angle in degrees",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "tan",
+        "tangent",
+        "trig",
+        "trigonometry"
+      ],
       "inputs": [
         {
           "id": "angle",
@@ -1310,7 +1527,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/TanNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/TanNode.java"
     },
     {
       "type": "math.distance",
@@ -1319,6 +1536,12 @@
       "description": "Calculates the distance between two 3D points",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "distance",
+        "length",
+        "measure",
+        "vector"
+      ],
       "inputs": [
         {
           "id": "a",
@@ -1344,7 +1567,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/math/DistanceNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/DistanceNode.java"
     },
     {
       "type": "logic.compare",
@@ -1353,6 +1576,13 @@
       "description": "Compares two values using a specified operator",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "compare",
+        "equal",
+        "greater",
+        "less",
+        "equals"
+      ],
       "inputs": [
         {
           "id": "a",
@@ -1388,7 +1618,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/logic/CompareNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/logic/CompareNode.java"
     },
     {
       "type": "logic.and",
@@ -1397,6 +1627,12 @@
       "description": "Returns true if both inputs are true",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "and",
+        "both",
+        "all",
+        "logic"
+      ],
       "inputs": [
         {
           "id": "a",
@@ -1424,7 +1660,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/logic/AndNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/logic/AndNode.java"
     },
     {
       "type": "logic.or",
@@ -1433,6 +1669,12 @@
       "description": "Returns true if either input is true",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "or",
+        "either",
+        "any",
+        "logic"
+      ],
       "inputs": [
         {
           "id": "a",
@@ -1460,7 +1702,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/logic/OrNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/logic/OrNode.java"
     },
     {
       "type": "logic.not",
@@ -1469,6 +1711,12 @@
       "description": "Inverts a boolean value",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "not",
+        "negate",
+        "invert",
+        "logic"
+      ],
       "inputs": [
         {
           "id": "value",
@@ -1488,7 +1736,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/logic/NotNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/logic/NotNode.java"
     },
     {
       "type": "logic.xor",
@@ -1497,6 +1745,12 @@
       "description": "Returns true if exactly one input is true",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "xor",
+        "exclusive",
+        "different",
+        "logic"
+      ],
       "inputs": [
         {
           "id": "a",
@@ -1524,7 +1778,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/logic/XorNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/logic/XorNode.java"
     },
     {
       "type": "string.concat",
@@ -1533,6 +1787,14 @@
       "description": "Concatenates two strings together",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "string",
+        "concat",
+        "concatenate",
+        "join",
+        "append",
+        "combine"
+      ],
       "inputs": [
         {
           "id": "a",
@@ -1560,7 +1822,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/ConcatNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/ConcatNode.java"
     },
     {
       "type": "string.replace",
@@ -1569,6 +1831,12 @@
       "description": "Replaces occurrences of a substring with another string",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "string",
+        "replace",
+        "substitute",
+        "swap"
+      ],
       "inputs": [
         {
           "id": "text",
@@ -1612,7 +1880,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/ReplaceNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/ReplaceNode.java"
     },
     {
       "type": "string.split",
@@ -1621,6 +1889,13 @@
       "description": "Splits a string into a list by a delimiter",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "string",
+        "split",
+        "divide",
+        "separate",
+        "tokenize"
+      ],
       "inputs": [
         {
           "id": "text",
@@ -1648,7 +1923,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/SplitNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/SplitNode.java"
     },
     {
       "type": "string.substring",
@@ -1657,6 +1932,13 @@
       "description": "Extracts a substring from start index to end index",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "string",
+        "substring",
+        "slice",
+        "extract",
+        "sub"
+      ],
       "inputs": [
         {
           "id": "text",
@@ -1692,7 +1974,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/SubstringNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/SubstringNode.java"
     },
     {
       "type": "string.length",
@@ -1701,6 +1983,12 @@
       "description": "Returns the length of a string",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "string",
+        "length",
+        "count",
+        "size"
+      ],
       "inputs": [
         {
           "id": "text",
@@ -1720,7 +2008,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/StringLengthNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/StringLengthNode.java"
     },
     {
       "type": "string.starts_with",
@@ -1729,6 +2017,12 @@
       "description": "Checks if a string starts with a prefix",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "string",
+        "starts",
+        "prefix",
+        "begin"
+      ],
       "inputs": [
         {
           "id": "text",
@@ -1764,7 +2058,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/StartsWithNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/StartsWithNode.java"
     },
     {
       "type": "string.ends_with",
@@ -1773,6 +2067,12 @@
       "description": "Checks if a string ends with a suffix",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "string",
+        "ends",
+        "suffix",
+        "end"
+      ],
       "inputs": [
         {
           "id": "text",
@@ -1808,7 +2108,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/EndsWithNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/EndsWithNode.java"
     },
     {
       "type": "string.to_lower_case",
@@ -1817,6 +2117,12 @@
       "description": "Converts a string to lowercase",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "string",
+        "lowercase",
+        "lower",
+        "case"
+      ],
       "inputs": [
         {
           "id": "text",
@@ -1836,7 +2142,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/ToLowerCaseNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/ToLowerCaseNode.java"
     },
     {
       "type": "string.to_upper_case",
@@ -1845,6 +2151,13 @@
       "description": "Converts a string to uppercase",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "string",
+        "uppercase",
+        "upper",
+        "capital",
+        "case"
+      ],
       "inputs": [
         {
           "id": "text",
@@ -1864,7 +2177,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/ToUpperCaseNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/ToUpperCaseNode.java"
     },
     {
       "type": "string.trim",
@@ -1873,6 +2186,12 @@
       "description": "Removes whitespace from both ends of a string",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "string",
+        "trim",
+        "whitespace",
+        "strip"
+      ],
       "inputs": [
         {
           "id": "text",
@@ -1892,7 +2211,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/TrimNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/TrimNode.java"
     },
     {
       "type": "string.contains",
@@ -1901,6 +2220,14 @@
       "description": "Checks if a string contains a substring",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "string",
+        "contains",
+        "includes",
+        "has",
+        "search",
+        "find"
+      ],
       "inputs": [
         {
           "id": "text",
@@ -1936,7 +2263,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/StringContainsNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/StringContainsNode.java"
     },
     {
       "type": "string.format",
@@ -1945,6 +2272,13 @@
       "description": "Formats a template string by replacing placeholders such as {0} and {1} with arguments",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "string",
+        "format",
+        "template",
+        "placeholder",
+        "interpolate"
+      ],
       "inputs": [
         {
           "id": "template",
@@ -1971,7 +2305,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/FormatNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/FormatNode.java"
     },
     {
       "type": "string.index_of",
@@ -1980,6 +2314,14 @@
       "description": "Finds the index of the first occurrence of a substring",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "string",
+        "index",
+        "find",
+        "search",
+        "position",
+        "location"
+      ],
       "inputs": [
         {
           "id": "text",
@@ -2015,7 +2357,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/IndexOfNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/IndexOfNode.java"
     },
     {
       "type": "string.regex_match",
@@ -2024,6 +2366,15 @@
       "description": "Tests if a string matches a regex pattern and extracts capture groups",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "regex",
+        "match",
+        "pattern",
+        "test",
+        "find",
+        "capture",
+        "group"
+      ],
       "inputs": [
         {
           "id": "input",
@@ -2085,7 +2436,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/RegexMatchNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/RegexMatchNode.java"
     },
     {
       "type": "string.regex_replace",
@@ -2094,6 +2445,13 @@
       "description": "Replaces matches of a regex pattern with a replacement string",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "regex",
+        "replace",
+        "substitute",
+        "pattern",
+        "sed"
+      ],
       "inputs": [
         {
           "id": "input",
@@ -2156,7 +2514,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/string/RegexReplaceNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/RegexReplaceNode.java"
     },
     {
       "type": "collection.size",
@@ -2165,6 +2523,12 @@
       "description": "Returns the size of a list or set",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "collection",
+        "size",
+        "length",
+        "count"
+      ],
       "inputs": [
         {
           "id": "collection",
@@ -2183,7 +2547,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionSizeNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionSizeNode.java"
     },
     {
       "type": "collection.contains",
@@ -2192,6 +2556,12 @@
       "description": "Checks if a list or set contains a specific item",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "collection",
+        "contains",
+        "includes",
+        "has"
+      ],
       "inputs": [
         {
           "id": "collection",
@@ -2217,7 +2587,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionContainsNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionContainsNode.java"
     },
     {
       "type": "collection.is_empty",
@@ -2226,6 +2596,11 @@
       "description": "Checks if a list or set is empty",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "collection",
+        "empty",
+        "size"
+      ],
       "inputs": [
         {
           "id": "collection",
@@ -2244,7 +2619,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionIsEmptyNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionIsEmptyNode.java"
     },
     {
       "type": "collection.add",
@@ -2253,6 +2628,12 @@
       "description": "Returns a new collection with the item added",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "collection",
+        "add",
+        "append",
+        "insert"
+      ],
       "inputs": [
         {
           "id": "collection",
@@ -2278,7 +2659,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionAddNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionAddNode.java"
     },
     {
       "type": "collection.remove",
@@ -2287,6 +2668,11 @@
       "description": "Returns a new collection with the first matching item removed",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "collection",
+        "remove",
+        "delete"
+      ],
       "inputs": [
         {
           "id": "collection",
@@ -2312,7 +2698,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionRemoveNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionRemoveNode.java"
     },
     {
       "type": "collection.add_all",
@@ -2321,6 +2707,12 @@
       "description": "Returns a new collection with all items from another collection added",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "collection",
+        "add all",
+        "concat",
+        "merge"
+      ],
       "inputs": [
         {
           "id": "collection",
@@ -2346,7 +2738,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionAddAllNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionAddAllNode.java"
     },
     {
       "type": "collection.remove_all",
@@ -2355,6 +2747,11 @@
       "description": "Returns a new collection with all matching items removed",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "collection",
+        "remove all",
+        "subtract"
+      ],
       "inputs": [
         {
           "id": "collection",
@@ -2380,7 +2777,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionRemoveAllNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionRemoveAllNode.java"
     },
     {
       "type": "collection.retain_all",
@@ -2389,6 +2786,12 @@
       "description": "Returns a new collection that keeps only items present in the other collection",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "collection",
+        "retain all",
+        "intersect",
+        "filter"
+      ],
       "inputs": [
         {
           "id": "collection",
@@ -2414,7 +2817,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionRetainAllNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionRetainAllNode.java"
     },
     {
       "type": "collection.to_list",
@@ -2423,6 +2826,11 @@
       "description": "Converts a collection to a list",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "collection",
+        "to list",
+        "convert"
+      ],
       "inputs": [
         {
           "id": "collection",
@@ -2441,7 +2849,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionToListNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionToListNode.java"
     },
     {
       "type": "collection.to_set",
@@ -2450,6 +2858,12 @@
       "description": "Converts a collection to a set",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "collection",
+        "to set",
+        "convert",
+        "distinct"
+      ],
       "inputs": [
         {
           "id": "collection",
@@ -2468,7 +2882,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionToSetNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionToSetNode.java"
     },
     {
       "type": "list.create",
@@ -2477,6 +2891,12 @@
       "description": "Creates a native list from ordered inputs",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "list",
+        "create",
+        "build",
+        "collection"
+      ],
       "inputs": [
         {
           "id": "items",
@@ -2496,7 +2916,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/ListCreateNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/ListCreateNode.java"
     },
     {
       "type": "list.add",
@@ -2505,6 +2925,11 @@
       "description": "Returns a new list with an item appended",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "list",
+        "add",
+        "append"
+      ],
       "inputs": [
         {
           "id": "list",
@@ -2530,7 +2955,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/ListAddNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/ListAddNode.java"
     },
     {
       "type": "list.remove_at",
@@ -2539,6 +2964,12 @@
       "description": "Returns a new list with the item at the given index removed",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "list",
+        "remove",
+        "index",
+        "delete"
+      ],
       "inputs": [
         {
           "id": "list",
@@ -2564,7 +2995,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/ListRemoveAtNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/ListRemoveAtNode.java"
     },
     {
       "type": "set.create",
@@ -2573,6 +3004,13 @@
       "description": "Creates a native set from inputs while preserving first-seen order",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "set",
+        "create",
+        "build",
+        "distinct",
+        "collection"
+      ],
       "inputs": [
         {
           "id": "items",
@@ -2592,7 +3030,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/SetCreateNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/SetCreateNode.java"
     },
     {
       "type": "map.keys",
@@ -2601,6 +3039,13 @@
       "description": "Returns the keys of a map/object as a list",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "map",
+        "keys",
+        "keyset",
+        "json",
+        "object"
+      ],
       "inputs": [
         {
           "id": "map",
@@ -2619,7 +3064,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/MapKeysNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/MapKeysNode.java"
     },
     {
       "type": "map.values",
@@ -2628,6 +3073,12 @@
       "description": "Returns the values of a map/object as a list in insertion order",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "map",
+        "values",
+        "json",
+        "object"
+      ],
       "inputs": [
         {
           "id": "map",
@@ -2646,7 +3097,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/MapValuesNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/MapValuesNode.java"
     },
     {
       "type": "list.length",
@@ -2655,6 +3106,12 @@
       "description": "Returns the length of a list",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "list",
+        "length",
+        "count",
+        "size"
+      ],
       "inputs": [
         {
           "id": "list",
@@ -2673,7 +3130,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/list/ListLengthNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/list/ListLengthNode.java"
     },
     {
       "type": "list.get_at",
@@ -2682,6 +3139,14 @@
       "description": "Gets an item at a specific index in a list",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "list",
+        "get",
+        "index",
+        "at",
+        "element",
+        "access"
+      ],
       "inputs": [
         {
           "id": "list",
@@ -2715,7 +3180,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/list/GetAtNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/list/GetAtNode.java"
     },
     {
       "type": "list.first",
@@ -2724,6 +3189,13 @@
       "description": "Gets the first item in a list",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "list",
+        "first",
+        "head",
+        "front",
+        "start"
+      ],
       "inputs": [
         {
           "id": "list",
@@ -2749,7 +3221,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/list/FirstNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/list/FirstNode.java"
     },
     {
       "type": "list.last",
@@ -2758,6 +3230,13 @@
       "description": "Gets the last item in a list",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "list",
+        "last",
+        "tail",
+        "back",
+        "end"
+      ],
       "inputs": [
         {
           "id": "list",
@@ -2783,7 +3262,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/list/LastNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/list/LastNode.java"
     },
     {
       "type": "list.contains",
@@ -2792,6 +3271,14 @@
       "description": "Checks if a list contains a specific item",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "list",
+        "contains",
+        "includes",
+        "has",
+        "find",
+        "search"
+      ],
       "inputs": [
         {
           "id": "list",
@@ -2817,7 +3304,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/list/ListContainsNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/list/ListContainsNode.java"
     },
     {
       "type": "list.range",
@@ -2826,6 +3313,14 @@
       "description": "Generates a list of numbers from start to end with a given step",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "list",
+        "range",
+        "sequence",
+        "numbers",
+        "generate",
+        "create"
+      ],
       "inputs": [
         {
           "id": "start",
@@ -2861,7 +3356,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/list/RangeNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/list/RangeNode.java"
     },
     {
       "type": "list.join",
@@ -2870,6 +3365,14 @@
       "description": "Joins list items into a string with a separator",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "list",
+        "join",
+        "string",
+        "concat",
+        "combine",
+        "separator"
+      ],
       "inputs": [
         {
           "id": "list",
@@ -2896,7 +3399,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/list/JoinToStringNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/list/JoinToStringNode.java"
     },
     {
       "type": "util.to_string",
@@ -2905,6 +3408,12 @@
       "description": "Converts any value to a string",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "convert",
+        "string",
+        "text",
+        "cast"
+      ],
       "inputs": [
         {
           "id": "value",
@@ -2923,7 +3432,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/util/ToStringNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/util/ToStringNode.java"
     },
     {
       "type": "util.to_number",
@@ -2932,6 +3441,14 @@
       "description": "Parses a string to a number",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "convert",
+        "number",
+        "parse",
+        "cast",
+        "integer",
+        "float"
+      ],
       "inputs": [
         {
           "id": "value",
@@ -2965,7 +3482,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/util/ToNumberNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/util/ToNumberNode.java"
     },
     {
       "type": "util.is_null",
@@ -2974,6 +3491,13 @@
       "description": "Checks if a value is null",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "null",
+        "check",
+        "undefined",
+        "missing",
+        "validate"
+      ],
       "inputs": [
         {
           "id": "value",
@@ -2992,7 +3516,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/util/IsNullNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/util/IsNullNode.java"
     },
     {
       "type": "util.is_empty",
@@ -3001,6 +3525,14 @@
       "description": "Checks if a value is null or empty (works with strings and lists)",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "empty",
+        "check",
+        "null",
+        "blank",
+        "validate",
+        "length"
+      ],
       "inputs": [
         {
           "id": "value",
@@ -3019,7 +3551,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/util/IsEmptyNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/util/IsEmptyNode.java"
     },
     {
       "type": "util.create_vector3",
@@ -3028,6 +3560,14 @@
       "description": "Creates a 3D vector from x, y, z components",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "vector",
+        "vec3",
+        "position",
+        "coordinates",
+        "xyz",
+        "create"
+      ],
       "inputs": [
         {
           "id": "x",
@@ -3063,7 +3603,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/util/CreateVector3Node.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/util/CreateVector3Node.java"
     },
     {
       "type": "util.split_vector3",
@@ -3072,6 +3612,15 @@
       "description": "Splits a 3D vector into x, y, z components",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "vector",
+        "vec3",
+        "position",
+        "coordinates",
+        "xyz",
+        "split",
+        "decompose"
+      ],
       "inputs": [
         {
           "id": "vector",
@@ -3104,7 +3653,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/util/SplitVector3Node.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/util/SplitVector3Node.java"
     },
     {
       "type": "utility.timestamp",
@@ -3113,6 +3662,14 @@
       "description": "Gets the current timestamp in various formats",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "time",
+        "timestamp",
+        "date",
+        "now",
+        "epoch",
+        "clock"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -3168,7 +3725,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/util/TimestampNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/util/TimestampNode.java"
     },
     {
       "type": "action.set_rotation",
@@ -3177,6 +3734,14 @@
       "description": "Sets the bot's rotation (yaw and pitch in degrees)",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "rotation",
+        "yaw",
+        "pitch",
+        "turn",
+        "face",
+        "angle"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -3218,7 +3783,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SetRotationNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SetRotationNode.java"
     },
     {
       "type": "action.look_at",
@@ -3227,6 +3792,13 @@
       "description": "Makes the bot look at a specific position in the world",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "look",
+        "face",
+        "turn",
+        "aim",
+        "view"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -3259,7 +3831,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/LookAtNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/LookAtNode.java"
     },
     {
       "type": "action.sneak",
@@ -3268,6 +3840,12 @@
       "description": "Sets the bot's sneaking state",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "sneak",
+        "crouch",
+        "shift",
+        "stealth"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -3301,7 +3879,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SneakNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SneakNode.java"
     },
     {
       "type": "action.sprint",
@@ -3310,6 +3888,12 @@
       "description": "Sets the bot's sprinting state",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "sprint",
+        "run",
+        "fast",
+        "speed"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -3343,7 +3927,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SprintNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SprintNode.java"
     },
     {
       "type": "action.jump",
@@ -3352,6 +3936,11 @@
       "description": "Makes the bot jump once",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "jump",
+        "hop",
+        "leap"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -3377,7 +3966,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/JumpNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/JumpNode.java"
     },
     {
       "type": "action.move_forward",
@@ -3386,6 +3975,13 @@
       "description": "Sets the bot's forward movement state (W key)",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "move",
+        "forward",
+        "walk",
+        "w-key",
+        "wasd"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -3419,7 +4015,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/MoveForwardNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/MoveForwardNode.java"
     },
     {
       "type": "action.move_backward",
@@ -3428,6 +4024,13 @@
       "description": "Sets the bot's backward movement state (S key)",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "move",
+        "backward",
+        "back",
+        "s-key",
+        "wasd"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -3461,7 +4064,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/MoveBackwardNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/MoveBackwardNode.java"
     },
     {
       "type": "action.strafe_left",
@@ -3470,6 +4073,13 @@
       "description": "Sets the bot's left strafe movement state (A key)",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "move",
+        "strafe",
+        "left",
+        "a-key",
+        "wasd"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -3503,7 +4113,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/StrafeLeftNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/StrafeLeftNode.java"
     },
     {
       "type": "action.strafe_right",
@@ -3512,6 +4122,13 @@
       "description": "Sets the bot's right strafe movement state (D key)",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "move",
+        "strafe",
+        "right",
+        "d-key",
+        "wasd"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -3545,7 +4162,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/StrafeRightNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/StrafeRightNode.java"
     },
     {
       "type": "action.attack",
@@ -3554,6 +4171,14 @@
       "description": "Makes the bot attack the entity it's looking at (left click)",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "attack",
+        "hit",
+        "fight",
+        "damage",
+        "combat",
+        "left click"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -3579,7 +4204,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/AttackNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/AttackNode.java"
     },
     {
       "type": "action.swing_hand",
@@ -3588,6 +4213,13 @@
       "description": "Swings the bot's arm without attacking (cosmetic swing)",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "swing",
+        "arm",
+        "wave",
+        "miss",
+        "fake"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -3613,7 +4245,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SwingHandNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SwingHandNode.java"
     },
     {
       "type": "action.use_item",
@@ -3622,6 +4254,14 @@
       "description": "Uses the item in the bot's hand (right click)",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "use",
+        "item",
+        "right click",
+        "interact",
+        "eat",
+        "drink"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -3647,15 +4287,23 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/UseItemNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/UseItemNode.java"
     },
     {
       "type": "action.pathfind_to",
-      "name": "Pathfind To",
+      "name": "Go to position",
       "category": "actions",
       "description": "Moves the bot to a target position using pathfinding",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "Pathfind To",
+        "pathfind",
+        "walk",
+        "move",
+        "goto",
+        "navigate"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -3709,7 +4357,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/PathfindToNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/PathfindToNode.java"
     },
     {
       "type": "action.pathfind_away_from",
@@ -3718,6 +4366,14 @@
       "description": "Moves the bot away from a position using pathfinding",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "pathfind",
+        "away",
+        "flee",
+        "escape",
+        "move",
+        "afk"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -3779,7 +4435,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/PathfindAwayFromNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/PathfindAwayFromNode.java"
     },
     {
       "type": "action.break_block",
@@ -3788,6 +4444,13 @@
       "description": "Pathfinds to and breaks a block at the specified position",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "break",
+        "mine",
+        "dig",
+        "destroy",
+        "block"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -3841,7 +4504,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/BreakBlockNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/BreakBlockNode.java"
     },
     {
       "type": "action.place_block",
@@ -3850,6 +4513,12 @@
       "description": "Pathfinds to and places a block at the specified position",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "place",
+        "build",
+        "put",
+        "block"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -3903,15 +4572,23 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/PlaceBlockNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/PlaceBlockNode.java"
     },
     {
       "type": "action.select_slot",
-      "name": "Select Slot",
+      "name": "Select hotbar slot",
       "category": "actions",
       "description": "Selects a hotbar slot (0-8)",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "Select Slot",
+        "slot",
+        "hotbar",
+        "select",
+        "inventory",
+        "hand"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -3945,7 +4622,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SelectSlotNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SelectSlotNode.java"
     },
     {
       "type": "action.send_chat",
@@ -3954,6 +4631,13 @@
       "description": "Sends a chat message or command",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "chat",
+        "message",
+        "send",
+        "say",
+        "command"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -3987,7 +4671,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SendChatNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SendChatNode.java"
     },
     {
       "type": "action.wait",
@@ -3996,6 +4680,14 @@
       "description": "Delays execution for a specified duration with optional random jitter",
       "trigger": false,
       "expensive": true,
+      "keywords": [
+        "wait",
+        "delay",
+        "sleep",
+        "pause",
+        "timer",
+        "jitter"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -4053,15 +4745,24 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/WaitNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/WaitNode.java"
     },
     {
       "type": "action.print",
-      "name": "Print",
+      "name": "Log message",
       "category": "actions",
       "description": "Logs a message for debugging purposes",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "Print",
+        "print",
+        "log",
+        "debug",
+        "console",
+        "output",
+        "message"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -4095,7 +4796,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/PrintNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/PrintNode.java"
     },
     {
       "type": "action.click_slot",
@@ -4104,6 +4805,14 @@
       "description": "Clicks an inventory slot (left, right, or shift click)",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "click",
+        "slot",
+        "inventory",
+        "move",
+        "item",
+        "swap"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -4145,15 +4854,23 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/ClickSlotNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/ClickSlotNode.java"
     },
     {
       "type": "action.drop_item",
-      "name": "Drop Item",
+      "name": "Drop cursor item",
       "category": "actions",
       "description": "Drops the item currently held on the cursor",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "Drop Item",
+        "drop",
+        "item",
+        "cursor",
+        "throw",
+        "discard"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -4187,7 +4904,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/DropItemNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/DropItemNode.java"
     },
     {
       "type": "action.drop_slot",
@@ -4196,6 +4913,14 @@
       "description": "Picks up an item from a slot and drops it outside the inventory",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "drop",
+        "slot",
+        "inventory",
+        "throw",
+        "discard",
+        "remove"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -4229,7 +4954,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/DropSlotNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/DropSlotNode.java"
     },
     {
       "type": "action.open_inventory",
@@ -4238,6 +4963,12 @@
       "description": "Opens the player's inventory screen",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "open",
+        "inventory",
+        "container",
+        "screen"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -4263,7 +4994,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/OpenInventoryNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/OpenInventoryNode.java"
     },
     {
       "type": "action.close_inventory",
@@ -4272,6 +5003,12 @@
       "description": "Closes any open container or inventory screen",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "close",
+        "inventory",
+        "container",
+        "screen"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -4297,7 +5034,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/CloseInventoryNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/CloseInventoryNode.java"
     },
     {
       "type": "action.respawn",
@@ -4306,6 +5043,12 @@
       "description": "Respawns the bot after death",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "respawn",
+        "death",
+        "revive",
+        "alive"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -4331,7 +5074,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/action/RespawnNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/RespawnNode.java"
     },
     {
       "type": "data.get_position",
@@ -4340,6 +5083,12 @@
       "description": "Gets the bot's current position in the world",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "position",
+        "location",
+        "coordinates",
+        "xyz"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -4372,7 +5121,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetPositionNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetPositionNode.java"
     },
     {
       "type": "data.get_rotation",
@@ -4381,6 +5130,13 @@
       "description": "Gets the bot's current rotation (yaw and pitch)",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "rotation",
+        "yaw",
+        "pitch",
+        "angle",
+        "direction"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -4420,7 +5176,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetRotationNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetRotationNode.java"
     },
     {
       "type": "data.get_health",
@@ -4429,6 +5185,12 @@
       "description": "Gets the bot's current health and max health",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "health",
+        "hp",
+        "hearts",
+        "life"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -4468,7 +5230,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetHealthNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetHealthNode.java"
     },
     {
       "type": "data.get_hunger",
@@ -4477,6 +5239,12 @@
       "description": "Gets the bot's food level and saturation",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "hunger",
+        "food",
+        "saturation",
+        "eat"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -4523,7 +5291,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetHungerNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetHungerNode.java"
     },
     {
       "type": "data.get_inventory",
@@ -4532,6 +5300,13 @@
       "description": "Gets information about an item in a specific inventory slot",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "inventory",
+        "item",
+        "slot",
+        "count",
+        "stack"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -4586,7 +5361,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetInventoryNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetInventoryNode.java"
     },
     {
       "type": "data.get_block",
@@ -4595,6 +5370,13 @@
       "description": "Gets information about a block at a specific position",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "block",
+        "get",
+        "info",
+        "type",
+        "world"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -4665,7 +5447,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBlockNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBlockNode.java"
     },
     {
       "type": "data.find_entity",
@@ -4674,6 +5456,15 @@
       "description": "Finds the nearest entity of a specific type within range",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "find",
+        "entity",
+        "search",
+        "nearest",
+        "mob",
+        "player",
+        "locate"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -4775,7 +5566,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/FindEntityNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/FindEntityNode.java"
     },
     {
       "type": "data.can_see_position",
@@ -4784,6 +5575,15 @@
       "description": "Checks if the bot has line-of-sight to a position (raytrace)",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "see",
+        "visible",
+        "sight",
+        "raytrace",
+        "line",
+        "wall",
+        "block"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -4823,7 +5623,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/CanSeePositionNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/CanSeePositionNode.java"
     },
     {
       "type": "data.get_entity_state",
@@ -4832,6 +5632,19 @@
       "description": "Gets an entity state by integer ID or UUID, including its position, health, and game mode",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "entity",
+        "state",
+        "health",
+        "alive",
+        "player",
+        "gamemode",
+        "sprint",
+        "position",
+        "uuid",
+        "rotation",
+        "motion"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -4957,7 +5770,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetEntityStateNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetEntityStateNode.java"
     },
     {
       "type": "data.find_block",
@@ -4966,6 +5779,14 @@
       "description": "Finds the nearest block of a specific type within range",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "find",
+        "block",
+        "search",
+        "nearest",
+        "ore",
+        "locate"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -5028,7 +5849,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/FindBlockNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/FindBlockNode.java"
     },
     {
       "type": "data.get_bots",
@@ -5037,6 +5858,12 @@
       "description": "Returns all connected bots in the instance",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "bots",
+        "all",
+        "list",
+        "connections"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -5062,7 +5889,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBotsNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBotsNode.java"
     },
     {
       "type": "data.filter_bots",
@@ -5071,6 +5898,13 @@
       "description": "Filters a list of bots by name using a regex pattern",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "filter",
+        "bots",
+        "regex",
+        "match",
+        "name"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -5111,7 +5945,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/FilterBotsNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/FilterBotsNode.java"
     },
     {
       "type": "data.get_bot_by_name",
@@ -5120,6 +5954,13 @@
       "description": "Finds a bot by its account name",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "bot",
+        "name",
+        "find",
+        "get",
+        "search"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -5160,7 +6001,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBotByNameNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBotByNameNode.java"
     },
     {
       "type": "data.get_experience",
@@ -5169,6 +6010,12 @@
       "description": "Gets the bot's experience level and points",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "experience",
+        "xp",
+        "level",
+        "points"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -5215,7 +6062,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetExperienceNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetExperienceNode.java"
     },
     {
       "type": "data.get_armor",
@@ -5224,6 +6071,12 @@
       "description": "Gets the bot's armor value and toughness",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "armor",
+        "defence",
+        "protection",
+        "toughness"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -5263,7 +6116,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetArmorNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetArmorNode.java"
     },
     {
       "type": "data.get_velocity",
@@ -5272,6 +6125,12 @@
       "description": "Gets the bot's current velocity and speed",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "velocity",
+        "speed",
+        "movement",
+        "motion"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -5311,7 +6170,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetVelocityNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetVelocityNode.java"
     },
     {
       "type": "data.get_gamemode",
@@ -5320,6 +6179,13 @@
       "description": "Gets the bot's current gamemode",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "gamemode",
+        "survival",
+        "creative",
+        "adventure",
+        "spectator"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -5380,7 +6246,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetGamemodeNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetGamemodeNode.java"
     },
     {
       "type": "data.get_selected_slot",
@@ -5389,6 +6255,13 @@
       "description": "Gets the bot's currently selected hotbar slot and item",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "slot",
+        "hotbar",
+        "selected",
+        "hand",
+        "held"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -5435,15 +6308,26 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetSelectedSlotNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetSelectedSlotNode.java"
     },
     {
       "type": "data.get_bot_state",
-      "name": "Get Bot State",
+      "name": "Get movement state",
       "category": "data",
       "description": "Gets various movement and state flags of the bot",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "Get Bot State",
+        "state",
+        "ground",
+        "water",
+        "swimming",
+        "sprinting",
+        "sneaking",
+        "flying",
+        "elytra"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -5511,7 +6395,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBotStateNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBotStateNode.java"
     },
     {
       "type": "data.get_dimension",
@@ -5520,6 +6404,13 @@
       "description": "Gets the bot's current dimension",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "dimension",
+        "world",
+        "overworld",
+        "nether",
+        "end"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -5573,7 +6464,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetDimensionNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetDimensionNode.java"
     },
     {
       "type": "data.get_time",
@@ -5582,6 +6473,13 @@
       "description": "Gets the current game time and day/night status",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "time",
+        "day",
+        "night",
+        "tick",
+        "clock"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -5635,7 +6533,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetTimeNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetTimeNode.java"
     },
     {
       "type": "data.get_weather",
@@ -5644,6 +6542,13 @@
       "description": "Gets the current weather conditions",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "weather",
+        "rain",
+        "thunder",
+        "storm",
+        "clear"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -5697,7 +6602,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetWeatherNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetWeatherNode.java"
     },
     {
       "type": "data.get_biome",
@@ -5706,6 +6611,14 @@
       "description": "Gets the biome at the bot's current position",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "biome",
+        "terrain",
+        "environment",
+        "forest",
+        "desert",
+        "ocean"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -5738,7 +6651,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBiomeNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBiomeNode.java"
     },
     {
       "type": "data.get_light_level",
@@ -5747,6 +6660,13 @@
       "description": "Gets the light level at the bot's current position",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "light",
+        "brightness",
+        "dark",
+        "spawn",
+        "mob"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -5793,7 +6713,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetLightLevelNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetLightLevelNode.java"
     },
     {
       "type": "data.get_bot_info",
@@ -5802,6 +6722,13 @@
       "description": "Gets basic information about the bot",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "name",
+        "username",
+        "uuid",
+        "identity",
+        "info"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -5841,7 +6768,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBotInfoNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBotInfoNode.java"
     },
     {
       "type": "data.get_target_block",
@@ -5850,6 +6777,13 @@
       "description": "Gets the block the bot is currently looking at (raycast)",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "target",
+        "look",
+        "raycast",
+        "crosshair",
+        "aim"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -5911,7 +6845,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetTargetBlockNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetTargetBlockNode.java"
     },
     {
       "type": "data.get_effects",
@@ -5920,6 +6854,13 @@
       "description": "Gets the bot's active potion effects",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "effects",
+        "potion",
+        "buff",
+        "debuff",
+        "status"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -5966,7 +6907,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetEffectsNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetEffectsNode.java"
     },
     {
       "type": "data.find_item",
@@ -5975,6 +6916,14 @@
       "description": "Searches inventory for items by ID or food filter",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "find",
+        "item",
+        "inventory",
+        "search",
+        "food",
+        "slot"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -6057,7 +7006,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/FindItemNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/FindItemNode.java"
     },
     {
       "type": "data.is_container_open",
@@ -6066,6 +7015,13 @@
       "description": "Checks if a container or inventory screen is open",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "container",
+        "inventory",
+        "open",
+        "screen",
+        "check"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -6098,7 +7054,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/data/IsContainerOpenNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/IsContainerOpenNode.java"
     },
     {
       "type": "constant.number",
@@ -6107,6 +7063,11 @@
       "description": "Outputs a constant number value",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "number",
+        "constant",
+        "value"
+      ],
       "inputs": [
         {
           "id": "value",
@@ -6126,7 +7087,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/constant/NumberConstantNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/constant/NumberConstantNode.java"
     },
     {
       "type": "constant.string",
@@ -6135,6 +7096,12 @@
       "description": "Outputs a constant string value",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "string",
+        "text",
+        "constant",
+        "value"
+      ],
       "inputs": [
         {
           "id": "value",
@@ -6153,7 +7120,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/constant/StringConstantNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/constant/StringConstantNode.java"
     },
     {
       "type": "constant.boolean",
@@ -6162,6 +7129,14 @@
       "description": "Outputs a constant boolean value",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "boolean",
+        "bool",
+        "true",
+        "false",
+        "constant",
+        "value"
+      ],
       "inputs": [
         {
           "id": "value",
@@ -6181,7 +7156,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/constant/BooleanConstantNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/constant/BooleanConstantNode.java"
     },
     {
       "type": "constant.vector3",
@@ -6190,6 +7165,14 @@
       "description": "Outputs a constant 3D vector with both a typed vector and x, y, z components",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "vector",
+        "vector3",
+        "xyz",
+        "position",
+        "coordinate",
+        "constant"
+      ],
       "inputs": [
         {
           "id": "x",
@@ -6246,7 +7229,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/constant/Vector3ConstantNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/constant/Vector3ConstantNode.java"
     },
     {
       "type": "flow.branch",
@@ -6255,6 +7238,13 @@
       "description": "Branches execution based on a boolean condition",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "branch",
+        "if",
+        "condition",
+        "switch",
+        "split"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -6302,7 +7292,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/BranchNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/BranchNode.java"
     },
     {
       "type": "flow.switch",
@@ -6311,6 +7301,12 @@
       "description": "Performs a multi-way branch based on a value",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "switch",
+        "case",
+        "branch",
+        "select"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -6422,7 +7418,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/SwitchNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/SwitchNode.java"
     },
     {
       "type": "flow.loop",
@@ -6431,6 +7427,13 @@
       "description": "Repeats execution a specified number of times",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "loop",
+        "repeat",
+        "for",
+        "iterate",
+        "count"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -6485,7 +7488,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/LoopNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/LoopNode.java"
     },
     {
       "type": "flow.foreach",
@@ -6494,6 +7497,13 @@
       "description": "Iterates over each item in a list",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "foreach",
+        "loop",
+        "iterate",
+        "list",
+        "array"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -6554,7 +7564,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/ForEachNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/ForEachNode.java"
     },
     {
       "type": "flow.foreach_bot",
@@ -6563,6 +7573,12 @@
       "description": "Iterates over each bot in a list",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "foreach",
+        "bot",
+        "iterate",
+        "loop"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -6623,7 +7639,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/ForEachBotNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/ForEachBotNode.java"
     },
     {
       "type": "flow.sequence",
@@ -6632,6 +7648,12 @@
       "description": "Executes multiple branches in order",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "sequence",
+        "order",
+        "steps",
+        "then"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -6714,7 +7736,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/SequenceNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/SequenceNode.java"
     },
     {
       "type": "flow.repeat_until",
@@ -6723,6 +7745,14 @@
       "description": "Repeats execution until a condition is met (do-while semantics)",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "loop",
+        "repeat",
+        "until",
+        "while",
+        "condition",
+        "do-while"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -6777,7 +7807,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/RepeatUntilNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/RepeatUntilNode.java"
     },
     {
       "type": "flow.result",
@@ -6786,6 +7816,13 @@
       "description": "Reports a boolean result back to a loop's check chain",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "result",
+        "check",
+        "condition",
+        "loop",
+        "terminal"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -6804,7 +7841,7 @@
         }
       ],
       "outputs": [],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/ResultNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/ResultNode.java"
     },
     {
       "type": "flow.gate",
@@ -6813,6 +7850,13 @@
       "description": "Conditionally passes through execution and values",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "gate",
+        "filter",
+        "pass",
+        "block",
+        "conditional"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -6867,15 +7911,22 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/GateNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/GateNode.java"
     },
     {
       "type": "flow.debounce",
-      "name": "Debounce",
+      "name": "Cooldown",
       "category": "flow",
       "description": "Rate-limits execution by enforcing a cooldown period",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "Debounce",
+        "debounce",
+        "rate limit",
+        "cooldown",
+        "throttle"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -6931,7 +7982,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/DebounceNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/DebounceNode.java"
     },
     {
       "type": "flow.rate_limit",
@@ -6940,6 +7991,14 @@
       "description": "Limits execution rate using a token bucket algorithm",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "rate",
+        "limit",
+        "throttle",
+        "bucket",
+        "spam",
+        "cooldown"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -7018,7 +8077,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/RateLimitNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/flow/RateLimitNode.java"
     },
     {
       "type": "network.web_fetch",
@@ -7027,6 +8086,17 @@
       "description": "Performs HTTP requests with full control over method, headers, and body",
       "trigger": false,
       "expensive": true,
+      "keywords": [
+        "http",
+        "fetch",
+        "request",
+        "api",
+        "rest",
+        "web",
+        "url",
+        "get",
+        "post"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -7126,7 +8196,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/network/WebFetchNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/network/WebFetchNode.java"
     },
     {
       "type": "ai.llm_chat",
@@ -7135,6 +8205,16 @@
       "description": "Sends a prompt to an LLM and returns the response using the bot's AI settings",
       "trigger": false,
       "expensive": true,
+      "keywords": [
+        "ai",
+        "llm",
+        "gpt",
+        "chat",
+        "openai",
+        "prompt",
+        "completion",
+        "generate"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -7234,7 +8314,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/ai/LLMChatNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/ai/LLMChatNode.java"
     },
     {
       "type": "json.parse",
@@ -7243,6 +8323,12 @@
       "description": "Parses a JSON string into a usable object",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "json",
+        "parse",
+        "deserialize",
+        "decode"
+      ],
       "inputs": [
         {
           "id": "json",
@@ -7275,7 +8361,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonParseNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonParseNode.java"
     },
     {
       "type": "json.stringify",
@@ -7284,6 +8370,13 @@
       "description": "Converts a value to a JSON string with optional pretty printing",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "json",
+        "stringify",
+        "serialize",
+        "encode",
+        "format"
+      ],
       "inputs": [
         {
           "id": "value",
@@ -7310,7 +8403,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonStringifyNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonStringifyNode.java"
     },
     {
       "type": "json.get",
@@ -7319,6 +8412,14 @@
       "description": "Extracts a value from JSON using a path expression",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "json",
+        "get",
+        "extract",
+        "path",
+        "query",
+        "access"
+      ],
       "inputs": [
         {
           "id": "json",
@@ -7359,7 +8460,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonGetNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonGetNode.java"
     },
     {
       "type": "json.set",
@@ -7368,6 +8469,13 @@
       "description": "Sets a value in JSON at a specified path",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "json",
+        "set",
+        "modify",
+        "update",
+        "write"
+      ],
       "inputs": [
         {
           "id": "json",
@@ -7408,7 +8516,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonSetNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonSetNode.java"
     },
     {
       "type": "json.array",
@@ -7417,6 +8525,13 @@
       "description": "Creates a JSON array from multiple inputs",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "json",
+        "array",
+        "list",
+        "create",
+        "build"
+      ],
       "inputs": [
         {
           "id": "items",
@@ -7436,7 +8551,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonArrayNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonArrayNode.java"
     },
     {
       "type": "json.object",
@@ -7445,6 +8560,14 @@
       "description": "Creates a JSON object from key-value pairs",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "json",
+        "object",
+        "map",
+        "create",
+        "build",
+        "dictionary"
+      ],
       "inputs": [
         {
           "id": "keys",
@@ -7470,7 +8593,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonObjectNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonObjectNode.java"
     },
     {
       "type": "encoding.hash",
@@ -7479,6 +8602,14 @@
       "description": "Computes a cryptographic hash of the input",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "hash",
+        "md5",
+        "sha",
+        "sha256",
+        "checksum",
+        "digest"
+      ],
       "inputs": [
         {
           "id": "input",
@@ -7520,7 +8651,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/HashNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/HashNode.java"
     },
     {
       "type": "encoding.base64_encode",
@@ -7529,6 +8660,11 @@
       "description": "Encodes a string to Base64",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "base64",
+        "encode",
+        "encoding"
+      ],
       "inputs": [
         {
           "id": "input",
@@ -7555,7 +8691,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/Base64EncodeNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/Base64EncodeNode.java"
     },
     {
       "type": "encoding.base64_decode",
@@ -7564,6 +8700,11 @@
       "description": "Decodes a Base64 string",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "base64",
+        "decode",
+        "decoding"
+      ],
       "inputs": [
         {
           "id": "input",
@@ -7597,7 +8738,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/Base64DecodeNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/Base64DecodeNode.java"
     },
     {
       "type": "encoding.encrypt",
@@ -7606,6 +8747,13 @@
       "description": "Encrypts a string using AES encryption",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "encrypt",
+        "aes",
+        "cipher",
+        "secure",
+        "protection"
+      ],
       "inputs": [
         {
           "id": "plaintext",
@@ -7645,7 +8793,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/EncryptNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/EncryptNode.java"
     },
     {
       "type": "encoding.decrypt",
@@ -7654,6 +8802,12 @@
       "description": "Decrypts an AES-encrypted string",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "decrypt",
+        "aes",
+        "cipher",
+        "decipher"
+      ],
       "inputs": [
         {
           "id": "ciphertext",
@@ -7693,7 +8847,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/DecryptNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/DecryptNode.java"
     },
     {
       "type": "encoding.compress",
@@ -7702,6 +8856,13 @@
       "description": "Compresses or decompresses data using GZIP",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "compress",
+        "gzip",
+        "decompress",
+        "zip",
+        "deflate"
+      ],
       "inputs": [
         {
           "id": "input",
@@ -7742,7 +8903,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/CompressionNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/CompressionNode.java"
     },
     {
       "type": "state.cache",
@@ -7751,6 +8912,13 @@
       "description": "In-memory key-value cache with optional TTL",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "cache",
+        "store",
+        "memory",
+        "ttl",
+        "temporary"
+      ],
       "inputs": [
         {
           "id": "operation",
@@ -7816,7 +8984,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/state/CacheNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/state/CacheNode.java"
     },
     {
       "type": "state.state_machine",
@@ -7825,6 +8993,14 @@
       "description": "Simple state machine for bot behavior management",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "state",
+        "machine",
+        "fsm",
+        "behavior",
+        "mode",
+        "transition"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -7903,7 +9079,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/state/StateNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/state/StateNode.java"
     },
     {
       "type": "integration.discord_webhook",
@@ -7912,6 +9088,14 @@
       "description": "Sends messages to a Discord webhook",
       "trigger": false,
       "expensive": true,
+      "keywords": [
+        "discord",
+        "webhook",
+        "notify",
+        "message",
+        "alert",
+        "integration"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -7990,15 +9174,25 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/integration/DiscordWebhookNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/integration/DiscordWebhookNode.java"
     },
     {
       "type": "variable.set_persistent_bot",
-      "name": "Set Persistent Bot Variable",
+      "name": "Set persistent bot variable",
       "category": "variable",
-      "description": "Stores a value in the bot's persistent metadata (survives disconnects)",
+      "description": "Stores persistent metadata for the bot account, which survives reconnects and SoulFire server restarts.",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "Set Persistent Bot Variable",
+        "variable",
+        "persistent",
+        "bot",
+        "save",
+        "store",
+        "set",
+        "permanent"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -8053,15 +9247,25 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/SetPersistentBotVariableNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/SetPersistentBotVariableNode.java"
     },
     {
       "type": "variable.get_persistent_bot",
-      "name": "Get Persistent Bot Variable",
+      "name": "Get persistent bot variable",
       "category": "variable",
-      "description": "Retrieves a value from the bot's persistent metadata",
+      "description": "Reads persistent metadata for the bot account, which survives reconnects and SoulFire server restarts.",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "Get Persistent Bot Variable",
+        "variable",
+        "persistent",
+        "bot",
+        "load",
+        "get",
+        "retrieve",
+        "permanent"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -8124,15 +9328,25 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/GetPersistentBotVariableNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/GetPersistentBotVariableNode.java"
     },
     {
       "type": "variable.set_session_bot",
-      "name": "Set Session Bot Variable",
+      "name": "Set connection variable",
       "category": "variable",
-      "description": "Stores a value in the bot's session metadata (lost on disconnect)",
+      "description": "Stores temporary data for this bot connection. A new connection starts without these values.",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "Set Session Bot Variable",
+        "variable",
+        "session",
+        "bot",
+        "temporary",
+        "store",
+        "set",
+        "memory"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -8179,15 +9393,25 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/SetSessionBotVariableNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/SetSessionBotVariableNode.java"
     },
     {
       "type": "variable.get_session_bot",
-      "name": "Get Session Bot Variable",
+      "name": "Get connection variable",
       "category": "variable",
-      "description": "Retrieves a value from the bot's session metadata",
+      "description": "Reads temporary data for this bot connection. A new connection starts without these values.",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "Get Session Bot Variable",
+        "variable",
+        "session",
+        "bot",
+        "temporary",
+        "get",
+        "retrieve",
+        "memory"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -8242,15 +9466,25 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/GetSessionBotVariableNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/GetSessionBotVariableNode.java"
     },
     {
       "type": "variable.set_persistent_instance",
-      "name": "Set Persistent Instance Variable",
+      "name": "Set persistent project variable",
       "category": "variable",
-      "description": "Stores a value in the instance's persistent metadata (survives restarts)",
+      "description": "Stores persistent project metadata, which survives SoulFire server restarts.",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "Set Persistent Instance Variable",
+        "variable",
+        "persistent",
+        "instance",
+        "save",
+        "store",
+        "set",
+        "permanent"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -8298,15 +9532,25 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/SetPersistentInstanceVariableNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/SetPersistentInstanceVariableNode.java"
     },
     {
       "type": "variable.get_persistent_instance",
-      "name": "Get Persistent Instance Variable",
+      "name": "Get persistent project variable",
       "category": "variable",
-      "description": "Retrieves a value from the instance's persistent metadata",
+      "description": "Reads persistent project metadata, which survives SoulFire server restarts.",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "Get Persistent Instance Variable",
+        "variable",
+        "persistent",
+        "instance",
+        "load",
+        "get",
+        "retrieve",
+        "permanent"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -8362,15 +9606,25 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/GetPersistentInstanceVariableNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/GetPersistentInstanceVariableNode.java"
     },
     {
       "type": "variable.set_session_instance",
-      "name": "Set Session Instance Variable",
+      "name": "Set project runtime variable",
       "category": "variable",
-      "description": "Stores a value in the instance's session metadata (lost on restart)",
+      "description": "Stores temporary data for this project runtime. Values reset when the SoulFire server restarts.",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "Set Session Instance Variable",
+        "variable",
+        "session",
+        "instance",
+        "temporary",
+        "store",
+        "set",
+        "memory"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -8410,15 +9664,25 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/SetSessionInstanceVariableNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/SetSessionInstanceVariableNode.java"
     },
     {
       "type": "variable.get_session_instance",
-      "name": "Get Session Instance Variable",
+      "name": "Get project runtime variable",
       "category": "variable",
-      "description": "Retrieves a value from the instance's session metadata",
+      "description": "Reads temporary data for this project runtime. Values reset when the SoulFire server restarts.",
       "trigger": false,
       "expensive": false,
+      "keywords": [
+        "Get Session Instance Variable",
+        "variable",
+        "session",
+        "instance",
+        "temporary",
+        "get",
+        "retrieve",
+        "memory"
+      ],
       "inputs": [
         {
           "id": "in",
@@ -8466,7 +9730,7 @@
           "required": false
         }
       ],
-      "source": "https://github.com/soulfiremc-com/SoulFire/blob/878ba24b85ee4a1ec170ed738b7664b61ace1a2d/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/GetSessionInstanceVariableNode.java"
+      "source": "https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/GetSessionInstanceVariableNode.java"
     }
   ]
 }

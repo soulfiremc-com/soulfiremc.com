@@ -1,9 +1,6 @@
 "use client"
 
-import {
-  getAuthErrorMessage,
-  isReauthenticationRequiredError
-} from "@better-auth-ui/core"
+import { isReauthenticationRequiredError } from "@better-auth-ui/core"
 import { useAuth, useListSessions, useSession } from "@better-auth-ui/react"
 import { Fragment } from "react"
 import { Card, CardContent } from "@/components/ui/card"
@@ -15,6 +12,7 @@ import {
   ItemSeparator
 } from "@/components/ui/item"
 import { Skeleton } from "@/components/ui/skeleton"
+import { useAuthErrorMessage } from "@/lib/auth/use-auth-error-message"
 import { cn } from "@/lib/utils"
 import { ReauthenticationAction } from "../../reauthentication"
 import { ActiveSession } from "./active-session"
@@ -34,6 +32,7 @@ export type ActiveSessionsProps = {
  */
 export function ActiveSessions({ className }: ActiveSessionsProps) {
   const { authClient, localization } = useAuth()
+  const getErrorMessage = useAuthErrorMessage()
   const { data: session } = useSession(authClient)
 
   const sessionsQuery = useListSessions(authClient, {
@@ -57,7 +56,7 @@ export function ActiveSessions({ className }: ActiveSessionsProps) {
             <ReauthenticationAction />
           ) : error ? (
             <div role="alert" className="p-4 text-destructive text-sm">
-              {getAuthErrorMessage(error, localization) ??
+              {getErrorMessage(error) ??
                 localization.errors.generic}
             </div>
           ) : isPending ? (

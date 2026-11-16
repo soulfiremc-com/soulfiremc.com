@@ -4,8 +4,10 @@ import {
   type PasskeyPluginOptions,
 } from "@better-auth-ui/core/plugins/passkey";
 
-import { PasskeyButton } from "@/components/auth/passkey/passkey-button";
-import { Passkeys } from "@/components/auth/passkey/passkeys";
+import { lazyAuthUi } from "@/lib/auth/lazy-auth-ui";
+
+const PasskeyButton = lazyAuthUi("PasskeyButton");
+const Passkeys = lazyAuthUi("Passkeys");
 
 export const passkeyPlugin = createAuthPlugin(
   corePasskeyPlugin.id,

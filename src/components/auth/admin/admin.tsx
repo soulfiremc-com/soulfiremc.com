@@ -38,6 +38,8 @@ export function Admin({ className, hideNav, path, view }: AdminProps) {
 
   return (
     <div className={cn("flex w-full flex-col gap-6", className)}>
+      <h1 className="sr-only">{localization.admin}</h1>
+
       {!hideNav && (
         <nav
           aria-label={localization.admin}

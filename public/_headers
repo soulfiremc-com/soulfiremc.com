@@ -1,4 +1,11 @@
-
+# Prerendered pages and static files skip the Worker, so they need the same
+# security headers as src/server.ts.
+/*
+  X-Frame-Options: SAMEORIGIN
+  Content-Security-Policy: frame-ancestors 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), usb=(), serial=(), hid=(), browsing-topics=()
+  Cross-Origin-Opener-Policy: same-origin-allow-popups
 
 /api/search
   Content-Type: application/json; charset=utf-8

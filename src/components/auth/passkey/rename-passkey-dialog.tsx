@@ -61,6 +61,7 @@ export function RenamePasskeyDialog({
                   </FieldLabel>
                   <Input
                     id={`passkey-name-${passkey.id}`}
+                    autoComplete="off"
                     name={field.name}
                     autoFocus
                     value={field.state.value}

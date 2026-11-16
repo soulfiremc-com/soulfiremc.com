@@ -5,7 +5,7 @@ description: Install the released TypeScript and Python SDKs with their matching
 icon: GitBranch
 ---
 
-The examples use SoulFire SDK `2.10.2`.
+The examples use SoulFire SDK `%SOULFIRE_SDK_VERSION%`.
 The TypeScript SDK requires Effect v4. The Python SDK requires CPython 3.14 or newer and uses effect-py.
 Both packages are available from their package registries.
 
@@ -17,13 +17,13 @@ Create an application with Bun:
 mkdir soulfire-tutorial
 cd soulfire-tutorial
 bun init -y
-bun add @soulfiremc/sdk@2.10.2 effect@^4
+bun add @soulfiremc/sdk@%SOULFIRE_SDK_VERSION% effect@^4
 ```
 
 For Node.js 22 or newer, install the Node runtime too:
 
 ```bash
-npm install @soulfiremc/sdk@2.10.2 effect@^4 @effect/platform-node@^4
+npm install @soulfiremc/sdk@%SOULFIRE_SDK_VERSION% effect@^4 @effect/platform-node@^4
 npm install --save-dev tsx
 ```
 
@@ -51,7 +51,7 @@ Create a virtual environment with CPython 3.14 or newer:
 mkdir soulfire-python-tutorial
 cd soulfire-python-tutorial
 python3.14 -m venv .venv
-.venv/bin/python -m pip install soulfire==2.10.2
+.venv/bin/python -m pip install soulfire==%SOULFIRE_SDK_VERSION%
 ```
 
 On Windows, use `py -3.14 -m venv .venv` and `.venv\Scripts\python` for the remaining commands.
@@ -64,7 +64,7 @@ Continue with [your first Python program](/docs/sdk/python).
 
 For a local script, `SoulFire.createBot` or Python `SoulFire.create_bot` downloads SoulFire and Java when needed.
 It creates or reuses the instance and account, starts the bot, and waits for its initial player snapshot.
-The tutorials pin the managed backend with `installation.version` or Python `installation={"version": "2.10.2"}`.
+The tutorials pin the managed backend with `installation.version` or Python `installation={"version": "%SOULFIRE_SDK_VERSION%"}`.
 Without a version, managed installation selects the latest release.
 
 For an existing backend, use `SoulFire.connect` with its API URL and token.
@@ -86,7 +86,7 @@ Python:
 .venv/bin/python -c "from importlib.metadata import version; print(version('soulfire'))"
 ```
 
-Expect SDK version `2.10.2`. A matching version label alone does not prove backend compatibility.
+Expect SDK version `%SOULFIRE_SDK_VERSION%`. A matching version label alone does not prove backend compatibility.
 The backend must also pass the connection handshake.
 
 ## Migrate older applications
@@ -109,8 +109,8 @@ Compare the version with your SoulFire server before you copy an example.
 
 | Content | Version | Why |
 | --- | --- | --- |
-| SDK guides, recipes, and tutorials | `2.10.2` | The examples are tested against this release |
-| [Node reference](/docs/scripting/node-reference) | `2.10.2` source | Generated from the same revision |
+| SDK guides, recipes, and tutorials | `%SOULFIRE_SDK_VERSION%` | The examples are tested against this release |
+| [Node reference](/docs/scripting/node-reference) | `%SOULFIRE_SDK_VERSION%` source | Generated from the same revision |
 | [HTTP API reference](/docs/openapi) | `2.11.0` | Generated from the development branch, which is ahead of the latest release |
 | App labels in the guides | After `2.10.7` | The guides use the updated names. Each page names the earlier label. |
 | App screenshots | `2.10.1` | Each caption states its version |
@@ -121,7 +121,7 @@ The connected server is the authority for its own commands, nodes, and capabilit
 
 ## Source and generated reference
 
-The documentation uses the [2.10.2 release source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d).
+The documentation uses the [%SOULFIRE_SDK_VERSION% release source](https://github.com/soulfiremc-com/SoulFire/tree/%SOULFIRE_SDK_VERSION%).
 The [node reference](/docs/scripting/node-reference) links to that revision.
 The [TypeScript API](https://ts.soulfiremc.com/) and [Python API](https://py.soulfiremc.com/) show their SDK version and source.
 The [HTTP schema](/docs/openapi) reports its own version and covers unary JSON operations.
@@ -131,5 +131,5 @@ For SDK development, clone the same revision, run `bun install --frozen-lockfile
 For a Python source install, use:
 
 ```bash
-.venv/bin/python -m pip install "soulfire @ git+https://github.com/soulfiremc-com/SoulFire.git@878ba24b85ee4a1ec170ed738b7664b61ace1a2d#subdirectory=sdk/python"
+.venv/bin/python -m pip install "soulfire @ git+https://github.com/soulfiremc-com/SoulFire.git@%SOULFIRE_SDK_REVISION%#subdirectory=sdk/python"
 ```

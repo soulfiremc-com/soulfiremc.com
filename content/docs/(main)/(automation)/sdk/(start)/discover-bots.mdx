@@ -19,7 +19,7 @@ import { Effect } from "effect";
 import { SoulFire } from "@soulfiremc/sdk/bun";
 
 const program = Effect.scoped(Effect.gen(function* () {
-  const client = yield* SoulFire.install({ version: "2.10.2" });
+  const client = yield* SoulFire.install({ version: "%SOULFIRE_SDK_VERSION%" });
   const instance = yield* client.getOrCreateInstance("farm", {
     server: "localhost:25565",
   });
@@ -41,7 +41,7 @@ from soulfire import SoulFire, SoulFireOperationError
 
 @gen
 def program() -> EffectGen[None, SoulFireOperationError, Scope]:
-    client = yield from SoulFire.install(version="2.10.2")
+    client = yield from SoulFire.install(version="%SOULFIRE_SDK_VERSION%")
     instance = yield from client.get_or_create_instance("farm", server="localhost:25565")
     builder = yield from instance.get_or_create_bot("Builder")
     miner = yield from instance.get_or_create_bot("Miner")

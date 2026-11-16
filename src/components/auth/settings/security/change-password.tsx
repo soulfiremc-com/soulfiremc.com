@@ -6,6 +6,7 @@ import {
 } from "@better-auth-ui/core/plugins/email-otp";
 import { useRequestPasswordResetOtp } from "@better-auth-ui/react/plugins/email-otp";
 import {
+  getAuthErrorCode,
   getAuthLinkURL,
   getViewURL,
   isPasswordCompromisedError,
@@ -35,6 +36,7 @@ import {
 } from "@/components/ui/input-group";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
+import { useAuthErrorMessage } from "@/lib/auth/use-auth-error-message";
 import { cn } from "@/lib/utils";
 import { isAuthFormFieldInvalid, useAuthForm } from "../../auth-form";
 import { OpenEmailButton } from "../../open-email-button";
@@ -209,13 +211,22 @@ function ChangePasswordForm({
   session: ReturnType<typeof useSession>["data"];
 }) {
   const { authClient } = useAuth();
+  const getErrorMessage = useAuthErrorMessage();
   const { mutateAsync: changePassword, isPending } = useChangePassword(
     authClient,
     {
+      meta: { errorPresentation: "inline" },
       onError: (error) => {
-        // The haveIBeenPwned plugin rejects on the password itself, so it
-        // belongs against the field rather than in a toast.
-        setIsCompromised(isPasswordCompromisedError(error));
+        // Errors about one of the passwords belong against that field rather
+        // than in a toast. The haveIBeenPwned plugin rejects the new one.
+        const isCompromisedError = isPasswordCompromisedError(error);
+        const message = getErrorMessage(error);
+        const isInvalidCurrent = getAuthErrorCode(error) === "INVALID_PASSWORD";
+        setIsCompromised(isCompromisedError);
+        setCurrentPasswordError(isInvalidCurrent ? message : null);
+        if (isCompromisedError || isInvalidCurrent) return;
+
+        if (message) toast.error(message);
       },
       onSuccess: () => {
         form.reset();
@@ -229,6 +240,15 @@ function ChangePasswordForm({
   const [isNewPasswordVisible, setIsNewPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
     useState(false);
+
+  const [currentPasswordError, setCurrentPasswordError] = useState<
+    string | null
+  >(null);
+  const isCurrentPasswordRejected = currentPasswordError !== null;
+  const currentPasswordInputRef = useFocusRejectedPassword(
+    isCurrentPasswordRejected,
+    isPending,
+  );
 
   const [isCompromised, setIsCompromised] = useState(false);
   const newPasswordInputRef = useFocusRejectedPassword(
@@ -274,66 +294,85 @@ function ChangePasswordForm({
                     }),
                 }}
               >
-                {(field) => (
-                  <Field
-                    data-invalid={isAuthFormFieldInvalid(field.state.meta)}
-                  >
-                    <FieldLabel htmlFor="currentPassword">
-                      {localization.settings.currentPassword}
-                    </FieldLabel>
+                {(field) => {
+                  const isInvalid =
+                    isAuthFormFieldInvalid(field.state.meta) ||
+                    isCurrentPasswordRejected;
 
-                    {session ? (
-                      <InputGroup>
-                        <InputGroupInput
-                          id="currentPassword"
-                          name={field.name}
-                          type={isCurrentPasswordVisible ? "text" : "password"}
-                          autoComplete="current-password"
-                          placeholder={
-                            localization.settings.currentPasswordPlaceholder
-                          }
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                          disabled={isPending}
-                          required
-                          aria-invalid={isAuthFormFieldInvalid(
-                            field.state.meta,
-                          )}
-                        />
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <FieldLabel htmlFor="currentPassword">
+                        {localization.settings.currentPassword}
+                      </FieldLabel>
 
-                        <InputGroupAddon align="inline-end">
-                          <InputGroupButton
-                            size="icon-xs"
-                            aria-label={
-                              isCurrentPasswordVisible
-                                ? localization.auth.hidePassword
-                                : localization.auth.showPassword
+                      {session ? (
+                        <InputGroup>
+                          <InputGroupInput
+                            ref={currentPasswordInputRef}
+                            id="currentPassword"
+                            name={field.name}
+                            type={
+                              isCurrentPasswordVisible ? "text" : "password"
                             }
-                            title={
-                              isCurrentPasswordVisible
-                                ? localization.auth.hidePassword
-                                : localization.auth.showPassword
+                            autoComplete="current-password"
+                            placeholder={
+                              localization.settings.currentPasswordPlaceholder
                             }
-                            onClick={() => {
-                              setIsCurrentPasswordVisible(
-                                (visible) => !visible,
-                              );
+                            value={field.state.value}
+                            onBlur={field.handleBlur}
+                            onChange={(e) => {
+                              field.handleChange(e.target.value);
+                              setCurrentPasswordError(null);
                             }}
-                          >
-                            {isCurrentPasswordVisible ? <EyeOff /> : <Eye />}
-                          </InputGroupButton>
-                        </InputGroupAddon>
-                      </InputGroup>
-                    ) : (
-                      <Skeleton>
-                        <Input className="invisible" />
-                      </Skeleton>
-                    )}
+                            disabled={isPending}
+                            required
+                            aria-invalid={isInvalid}
+                            aria-describedby={
+                              isCurrentPasswordRejected
+                                ? "currentPassword-error"
+                                : undefined
+                            }
+                          />
 
-                    <field.AuthFormFieldError />
-                  </Field>
-                )}
+                          <InputGroupAddon align="inline-end">
+                            <InputGroupButton
+                              size="icon-xs"
+                              aria-label={
+                                isCurrentPasswordVisible
+                                  ? localization.auth.hidePassword
+                                  : localization.auth.showPassword
+                              }
+                              title={
+                                isCurrentPasswordVisible
+                                  ? localization.auth.hidePassword
+                                  : localization.auth.showPassword
+                              }
+                              onClick={() => {
+                                setIsCurrentPasswordVisible(
+                                  (visible) => !visible,
+                                );
+                              }}
+                            >
+                              {isCurrentPasswordVisible ? <EyeOff /> : <Eye />}
+                            </InputGroupButton>
+                          </InputGroupAddon>
+                        </InputGroup>
+                      ) : (
+                        <Skeleton>
+                          <Input className="invisible" />
+                        </Skeleton>
+                      )}
+
+                      {isCurrentPasswordRejected ? (
+                        <FieldError id="currentPassword-error">
+                          {currentPasswordError}
+                        </FieldError>
+                      ) : (
+                        <field.AuthFormFieldError />
+                      )}
+                    </Field>
+                  );
+                }}
               </form.AppField>
 
               <form.AppField

@@ -18,7 +18,6 @@ import {
   getOrganizationStructuredData,
   getWebsiteStructuredData,
   jsonLdScript,
-  siteDescription,
   siteName,
   siteUrl,
 } from "@/lib/seo";
@@ -30,45 +29,65 @@ export interface RouterAppContext {
 }
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
-  head: () => ({
-    meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: siteName },
-      { name: "description", content: siteDescription },
-      { name: "theme-color", content: "#3289BF" },
-      { name: "robots", content: "index, follow" },
-      { property: "og:type", content: "website" },
-      { property: "og:site_name", content: siteName },
-      { property: "og:title", content: siteName },
-      { property: "og:description", content: siteDescription },
-      { property: "og:url", content: siteUrl },
-      { property: "og:image", content: `${siteUrl}/og/site/home/image.webp` },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: siteName },
-      { name: "twitter:description", content: siteDescription },
-      { name: "twitter:image", content: `${siteUrl}/og/site/home/image.webp` },
-    ],
-    links: [
-      { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.ico" },
-      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
-      {
-        rel: "alternate",
-        type: "application/rss+xml",
-        title: "SoulFire Blog Feed",
-        href: "/blog/feed.xml",
-      },
-    ],
-    scripts: [
-      jsonLdScript(
-        createStructuredDataGraph([
-          getOrganizationStructuredData(),
-          getWebsiteStructuredData(),
-        ]),
-      ),
-    ],
-  }),
+  head: ({ matches }) => {
+    // Child routes override these defaults. A global 404 has no child head, so
+    // localize the fallback and keep missing pages out of search results.
+    const locale = splitLocalePath(matches.at(-1)?.pathname ?? "/").locale;
+    const notFound = matches.some(
+      (match) => match._notFound || match.status === "notFound",
+    );
+    const title = notFound
+      ? `${translate(locale, "errors.pageNotFound")} - ${siteName}`
+      : siteName;
+    const description = notFound
+      ? translate(locale, "errors.thePageYouRequestedDoesNotExist")
+      : translate(locale, "home.meta.description");
+    return {
+      meta: [
+        { charSet: "utf-8" },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { title },
+        { name: "description", content: description },
+        { name: "theme-color", content: "#3289BF" },
+        {
+          name: "robots",
+          content: notFound ? "noindex, follow" : "index, follow",
+        },
+        { property: "og:type", content: "website" },
+        { property: "og:site_name", content: siteName },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:url", content: siteUrl },
+        { property: "og:image", content: `${siteUrl}/og/site/home/image.webp` },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
+        {
+          name: "twitter:image",
+          content: `${siteUrl}/og/site/home/image.webp`,
+        },
+      ],
+      links: [
+        { rel: "stylesheet", href: appCss },
+        { rel: "icon", href: "/favicon.ico" },
+        { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+        {
+          rel: "alternate",
+          type: "application/rss+xml",
+          title: "SoulFire Blog Feed",
+          href: "/blog/feed.xml",
+        },
+      ],
+      scripts: [
+        jsonLdScript(
+          createStructuredDataGraph([
+            getOrganizationStructuredData(),
+            getWebsiteStructuredData(),
+          ]),
+        ),
+      ],
+    };
+  },
   component: RootComponent,
   shellComponent: RootDocument,
   errorComponent: (props) => (

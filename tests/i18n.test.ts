@@ -4,6 +4,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 import test from "node:test";
 import { loader, type VirtualFile } from "fumadocs-core/source";
+import type { Node } from "fumadocs-core/page-tree";
 import {
   docFileInfo,
   formatEuro,
@@ -33,9 +34,8 @@ void test("locale links preserve download choices and anchors without changing s
   assert.equal(localizePath("/", "de"), "/de");
   for (const href of [
     "/api/search",
-    "/auth/sign-in",
-    "/account/settings",
     "/admin",
+    "/admin/users",
     "/blog",
     "/privacy-policy",
     "https://example.com/docs",
@@ -48,6 +48,11 @@ void test("locale links preserve download choices and anchors without changing s
     "/de/docs/start-here#1-install-the-app",
   );
   assert.equal(localeDestination("/blog?tag=release", "pl"), "/pl");
+  assert.equal(
+    localizeHref("/auth/sign-in?redirectTo=%2Fget-accounts#reviews", "de"),
+    "/auth/sign-in?redirectTo=%2Fget-accounts#reviews",
+  );
+  assert.equal(localizeHref("/account/security", "ru"), "/account/security");
   for (const path of [
     "/get-accounts",
     "/get-accounts/localts",
@@ -131,6 +136,62 @@ void test("Fumadocs resolves the translated onboarding and English fallback in e
     assert.ok(fallback);
     assert.equal(docFileInfo(fallback.path).locale, "en");
   }
+});
+
+void test("every titled docs folder has localized metadata with the English page order", () => {
+  const root = join(process.cwd(), "content/docs");
+  const readMeta = (path: string): Record<string, unknown> =>
+    JSON.parse(readFileSync(path, "utf8"));
+  function walk(directory: string) {
+    const names = readdirSync(directory, { withFileTypes: true });
+    if (names.some((entry) => entry.name === "meta.json")) {
+      const { title, description, ...english } = readMeta(
+        join(directory, "meta.json"),
+      );
+      for (const locale of locales.filter((value) => value !== "en")) {
+        const file = join(directory, `meta.${locale}.json`);
+        const label = relative(root, file);
+        if (title === undefined) {
+          assert.ok(
+            !names.some((entry) => entry.name === `meta.${locale}.json`),
+          );
+          continue;
+        }
+        assert.ok(
+          names.some((entry) => entry.name === `meta.${locale}.json`),
+          `${label} is missing`,
+        );
+        const localized = readMeta(file);
+        assert.equal(typeof localized.title, "string", `${label} title`);
+        assert.equal(
+          localized.description === undefined,
+          description === undefined,
+          `${label} description`,
+        );
+        const {
+          title: _title,
+          description: _description,
+          ...structure
+        } = localized;
+        assert.deepEqual(structure, english, `${label} differs from English`);
+      }
+    }
+    for (const entry of names)
+      if (entry.isDirectory()) walk(join(directory, entry.name));
+  }
+  walk(root);
+
+  const folderNames: unknown[] = [];
+  const collect = (nodes: Node[]) => {
+    for (const node of nodes)
+      if (node.type === "folder") {
+        folderNames.push(node.name);
+        collect(node.children);
+      }
+  };
+  collect(docsSource().getPageTree("de").children);
+  assert.ok(folderNames.includes("Benutzerhandbuch"), String(folderNames));
+  assert.ok(!folderNames.includes("User guide"));
 });
 
 void test("canonical and reciprocal hreflang links omit query data and use English x-default", () => {

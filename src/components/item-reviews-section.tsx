@@ -10,8 +10,16 @@ import {
   RotateCw,
   TriangleAlert,
 } from "lucide-react";
-import { type ReactNode, useEffect, useId, useMemo, useState } from "react";
+import {
+  type ReactNode,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { toast } from "sonner";
+import { ReviewRemoveDialog } from "@/components/review-remove-dialog";
 import { ReviewTurnstileProvider } from "@/components/review-turnstile-provider";
 import { SignInRequiredCredenza } from "@/components/sign-in-required-credenza";
 import { CustomTimeAgo } from "@/components/time-ago";
@@ -43,6 +51,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import { useReviews } from "@/hooks/use-reviews";
 import type { ItemType } from "@/lib/review-core";
+import {
+  type ReviewDraft,
+  saveReviewDraft,
+  takeReviewDraft,
+} from "@/lib/review-draft";
 import type { ReviewMutationResult } from "@/lib/review-mutations";
 import { cn, generateN } from "@/lib/utils";
 import { ReviewStarInput, ReviewStars } from "./review-stars";
@@ -121,7 +134,9 @@ export function ItemReviewsSection({
 }) {
   return (
     <ReviewTurnstileProvider>
+      {/* Reset form state when the page switches to another item. */}
       <ItemReviewsSectionContent
+        key={`${itemType}:${slug}`}
         itemType={itemType}
         onReviewPageChange={onReviewPageChange}
         reviewPage={reviewPage}
@@ -171,6 +186,9 @@ function ItemReviewsSectionContent({
   const [rating, setRating] = useState(currentReview?.rating ?? 5);
   const [body, setBody] = useState(currentReview?.body ?? "");
   const [showSignInPrompt, setShowSignInPrompt] = useState(false);
+  const [confirmRemove, setConfirmRemove] = useState(false);
+  // A draft saved before sign-in replaces the stored review until it is saved.
+  const [draft, setDraft] = useState<ReviewDraft | null>(null);
   const ratingLabelId = useId();
   const location = useLocation();
   const reviewPageHref = (page: number) => {
@@ -191,9 +209,16 @@ function ItemReviewsSectionContent({
   };
 
   useEffect(() => {
-    setRating(currentReview?.rating ?? 5);
-    setBody(currentReview?.body ?? "");
-  }, [currentReview]);
+    // Reading removes the draft, so a repeated effect run must not clear it.
+    const restored = takeReviewDraft(itemType, slug);
+    if (restored) setDraft(restored);
+  }, [itemType, slug]);
+
+  useEffect(() => {
+    const source = draft ?? currentReview;
+    setRating(source?.rating ?? 5);
+    setBody(source?.body ?? "");
+  }, [currentReview, draft]);
 
   const hasWrittenReviews = visibleReviews.length > 0;
   const hasPreviousPage = reviewPageData.page > 1;
@@ -232,8 +257,16 @@ function ItemReviewsSectionContent({
       return;
     }
     if (result.skipped) return;
-    handleMutationError(result.error, () => setShowSignInPrompt(true), t);
+    handleMutationError(
+      result.error,
+      () => {
+        saveReviewDraft(itemType, slug, { rating, body });
+        setShowSignInPrompt(true);
+      },
+      t,
+    );
     if (!result.error) {
+      setDraft(null);
       toast(
         t(
           submittedForReview
@@ -245,6 +278,8 @@ function ItemReviewsSectionContent({
       );
     }
   };
+
+  const saveButtonRef = useRef<HTMLButtonElement>(null);
 
   const removeReview = async () => {
     let result: ReviewMutationResult;
@@ -259,7 +294,14 @@ function ItemReviewsSectionContent({
     if (result.skipped) return;
     handleMutationError(result.error, () => setShowSignInPrompt(true), t);
     if (!result.error) {
+      setDraft(null);
       toast(t("reviews.reviewRemoved"));
+      // The Remove button disappears with the review, so move keyboard focus
+      // to the submit button instead of dropping it to the page.
+      requestAnimationFrame(() => {
+        const active = document.activeElement;
+        if (!active || active === document.body) saveButtonRef.current?.focus();
+      });
     }
   };
 
@@ -278,7 +320,7 @@ function ItemReviewsSectionContent({
           </p>
         </div>
 
-        <Card className="gap-4 px-6 py-5">
+        <Card className="gap-4 py-5">
           <CardContent>
             {loading ? (
               <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -432,9 +474,12 @@ function ItemReviewsSectionContent({
 
           <CardFooter className="flex-wrap gap-2 px-0">
             <Button
+              ref={saveButtonRef}
               type="button"
               onClick={saveReview}
               disabled={pending || loading || refreshing || failed}
+              // Saving disables the button. Keep focus here for keyboard users.
+              focusableWhenDisabled
             >
               {currentReview
                 ? t("reviews.updateReview")
@@ -444,8 +489,9 @@ function ItemReviewsSectionContent({
               <Button
                 type="button"
                 variant="outline"
-                onClick={removeReview}
+                onClick={() => setConfirmRemove(true)}
                 disabled={pending || refreshing}
+                focusableWhenDisabled
               >
                 {t("reviews.removeReview")}
               </Button>
@@ -616,11 +662,17 @@ function ItemReviewsSectionContent({
           )}
         </div>
       </section>
+      <ReviewRemoveDialog
+        open={confirmRemove}
+        onOpenChange={setConfirmRemove}
+        onConfirm={() => void removeReview()}
+      />
       <SignInRequiredCredenza
         open={showSignInPrompt}
         onOpenChange={setShowSignInPrompt}
         title={t("reviews.signInToLeaveAReview")}
         description={t("reviews.youNeedToBeSignedInToRateAnd")}
+        returnHash={REVIEWS_SECTION_ID}
       />
     </>
   );

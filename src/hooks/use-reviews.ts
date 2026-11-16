@@ -17,6 +17,7 @@ import {
   normalizeReviewSlugs,
   type PaginatedPublicReviewRecords,
   type ReviewSummary,
+  type ReviewSummaryStatus,
 } from "@/lib/review-core";
 import {
   type ReviewMutationResult,
@@ -93,11 +94,19 @@ export function useReviews(
     !loading &&
     (reviewsData?.unavailable === true ||
       (reviewsQuery.isError && reviewsData === undefined));
+  const summaryStatus: ReviewSummaryStatus = loading
+    ? "loading"
+    : failed
+      ? "unavailable"
+      : "ready";
   const retrying = failed && reviewsQuery.isFetching;
-  const { refetch } = reviewsQuery;
   const retryReviews = useCallback(() => {
-    void refetch();
-  }, [refetch]);
+    // Page headers read the same reviews through their own query.
+    void queryClient.refetchQueries({
+      queryKey: ["reviews", itemType],
+      type: "active",
+    });
+  }, [itemType, queryClient]);
   const mutationKey = reviewMutationKey(itemType, session?.user.id);
   const { mutateAsync } = useMutation(
     reviewMutationOptions({
@@ -188,6 +197,7 @@ export function useReviews(
     loading,
     refreshing,
     failed,
+    summaryStatus,
     retrying,
     retryReviews,
     pendingBySlug,

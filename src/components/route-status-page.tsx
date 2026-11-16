@@ -10,8 +10,9 @@ import { Button } from "@/components/ui/button";
 import { localizeHref } from "@/lib/i18n";
 import { useLocale, useT } from "@/lib/i18n-react";
 import { resolveMessage } from "@/lib/messages";
+import { isNetworkError } from "@/lib/network-error";
 
-function StatusMessage({
+export function StatusMessage({
   actions,
   text,
   title,
@@ -35,7 +36,7 @@ function StatusMessage({
   );
 }
 
-function HomeButton({ variant }: { variant: "default" | "outline" }) {
+export function HomeButton({ variant }: { variant: "default" | "outline" }) {
   const t = useT();
   const locale = useLocale();
   return (
@@ -89,14 +90,24 @@ export function RouteErrorPage({ error, reset }: ErrorComponentProps) {
   const t = useT();
   const locale = useLocale();
   const router = useRouter();
+  const offline = isNetworkError(
+    error,
+    typeof navigator === "undefined" || navigator.onLine,
+  );
   return (
     <div className="flex min-h-dvh flex-col">
       <StatusMessage
-        title={t("errors.somethingWentWrong")}
+        title={
+          offline
+            ? t("errors.couldNotLoadPage")
+            : t("errors.somethingWentWrong")
+        }
         text={
-          error instanceof Error && error.message
-            ? resolveMessage(locale, error.message)
-            : t("errors.anUnexpectedErrorOccurred")
+          offline
+            ? t("errors.checkYourConnection")
+            : error instanceof Error && error.message
+              ? resolveMessage(locale, error.message)
+              : t("errors.anUnexpectedErrorOccurred")
         }
         actions={
           <>

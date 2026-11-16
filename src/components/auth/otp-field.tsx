@@ -1,7 +1,7 @@
 "use client";
 
 import { REGEXP_ONLY_DIGITS } from "input-otp";
-import { useId } from "react";
+import { useEffect, useId, useRef } from "react";
 
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import {
@@ -55,12 +55,28 @@ export function OtpField({
   value,
 }: OtpFieldProps) {
   const inputId = useId();
+  const errorId = `${inputId}-error`;
+  const inputRef = useRef<HTMLInputElement>(null);
+  const wasDisabledRef = useRef(disabled);
+
+  // Disabling the input while a code is checked drops focus to the page. When
+  // the check fails and the input comes back, return focus so the user can
+  // type the next code right away.
+  useEffect(() => {
+    const wasDisabled = wasDisabledRef.current;
+    wasDisabledRef.current = disabled;
+    if (!wasDisabled || disabled) return;
+
+    const active = document.activeElement;
+    if (!active || active === document.body) inputRef.current?.focus();
+  }, [disabled]);
 
   return (
     <Field className={cn(className)} data-invalid={!!errorMessage}>
       <FieldLabel htmlFor={inputId}>{label}</FieldLabel>
 
       <InputOTP
+        aria-describedby={errorMessage ? errorId : undefined}
         aria-invalid={!!errorMessage}
         aria-label={label}
         autoComplete="one-time-code"
@@ -68,6 +84,7 @@ export function OtpField({
         containerClassName="w-full justify-center"
         disabled={disabled}
         id={inputId}
+        ref={inputRef}
         inputMode="numeric"
         maxLength={length}
         name={name}
@@ -89,7 +106,7 @@ export function OtpField({
         </InputOTPGroup>
       </InputOTP>
 
-      <FieldError>{errorMessage}</FieldError>
+      <FieldError id={errorId}>{errorMessage}</FieldError>
     </Field>
   );
 }

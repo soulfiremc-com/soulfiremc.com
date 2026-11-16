@@ -2,6 +2,7 @@ import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
 import { Settings } from "@/components/auth/settings/settings";
 import { SiteShell } from "@/components/site-shell";
 import { AUTH_UI_VIEW_PATHS } from "@/lib/auth-ui-config";
+import { authPageTitle } from "@/lib/auth-ui-titles";
 import { ensureRouteSession } from "@/lib/route-session";
 
 const validAccountPathSegments = new Set(
@@ -28,9 +29,7 @@ export const Route = createFileRoute("/account/$path")({
   },
   head: ({ params: { path } }) => ({
     meta: [
-      {
-        title: `${path.charAt(0).toUpperCase()}${path.slice(1).replaceAll("-", " ")} - SoulFire`,
-      },
+      { title: authPageTitle(path, "en") },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),

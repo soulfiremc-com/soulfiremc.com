@@ -1,15 +1,19 @@
 "use client";
 
-import { authQueryKeys, validateStringLength } from "@better-auth-ui/core";
-import type { TwoFactorAuthClient } from "@better-auth-ui/core/plugins/two-factor";
-import { useAuth, useAuthPlugin, useSession } from "@better-auth-ui/react";
 import {
-  useSendTwoFactorOtp,
-  useVerifyBackupCode,
-  useVerifyTotp,
-  useVerifyTwoFactorOtp,
-} from "@better-auth-ui/react/plugins/two-factor";
-import { useQueryClient } from "@tanstack/react-query";
+  authQueryKeys,
+  getAuthLinkURL,
+  validateStringLength,
+} from "@better-auth-ui/core";
+import {
+  type TwoFactorAuthClient,
+  verifyBackupCodeOptions,
+  verifyTotpOptions,
+  verifyTwoFactorOtpOptions,
+} from "@better-auth-ui/core/plugins/two-factor";
+import { useAuth, useAuthPlugin, useSession } from "@better-auth-ui/react";
+import { useSendTwoFactorOtp } from "@better-auth-ui/react/plugins/two-factor";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -29,6 +33,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
+import { withInlineErrors } from "@/lib/auth/inline-errors";
 import {
   clearTwoFactorMethods,
   readTwoFactorMethods,
@@ -42,6 +47,7 @@ import {
 import { cn } from "@/lib/utils";
 import { runAuthFormAction, submitAuthForm, useAuthForm } from "../auth-form";
 import { OtpField } from "../otp-field";
+import { useFocusRejectedPassword } from "../use-focus-rejected-password";
 import { useIsHydrated } from "../use-is-hydrated";
 
 /** Challenge surfaces the view can render, in the order they are offered. */
@@ -90,6 +96,7 @@ export function TwoFactorChallenge({ className }: TwoFactorChallengeProps) {
     () => methods[0] ?? "totp",
   );
   const [otpRequested, setOtpRequested] = useState(false);
+  const [isBackupCodeRejected, setIsBackupCodeRejected] = useState(false);
   const { cooldown, isCoolingDown, startCooldown } = useResendCooldown();
 
   useEffect(() => {
@@ -108,31 +115,39 @@ export function TwoFactorChallenge({ className }: TwoFactorChallengeProps) {
 
   const { mutateAsync: sendTwoFactorOtp, isPending: isSendingOtp } =
     useSendTwoFactorOtp(twoFactorClient, {
+      meta: { errorPresentation: "inline" },
       onSuccess: () => {
         setOtpRequested(true);
         startCooldown(RESEND_COOLDOWN_SECONDS);
       },
     });
 
-  const { mutateAsync: verifyTotp, isPending: isVerifyingTotp } = useVerifyTotp(
-    twoFactorClient,
-    {
-      onError: () => form.setFieldValue("code", ""),
-      onSuccess: onVerified,
-    },
-  );
+  const { mutateAsync: verifyTotp, isPending: isVerifyingTotp } = useMutation({
+    ...withInlineErrors(verifyTotpOptions(twoFactorClient)),
+    onError: () => form.setFieldValue("code", ""),
+    onSuccess: onVerified,
+  });
 
   const { mutateAsync: verifyTwoFactorOtp, isPending: isVerifyingOtp } =
-    useVerifyTwoFactorOtp(twoFactorClient, {
+    useMutation({
+      ...withInlineErrors(verifyTwoFactorOtpOptions(twoFactorClient)),
       onError: () => form.setFieldValue("code", ""),
       onSuccess: onVerified,
     });
 
   const { mutateAsync: verifyBackupCode, isPending: isVerifyingBackupCode } =
-    useVerifyBackupCode(twoFactorClient, { onSuccess: onVerified });
+    useMutation({
+      ...withInlineErrors(verifyBackupCodeOptions(twoFactorClient)),
+      onError: () => setIsBackupCodeRejected(true),
+      onSuccess: onVerified,
+    });
 
   const isPending =
     isSendingOtp || isVerifyingTotp || isVerifyingOtp || isVerifyingBackupCode;
+  const backupCodeInputRef = useFocusRejectedPassword(
+    isBackupCodeRejected,
+    isPending,
+  );
   const needsOtpRequest = method === "otp" && !otpRequested;
 
   const form = useAuthForm({
@@ -152,6 +167,7 @@ export function TwoFactorChallenge({ className }: TwoFactorChallengeProps) {
   const switchMethod = (next: ChallengeMethod) => {
     form.setFieldValue("code", "");
     form.setFieldValue("backupCode", "");
+    setIsBackupCodeRejected(false);
     setMethod(next);
   };
 
@@ -205,7 +221,7 @@ export function TwoFactorChallenge({ className }: TwoFactorChallengeProps) {
     <Card className={cn("w-full max-w-sm", className)}>
       <CardHeader>
         <CardTitle className="text-xl">
-          {twoFactorLocalization.twoFactor}
+          <h1>{twoFactorLocalization.twoFactor}</h1>
         </CardTitle>
 
         <CardDescription>{description}</CardDescription>
@@ -233,17 +249,23 @@ export function TwoFactorChallenge({ className }: TwoFactorChallengeProps) {
                       </FieldLabel>
 
                       <Input
+                        ref={backupCodeInputRef}
                         id="backupCode"
                         name={field.name}
-                        autoComplete="one-time-code"
+                        autoComplete="off"
+                        autoCapitalize="none"
+                        autoCorrect="off"
+                        spellCheck={false}
                         autoFocus
                         required
                         disabled={isPending}
+                        aria-invalid={isBackupCodeRejected}
                         value={field.state.value}
                         onBlur={field.handleBlur}
-                        onChange={(event) =>
-                          field.handleChange(event.target.value)
-                        }
+                        onChange={(event) => {
+                          field.handleChange(event.target.value);
+                          setIsBackupCodeRejected(false);
+                        }}
                       />
                     </Field>
                   )}
@@ -359,7 +381,10 @@ export function TwoFactorChallenge({ className }: TwoFactorChallengeProps) {
         <div className="flex flex-col gap-3 items-center w-full mt-4">
           <FieldDescription className="text-center">
             <Link
-              href={`${basePaths.auth}/${viewPaths.auth.signIn}`}
+              href={getAuthLinkURL(
+                `${basePaths.auth}/${viewPaths.auth.signIn}`,
+                redirectTo,
+              )}
               className="underline underline-offset-4"
             >
               {twoFactorLocalization.backToSignIn}

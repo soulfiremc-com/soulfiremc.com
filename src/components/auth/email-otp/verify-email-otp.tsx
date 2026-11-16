@@ -1,13 +1,14 @@
 "use client";
 
 import { getAuthLinkURL } from "@better-auth-ui/core";
-import type { EmailOtpAuthClient } from "@better-auth-ui/core/plugins/email-otp";
-import { useAuth, useAuthPlugin } from "@better-auth-ui/react";
 import {
-  useSendVerificationOtp,
-  useVerifyEmailOtp,
-} from "@better-auth-ui/react/plugins/email-otp";
+  type EmailOtpAuthClient,
+  verifyEmailOtpOptions,
+} from "@better-auth-ui/core/plugins/email-otp";
+import { useAuth, useAuthPlugin } from "@better-auth-ui/react";
+import { useSendVerificationOtp } from "@better-auth-ui/react/plugins/email-otp";
 import { useSelector } from "@tanstack/react-form";
+import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -27,6 +28,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { emailOtpPlugin } from "@/lib/auth/email-otp-plugin";
+import { withInlineErrors } from "@/lib/auth/inline-errors";
 import {
   RESEND_COOLDOWN_SECONDS,
   useResendCooldown,
@@ -97,15 +99,15 @@ export function VerifyEmailOtp({ className }: VerifyEmailOtpProps) {
       },
     });
 
-  const { mutateAsync: verifyEmailOtp, isPending: isVerifying } =
-    useVerifyEmailOtp(otpClient, {
-      onError: () => form.setFieldValue("code", ""),
-      onSuccess: () => {
-        sessionStorage.removeItem(VERIFY_EMAIL_STORAGE_KEY);
-        toast.success(emailOtpLocalization.emailVerified);
-        navigate({ to: redirectTo });
-      },
-    });
+  const { mutateAsync: verifyEmailOtp, isPending: isVerifying } = useMutation({
+    ...withInlineErrors(verifyEmailOtpOptions(otpClient)),
+    onError: () => form.setFieldValue("code", ""),
+    onSuccess: () => {
+      sessionStorage.removeItem(VERIFY_EMAIL_STORAGE_KEY);
+      toast.success(emailOtpLocalization.emailVerified);
+      navigate({ to: redirectTo });
+    },
+  });
 
   const isPending = isSending || isVerifying;
 
@@ -137,7 +139,7 @@ export function VerifyEmailOtp({ className }: VerifyEmailOtpProps) {
     <Card className={cn("w-full max-w-sm", className)}>
       <CardHeader>
         <CardTitle className="text-xl">
-          {localization.auth.verifyEmail}
+          <h1>{localization.auth.verifyEmail}</h1>
         </CardTitle>
 
         {email && (

@@ -118,14 +118,19 @@ function BlogIndexPage() {
                     ))}
                   </div>
                 ) : null}
-                <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-1 border-t pt-4 text-sm text-muted-foreground">
+                <div className="mt-auto flex flex-col gap-1 border-t pt-4 text-sm text-muted-foreground">
                   {post.author ? <span>{post.author}</span> : null}
-                  {post.date ? (
-                    <time dateTime={new Date(post.date).toISOString()}>
-                      {formatBlogDate(post.date)}
-                    </time>
-                  ) : null}
-                  <span>{post.readingTime} min read</span>
+                  <div className="flex flex-wrap items-center gap-x-2">
+                    {post.date ? (
+                      <>
+                        <time dateTime={new Date(post.date).toISOString()}>
+                          {formatBlogDate(post.date)}
+                        </time>
+                        <span aria-hidden="true">·</span>
+                      </>
+                    ) : null}
+                    <span>{post.readingTime} min read</span>
+                  </div>
                 </div>
               </CardContent>
             </Card>

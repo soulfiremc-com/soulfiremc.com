@@ -4,8 +4,10 @@ import {
   type UsernamePluginOptions,
 } from "@better-auth-ui/core/plugins/username";
 
-import { SignInUsername } from "@/components/auth/username/sign-in-username";
-import { UsernameField } from "@/components/auth/username/username-field";
+import { lazyAuthUi } from "@/lib/auth/lazy-auth-ui";
+
+const SignInUsername = lazyAuthUi("SignInUsername");
+const UsernameField = lazyAuthUi("UsernameField");
 
 export const usernamePlugin = createAuthPlugin(
   coreUsernamePlugin.id,

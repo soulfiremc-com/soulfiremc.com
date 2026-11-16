@@ -8,6 +8,7 @@ import type {
 import { useAuth, useAuthPlugin } from "@better-auth-ui/react";
 import { useAddPasskey } from "@better-auth-ui/react/plugins/passkey";
 import { Fingerprint } from "lucide-react";
+import { useState } from "react";
 import { buttonVariants } from "@/components/ui/button";
 import {
   Dialog,
@@ -38,6 +39,9 @@ export function AddPasskeyDialog({
     useAuthPlugin(passkeyPlugin);
 
   const addPasskey = useAddPasskey(authClient);
+  // The passkey client returns WebAuthn failures, such as an authenticator
+  // that is already registered, instead of throwing them.
+  const [ceremonyError, setCeremonyError] = useState<string | null>(null);
 
   const submitRequest = async (
     request: AddPasskeyParams<PasskeyAuthClient>,
@@ -49,7 +53,17 @@ export function AddPasskeyDialog({
         onSuccess: () => handleOpenChange(false),
       },
     };
-    await addPasskey.mutateAsync(requestWithCallbacks);
+    setCeremonyError(null);
+    const result = await addPasskey.mutateAsync(requestWithCallbacks);
+    // A cancelled prompt needs no message.
+    if (
+      result?.error &&
+      !(
+        "code" in result.error && result.error.code === "ERROR_CEREMONY_ABORTED"
+      )
+    ) {
+      setCeremonyError(result.error.message ?? localization.errors.generic);
+    }
   };
 
   const form = useAuthForm({
@@ -66,6 +80,7 @@ export function AddPasskeyDialog({
   const handleOpenChange = (nextOpen: boolean) => {
     if (!nextOpen) {
       addPasskey.reset();
+      setCeremonyError(null);
       form.reset();
     }
     onOpenChange(nextOpen);
@@ -103,12 +118,13 @@ export function AddPasskeyDialog({
 
               <form.AppField name="name">
                 {(field) => (
-                  <Field data-invalid={addPasskey.isError}>
+                  <Field data-invalid={addPasskey.isError || !!ceremonyError}>
                     <FieldLabel htmlFor="passkey-name">
                       {passkeyLocalization.name}
                     </FieldLabel>
                     <Input
                       id="passkey-name"
+                      autoComplete="off"
                       name={field.name}
                       autoFocus
                       placeholder={localization.settings.optional}
@@ -118,13 +134,15 @@ export function AddPasskeyDialog({
                       onChange={(event) =>
                         field.handleChange(event.target.value)
                       }
-                      aria-invalid={addPasskey.isError}
+                      aria-invalid={addPasskey.isError || !!ceremonyError}
                     />
-                    {addPasskey.error && (
+                    {addPasskey.error ? (
                       <FieldError>
                         {addPasskey.error.error?.message ??
                           addPasskey.error.message}
                       </FieldError>
+                    ) : (
+                      ceremonyError && <FieldError>{ceremonyError}</FieldError>
                     )}
                   </Field>
                 )}

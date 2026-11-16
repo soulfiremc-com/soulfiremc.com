@@ -80,6 +80,18 @@ await test("promotion affects default ordering but not an explicit rating sort",
   );
 });
 
+await test("featured order keeps the curated order and ignores reviews", () => {
+  const summaries = {
+    paid: { ...emptyReviewSummary(), averageRating: 5, reviewCount: 500 },
+  };
+  assert.deepEqual(
+    sortAccountProviders([free, paid, promoted], "default", summaries, now).map(
+      (provider) => provider.slug,
+    ),
+    ["localts", "free", "paid"],
+  );
+});
+
 await test("filter option counts show the results each option would give", () => {
   const mfa: Provider = {
     ...paid,

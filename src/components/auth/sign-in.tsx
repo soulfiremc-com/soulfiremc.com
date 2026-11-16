@@ -137,7 +137,7 @@ export function SignIn({
       <ReauthenticationNotice />
       <CardHeader>
         <CardTitle className="text-xl font-semibold">
-          {localization.auth.signIn}
+          <h1>{localization.auth.signIn}</h1>
         </CardTitle>
       </CardHeader>
 
@@ -371,7 +371,10 @@ export function SignIn({
             <FieldDescription className="text-center">
               {localization.auth.needToCreateAnAccount}{" "}
               <Link
-                href={`${basePaths.auth}/${viewPaths.auth.signUp}`}
+                href={getAuthLinkURL(
+                  `${basePaths.auth}/${viewPaths.auth.signUp}`,
+                  redirectTo
+                )}
                 className="underline underline-offset-4"
               >
                 {localization.auth.signUp}

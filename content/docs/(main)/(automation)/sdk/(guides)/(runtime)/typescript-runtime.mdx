@@ -36,7 +36,7 @@ const program = Effect.scoped(
     const bot = yield* SoulFire.createBot({
       server: "localhost:25565",
       username: "SoulFireBot",
-      installation: { version: "2.10.2" },
+      installation: { version: "%SOULFIRE_SDK_VERSION%" },
     });
     yield* bot.chat.send("Hello from SoulFire");
     yield* Effect.logInfo(bot.state.player);

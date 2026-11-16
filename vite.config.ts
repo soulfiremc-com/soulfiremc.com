@@ -74,6 +74,18 @@ export default defineConfig(({ command }) => ({
     },
   },
   envPrefix: ["VITE_"],
+  optimizeDeps: {
+    // fumadocs-ui imports these Base UI entry points, but the app does not,
+    // so dev served them unbundled with a second copy of Base UI's contexts.
+    // Navbar buttons then hydrated with a different tabIndex than the server.
+    include: [
+      "@base-ui/react/autocomplete",
+      "@base-ui/react/collapsible",
+      "@base-ui/react/direction-provider",
+      "@base-ui/react/navigation-menu",
+      "@base-ui/react/scroll-area",
+    ],
+  },
   resolve: {
     dedupe: [
       "react",
@@ -95,6 +107,21 @@ export default defineConfig(({ command }) => ({
     tailwindcss(),
     tanstackStart({
       serverFns: { generateFunctionId: docsFunctionId },
+      router: {
+        codeSplittingOptions: {
+          // Provider page loaders read the shop and proxy catalogs. Splitting
+          // them with the page component keeps that data out of the entry.
+          splitBehavior: ({ routeId }) =>
+            /\/get-(accounts|proxies)\//.test(routeId)
+              ? [
+                  ["loader", "component"],
+                  ["pendingComponent"],
+                  ["errorComponent"],
+                  ["notFoundComponent"],
+                ]
+              : undefined,
+        },
+      },
       sitemap: {
         enabled: true,
         host: sitemapHost,

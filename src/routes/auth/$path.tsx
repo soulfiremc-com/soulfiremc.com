@@ -4,6 +4,7 @@ import { Auth } from "@/components/auth/auth";
 import { SiteShell } from "@/components/site-shell";
 import { emailOtpPlugin } from "@/lib/auth/email-otp-plugin";
 import { twoFactorPlugin } from "@/lib/auth/two-factor-plugin";
+import { authPageTitle } from "@/lib/auth-ui-titles";
 
 const validAuthPathSegments = new Set([
   ...Object.values(viewPaths.auth),
@@ -19,9 +20,7 @@ export const Route = createFileRoute("/auth/$path")({
   },
   head: ({ params: { path } }) => ({
     meta: [
-      {
-        title: `${path.charAt(0).toUpperCase()}${path.slice(1).replaceAll("-", " ")} - SoulFire`,
-      },
+      { title: authPageTitle(path, "en") },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),

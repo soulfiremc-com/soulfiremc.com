@@ -88,6 +88,8 @@ export function ResetPasswordOtp({ className }: ResetPasswordOtpProps) {
   const { mutateAsync: resetPasswordOtp, isPending } = useResetPasswordOtp(
     authClient as EmailOtpAuthClient,
     {
+      // The form shows server errors next to the fields, so skip the toast.
+      meta: { errorPresentation: "inline" },
       onError: (error) => {
         // The haveIBeenPwned plugin rejects on the password itself, so it
         // belongs against the field rather than in a toast.
@@ -151,7 +153,7 @@ export function ResetPasswordOtp({ className }: ResetPasswordOtpProps) {
     <Card className={cn("w-full max-w-sm", className)}>
       <CardHeader>
         <CardTitle className="text-xl font-semibold">
-          {localization.auth.resetPassword}
+          <h1>{localization.auth.resetPassword}</h1>
         </CardTitle>
 
         {hasStoredEmail && email && (

@@ -5,10 +5,16 @@ import { Data, Effect } from "effect";
 import { db } from "@/lib/db";
 import { account, user } from "@/lib/db/auth-schema";
 import {
+  checkLinkedRoleCallback,
+  getLinkedRoleResultUrl,
+  type LinkedRoleStatus,
+} from "@/lib/discord-linked-role";
+import {
   exchangeDiscordCodeEffect,
   getDiscordUserEffect,
   pushLinkedRoleMetadataEffect,
 } from "@/lib/discord";
+import { runWebsiteEffect } from "@/lib/effect-runtime";
 
 const REDIRECT_URI = "https://soulfiremc.com/api/discord/linked-role/callback";
 
@@ -22,25 +28,18 @@ export const Route = createFileRoute("/api/discord/linked-role/callback")({
   server: {
     handlers: {
       GET: async ({ request }) => {
-        const { searchParams } = new URL(request.url);
-        const code = searchParams.get("code");
-        const state = searchParams.get("state");
-
-        if (!code || !state) {
-          return Response.json(
-            { error: "Missing code or state" },
-            { status: 400 },
-          );
-        }
-
-        const storedState = getCookie("discord_oauth_state");
+        const check = checkLinkedRoleCallback(
+          new URL(request.url).searchParams,
+          getCookie("discord_oauth_state"),
+        );
         deleteCookie("discord_oauth_state", { path: "/" });
+        const showResult = (status: LinkedRoleStatus) =>
+          Response.redirect(getLinkedRoleResultUrl(status, request.url));
 
-        if (state !== storedState) {
-          return Response.json({ error: "Invalid state" }, { status: 403 });
-        }
+        if ("status" in check) return showResult(check.status);
+        const { code } = check;
 
-        return Effect.runPromise(
+        return runWebsiteEffect(
           Effect.gen(function* () {
             const tokens = yield* exchangeDiscordCodeEffect(code, REDIRECT_URI);
             const discordUser = yield* getDiscordUserEffect(
@@ -92,8 +91,15 @@ export const Route = createFileRoute("/api/discord/linked-role/callback")({
               });
             }
 
-            return Response.redirect("https://discord.com/");
-          }),
+            return showResult(sfUser ? "linked" : "accountNotFound");
+          }).pipe(
+            Effect.catch((error) =>
+              Effect.logError("Discord linked role update failed", error).pipe(
+                Effect.as(showResult("failed")),
+              ),
+            ),
+          ),
+          request.signal,
         );
       },
     },

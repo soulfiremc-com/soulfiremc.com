@@ -43,6 +43,7 @@ type Node = {
   description: string;
   trigger: boolean;
   expensive: boolean;
+  keywords: string[];
   inputs: NodePort[];
   outputs: NodePort[];
   source: string;
@@ -67,6 +68,7 @@ const nodes: Node[] = registered.map((className) => {
     description: "",
     trigger: false,
     expensive: false,
+    keywords: [],
     inputs: [],
     outputs: [],
     source: `${sdkRepository}/blob/${sdkRevision}/${relative(checkout, path)}`,
@@ -102,9 +104,17 @@ const nodes: Node[] = registered.map((className) => {
       case "isExpensive":
         node.expensive = call.args[0] === "true";
         break;
+      case "keywords":
+      case "addKeywords":
+        // Search aliases, such as names from earlier releases.
+        node.keywords.push(
+          ...[...call.args.join(",").matchAll(/"(?:[^"\\]|\\.)*"/gu)].map(
+            (match) => javaString(match[0]),
+          ),
+        );
+        break;
       case "icon":
       case "color":
-      case "addKeywords":
       case "supportsMuting":
       case "blocksThread":
         break;
@@ -129,6 +139,14 @@ const escape = (value: string) =>
     .replace(/\s*—\s*/gu, "; ")
     .replace(/</gu, "&lt;")
     .replace(/>/gu, "&gt;");
+const aliases = (node: Node) => {
+  const names = [...new Set(node.keywords)].filter(
+    (keyword) => keyword.toLowerCase() !== node.name.toLowerCase(),
+  );
+  return names.length
+    ? `\n\nAlso called: ${names.map(escape).join(", ")}.`
+    : "";
+};
 const portsTable = (ports: NodePort[], input: boolean) =>
   ports.length
     ? `| Port | Type | ${input ? "Required / default" : "Description"} |${input ? " Description |" : ""}\n| --- | --- | --- |${input ? " --- |" : ""}\n${ports.map((port) => `| \`${port.id}\` (${escape(port.name)}) | \`${codeCell(port.type)}\` | ${input ? `${port.defaultValue !== undefined ? `\`${codeCell(JSON.stringify(port.defaultValue))}\`` : port.required ? "Required" : "Optional"} | ` : ""}${escape(port.description)}${port.multiInput ? " Multi-input collection is not implemented by the reactive engine." : ""} |`).join("\n")}`
@@ -139,7 +157,7 @@ const body = categories
       .filter((node) => node.category === category.id)
       .sort((a, b) => a.name.localeCompare(b.name, "en"));
     if (!items.length) return "";
-    return `## ${category.name}\n\n${items.map((node) => `### ${node.name}\n\n\`${node.type}\`${node.trigger ? " (trigger)" : ""}${node.expensive ? " (expensive operation)" : ""}\n\n${escape(node.description)}\n\n**Inputs**\n\n${portsTable(node.inputs, true)}\n\n**Outputs**\n\n${portsTable(node.outputs, false)}\n\n[Implementation](${node.source})`).join("\n\n")}`;
+    return `## ${category.name}\n\n${items.map((node) => `### ${node.name}\n\n\`${node.type}\`${node.trigger ? " (trigger)" : ""}${node.expensive ? " (expensive operation)" : ""}\n\n${escape(node.description)}${aliases(node)}\n\n**Inputs**\n\n${portsTable(node.inputs, true)}\n\n**Outputs**\n\n${portsTable(node.outputs, false)}\n\n[Implementation](${node.source})`).join("\n\n")}`;
   })
   .filter(Boolean)
   .join("\n\n");

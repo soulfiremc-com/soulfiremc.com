@@ -30,12 +30,26 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Spinner } from "@/components/ui/spinner"
+import { authErrorMessageKey } from "@/lib/auth/auth-error-messages"
+import { useLocale } from "@/lib/i18n-react"
+import { type MessageKey, resolveMessage } from "@/lib/messages"
 import { AdditionalField, type AdditionalFieldProps } from "./additional-field"
 
 const { fieldContext, formContext, useFieldContext, useFormContext } =
   createFormHookContexts()
 
-const DEFAULT_AUTH_FORM_SERVER_ERROR = "Unable to submit this form. Try again."
+// Form errors store catalog keys for known failures and resolve them while
+// rendering, so the message follows the page language.
+const DEFAULT_AUTH_FORM_SERVER_ERROR: string =
+  "authUi.errors.generic" satisfies MessageKey
+
+function useLocalizedFormErrors(errors: readonly unknown[]) {
+  const locale = useLocale()
+  return getFormFieldErrors(errors).map((error) => ({
+    ...error,
+    message: resolveMessage(locale, error.message)
+  }))
+}
 
 export function focusFirstInvalidAuthFormControl(form: HTMLFormElement) {
   requestAnimationFrame(() => {
@@ -50,12 +64,18 @@ export function focusFirstInvalidAuthFormControl(form: HTMLFormElement) {
 function AuthFormFieldError({ id }: { id?: string }) {
   const field = useFieldContext<unknown>()
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+  const errors = useLocalizedFormErrors(field.state.meta.errors)
 
   if (!isInvalid) return null
 
-  const errors = getFormFieldErrors(field.state.meta.errors)
-
   return errors.length > 0 ? <FieldError id={id} errors={errors} /> : null
+}
+
+function AuthFormServerErrorMessage({ error }: { error: unknown }) {
+  const formError =
+    error && typeof error === "object" && "form" in error ? error.form : error
+  const errors = useLocalizedFormErrors(formError ? [formError] : [])
+  return errors.length > 0 ? <FieldError errors={errors} /> : null
 }
 
 function AuthFormServerError() {
@@ -63,14 +83,7 @@ function AuthFormServerError() {
 
   return (
     <form.Subscribe selector={(state) => state.errorMap.onServer}>
-      {(error) => {
-        const formError =
-          error && typeof error === "object" && "form" in error
-            ? error.form
-            : error
-        const errors = getFormFieldErrors(formError ? [formError] : [])
-        return errors.length > 0 ? <FieldError errors={errors} /> : null
-      }}
+      {(error) => <AuthFormServerErrorMessage error={error} />}
     </form.Subscribe>
   )
 }
@@ -81,10 +94,11 @@ export function setAuthFormServerError(
   fallbackMessage: string
 ) {
   const normalized = normalizeAuthFormServerError(error, fallbackMessage)
+  const messageKey = authErrorMessageKey(error)
   form.setErrorMap({
     onServer: {
       fields: normalized.fields ?? {},
-      form: normalized.form
+      form: messageKey ? { message: messageKey } : normalized.form
     }
   })
 }
@@ -215,6 +229,7 @@ function AuthFormTextField({
   const form = useFormContext()
   const isInvalid = isAuthFormFieldInvalid(field.state.meta)
   const inputId = id ?? field.name
+  const errorId = `${inputId}-error`
 
   return (
     <Field data-invalid={isInvalid}>
@@ -222,6 +237,7 @@ function AuthFormTextField({
       <Input
         {...props}
         aria-busy={field.state.meta.isValidating || undefined}
+        aria-describedby={isInvalid ? errorId : props["aria-describedby"]}
         aria-invalid={isInvalid}
         id={inputId}
         name={field.name}
@@ -233,7 +249,7 @@ function AuthFormTextField({
         value={field.state.value}
       />
       {description ? <FieldDescription>{description}</FieldDescription> : null}
-      <AuthFormFieldError />
+      <AuthFormFieldError id={errorId} />
     </Field>
   )
 }
@@ -258,6 +274,9 @@ function AuthFormSubmitButton({
             disabled || isPending || isSubmitting || isValidating || undefined
           }
           disabled={disabled || isPending || isSubmitting || isValidating}
+          // Keep focus on the button while the request runs, so keyboard and
+          // screen reader users stay in the form when it fails.
+          focusableWhenDisabled
           type="submit"
         >
           {isPending || isSubmitting ? (

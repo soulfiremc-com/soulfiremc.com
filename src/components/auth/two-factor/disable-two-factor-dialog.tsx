@@ -1,9 +1,14 @@
 "use client";
 
-import type { TwoFactorAuthClient } from "@better-auth-ui/core/plugins/two-factor";
+import {
+  disableTwoFactorOptions,
+  type TwoFactorAuthClient,
+} from "@better-auth-ui/core/plugins/two-factor";
+import { getAuthErrorCode } from "@better-auth-ui/core";
 import { useAuth, useAuthPlugin } from "@better-auth-ui/react";
-import { useDisableTwoFactor } from "@better-auth-ui/react/plugins/two-factor";
+import { useMutation } from "@tanstack/react-query";
 import { ShieldAlert } from "lucide-react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 import {
@@ -18,9 +23,11 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { withInlineErrors } from "@/lib/auth/inline-errors";
 import { twoFactorPlugin } from "@/lib/auth/two-factor-plugin";
 import { useTwoFactorPasswordRequirement } from "@/lib/auth/use-two-factor-password";
 import { useAuthForm } from "../auth-form";
+import { useFocusRejectedPassword } from "../use-focus-rejected-password";
 
 export type DisableTwoFactorDialogProps = {
   open: boolean;
@@ -42,16 +49,27 @@ export function DisableTwoFactorDialog({
     useAuthPlugin(twoFactorPlugin);
   const { isPending: isResolvingPasswordRequirement, requiresPassword } =
     useTwoFactorPasswordRequirement();
+  const [isPasswordRejected, setIsPasswordRejected] = useState(false);
 
-  const { mutateAsync: disableTwoFactor, isPending: isDisabling } =
-    useDisableTwoFactor(authClient as TwoFactorAuthClient, {
+  const { mutateAsync: disableTwoFactor, isPending: isDisabling } = useMutation(
+    {
+      ...withInlineErrors(
+        disableTwoFactorOptions(authClient as TwoFactorAuthClient),
+      ),
+      onError: (error) =>
+        setIsPasswordRejected(getAuthErrorCode(error) === "INVALID_PASSWORD"),
       onSuccess: () => {
         toast.success(twoFactorLocalization.twoFactorDisabled);
         onOpenChange(false);
       },
-    });
+    },
+  );
 
   const isPending = isDisabling || isResolvingPasswordRequirement;
+  const passwordInputRef = useFocusRejectedPassword(
+    isPasswordRejected,
+    isPending,
+  );
 
   const form = useAuthForm({
     defaultValues: { password: "" },
@@ -91,6 +109,7 @@ export function DisableTwoFactorDialog({
                     </FieldLabel>
 
                     <Input
+                      ref={passwordInputRef}
                       id="disable-two-factor-password"
                       name={field.name}
                       type="password"
@@ -99,11 +118,13 @@ export function DisableTwoFactorDialog({
                       required
                       placeholder={localization.auth.passwordPlaceholder}
                       disabled={isPending}
+                      aria-invalid={isPasswordRejected}
                       value={field.state.value}
                       onBlur={field.handleBlur}
-                      onChange={(event) =>
-                        field.handleChange(event.target.value)
-                      }
+                      onChange={(event) => {
+                        field.handleChange(event.target.value);
+                        setIsPasswordRejected(false);
+                      }}
                     />
 
                     <FieldError />
@@ -111,6 +132,8 @@ export function DisableTwoFactorDialog({
                 )}
               </form.AppField>
             )}
+
+            <form.AuthFormServerError />
 
             <AlertDialogFooter>
               <AlertDialogCancel disabled={isPending}>

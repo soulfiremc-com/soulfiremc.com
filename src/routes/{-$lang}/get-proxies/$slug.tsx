@@ -6,6 +6,7 @@ import { Schema } from "effect";
 import { discordEmbedScript } from "@/lib/discord-embed";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import {
+  CatchBoundary,
   createFileRoute,
   Link,
   notFound,
@@ -44,6 +45,7 @@ import {
 } from "@/lib/proxies-data";
 import {
   emptyReviewSummary,
+  getReviewSummaryStatus,
   getAggregateRatingJsonLd,
   getReviewJsonLd,
 } from "@/lib/review-core";
@@ -165,13 +167,19 @@ function ProxyProviderPageContent({
   return (
     <main className="mx-auto flex w-full max-w-(--fd-layout-width) flex-col gap-8 px-4 py-12">
       <JsonLd data={pageJsonLd} />
-      <Suspense fallback={<JsonLd data={productJsonLd} />}>
-        <ProxyProductStructuredData
-          productJsonLd={productJsonLd}
-          provider={provider}
-          reviewsPage={reviewsPage}
-        />
-      </Suspense>
+      {/* A failed review request must not replace the page with an error. */}
+      <CatchBoundary
+        getResetKey={() => `${provider.slug}:${reviewsPage}`}
+        errorComponent={() => <JsonLd data={productJsonLd} />}
+      >
+        <Suspense fallback={<JsonLd data={productJsonLd} />}>
+          <ProxyProductStructuredData
+            productJsonLd={productJsonLd}
+            provider={provider}
+            reviewsPage={reviewsPage}
+          />
+        </Suspense>
+      </CatchBoundary>
       <JsonLd data={breadcrumbJsonLd} />
 
       <nav className="flex items-center gap-1.5 text-sm text-muted-foreground">
@@ -247,7 +255,10 @@ function ProxyProviderPageContent({
                   className="h-5 w-32"
                 />
               ) : (
-                <ReviewSummaryBadge summary={reviewSummary} />
+                <ReviewSummaryBadge
+                  summary={reviewSummary}
+                  status={getReviewSummaryStatus(reviewsQuery)}
+                />
               )}
             </div>
             {provider.socialLinks?.length ? (

@@ -3,7 +3,6 @@
 import {
   getAuthCallbackURL,
   type AuthSocialProvider,
-  getAuthErrorMessage,
   getProviderId,
   getProviderName,
   isReauthenticationRequiredError,
@@ -36,6 +35,7 @@ import {
 } from "@/components/ui/item";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
+import { useAuthErrorMessage } from "@/lib/auth/use-auth-error-message";
 import { cn } from "@/lib/utils";
 import { ReauthenticationAction } from "../../reauthentication";
 
@@ -61,6 +61,7 @@ export function LinkedAccount({
   provider,
 }: LinkedAccountProps) {
   const { authClient, baseURL, localization } = useAuth();
+  const getErrorMessage = useAuthErrorMessage();
 
   const { data: accountInfo, isPending: isLoadingInfo } = useAccountInfo(
     authClient,
@@ -74,7 +75,7 @@ export function LinkedAccount({
     meta: { errorPresentation: "inline" },
     onError: (error) => {
       if (!isReauthenticationRequiredError(error)) {
-        const message = getAuthErrorMessage(error, localization);
+        const message = getErrorMessage(error);
         if (message) {
           console.error("[Better Auth UI]", error);
           toast.error(message);

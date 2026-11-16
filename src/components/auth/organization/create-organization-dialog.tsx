@@ -129,6 +129,7 @@ export function CreateOrganizationDialog({
 
                       <Input
                         id="create-organization-name"
+                        autoComplete="organization"
                         name={field.name}
                         autoFocus
                         placeholder={organizationLocalization.namePlaceholder}

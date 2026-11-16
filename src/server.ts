@@ -3,11 +3,23 @@ import { runWithD1Database } from "@/lib/db";
 import { createReviewSession, setReviewBookmark } from "@/lib/db/replication";
 import { runWithDiscordLookupScope } from "@/lib/discord";
 
+// Keep in sync with the `/*` block in public/_headers, which covers
+// prerendered pages and other static assets that skip this Worker.
 const securityHeaders = [
   ["X-DNS-Prefetch-Control", "on"],
   ["X-XSS-Protection", "0"],
   ["X-Frame-Options", "SAMEORIGIN"],
   ["X-Content-Type-Options", "nosniff"],
+  [
+    "Content-Security-Policy",
+    "frame-ancestors 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests",
+  ],
+  ["Referrer-Policy", "strict-origin-when-cross-origin"],
+  [
+    "Permissions-Policy",
+    "camera=(), microphone=(), geolocation=(), usb=(), serial=(), hid=(), browsing-topics=()",
+  ],
+  ["Cross-Origin-Opener-Policy", "same-origin-allow-popups"],
 ] as const;
 
 export default {

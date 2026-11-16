@@ -1,5 +1,6 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { createHighlighter } from "shiki";
+import { codeColorReplacements, codeThemes } from "../src/lib/code-theme";
 import { sdkCodeExamples } from "../src/lib/sdk-code-examples";
 
 const outputUrl = new URL(
@@ -7,7 +8,7 @@ const outputUrl = new URL(
   import.meta.url,
 );
 const highlighter = await createHighlighter({
-  themes: ["github-light", "github-dark"],
+  themes: Object.values(codeThemes),
   langs: ["typescript", "python"],
 });
 
@@ -16,7 +17,8 @@ const html = Object.fromEntries(
     language,
     highlighter.codeToHtml(code, {
       lang: language,
-      themes: { light: "github-light", dark: "github-dark" },
+      themes: codeThemes,
+      colorReplacements: codeColorReplacements,
       defaultColor: false,
     }),
   ]),

@@ -44,7 +44,7 @@ export function ResetLinkSent({ className }: ResetLinkSentProps) {
     <Card className={cn("w-full max-w-sm", className)}>
       <CardHeader>
         <CardTitle className="text-xl font-semibold">
-          {localization.auth.checkYourEmailTitle}
+          <h1>{localization.auth.checkYourEmailTitle}</h1>
         </CardTitle>
       </CardHeader>
 

@@ -236,7 +236,10 @@ export function ViewOptions({
         {t("docs.openPageIn")}
         <ChevronDown className="size-3.5 text-fd-muted-foreground" />
       </PopoverTrigger>
-      <PopoverContent className="flex flex-col overflow-auto">
+      <PopoverContent
+        aria-label={t("docs.openPageIn")}
+        className="flex flex-col overflow-auto"
+      >
         {items.map((item) => (
           <a
             key={item.href}

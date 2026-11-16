@@ -49,6 +49,19 @@ export type ReviewSummary = {
   reviewCount: number;
 };
 
+export type ReviewSummaryStatus = "ready" | "loading" | "unavailable";
+
+/** Loading or failed review data must not read as an item without ratings. */
+export function getReviewSummaryStatus(query: {
+  data: { unavailable?: true } | undefined;
+  isPending: boolean;
+}): ReviewSummaryStatus {
+  if (query.isPending) return "loading";
+  return query.data === undefined || query.data.unavailable === true
+    ? "unavailable"
+    : "ready";
+}
+
 export type UserReviewRecord = {
   rating: number;
   body: string | null;

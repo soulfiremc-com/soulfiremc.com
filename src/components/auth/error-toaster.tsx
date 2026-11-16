@@ -2,12 +2,10 @@ import {
   authMutationKeys,
   authQueryKeys,
   getAuthErrorCode,
-  getAuthErrorMessage,
   getAuthErrorPresentation,
   isPasswordCompromisedError,
 } from "@better-auth-ui/core";
 import { oneTapMutationKeys } from "@better-auth-ui/core/plugins/one-tap";
-import { useAuth } from "@better-auth-ui/react";
 import {
   matchMutation,
   matchQuery,
@@ -16,8 +14,10 @@ import {
 import { useEffect } from "react";
 import { toast } from "sonner";
 
+import { useAuthErrorMessage } from "@/lib/auth/use-auth-error-message";
+
 export function ErrorToaster() {
-  const { localization } = useAuth();
+  const getErrorMessage = useAuthErrorMessage();
   const queryClient = useQueryClient();
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export function ErrorToaster() {
       if (getAuthErrorPresentation(query.meta) !== "toast") return;
 
       if (getAuthErrorCode(error) === "EMAIL_NOT_VERIFIED") return;
-      const message = getAuthErrorMessage(error, localization);
+      const message = getErrorMessage(error);
       if (message) {
         console.error("[Better Auth UI]", error);
         toast.error(message);
@@ -70,11 +70,7 @@ export function ErrorToaster() {
       ) {
         return;
       }
-      const message = getAuthErrorMessage(
-        error,
-        localization,
-        mutation.options.mutationKey,
-      );
+      const message = getErrorMessage(error, mutation.options.mutationKey);
       if (message) {
         console.error("[Better Auth UI]", error);
         toast.error(message);
@@ -85,7 +81,7 @@ export function ErrorToaster() {
       queryCache.config.onError = previousQueryOnError;
       mutationCache.config.onError = previousMutationOnError;
     };
-  }, [queryClient, localization]);
+  }, [queryClient, getErrorMessage]);
 
   return null;
 }

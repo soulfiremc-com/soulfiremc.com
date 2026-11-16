@@ -3,10 +3,8 @@
 import { useAuthPlugin } from "@better-auth-ui/react";
 import { Fingerprint } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import {
   Empty,
-  EmptyContent,
   EmptyDescription,
   EmptyHeader,
   EmptyMedia,
@@ -14,11 +12,8 @@ import {
 } from "@/components/ui/empty";
 import { passkeyPlugin } from "@/lib/auth/passkey-plugin";
 
-export type PasskeysEmptyProps = {
-  onAddPress: () => void;
-};
-
-export function PasskeysEmpty({ onAddPress }: PasskeysEmptyProps) {
+/** Empty list state. The card header owns the single "Add passkey" action. */
+export function PasskeysEmpty() {
   const { localization: passkeyLocalization } = useAuthPlugin(passkeyPlugin);
 
   return (
@@ -32,11 +27,6 @@ export function PasskeysEmpty({ onAddPress }: PasskeysEmptyProps) {
           {passkeyLocalization.passkeysDescription}
         </EmptyDescription>
       </EmptyHeader>
-      <EmptyContent>
-        <Button size="sm" onClick={onAddPress}>
-          {passkeyLocalization.addPasskey}
-        </Button>
-      </EmptyContent>
     </Empty>
   );
 }

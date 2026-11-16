@@ -4,7 +4,9 @@ import {
   type DeleteUserPluginOptions,
 } from "@better-auth-ui/core/plugins/delete-user";
 
-import { DangerZone } from "@/components/auth/delete-user/danger-zone";
+import { lazyAuthUi } from "@/lib/auth/lazy-auth-ui";
+
+const DangerZone = lazyAuthUi("DangerZone");
 
 export const deleteUserPlugin = createAuthPlugin(
   coreDeleteUserPlugin.id,

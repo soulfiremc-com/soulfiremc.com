@@ -4,7 +4,7 @@ import { useLocale, useT } from "@/lib/i18n-react";
 import { formatEuro, isLocale } from "@/lib/i18n";
 import { SiKofi } from "@icons-pack/react-simple-icons";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Check, Download, Gift, Heart, Users } from "lucide-react";
+import { Check, Coins, Download, Gift, Heart, Users } from "lucide-react";
 import { SiteShell } from "@/components/site-shell";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
@@ -193,15 +193,28 @@ function PricingPageContent() {
           <CardContent className="flex-1">
             <iframe
               src="https://ko-fi.com/alexprogrammerde/?hidefeed=true&widget=true&embed=true&preview=true"
-              className="border-none w-full"
+              className="w-full rounded-md border-none bg-muted"
               height="712"
               title="Ko-fi"
+              loading="lazy"
             />
           </CardContent>
+          <CardFooter>
+            <a
+              href="https://ko-fi.com/alexprogrammerde"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(buttonVariants({ variant: "outline" }), "w-full")}
+            >
+              <SiKofi className="h-4 w-4" />
+              {t("support.openKofi")}
+            </a>
+          </CardFooter>
         </Card>
         <Card className="flex flex-col">
           <CardHeader>
             <CardTitle className="text-xl flex items-center gap-2">
+              <Coins className="h-5 w-5" />
               {t("support.crypto")}
             </CardTitle>
             <CardDescription>
@@ -212,8 +225,9 @@ function PricingPageContent() {
             <iframe
               src="https://nowpayments.io/embeds/donation-widget?api_key=99dbdb4c-b2d7-4470-a0d9-b8bb978c4881"
               height="623"
-              className="mx-auto block w-full max-w-[346px] overflow-y-hidden border-none"
+              className="mx-auto block w-full max-w-[346px] overflow-y-hidden rounded-md border-none bg-muted"
               title={t("support.nowpaymentsDonationWidget")}
+              loading="lazy"
             />
           </CardContent>
         </Card>

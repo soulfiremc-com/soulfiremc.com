@@ -16,7 +16,7 @@ function PrivacyPolicy() {
     <main className="px-4 py-12 w-full max-w-3xl mx-auto prose">
       <h1>Privacy Policy</h1>
       <p>
-        <strong>Last updated:</strong> February 25, 2026
+        <strong>Last updated:</strong> November 16, 2026
       </p>
 
       <p>
@@ -147,7 +147,19 @@ function PrivacyPolicy() {
           >
             Have I Been Pwned
           </a>{" "}
-          breached password database.
+          breached password database. To detect automated sign-ins and account
+          abuse, the{" "}
+          <a
+            href="https://www.better-auth.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Better Auth
+          </a>{" "}
+          security service receives browser and device characteristics when a
+          page loads, such as screen size, time zone, language, and graphics
+          details. It uses them to recognize repeated automated requests and
+          does not store cookies on your device.
         </li>
         <li>
           <strong>Analyze usage and improve our website</strong> &mdash; with
@@ -159,7 +171,10 @@ function PrivacyPolicy() {
           >
             PostHog
           </a>{" "}
-          (EU-hosted) for product analytics.
+          (EU-hosted) for product analytics. If you decline analytics cookies,
+          PostHog counts page views, clicks, performance, and errors
+          anonymously, without cookies or a visitor ID on your device. See our{" "}
+          <Link to="/cookie-policy">Cookie Policy</Link> for details.
         </li>
         <li>
           <strong>SEO monitoring</strong> &mdash; we use{" "}
@@ -240,8 +255,23 @@ function PrivacyPolicy() {
                 PostHog (EU)
               </a>
             </TableCell>
-            <TableCell>Product analytics (consent-gated)</TableCell>
+            <TableCell>
+              Product analytics (full tracking only with consent)
+            </TableCell>
             <TableCell>Usage data, device info, feedback text</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <a
+                href="https://www.better-auth.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Better Auth
+              </a>
+            </TableCell>
+            <TableCell>Sign-in security and bot detection</TableCell>
+            <TableCell>Browser and device characteristics</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
@@ -395,7 +425,11 @@ function PrivacyPolicy() {
         </li>
         <li>
           <strong>Withdraw consent</strong> &mdash; you can withdraw consent for
-          analytics cookies at any time via our cookie consent banner.
+          analytics cookies at any time in the{" "}
+          <Link to="/cookie-policy" hash="cookie-settings">
+            cookie settings
+          </Link>
+          .
         </li>
         <li>
           <strong>Data portability</strong> &mdash; request your data in a

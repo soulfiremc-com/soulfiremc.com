@@ -268,7 +268,11 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
           <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
             {t("download.operatingSystem")}
           </p>
-          <div className="grid gap-4 sm:grid-cols-3">
+          <div
+            role="group"
+            aria-label={t("download.operatingSystem")}
+            className="grid gap-4 sm:grid-cols-3"
+          >
             {OS_OPTIONS.map((option) => (
               <button
                 key={option.id}
@@ -310,7 +314,11 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
           <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
             {t("download.cpuArchitecture")}
           </p>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div
+            role="group"
+            aria-label={t("download.cpuArchitecture")}
+            className="grid gap-4 sm:grid-cols-2"
+          >
             {CPU_OPTIONS.map((option) => (
               <button
                 key={option.id}

@@ -3,6 +3,7 @@ import test from "node:test";
 import {
   type ClientReleaseManifest,
   createClientDownloads,
+  createServerDownloads,
   getClientReleaseNotesUrl,
 } from "@/lib/download-links";
 
@@ -53,4 +54,23 @@ test("getClientReleaseNotesUrl links the release tag or falls back to the latest
     getClientReleaseNotesUrl(undefined),
     "https://github.com/soulfiremc-com/SoulFireClient/releases/latest",
   );
+});
+
+test("createServerDownloads links versioned jars or the release page when the version is unknown", () => {
+  assert.deepEqual(
+    createServerDownloads("2.10.8").map((item) => item.url),
+    [
+      "https://github.com/soulfiremc-com/SoulFire/releases/download/2.10.8/SoulFireCLI-2.10.8.jar",
+      "https://github.com/soulfiremc-com/SoulFire/releases/download/2.10.8/SoulFireDedicated-2.10.8.jar",
+    ],
+  );
+  for (const version of ["latest", " "]) {
+    assert.deepEqual(
+      createServerDownloads(version).map((item) => item.url),
+      [
+        "https://github.com/soulfiremc-com/SoulFire/releases/latest",
+        "https://github.com/soulfiremc-com/SoulFire/releases/latest",
+      ],
+    );
+  }
 });

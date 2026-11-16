@@ -5,13 +5,18 @@ import {
   defineDocs,
 } from "fumadocs-mdx/config";
 import lastModified from "fumadocs-mdx/plugins/last-modified";
-import { rehypeCodeDefaultOptions } from "fumadocs-core/mdx-plugins";
+import {
+  rehypeCodeDefaultOptions,
+  remarkMdxMermaid,
+} from "fumadocs-core/mdx-plugins";
 import {
   createFileSystemGeneratorCache,
   createGenerator,
   remarkAutoTypeTable,
 } from "fumadocs-typescript";
 import { transformerTwoslash } from "fumadocs-twoslash";
+import { codeColorReplacements, codeThemes } from "./src/lib/code-theme";
+import { remarkSdkRelease } from "./src/lib/docs/remark-sdk-release";
 
 const typeGenerator = createGenerator({
   cache: createFileSystemGeneratorCache("node_modules/.cache/sdk-type-tables"),
@@ -70,12 +75,17 @@ export const blog = defineCollections({
 
 export default defineConfig({
   mdxOptions: {
-    remarkPlugins: [[remarkAutoTypeTable, { generator: typeGenerator }]],
+    // Keep public image paths so `Image` finds their size and optimized
+    // variants in the static image manifest. Imports become hashed URLs.
+    remarkImageOptions: { useImport: false },
+    remarkPlugins: [
+      remarkSdkRelease,
+      remarkMdxMermaid,
+      [remarkAutoTypeTable, { generator: typeGenerator }],
+    ],
     rehypeCodeOptions: {
-      themes: {
-        light: "github-light",
-        dark: "github-dark",
-      },
+      themes: codeThemes,
+      colorReplacements: codeColorReplacements,
       inline: "tailing-curly-colon",
       transformers: [
         ...(rehypeCodeDefaultOptions.transformers ?? []),

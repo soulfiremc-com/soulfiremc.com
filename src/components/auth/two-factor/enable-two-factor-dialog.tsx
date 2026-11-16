@@ -1,19 +1,18 @@
 "use client";
 
-import { createQrCodeSvgData } from "@better-auth-ui/core";
-import type {
-  TwoFactorAuthClient,
-  TwoFactorMethod,
+import { createQrCodeSvgData, getAuthErrorCode } from "@better-auth-ui/core";
+import {
+  enableTwoFactorOptions,
+  type TwoFactorAuthClient,
+  type TwoFactorMethod,
+  verifyTotpOptions,
 } from "@better-auth-ui/core/plugins/two-factor";
 import {
   useAuth,
   useAuthPlugin,
   useCopyToClipboard,
 } from "@better-auth-ui/react";
-import {
-  useEnableTwoFactor,
-  useVerifyTotp,
-} from "@better-auth-ui/react/plugins/two-factor";
+import { useMutation } from "@tanstack/react-query";
 import { Check, Copy, Mail, ShieldCheck, Smartphone } from "lucide-react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
@@ -36,10 +35,12 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { withInlineErrors } from "@/lib/auth/inline-errors";
 import { twoFactorPlugin } from "@/lib/auth/two-factor-plugin";
 import { useTwoFactorPasswordRequirement } from "@/lib/auth/use-two-factor-password";
 import { submitAuthForm, useAuthForm } from "../auth-form";
 import { OtpField } from "../otp-field";
+import { useFocusRejectedPassword } from "../use-focus-rejected-password";
 import { BackupCodes } from "./backup-codes";
 
 type EnrollmentStep = "password" | "verify" | "backupCodes";
@@ -79,6 +80,7 @@ export function EnableTwoFactorDialog({
   );
   const [totpUri, setTotpUri] = useState("");
   const [backupCodes, setBackupCodes] = useState<string[]>([]);
+  const [isPasswordRejected, setIsPasswordRejected] = useState(false);
   const {
     copied: setupKeyCopied,
     copy: copySetupKeyValue,
@@ -114,7 +116,10 @@ export function EnableTwoFactorDialog({
     mutateAsync: enableTwoFactor,
     isPending: isEnabling,
     reset: resetEnrollment,
-  } = useEnableTwoFactor(twoFactorClient, {
+  } = useMutation({
+    ...withInlineErrors(enableTwoFactorOptions(twoFactorClient)),
+    onError: (error) =>
+      setIsPasswordRejected(getAuthErrorCode(error) === "INVALID_PASSWORD"),
     onSuccess: (data) => {
       if (data.method === "otp") {
         toast.success(twoFactorLocalization.twoFactorEnabled);
@@ -128,19 +133,21 @@ export function EnableTwoFactorDialog({
     },
   });
 
-  const { mutateAsync: verifyTotp, isPending: isVerifying } = useVerifyTotp(
-    twoFactorClient,
-    {
-      onError: () => form.setFieldValue("code", ""),
-      onSuccess: () => {
-        toast.success(twoFactorLocalization.twoFactorEnabled);
-        if (backupCodes.length) setStep("backupCodes");
-        else handleOpenChange(false);
-      },
+  const { mutateAsync: verifyTotp, isPending: isVerifying } = useMutation({
+    ...withInlineErrors(verifyTotpOptions(twoFactorClient)),
+    onError: () => form.setFieldValue("code", ""),
+    onSuccess: () => {
+      toast.success(twoFactorLocalization.twoFactorEnabled);
+      if (backupCodes.length) setStep("backupCodes");
+      else handleOpenChange(false);
     },
-  );
+  });
 
   const isPending = isEnabling || isVerifying || isResolvingPasswordRequirement;
+  const passwordInputRef = useFocusRejectedPassword(
+    isPasswordRejected,
+    isPending,
+  );
 
   const form = useAuthForm({
     defaultValues: { code: "", password: "" },
@@ -175,6 +182,7 @@ export function EnableTwoFactorDialog({
       setMethod(enrollmentMethods[0] ?? "totp");
       setTotpUri("");
       setBackupCodes([]);
+      setIsPasswordRejected(false);
       form.reset();
       resetSetupKeyCopy();
       // Clears the resolved TOTP URI and backup codes from the mutation cache.
@@ -259,6 +267,7 @@ export function EnableTwoFactorDialog({
                         </FieldLabel>
 
                         <Input
+                          ref={passwordInputRef}
                           id="two-factor-password"
                           name={field.name}
                           type="password"
@@ -267,11 +276,13 @@ export function EnableTwoFactorDialog({
                           required
                           placeholder={localization.auth.passwordPlaceholder}
                           disabled={isPending}
+                          aria-invalid={isPasswordRejected}
                           value={field.state.value}
                           onBlur={field.handleBlur}
-                          onChange={(event) =>
-                            field.handleChange(event.target.value)
-                          }
+                          onChange={(event) => {
+                            field.handleChange(event.target.value);
+                            setIsPasswordRejected(false);
+                          }}
                         />
 
                         <FieldError />

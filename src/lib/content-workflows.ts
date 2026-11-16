@@ -1,4 +1,5 @@
 import { Context, Data, Effect } from "effect";
+import { replaceSdkReleaseTokens } from "./sdk-release";
 
 export interface DocumentationPage {
   readonly data: {
@@ -47,7 +48,9 @@ export const documentationPageText = Effect.fn("Documentation.pageText")(
       try: () => getText("processed"),
       catch: (cause) => new DocumentationError({ operation: "page", cause }),
     });
-    return `${introduction}\n\n${processed}`;
+    // Processed markdown keeps the source text, so fill release placeholders
+    // here as the rendered page does.
+    return replaceSdkReleaseTokens(`${introduction}\n\n${processed}`);
   },
 );
 

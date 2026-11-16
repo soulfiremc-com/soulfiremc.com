@@ -4,12 +4,14 @@ import {
   type EmailOtpPluginOptions,
 } from "@better-auth-ui/core/plugins/email-otp";
 
-import { ChangeEmailOtp } from "@/components/auth/email-otp/change-email-otp";
-import { EmailOtp } from "@/components/auth/email-otp/email-otp";
-import { EmailOtpButton } from "@/components/auth/email-otp/email-otp-button";
-import { ForgotPasswordOtp } from "@/components/auth/email-otp/forgot-password-otp";
-import { ResetPasswordOtp } from "@/components/auth/email-otp/reset-password-otp";
-import { VerifyEmailOtp } from "@/components/auth/email-otp/verify-email-otp";
+import { lazyAuthUi } from "@/lib/auth/lazy-auth-ui";
+
+const ChangeEmailOtp = lazyAuthUi("ChangeEmailOtp");
+const EmailOtp = lazyAuthUi("EmailOtp");
+const EmailOtpButton = lazyAuthUi("EmailOtpButton");
+const ForgotPasswordOtp = lazyAuthUi("ForgotPasswordOtp");
+const ResetPasswordOtp = lazyAuthUi("ResetPasswordOtp");
+const VerifyEmailOtp = lazyAuthUi("VerifyEmailOtp");
 
 export const emailOtpPlugin = createAuthPlugin(
   coreEmailOtpPlugin.id,

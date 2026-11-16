@@ -14,6 +14,7 @@ import {
   ItemTitle,
 } from "@/components/ui/item";
 import { passkeyPlugin } from "@/lib/auth/passkey-plugin";
+import { useLocale } from "@/lib/i18n-react";
 
 import {
   DeletePasskeyDialog,
@@ -28,6 +29,7 @@ export type PasskeyProps = {
 export function Passkey({ passkey }: PasskeyProps) {
   const { localization } = useAuth();
   const { localization: passkeyLocalization } = useAuthPlugin(passkeyPlugin);
+  const locale = useLocale();
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [renameOpen, setRenameOpen] = useState(false);
 
@@ -41,7 +43,7 @@ export function Passkey({ passkey }: PasskeyProps) {
       <ItemContent>
         <ItemTitle>{passkeyName}</ItemTitle>
         <ItemDescription>
-          {new Date(passkey.createdAt).toLocaleString(undefined, {
+          {new Date(passkey.createdAt).toLocaleString(locale, {
             dateStyle: "medium",
             timeStyle: "short",
           })}

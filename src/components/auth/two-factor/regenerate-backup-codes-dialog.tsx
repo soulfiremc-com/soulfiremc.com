@@ -1,6 +1,7 @@
 "use client";
 
 import type { TwoFactorAuthClient } from "@better-auth-ui/core/plugins/two-factor";
+import { getAuthErrorCode } from "@better-auth-ui/core";
 import { useAuth, useAuthPlugin } from "@better-auth-ui/react";
 import { useGenerateBackupCodes } from "@better-auth-ui/react/plugins/two-factor";
 import { KeyRound } from "lucide-react";
@@ -22,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import { twoFactorPlugin } from "@/lib/auth/two-factor-plugin";
 import { useTwoFactorPasswordRequirement } from "@/lib/auth/use-two-factor-password";
 import { useAuthForm } from "../auth-form";
+import { useFocusRejectedPassword } from "../use-focus-rejected-password";
 import { BackupCodes } from "./backup-codes";
 
 export type RegenerateBackupCodesDialogProps = {
@@ -49,12 +51,16 @@ export function RegenerateBackupCodesDialog({
     useTwoFactorPasswordRequirement();
 
   const [codes, setCodes] = useState<string[]>([]);
+  const [isPasswordRejected, setIsPasswordRejected] = useState(false);
 
   const {
     mutateAsync: generateBackupCodes,
     isPending: isGenerating,
     reset: resetGeneration,
   } = useGenerateBackupCodes(authClient as TwoFactorAuthClient, {
+    meta: { errorPresentation: "inline" },
+    onError: (error) =>
+      setIsPasswordRejected(getAuthErrorCode(error) === "INVALID_PASSWORD"),
     onSuccess: (data) => {
       setCodes(data.backupCodes);
       toast.success(twoFactorLocalization.backupCodesRegenerated);
@@ -62,6 +68,10 @@ export function RegenerateBackupCodesDialog({
   });
 
   const isPending = isGenerating || isResolvingPasswordRequirement;
+  const passwordInputRef = useFocusRejectedPassword(
+    isPasswordRejected,
+    isPending,
+  );
 
   const form = useAuthForm({
     defaultValues: { password: "" },
@@ -81,6 +91,7 @@ export function RegenerateBackupCodesDialog({
 
     if (!nextOpen) {
       setCodes([]);
+      setIsPasswordRejected(false);
       form.reset();
       // Clears the resolved backup codes from the mutation cache.
       resetGeneration();
@@ -120,6 +131,7 @@ export function RegenerateBackupCodesDialog({
                       </FieldLabel>
 
                       <Input
+                        ref={passwordInputRef}
                         id="regenerate-backup-codes-password"
                         name={field.name}
                         type="password"
@@ -128,11 +140,13 @@ export function RegenerateBackupCodesDialog({
                         required
                         placeholder={localization.auth.passwordPlaceholder}
                         disabled={isPending}
+                        aria-invalid={isPasswordRejected}
                         value={field.state.value}
                         onBlur={field.handleBlur}
-                        onChange={(event) =>
-                          field.handleChange(event.target.value)
-                        }
+                        onChange={(event) => {
+                          field.handleChange(event.target.value);
+                          setIsPasswordRejected(false);
+                        }}
                       />
 
                       <FieldError />
@@ -141,6 +155,8 @@ export function RegenerateBackupCodesDialog({
                 </form.AppField>
               )
             )}
+
+            <form.AuthFormServerError />
 
             <AlertDialogFooter>
               {!codes.length && (

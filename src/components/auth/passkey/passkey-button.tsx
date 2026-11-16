@@ -6,7 +6,7 @@ import {
   authQueryKeys,
 } from "@better-auth-ui/core";
 import type { PasskeyAuthClient } from "@better-auth-ui/core/plugins/passkey";
-import { useAuth, useAuthPlugin } from "@better-auth-ui/react";
+import { useAuth } from "@better-auth-ui/react";
 import {
   usePasskeyAutoFill,
   useSignInPasskey,
@@ -17,7 +17,7 @@ import { useCallback, useMemo } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
-import { passkeyPlugin } from "@/lib/auth/passkey-plugin";
+import { useT } from "@/lib/i18n-react";
 import { cn } from "@/lib/utils";
 
 export type PasskeyButtonProps = {
@@ -33,9 +33,9 @@ export type PasskeyButtonProps = {
  * @param view - Current auth view. Hides the button on `"signUp"`.
  */
 export function PasskeyButton({ view }: PasskeyButtonProps) {
-  const { authClient, localization, redirectTo, navigate } =
+  const { authClient, redirectTo, navigate } =
     useAuth<PasskeyAuthClient>();
-  const { localization: passkeyLocalization } = useAuthPlugin(passkeyPlugin);
+  const t = useT();
   const queryClient = useQueryClient();
 
   const handleSuccess = useCallback(async () => {
@@ -80,10 +80,7 @@ export function PasskeyButton({ view }: PasskeyButtonProps) {
       onClick={() => signInPasskey({ autoFill: false, fetchOptions })}
     >
       {passkeyPending ? <Spinner /> : <Fingerprint />}
-      {localization.auth.continueWith.replace(
-        "{{provider}}",
-        passkeyLocalization.passkey,
-      )}
+      {t("auth.continueWithPasskey")}
     </Button>
   );
 }

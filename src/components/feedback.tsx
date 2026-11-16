@@ -8,10 +8,10 @@ import {
   CollapsibleContent,
 } from "fumadocs-ui/components/ui/collapsible";
 import { ThumbsDown, ThumbsUp } from "lucide-react";
-import { usePostHog } from "posthog-js/react";
-import { type SubmitEvent, useEffect, useState } from "react";
+import { type SubmitEvent, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { captureAnalyticsEvent } from "@/lib/integrations/posthog";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 interface PageFeedback {
@@ -26,11 +26,12 @@ export function Feedback() {
 
 function FeedbackForm({ url }: { url: string }) {
   const t = useT();
-  const posthog = usePostHog();
   const storageKey = `docs-feedback-${url}`;
   const [previous, setPrevious] = useState<PageFeedback | null>(null);
   const [opinion, setOpinion] = useState<"good" | "bad" | null>(null);
   const [message, setMessage] = useState("");
+  // Submitting replaces the focused form, so focus moves to the thank-you note.
+  const focusThanksRef = useRef(false);
 
   useEffect(() => {
     try {
@@ -46,7 +47,8 @@ function FeedbackForm({ url }: { url: string }) {
     if (opinion === null) return;
 
     const feedback: PageFeedback = { opinion, message };
-    posthog.capture("on_rate_docs", feedback);
+    captureAnalyticsEvent("on_rate_docs", { ...feedback });
+    focusThanksRef.current = true;
     setPrevious(feedback);
     setMessage("");
     setOpinion(null);
@@ -71,6 +73,7 @@ function FeedbackForm({ url }: { url: string }) {
       <div className="flex flex-row items-center gap-2">
         <p className="text-sm font-medium pe-2">{t("common.howIsThisPage")}</p>
         <ToggleGroup
+          aria-label={t("common.howIsThisPage")}
           value={activeOpinion ? [activeOpinion] : []}
           onValueChange={([value]) => {
             if (previous !== null) return;
@@ -100,7 +103,18 @@ function FeedbackForm({ url }: { url: string }) {
       <CollapsibleContent className="mt-3">
         {previous ? (
           <div className="px-3 py-6 flex flex-col items-center gap-3 bg-fd-card text-fd-muted-foreground text-sm text-center rounded-xl">
-            <p>{t("common.thankYouForYourFeedback")}</p>
+            <p
+              tabIndex={-1}
+              className="outline-none"
+              ref={(element) => {
+                if (element && focusThanksRef.current) {
+                  focusThanksRef.current = false;
+                  element.focus();
+                }
+              }}
+            >
+              {t("common.thankYouForYourFeedback")}
+            </p>
             <div className="flex flex-row items-center gap-2">
               <Button
                 type="button"

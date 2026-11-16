@@ -141,7 +141,14 @@ const clientLoader = browserCollections.docs.createClientLoader<{
     const locale = useLocale();
     const t = useT();
     return (
-      <DocsPage toc={toc} tableOfContent={{ style: "clerk" }}>
+      <DocsPage
+        toc={toc}
+        tableOfContent={{
+          style: "clerk",
+          // Expose the side table of contents as a navigation landmark.
+          container: { role: "navigation", "aria-labelledby": "toc-title" },
+        }}
+      >
         <div className="flex flex-col gap-2" lang={props.contentLocale}>
           <DocsTitle>{frontmatter.title}</DocsTitle>
           <DocsDescription className="mb-2.5">
@@ -338,10 +345,9 @@ function DocsPageRoute() {
       <Suspense>
         {page.type === "openapi" ? (
           <DocsPage full>
-            <div className="mb-6 flex flex-col gap-2 border-b pb-6">
-              <DocsTitle>{page.title}</DocsTitle>
-              <DocsDescription>{page.description}</DocsDescription>
-            </div>
+            {/* APIPage renders the operation description as Markdown below
+                the endpoint, so a page description here would repeat it. */}
+            <DocsTitle className="mb-6 border-b pb-6">{page.title}</DocsTitle>
             <DocsBody lang={page.contentLocale}>
               <APIPage {...page.props} />
             </DocsBody>

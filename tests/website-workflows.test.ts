@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { Deferred, Effect, Fiber } from "effect";
 import { createElement } from "react";
+import { render } from "react-email";
 import { SHOPS } from "../src/lib/accounts-data";
 import {
   AccountProviderSources,
@@ -19,6 +20,7 @@ import {
   WebsiteMailer,
   makeWebsiteMailer,
   type WebsiteEmail,
+  type WebsiteEmailSubmission,
 } from "../src/lib/resend";
 import { runWebsiteEffect } from "../src/lib/effect-runtime";
 import { reviewQuery } from "../src/lib/review-database";
@@ -210,7 +212,7 @@ await test("authentication email programs keep destination, subject, tokens and 
     appName: "SoulFire",
     currentEmail: user.email,
     expirationMinutes: 60,
-    logoURL: "https://soulfiremc.com/logo-square.png",
+    logoURL: "https://soulfiremc.com/logo.png",
     newEmail: "new@example.com",
     url: "https://example.com/confirm?token=private",
   });
@@ -223,6 +225,42 @@ await test("authentication email programs keep destination, subject, tokens and 
     (messages[1].react.props as { expirationMinutes: number })
       .expirationMinutes,
     5,
+  );
+});
+
+await test("code emails name their purpose and submit a readable plain-text part", async () => {
+  const submitted: WebsiteEmailSubmission[] = [];
+  const mailer = makeWebsiteMailer(async (email) => {
+    submitted.push(email);
+    return { error: null };
+  });
+  await Effect.runPromise(
+    Effect.gen(function* () {
+      yield* authNotificationEffects.sendTwoFactorOTP({
+        user: { id: "user", email: "current@example.com" },
+        otp: "482913",
+      });
+      yield* authNotificationEffects.sendEmailOTP({
+        email: "new@example.com",
+        otp: "105274",
+        type: "change-email",
+      });
+    }).pipe(Effect.provideService(WebsiteMailer, mailer)),
+  );
+  const [twoFactor, changeEmail] = submitted;
+  assert.equal(twoFactor.subject, "Your two-factor code for SoulFire");
+  assert.match(
+    await render(twoFactor.react),
+    /Your SoulFire two-factor code is 482913/,
+  );
+  assert.match(twoFactor.text, /482913/);
+  assert.match(twoFactor.text, /someone else might know your password/);
+  assert.doesNotMatch(twoFactor.text, /two-factor code is/);
+  assert.doesNotMatch(twoFactor.text, /typed your email address by mistake/);
+  assert.equal(changeEmail.to, "new@example.com");
+  assert.match(
+    changeEmail.text,
+    /make new@example\.com the new email address of your SoulFire account/,
   );
 });
 

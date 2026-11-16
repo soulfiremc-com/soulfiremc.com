@@ -25,7 +25,7 @@ SoulFire does not contain a beat-game planner.
 ### Install the packages
 
 ```bash
-bun add @soulfiremc/sdk@2.10.2 @soulfiremc/beat-game@2.10.2 effect@^4
+bun add @soulfiremc/sdk@%SOULFIRE_SDK_VERSION% @soulfiremc/beat-game@%SOULFIRE_SDK_VERSION% effect@^4
 ```
 
 ### Create a ready bot and start the runner
@@ -40,7 +40,7 @@ const program = Effect.scoped(
     const bot = yield* SoulFire.createBot({
       server: "localhost:25565",
       username: "Survivor",
-      installation: { version: "2.10.2" },
+      installation: { version: "%SOULFIRE_SDK_VERSION%" },
     });
     const run = yield* beatGame(bot);
 

@@ -21,6 +21,7 @@ import {
   type EmailClassNames,
   type EmailColors,
   EmailStyles,
+  primaryButtonFallbackStyle,
 } from "./email-styles";
 
 const changeEmailConfirmationEmailLocalization = {
@@ -251,6 +252,7 @@ export const ChangeEmailConfirmationEmail = ({
 
               <Section className="my-6">
                 <Button
+                  style={primaryButtonFallbackStyle}
                   className={cn(
                     "inline-block whitespace-nowrap rounded-none bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground no-underline",
                     classNames?.button,

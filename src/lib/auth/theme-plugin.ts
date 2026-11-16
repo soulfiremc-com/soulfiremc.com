@@ -4,8 +4,10 @@ import {
   type ThemeLocalization,
 } from "@better-auth-ui/core/plugins/theme";
 
-import { Appearance } from "@/components/auth/theme/appearance";
 import { ThemeToggleItem } from "@/components/auth/theme/theme-toggle-item";
+import { lazyAuthUi } from "@/lib/auth/lazy-auth-ui";
+
+const Appearance = lazyAuthUi("Appearance");
 
 /**
  * Hook shape compatible with `next-themes`' `useTheme` and similar APIs. The

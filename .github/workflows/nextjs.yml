@@ -34,6 +34,9 @@ jobs:
           distribution: temurin
           java-version: "25"
 
+      - name: Use the latest SoulFire SDK release
+        run: bun run sync-sdk-version && bun run generate-node-reference && bun run generate-sdk-code
+
       - name: Run typecheck
         run: bun run typecheck
 

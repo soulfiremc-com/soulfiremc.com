@@ -411,11 +411,10 @@
   padding: 15px 18px;
   color: var(--home-muted);
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
 }
 .workflow-title span:last-child {
   margin-left: auto;
-  opacity: 0.8;
 }
 @utility workflow-canvas {
   position: relative;
@@ -646,6 +645,9 @@
   border-radius: 8px;
 }
 @utility home-final {
+  /* Match the hero download button instead of the neutral site primary. */
+  --primary: var(--home-accent);
+  --primary-foreground: var(--home-panel);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -663,7 +665,6 @@
   margin-top: 32px;
 }
 .home-final > img {
-  opacity: 0.8;
   width: 160px;
   height: 160px;
   margin-right: 48px;
@@ -873,10 +874,7 @@
   }
   .workflow-title {
     padding: 12px;
-    font-size: 9px;
-  }
-  .workflow-title span:last-child {
-    font-size: 8px;
+    font-size: 10px;
   }
   /* Stack the nodes so their text stays readable on narrow screens. */
   .workflow-canvas {

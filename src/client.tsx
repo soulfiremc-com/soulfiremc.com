@@ -1,8 +1,10 @@
 import { StartClient } from "@tanstack/react-start/client";
 import { StrictMode, startTransition } from "react";
 import { hydrateRoot } from "react-dom/client";
-import posthog from "posthog-js";
-import { isPostHogConfigured } from "@/lib/integrations/posthog";
+import {
+  captureAnalyticsException,
+  isPostHogConfigured,
+} from "@/lib/integrations/posthog";
 import { createRecoverableErrorHandler } from "@/lib/react-error-reporting";
 
 window.addEventListener("vite:preloadError", (event) => {
@@ -28,10 +30,7 @@ startTransition(() => {
       onRecoverableError: import.meta.env.DEV
         ? undefined
         : createRecoverableErrorHandler(
-            isPostHogConfigured
-              ? (error, properties) =>
-                  posthog.captureException(error, properties)
-              : undefined,
+            isPostHogConfigured ? captureAnalyticsException : undefined,
           ),
     },
   );

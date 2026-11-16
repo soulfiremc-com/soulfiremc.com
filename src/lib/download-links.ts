@@ -67,17 +67,28 @@ export function createClientDownloads(
   };
 }
 
+export const SERVER_RELEASES_URL =
+  "https://github.com/soulfiremc-com/SoulFire/releases/latest";
+
+function buildServerJarUrl(version: string, artifact: string): string {
+  const tag = version.trim();
+  // Without a resolved version there is no jar URL, so send users to the release page.
+  return tag && tag !== "latest"
+    ? `${GH_SERVER_BASE}/${tag}/${artifact}-${tag}.jar`
+    : SERVER_RELEASES_URL;
+}
+
 export function createServerDownloads(version: string): ServerDownload[] {
   return [
     {
       name: "SoulFire CLI",
       description: "download.headlessCommandLineClient",
-      url: `${GH_SERVER_BASE}/${version}/SoulFireCLI-${version}.jar`,
+      url: buildServerJarUrl(version, "SoulFireCLI"),
     },
     {
       name: "SoulFire Dedicated",
       description: "download.dedicatedServerController",
-      url: `${GH_SERVER_BASE}/${version}/SoulFireDedicated-${version}.jar`,
+      url: buildServerJarUrl(version, "SoulFireDedicated"),
     },
   ];
 }

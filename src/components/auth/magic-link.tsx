@@ -98,7 +98,7 @@ export function MagicLink({
     <Card className={cn("w-full max-w-sm", className)}>
       <ReauthenticationNotice />
       <CardHeader>
-        <CardTitle className="text-xl">{localization.auth.signIn}</CardTitle>
+        <CardTitle className="text-xl"><h1>{localization.auth.signIn}</h1></CardTitle>
       </CardHeader>
 
       <CardContent>

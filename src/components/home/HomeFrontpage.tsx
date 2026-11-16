@@ -559,7 +559,7 @@ export function HomeFrontpage({
                 </div>
               </Reveal>
               <img
-                src="/logo-square.svg"
+                src="/logo-rounded.svg"
                 width="180"
                 height="180"
                 alt=""

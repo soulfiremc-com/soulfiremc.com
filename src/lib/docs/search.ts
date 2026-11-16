@@ -1,6 +1,7 @@
 import { createFromSource } from "fumadocs-core/search/server";
 import type { Locale } from "@/lib/i18n";
 import { translate } from "@/lib/messages";
+import { replaceSdkReleaseTokens } from "@/lib/sdk-release";
 
 type SearchStructuredData = {
   contents: Array<{ content: string; heading: string }>;
@@ -27,6 +28,38 @@ function hasStructuredDataLoader(
     "load" in data &&
     typeof data.load === "function"
   );
+}
+
+// These sections only list links to other pages. Their short link labels
+// outrank the pages they point to, so search leaves them out.
+const navigationSectionIds = new Set([
+  "related-pages",
+  "next-step",
+  "next-steps",
+]);
+
+export function withoutNavigationSections(
+  structuredData: SearchStructuredData,
+): SearchStructuredData {
+  return {
+    ...structuredData,
+    contents: structuredData.contents.filter(
+      (item) => !navigationSectionIds.has(item.heading),
+    ),
+  };
+}
+
+/** Structured data keeps source text, so fill SDK release placeholders. */
+function withSdkRelease(
+  structuredData: SearchStructuredData,
+): SearchStructuredData {
+  return {
+    ...structuredData,
+    contents: structuredData.contents.map((item) => ({
+      ...item,
+      content: replaceSdkReleaseTokens(item.content),
+    })),
+  };
 }
 
 const searchAPIs = new Map<Locale, ReturnType<typeof createSearchAPI>>();
@@ -85,7 +118,9 @@ async function createSearchAPI(locale: Locale) {
           breadcrumbs,
           description: page.data.description,
           id: page.url,
-          structuredData,
+          structuredData: withSdkRelease(
+            withoutNavigationSections(structuredData),
+          ),
           title: page.data.title ?? page.slugs.at(-1) ?? "Docs",
           url: page.url,
         };

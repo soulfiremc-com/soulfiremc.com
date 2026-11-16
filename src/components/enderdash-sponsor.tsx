@@ -1,6 +1,8 @@
 import { ArrowUpRight } from "lucide-react";
 import { Image } from "@/components/image";
 import { Button } from "@/components/ui/button";
+import { useT } from "@/lib/i18n-react";
+import type { MessageKey } from "@/lib/messages";
 import { cn } from "@/lib/utils";
 
 type EnderDashSponsorPlacement = "homepage" | "docs-footer" | "blog-footer";
@@ -11,23 +13,12 @@ type EnderDashSponsorProps = {
   variant?: "feature" | "footer";
 };
 
-const featureTitle =
-  "Advanced administration for Minecraft servers without replacing your stack.";
-
-const featureDescription =
-  "EnderDash lets you manage your existing Minecraft servers from one dashboard by installing a single plugin. Run commands, read logs, manage files, invite your whole team, manage players, and keep Ocelot close at hand without changing your current infrastructure or panel.";
-
-const footerTitle = "Server management with EnderDash";
-
-const footerDescription =
-  "Install the EnderDash plugin to manage your existing servers from a web dashboard.";
-
 const featureHighlights = [
-  "Run commands with tab completion",
-  "Read logs and manage files",
-  "Invite your whole team",
-  "Manage players with Ocelot AI",
-];
+  "sponsor.highlightCommands",
+  "sponsor.highlightLogs",
+  "sponsor.highlightTeam",
+  "sponsor.highlightPlayers",
+] satisfies MessageKey[];
 
 const sponsorCampaignByPlacement = {
   homepage: "homepage-sponsor",
@@ -50,6 +41,7 @@ function SponsorLogo({
   href: string;
   variant: "feature" | "footer";
 }) {
+  const t = useT();
   if (variant === "feature") {
     return (
       <a
@@ -60,7 +52,7 @@ function SponsorLogo({
         <span className="flex size-full items-center justify-center rounded-xl bg-zinc-950 p-4">
           <Image
             src="/sponsors/enderdash-logo.png"
-            alt="EnderDash logo"
+            alt={t("sponsor.logoAlt")}
             width={96}
             height={96}
             className="h-auto w-full"
@@ -78,7 +70,7 @@ function SponsorLogo({
     >
       <Image
         src="/sponsors/enderdash-logo.png"
-        alt="EnderDash logo"
+        alt={t("sponsor.logoAlt")}
         width={48}
         height={48}
         className="h-auto w-full"
@@ -116,13 +108,13 @@ export function EnderDashSponsor({
   placement,
   variant = "footer",
 }: EnderDashSponsorProps) {
+  const t = useT();
   const href = getSponsorHref(placement);
 
   if (variant === "feature") {
     return (
       <section
-        lang="en"
-        aria-label="Partnered with EnderDash"
+        aria-label={t("sponsor.ariaLabel")}
         className={cn(
           "overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-950 text-zinc-50",
           className,
@@ -130,27 +122,29 @@ export function EnderDashSponsor({
       >
         <div className="grid gap-8 p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:px-10">
           <div className="flex flex-col gap-5">
-            <p className="text-xs font-medium text-zinc-400">Partnership</p>
+            <p className="text-xs font-medium text-zinc-400">
+              {t("sponsor.partnership")}
+            </p>
             <div className="flex flex-col gap-3">
               <h2 className="max-w-4xl text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
-                {featureTitle}
+                {t("sponsor.featureTitle")}
               </h2>
               <p className="max-w-3xl text-sm leading-6 text-zinc-400 sm:text-base">
-                {featureDescription}
+                {t("sponsor.featureDescription")}
               </p>
             </div>
             <ul className="grid gap-x-8 gap-y-2 text-sm text-zinc-300 sm:grid-cols-2">
               {featureHighlights.map((highlight) => (
                 <li key={highlight} className="flex items-start gap-3">
                   <span className="mt-2 size-1.5 shrink-0 rounded-full bg-zinc-200" />
-                  <span>{highlight}</span>
+                  <span>{t(highlight)}</span>
                 </li>
               ))}
             </ul>
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <SponsorButton href={href} label="Visit EnderDash" size="lg" />
+              <SponsorButton href={href} label={t("sponsor.visit")} size="lg" />
               <p className="text-sm text-zinc-400">
-                Works with existing infrastructure and panels.
+                {t("sponsor.worksWithExistingStack")}
               </p>
             </div>
           </div>
@@ -164,8 +158,7 @@ export function EnderDashSponsor({
 
   return (
     <aside
-      lang="en"
-      aria-label="Partnered with EnderDash"
+      aria-label={t("sponsor.ariaLabel")}
       className={cn(
         "overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 text-zinc-50",
         className,
@@ -175,16 +168,18 @@ export function EnderDashSponsor({
         <div className="flex min-w-0 items-start gap-4">
           <SponsorLogo href={href} variant="footer" />
           <div className="flex min-w-0 flex-col gap-1.5">
-            <p className="text-xs font-medium text-zinc-400">Sponsored</p>
+            <p className="text-xs font-medium text-zinc-400">
+              {t("sponsor.sponsored")}
+            </p>
             <p className="text-base font-semibold tracking-tight text-balance">
-              {footerTitle}
+              {t("sponsor.footerTitle")}
             </p>
             <p className="max-w-2xl text-sm leading-6 text-zinc-400">
-              {footerDescription}
+              {t("sponsor.footerDescription")}
             </p>
           </div>
         </div>
-        <SponsorButton href={href} label="Visit EnderDash" size="default" />
+        <SponsorButton href={href} label={t("sponsor.visit")} size="default" />
       </div>
     </aside>
   );

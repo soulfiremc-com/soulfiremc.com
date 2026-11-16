@@ -70,6 +70,7 @@ export function EditApiKeyDialog({
                     </FieldLabel>
                     <Input
                       id={`api-key-name-${apiKey.id}`}
+                      autoComplete="off"
                       name={field.name}
                       value={field.state.value}
                       onBlur={field.handleBlur}

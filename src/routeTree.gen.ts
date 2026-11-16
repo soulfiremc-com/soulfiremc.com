@@ -29,6 +29,7 @@ import { Route as AuthPathRouteImport } from './routes/auth/$path'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 import { Route as BlogFeedDotxmlRouteImport } from './routes/blog/feed[.]xml'
+import { Route as DiscordLinkedRoleRouteImport } from './routes/discord_.linked-role'
 import { Route as Char123LangChar125IndexRouteImport } from './routes/{-$lang}/index'
 import { Route as Char123LangChar125DocsDotmdxRouteImport } from './routes/{-$lang}/docs[.]mdx'
 import { Route as Char123LangChar125DownloadRouteImport } from './routes/{-$lang}/download'
@@ -148,6 +149,11 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
 const BlogFeedDotxmlRoute = BlogFeedDotxmlRouteImport.update({
   id: '/blog/feed.xml',
   path: '/blog/feed.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DiscordLinkedRoleRoute = DiscordLinkedRoleRouteImport.update({
+  id: '/discord_/linked-role',
+  path: '/discord/linked-role',
   getParentRoute: () => rootRouteImport,
 } as any)
 const Char123LangChar125IndexRoute = Char123LangChar125IndexRouteImport.update({
@@ -286,6 +292,7 @@ export interface FileRoutesByFullPath {
   '/auth/$path': typeof AuthPathRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/feed.xml': typeof BlogFeedDotxmlRoute
+  '/discord/linked-role': typeof DiscordLinkedRoleRoute
   '/{-$lang}/docs.mdx': typeof Char123LangChar125DocsDotmdxRoute
   '/{-$lang}/download': typeof Char123LangChar125DownloadRoute
   '/{-$lang}/pricing': typeof Char123LangChar125PricingRoute
@@ -326,6 +333,7 @@ export interface FileRoutesByTo {
   '/auth/$path': typeof AuthPathRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/feed.xml': typeof BlogFeedDotxmlRoute
+  '/discord/linked-role': typeof DiscordLinkedRoleRoute
   '/{-$lang}/docs.mdx': typeof Char123LangChar125DocsDotmdxRoute
   '/{-$lang}/download': typeof Char123LangChar125DownloadRoute
   '/{-$lang}/pricing': typeof Char123LangChar125PricingRoute
@@ -369,6 +377,7 @@ export interface FileRoutesById {
   '/auth/$path': typeof AuthPathRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/feed.xml': typeof BlogFeedDotxmlRoute
+  '/discord_/linked-role': typeof DiscordLinkedRoleRoute
   '/{-$lang}/docs.mdx': typeof Char123LangChar125DocsDotmdxRoute
   '/{-$lang}/download': typeof Char123LangChar125DownloadRoute
   '/{-$lang}/pricing': typeof Char123LangChar125PricingRoute
@@ -413,6 +422,7 @@ export interface FileRouteTypes {
     | '/auth/$path'
     | '/blog/$slug'
     | '/blog/feed.xml'
+    | '/discord/linked-role'
     | '/{-$lang}/docs.mdx'
     | '/{-$lang}/download'
     | '/{-$lang}/pricing'
@@ -453,6 +463,7 @@ export interface FileRouteTypes {
     | '/auth/$path'
     | '/blog/$slug'
     | '/blog/feed.xml'
+    | '/discord/linked-role'
     | '/{-$lang}/docs.mdx'
     | '/{-$lang}/download'
     | '/{-$lang}/pricing'
@@ -495,6 +506,7 @@ export interface FileRouteTypes {
     | '/auth/$path'
     | '/blog/$slug'
     | '/blog/feed.xml'
+    | '/discord_/linked-role'
     | '/{-$lang}/docs.mdx'
     | '/{-$lang}/download'
     | '/{-$lang}/pricing'
@@ -537,6 +549,7 @@ export interface RootRouteChildren {
   AuthPathRoute: typeof AuthPathRoute
   BlogSlugRoute: typeof BlogSlugRoute
   BlogFeedDotxmlRoute: typeof BlogFeedDotxmlRoute
+  DiscordLinkedRoleRoute: typeof DiscordLinkedRoleRoute
   BlogIndexRoute: typeof BlogIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiSearchIndexLangRoute: typeof ApiSearchIndexLangRoute
@@ -690,6 +703,13 @@ declare module '@tanstack/react-router' {
       path: '/blog/feed.xml'
       fullPath: '/blog/feed.xml'
       preLoaderRoute: typeof BlogFeedDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/discord_/linked-role': {
+      id: '/discord_/linked-role'
+      path: '/discord/linked-role'
+      fullPath: '/discord/linked-role'
+      preLoaderRoute: typeof DiscordLinkedRoleRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/{-$lang}/': {
@@ -902,6 +922,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthPathRoute: AuthPathRoute,
   BlogSlugRoute: BlogSlugRoute,
   BlogFeedDotxmlRoute: BlogFeedDotxmlRoute,
+  DiscordLinkedRoleRoute: DiscordLinkedRoleRoute,
   BlogIndexRoute: BlogIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiSearchIndexLangRoute: ApiSearchIndexLangRoute,

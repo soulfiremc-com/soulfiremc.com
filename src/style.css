@@ -29,9 +29,10 @@
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
-  --success: var(--color-green-600);
-  --warning: var(--color-yellow-600);
-  --offer: var(--color-pink-600);
+  /* The 700 shades keep text above 4.5:1 on white and on /10 tints. */
+  --success: var(--color-green-700);
+  --warning: var(--color-yellow-700);
+  --offer: var(--color-pink-700);
   /* Discord's darker blurple keeps tinted badge text above 4.5:1. */
   --discord: #4752c4;
   --chart-1: oklch(0.646 0.222 41.116);
@@ -68,7 +69,8 @@
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  /* Brighter than the shadcn default so focus borders reach 3:1 on cards. */
+  --ring: oklch(0.708 0 0);
   --success: var(--color-green-400);
   --warning: var(--color-yellow-500);
   --offer: var(--color-pink-400);
@@ -183,4 +185,34 @@
 
 .prose a[data-card] {
   text-decoration: none;
+}
+
+/* Phones in landscape and other short viewports. */
+@custom-variant short (@media (max-height: 30rem));
+
+/*
+ * iOS Safari zooms into any focused field under 16px. shadcn fields drop to
+ * 14px from the md breakpoint, which landscape phones and tablets reach.
+ * Keep small text fields at 16px on touch screens; larger fields keep their size.
+ */
+@media (pointer: coarse) {
+  @layer utilities {
+    :is(input, textarea, select):is(.text-xs, .text-sm, .md\:text-sm) {
+      font-size: 1rem;
+    }
+  }
+}
+
+/* Focused fields, anchor targets, and the docs drawer clear the cookie banner. */
+html {
+  scroll-padding-bottom: var(--cookie-banner-height, 0px);
+}
+
+#nd-sidebar-mobile {
+  padding-bottom: var(--cookie-banner-height, 0px);
+}
+
+/* An open navigation menu sits above the cookie banner (z-45). */
+#nd-nav[data-open] {
+  z-index: 46;
 }

@@ -66,7 +66,7 @@ For Microsoft accounts, pass `auth="microsoft"` and complete the device-code sig
 For several bots, install once:
 
 ```python
-client = yield from SoulFire.install(version="2.10.2")
+client = yield from SoulFire.install(version="%SOULFIRE_SDK_VERSION%")
 instance = yield from client.get_or_create_instance("farm", server="localhost:25565")
 bot = yield from instance.get_or_create_bot("Builder")
 ```

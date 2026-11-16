@@ -2,9 +2,10 @@ import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { tmpdir } from "node:os";
+import { sdkRelease } from "../src/lib/sdk-release";
 
 export const sdkRepository = "https://github.com/soulfiremc-com/SoulFire";
-export const sdkRevision = "878ba24b85ee4a1ec170ed738b7664b61ace1a2d";
+export const sdkRevision = sdkRelease.revision;
 
 export function sdkSource() {
   const directory = resolve(

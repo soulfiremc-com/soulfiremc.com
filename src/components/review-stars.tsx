@@ -85,7 +85,7 @@ export function ReviewStarInput({
     <div
       role="group"
       aria-labelledby={labelledBy}
-      className={cn("inline-flex items-center gap-0.5", className)}
+      className={cn("-m-1 inline-flex items-center", className)}
     >
       {Array.from({ length: 5 }, (_, index) => {
         const starValue = index + 1;
@@ -95,10 +95,14 @@ export function ReviewStarInput({
           <button
             key={starValue}
             type="button"
-            onClick={() => onChange(starValue)}
-            disabled={disabled}
+            // aria-disabled keeps the focused star focusable while a rating
+            // saves, so keyboard users do not lose their place.
+            onClick={() => {
+              if (!disabled) onChange(starValue);
+            }}
+            aria-disabled={disabled || undefined}
             className={cn(
-              "rounded-sm text-rating outline-none transition-transform hover:scale-105 focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50",
+              "rounded-sm p-1 text-rating outline-none transition-transform hover:scale-105 focus-visible:ring-3 focus-visible:ring-ring/50 aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:hover:scale-100",
               !active && "text-rating-muted/70",
             )}
             aria-label={t("reviews.setRating5", { count: starValue })}

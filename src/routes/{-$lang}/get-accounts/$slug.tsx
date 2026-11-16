@@ -7,6 +7,7 @@ import { discordEmbedScript } from "@/lib/discord-embed";
 import { SiDiscord, SiTrustpilot } from "@icons-pack/react-simple-icons";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import {
+  CatchBoundary,
   createFileRoute,
   Link,
   notFound,
@@ -60,6 +61,7 @@ import type { DiscordInviteResponse } from "@/lib/discord";
 import { getAccountPageImage } from "@/lib/og";
 import {
   emptyReviewSummary,
+  getReviewSummaryStatus,
   getAggregateRatingJsonLd,
   getReviewJsonLd,
 } from "@/lib/review-core";
@@ -92,7 +94,7 @@ function DiscordMemberBadge({
     return (
       <UiBadge
         variant="outline"
-        className="border-transparent bg-discord/10 text-discord/50"
+        className="border-transparent bg-discord/10 text-discord"
       >
         <Users />
         {t("providers.accounts.unknown")}
@@ -472,9 +474,15 @@ function AccountDetailPage() {
     <SiteShell>
       <main className="mx-auto flex w-full max-w-(--fd-layout-width) flex-col gap-8 px-4 py-12">
         <JsonLd data={data.pageJsonLd} />
-        <Suspense fallback={<JsonLd data={data.productJsonLd} />}>
-          <AccountProductSeoEnrichment data={data} />
-        </Suspense>
+        {/* A failed review or stock request must not replace the page. */}
+        <CatchBoundary
+          getResetKey={() => `${data.shop.slug}:${data.reviewsPage}`}
+          errorComponent={() => <JsonLd data={data.productJsonLd} />}
+        >
+          <Suspense fallback={<JsonLd data={data.productJsonLd} />}>
+            <AccountProductSeoEnrichment data={data} />
+          </Suspense>
+        </CatchBoundary>
         <JsonLd data={data.breadcrumbJsonLd} />
 
         <nav className="flex items-center gap-1.5 text-sm text-muted-foreground">
@@ -639,7 +647,10 @@ function AccountDetailPage() {
                     theme?.secondaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
                   }
                 />
-                <ReviewSummaryBadge summary={reviewSummary} />
+                <ReviewSummaryBadge
+                  summary={reviewSummary}
+                  status={getReviewSummaryStatus(reviewsQuery)}
+                />
               </div>
             </div>
           </div>

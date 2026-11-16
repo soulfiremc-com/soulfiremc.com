@@ -37,7 +37,7 @@ def program() -> EffectGen[None, SoulFireOperationError, Scope]:
     bot = yield from SoulFire.create_bot(
         server="localhost:25565",
         username="DocsBot_1",
-        installation={"version": "2.10.2"},
+        installation={"version": "%SOULFIRE_SDK_VERSION%"},
     )
     yield from bot.chat.send("Hello from SoulFire")
     yield from sync(lambda: print(bot.state.player))
@@ -61,7 +61,7 @@ Later runs reuse those files and the saved account.
 Expect `Hello from SoulFire` in Minecraft chat and a player snapshot in the terminal.
 The scope closes subscriptions and the managed backend when the program finishes.
 
-Use `installation={"directory": "...", "version": "2.10.2"}` to choose the data directory and backend version.
+Use `installation={"directory": "...", "version": "%SOULFIRE_SDK_VERSION%"}` to choose the data directory and backend version.
 Without a version, managed installation selects the latest release.
 
 ## Read the code

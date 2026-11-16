@@ -30,8 +30,8 @@ export function Passkeys({ className }: PasskeysProps) {
 
   return (
     <div className={cn("flex flex-col gap-3", className)}>
-      <div className="flex items-end justify-between gap-3">
-        <h2 className="truncate text-sm font-semibold">
+      <div className="flex flex-wrap items-end justify-between gap-x-3 gap-y-2">
+        <h2 className="min-w-0 text-sm font-semibold">
           {passkeyLocalization.passkeys}
         </h2>
 
@@ -50,7 +50,7 @@ export function Passkeys({ className }: PasskeysProps) {
           {isPending ? (
             <PasskeySkeleton />
           ) : !passkeys?.length ? (
-            <PasskeysEmpty onAddPress={() => setAddOpen(true)} />
+            <PasskeysEmpty />
           ) : (
             <ItemGroup className="gap-0">
               {passkeys.map((passkey, index) => (

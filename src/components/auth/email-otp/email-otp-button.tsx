@@ -10,6 +10,7 @@ import { useIsMutating } from "@tanstack/react-query";
 import { KeyRound, Lock } from "lucide-react";
 
 import { buttonVariants } from "@/components/ui/button";
+import { useT } from "@/lib/i18n-react";
 import { emailOtpPlugin } from "@/lib/auth/email-otp-plugin";
 import { cn } from "@/lib/utils";
 
@@ -27,13 +28,12 @@ export function EmailOtpButton({ view }: EmailOtpButtonProps) {
   const {
     basePaths,
     emailAndPassword,
-    localization,
     redirectTo,
     viewPaths,
     Link,
   } = useAuth();
-  const { localization: emailOtpLocalization, viewPaths: emailOtpViewPaths } =
-    useAuthPlugin(emailOtpPlugin);
+  const { viewPaths: emailOtpViewPaths } = useAuthPlugin(emailOtpPlugin);
+  const t = useT();
 
   const signInMutating = useIsMutating({
     mutationKey: authMutationKeys.signIn.all,
@@ -68,12 +68,10 @@ export function EmailOtpButton({ view }: EmailOtpButtonProps) {
     >
       {isEmailOtpView ? <Lock /> : <KeyRound />}
 
-      {localization.auth.continueWith.replace(
-        "{{provider}}",
-        isEmailOtpView
-          ? localization.auth.password
-          : emailOtpLocalization.emailOtp,
-      )}
+      {/* Whole sentences translate better than an inserted method name. */}
+      {isEmailOtpView
+        ? t("auth.continueWithPassword")
+        : t("auth.continueWithEmailCode")}
     </Link>
   );
 }

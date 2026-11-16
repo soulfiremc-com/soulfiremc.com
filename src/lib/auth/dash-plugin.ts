@@ -3,23 +3,29 @@ import {
   dashPlugin as coreDashPlugin,
   type DashPluginOptions,
 } from "@better-auth-ui/core/plugins/dash";
+import { useAuthPlugin } from "@better-auth-ui/react";
 import { Activity } from "lucide-react";
 import { createElement } from "react";
 
-import {
-  AdminActivity,
-  AdminUserActivity,
-  OrganizationActivity,
-  UserActivity,
-} from "@/components/auth/dash/activity";
+import { lazyAuthUi } from "@/lib/auth/lazy-auth-ui";
 
-const activityLabel = (label: string) =>
-  createElement(
+const AdminActivity = lazyAuthUi("AdminActivity");
+const AdminUserActivity = lazyAuthUi("AdminUserActivity");
+const OrganizationActivity = lazyAuthUi("OrganizationActivity");
+const UserActivity = lazyAuthUi("UserActivity");
+
+/** Reads the label at render time so it follows the page language. */
+function ActivityLabel() {
+  const { localization } = useAuthPlugin(coreDashPlugin);
+  return createElement(
     "span",
     { className: "inline-flex items-center gap-1" },
     createElement(Activity, { className: "text-muted-foreground" }),
-    label,
+    localization.activity,
   );
+}
+
+const activityLabel = createElement(ActivityLabel);
 
 export const dashPlugin = createAuthPlugin(
   coreDashPlugin.id,
@@ -33,14 +39,14 @@ export const dashPlugin = createAuthPlugin(
               {
                 id: "activity",
                 path: core.viewPaths.settings.activity,
-                label: activityLabel(core.localization.activity),
+                label: activityLabel,
                 component: AdminActivity,
               },
             ],
             adminUserTabs: [
               {
                 id: "activity",
-                label: activityLabel(core.localization.activity),
+                label: activityLabel,
                 component: AdminUserActivity,
               },
             ],
@@ -51,7 +57,7 @@ export const dashPlugin = createAuthPlugin(
             settingsTabs: [
               {
                 view: "activity" as const,
-                label: activityLabel(core.localization.activity),
+                label: activityLabel,
                 component: UserActivity,
               },
             ],
@@ -63,7 +69,7 @@ export const dashPlugin = createAuthPlugin(
               {
                 id: "activity",
                 path: core.viewPaths.settings.activity,
-                label: activityLabel(core.localization.activity),
+                label: activityLabel,
                 component: OrganizationActivity,
               },
             ],

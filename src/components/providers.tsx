@@ -10,17 +10,18 @@ import { LocaleProvider, useLocale } from "@/lib/i18n-react";
 import { fumadocsMessages } from "@/lib/messages/fumadocs";
 import { captchaPlugin } from "@better-auth-ui/react/plugins/captcha";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { useMemo } from "react";
 import { RootProvider } from "fumadocs-ui/provider/tanstack";
 import { ContentImage } from "@/components/content-image";
 import { ThemeProvider, useTheme } from "next-themes";
 import { AuthProvider } from "@/components/auth/auth-provider";
-import { AuthTurnstile } from "@/components/auth-turnstile";
 import { CookieConsentBanner } from "@/components/cookie-consent-banner";
 import { Toaster } from "@/components/ui/sonner";
 import { adminPlugin } from "@/lib/auth/admin-plugin";
 import { dashPlugin } from "@/lib/auth/dash-plugin";
 import { deleteUserPlugin } from "@/lib/auth/delete-user-plugin";
 import { emailOtpPlugin } from "@/lib/auth/email-otp-plugin";
+import { lazyAuthUi } from "@/lib/auth/lazy-auth-ui";
 import { lastLoginMethodPlugin } from "@/lib/auth/last-login-method-plugin.ts";
 import { passkeyPlugin } from "@/lib/auth/passkey-plugin";
 import { themePlugin } from "@/lib/auth/theme-plugin";
@@ -28,14 +29,13 @@ import { twoFactorPlugin } from "@/lib/auth/two-factor-plugin";
 import { usernamePlugin } from "@/lib/auth/username-plugin";
 import { authClient } from "@/lib/auth-client";
 import {
-  AUTH_UI_BASE_PATHS,
   AUTH_UI_VIEW_PATHS,
+  AUTH_UI_BASE_PATHS,
   DEFAULT_AUTH_REDIRECT_PATH,
 } from "@/lib/auth-ui-config";
-import {
-  isPostHogConfigured,
-  PostHogProvider,
-} from "@/lib/integrations/posthog";
+import { authUiLocale } from "@/lib/auth/auth-ui-locale";
+import { translate } from "@/lib/messages";
+import { isPostHogConfigured } from "@/lib/integrations/posthog";
 import { AuthLink } from "./auth-link";
 
 const authUiPlugins = [
@@ -45,11 +45,10 @@ const authUiPlugins = [
     passwordReset: true,
     changeEmail: true,
     verifyCurrentEmail: true,
-    localization: { emailOtp: "Email code" },
   }),
   twoFactorPlugin(),
   passkeyPlugin(),
-  captchaPlugin({ render: AuthTurnstile }),
+  captchaPlugin({ render: lazyAuthUi("AuthTurnstile") }),
   deleteUserPlugin({ sendDeleteAccountVerification: true }),
   adminPlugin(),
   dashPlugin({ organization: false }),
@@ -59,13 +58,30 @@ const authUiPlugins = [
 
 function AuthUIProviders({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
+  const locale = useLocale();
+  const authLocale = useMemo(
+    () => authUiLocale(locale, authUiPlugins),
+    [locale],
+  );
+  // Better Auth UI reads `redirectTo` from `window.location`, which the server
+  // render lacks. Read it from the router so server and browser links match.
+  const requestedRedirectTo = useRouterState({
+    select: (state) => {
+      const value = (state.location.search as { redirectTo?: unknown })
+        .redirectTo;
+      // Only same-site paths. Protocol-relative URLs leave the site.
+      return typeof value === "string" && /^\/(?![/\\])/.test(value.trim())
+        ? value.trim()
+        : null;
+    },
+  });
 
   return (
     <AuthProvider
       authClient={authClient}
       navigate={navigate}
       Link={AuthLink}
-      redirectTo={DEFAULT_AUTH_REDIRECT_PATH}
+      redirectTo={requestedRedirectTo ?? DEFAULT_AUTH_REDIRECT_PATH}
       basePaths={AUTH_UI_BASE_PATHS}
       viewPaths={AUTH_UI_VIEW_PATHS}
       socialProviders={["google", "discord", "github"]}
@@ -76,19 +92,7 @@ function AuthUIProviders({ children }: { children: React.ReactNode }) {
         requireEmailVerification: true,
       }}
       plugins={authUiPlugins}
-      localization={{
-        // Brand copy uses sentence case.
-        auth: {
-          forgotPassword: "Forgot password",
-          name: "Display name",
-          namePlaceholder: "Display name",
-          resetPassword: "Reset password",
-          signIn: "Sign in",
-          signOut: "Sign out",
-          signUp: "Sign up",
-          verifyEmail: "Verify email",
-        },
-      }}
+      locale={authLocale}
     >
       {children}
     </AuthProvider>
@@ -102,40 +106,45 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <LocaleProvider locale={locale}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <PostHogProvider>
-          <RootProvider
-            components={{ Link: LocaleLink, Image: ContentImage }}
-            search={{
-              options: {
-                type: "static",
-                api:
-                  locale === "en"
-                    ? "/api/search"
-                    : `/api/search-index/${locale}`,
-              },
-            }}
-            i18n={{
-              locale,
-              locales: locales.map((code) => ({
-                locale: code,
-                name: localeNames[code],
-              })),
-              translations: fumadocsMessages(locale),
-              onLocaleChange: (next) => {
-                if (isLocale(next))
-                  void navigate({
-                    href: localeDestination(location.href, next),
-                  });
-              },
-            }}
-          >
-            <AuthUIProviders>
-              {children}
-              {isPostHogConfigured && <CookieConsentBanner />}
-              <Toaster richColors />
-            </AuthUIProviders>
-          </RootProvider>
-        </PostHogProvider>
+        <RootProvider
+          components={{ Link: LocaleLink, Image: ContentImage }}
+          search={{
+            options: {
+              type: "static",
+              api:
+                locale === "en" ? "/api/search" : `/api/search-index/${locale}`,
+            },
+          }}
+          i18n={{
+            locale,
+            locales: locales.map((code) => ({
+              locale: code,
+              name: localeNames[code],
+            })),
+            translations: fumadocsMessages(locale),
+            onLocaleChange: (next) => {
+              if (isLocale(next))
+                void navigate({
+                  href: localeDestination(location.href, next),
+                });
+            },
+          }}
+        >
+          <AuthUIProviders>
+            {children}
+            {isPostHogConfigured && <CookieConsentBanner />}
+            <Toaster
+              richColors
+              containerAriaLabel={translate(locale, "common.notifications")}
+              toastOptions={{
+                closeButtonAriaLabel: translate(
+                  locale,
+                  "common.closeNotification",
+                ),
+              }}
+            />
+          </AuthUIProviders>
+        </RootProvider>
       </ThemeProvider>
     </LocaleProvider>
   );

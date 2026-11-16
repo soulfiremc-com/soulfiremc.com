@@ -175,7 +175,7 @@ export function SignUp({
       <AuthPrompts view="signUp" />
       <CardHeader>
         <CardTitle className="text-xl font-semibold">
-          {localization.auth.signUp}
+          <h1>{localization.auth.signUp}</h1>
         </CardTitle>
       </CardHeader>
 

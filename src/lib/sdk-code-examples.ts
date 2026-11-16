@@ -1,3 +1,5 @@
+import { sdkRelease } from "./sdk-release";
+
 export const sdkCodeExamples = {
   typescript: `import { Effect } from "effect";
 import { SoulFire } from "@soulfiremc/sdk/bun";
@@ -7,7 +9,7 @@ const program = Effect.scoped(
     const bot = yield* SoulFire.createBot({
       server: "localhost:25565",
       username: "DocsBot_1",
-      installation: { version: "2.10.2" },
+      installation: { version: "${sdkRelease.version}" },
     });
 
     yield* bot.chat.send("Hello from SoulFire");
@@ -27,7 +29,7 @@ def program() -> EffectGen[None, SoulFireOperationError, Scope]:
     bot = yield from SoulFire.create_bot(
         server="localhost:25565",
         username="DocsBot_1",
-        installation={"version": "2.10.2"},
+        installation={"version": "${sdkRelease.version}"},
     )
     yield from bot.chat.send("Hello from SoulFire")
     yield from sync(lambda: print(bot.state.player))

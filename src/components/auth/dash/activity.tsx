@@ -83,6 +83,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 import { dashPlugin } from "@/lib/auth/dash-plugin";
 import { organizationPlugin } from "@/lib/auth/organization-plugin";
+import type { Locale } from "@/lib/i18n";
+import { useLocale } from "@/lib/i18n-react";
 import { cn } from "@/lib/utils";
 import { useServerTableState } from "../server-table-state";
 
@@ -132,12 +134,12 @@ const generateN = (count: number) =>
     (_, index) => index + 1,
   );
 
-const formatRelativeTime = (value: string) => {
+const formatRelativeTime = (value: string, locale: Locale) => {
   const date = new Date(value);
   const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
   if (!Number.isFinite(seconds)) return value;
 
-  const formatter = new Intl.RelativeTimeFormat(undefined, { numeric: "auto" });
+  const formatter = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
   const units: [Intl.RelativeTimeFormatUnit, number][] = [
     ["year", 31_536_000],
     ["month", 2_592_000],
@@ -184,6 +186,7 @@ const getEventIcon = (eventType: string) => {
 
 function ActivityRow({ event }: { event: DashAuditLog }) {
   const { localization, showIpAddress } = useAuthPlugin(dashPlugin);
+  const locale = useLocale();
   const Icon = getEventIcon(event.eventType);
   const title =
     (localization.eventLabels as Record<string, string>)[event.eventType] ??
@@ -191,7 +194,7 @@ function ActivityRow({ event }: { event: DashAuditLog }) {
     localization.unknownEvent;
   const detail = getDashEventDetail(event);
   const location = getDashEventLocation(event, showIpAddress);
-  const absoluteTime = new Date(event.createdAt).toLocaleString();
+  const absoluteTime = new Date(event.createdAt).toLocaleString(locale);
 
   return (
     <li className="flex items-start gap-3 py-4 first:pt-0 last:pb-0">
@@ -206,7 +209,7 @@ function ActivityRow({ event }: { event: DashAuditLog }) {
             dateTime={event.createdAt}
             title={absoluteTime}
           >
-            {formatRelativeTime(event.createdAt)}
+            {formatRelativeTime(event.createdAt, locale)}
           </time>
         </div>
         {(detail || location) && (

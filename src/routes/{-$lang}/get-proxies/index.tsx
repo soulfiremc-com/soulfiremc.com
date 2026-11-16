@@ -12,6 +12,7 @@ import {
 } from "@/components/provider-faq";
 import { Schema, Effect, Option } from "effect";
 import { usePrerenderedSearch } from "@/hooks/use-prerendered-search";
+import { usePrerenderedSearchOrder } from "@/hooks/use-prerendered-search-order";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   createFileRoute,
@@ -28,7 +29,16 @@ import {
   ImageIcon,
   Star,
 } from "lucide-react";
-import { Suspense, useEffect, useMemo, useState } from "react";
+import {
+  memo,
+  Suspense,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { CouponCode } from "@/components/coupon-code";
 import { Image } from "@/components/image";
 import { ProviderInfoPopover } from "@/components/provider-info-popover";
@@ -60,6 +70,7 @@ import {
   compareReviewSummaries,
   getAggregateRatingJsonLd,
   type ReviewSummary,
+  type ReviewSummaryStatus,
   type UserReviewRecord,
 } from "@/lib/review-core";
 import { reviewsQueryOptions } from "@/lib/reviews-query";
@@ -152,9 +163,11 @@ function ProviderLogo({ provider }: { provider: Provider }) {
   );
 }
 
-function ProviderCard({
+// Memoized so a filter change renders only the cards that it adds.
+const ProviderCard = memo(function ProviderCard({
   provider,
   reviewSummary,
+  reviewSummaryStatus,
   userReview,
   reviewPending,
   onRate,
@@ -162,6 +175,7 @@ function ProviderCard({
 }: {
   provider: Provider;
   reviewSummary: ReviewSummary;
+  reviewSummaryStatus: ReviewSummaryStatus;
   userReview?: UserReviewRecord;
   reviewPending: boolean;
   onRate: (
@@ -182,7 +196,7 @@ function ProviderCard({
         </div>
         <div className="flex flex-1 flex-col gap-3">
           <div className="flex flex-wrap items-center gap-3">
-            <h3 className="text-xl font-semibold">
+            <h2 className="text-xl font-semibold">
               <Link
                 to="/{-$lang}/get-proxies/$slug"
                 params={{ slug: provider.slug }}
@@ -190,7 +204,7 @@ function ProviderCard({
               >
                 {provider.name}
               </Link>
-            </h3>
+            </h2>
             {provider.startDate && (
               <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
                 <Calendar className="h-3 w-3" />
@@ -243,6 +257,7 @@ function ProviderCard({
           </div>
           <ReviewInlineActions
             summary={reviewSummary}
+            summaryStatus={reviewSummaryStatus}
             currentRating={userReview?.rating}
             pending={reviewPending}
             onRate={(rating) => onRate(provider.slug, rating)}
@@ -252,19 +267,49 @@ function ProviderCard({
       </div>
     </Card>
   );
-}
+});
 
 function MainContent() {
   const t = useT();
   const providers = PROVIDERS;
-  const { summaries, userReviews, pendingBySlug, upsertReview, deleteReview } =
-    useReviews("proxy", proxyReviewSlugs);
+  const {
+    summaries,
+    summaryStatus,
+    userReviews,
+    pendingBySlug,
+    upsertReview,
+    deleteReview,
+  } = useReviews("proxy", proxyReviewSlugs);
   const { badges, sort } = usePrerenderedSearch(
     Route.useSearch(),
     Schema.decodeUnknownSync(proxiesSearchSchema)({}),
   );
   const navigate = Route.useNavigate();
   const hydrated = useHydrated();
+  const orderSummaries = usePrerenderedSearchOrder(
+    summaries,
+    JSON.stringify([
+      badges,
+      sort,
+      // A rating sort from a shared link applies once the reviews arrive.
+      sort === "best-rated" && summaryStatus === "loading",
+    ]),
+  );
+
+  // Stable handlers let the memoized cards skip renders.
+  const reviewActions = useRef({ upsertReview, deleteReview });
+  useLayoutEffect(() => {
+    reviewActions.current = { upsertReview, deleteReview };
+  });
+  const rateProvider = useCallback(
+    (slug: string, rating: number) =>
+      reviewActions.current.upsertReview(slug, { rating }),
+    [],
+  );
+  const clearProviderRating = useCallback(
+    (slug: string) => reviewActions.current.deleteReview(slug),
+    [],
+  );
 
   useEffect(() => {
     if (hydrated) {
@@ -288,13 +333,18 @@ function MainContent() {
             badges.every((filter) => provider.badges.includes(filter)),
           );
 
+    // "Featured" keeps the curated data order and ignores reviews.
+    if (sort === "default") return filtered;
     return [...filtered].sort((a, b) => {
       return (
-        compareReviewSummaries(summaries[a.slug], summaries[b.slug], sort) ||
-        a.name.localeCompare(b.name)
+        compareReviewSummaries(
+          orderSummaries[a.slug],
+          orderSummaries[b.slug],
+          sort,
+        ) || a.name.localeCompare(b.name)
       );
     });
-  }, [badges, sort, summaries]);
+  }, [badges, sort, orderSummaries]);
 
   const [filtersOpen, setFiltersOpen] = useState(false);
 
@@ -322,6 +372,7 @@ function MainContent() {
           {t("providers.accounts.sort")}
         </span>
         <ToggleGroup
+          aria-label={t("providers.accounts.sort")}
           value={[sort]}
           onValueChange={([value]) => {
             if (value) {
@@ -355,6 +406,7 @@ function MainContent() {
         </ToggleGroup>
       </div>
       <ToggleGroup
+        aria-label={t("providers.proxies.filterByType")}
         multiple
         value={badges}
         onValueChange={(value) =>
@@ -437,6 +489,12 @@ function MainContent() {
         dangerouslySetInnerHTML={{ __html: hidePrerenderedResultsScript }}
       />
       <div className="flex-1" data-provider-results>
+        <p role="status" className="sr-only">
+          {t("providers.accounts.resultCount", {
+            count: filteredProviders.length,
+            total: providers.length,
+          })}
+        </p>
         {filteredProviders.length === 0 ? (
           <Empty className="border">
             <EmptyHeader>
@@ -455,10 +513,11 @@ function MainContent() {
                 key={provider.slug}
                 provider={provider}
                 reviewSummary={summaries[provider.slug]}
+                reviewSummaryStatus={summaryStatus}
                 userReview={userReviews[provider.slug]}
                 reviewPending={pendingBySlug[provider.slug] ?? false}
-                onRate={(slug, rating) => upsertReview(slug, { rating })}
-                onClearRating={deleteReview}
+                onRate={rateProvider}
+                onClearRating={clearProviderRating}
               />
             ))}
           </div>

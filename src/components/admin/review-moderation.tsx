@@ -6,10 +6,11 @@ import {
   ExternalLink,
   Inbox,
   type LucideIcon,
+  RotateCw,
   ShieldAlert,
   X,
 } from "lucide-react";
-import { type SubmitEvent, useCallback } from "react";
+import { type ReactNode, type SubmitEvent, useCallback } from "react";
 import { toast } from "sonner";
 import { ReviewStars } from "@/components/review-stars";
 import { CustomTimeAgo } from "@/components/time-ago";
@@ -25,6 +26,7 @@ import {
 } from "@/components/ui/card";
 import {
   Empty,
+  EmptyContent,
   EmptyDescription,
   EmptyHeader,
   EmptyMedia,
@@ -41,6 +43,8 @@ import {
 import { generateN } from "@/lib/utils";
 
 const pendingReviewCommentsQueryKey = ["admin", "pending-reviews"] as const;
+
+class ModerationAccessError extends Error {}
 
 function getInitial(name: string) {
   return name.trim().charAt(0).toUpperCase() || "?";
@@ -97,10 +101,12 @@ function ReviewModerationSkeleton() {
 }
 
 function ReviewModerationState({
+  action,
   description,
   icon: Icon,
   title,
 }: {
+  action?: ReactNode;
   description: string;
   icon: LucideIcon;
   title: string;
@@ -114,6 +120,7 @@ function ReviewModerationState({
         <EmptyTitle>{title}</EmptyTitle>
         <EmptyDescription>{description}</EmptyDescription>
       </EmptyHeader>
+      {action ? <EmptyContent>{action}</EmptyContent> : null}
     </Empty>
   );
 }
@@ -137,12 +144,16 @@ export function ReviewModeration() {
       });
 
       if (!result.ok) {
-        throw new Error("Your account does not have admin access.");
+        throw new ModerationAccessError();
       }
     },
     onError: (error) => {
-      toast("Could not moderate comment", {
-        description: error.message,
+      // Request and validation errors are not useful to show as raw text.
+      toast.error("Could not moderate comment", {
+        description:
+          error instanceof ModerationAccessError
+            ? "Your account does not have admin access."
+            : "Check your connection and try again.",
       });
     },
     onSuccess: (_, variables) => {
@@ -203,9 +214,9 @@ export function ReviewModeration() {
   return (
     <section className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
-        <h1 className="text-xl font-semibold tracking-tight">
+        <h2 className="text-xl font-semibold tracking-tight">
           Review moderation
-        </h1>
+        </h2>
         <p className="text-sm text-muted-foreground">
           Approve written comments before they appear on public reviews.
         </p>
@@ -217,7 +228,18 @@ export function ReviewModeration() {
         <ReviewModerationState
           icon={ShieldAlert}
           title="Could not load comments"
-          description="Refresh the page and try again."
+          description="Check your connection and try again."
+          action={
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => void pendingReviews.refetch()}
+              disabled={pendingReviews.isFetching}
+            >
+              <RotateCw data-icon="inline-start" />
+              Try again
+            </Button>
+          }
         />
       ) : !result?.ok ? (
         <ReviewModerationState

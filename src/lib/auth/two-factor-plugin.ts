@@ -4,8 +4,10 @@ import {
   type TwoFactorPluginOptions,
 } from "@better-auth-ui/core/plugins/two-factor";
 
-import { TwoFactorChallenge } from "@/components/auth/two-factor/two-factor-challenge";
-import { TwoFactorSettings } from "@/components/auth/two-factor/two-factor-settings";
+import { lazyAuthUi } from "@/lib/auth/lazy-auth-ui";
+
+const TwoFactorChallenge = lazyAuthUi("TwoFactorChallenge");
+const TwoFactorSettings = lazyAuthUi("TwoFactorSettings");
 
 export const twoFactorPlugin = createAuthPlugin(
   coreTwoFactorPlugin.id,

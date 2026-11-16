@@ -1,4 +1,5 @@
 import { Context, Data, Effect } from "effect";
+import { render } from "react-email";
 import { Resend } from "resend";
 import { runWebsiteEffect } from "@/lib/effect-runtime";
 
@@ -19,6 +20,11 @@ export interface WebsiteEmail {
   readonly react: React.ReactElement;
 }
 
+/** React Email's plain-text render skips the hidden preheader, so send it with the HTML. */
+export interface WebsiteEmailSubmission extends WebsiteEmail {
+  readonly text: string;
+}
+
 export class WebsiteMailer extends Context.Service<
   WebsiteMailer,
   {
@@ -29,27 +35,33 @@ export class WebsiteMailer extends Context.Service<
 >()("soulfire/WebsiteMailer") {}
 
 export function makeWebsiteMailer(
-  submit: (email: WebsiteEmail) => Promise<{ error: unknown }> = (email) =>
-    new Resend(process.env.RESEND_API_KEY).emails.send(email),
+  submit: (email: WebsiteEmailSubmission) => Promise<{ error: unknown }> = (
+    email,
+  ) => new Resend(process.env.RESEND_API_KEY).emails.send(email),
 ): Context.Service.Shape<typeof WebsiteMailer> {
+  const submitEmail = (email: WebsiteEmailSubmission) =>
+    Effect.tryPromise({
+      try: () => submit(email),
+      catch: (cause) => new EmailDeliveryError({ reason: "transport", cause }),
+    }).pipe(
+      Effect.flatMap(({ error }) =>
+        error
+          ? Effect.fail(
+              new EmailDeliveryError({ reason: "rejected", cause: error }),
+            )
+          : Effect.void,
+      ),
+      // Email submission may have succeeded despite a lost acknowledgement.
+      // Wait for its one SDK call; never retry it or return before it settles.
+      Effect.uninterruptible,
+    );
+
   return {
     send: (email) =>
       Effect.tryPromise({
-        try: () => submit(email),
-        catch: (cause) =>
-          new EmailDeliveryError({ reason: "transport", cause }),
-      }).pipe(
-        Effect.flatMap(({ error }) =>
-          error
-            ? Effect.fail(
-                new EmailDeliveryError({ reason: "rejected", cause: error }),
-              )
-            : Effect.void,
-        ),
-        // Email submission may have succeeded despite a lost acknowledgement.
-        // Wait for its one SDK call; never retry it or return before it settles.
-        Effect.uninterruptible,
-      ),
+        try: () => render(email.react, { plainText: true }),
+        catch: (cause) => new EmailDeliveryError({ reason: "prepare", cause }),
+      }).pipe(Effect.flatMap((text) => submitEmail({ ...email, text }))),
   };
 }
 

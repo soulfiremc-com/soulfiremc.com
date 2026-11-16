@@ -1,13 +1,16 @@
 "use client";
 
-import type { EmailOtpAuthClient } from "@better-auth-ui/core/plugins/email-otp";
+import {
+  changeEmailOtpOptions,
+  type EmailOtpAuthClient,
+} from "@better-auth-ui/core/plugins/email-otp";
 import { useAuth, useAuthPlugin, useSession } from "@better-auth-ui/react";
 import {
-  useChangeEmailOtp,
   useRequestEmailChangeOtp,
   useSendVerificationOtp,
 } from "@better-auth-ui/react/plugins/email-otp";
 import { useSelector } from "@tanstack/react-form";
+import { useMutation } from "@tanstack/react-query";
 import { useEffect, useReducer } from "react";
 import { toast } from "sonner";
 
@@ -17,6 +20,7 @@ import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { emailOtpPlugin } from "@/lib/auth/email-otp-plugin";
+import { withInlineErrors } from "@/lib/auth/inline-errors";
 import { cn } from "@/lib/utils";
 import { submitAuthForm, useAuthForm } from "../auth-form";
 import { OpenEmailButton } from "../open-email-button";
@@ -100,14 +104,14 @@ export function ChangeEmailOtp({ className }: ChangeEmailOtpProps) {
       },
     });
 
-  const { mutateAsync: changeEmailOtp, isPending: isChanging } =
-    useChangeEmailOtp(otpClient, {
-      onError: () => form.setFieldValue("code", ""),
-      onSuccess: () => {
-        toast.success(localization.settings.changeEmailSuccess);
-        resetFlow();
-      },
-    });
+  const { mutateAsync: changeEmailOtp, isPending: isChanging } = useMutation({
+    ...withInlineErrors(changeEmailOtpOptions(otpClient)),
+    onError: () => form.setFieldValue("code", ""),
+    onSuccess: () => {
+      toast.success(localization.settings.changeEmailSuccess);
+      resetFlow();
+    },
+  });
 
   const isPending = isSending || isRequesting || isChanging;
 

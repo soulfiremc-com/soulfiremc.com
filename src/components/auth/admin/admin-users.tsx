@@ -56,6 +56,7 @@ import {
   UserRound,
 } from "lucide-react";
 import { type FormEvent, useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
 import { UserAvatar } from "@/components/auth/user/user-avatar";
 import {
   AlertDialog,
@@ -121,6 +122,9 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { adminPlugin } from "@/lib/auth/admin-plugin";
+import { localizedAuthErrorMessage } from "@/lib/auth/auth-error-messages";
+import type { Locale } from "@/lib/i18n";
+import { useLocale, useT } from "@/lib/i18n-react";
 import { getAuthAdditionalFieldValidators, useAuthForm } from "../auth-form";
 import { useServerTableState } from "../server-table-state";
 
@@ -130,6 +134,16 @@ type SearchField = "email" | "name";
 type SearchOperator = "contains" | "ends_with" | "starts_with";
 type StatusFilter = "all" | "active" | "banned";
 type DangerousAction = "ban" | "delete" | "impersonate" | "revokeAll";
+
+/** Sign-up leaves `name` empty, so fall back to the username, then the email. */
+function getUserLabel(user: {
+  name?: string | null;
+  email?: string | null;
+  displayUsername?: string | null;
+  username?: string | null;
+}) {
+  return user.name || user.displayUsername || user.username || user.email;
+}
 
 export type AdminUsersProps = {
   className?: string;
@@ -167,9 +181,14 @@ const getBanDurationSeconds = (value: string) => {
   return Number.isSafeInteger(seconds) ? seconds : null;
 };
 
-const getAdminErrorMessage = (error: Error | null) => {
-  const authError = error as BetterFetchError | null;
-  return authError?.error?.message ?? authError?.message;
+const getAdminErrorMessage = (error: Error | null, locale: Locale) => {
+  if (!error) return undefined;
+  const authError = error as BetterFetchError;
+  return (
+    localizedAuthErrorMessage(error, locale) ??
+    authError.error?.message ??
+    authError.message
+  );
 };
 
 const adminColumnHelper = createAdminColumnHelper<AdminUser>();
@@ -258,6 +277,8 @@ export function AdminUsers({
     ],
   );
   const permission = useAdminPermission(auth.authClient, { user: ["list"] });
+  // Search and paging do nothing for someone who cannot list users.
+  const isListDenied = !permission.isPending && !permission.data?.success;
   const users = useAdminUsers(auth.authClient, {
     enabled: permission.data?.success === true,
     params,
@@ -320,9 +341,10 @@ export function AdminUsers({
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div className="flex flex-col gap-1">
-            <h1 className="text-xl font-semibold tracking-tight">
+            {/* The admin shell owns the page h1, as on the other admin tabs. */}
+            <h2 className="text-xl font-semibold tracking-tight">
               {localization.users}
-            </h1>
+            </h2>
             <p className="text-sm text-muted-foreground">
               {localization.usersDescription}
             </p>
@@ -337,7 +359,10 @@ export function AdminUsers({
           ) : null}
         </div>
 
-        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-[9rem_10rem_minmax(14rem,1fr)_10rem]">
+        <div
+          className="grid gap-2 sm:grid-cols-2 lg:grid-cols-[9rem_10rem_minmax(14rem,1fr)_10rem]"
+          hidden={isListDenied}
+        >
           <Select
             items={searchFieldItems}
             value={searchField}
@@ -525,10 +550,14 @@ export function AdminUsers({
                                   }}
                                   variant="link"
                                 >
-                                  <span className="truncate">{user.name}</span>
+                                  <span className="truncate">
+                                    {getUserLabel(user)}
+                                  </span>
                                 </Button>
                               ) : (
-                                <span className="truncate">{user.name}</span>
+                                <span className="truncate">
+                                  {getUserLabel(user)}
+                                </span>
                               )}
                               <div className="truncate text-xs text-muted-foreground">
                                 {user.email}
@@ -573,7 +602,10 @@ export function AdminUsers({
           </div>
         )}
 
-        <div className="flex items-center justify-between gap-3 text-sm text-muted-foreground">
+        <div
+          className="flex items-center justify-between gap-3 text-sm text-muted-foreground"
+          hidden={isListDenied}
+        >
           <span>
             {localization.usersPaginationRange
               .replace("{{from}}", String(from))
@@ -720,6 +752,7 @@ function CreateUserDialog({
 }) {
   const auth = useAuth<AdminAuthClient>();
   const config = useAuthPlugin(adminPlugin);
+  const locale = useLocale();
   const { data: session } = useSession(auth.authClient);
   const createUser = useMutation(
     createAdminUserOptions(auth.authClient, session?.user.id),
@@ -798,6 +831,7 @@ function CreateUserDialog({
                     <InputGroup>
                       <InputGroupInput
                         id="admin-create-name"
+                        autoComplete="off"
                         name={field.name}
                         onChange={(event) =>
                           field.handleChange(event.target.value)
@@ -940,7 +974,7 @@ function CreateUserDialog({
                 </form.AppField>
               ))}
             </FieldGroup>
-            <FieldError>{getAdminErrorMessage(createUser.error)}</FieldError>
+            <FieldError>{getAdminErrorMessage(createUser.error, locale)}</FieldError>
             <DialogFooter>
               <Button onClick={close} type="button" variant="outline">
                 {config.localization.cancel}
@@ -969,6 +1003,8 @@ function UserInspector({
 }) {
   const auth = useAuth<AdminAuthClient>();
   const config = useAuthPlugin(adminPlugin);
+  const locale = useLocale();
+  const t = useT();
   const contributedTabs = auth.plugins.flatMap((plugin) =>
     (plugin.adminUserTabs ?? []).map((tab) => ({
       ...tab,
@@ -1102,14 +1138,33 @@ function UserInspector({
       ),
     [auth.additionalFields, user],
   );
-  const profileForm = useAuthForm({
-    defaultValues: {
+  // The form syncs its values to `defaultValues` on every render while
+  // untouched, so they must come from the loaded user. Static blanks here
+  // would wipe the values the effect below resets to.
+  const profileDefaults = useMemo(
+    () => ({
       additionalFields: getAdditionalFieldDefaultValues(configuredUserFields),
-      email: "",
-      emailVerified: false,
-      name: "",
-      roles: [config.defaultRole],
-    },
+      email: user?.email ?? "",
+      emailVerified: user?.emailVerified ?? false,
+      name: user?.name ?? "",
+      roles: parseAdminRoles(
+        user?.role,
+        config.defaultRole,
+        config.allowMultipleRoles,
+      ),
+    }),
+    [
+      config.allowMultipleRoles,
+      config.defaultRole,
+      configuredUserFields,
+      user?.email,
+      user?.emailVerified,
+      user?.name,
+      user?.role,
+    ],
+  );
+  const profileForm = useAuthForm({
+    defaultValues: profileDefaults,
     onSubmit: async ({ value }) => {
       if (!user) return;
 
@@ -1153,27 +1208,8 @@ function UserInspector({
   });
 
   useEffect(() => {
-    profileForm.reset({
-      additionalFields: getAdditionalFieldDefaultValues(configuredUserFields),
-      email: user?.email ?? "",
-      emailVerified: user?.emailVerified ?? false,
-      name: user?.name ?? "",
-      roles: parseAdminRoles(
-        user?.role,
-        config.defaultRole,
-        config.allowMultipleRoles,
-      ),
-    });
-  }, [
-    config.allowMultipleRoles,
-    config.defaultRole,
-    configuredUserFields,
-    profileForm.reset,
-    user?.email,
-    user?.emailVerified,
-    user?.name,
-    user?.role,
-  ]);
+    profileForm.reset(profileDefaults);
+  }, [profileDefaults, profileForm.reset]);
 
   const confirm = () => {
     if (!user) return;
@@ -1190,6 +1226,7 @@ function UserInspector({
             setBanDuration("");
             setBanReason("");
             setDangerousAction(undefined);
+            toast.success(t("auth.userBanned"));
           },
         },
       );
@@ -1238,7 +1275,7 @@ function UserInspector({
         : dangerousAction === "revokeAll"
           ? revokeSessions
           : impersonate;
-  const dangerousError = getAdminErrorMessage(dangerousMutation.error);
+  const dangerousError = getAdminErrorMessage(dangerousMutation.error, locale);
   const dangerLabel =
     dangerousAction === "ban"
       ? config.localization.banUser
@@ -1251,14 +1288,16 @@ function UserInspector({
   return (
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="h-[min(52rem,calc(100vh-2rem))] grid-rows-[auto_minmax(0,1fr)] gap-0 overflow-hidden p-0 sm:max-w-4xl">
+        <DialogContent className="h-[min(52rem,calc(100vh-2rem))] grid-cols-[minmax(0,1fr)] grid-rows-[auto_minmax(0,1fr)] gap-0 overflow-hidden p-0 sm:max-w-4xl">
           <DialogHeader className="border-b px-6 py-5 pr-14">
             {user ? (
               <div className="flex items-center justify-between gap-4">
                 <div className="flex min-w-0 items-center gap-3">
                   <UserAvatar className="size-12" user={user} />
                   <div className="min-w-0">
-                    <DialogTitle className="truncate">{user.name}</DialogTitle>
+                    <DialogTitle className="truncate">
+                      {getUserLabel(user)}
+                    </DialogTitle>
                     <DialogDescription className="truncate">
                       {user.email}
                     </DialogDescription>
@@ -1369,6 +1408,7 @@ function UserInspector({
                                   <InputGroupInput
                                     disabled={!canUpdate.data?.success}
                                     id="admin-user-name"
+                                    autoComplete="off"
                                     name={field.name}
                                     value={field.state.value}
                                     onChange={(event) =>
@@ -1392,6 +1432,7 @@ function UserInspector({
                                       !canSetEmail.data?.success
                                     }
                                     id="admin-user-email"
+                                    autoComplete="off"
                                     name={field.name}
                                     onChange={(event) =>
                                       field.handleChange(event.target.value)
@@ -1520,8 +1561,8 @@ function UserInspector({
                           ))}
                         </FieldGroup>
                         <FieldError>
-                          {getAdminErrorMessage(updateUser.error) ??
-                            getAdminErrorMessage(setRoleMutation.error)}
+                          {getAdminErrorMessage(updateUser.error, locale) ??
+                            getAdminErrorMessage(setRoleMutation.error, locale)}
                         </FieldError>
                       </section>
                       <Separator />
@@ -1628,7 +1669,13 @@ function UserInspector({
                             }
                             onClick={() =>
                               user.banned
-                                ? unban.mutate({ userId: user.id })
+                                ? unban.mutate(
+                                    { userId: user.id },
+                                    {
+                                      onSuccess: () =>
+                                        toast.success(t("auth.userUnbanned")),
+                                    },
+                                  )
                                 : setDangerousAction("ban")
                             }
                             type="button"
@@ -1655,7 +1702,7 @@ function UserInspector({
                         </div>
                         {unban.error ? (
                           <FieldError>
-                            {getAdminErrorMessage(unban.error)}
+                            {getAdminErrorMessage(unban.error, locale)}
                           </FieldError>
                         ) : null}
                       </section>
@@ -1855,7 +1902,11 @@ function UserInspector({
                 event.preventDefault();
                 confirm();
               }}
-              variant={dangerousAction === "delete" ? "destructive" : "default"}
+              variant={
+                dangerousAction === "ban" || dangerousAction === "delete"
+                  ? "destructive"
+                  : "default"
+              }
             >
               {dangerLabel}
             </AlertDialogAction>
@@ -1877,6 +1928,7 @@ function PasswordDialog({
 }) {
   const auth = useAuth<AdminAuthClient>();
   const config = useAuthPlugin(adminPlugin);
+  const locale = useLocale();
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState<string>();
   const mutation = useMutation(
@@ -1897,7 +1949,7 @@ function PasswordDialog({
       mutation.mutate(
         { userId, newPassword: password },
         {
-          onError: (error) => setErrorMessage(getAdminErrorMessage(error)),
+          onError: (error) => setErrorMessage(getAdminErrorMessage(error, locale)),
           onSuccess: close,
         },
       );

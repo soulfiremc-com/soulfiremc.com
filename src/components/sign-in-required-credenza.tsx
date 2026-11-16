@@ -19,11 +19,14 @@ export function SignInRequiredCredenza({
   onOpenChange,
   title,
   description,
+  returnHash,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
   description: string;
+  /** Section to scroll back to after sign-in, such as `reviews`. */
+  returnHash?: string;
 }) {
   const t = useT();
   const router = useRouter();
@@ -50,7 +53,7 @@ export function SignInRequiredCredenza({
               const currentPath =
                 typeof window === "undefined"
                   ? "/"
-                  : `${window.location.pathname}${window.location.search}`;
+                  : `${window.location.pathname}${window.location.search}${returnHash ? `#${returnHash}` : window.location.hash}`;
               const target = `/auth/sign-in?redirectTo=${encodeURIComponent(currentPath)}`;
               void router.navigate({ href: target });
             }}

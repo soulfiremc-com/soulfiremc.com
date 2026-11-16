@@ -22,13 +22,14 @@ The first error can explain later reconnect or task errors.
 
 ## Identify which server failed
 
+Lag can come from either machine.
 A healthy SoulFire backend can have bots rejected by Minecraft.
 A healthy Minecraft server can receive too little load from an overloaded bot backend.
 Compare logs and resource metrics from both machines before changing settings.
 
 ## Measure before tuning
 
-Record CPU, memory, network throughput, connected bots, active scripts, and tasks.
+Record CPU, memory (RAM), network throughput, connected bots, active scripts, and tasks.
 Add load in stages with [the testing procedure](/docs/testing/load-test).
 Inspect a profiler capture if CPU remains high or a repeated action stalls.
 The backend's `spark` command exposes its profiling tools. Use `spark` for the live help.
@@ -40,7 +41,7 @@ The backend's `spark` command exposes its profiling tools. Use `spark` for the l
 - Change the Java heap limit only with evidence of memory pressure.
 - Keep memory available for the operating system and other processes.
 
-Bot capacity depends on world activity, server versions, plugins, hardware, and workload.
+How many bots one backend can run depends on world activity, server versions, plugins, hardware, and workload.
 Use measured results for your deployment instead of treating a fixed bots-per-gigabyte table as a guarantee.
 
 For startup failures, use [dedicated server troubleshooting](/docs/troubleshooting/dedicated-server-and-docker).

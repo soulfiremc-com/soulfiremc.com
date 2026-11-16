@@ -69,6 +69,8 @@ export function Settings({ className, view, path, hideNav }: SettingsProps) {
       value={currentView}
       className={cn("w-full gap-4 md:gap-6", className)}
     >
+      <h1 className="sr-only">{localization.settings.settings}</h1>
+
       <div className={cn(hideNav && "hidden")}>
         <TabsList aria-label={localization.settings.settings}>
           <TabsTrigger

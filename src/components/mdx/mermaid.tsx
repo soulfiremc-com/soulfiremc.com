@@ -65,6 +65,12 @@ function MermaidContent({ chart }: { chart: string }) {
     fontFamily: "inherit",
     themeCSS: "margin: 1.5rem auto 0;",
     theme: resolvedTheme === "dark" ? "dark" : "default",
+    // The dark theme's gray edge label box drops its text to 4.4:1.
+    // Set both values so a light render does not keep the dark override.
+    themeVariables: {
+      edgeLabelBackground:
+        resolvedTheme === "dark" ? "#262626" : "rgba(232, 232, 232, 0.8)",
+    },
   });
 
   const { svg, bindFunctions } = use(

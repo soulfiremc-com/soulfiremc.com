@@ -1,15 +1,19 @@
 "use client"
 
-import { authMutationKeys, validateEmailAddress } from "@better-auth-ui/core"
-import type { EmailOtpAuthClient } from "@better-auth-ui/core/plugins/email-otp"
+import {
+  authMutationKeys,
+  getAuthLinkURL,
+  validateEmailAddress
+} from "@better-auth-ui/core"
+import {
+  type EmailOtpAuthClient,
+  signInEmailOtpOptions
+} from "@better-auth-ui/core/plugins/email-otp"
 import { getSsoFallbackEmail } from "@better-auth-ui/core/plugins/sso"
 import { useAuth, useAuthPlugin, useFetchOptions } from "@better-auth-ui/react"
-import {
-  useSendVerificationOtp,
-  useSignInEmailOtp
-} from "@better-auth-ui/react/plugins/email-otp"
+import { useSendVerificationOtp } from "@better-auth-ui/react/plugins/email-otp"
 import { useSelector } from "@tanstack/react-form"
-import { useIsMutating } from "@tanstack/react-query"
+import { useIsMutating, useMutation } from "@tanstack/react-query"
 import { useId, useState } from "react"
 
 import { Button } from "@/components/ui/button"
@@ -29,6 +33,7 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { emailOtpPlugin } from "@/lib/auth/email-otp-plugin"
+import { withInlineErrors } from "@/lib/auth/inline-errors"
 import { useResendCooldown } from "@/lib/auth/use-resend-cooldown"
 import { useSignInContinuation } from "@/lib/auth/use-sign-in-continuation"
 import { cn } from "@/lib/utils"
@@ -71,6 +76,7 @@ export function EmailOtp({
     emailAndPassword,
     localization,
     plugins,
+    redirectTo,
     socialProviders,
     viewPaths,
     Link
@@ -99,7 +105,8 @@ export function EmailOtp({
     })
 
   const { mutateAsync: signInEmailOtp, isPending: isSigningIn } =
-    useSignInEmailOtp(otpClient, {
+    useMutation({
+      ...withInlineErrors(signInEmailOtpOptions(otpClient)),
       onError: () => {
         form.setFieldValue("code", "")
         resetCaptcha()
@@ -158,7 +165,7 @@ export function EmailOtp({
     <Card className={cn("w-full max-w-sm", className)}>
       <ReauthenticationNotice />
       <CardHeader>
-        <CardTitle className="text-xl">{localization.auth.signIn}</CardTitle>
+        <CardTitle className="text-xl"><h1>{localization.auth.signIn}</h1></CardTitle>
 
         {codeSent && (
           <CardDescription>
@@ -329,7 +336,10 @@ export function EmailOtp({
             <FieldDescription className="text-center">
               {localization.auth.needToCreateAnAccount}{" "}
               <Link
-                href={`${basePaths.auth}/${viewPaths.auth.signUp}`}
+                href={getAuthLinkURL(
+                  `${basePaths.auth}/${viewPaths.auth.signUp}`,
+                  redirectTo
+                )}
                 className="underline underline-offset-4"
               >
                 {localization.auth.signUp}

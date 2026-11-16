@@ -21,6 +21,7 @@ import {
   type EmailClassNames,
   type EmailColors,
   EmailStyles,
+  primaryButtonFallbackStyle,
 } from "./email-styles";
 
 const resetPasswordEmailLocalization = {
@@ -226,6 +227,7 @@ export const ResetPasswordEmail = ({
 
               <Section className="my-6">
                 <Button
+                  style={primaryButtonFallbackStyle}
                   href={url}
                   className={cn(
                     "inline-block whitespace-nowrap rounded-none text-sm font-medium py-2.5 px-6 bg-primary text-primary-foreground no-underline",

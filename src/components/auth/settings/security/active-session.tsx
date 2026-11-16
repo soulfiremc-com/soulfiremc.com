@@ -17,10 +17,12 @@ import {
   ItemTitle,
 } from "@/components/ui/item";
 import { Spinner } from "@/components/ui/spinner";
+import type { Locale } from "@/lib/i18n";
+import { useLocale, useT } from "@/lib/i18n-react";
 
-function timeAgo(date: Date) {
+function timeAgo(date: Date, locale: Locale) {
   const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
-  const rtf = new Intl.RelativeTimeFormat(undefined, { numeric: "auto" });
+  const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
 
   const UNITS: [Intl.RelativeTimeFormatUnit, number][] = [
     ["year", 31536000],
@@ -57,6 +59,8 @@ export type ActiveSessionProps = {
 export function ActiveSession({ activeSession }: ActiveSessionProps) {
   const { authClient, basePaths, localization, viewPaths, navigate } =
     useAuth();
+  const locale = useLocale();
+  const t = useT();
   const { data: session } = useSession(authClient, { refetchOnMount: false });
 
   const { mutate: revokeSession, isPending: isRevoking } = useRevokeSession(
@@ -79,7 +83,7 @@ export function ActiveSession({ activeSession }: ActiveSessionProps) {
       </ItemMedia>
       <ItemContent>
         <ItemTitle>
-          {ua.browser.name || "Unknown Browser"}
+          {ua.browser.name || t("auth.unknownBrowser")}
           {ua.os.name ? `, ${ua.os.name}` : ""}
         </ItemTitle>
         {isCurrentSession ? (
@@ -88,8 +92,8 @@ export function ActiveSession({ activeSession }: ActiveSessionProps) {
           </Badge>
         ) : (
           activeSession.createdAt && (
-            <ItemDescription className="capitalize">
-              {timeAgo(activeSession.createdAt)}
+            <ItemDescription className="first-letter:uppercase">
+              {timeAgo(activeSession.createdAt, locale)}
             </ItemDescription>
           )
         )}

@@ -27,10 +27,12 @@ export function sortAccountProviders(
   now: number,
 ): Provider[] {
   return providers.slice().sort((a, b) => {
+    // "Featured" shows promoted shops first, then the curated order of the
+    // data. It ignores reviews, so the list doesn't move when they load.
     if (sort === "default") {
-      const promotionOrder =
-        Number(isProviderPromoted(b, now)) - Number(isProviderPromoted(a, now));
-      if (promotionOrder !== 0) return promotionOrder;
+      return (
+        Number(isProviderPromoted(b, now)) - Number(isProviderPromoted(a, now))
+      );
     }
     return (
       (sort === "price-asc" || sort === "price-desc"

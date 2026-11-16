@@ -12,6 +12,7 @@ import {
 } from "@/components/provider-faq";
 import { Schema, Effect, Option } from "effect";
 import { usePrerenderedSearch } from "@/hooks/use-prerendered-search";
+import { usePrerenderedSearchOrder } from "@/hooks/use-prerendered-search-order";
 import { SiDiscord, SiTrustpilot } from "@icons-pack/react-simple-icons";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import {
@@ -30,7 +31,17 @@ import {
   Info,
   Users,
 } from "lucide-react";
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import {
+  memo,
+  Suspense,
+  useCallback,
+  useDeferredValue,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { CouponCode, LinkDiscountNotice } from "@/components/coupon-code";
 import { Image } from "@/components/image";
 import { PaymentMethods } from "@/components/payment-methods";
@@ -83,6 +94,7 @@ import {
 import {
   getAggregateRatingJsonLd,
   type ReviewSummary,
+  type ReviewSummaryStatus,
   type UserReviewRecord,
 } from "@/lib/review-core";
 import { reviewsQueryOptions } from "@/lib/reviews-query";
@@ -101,7 +113,7 @@ function DiscordMemberBadge({ providerSlug }: { providerSlug: string }) {
     return (
       <UiBadge
         variant="outline"
-        className="border-transparent bg-discord/10 text-discord/50"
+        className="border-transparent bg-discord/10 text-discord"
       >
         <Users />
         {t("providers.accounts.unknown")}
@@ -195,7 +207,7 @@ const OFFERED_FILTER_BADGES = new Set(
 
 function FilterOptionCount({ count }: { count: number }) {
   return (
-    <span aria-hidden="true" className="tabular-nums opacity-70">
+    <span aria-hidden="true" className="tabular-nums">
       {count}
     </span>
   );
@@ -253,9 +265,11 @@ function ProviderLogo({ provider }: { provider: Provider }) {
   );
 }
 
-function ProviderCard({
+// Memoized so a filter change renders only the cards that it adds.
+const ProviderCard = memo(function ProviderCard({
   provider,
   reviewSummary,
+  reviewSummaryStatus,
   userReview,
   reviewPending,
   onRate,
@@ -263,6 +277,7 @@ function ProviderCard({
 }: {
   provider: Provider;
   reviewSummary: ReviewSummary;
+  reviewSummaryStatus: ReviewSummaryStatus;
   userReview?: UserReviewRecord;
   reviewPending: boolean;
   onRate: (
@@ -487,6 +502,7 @@ function ProviderCard({
           <div className="relative z-10">
             <ReviewInlineActions
               summary={reviewSummary}
+              summaryStatus={reviewSummaryStatus}
               currentRating={userReview?.rating}
               pending={reviewPending}
               onRate={(rating) => onRate(provider.slug, rating)}
@@ -497,7 +513,7 @@ function ProviderCard({
       </div>
     </Card>
   );
-}
+});
 
 function MainContent() {
   const t = useT();
@@ -506,29 +522,75 @@ function MainContent() {
   const now = hydrated ? Date.now() : renderedAt;
   const providers = PROVIDERS;
   const slugs = useMemo(() => [...new Set(providers.map((p) => p.slug))], []);
-  const { summaries, userReviews, pendingBySlug, upsertReview, deleteReview } =
-    useReviews("account", slugs);
+  const {
+    summaries,
+    summaryStatus,
+    userReviews,
+    pendingBySlug,
+    upsertReview,
+    deleteReview,
+  } = useReviews("account", slugs);
   const { category, badges, sort } = usePrerenderedSearch(
     Route.useSearch(),
     Schema.decodeUnknownSync(accountsSearchSchema)({}),
   );
   const navigate = Route.useNavigate();
   const resultsRef = useRef<HTMLDivElement>(null);
+  // The filter controls update at once. The cards follow in an interruptible
+  // render, so a click paints its pressed state before the list changes.
+  const resultsCategory = useDeferredValue(category);
+  const resultsBadges = useDeferredValue(badges);
+  const resultsSort = useDeferredValue(sort);
+  const orderSummaries = usePrerenderedSearchOrder(
+    summaries,
+    JSON.stringify([
+      resultsCategory,
+      resultsBadges,
+      resultsSort,
+      // A rating sort from a shared link applies once the reviews arrive.
+      resultsSort === "best-rated" && summaryStatus === "loading",
+    ]),
+  );
 
+  // Stable handlers let the memoized cards skip renders.
+  const reviewActions = useRef({ upsertReview, deleteReview });
+  useLayoutEffect(() => {
+    reviewActions.current = { upsertReview, deleteReview };
+  });
+  const rateProvider = useCallback(
+    (slug: string, rating: number) =>
+      reviewActions.current.upsertReview(slug, { rating }),
+    [],
+  );
+  const clearProviderRating = useCallback(
+    (slug: string) => reviewActions.current.deleteReview(slug),
+    [],
+  );
+
+  // Reveal the results only after the deferred render applied the URL filters.
+  const resultsMatchSearch =
+    hydrated &&
+    resultsCategory === category &&
+    resultsBadges === badges &&
+    resultsSort === sort;
   useEffect(() => {
-    if (hydrated) {
+    if (resultsMatchSearch) {
       document.getElementById(PENDING_SEARCH_STYLE_ID)?.remove();
     }
-  }, [hydrated]);
+  }, [resultsMatchSearch]);
 
   const updateSearch = (
     search: (previous: AccountsSearch) => AccountsSearch,
   ) => {
+    // Read the position before the update. Reading it after the update
+    // forces a synchronous layout of the whole new list.
+    const resultsAbove =
+      (resultsRef.current?.getBoundingClientRect().top ?? 0) < 0;
     void navigate({ search, replace: true, resetScroll: false }).then(() => {
       // Scroll anchoring keeps the visible cards in place when sections above
       // them change, so bring the start of the results back into view.
       const results = resultsRef.current;
-      if (results && results.getBoundingClientRect().top < 0) {
+      if (results && resultsAbove) {
         results.scrollIntoView({
           block: "start",
           behavior: window.matchMedia("(prefers-reduced-motion: reduce)")
@@ -558,16 +620,21 @@ function MainContent() {
     badges,
   );
 
+  const resultProviders = filterAccountProviders(
+    providers,
+    resultsCategory,
+    resultsBadges,
+  );
   const nfaProviders = sortAccountProviders(
-    filteredProviders.filter((p) => p.category === "nfa-accounts"),
-    sort,
-    summaries,
+    resultProviders.filter((p) => p.category === "nfa-accounts"),
+    resultsSort,
+    orderSummaries,
     now,
   );
   const mfaProviders = sortAccountProviders(
-    filteredProviders.filter((p) => p.category === "mfa-accounts"),
-    sort,
-    summaries,
+    resultProviders.filter((p) => p.category === "mfa-accounts"),
+    resultsSort,
+    orderSummaries,
     now,
   );
 
@@ -610,6 +677,7 @@ function MainContent() {
           {t("providers.accounts.category")}
         </span>
         <ToggleGroup
+          aria-label={t("providers.accounts.category")}
           value={category ? [category] : []}
           onValueChange={([value]) =>
             updateSearch((previous) => ({
@@ -646,6 +714,7 @@ function MainContent() {
           {t("providers.accounts.features")}
         </span>
         <ToggleGroup
+          aria-label={t("providers.accounts.features")}
           multiple
           value={badges}
           onValueChange={(value) =>
@@ -694,6 +763,7 @@ function MainContent() {
           {t("providers.accounts.sort")}
         </span>
         <ToggleGroup
+          aria-label={t("providers.accounts.sort")}
           value={[sort]}
           onValueChange={([value]) =>
             // Pressing the active sort again returns to the default order.
@@ -772,7 +842,7 @@ function MainContent() {
         <p role="status" className="sr-only">
           {resultCount}
         </p>
-        {filteredProviders.length === 0 ? (
+        {resultProviders.length === 0 ? (
           <Empty className="border">
             <EmptyHeader>
               <EmptyTitle>
@@ -807,10 +877,11 @@ function MainContent() {
                       key={provider.slug}
                       provider={provider}
                       reviewSummary={summaries[provider.slug]}
+                      reviewSummaryStatus={summaryStatus}
                       userReview={userReviews[provider.slug]}
                       reviewPending={pendingBySlug[provider.slug] ?? false}
-                      onRate={(slug, rating) => upsertReview(slug, { rating })}
-                      onClearRating={deleteReview}
+                      onRate={rateProvider}
+                      onClearRating={clearProviderRating}
                     />
                   ))}
                 </div>
@@ -838,10 +909,11 @@ function MainContent() {
                       key={provider.slug}
                       provider={provider}
                       reviewSummary={summaries[provider.slug]}
+                      reviewSummaryStatus={summaryStatus}
                       userReview={userReviews[provider.slug]}
                       reviewPending={pendingBySlug[provider.slug] ?? false}
-                      onRate={(slug, rating) => upsertReview(slug, { rating })}
-                      onClearRating={deleteReview}
+                      onRate={rateProvider}
+                      onClearRating={clearProviderRating}
                     />
                   ))}
                 </div>

@@ -90,7 +90,7 @@ function AuthResultView({ className, fallbackIntent }: AuthResultProps) {
                 : "text-destructive",
           )}
         />
-        <CardTitle className="text-xl">{message.title}</CardTitle>
+        <CardTitle className="text-xl"><h1>{message.title}</h1></CardTitle>
         <CardDescription>{message.description}</CardDescription>
       </CardHeader>
       <CardContent>

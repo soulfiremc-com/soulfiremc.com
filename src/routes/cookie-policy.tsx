@@ -1,5 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import {
+  reopenCookieConsent,
+  useAnalyticsConsent,
+} from "@/components/cookie-consent-banner";
 import { SiteShell } from "@/components/site-shell";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -8,14 +13,37 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { isPostHogConfigured } from "@/lib/integrations/posthog";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
+
+const CONSENT_LABELS = {
+  granted: "You accepted analytics cookies.",
+  denied: "You declined analytics cookies.",
+  pending: "You have not made a choice yet.",
+} as const;
+
+function CookieSettings() {
+  const consent = useAnalyticsConsent();
+  if (!isPostHogConfigured) return null;
+
+  return (
+    <div className="not-prose flex flex-col items-start gap-3 rounded-lg border p-4 sm:flex-row sm:items-center sm:justify-between">
+      <p className="text-sm" aria-live="polite">
+        {consent ? CONSENT_LABELS[consent] : "Checking your choice..."}
+      </p>
+      <Button type="button" variant="outline" onClick={reopenCookieConsent}>
+        Change cookie settings
+      </Button>
+    </div>
+  );
+}
 
 function CookiePolicy() {
   return (
     <main className="px-4 py-12 w-full max-w-3xl mx-auto prose">
       <h1>Cookie Policy</h1>
       <p>
-        <strong>Last updated:</strong> February 25, 2026
+        <strong>Last updated:</strong> November 16, 2026
       </p>
 
       <p>
@@ -142,7 +170,19 @@ function CookiePolicy() {
         These cookies help us understand how visitors interact with our website
         by collecting and reporting information. They are only set{" "}
         <strong>after you accept analytics cookies</strong> via our cookie
-        consent banner.
+        consent banner. Until you choose, the analytics script does not load.
+      </p>
+      <p>
+        If you accept, PostHog records page views, clicks, page performance,
+        errors, and session replays with text in form fields hidden. Events go
+        through our proxy at <code>t.soulfiremc.com</code> to PostHog&apos;s EU
+        servers.
+      </p>
+      <p>
+        If you decline, PostHog stores no cookies or visitor ID on your device.
+        We still count page views, clicks, page performance, and errors
+        anonymously. PostHog groups these events with a temporary hash that
+        changes every day, and session replay stays off.
       </p>
       <Table className="[&_td]:min-w-32 [&_td]:whitespace-normal">
         <TableHeader>
@@ -156,7 +196,8 @@ function CookiePolicy() {
         <TableBody>
           <TableRow>
             <TableCell>
-              <code>ph_*</code> cookies
+              <code>ph_*_posthog</code> cookie and local storage,{" "}
+              <code>ph_*</code> session storage
             </TableCell>
             <TableCell>
               <a
@@ -169,48 +210,27 @@ function CookiePolicy() {
               (EU-hosted)
             </TableCell>
             <TableCell>
-              Product analytics &mdash; tracks page views, feature usage, and
-              user interactions. Data is hosted in the EU (
-              <code>eu.i.posthog.com</code>).
+              Product analytics &mdash; stores an anonymous visitor ID and the
+              current session so page views, feature usage, and interactions can
+              be grouped. Data is hosted in the EU.
             </TableCell>
-            <TableCell>Persistent (up to 1 year)</TableCell>
+            <TableCell>
+              Cookie up to 1 year, session storage until the tab closes
+            </TableCell>
           </TableRow>
         </TableBody>
       </Table>
 
-      <h3>Performance / SEO Cookies</h3>
+      <h3>Performance and SEO Measurement</h3>
       <p>
-        These cookies are used for website performance monitoring and SEO
-        analysis.
+        We use{" "}
+        <a href="https://ahrefs.com" target="_blank" rel="noopener noreferrer">
+          Ahrefs Web Analytics
+        </a>{" "}
+        for SEO analysis and website performance monitoring. It does not set
+        cookies or use browser storage. It receives page visit data, such as the
+        page address, referrer, and browser type.
       </p>
-      <Table className="[&_td]:min-w-32 [&_td]:whitespace-normal">
-        <TableHeader>
-          <TableRow>
-            <TableHead>Cookie / Storage</TableHead>
-            <TableHead>Provider</TableHead>
-            <TableHead>Purpose</TableHead>
-            <TableHead>Duration</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          <TableRow>
-            <TableCell>Ahrefs analytics cookies</TableCell>
-            <TableCell>
-              <a
-                href="https://ahrefs.com"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Ahrefs
-              </a>
-            </TableCell>
-            <TableCell>
-              SEO analytics and website performance monitoring
-            </TableCell>
-            <TableCell>Session / persistent</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
 
       <h3>Third-Party Cookies</h3>
       <p>
@@ -276,6 +296,22 @@ function CookiePolicy() {
         <TableBody>
           <TableRow>
             <TableCell>
+              <code>__ph_opt_in_out_*</code>
+            </TableCell>
+            <TableCell>
+              Remembers whether you accepted or declined analytics cookies
+            </TableCell>
+            <TableCell>Persistent (until cleared)</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <code>theme</code>
+            </TableCell>
+            <TableCell>Remembers your light or dark theme choice</TableCell>
+            <TableCell>Persistent (until cleared)</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
               <code>docs-feedback-&#123;url&#125;</code>
             </TableCell>
             <TableCell>
@@ -284,17 +320,30 @@ function CookiePolicy() {
             </TableCell>
             <TableCell>Persistent (until cleared)</TableCell>
           </TableRow>
+          <TableRow>
+            <TableCell>
+              <code>tsr-scroll-restoration-*</code>,{" "}
+              <code>better-auth-ui.*</code> (session storage)
+            </TableCell>
+            <TableCell>
+              Restores your scroll position and remembers the email address for
+              a pending sign-in, verification, or password reset step
+            </TableCell>
+            <TableCell>Until you close the tab</TableCell>
+          </TableRow>
         </TableBody>
       </Table>
 
       <h2>4. How to Manage Cookies</h2>
-      <h3>Cookie Consent Banner</h3>
+      <h3 id="cookie-settings" className="scroll-mt-20">
+        Cookie Consent Banner
+      </h3>
       <p>
         When you first visit our website, a cookie consent banner will appear
         allowing you to accept or decline analytics cookies. You can change your
-        preference at any time by clearing your browser cookies and revisiting
-        the site.
+        choice at any time here:
       </p>
+      <CookieSettings />
 
       <h3>Browser Settings</h3>
       <p>

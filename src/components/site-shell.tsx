@@ -23,7 +23,7 @@ function ShellContainer({
       id="nd-home-layout"
       {...props}
       className={cn(
-        "flex flex-1 flex-col [--fd-layout-width:1400px]",
+        "flex min-h-dvh flex-1 flex-col [--fd-layout-width:1400px]",
         className,
       )}
     />
@@ -110,9 +110,22 @@ export function SiteShell({ children }: { children: ReactNode }) {
             description: t("nav.support.description"),
           },
           ...(baseOptions.links || []),
+          // Fumadocs renders desktop nav items inside a <ul>, so the custom
+          // item needs its own <li>. The mobile menu wraps items in a <div>.
           {
             type: "custom",
             secondary: true,
+            on: "nav",
+            children: (
+              <li className="list-none">
+                <UserButton size="icon" />
+              </li>
+            ),
+          },
+          {
+            type: "custom",
+            secondary: true,
+            on: "menu",
             children: <UserButton size="icon" />,
           },
         ]}
@@ -123,7 +136,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
           className="scroll-mt-14 outline-none"
         />
         {children}
-        <footer className="border-t py-6 text-sm text-fd-muted-foreground">
+        <footer className="mt-auto border-t py-6 text-sm text-fd-muted-foreground">
           <div className="mx-auto flex w-full max-w-(--fd-layout-width) flex-col items-center gap-2 px-4 sm:flex-row sm:justify-between">
             {/* Pages are prerendered, so the build year can trail the visitor's clock. */}
             <p suppressHydrationWarning>
@@ -131,29 +144,29 @@ export function SiteShell({ children }: { children: ReactNode }) {
             </p>
             <nav
               aria-label={t("nav.legal")}
-              className="flex flex-wrap justify-center gap-x-4 gap-y-2"
+              className="flex flex-wrap justify-center gap-x-4"
             >
               <Link
                 to="/privacy-policy"
-                className="hover:text-fd-foreground transition-colors"
+                className="inline-flex min-h-8 items-center hover:text-fd-foreground transition-colors"
               >
                 {t("legal.privacyPolicy")}
               </Link>
               <Link
                 to="/terms-of-service"
-                className="hover:text-fd-foreground transition-colors"
+                className="inline-flex min-h-8 items-center hover:text-fd-foreground transition-colors"
               >
                 {t("legal.termsOfService")}
               </Link>
               <Link
                 to="/cookie-policy"
-                className="hover:text-fd-foreground transition-colors"
+                className="inline-flex min-h-8 items-center hover:text-fd-foreground transition-colors"
               >
                 {t("legal.cookiePolicy")}
               </Link>
               <Link
                 to="/imprint"
-                className="hover:text-fd-foreground transition-colors"
+                className="inline-flex min-h-8 items-center hover:text-fd-foreground transition-colors"
               >
                 {t("legal.imprint")}
               </Link>

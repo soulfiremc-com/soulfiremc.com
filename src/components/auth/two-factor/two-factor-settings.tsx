@@ -44,8 +44,8 @@ export function TwoFactorSettings({ className }: TwoFactorSettingsProps) {
 
   return (
     <div className={cn("flex flex-col gap-3", className)}>
-      <div className="flex items-end justify-between gap-3">
-        <h2 className="truncate text-sm font-semibold">
+      <div className="flex flex-wrap items-end justify-between gap-x-3 gap-y-2">
+        <h2 className="min-w-0 text-sm font-semibold">
           {twoFactorLocalization.twoFactor}
         </h2>
 

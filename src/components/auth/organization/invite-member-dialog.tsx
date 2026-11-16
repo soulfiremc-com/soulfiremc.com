@@ -233,6 +233,7 @@ export function InviteMemberDialog({
                       </FieldLabel>
                       <Input
                         id="invite-member-email"
+                        autoComplete="off"
                         name={field.name}
                         type="email"
                         autoFocus

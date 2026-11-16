@@ -224,9 +224,8 @@ export const auth = betterAuth({
     revokeSessionsOnPasswordReset: true,
   },
   emailVerification: {
-    async sendVerificationEmail({ user, url }): Promise<void> {
-      await authNotifications.sendEmailVerification({ user, url });
-    },
+    // The emailOTP plugin sends the verification code. A sender here would
+    // override it and email a link the verify page cannot accept.
     sendOnSignUp: true,
     sendOnSignIn: true,
     autoSignInAfterVerification: true,

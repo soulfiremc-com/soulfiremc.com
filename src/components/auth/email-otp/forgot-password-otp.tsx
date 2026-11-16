@@ -76,7 +76,7 @@ export function ForgotPasswordOtp({ className }: ForgotPasswordOtpProps) {
     <Card className={cn("w-full max-w-sm", className)}>
       <CardHeader>
         <CardTitle className="text-xl">
-          {localization.auth.forgotPassword}
+          <h1>{localization.auth.forgotPassword}</h1>
         </CardTitle>
       </CardHeader>
 

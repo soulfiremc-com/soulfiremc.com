@@ -1,7 +1,7 @@
 ---
 title: Cannot connect or times out
 sidebarTitle: "Connection failures"
-description: Fix remote login, session disconnect, and timeout errors.
+description: Fix client login failures, connection refused and timed out errors, and bots that get kicked.
 icon: WifiOff
 ---
 
@@ -99,6 +99,26 @@ The project terminal is usually the fastest place to see whether the disconnect 
 - a proxy connect failure
 - authentication
 - a plugin-driven action after join
+
+## If the Minecraft server kicks the bots
+
+Read the first kick or disconnect message in the project terminal.
+Later messages often come from reconnect attempts.
+
+| Message contains | Likely cause | Next check |
+| --- | --- | --- |
+| `Connection refused` | Wrong address or port, or the Minecraft server is not running | Join the same address with a normal client, then check the target address in **Bot Settings** |
+| `timed out` | The server, proxy, or network stopped responding | Test without proxies and with fewer bots |
+| `Connection throttled` | The server limits how fast one address can join | Increase the join delay |
+| `Outdated client` or `Outdated server` | The protocol version does not match the server | Set the protocol version and see [Supported versions](/docs/reference/versions) |
+| `Failed to verify username` | The server uses online mode, but the bot uses an offline account | Use a Microsoft account, see [Accounts and authentication](/docs/troubleshooting/accounts-and-authentication) |
+| `not white-listed` | The server whitelist does not include the bot | Add the bot names to the whitelist on your test server |
+| A register or login prompt | An authentication plugin such as AuthMe waits for chat input | Configure [auto login and register](/docs/how-to/auto-register) |
+| An AFK or idle message | The server kicks players that do not move | Enable the `anti-afk` [built-in plugin](/docs/reference/built-in-plugins) |
+
+The built-in `auto-reconnect` plugin is on by default.
+It reconnects a kicked or timed-out bot after a short delay.
+Repeated reconnects can trigger the server's join throttle, so turn the plugin off while you find the first kick reason.
 
 ## If only some bots fail
 

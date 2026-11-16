@@ -13,6 +13,7 @@ import { remark } from "remark";
 import remarkMdx from "remark-mdx";
 import { buildSdk, sdkSource, sdkRevision } from "./sdk-source";
 import { sdkCodeExamples } from "../src/lib/sdk-code-examples";
+import { replaceSdkReleaseTokens } from "../src/lib/sdk-release";
 
 type AstNode = {
   type: string;
@@ -75,7 +76,7 @@ try {
         directory,
         `${typescriptFiles.length + pythonFiles.length}-${filename}`,
       );
-      writeFileSync(output, block.value ?? "");
+      writeFileSync(output, replaceSdkReleaseTokens(block.value ?? ""));
       if (block.lang === "ts") typescriptFiles.push(output);
       else pythonFiles.push(output);
     }

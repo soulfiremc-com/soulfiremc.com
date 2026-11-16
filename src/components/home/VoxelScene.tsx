@@ -168,6 +168,8 @@ export function VoxelScene() {
                   setAnnouncement(t("simulation.tntArmed"));
               }}
               disabled={!ready || !summary.canBreach}
+              // Pressing it disables it, so keep focus on it for keyboard users.
+              focusableWhenDisabled
               aria-label={t("simulation.triggerATntBreach")}
             >
               <Bomb data-icon="inline-start" />
@@ -181,6 +183,8 @@ export function VoxelScene() {
                   setAnnouncement(t("simulation.stormIncoming"));
               }}
               disabled={!ready || !summary.canStorm}
+              // Pressing it disables it, so keep focus on it for keyboard users.
+              focusableWhenDisabled
               aria-label={t("simulation.summonAStorm")}
               title={t("simulation.summonAStorm")}
             >
@@ -247,7 +251,7 @@ export function VoxelScene() {
         {t("simulation.localSimulationNoMinecraftServerConnection")}
       </p>
       <p className="sr-only" role="status">
-        {announcement}
+        {announcement && `${announcement} `}
         {t("simulation.generationReward", {
           generation: summary.generation,
           reward: t(
