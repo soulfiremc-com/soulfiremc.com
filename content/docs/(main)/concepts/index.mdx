@@ -1,22 +1,29 @@
 ---
 title: Concepts
 sidebarTitle: "Overview"
-description: Learn the main SoulFire concepts before you choose a setup or build a plugin.
+description: Learn how clients, servers, bots, tasks, and plugins fit together.
 icon: Lightbulb
 ---
 
 import { Cards, Card } from 'fumadocs-ui/components/card';
-import { ArrowLeftRight, Blocks } from 'lucide-react';
+import { Activity, ArrowLeftRight, Blocks } from 'lucide-react';
 
 These pages explain how SoulFire works.
 
 <Cards>
   <Card
     icon={<ArrowLeftRight />}
-    title="Operation Modes"
+    title="Operation modes"
     href="/docs/concepts/operation-modes"
   >
     Compare integrated and dedicated servers, GUI clients, and CLI clients.
+  </Card>
+  <Card
+    icon={<Activity />}
+    title="Bot state and task ownership"
+    href="/docs/concepts/bot-lifecycle"
+  >
+    Separate saved state from live connections and learn who owns running work.
   </Card>
   <Card
     icon={<Blocks />}

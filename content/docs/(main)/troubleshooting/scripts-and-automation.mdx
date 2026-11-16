@@ -1,5 +1,5 @@
 ---
-title: Scripts And Automation
+title: Scripts and automation
 sidebarTitle: "Scripts and automation"
 description: Find problems in visual scripts and SDK workers with a small test.
 icon: Bug
@@ -20,11 +20,9 @@ Identify the correct layer before you continue.
 
 Reduce the graph to three parts:
 
-The fastest path is usually:
-
-1. trigger
-2. `Print`
-3. one action
+1. The trigger
+2. `Log message` (`Print` in releases up to 2.10.7)
+3. One action
 
 Then add the other nodes back one at a time.
 
@@ -48,9 +46,9 @@ That is especially important when:
 - `Send Chat` appears to run but nothing visible happens
 - the graph only breaks once a delay or branch is added
 
-## Use `Print` to trace the graph
+## Use `Log message` to trace the graph
 
-`Print` is usually the fastest way to answer:
+`Log message` is usually the fastest way to answer:
 
 - did the trigger fire?
 - which branch ran?

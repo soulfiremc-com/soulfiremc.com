@@ -1,5 +1,5 @@
 ---
-title: Dedicated Server And Docker
+title: Dedicated server and Docker
 sidebarTitle: "Backend and Docker"
 description: Find and fix problems with remote servers, Docker, Cloudflared, or Traefik.
 icon: ServerCrash
@@ -62,7 +62,8 @@ If the tunnel is healthy but SoulFire still does not respond, inspect the app co
 Make sure that these Traefik settings are correct:
 
 - the domain or IP you actually configured
-- whether ports `80` and `443` are reachable from the internet
+- whether port `443` is reachable from the internet
+- whether port `80` is also reachable, if you use the setup script or public-IP HTTPS
 - certificate issuance status
 - container logs for Traefik and the app
 
@@ -75,7 +76,7 @@ Start simple:
 1. Make sure that the app container is running.
 2. Make sure that the container is healthy.
 3. Read the logs.
-4. retry a basic GUI or CLI login with a fresh token
+4. Retry a basic GUI or CLI login with a fresh token.
 
 After the basic login works, enable proxies, automation, and external integrations one at a time.
 
@@ -114,8 +115,8 @@ If related URLs are wrong, make sure that the public server address is correct.
 
 ## Related pages
 
-- [Deploy a Dedicated Server](/docs/server/automated-setup)
+- [Deploy a dedicated server](/docs/server/automated-setup)
 - [Docker](/docs/server/docker)
-- [Cannot Connect Or Times Out](/docs/troubleshooting/cannot-connect-or-times-out)
+- [Cannot connect or times out](/docs/troubleshooting/cannot-connect-or-times-out)
 - [MCP (AI Integration)](/docs/how-to/mcp)
 - [WebDAV](/docs/how-to/webdav)

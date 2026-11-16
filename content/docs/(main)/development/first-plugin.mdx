@@ -1,5 +1,5 @@
 ---
-title: Build Your First Plugin
+title: Build your first plugin
 sidebarTitle: "First plugin"
 description: Build a SoulFire plugin from the official template and load it as a Fabric mod.
 icon: Plug
@@ -159,13 +159,13 @@ Read [Gradle and project layout](/docs/development/gradle-and-project-layout) be
 
 ## Check the event with one bot
 
-Start one bot in a test instance.
+Start one bot in a test project.
 Expect the backend log to include `Bot <account name> was initialized`.
 This event occurs during initialization, before a usable player and world necessarily exist.
 Use a later lifecycle event for actions that need a joined player.
 
 Stop the bot after the check.
-If the plugin appears in `plugins` but produces no event output, inspect event registration and the selected instance.
+If the plugin appears in `plugins` but produces no event output, inspect event registration and the selected project.
 
 ## Add settings and a plugin page
 
@@ -182,7 +182,7 @@ That makes your settings appear in the GUI, CLI, and exported instance metadata 
 
 Use the built-in plugin inspection tools:
 
-- open the instance UI and view **Plugins**
+- open the project in the app and view **Plugins**
 - run `plugins` in the terminal
 - run `print-docs plugins` if you want the current built-in plugin documentation output
 
@@ -191,12 +191,12 @@ Fabric loading problems, missing dependencies, and bad mixin config usually fail
 
 If Fabric itself is complaining, go back to:
 
-- [Gradle And Project Layout](/docs/development/gradle-and-project-layout)
+- [Gradle and project layout](/docs/development/gradle-and-project-layout)
 - [Fabric Documentation](https://docs.fabricmc.net/)
 
 ## What to do next
 
-- [Environment Setup](/docs/development/environment-setup) to align your IDE and source checkout
-- [Gradle And Project Layout](/docs/development/gradle-and-project-layout) for the important build files
-- [Event System](/docs/development/event-system) to choose the right hook
-- [Mixins And Access Wideners](/docs/development/mixins-and-access-wideners) if events are not enough
+- [Environment setup](/docs/development/environment-setup) to align your IDE and source checkout
+- [Gradle and project layout](/docs/development/gradle-and-project-layout) for the important build files
+- [Event system](/docs/development/event-system) to choose the right hook
+- [Mixins and access wideners](/docs/development/mixins-and-access-wideners) if events are not enough

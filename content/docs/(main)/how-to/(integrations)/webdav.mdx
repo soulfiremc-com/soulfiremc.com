@@ -1,123 +1,102 @@
 ---
-title: WebDAV
-description: Connect to SoulFire files through WebDAV on Windows, macOS, or Linux.
+title: Access server files with WebDAV
+sidebarTitle: "WebDAV"
+description: Mount a SoulFire server's stored files on Windows, macOS, or Linux with a WebDAV token.
 icon: FolderSync
 ---
 
-## What is WebDAV?
+import { Callout } from 'fumadocs-ui/components/callout';
 
-WebDAV (Web Distributed Authoring and Versioning) gives you network access to SoulFire files.
-This page has connection steps for Windows, macOS, and Linux.
+WebDAV is a protocol that shows remote files as a network folder.
+The SoulFire server publishes its object storage at the `/webdav/` path.
+Object storage holds stored objects such as script code. Each project has a folder named `instance-<project ID>`.
 
-Install and start SoulFire before you continue.
-See [Start Here](/docs/start-here) for installation steps.
+Use WebDAV to read or edit those files without shell access to the SoulFire server.
+It is not a server backup. Use [backup and restore](/docs/server/backup-and-restore) for that.
 
-## What can you do with WebDAV?
+## Before you start
 
-With WebDAV, you can:
+- Start a SoulFire server and connect to it. See [Get started](/docs/start-here) or [Run a SoulFire server](/docs/server).
+- Find the server URL that your client uses, such as `https://soulfire.example.com`.
+- Use HTTPS for a server on another machine. Over plain HTTP, the token crosses the network unencrypted.
 
-- Access your SoulFire files from any device
-- Edit configuration files and scripts remotely
-- Upload and download instance data and script code
-- Manage SoulFire files without direct server access
+An administrator sees all folders.
+Another user sees only the projects where that user has the object storage permission.
 
-## Windows
+## Generate a WebDAV token
 
-### Connecting to WebDAV on Windows
+Run this command in the SoulFire server console, or in the app **Terminal** as the user who needs access:
 
-1. Open File Explorer
-2. Right-click on "This PC" and select "Add a network location"
-3. Click "Next" in the wizard
-4. Select "Choose a custom network location" and click "Next"
-5. Enter the WebDAV URL (e.g., `http://your-server-ip:port/webdav`) and click "Next"
-6. Enter your username and password if prompted
-7. Give the connection a name (e.g., "SoulFire WebDAV") and click "Next"
-8. Click "Finish" to complete the setup
+```text
+generate-token webdav
+```
 
-You can now access your SoulFire files through the network location in File Explorer.
+Copy the token. Treat it as a password.
+An API token does not work for WebDAV, and a WebDAV token does not work for the API.
 
-### Troubleshooting on Windows
+## Know your credentials
 
-If you encounter issues connecting to WebDAV on Windows:
+| Field | Value |
+| --- | --- |
+| URL | Your server URL followed by `/webdav/`, such as `https://soulfire.example.com/webdav/` |
+| Username | Any value. The server ignores it. Your SoulFire username is a good choice. |
+| Password | The WebDAV token |
 
-- Make sure the WebDAV service is enabled in your SoulFire configuration
-- Make sure that your firewall allows connections to the WebDAV port
-- Try using the full URL including the http:// prefix
-- If Windows cannot connect, enable Basic Authentication on the server
+The server reads the token from the password field of HTTP Basic authentication.
+A client that sends `Authorization: Bearer <token>` also works.
 
-## macOS
+## Connect on Windows
 
-### Connecting to WebDAV on macOS
+1. Open File Explorer.
+2. Right-click **This PC** and select **Add a network location**.
+3. Select **Choose a custom network location**.
+4. Enter the WebDAV URL.
+5. Enter a username and the WebDAV token as the password.
+6. Name the location and finish the wizard.
 
-1. Open Finder
-2. Click on "Go" in the menu bar and select "Connect to Server" (or press ⌘K)
-3. Enter the WebDAV URL (e.g., `http://your-server-ip:port/webdav`) in the Server Address field
-4. Click "Connect"
-5. Enter your username and password if prompted
-6. The WebDAV share will appear as a mounted drive in Finder
+By default, Windows sends Basic credentials only over HTTPS.
+If the connection to an `http://` URL fails, put the server behind [HTTPS](/docs/server/access).
 
-### Troubleshooting on macOS
+## Connect on macOS
 
-If you encounter issues connecting to WebDAV on macOS:
+1. Open Finder.
+2. Select **Go**, then **Connect to Server**. The shortcut is Command-K.
+3. Enter the WebDAV URL and select **Connect**.
+4. Enter a username and the WebDAV token as the password.
 
-- Make sure that the WebDAV URL is correct
-- Make sure that your computer can reach the server
-- Make sure that the username and password are correct
-- Try using https:// instead of http:// if SSL is enabled
+Finder mounts the share as a volume.
 
-## Linux
+## Connect on Linux
 
-### Connecting to WebDAV on Linux
+In GNOME Files, open **Other Locations** and enter the URL with the `davs://` scheme, such as `davs://soulfire.example.com/webdav/`.
+In KDE Dolphin, enter the URL with the `webdavs://` scheme in the address bar.
+Use `dav://` or `webdav://` for a plain HTTP server.
 
-There are several ways to connect to WebDAV on Linux, depending on your distribution and desktop environment.
+To mount from a terminal, install `davfs2` with your package manager, then run:
 
-#### Using GNOME Files (Nautilus)
+```bash
+sudo mkdir -p /mnt/soulfire
+sudo mount -t davfs https://soulfire.example.com/webdav/ /mnt/soulfire
+```
 
-1. Open Files (Nautilus)
-2. Click on "Other Locations" in the sidebar
-3. In the "Connect to Server" field at the bottom, enter the WebDAV URL (e.g., `dav://your-server-ip:port/webdav`)
-4. Click "Connect"
-5. Enter your username and password if prompted
+Enter a username and the WebDAV token when `mount` asks for them.
 
-#### Using KDE Dolphin
+## Check the result
 
-1. Open Dolphin file manager
-2. In the address bar, enter the WebDAV URL (e.g., `webdav://your-server-ip:port/webdav`)
-3. Enter your username and password if prompted
+Open the mounted folder.
+Expect one `instance-<project ID>` folder for each project that you can access.
+To match a folder with a project, copy the project ID from the project's context menu in the app.
 
-#### Using davfs2 (Command Line)
+## If the connection fails
 
-1. Install davfs2:
-   ```bash
-   sudo apt-get install davfs2   # Debian/Ubuntu
-   sudo yum install davfs2       # CentOS/RHEL
-   ```
+| Symptom | Next check |
+| --- | --- |
+| Login prompt repeats | The password must be a token from `generate-token webdav`, not an API token |
+| The folder is empty | Your user needs the object storage permission for the project |
+| Windows refuses an `http://` URL | Use HTTPS |
+| Connection refused or timeout | Open the same host and port that the app uses, with `/webdav/` added |
 
-2. Create a mount point:
-   ```bash
-   sudo mkdir /mnt/webdav
-   ```
-
-3. Mount the WebDAV share:
-   ```bash
-   sudo mount -t davfs http://your-server-ip:port/webdav /mnt/webdav
-   ```
-
-4. Enter your username and password when prompted
-
-### Troubleshooting on Linux
-
-If you encounter issues connecting to WebDAV on Linux:
-
-- Make sure that the required packages are installed
-- Make sure that the WebDAV URL has the correct format
-- Make sure that your user can mount the file system
-- Read the system logs for more detailed error messages
-
-## Security Considerations
-
-When using WebDAV, keep the following security considerations in mind:
-
-- Use HTTPS instead of HTTP when possible to encrypt your connection
-- Do not share your WebDAV URL or credentials with unauthorized users
-- Regularly update your SoulFire installation to patch security vulnerabilities
+<Callout type="warn">
+  Keep the WebDAV token private. Anyone who has it can read and change the files that your user can access.
+  A new token does not cancel an old one. If you expose a token, ask a server administrator to invalidate your sessions.
+</Callout>

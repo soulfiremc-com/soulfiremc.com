@@ -7,7 +7,7 @@ icon: Apple
 
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 
-If you have not decided on a setup yet, start with [Choose Your Setup](/docs/start-here/choose-your-setup).
+If you have not decided on a setup yet, start with [Choose your setup](/docs/start-here/choose-your-setup).
 
 ## Install SoulFire
 
@@ -21,30 +21,34 @@ Follow these steps to install SoulFire on macOS.
   </Step>
 
   <Step>
-    ### Run the installer
-    Open the downloads list in the toolbar.
-    Hold `Control` and click the installer, then select **Open**.
-
-    macOS can block the installer if you open it without the `Control` key.
+    ### Copy SoulFire to Applications
+    Open the downloaded `.dmg` file.
+    Drag **SoulFire** into the **Applications** folder, then eject the disk image.
   </Step>
 
   <Step>
-    ### Accept the warning
-    If macOS warns you about an unidentified developer, continue with the installation.
-  </Step>
+    ### Allow the first start
+    Open SoulFire from the Applications folder.
+    macOS blocks the first start because the app is not notarized by Apple.
 
-  <Step>
-    ### Follow the installer
-    Follow the instructions and accept the license.
-    Keep the default settings unless you need to change them.
+    On macOS 15 or newer:
+
+    1. Close the warning.
+    2. Open **System Settings**, then **Privacy & Security**.
+    3. Scroll to **Security** and select **Open Anyway** next to the SoulFire message.
+    4. Confirm with your password, then select **Open Anyway** again.
+
+    On macOS 14 or older, hold `Control`, click the app, and select **Open** twice.
+    You only do this once for each installed version.
   </Step>
 
   <Step>
     ### Start SoulFire
-    Open SoulFire from the Applications folder.
+    Open SoulFire from the Applications folder or Launchpad.
+    Expect the **Choose where SoulFire runs** screen.
   </Step>
 </Steps>
 
 ## Next steps
 
-After installing SoulFire, continue with [Run Your First Session in GUI Mode](/docs/start-here/gui-mode).
+After installing SoulFire, continue with [Connect your first bot](/docs/start-here/gui-mode).

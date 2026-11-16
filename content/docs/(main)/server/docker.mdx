@@ -93,6 +93,7 @@ Keep the local API port bound to loopback, or remove the published port if only 
 ## Use Traefik with a hostname
 
 Point your hostname to this host and make port `443` reachable for the TLS challenge.
+This example does not use port `80`. The [setup script](/docs/server/automated-setup) also opens port `80`, and its public-IP HTTPS mode requires it.
 Set these values in `.env`:
 
 ```dotenv title=".env"

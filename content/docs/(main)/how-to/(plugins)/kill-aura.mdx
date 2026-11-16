@@ -1,6 +1,6 @@
 ---
-title: Kill Aura
-sidebarTitle: "Kill aura"
+title: Auto attack
+sidebarTitle: "Auto attack"
 description: Configure targeting ranges, cooldowns, protected players, and wall checks for combat tests.
 icon: Sword
 ---
@@ -10,7 +10,8 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
 
 ## What this is for
 
-`kill-aura` makes a bot look at and attack nearby targets within configured ranges.
+**Auto attack** makes a bot look at and attack nearby targets within configured ranges.
+Releases up to 2.10.7 call this feature **Kill Aura** or KillAura. The plugin ID stays `kill-aura`.
 
 This is useful for:
 
@@ -39,13 +40,13 @@ Set the ranges in this order:
 - Use a smaller value for `swing-range`
 - Use the smallest value for `hit-range`
 
-## Enable and tune kill-aura
+## Enable and tune Auto attack
 
 <Steps>
   <Step>
     ### Enable the plugin
 
-    Open **Plugins** and enable **Kill Aura**.
+    Open **Plugins** and enable **Auto attack**.
   </Step>
 
   <Step>
@@ -99,7 +100,7 @@ If your `hit-range` is too aggressive, you are more likely to create behavior th
 
 ## Cooldown and version behavior
 
-`kill-aura` respects normal attack strength behavior by default.
+Auto attack respects normal attack strength behavior by default.
 
 The plugin adds custom attack delay logic in two situations:
 
@@ -162,6 +163,6 @@ Your `whitelisted-users` list is incomplete or misspelled.
 
 ## Related pages
 
-- [Import Accounts](/docs/how-to/import-accounts)
-- [Import Proxies](/docs/how-to/import-proxies)
+- [Import accounts](/docs/how-to/import-accounts)
+- [Import proxies](/docs/how-to/import-proxies)
 - [Plugins](/docs/concepts/plugins)

@@ -13,7 +13,8 @@ Those checks do not replace validation on your installed backend.
 ## Greeting on join
 
 [Download the join greeting](/docs/scripts/join-greeting.soulfire-script.json).
-The graph connects **On Join** to **Send Chat**.
+The graph connects **On player ready** to **Send Chat**.
+Releases up to 2.10.7 call that trigger **On Join**.
 Set the message, save, enable, and start one bot.
 Expect one message per join. Pause the script after the check.
 
@@ -22,7 +23,7 @@ Use the [first-script tutorial](/docs/scripting/first-script) for the complete p
 ## Log a join without sending chat
 
 [Download the join log](/docs/scripts/join-log.soulfire-script.json).
-The graph connects **On Join** to **Print** and passes the trigger's username into the log message.
+The graph connects **On player ready** to **Log message** (earlier **Print**) and passes the trigger's username into the log message.
 Save, enable, and start one bot.
 Expect that account's username in the script log when it joins.
 
@@ -30,13 +31,13 @@ Pause the script and stop the bot after checking the result.
 
 ## Import procedure
 
-1. Open the intended instance's **Scripts** page.
+1. Open the intended project's **Scripts** page.
 2. Create or open the script you want to replace.
 3. Use the toolbar import action and select the download.
 4. Review the graph, its paused state, and validation diagnostics.
 5. Save the script before enabling it.
 
-Import changes the graph in the editor. It is not a complete instance restore.
+Import changes the graph in the editor. It is not a complete project restore.
 Use the toolbar export action to preserve your modified graph.
 
 ## Larger examples

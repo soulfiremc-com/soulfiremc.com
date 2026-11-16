@@ -1,6 +1,6 @@
 ---
-title: Forwarding Bypass
-sidebarTitle: "Forwarding bypass"
+title: Player forwarding
+sidebarTitle: "Player forwarding"
 description: Configure Modern, BungeeGuard, legacy forwarding, or SoulFireBypass for an online-mode proxy network.
 icon: ShieldCheck
 ---
@@ -10,7 +10,8 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
 
 ## What this is for
 
-Use `forwarding-bypass` when a proxy requires forwarded player data instead of a direct login.
+Use **Player forwarding** when a proxy requires forwarded player data instead of a direct login.
+Releases up to 2.10.7 call this feature **Forwarding Bypass**. The plugin ID stays `forwarding-bypass`.
 
 The plugin supports:
 
@@ -23,7 +24,7 @@ If your target is a normal standalone server with no proxy forwarding in front o
 
 ## What the built-in plugin supports
 
-SoulFire ships `forwarding-bypass` as a built-in plugin.
+SoulFire ships Player forwarding as a built-in plugin.
 It exposes these modes:
 
 | Mode | Use this when | Needs a secret | Uses `player-address` |
@@ -46,19 +47,19 @@ The related CLI flags are:
   An incorrect setup can create an authentication bypass.
 </Callout>
 
-## Enable forwarding-bypass in SoulFire
+## Enable Player forwarding in SoulFire
 
 <Steps>
   <Step>
-    ### Open the instance
+    ### Open the project
 
-    Open the SoulFire instance that will run the bots.
+    Open the SoulFire project that will run the bots.
   </Step>
 
   <Step>
     ### Enable the plugin
 
-    Open **Plugins** and enable **Forwarding Bypass**.
+    Open **Plugins** and enable **Player forwarding**.
   </Step>
 
   <Step>
@@ -163,9 +164,9 @@ Use it when:
 
 <Steps>
   <Step>
-    ### Enable Forwarding Bypass
+    ### Enable Player forwarding
 
-    In SoulFire, enable the built-in **Forwarding Bypass** plugin.
+    In SoulFire, enable the built-in **Player forwarding** plugin.
   </Step>
 
   <Step>
@@ -204,11 +205,11 @@ It is a separate opt-in bypass path specifically for SoulFire.
 - Use `MODERN` if you are connecting through a standard Velocity modern-forwarding setup and do not need SoulFireBypass.
 - Use `BUNGEE_GUARD` if you are testing against an older Bungee-style network protected by BungeeGuard.
 - Use `SF_BYPASS` if you specifically want SoulFire offline-mode bots to reach an otherwise online-mode proxy network.
-- Do not enable `forwarding-bypass` unless the server architecture actually requires it.
+- Do not enable Player forwarding unless the server architecture actually requires it.
 
 ## Related pages
 
-- [Install Plugins](/docs/how-to/install-plugins)
-- [Built-in Plugins](/docs/reference/built-in-plugins)
+- [Install plugins](/docs/how-to/install-plugins)
+- [Built-in plugins](/docs/reference/built-in-plugins)
 - [Plugins](/docs/concepts/plugins)
 - [Proxies](/docs/troubleshooting/proxies)

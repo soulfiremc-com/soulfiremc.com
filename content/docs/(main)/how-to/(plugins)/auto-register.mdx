@@ -1,7 +1,7 @@
 ---
-title: Auto Register
-sidebarTitle: "Auto register"
-description: Configure SoulFire's auto-register plugin to respond to AuthMe-style register and login prompts automatically.
+title: Auto login and register
+sidebarTitle: "Auto login and register"
+description: Respond to AuthMe-style register and login prompts in chat automatically.
 icon: KeyRound
 ---
 
@@ -10,7 +10,8 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
 
 ## What this is for
 
-Use `auto-register` when the target server expects players to register or log in through chat commands after joining.
+Use **Auto login and register** when the target server expects players to register or log in through chat commands after joining.
+Releases up to 2.10.7 call this feature **Auto Register**. The plugin ID stays `auto-register`.
 
 The current built-in behavior is simple:
 
@@ -37,13 +38,13 @@ It is a poor fit for:
 - plugin flows that hide the command entirely
 - custom registration systems that do not expose standard chat prompts
 
-## Configure auto-register
+## Configure Auto login and register
 
 <Steps>
   <Step>
     ### Enable the plugin
 
-    Open **Plugins** and enable **Auto Register**.
+    Open **Plugins** and enable **Auto login and register**.
   </Step>
 
   <Step>
@@ -135,7 +136,7 @@ The delay controls when SoulFire sends the command after the prompt.
 Treat the configured password as sensitive.
 
 - Do not reuse an important real-world password here.
-- Assume anyone with access to the instance settings can see or reuse it.
+- Assume anyone with access to the project settings can see or reuse it.
 - Prefer a dedicated test password for bots.
 
 <Callout type="warn">
@@ -166,6 +167,6 @@ Review the password format, command alias, and timing for that server.
 
 ## Related pages
 
-- [Import Accounts](/docs/how-to/import-accounts)
-- [Accounts And Authentication](/docs/troubleshooting/accounts-and-authentication)
-- [Install Plugins](/docs/how-to/install-plugins)
+- [Import accounts](/docs/how-to/import-accounts)
+- [Accounts and authentication](/docs/troubleshooting/accounts-and-authentication)
+- [Install plugins](/docs/how-to/install-plugins)

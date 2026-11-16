@@ -13,14 +13,14 @@ The host mount or named volume at that path must survive container replacement.
 
 The current backend includes:
 
-- `soulfire.sqlite`: the default SQLite database for instances, users, accounts, and saved state.
+- `soulfire.sqlite`: the default SQLite database for projects, users, accounts, and saved state.
 - `secret-key.bin`: the JWT signing key.
 - `config/`: backend and plugin data.
 - `object-storage/`: stored objects, including script code.
 - Export directories and installed plugin files needed by your workflow.
 
 Preserve the complete deployment data and plugin locations rather than selecting only the database.
-An exported visual script does not include accounts, users, signing keys, or every instance setting.
+An exported visual script does not include accounts, users, signing keys, or every project setting.
 
 ## Find the directory
 
@@ -36,10 +36,10 @@ Do not assume that a remote backend stores files beside your client executable.
 
 ## Check persistence
 
-1. Create a test instance and save its settings.
+1. Create a test project and save its settings.
 2. Stop the backend cleanly.
 3. Start the same deployment with the same data mount.
-4. Check that the instance and its settings remain available.
+4. Check that the project and its settings remain available.
 
 Keep bots stopped during this check so a restored running request does not reconnect unexpectedly.
 Use [backup and restore](/docs/server/backup-and-restore) before replacing or moving the deployment.

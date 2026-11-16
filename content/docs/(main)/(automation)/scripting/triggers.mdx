@@ -22,7 +22,9 @@ Keep these engine details in mind:
 
 ## Bot connection triggers
 
-### On Bot Init
+### On connection created
+
+Releases up to 2.10.7 call this trigger **On Bot Init**. The node type stays `trigger.on_bot_init`.
 
 Fires when the bot connection starts, before the player object is ready.
 
@@ -32,9 +34,11 @@ Fires when the bot connection starts, before the player object is ready.
 | `serverAddress` | String | The current server address |
 | `username` | String | The bot account name |
 
-Use this when you need early connection setup. If you want to move, chat, or interact with the world, use `On Join` instead.
+Use this when you need early connection setup. If you want to move, chat, or interact with the world, use `On player ready` instead.
 
-### On Join
+### On player ready
+
+Releases up to 2.10.7 call this trigger **On Join**. The node type stays `trigger.on_join`.
 
 Fires when the bot has fully joined and is ready to interact.
 
@@ -124,7 +128,7 @@ Fires on a repeating timer.
 | `executionCount` | Number | How many times this trigger has fired |
 
 <Callout type="info">
-  `On Interval` is instance-level, not bot-level. If you want to run something for every connected bot, connect `On Interval` to `Get Bots` and then `For Each Bot`.
+  `On Interval` is project-level, not bot-level. If you want to run something for every connected bot, connect `On Interval` to `Get Bots` and then `For Each Bot`.
 </Callout>
 
 ### On Script Init
@@ -181,8 +185,8 @@ For example, use it for a combat action after movement.
 
 ## Choose a trigger
 
-- Use `On Join` for most startup behavior.
-- Use `On Bot Init` only when `On Join` is too late.
+- Use `On player ready` for most startup behavior.
+- Use `On connection created` only when `On player ready` is too late.
 - Use `On Chat` for anything message-driven.
 - Use `On Interval` for a task that runs at a fixed interval.
 - Use `On Pre Entity Tick` and `On Post Entity Tick` only for timing-sensitive logic.
@@ -192,5 +196,5 @@ For example, use it for a combat action after movement.
 
 - Using `On Interval` and expecting a `bot` output.
 - Treating `On Pre Entity Tick` as a safe place for expensive work.
-- Using `On Bot Init` for actions that need a loaded player.
+- Using `On connection created` for actions that need a loaded player.
 - Putting all behavior in one large chain. One script can use several triggers.

@@ -33,7 +33,7 @@ docker compose stop
 docker compose start
 ```
 
-Check authenticated client access and the saved instance list.
+Check authenticated client access and the saved project list.
 Keep the backup private. It can contain account credentials and the token signing key.
 
 ## Verify recovery in isolation
@@ -45,7 +45,7 @@ Keep the backup private. It can contain account credentials and the token signin
 5. Keep test bots stopped and prevent accidental access to the production target.
 6. Start the restored backend and connect an authenticated client.
 
-Check users, instances, account counts, settings, and scripts.
+Check users, projects, account counts, settings, and scripts.
 Run one disposable bot against a test Minecraft server to check the complete connection path.
 Do not mark the backup usable until this recovery check succeeds.
 
@@ -56,7 +56,7 @@ Preserve its current data in a separate directory first.
 Restore the verified backup and its matching software and plugins.
 Preserve file ownership, especially the container's UID/GID `1001` for writable data.
 
-Start the backend. Repeat the authenticated access and instance checks.
+Start the backend. Repeat the authenticated access and project checks.
 Start one bot before resuming the remaining workload.
 
 ## Signing keys and rollback

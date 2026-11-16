@@ -1,7 +1,7 @@
 ---
 title: Manage access and HTTPS
 sidebarTitle: "Access and HTTPS"
-description: Connect remote clients with an API token and the correct instance permissions.
+description: Connect remote clients with an API token and the correct project permissions.
 icon: KeyRound
 ---
 
@@ -30,15 +30,15 @@ For a local connection, the default backend port is `38765`.
 Keep a local-only listener or published port bound to loopback when remote access is unnecessary.
 The [Java guide](/docs/server/java) describes `sf.grpc.host` and `sf.grpc.port`.
 
-## Grant instance access
+## Grant project access
 
-Use the client's user management and instance permission controls for the user who needs access.
-Grant only the instances and actions required for that workflow.
-Server-wide administration and instance access are separate permissions.
+Use the client's user management and project permission controls for the user who needs access.
+Grant only the projects and actions required for that workflow.
+Server-wide administration and project access are separate permissions.
 
 Sign in as that user after the change.
-Check that the intended instance appears and its required actions work.
-Also check that unrelated instances remain inaccessible.
+Check that the intended project appears and its required actions work.
+Also check that unrelated projects remain inaccessible.
 
 For programmatic management, use the [administration guide](/docs/sdk/administration) and the generated [UserService and InstanceService contracts](/docs/openapi).
 

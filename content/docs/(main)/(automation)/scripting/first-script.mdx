@@ -1,7 +1,7 @@
 ---
 title: Send chat when a bot joins
 sidebarTitle: "First script"
-description: Build, verify, and stop a two-node script in your tutorial instance.
+description: Build, verify, and stop a two-node script in your tutorial project.
 icon: Play
 ---
 
@@ -14,11 +14,11 @@ Use a backend with the node types listed in the [node reference](/docs/scripting
 
 ## Create the graph
 
-1. Open **Scripts** in the tutorial instance.
+1. Open **Scripts** in the tutorial project.
 2. Create a script named `Tutorial greeting`.
-3. Add an **On Join** trigger.
+3. Add an **On player ready** trigger. Releases up to 2.10.7 call it **On Join**.
 4. Add a **Send Chat** action.
-5. Connect **On Join: Out** to **Send Chat: In** with an execution wire.
+5. Connect **On player ready: Out** to **Send Chat: In** with an execution wire.
 6. Set **Send Chat: Message** to `Hello from the visual script`.
 7. Save the script and enable it by clearing its paused state.
 
@@ -26,7 +26,7 @@ The graph is:
 
 ```mermaid
 flowchart LR
-  join[On Join] -->|execution| chat[Send Chat]
+  join[On player ready] -->|execution| chat[Send Chat]
 ```
 
 The join trigger supplies the bot in execution context.

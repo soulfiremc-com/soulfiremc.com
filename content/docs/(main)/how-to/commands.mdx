@@ -1,16 +1,16 @@
 ---
 title: Run a command for one bot
 sidebarTitle: "Commands"
-description: Use the instance terminal and bot selector without affecting an entire fleet.
+description: Use the project terminal and bot selector without affecting an entire fleet.
 icon: SquareTerminal
 ---
 
-The instance **Terminal** accepts SoulFire commands.
+The project **Terminal** accepts SoulFire commands.
 These commands run on the SoulFire backend. They differ from Minecraft chat commands.
 
 ## Send chat through one bot
 
-With `DocsBot_1` connected in your tutorial instance, run:
+With `DocsBot_1` connected in your tutorial project, run:
 
 ```text
 bot DocsBot_1 say Hello from one bot
@@ -26,7 +26,7 @@ online
 bot DocsBot_1 health
 ```
 
-Check the selected instance and bot names before running a movement or inventory command.
+Check the selected project and bot names before running a movement or inventory command.
 A command without a bot selector can affect multiple bots in its scope.
 
 ## Send a Minecraft command
@@ -46,7 +46,7 @@ bots stop
 ```
 
 `control reset` clears movement inputs. It does not disconnect the bot.
-`bots stop` requests stopped state for configured bots in the selected instance scope.
+`bots stop` requests stopped state for configured bots in the selected project scope.
 The plain `stop` command shuts down the SoulFire backend.
 
 ## Look up the available commands

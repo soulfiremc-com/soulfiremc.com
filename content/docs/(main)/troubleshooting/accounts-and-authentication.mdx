@@ -1,5 +1,5 @@
 ---
-title: Accounts And Authentication
+title: Accounts and authentication
 sidebarTitle: "Account authentication"
 description: Fix Minecraft account import and authentication problems.
 icon: KeyRound
@@ -14,7 +14,7 @@ SoulFire has two separate authentication layers:
 - logging a GUI or CLI client into a SoulFire server
 - importing and refreshing Minecraft accounts for bots
 
-If your GUI cannot log into a remote SoulFire server, start with [Cannot Connect Or Times Out](/docs/troubleshooting/cannot-connect-or-times-out).
+If your GUI cannot log into a remote SoulFire server, start with [Cannot connect or times out](/docs/troubleshooting/cannot-connect-or-times-out).
 This page covers bot account imports and Minecraft authentication.
 
 ## Identify the account type first
@@ -26,7 +26,7 @@ Before you change anything, identify the account type:
 - Microsoft Bedrock
 - cookie-based formats
 
-Then compare your input against [Account Formats](/docs/reference/account-formats).
+Then compare your input against [Account formats](/docs/reference/account-formats).
 An incorrect input format often causes authentication errors.
 
 ## Test without proxies first
@@ -63,13 +63,13 @@ If one account works, test a smaller batch before you import all accounts.
 ## If import succeeds but joining still fails
 
 The problem now occurs after account import.
-Find out whether:
+Find out which of these applies:
 
-- whether the target server needs additional in-game login or registration
-- whether proxies are only failing after the join step
-- whether the wrong protocol version is selected
+- The target server needs an additional in-game login or registration.
+- The proxies fail only after the join step.
+- The wrong protocol version is selected.
 
-At that point, continue with [Cannot Connect Or Times Out](/docs/troubleshooting/cannot-connect-or-times-out) or [Proxies](/docs/troubleshooting/proxies).
+At that point, continue with [Cannot connect or times out](/docs/troubleshooting/cannot-connect-or-times-out) or [Proxies](/docs/troubleshooting/proxies).
 
 ## Access tokens for remote SoulFire servers
 
@@ -96,7 +96,7 @@ It is not the same thing as a Minecraft account credential.
 
 ## Related pages
 
-- [Import Accounts](/docs/how-to/import-accounts)
-- [Account Formats](/docs/reference/account-formats)
+- [Import accounts](/docs/how-to/import-accounts)
+- [Account formats](/docs/reference/account-formats)
 - [Proxies](/docs/troubleshooting/proxies)
-- [Cannot Connect Or Times Out](/docs/troubleshooting/cannot-connect-or-times-out)
+- [Cannot connect or times out](/docs/troubleshooting/cannot-connect-or-times-out)

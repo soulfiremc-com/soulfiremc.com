@@ -7,13 +7,13 @@ icon: Bug
 
 ## The script does not run
 
-1. Check that the script belongs to the intended instance.
+1. Check that the script belongs to the intended project.
 2. Check that it is saved and not paused.
 3. Cause the trigger event after enabling the script.
 4. Check that an execution wire reaches the first action.
 5. Inspect validation diagnostics and execution logs.
 
-An On Join trigger needs a new join. Saving a script while a bot is already online does not recreate that event.
+An **On player ready** trigger (earlier **On Join**) needs a new join. Saving a script while a bot is already online does not recreate that event.
 
 ## The wrong bot acts
 
@@ -25,7 +25,7 @@ Reduce the graph to one trigger and one action with a known bot before restoring
 
 Inspect the source output and target input in the [node reference](/docs/scripting/node-reference).
 Use a constant value to isolate the target node.
-Enable node previews or add a **Print** node to inspect the actual value.
+Enable node previews or add a **Log message** node (earlier **Print**) to inspect the actual value.
 The preview is evidence of a value, not proof that a later Minecraft action succeeded.
 
 ## The graph runs too often

@@ -1,6 +1,6 @@
 ---
-title: Fake Virtual Host
-sidebarTitle: "Virtual host"
+title: Handshake host override
+sidebarTitle: "Handshake host override"
 description: Change the hostname and port in the login handshake for virtual-host routing.
 icon: Globe
 ---
@@ -10,7 +10,8 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
 
 ## What this changes
 
-`fake-virtual-host` changes the hostname and port in the client handshake before login.
+**Handshake host override** changes the hostname and port in the client handshake before login.
+Releases up to 2.10.7 call this feature **Fake Virtual Host**. The plugin ID stays `fake-virtual-host`.
 
 That means:
 
@@ -47,17 +48,17 @@ It will not repair:
 
 The plugin cannot fix an incorrect connection address.
 
-## Configure fake-virtual-host
+## Configure Handshake host override
 
 <Steps>
   <Step>
     ### Enable the plugin
 
-    Open **Plugins** and enable **Fake Virtual Host**.
+    Open **Plugins** and enable **Handshake host override**.
   </Step>
 
   <Step>
-    ### Set the hostname to fake
+    ### Set the hostname to send
 
     Enter the hostname you want the server to see in the handshake.
 
@@ -69,7 +70,7 @@ The plugin cannot fix an incorrect connection address.
   </Step>
 
   <Step>
-    ### Set the port to fake
+    ### Set the port to send
 
     Enter the port you want the server to see alongside that hostname.
 
@@ -98,7 +99,7 @@ Connect to the shared IP and set the hostname that the proxy expects.
 ### Frontends or reverse proxies
 
 Some infrastructures preserve or inspect the original requested host during the handshake.
-If SoulFire reaches the frontend through a different address than normal players do, faking the virtual host can restore the expected login context.
+If SoulFire reaches the frontend through a different address than normal players do, overriding the handshake host can restore the expected login context.
 
 ## Verification checklist
 
@@ -109,22 +110,22 @@ When you test this plugin, make sure that:
 - the port matches the expected logical entry point
 - the bot reaches the right network path after join
 
-If the connection lands on the wrong backend or gets rejected immediately, the faked host value is likely wrong or unnecessary.
+If the connection lands on the wrong backend or gets rejected immediately, the override value is likely wrong or unnecessary.
 
 ## What it cannot fix
 
 - It does not emulate proxy forwarding.
-- It does not replace [Forwarding Bypass](/docs/how-to/forwarding-bypass).
+- It does not replace [Player forwarding](/docs/how-to/forwarding-bypass).
 - It does not bypass anti-bot systems by itself.
 - It does not change the actual TCP destination SoulFire connects to.
 
 <Callout type="info">
   If the problem is about what hostname the server sees, use this page.
-  If the problem is about what player identity or IP the backend expects from a proxy, use [Forwarding Bypass](/docs/how-to/forwarding-bypass) instead.
+  If the problem is about what player identity or IP the backend expects from a proxy, use [Player forwarding](/docs/how-to/forwarding-bypass) instead.
 </Callout>
 
 ## Related pages
 
-- [Forwarding Bypass](/docs/how-to/forwarding-bypass)
+- [Player forwarding](/docs/how-to/forwarding-bypass)
 - [Proxies](/docs/troubleshooting/proxies)
-- [Cannot Connect Or Times Out](/docs/troubleshooting/cannot-connect-or-times-out)
+- [Cannot connect or times out](/docs/troubleshooting/cannot-connect-or-times-out)

@@ -1,6 +1,6 @@
 ---
-title: Server List Bypass
-sidebarTitle: "Server list bypass"
+title: Ping before join
+sidebarTitle: "Ping before join"
 description: Ping the server list before joining networks that require this step.
 icon: Radar
 ---
@@ -10,7 +10,8 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
 
 ## What this is for
 
-Use `server-list-bypass` when a target network behaves differently if a client pings the server list before joining.
+Use **Ping before join** when a target network behaves differently if a client pings the server list before joining.
+Releases up to 2.10.7 call this feature **Server List Bypass**. The plugin ID stays `server-list-bypass`.
 
 The built-in plugin does one simple thing:
 
@@ -18,7 +19,8 @@ The built-in plugin does one simple thing:
 2. it waits for a random delay
 3. it starts the real join attempt
 
-This flow can pass anti-bot systems such as EpicGuard that expect a status ping before login.
+Some anti-bot systems, such as EpicGuard, expect a status ping before login.
+Whether the server then accepts the join depends on its configuration.
 
 ## When it helps
 
@@ -47,19 +49,19 @@ If the problem is a dead proxy, a wrong hostname, or broken forwarding, this plu
   Normal servers usually do not need it.
 </Callout>
 
-## Enable server-list-bypass
+## Enable Ping before join
 
 <Steps>
   <Step>
-    ### Open the instance
+    ### Open the project
 
-    Open the instance that will connect to the target server.
+    Open the project that will connect to the target server.
   </Step>
 
   <Step>
     ### Enable the plugin
 
-    Open **Plugins** and enable **Server List Bypass**.
+    Open **Plugins** and enable **Ping before join**.
   </Step>
 
   <Step>
@@ -96,7 +98,7 @@ Start with this process:
 
 When you are not sure whether the plugin is helping, isolate it cleanly:
 
-1. try a join without `server-list-bypass`
+1. try a join without Ping before join
 2. enable it with the default delay range
 3. test one bot
 4. compare the result before touching other settings
@@ -122,7 +124,7 @@ This usually means rate limiting, poor proxies, or too many bots.
 
 ## Related pages
 
-- [Import Proxies](/docs/how-to/import-proxies)
-- [Forwarding Bypass](/docs/how-to/forwarding-bypass)
+- [Import proxies](/docs/how-to/import-proxies)
+- [Player forwarding](/docs/how-to/forwarding-bypass)
 - [Proxies](/docs/troubleshooting/proxies)
-- [Cannot Connect Or Times Out](/docs/troubleshooting/cannot-connect-or-times-out)
+- [Cannot connect or times out](/docs/troubleshooting/cannot-connect-or-times-out)

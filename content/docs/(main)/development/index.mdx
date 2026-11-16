@@ -47,76 +47,76 @@ Move to plugin development when:
 
 For your first plugin, read these pages in order:
 
-1. [Build Your First Plugin](/docs/development/first-plugin) to get one jar loading inside SoulFire
-2. [Environment Setup](/docs/development/environment-setup) to align Java, IntelliJ, and your local source checkout
-3. [Gradle And Project Layout](/docs/development/gradle-and-project-layout) when you start changing the template
-4. [Event System](/docs/development/event-system) and [Settings And Metadata](/docs/development/settings-and-metadata) for normal plugin work
-5. [Bot Control And Direct Access](/docs/development/bot-control-and-direct-access) only when you need real runtime objects or controlling tasks
-6. [Mixins And Access Wideners](/docs/development/mixins-and-access-wideners) only when the public API is not enough
-7. [Architecture And Protocols](/docs/development/architecture-and-protocols) when you need to trace how SoulFire wires the internals together
+1. [Environment setup](/docs/development/environment-setup) to align Java, IntelliJ, and your local source checkout
+2. [Build your first plugin](/docs/development/first-plugin) to get one jar loading inside SoulFire
+3. [Gradle and project layout](/docs/development/gradle-and-project-layout) when you start changing the template
+4. [Event system](/docs/development/event-system) and [Settings and metadata](/docs/development/settings-and-metadata) for normal plugin work
+5. [Bot control and direct access](/docs/development/bot-control-and-direct-access) only when you need real runtime objects or controlling tasks
+6. [Mixins and access wideners](/docs/development/mixins-and-access-wideners) only when the public API is not enough
+7. [Architecture and protocols](/docs/development/architecture-and-protocols) when you need to trace how SoulFire wires the internals together
 
 ## Development map
 
 <Cards>
   <Card
     icon={<Code />}
-    title="Build Your First Plugin"
+    title="Build your first plugin"
     href="/docs/development/first-plugin"
   >
     Start from the official template, register an `ExternalPlugin`, build the jar, and load it into SoulFire.
   </Card>
   <Card
     icon={<Wrench />}
-    title="Environment Setup"
+    title="Environment setup"
     href="/docs/development/environment-setup"
   >
     Set up Java, Gradle, IntelliJ, and a local source checkout that matches the SoulFire version you target.
   </Card>
   <Card
     icon={<GitBranchPlus />}
-    title="Gradle And Project Layout"
+    title="Gradle and project layout"
     href="/docs/development/gradle-and-project-layout"
   >
     Configure Loom, Maven repositories, SoulFire dependencies, and the Fabric project files your plugin needs.
   </Card>
   <Card
     icon={<Blocks />}
-    title="Event System"
+    title="Event system"
     href="/docs/development/event-system"
   >
     Learn the public event model, how listeners are registered, and which server lifecycle and bot events exist.
   </Card>
   <Card
     icon={<SlidersHorizontal />}
-    title="Settings And Metadata"
+    title="Settings and metadata"
     href="/docs/development/settings-and-metadata"
   >
     Define typed settings, add GUI and CLI pages, and store temporary or saved plugin data.
   </Card>
   <Card
     icon={<Cable />}
-    title="Bot Control And Direct Access"
+    title="Bot control and direct access"
     href="/docs/development/bot-control-and-direct-access"
   >
     Use `ControlState`, `ControlTask`, and direct `BotConnection` access when you need real in-process control.
   </Card>
   <Card
     icon={<Bug />}
-    title="Mixins And Access Wideners"
+    title="Mixins and access wideners"
     href="/docs/development/mixins-and-access-wideners"
   >
     Inject into Minecraft or SoulFire code when no stable event or API is available.
   </Card>
   <Card
     icon={<LibraryBig />}
-    title="Architecture And Protocols"
+    title="Architecture and protocols"
     href="/docs/development/architecture-and-protocols"
   >
     Understand how the launcher, server, instances, bots, settings, gRPC services, and script runtime fit together.
   </Card>
   <Card
     icon={<LibraryBig />}
-    title="Developer Resources"
+    title="Developer resources"
     href="/docs/development/developer-resources"
   >
     Jump straight to the official Javadocs, Maven coordinates, source trees, built-in plugins, and proto definitions.
@@ -148,6 +148,6 @@ These are the external references worth keeping open in another tab:
 ## Related pages
 
 - [Plugins](/docs/concepts/plugins) for the high-level Fabric-based model
-- [Install Plugins](/docs/how-to/install-plugins) for loading a built jar into SoulFire
-- [Built-in Plugins](/docs/reference/built-in-plugins) for the currently shipped plugin list
+- [Install plugins](/docs/how-to/install-plugins) for loading a built jar into SoulFire
+- [Built-in plugins](/docs/reference/built-in-plugins) for the currently shipped plugin list
 - [Scripting](/docs/scripting) if your use case can stay in the visual editor

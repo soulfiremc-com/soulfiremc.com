@@ -9,16 +9,16 @@ icon: Cable
 
 MCP (Model Context Protocol) lets AI assistants use external tools and services.
 SoulFire exposes its API as MCP tools.
-An assistant can control bot instances, run commands, and change settings through natural language.
+An assistant can manage projects, control bots, run commands, and change settings through natural language.
 
 Install and start SoulFire before you continue.
-See [Start Here](/docs/start-here) for installation steps.
+See [Get started](/docs/start-here) for installation steps.
 
 ## Available actions
 
 Through MCP, an AI assistant can:
 
-- Create and configure instances
+- Create and configure projects
 - Start, stop, and restart configured bots independently
 - Control individual bots (movement, rotation, inventory)
 - Execute Brigadier commands
@@ -26,7 +26,7 @@ Through MCP, an AI assistant can:
 - View logs and metrics
 - Manage users and permissions
 - Work with visual scripts (node-based automation)
-- Query server and instance configuration
+- Query server and project configuration
 
 ## Get an API token
 
@@ -37,7 +37,7 @@ Create one in any of these ways:
 2. **The CLI**: Use the `generate-token api` command
 3. **The gRPC API**: Call `ClientService.GenerateAPIToken` or `UserService.GenerateUserAPIToken`
 
-## MCP Endpoint
+## MCP endpoint
 
 The MCP endpoint is available at:
 
@@ -47,29 +47,25 @@ http://your-server:port/mcp
 
 The endpoint uses the Streamable HTTP transport.
 
-## Connecting Claude Desktop
+## Connect Claude Desktop
 
-Add the following to your Claude Desktop MCP configuration file (`claude_desktop_config.json`):
+Claude Desktop adds a remote MCP server as a custom connector.
+The `claude_desktop_config.json` file is for local servers that Claude starts on your computer.
 
-```json
-{
-  "mcpServers": {
-    "soulfire": {
-      "url": "http://your-server:port/mcp",
-      "headers": {
-        "Authorization": "Bearer YOUR_API_TOKEN"
-      }
-    }
-  }
-}
-```
+1. Open **Settings**, then **Connectors**.
+2. Add a custom connector.
+3. Enter the MCP URL, such as `https://soulfire.example.com/mcp`.
+4. In the request headers step, add `Authorization` with the value `Bearer YOUR_API_TOKEN`.
 
-Replace `your-server:port` with the SoulFire server address.
-Replace `YOUR_API_TOKEN` with the JWT token.
+Claude connects to a custom connector through your Claude account, not from your computer.
+The SoulFire server therefore needs a public HTTPS address. A `127.0.0.1` or LAN address does not work here.
+See [Anthropic's custom connector guide](https://support.claude.com/en/articles/11175166-getting-started-with-custom-connectors-using-remote-mcp) for plan requirements and current menu names.
+For a local SoulFire server, use Claude Code or another client that connects from your computer.
 
-## Connecting Claude Code
+## Connect Claude Code
 
-For Claude Code (CLI), add the MCP server using:
+Claude Code connects from your computer, so a local address works.
+Replace `your-server:port` with the SoulFire server address and `YOUR_API_TOKEN` with the token:
 
 ```bash
 claude mcp add soulfire --transport http http://your-server:port/mcp \
@@ -90,14 +86,14 @@ Use these settings with other MCP clients:
 
 SoulFire groups its MCP tools by purpose:
 
-### Instance Management
-- `list_instances`: List all instances visible to the current user
-- `create_instance`: Create a new instance
-- `delete_instance`: Permanently delete an instance
-- `get_instance_info`: Get detailed instance information and configuration
-- `update_instance_meta`: Update an instance name or icon
+### Project management
+- `list_instances`: List all projects visible to the current user
+- `create_instance`: Create a new project
+- `delete_instance`: Permanently delete a project
+- `get_instance_info`: Get detailed project information and configuration
+- `update_instance_meta`: Update a project name or icon
 - `update_instance_config_entry`: Update a configuration setting
-- `get_audit_log`: View the instance audit log
+- `get_audit_log`: View the project audit log
 
 ### Account & Proxy Management
 - `add_instance_account`: Add an offline Minecraft account
@@ -106,13 +102,13 @@ SoulFire groups its MCP tools by purpose:
 - `remove_instance_proxy`: Remove a proxy
 
 ### Command Execution
-- `execute_command`: Execute a SoulFire command (global, instance, or bot scope)
+- `execute_command`: Execute a SoulFire command (global, project, or bot scope)
 - `tab_complete_command`: Get tab-completion suggestions
 
 ### Bot Control
 - `set_bots_desired_state`: Keep selected bots running or stopped
 - `restart_bots`: Reconnect selected bots
-- `get_bot_list`: List all bots in an instance
+- `get_bot_list`: List all bots in a project
 - `get_bot_info`: Get detailed bot information
 - `set_bot_movement`: Control WASD, jump, sneak, sprint
 - `reset_bot_movement`: Stop all movement
@@ -139,7 +135,7 @@ SoulFire groups its MCP tools by purpose:
 - `generate_api_token`: Generate a new API token
 
 ### Metrics & Logs
-- `get_instance_metrics`: Instance performance metrics
+- `get_instance_metrics`: Project performance metrics
 - `get_server_metrics`: Server system metrics (CPU, memory, etc.)
 - `get_previous_logs`: Retrieve recent log entries
 
@@ -148,7 +144,7 @@ SoulFire groups its MCP tools by purpose:
 - `get_account_metadata` / `set_account_metadata_entry` / `delete_account_metadata_entry`
 
 ### Scripts
-- `list_scripts`: List all scripts in an instance
+- `list_scripts`: List all scripts in a project
 - `get_script`: Get script details and node graph
 - `delete_script`: Delete a script
 - `deactivate_script`: Stop a running script
@@ -156,16 +152,16 @@ SoulFire groups its MCP tools by purpose:
 - `get_node_types`: Get available script node types
 - `get_registry_data`: Get Minecraft registry data
 
-## Example Conversation
+## Example conversation
 
 Once connected, you can talk to SoulFire in plain language:
 
-> **You**: Create a new instance called "Test Server" and add 5 offline accounts named bot1 through bot5
+> **You**: Create a new project called "Test Server" and add 5 offline accounts named bot1 through bot5
 
-> **AI**: I'll create the instance and add the accounts for you.
-> *Creates instance, then adds 5 accounts with names bot1-bot5*
+> **AI**: I'll create the project and add the accounts for you.
+> *Creates project, then adds 5 accounts with names bot1-bot5*
 
-> **You**: Configure the instance to connect to play.example.com and start all five bots
+> **You**: Configure the project to connect to play.example.com and start all five bots
 
 > **AI**: I'll update the server address and set those bots to running.
 > *Updates config, then sets the five bot IDs to the running desired state*

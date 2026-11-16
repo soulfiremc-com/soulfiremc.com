@@ -102,6 +102,23 @@ Stream callbacks return effects; consumers use `run_for_each`, `run_collect`, or
 Generated protocol clients remain available for direct transport integration.
 Read the [TypeScript runtime](/docs/sdk/typescript-runtime) and [Python runtime](/docs/sdk/python-runtime) guides for details.
 
+## Which version each page describes
+
+Different parts of this site follow different SoulFire versions.
+Compare the version with your SoulFire server before you copy an example.
+
+| Content | Version | Why |
+| --- | --- | --- |
+| SDK guides, recipes, and tutorials | `2.10.2` | The examples are tested against this release |
+| [Node reference](/docs/scripting/node-reference) | `2.10.2` source | Generated from the same revision |
+| [HTTP API reference](/docs/openapi) | `2.11.0` | Generated from the development branch, which is ahead of the latest release |
+| App labels in the guides | After `2.10.7` | The guides use the updated names. Each page names the earlier label. |
+| App screenshots | `2.10.1` | Each caption states its version |
+| Plugin template | `2.9.1-SNAPSHOT` | The [first-plugin guide](/docs/development/first-plugin#align-the-template-with-your-backend) explains how to align it |
+
+A newer SoulFire server can add or rename a field that an older page does not show.
+The connected server is the authority for its own commands, nodes, and capabilities.
+
 ## Source and generated reference
 
 The documentation uses the [2.10.2 release source](https://github.com/soulfiremc-com/SoulFire/tree/878ba24b85ee4a1ec170ed738b7664b61ace1a2d).
