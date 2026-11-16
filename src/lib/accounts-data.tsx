@@ -420,8 +420,9 @@ export const SHOPS: Shop[] = [
     slug: "atomic-nfas",
     name: "Atomic NFAs",
     logo: "/accounts/atomic-nfas.webp",
-    url: "https://atomic-nfas.mysellauth.com",
-    websiteUrl: "https://atomic-nfas.mysellauth.com",
+    // The mysellauth.com storefront went offline on 2026-11-16. The shop
+    // still sells through its Discord.
+    url: "https://dsc.gg/atomicnfas",
     discordUrl: "https://dsc.gg/atomicnfas",
     startDate: "Jan 2026",
     listings: {
@@ -656,8 +657,9 @@ export const SHOPS: Shop[] = [
     slug: "skycron",
     name: "Skycron",
     logo: "/accounts/skycron.png",
-    url: "https://skycron.mysellauth.com",
-    websiteUrl: "https://skycron.mysellauth.com",
+    // The mysellauth.com storefront went offline on 2026-11-16. The shop
+    // still sells through its Discord.
+    url: "https://discord.gg/5sZNDb4UMy",
     discordUrl: "https://discord.gg/5sZNDb4UMy",
     paymentMethods: ["Crypto", "PayPal", "Rewarble Gift Card (Card)"],
     startDate: "Feb 2026",
