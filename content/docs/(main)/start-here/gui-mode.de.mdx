@@ -7,7 +7,7 @@ icon: Bot
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-Diese Anleitung verwendet die Desktop-App und ihren integrierten SoulFire-Server.
+Diese Anleitung verwendet die Desktop-App und einen lokalen SoulFire-Server, den die App für dich startet.
 Plane nach der Installation etwa zehn Minuten ein.
 Am Ende hast du einen Bot, den du selbst starten und stoppen kannst.
 
@@ -23,21 +23,25 @@ Ein Offline-Konto meldet sich nicht bei Microsoft an. Es kann keinem Server im O
 [Importiere dafür ein Microsoft-Konto](/docs/how-to/import-accounts) und verwende seinen Namen statt `DocsBot_1`.
 </Callout>
 
-## 1. Integrierten Server öffnen [#1-open-the-integrated-server]
+## 1. Lokalen SoulFire-Server starten [#1-start-a-local-soulfire-server]
 
-Öffne SoulFire. Wähle **Integrated server (local)**.
-Warte, bis die App die Serverseiten und den Eintrag **Instances** anzeigt.
-Die Option **Demo server** zeigt nur Beispieldaten. Sie kann keine echten Bots verbinden.
+Öffne SoulFire. Wähle **Integrierter Server (lokal)** (englisch **Run on this computer**).
+Warte, bis die App die Seite **Instanzen** (**Projects**) anzeigt.
+Die Option **Demo Server** (**Try the demo**) zeigt nur Beispieldaten. Sie kann keine echten Bots verbinden.
 
-## 2. Eine Übungsinstanz erstellen [#2-create-a-tutorial-instance]
+## 2. Eine Übungsinstanz erstellen [#2-create-a-tutorial-project]
 
-Öffne **Instances**. Wähle **Create Instance**.
+Öffne **Instanzen** (**Projects**). Wähle **Instanz erstellen** (**Create project**).
 Nenne die Instanz `Docs tutorial` und öffne sie.
 Eine Instanz speichert Konten, Zieleinstellungen, Proxys, Plugins und Skripte für diesen Ablauf.
 
+Diese Anleitung nennt die deutschen Bezeichnungen der App und in Klammern die englischen.
+Die englische App nennt eine Instanz jetzt **Project**. Bis Version 2.10.7 heißt sie dort **Instance**, mit den Schaltflächen **Instances** und **Create Instance**.
+Die Schritte sind gleich. Unter [Namen und Kompatibilität](/docs/reference/naming) findest du die weiteren umbenannten Bezeichnungen.
+
 ## 3. Minecraft-Ziel festlegen [#3-set-the-minecraft-target]
 
-Öffne **Bot Settings**. Setze die Serveradresse auf `127.0.0.1:25565`.
+Öffne **Bot Einstellungen** (**Bot Settings**). Setze die Serveradresse auf `127.0.0.1:25565`.
 Wähle eine zu deinem Minecraft-Server passende Protokollversion.
 Behalte für diesen ersten Lauf die Standardwerte für Beitrittsverzögerung und Zeitlimit.
 Importiere noch keine Proxys und aktiviere keine zusätzliche Automatisierung.
@@ -47,7 +51,7 @@ Gib bei einem entfernten Backend eine Minecraft-Adresse ein, die dieser Computer
 
 ## 4. Genau ein Offline-Konto hinzufügen [#4-add-exactly-one-offline-account]
 
-Öffne **Account Settings** und den Dialog zur Erstellung von Offline-Konten.
+Öffne **Konto Einstellungen** (**Account Settings**) und den Dialog zur Erstellung von Offline-Konten.
 Setze die Anzahl auf `1` und das Namensformat auf `DocsBot_%d`.
 Erstelle das Konto. Prüfe, ob `DocsBot_1` in der Kontoliste erscheint.
 
@@ -56,7 +60,7 @@ Der Dialog erstellt Konten ausdrücklich. Ein Namensformat ist keine serverweite
 
 ## 5. Bot verbinden [#5-connect-the-bot]
 
-Kehre zu **Overview** zurück. Starte einen gestoppten Bot.
+Kehre zu **Übersicht** (**Overview**) zurück. Starte einen gestoppten Bot.
 Warte, bis `DocsBot_1` als verbunden angezeigt wird.
 Prüfe, ob der Minecraft-Server denselben Spieler auflistet.
 
@@ -81,7 +85,7 @@ Das Terminal führt SoulFire-Befehle aus. `say` sendet eine Minecraft-Chatnachri
 
 ## 7. Stoppen und Ergebnis prüfen [#7-stop-and-check-the-result]
 
-Kehre zu **Overview** zurück. Stoppe `DocsBot_1`.
+Kehre zu **Übersicht** zurück. Stoppe `DocsBot_1`.
 Prüfe, ob der Verbindungsstatus erlischt und der Bot die Minecraft-Spielerliste verlässt.
 Behalte die Instanz, wenn du als Nächstes SDK- oder Skript-Anleitungen nutzen möchtest.
 
