@@ -132,8 +132,11 @@ export function ChangeEmailOtp({ className }: ChangeEmailOtpProps) {
         const newEmail = value.email;
 
         if (verifyCurrentEmail && currentEmail) {
+          // Better Auth checks the current-address code under the
+          // email-verification type and rejects "change-email" on this
+          // endpoint.
           await sendVerificationOtp(
-            { email: currentEmail, type: "change-email" },
+            { email: currentEmail, type: "email-verification" },
             {
               onSuccess: () =>
                 dispatch({ type: "currentEmailChallenged", newEmail }),
@@ -151,6 +154,14 @@ export function ChangeEmailOtp({ className }: ChangeEmailOtpProps) {
   const codeComplete = useSelector(
     form.store,
     (formState) => formState.values.code.length === otpLength,
+  );
+  // Better Auth rejects an unchanged address only after the current-email
+  // code is sent, so block that request before it starts.
+  const emailUnchanged = useSelector(
+    form.store,
+    (formState) =>
+      formState.values.email.trim().toLowerCase() ===
+      currentEmail?.toLowerCase(),
   );
 
   const resetFlow = () => {
@@ -222,6 +233,7 @@ export function ChangeEmailOtp({ className }: ChangeEmailOtpProps) {
                   <form.AppField name="code">
                     {(field) => (
                       <OtpField
+                        key={state.step}
                         autoFocus
                         disabled={isPending}
                         label={
@@ -266,6 +278,7 @@ export function ChangeEmailOtp({ className }: ChangeEmailOtpProps) {
                 disabled={
                   isPending ||
                   !session ||
+                  (state.step === "email" && emailUnchanged) ||
                   (state.step !== "email" && !codeComplete)
                 }
               >

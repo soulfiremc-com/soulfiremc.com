@@ -19,7 +19,7 @@ export type AdminProps = {
 
 /** Render a finite, static administration route and plugin-contributed tabs. */
 export function Admin({ className, hideNav, path, view }: AdminProps) {
-  const { authClient, basePaths, plugins, viewPaths } = useAuth();
+  const { authClient, basePaths, Link, plugins, viewPaths } = useAuth();
   const { localization } = useAuthPlugin(adminPlugin);
   useAuthenticate(authClient);
 
@@ -46,10 +46,10 @@ export function Admin({ className, hideNav, path, view }: AdminProps) {
           <Button
             aria-current={currentView === "users" ? "page" : undefined}
             render={
-              <a href={`${basePaths.admin}/${viewPaths.admin.users}`}>
+              <Link href={`${basePaths.admin}/${viewPaths.admin.users}`}>
                 <UsersIcon />
                 {localization.users}
-              </a>
+              </Link>
             }
             nativeButton={false}
             className="rounded-b-none"
@@ -61,7 +61,9 @@ export function Admin({ className, hideNav, path, view }: AdminProps) {
               key={`${tab.id}-${tab.path}`}
               aria-current={currentView === tab.id ? "page" : undefined}
               render={
-                <a href={`${basePaths.admin}/${tab.path}`}>{tab.label}</a>
+                <Link href={`${basePaths.admin}/${tab.path}`}>
+                  {tab.label}
+                </Link>
               }
               nativeButton={false}
               className="rounded-b-none"

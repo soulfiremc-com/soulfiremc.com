@@ -288,6 +288,7 @@ await test("review reads fall back for operational failures while defects still 
       totalCount: 0,
       totalPages: 0,
     },
+    unavailable: true,
   });
   const broken = dependencies({
     store: {

@@ -25,6 +25,7 @@ import type { BreadcrumbList, Product, WebPage, WithContext } from "schema-dts";
 import { CouponCode, LinkDiscountNotice } from "@/components/coupon-code";
 import { GallerySection } from "@/components/gallery-section";
 import { Image } from "@/components/image";
+import { ProviderInfoPopover } from "@/components/provider-info-popover";
 import { ItemReviewsSection } from "@/components/item-reviews-section";
 import { JsonLd } from "@/components/json-ld";
 import { PaymentMethods } from "@/components/payment-methods";
@@ -38,11 +39,6 @@ import {
 import { Badge as UiBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   BADGE_CONFIG,
@@ -105,37 +101,37 @@ function DiscordMemberBadge({
   }
 
   return (
-    <HoverCard>
-      <HoverCardTrigger
-        render={
-          <UiBadge
-            variant="outline"
-            className="cursor-help border-transparent bg-discord/10 text-discord"
-          >
-            <Users />
-            {new Intl.NumberFormat(locale, {
-              notation: "compact",
-              maximumFractionDigits: 1,
-            }).format(info.approximate_member_count)}
-          </UiBadge>
-        }
-      />
-      <HoverCardContent className="w-auto text-sm">
-        {info.guild?.name && <p className="font-medium">{info.guild.name}</p>}
-        <p>
-          {t("providers.accounts.members", {
+    <ProviderInfoPopover
+      trigger={
+        <UiBadge
+          variant="outline"
+          aria-label={t("providers.accounts.members", {
             count: info.approximate_member_count.toLocaleString(locale),
           })}
+          className="cursor-help border-transparent bg-discord/10 text-discord"
+        >
+          <Users />
+          {new Intl.NumberFormat(locale, {
+            notation: "compact",
+            maximumFractionDigits: 1,
+          }).format(info.approximate_member_count)}
+        </UiBadge>
+      }
+    >
+      {info.guild?.name && <p className="font-medium">{info.guild.name}</p>}
+      <p>
+        {t("providers.accounts.members", {
+          count: info.approximate_member_count.toLocaleString(locale),
+        })}
+      </p>
+      {info.approximate_presence_count ? (
+        <p className="text-success">
+          {t("providers.accounts.online", {
+            count: info.approximate_presence_count.toLocaleString(locale),
+          })}
         </p>
-        {info.approximate_presence_count && (
-          <p className="text-success">
-            {t("providers.accounts.online", {
-              count: info.approximate_presence_count.toLocaleString(locale),
-            })}
-          </p>
-        )}
-      </HoverCardContent>
-    </HoverCard>
+      ) : null}
+    </ProviderInfoPopover>
   );
 }
 
@@ -282,7 +278,7 @@ function AccountProductSeoEnrichment({
     ...(aggregateRating ? { aggregateRating } : {}),
     ...(reviewJsonLd ? { review: reviewJsonLd } : {}),
     ...(aggregateOffer
-      ? { aggregateOffer: localizeProviderData(aggregateOffer, locale) }
+      ? { offers: localizeProviderData(aggregateOffer, locale) }
       : {}),
   } satisfies WithContext<Product>;
 
@@ -299,27 +295,24 @@ function ProviderBadge({
   const t = useT();
   const config = BADGE_CONFIG[badge];
   return (
-    <HoverCard>
-      <HoverCardTrigger
-        render={
-          <UiBadge
-            variant="outline"
-            className={cn(
-              "cursor-help border-transparent",
-              /* oxlint-disable shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
-              classNameOverride ?? config.className,
-              /* oxlint-enable shadcn/require-static-classes */
-            )}
-          >
-            {config.icon}
-            {t(config.label)}
-          </UiBadge>
-        }
-      />
-      <HoverCardContent className="w-64 text-sm">
-        <p>{t(config.description)}</p>
-      </HoverCardContent>
-    </HoverCard>
+    <ProviderInfoPopover
+      trigger={
+        <UiBadge
+          variant="outline"
+          className={cn(
+            "cursor-help border-transparent",
+            /* oxlint-disable shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
+            classNameOverride ?? config.className,
+            /* oxlint-enable shadcn/require-static-classes */
+          )}
+        >
+          {config.icon}
+          {t(config.label)}
+        </UiBadge>
+      }
+    >
+      <p>{t(config.description)}</p>
+    </ProviderInfoPopover>
   );
 }
 
@@ -537,10 +530,13 @@ function AccountDetailPage() {
                     })}
                   </span>
                 ) : null}
-                <DiscordMemberBadge
-                  info={discordInviteQuery.data}
-                  pending={discordInviteQuery.isPending}
-                />
+                {/* Shops without a Discord server have no member count. */}
+                {discordInviteUrl ? (
+                  <DiscordMemberBadge
+                    info={discordInviteQuery.data}
+                    pending={discordInviteQuery.isPending}
+                  />
+                ) : null}
               </div>
               <p className="text-lg text-muted-foreground">
                 {data.providers

@@ -1,4 +1,4 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { BlogOgImage } from "@/components/og/soulfire";
 import { getReadingTime } from "@/lib/blog";
 import { stripOgSuffix } from "@/lib/og";
@@ -21,7 +21,7 @@ export const Route = createFileRoute("/og/blog/{$}/image.webp")({
         const slugs = params._splat?.split("/").filter(Boolean) ?? [];
         const page = blogSource.getPage(stripOgSuffix(slugs));
 
-        if (!page) throw notFound();
+        if (!page) return new Response(null, { status: 404 });
 
         return createOgImageResponse(
           <BlogOgImage

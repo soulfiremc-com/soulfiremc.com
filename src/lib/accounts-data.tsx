@@ -449,7 +449,7 @@ export const SHOPS: Shop[] = [
         summary: "providers.accounts.luma-mfa.mfa.summary",
         badges: ["high-quality", "instant-delivery", "12h-warranty"],
         price: "$5.00",
-        priceValue: 4.5,
+        priceValue: 5,
         couponCode: "SOULFIRE",
         couponDiscount: "offers.fivePercentOff",
       },
@@ -680,8 +680,8 @@ export const SHOPS: Shop[] = [
       "nfa-accounts": {
         summary: "providers.accounts.skycron.nfa.summary",
         badges: ["instant-delivery"],
+        // A subscription has no per-account price to sort or publish.
         price: "common.subscription",
-        priceValue: 0,
         couponCode: "SOULFIRE",
         couponDiscount: "offers.fivePercentOff",
         priceDetails: "providers.accounts.skycron.nfa.priceDetails",

@@ -2,7 +2,7 @@ import { isLocale, localizePath } from "@/lib/i18n";
 import { translate } from "@/lib/messages";
 import { DocsOgImage } from "@/components/og/soulfire";
 import { soulfireLogoDataUri } from "@/lib/og-image";
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { ProxyOgImage } from "@/components/og/site";
 import { stripOgSuffix } from "@/lib/og";
 import { createOgImageResponse, getEmbeddedLogo } from "@/lib/og-image";
@@ -20,7 +20,7 @@ export const Route = createFileRoute("/og/proxies/{$}/image.webp")({
           ? getProviderBySlug(providerSlug)
           : undefined;
 
-        if (!provider) throw notFound();
+        if (!provider) return new Response(null, { status: 404 });
 
         if (locale !== "en")
           return createOgImageResponse(

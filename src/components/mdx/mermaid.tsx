@@ -1,7 +1,14 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { use, useEffect, useId, useState } from "react";
+import {
+  Suspense,
+  use,
+  useDeferredValue,
+  useEffect,
+  useId,
+  useState,
+} from "react";
 
 export function Mermaid({ chart }: { chart: string }) {
   const [mounted, setMounted] = useState(false);
@@ -10,8 +17,22 @@ export function Mermaid({ chart }: { chart: string }) {
     setMounted(true);
   }, []);
 
-  if (!mounted) return;
-  return <MermaidContent chart={chart} />;
+  const placeholder = (
+    <div
+      aria-hidden="true"
+      className="my-6 h-40 animate-pulse rounded-lg bg-fd-muted"
+    />
+  );
+
+  if (!mounted) return placeholder;
+
+  // Keep the diagram's loading state local. Without this boundary, the
+  // lazy mermaid import suspends the whole docs page and hides it.
+  return (
+    <Suspense fallback={placeholder}>
+      <MermaidContent chart={chart} />
+    </Suspense>
+  );
 }
 
 const cache = new Map<string, Promise<unknown>>();
@@ -30,7 +51,8 @@ function cachePromise<T>(
 
 function MermaidContent({ chart }: { chart: string }) {
   const id = useId();
-  const { resolvedTheme } = useTheme();
+  // Keep the current diagram visible while the other theme renders.
+  const resolvedTheme = useDeferredValue(useTheme().resolvedTheme);
   const { default: mermaid } = use(
     cachePromise("mermaid", () => import("mermaid")),
   );

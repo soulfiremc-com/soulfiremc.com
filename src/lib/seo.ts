@@ -18,6 +18,22 @@ export interface BreadcrumbItem {
   path: string;
 }
 
+const maxDescriptionLength = 160;
+
+/** Shortens text at a word boundary so search snippets do not cut it mid-word. */
+export function truncateDescription(
+  text: string,
+  maxLength = maxDescriptionLength,
+) {
+  const normalized = text.replace(/\s+/g, " ").trim();
+  if (normalized.length <= maxLength) return normalized;
+
+  const slice = normalized.slice(0, maxLength - 1);
+  const lastSpace = slice.lastIndexOf(" ");
+  const cut = lastSpace > maxLength / 2 ? slice.slice(0, lastSpace) : slice;
+  return `${cut.replace(/[\s,;:.\-–(]+$/, "")}…`;
+}
+
 export function getPageMeta({
   title,
   description,
@@ -25,6 +41,7 @@ export function getPageMeta({
   imageUrl = defaultSocialImageUrl,
   imageAlt = `${siteName} social preview`,
   ogType = "website",
+  publishedTime,
   locale = splitLocalePath(path).locale,
 }: {
   title: string;
@@ -33,9 +50,11 @@ export function getPageMeta({
   imageAlt?: string;
   imageUrl?: string;
   ogType?: "article" | "website";
+  publishedTime?: string;
   locale?: Locale;
 }) {
   path = localizePath(path, locale);
+  description = truncateDescription(description);
   imageUrl = absoluteUrl(imageUrl);
   const bare = splitLocalePath(path).path;
   if (
@@ -67,6 +86,9 @@ export function getPageMeta({
     { name: "twitter:description", content: description },
     { name: "twitter:image", content: imageUrl },
     { name: "twitter:image:alt", content: imageAlt },
+    ...(ogType === "article" && publishedTime
+      ? [{ property: "article:published_time", content: publishedTime }]
+      : []),
   ];
 }
 
@@ -174,6 +196,42 @@ export function createWebPageStructuredData({
           url: absoluteUrl(imageUrl),
         }
       : undefined,
+  };
+}
+
+export function createBlogPostingStructuredData({
+  path,
+  title,
+  description,
+  imageUrl,
+  author,
+  datePublished,
+  keywords,
+}: {
+  path: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+  author: string;
+  datePublished?: string;
+  keywords?: readonly string[];
+}) {
+  const url = absoluteUrl(path);
+  return {
+    "@type": "BlogPosting",
+    "@id": `${url}#article`,
+    headline: title,
+    description,
+    url,
+    mainEntityOfPage: { "@id": `${url}#webpage` },
+    image: absoluteUrl(imageUrl),
+    author: { "@type": "Person", name: author },
+    publisher: { "@id": `${siteUrl}/#organization` },
+    inLanguage: "en",
+    ...(datePublished ? { datePublished } : {}),
+    ...(keywords && keywords.length > 0
+      ? { keywords: keywords.join(", ") }
+      : {}),
   };
 }
 

@@ -42,7 +42,8 @@ export function ReviewStars({
     <div
       role="img"
       aria-label={label}
-      className={cn("relative inline-flex items-center", className)}
+      // Fit the stars so a stretching flex parent cannot widen the fill area.
+      className={cn("relative inline-flex w-fit items-center", className)}
       title={label}
     >
       <div className="flex items-center gap-0.5 text-rating-muted/70">

@@ -1,5 +1,6 @@
 import { createFromSource } from "fumadocs-core/search/server";
 import type { Locale } from "@/lib/i18n";
+import { translate } from "@/lib/messages";
 
 type SearchStructuredData = {
   contents: Array<{ content: string; heading: string }>;
@@ -50,8 +51,11 @@ async function createSearchAPI(locale: Locale) {
   return createFromSource(
     { ...source, getPages: () => source.getPages(locale) },
     {
+      // Search ranks by relevance only. A sort index adds about a quarter to
+      // the static index that every visitor downloads when opening search.
+      sort: { enabled: false },
       buildIndex: async (page) => {
-        const breadcrumbs = ["Docs"];
+        const breadcrumbs = [translate(locale, "nav.docs")];
         for (let index = 0; index < page.slugs.length - 1; index++) {
           const parentPage = source.getPage(
             page.slugs.slice(0, index + 1),

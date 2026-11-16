@@ -149,6 +149,9 @@ function TitleBlock({
             color: theme.muted,
             fontSize: 30,
             lineHeight: 1.32,
+            lineClamp: 4,
+            textOverflow: "ellipsis",
+            overflow: "hidden",
           }}
         >
           {description}

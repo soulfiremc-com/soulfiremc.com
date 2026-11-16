@@ -26,6 +26,14 @@ export const Route = createFileRoute("/account/$path")({
 
     return { session };
   },
+  head: ({ params: { path } }) => ({
+    meta: [
+      {
+        title: `${path.charAt(0).toUpperCase()}${path.slice(1).replaceAll("-", " ")} - SoulFire`,
+      },
+      { name: "robots", content: "noindex, nofollow" },
+    ],
+  }),
   component: AccountPage,
 });
 

@@ -31,7 +31,32 @@
   font-family: var(--font-mono);
   font-size: 11px;
 }
+/* The hero follows the site theme, so the header theme toggle visibly
+   changes the first screen. The dark values keep the night-stage look. */
 @utility home-hero {
+  --background: #e6eef0;
+  --foreground: #10252c;
+  --primary: #157287;
+  --primary-foreground: #fff;
+  --accent: #d3e1e3;
+  --accent-foreground: #10252c;
+  --border: #b9cbcf;
+  --input: #b9cbcf;
+  --muted-foreground: #4a6067;
+  --ring: #157287;
+  --hero-accent-text: #12687b;
+  --hero-text: #3c535a;
+  --hero-text-strong: #10252c;
+  --hero-subtle: #50666d;
+  --hero-line: #c3d3d6;
+  --hero-team-cyan: #0f8c86;
+  --hero-team-amber: #b26a1f;
+  position: relative;
+  color: var(--foreground);
+  background: var(--background);
+  isolation: isolate;
+}
+.dark .home-hero {
   --background: #0a1318;
   --foreground: #edf7f7;
   --primary: #a0e5e7;
@@ -42,10 +67,13 @@
   --input: #30454d;
   --muted-foreground: #a2b7bf;
   --ring: #a0e5e7;
-  position: relative;
-  color: var(--foreground);
-  background: var(--background);
-  isolation: isolate;
+  --hero-accent-text: #96dce1;
+  --hero-text: #b1c3ca;
+  --hero-text-strong: #fff;
+  --hero-subtle: #8da5ae;
+  --hero-line: #263b43;
+  --hero-team-cyan: #65d9d4;
+  --hero-team-amber: #edb175;
 }
 @utility home-hero-inner {
   max-width: 1320px;
@@ -65,13 +93,13 @@
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  color: #b1c9d0;
+  color: var(--hero-text);
   font-size: 13px;
   margin-bottom: 30px;
   transition: color 160ms;
 }
 .home-source-link:hover {
-  color: #fff;
+  color: var(--hero-text-strong);
 }
 .home-source-link svg:last-child {
   margin-left: 8px;
@@ -84,11 +112,11 @@
   margin: 0 0 28px;
 }
 .home-hero h1 span {
-  color: #96dce1;
+  color: var(--hero-accent-text);
 }
 .home-hero-copy > p {
   max-width: 420px;
-  color: #b1c3ca;
+  color: var(--hero-text);
   font-size: 17px;
   line-height: 1.75;
 }
@@ -104,26 +132,26 @@
 }
 .home-hero-copy > .home-platforms {
   font-size: 12px;
-  color: #8da5ae;
+  color: var(--hero-subtle);
   margin-top: 16px;
 }
 @utility home-hero-footer {
   max-width: 1224px;
   margin: 0 auto;
-  border-top: 1px solid #263b43;
+  border-top: 1px solid var(--hero-line);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
   padding: 22px 0;
   font-size: 12px;
-  color: #96aeb7;
+  color: var(--hero-subtle);
 }
 .home-hero-footer a {
   display: inline-flex;
   align-items: center;
   gap: 14px;
-  color: #d6e5e8;
+  color: var(--hero-text-strong);
 }
 @utility voxel-experience {
   min-width: 0;
@@ -163,13 +191,13 @@
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  color: #b8ced4;
+  color: var(--hero-text);
   font-size: 12px;
   margin: -48px 6px 12px;
   z-index: 1;
 }
 .voxel-caption > span:last-child {
-  color: #819ea8;
+  color: var(--hero-subtle);
 }
 .voxel-weather {
   display: inline-flex;
@@ -194,10 +222,10 @@
 .voxel-scores svg {
   width: 14px;
   height: 14px;
-  color: #65d9d4;
+  color: var(--hero-team-cyan);
 }
 .voxel-scores [data-team="amber"] svg {
-  color: #edb175;
+  color: var(--hero-team-amber);
 }
 @utility voxel-controls {
   position: relative;
@@ -217,7 +245,7 @@
 }
 .voxel-note {
   margin: 12px 6px 0;
-  color: #a2b7bf;
+  color: var(--hero-subtle);
   font-size: 12px;
   line-height: 1.6;
 }
@@ -236,12 +264,12 @@
   width: 100%;
   height: 12px;
   appearance: none;
-  background: #24363b;
+  background: var(--muted);
   border-radius: 2px;
   border: 0;
 }
 .voxel-genome-meter::-webkit-meter-bar {
-  background: #24363b;
+  background: var(--muted);
   border: 0;
   border-radius: 2px;
 }

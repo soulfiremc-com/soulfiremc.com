@@ -1,5 +1,6 @@
 import {
   docFileInfo,
+  formatLocaleDate,
   isLocale,
   localizePath,
   localizeHref,
@@ -138,12 +139,9 @@ const clientLoader = browserCollections.docs.createClientLoader<{
   id: "docs-page",
   component({ default: MDX, toc, frontmatter, lastModified }, props) {
     const locale = useLocale();
+    const t = useT();
     return (
-      <DocsPage
-        toc={toc}
-        lastUpdate={lastModified}
-        tableOfContent={{ style: "clerk" }}
-      >
+      <DocsPage toc={toc} tableOfContent={{ style: "clerk" }}>
         <div className="flex flex-col gap-2" lang={props.contentLocale}>
           <DocsTitle>{frontmatter.title}</DocsTitle>
           <DocsDescription className="mb-2.5">
@@ -202,6 +200,17 @@ const clientLoader = browserCollections.docs.createClientLoader<{
           className="mt-8"
           variant="footer"
         />
+        {lastModified && (
+          <p className="text-sm text-fd-muted-foreground">
+            {t("docs.lastUpdatedOn")}{" "}
+            <time
+              dateTime={new Date(lastModified).toISOString()}
+              suppressHydrationWarning
+            >
+              {formatLocaleDate(lastModified, locale)}
+            </time>
+          </p>
+        )}
       </DocsPage>
     );
   },
@@ -237,7 +246,11 @@ export const Route = createFileRoute("/{-$lang}/docs/$")({
     const title = loaderData
       ? `${loaderData.title} - SoulFire`
       : "Docs - SoulFire";
-    const description = loaderData?.description ?? "SoulFire documentation";
+    const description =
+      loaderData?.description ??
+      (loaderData?.type === "openapi"
+        ? `Request and response reference for the ${loaderData.title} endpoint in the SoulFire API.`
+        : "SoulFire documentation");
     const path = localizePath(
       loaderData?.url ?? "/docs",
       loaderData?.contentLocale ?? "en",

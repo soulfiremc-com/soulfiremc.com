@@ -368,7 +368,7 @@ export function HomeFrontpage({
   return (
     <LazyMotion features={domAnimation} strict>
       <MotionConfig reducedMotion="user">
-        <div className="soulfire-home">
+        <main className="soulfire-home">
           <section className="home-hero" aria-labelledby="hero-title">
             <div className="home-hero-inner">
               <m.div
@@ -568,7 +568,7 @@ export function HomeFrontpage({
               />
             </section>
           </div>
-        </div>
+        </main>
       </MotionConfig>
     </LazyMotion>
   );

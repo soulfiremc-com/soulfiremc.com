@@ -17,6 +17,14 @@ export const Route = createFileRoute("/auth/$path")({
       throw redirect({ to: "/{-$lang}" });
     }
   },
+  head: ({ params: { path } }) => ({
+    meta: [
+      {
+        title: `${path.charAt(0).toUpperCase()}${path.slice(1).replaceAll("-", " ")} - SoulFire`,
+      },
+      { name: "robots", content: "noindex, nofollow" },
+    ],
+  }),
   component: AuthPage,
 });
 

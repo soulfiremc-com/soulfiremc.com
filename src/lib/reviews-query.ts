@@ -43,6 +43,7 @@ export function reviewsQueryOptions({
           reviewsPage: normalizedPage,
         },
       }),
-    staleTime: 60_000,
+    // Fallback data from a storage failure should not hide reviews for long.
+    staleTime: (query) => (query.state.data?.unavailable ? 0 : 60_000),
   });
 }

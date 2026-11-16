@@ -20,7 +20,7 @@ type ControlledTabsProps = TabsProps & {
 const ControlledTabs = FumadocsTabs as ComponentType<ControlledTabsProps>;
 
 function tabValue(label: string) {
-  return label.toLowerCase().replace(/\s/u, "-");
+  return label.toLowerCase().replace(/\s+/gu, "-");
 }
 
 function readSelection(key: string) {

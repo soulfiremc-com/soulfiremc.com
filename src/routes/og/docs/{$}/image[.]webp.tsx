@@ -1,6 +1,6 @@
 import { translate } from "@/lib/messages";
 import { isLocale, localizePath } from "@/lib/i18n";
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { DocsOgImage } from "@/components/og/soulfire";
 import { stripOgSuffix } from "@/lib/og";
 import { createOgImageResponse, soulfireLogoDataUri } from "@/lib/og-image";
@@ -16,7 +16,7 @@ export const Route = createFileRoute("/og/docs/{$}/image.webp")({
         if (isLocale(slugs[0])) slugs.shift();
         const page = source.getPage(stripOgSuffix(slugs), locale);
 
-        if (!page) throw notFound();
+        if (!page) return new Response(null, { status: 404 });
 
         return createOgImageResponse(
           <DocsOgImage

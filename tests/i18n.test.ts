@@ -6,6 +6,8 @@ import test from "node:test";
 import { loader, type VirtualFile } from "fumadocs-core/source";
 import {
   docFileInfo,
+  formatEuro,
+  formatLocaleDate,
   i18n,
   locales,
   localeDestination,
@@ -219,6 +221,17 @@ void test("translation catalogs use stable keys and preserve English interpolati
       );
     }
   }
+  // Brand and service names are the only values that may use the English text.
+  const untranslated = /^(common\.brand|social\.[a-z]+)$/;
+  for (const [index, catalog] of catalogs.entries()) {
+    assert.deepEqual(
+      Object.keys(en).filter(
+        (key) => !(key in catalog) && !untranslated.test(key),
+      ),
+      [],
+      ["de", "pl", "ru"][index],
+    );
+  }
   assert.equal(
     translate("pl", "download.selection.summary", {
       os: "Linux",
@@ -233,7 +246,7 @@ void test("translation keys resolve in English and fall back without displaying 
     translate("en", "nav.support.description"),
     "Support SoulFire development",
   );
-  assert.equal(translate("de", "docs.copiedAnchorLink"), "Copied Anchor Link");
+  assert.equal(translate("de", "social.github"), "GitHub");
   assert.equal(isMessageKey("Support SoulFire development"), false);
   assert.equal(isMessageKey("constructor"), false);
   assert.equal(isMessageKey("toString"), false);
@@ -243,12 +256,34 @@ void test("translation keys resolve in English and fall back without displaying 
   assert.equal(resolveMessage("de", "common.free"), "Kostenlos");
 });
 
+void test("locale dates use the page language and UTC calendar day", () => {
+  const date = "2026-11-09T23:30:00.000Z";
+  assert.equal(formatLocaleDate(date, "en"), "November 9, 2026");
+  assert.equal(formatLocaleDate(date, "de"), "9. November 2026");
+  assert.equal(formatLocaleDate(date, "pl"), "9 listopada 2026");
+  assert.equal(formatLocaleDate(date, "ru"), "9 ноября 2026 г.");
+});
+
+void test("euro prices follow each language's symbol position", () => {
+  assert.equal(formatEuro(5, "en"), "€5");
+  assert.equal(formatEuro(5, "de"), "5\u00a0€");
+  assert.equal(formatEuro(0, "pl"), "0\u00a0€");
+  assert.equal(formatEuro(5, "ru"), "5\u00a0€");
+});
+
 void test("Fumadocs external identifiers map to application keys", () => {
   const messages = fumadocsMessages("de");
   assert.equal(messages["Search(search dialog)"], "Suchen");
   assert.equal(
     messages["Copied Anchor Link(heading anchor)(aria-label)"],
-    "Copied Anchor Link",
+    "Abschnittslink kopiert",
+  );
+  assert.equal(messages["Skip to Content(skip link)"], "Zum Inhalt springen");
+  assert.equal(
+    fumadocsMessages("pl")[
+      "Search failed, showing results for {query}(search dialog)"
+    ],
+    "Wyszukiwanie nie powiodło się, wyświetlane są wyniki dla {query}",
   );
   assert.equal(
     messages["Choose a language(language switcher)(aria-label)"],

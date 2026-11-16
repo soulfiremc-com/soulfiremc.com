@@ -1,4 +1,4 @@
-import { translate, resolveMessage, type MessageKey } from "@/lib/messages";
+import { translate, resolveMessage } from "@/lib/messages";
 import { isLocale } from "@/lib/i18n";
 import {
   formatProviderSince,
@@ -34,6 +34,7 @@ import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { CouponCode, LinkDiscountNotice } from "@/components/coupon-code";
 import { Image } from "@/components/image";
 import { PaymentMethods } from "@/components/payment-methods";
+import { ProviderInfoPopover } from "@/components/provider-info-popover";
 import { ProviderThemeDecoration } from "@/components/provider-theme-decoration";
 import { ReviewInlineActions } from "@/components/review-inline-actions";
 import { ReviewTurnstileProvider } from "@/components/review-turnstile-provider";
@@ -49,11 +50,6 @@ import {
   EmptyHeader,
   EmptyTitle,
 } from "@/components/ui/empty";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useReviews } from "@/hooks/use-reviews";
@@ -78,7 +74,7 @@ import {
   filterAccountProviders,
   sortAccountProviders,
 } from "@/lib/account-provider-list";
-import { getListingOffer, getShopAggregateOffer } from "@/lib/accounts-offers";
+import { getListingOffer } from "@/lib/accounts-offers";
 import {
   accountsDiscordInvitesQueryOptions,
   allAccountLiveShopDataQueryOptions,
@@ -92,30 +88,6 @@ import {
 import { reviewsQueryOptions } from "@/lib/reviews-query";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 import { cn } from "@/lib/utils";
-
-function PriceInfoBadge({ details }: { details: MessageKey }) {
-  const t = useT();
-  return (
-    <HoverCard>
-      <HoverCardTrigger
-        render={
-          <span className="inline-flex cursor-help items-center text-muted-foreground hover:text-foreground transition-colors">
-            <Info className="size-3.5" />
-            <span className="sr-only">
-              {t("providers.accounts.pricingDetails.label")}
-            </span>
-          </span>
-        }
-      />
-      <HoverCardContent className="w-64 text-sm">
-        <p className="font-medium mb-1">
-          {t("providers.accounts.pricingDetails.heading")}
-        </p>
-        <p className="text-muted-foreground">{t(details)}</p>
-      </HoverCardContent>
-    </HoverCard>
-  );
-}
 
 function DiscordMemberBadge({ providerSlug }: { providerSlug: string }) {
   const t = useT();
@@ -138,37 +110,37 @@ function DiscordMemberBadge({ providerSlug }: { providerSlug: string }) {
   }
 
   return (
-    <HoverCard>
-      <HoverCardTrigger
-        render={
-          <UiBadge
-            variant="outline"
-            className="cursor-help border-transparent bg-discord/10 text-discord"
-          >
-            <Users />
-            {new Intl.NumberFormat(locale, {
-              notation: "compact",
-              maximumFractionDigits: 1,
-            }).format(info.approximate_member_count)}
-          </UiBadge>
-        }
-      />
-      <HoverCardContent className="w-auto text-sm">
-        {info.guild?.name && <p className="font-medium">{info.guild.name}</p>}
-        <p>
-          {t("providers.accounts.members", {
+    <ProviderInfoPopover
+      trigger={
+        <UiBadge
+          variant="outline"
+          aria-label={t("providers.accounts.members", {
             count: info.approximate_member_count.toLocaleString(locale),
           })}
+          className="cursor-help border-transparent bg-discord/10 text-discord"
+        >
+          <Users />
+          {new Intl.NumberFormat(locale, {
+            notation: "compact",
+            maximumFractionDigits: 1,
+          }).format(info.approximate_member_count)}
+        </UiBadge>
+      }
+    >
+      {info.guild?.name && <p className="font-medium">{info.guild.name}</p>}
+      <p>
+        {t("providers.accounts.members", {
+          count: info.approximate_member_count.toLocaleString(locale),
+        })}
+      </p>
+      {info.approximate_presence_count ? (
+        <p className="text-success">
+          {t("providers.accounts.online", {
+            count: info.approximate_presence_count.toLocaleString(locale),
+          })}
         </p>
-        {info.approximate_presence_count && (
-          <p className="text-success">
-            {t("providers.accounts.online", {
-              count: info.approximate_presence_count.toLocaleString(locale),
-            })}
-          </p>
-        )}
-      </HoverCardContent>
-    </HoverCard>
+      ) : null}
+    </ProviderInfoPopover>
   );
 }
 
@@ -239,27 +211,24 @@ function ProviderBadge({
   const t = useT();
   const config = BADGE_CONFIG[badge];
   return (
-    <HoverCard>
-      <HoverCardTrigger
-        render={
-          <UiBadge
-            variant="outline"
-            className={cn(
-              "cursor-help border-transparent",
-              /* oxlint-disable shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
-              classNameOverride ?? config.className,
-              /* oxlint-enable shadcn/require-static-classes */
-            )}
-          >
-            {config.icon}
-            {t(config.label)}
-          </UiBadge>
-        }
-      />
-      <HoverCardContent className="w-64 text-sm">
-        <p>{t(config.description)}</p>
-      </HoverCardContent>
-    </HoverCard>
+    <ProviderInfoPopover
+      trigger={
+        <UiBadge
+          variant="outline"
+          className={cn(
+            "cursor-help border-transparent",
+            /* oxlint-disable shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
+            classNameOverride ?? config.className,
+            /* oxlint-enable shadcn/require-static-classes */
+          )}
+        >
+          {config.icon}
+          {t(config.label)}
+        </UiBadge>
+      }
+    >
+      <p>{t(config.description)}</p>
+    </ProviderInfoPopover>
   );
 }
 
@@ -348,32 +317,61 @@ function ProviderCard({
                 })}
               </span>
             )}
-            <UiBadge
-              variant="outline"
-              className={cn(
-                "relative z-10 border-transparent bg-primary/10 text-sm text-primary",
-                theme?.price /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */,
-              )}
-            >
-              {resolveMessage(locale, provider.price)}
-              {provider.priceDetails && (
-                <PriceInfoBadge details={provider.priceDetails} />
-              )}
-            </UiBadge>
             <span className="relative z-10 inline-flex">
-              <Suspense
-                fallback={
-                  <Skeleton
-                    aria-label={t(
-                      "providers.accounts.loadingDiscordMemberCount",
-                    )}
-                    className="h-5 w-16"
-                  />
-                }
-              >
-                <DiscordMemberBadge providerSlug={provider.slug} />
-              </Suspense>
+              {provider.priceDetails ? (
+                <ProviderInfoPopover
+                  trigger={
+                    <UiBadge
+                      variant="outline"
+                      className={cn(
+                        "cursor-help border-transparent bg-primary/10 text-sm text-primary",
+                        theme?.price /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */,
+                      )}
+                    >
+                      {resolveMessage(locale, provider.price)}
+                      <Info className="opacity-70" />
+                      <span className="sr-only">
+                        {t("providers.accounts.pricingDetails.label")}
+                      </span>
+                    </UiBadge>
+                  }
+                >
+                  <p className="font-medium">
+                    {t("providers.accounts.pricingDetails.heading")}
+                  </p>
+                  <p className="text-muted-foreground">
+                    {t(provider.priceDetails)}
+                  </p>
+                </ProviderInfoPopover>
+              ) : (
+                <UiBadge
+                  variant="outline"
+                  className={cn(
+                    "border-transparent bg-primary/10 text-sm text-primary",
+                    theme?.price /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */,
+                  )}
+                >
+                  {resolveMessage(locale, provider.price)}
+                </UiBadge>
+              )}
             </span>
+            {/* Shops without a Discord server have no member count. */}
+            {discordInviteUrl && (
+              <span className="relative z-10 inline-flex">
+                <Suspense
+                  fallback={
+                    <Skeleton
+                      aria-label={t(
+                        "providers.accounts.loadingDiscordMemberCount",
+                      )}
+                      className="h-5 w-16"
+                    />
+                  }
+                >
+                  <DiscordMemberBadge providerSlug={provider.slug} />
+                </Suspense>
+              </span>
+            )}
             <div className="relative z-10 flex flex-wrap gap-2">
               {provider.badges.map((badge) => (
                 <ProviderBadge
@@ -1017,7 +1015,6 @@ function createAccountsItemListJsonLd(
               : "providers.accounts.nfaTemporaryMinecraftAccounts",
           ...(shop && liveShopData && provider.priceValue !== undefined
             ? {
-                aggregateOffer: getShopAggregateOffer(shop, liveShopData),
                 offers: getListingOffer(
                   shop,
                   provider.category,

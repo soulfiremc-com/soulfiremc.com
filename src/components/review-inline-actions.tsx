@@ -5,20 +5,29 @@ import { useT } from "@/lib/i18n-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import type { ReviewSummary } from "@/lib/review-core";
+import type { ReviewMutationResult } from "@/lib/review-mutations";
 import { ReviewStarInput } from "./review-stars";
 import { ReviewSummaryBadge } from "./review-summary-badge";
 import { SignInRequiredCredenza } from "./sign-in-required-credenza";
 import { Button } from "./ui/button";
 
-type MutationResult =
-  | Promise<{ error: "unauthorized" | "verification" | null }>
-  | undefined;
+type MutationResult = Promise<ReviewMutationResult> | undefined;
 
-function handleMutationError(
-  error: "unauthorized" | "verification" | null,
+async function handleMutation(
+  request: MutationResult,
   onUnauthorized: () => void,
   t: ReturnType<typeof useT>,
 ) {
+  let result: ReviewMutationResult | undefined;
+  try {
+    result = await request;
+  } catch {
+    toast.error(t("reviews.errors.ratingSaveFailed"), {
+      description: t("reviews.errors.connectionDescription"),
+    });
+    return;
+  }
+  const error = result?.skipped ? null : (result?.error ?? null);
   if (error === "unauthorized") {
     onUnauthorized();
     return;
@@ -47,23 +56,12 @@ export function ReviewInlineActions({
   const t = useT();
   const [showSignInPrompt, setShowSignInPrompt] = useState(false);
 
-  const handleRate = async (rating: number) => {
-    const result = await onRate(rating);
-    handleMutationError(
-      result?.error ?? null,
-      () => setShowSignInPrompt(true),
-      t,
-    );
-  };
+  const handleRate = (rating: number) =>
+    handleMutation(onRate(rating), () => setShowSignInPrompt(true), t);
 
-  const handleClear = async () => {
+  const handleClear = () => {
     if (!onClear) return;
-    const result = await onClear();
-    handleMutationError(
-      result?.error ?? null,
-      () => setShowSignInPrompt(true),
-      t,
-    );
+    return handleMutation(onClear(), () => setShowSignInPrompt(true), t);
   };
 
   return (

@@ -23,6 +23,7 @@ import type {
 import { CouponCode } from "@/components/coupon-code";
 import { GallerySection } from "@/components/gallery-section";
 import { Image } from "@/components/image";
+import { ProviderInfoPopover } from "@/components/provider-info-popover";
 import { ItemReviewsSection } from "@/components/item-reviews-section";
 import { JsonLd } from "@/components/json-ld";
 import { PaymentMethods } from "@/components/payment-methods";
@@ -34,11 +35,6 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useHydratedQueryResult } from "@/hooks/use-hydrated-query-result";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
 import { getProxyPageImage } from "@/lib/og";
 import {
   BADGE_CONFIG,
@@ -89,25 +85,22 @@ function ProviderBadge({ badge }: { badge: Badge }) {
   const t = useT();
   const config = BADGE_CONFIG[badge];
   return (
-    <HoverCard>
-      <HoverCardTrigger
-        render={
-          <UiBadge
-            variant="outline"
-            className={cn(
-              "cursor-help border-transparent",
-              config.className /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */,
-            )}
-          >
-            {config.icon}
-            {t(config.label)}
-          </UiBadge>
-        }
-      />
-      <HoverCardContent className="w-64 text-sm">
-        <p>{t(config.description)}</p>
-      </HoverCardContent>
-    </HoverCard>
+    <ProviderInfoPopover
+      trigger={
+        <UiBadge
+          variant="outline"
+          className={cn(
+            "cursor-help border-transparent",
+            config.className /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */,
+          )}
+        >
+          {config.icon}
+          {t(config.label)}
+        </UiBadge>
+      }
+    >
+      <p>{t(config.description)}</p>
+    </ProviderInfoPopover>
   );
 }
 

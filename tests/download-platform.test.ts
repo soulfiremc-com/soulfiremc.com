@@ -1,6 +1,10 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { detectDownloadPlatform } from "@/lib/download-platform";
+import {
+  cpuFromArchitectureHints,
+  detectDownloadCpuFromHints,
+  detectDownloadPlatform,
+} from "@/lib/download-platform";
 
 await test("phones and tablets do not receive desktop platform recommendations", () => {
   for (const browser of [
@@ -58,4 +62,44 @@ await test("desktop recommendations retain OS and architecture detection", () =>
     os: null,
     cpu: null,
   });
+});
+
+await test("client hints correct CPUs that the user agent string hides", () => {
+  assert.equal(
+    cpuFromArchitectureHints({ architecture: "arm", bitness: "64" }),
+    "arm64",
+  );
+  assert.equal(
+    cpuFromArchitectureHints({ architecture: "x86", bitness: "64" }),
+    "x64",
+  );
+  assert.equal(
+    cpuFromArchitectureHints({ architecture: "x86", bitness: "32" }),
+    null,
+  );
+  assert.equal(cpuFromArchitectureHints({ architecture: "" }), null);
+});
+
+await test("browsers without client hints fall back to user agent detection", async () => {
+  assert.equal(await detectDownloadCpuFromHints({ userAgent: "Safari" }), null);
+  assert.equal(
+    await detectDownloadCpuFromHints({
+      userAgent: "Chrome",
+      userAgentData: {
+        getHighEntropyValues: () => Promise.reject(new Error("blocked")),
+      },
+    }),
+    null,
+  );
+  // Windows on ARM reports "Win64; x64" in the user agent string.
+  assert.equal(
+    await detectDownloadCpuFromHints({
+      userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+      userAgentData: {
+        getHighEntropyValues: () =>
+          Promise.resolve({ architecture: "arm", bitness: "64" }),
+      },
+    }),
+    "arm64",
+  );
 });

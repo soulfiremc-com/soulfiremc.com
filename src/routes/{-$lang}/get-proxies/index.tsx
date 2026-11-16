@@ -31,6 +31,7 @@ import {
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { CouponCode } from "@/components/coupon-code";
 import { Image } from "@/components/image";
+import { ProviderInfoPopover } from "@/components/provider-info-popover";
 import { PaymentMethods } from "@/components/payment-methods";
 import { ReviewInlineActions } from "@/components/review-inline-actions";
 import { ReviewTurnstileProvider } from "@/components/review-turnstile-provider";
@@ -45,11 +46,6 @@ import {
   EmptyHeader,
   EmptyTitle,
 } from "@/components/ui/empty";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useReviews } from "@/hooks/use-reviews";
 import {
@@ -116,25 +112,22 @@ function ProviderBadge({ badge }: { badge: Badge }) {
   const t = useT();
   const config = BADGE_CONFIG[badge];
   return (
-    <HoverCard>
-      <HoverCardTrigger
-        render={
-          <UiBadge
-            variant="outline"
-            className={cn(
-              "cursor-help border-transparent",
-              config.className /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */,
-            )}
-          >
-            {config.icon}
-            {t(config.label)}
-          </UiBadge>
-        }
-      />
-      <HoverCardContent className="w-64 text-sm">
-        <p>{t(config.description)}</p>
-      </HoverCardContent>
-    </HoverCard>
+    <ProviderInfoPopover
+      trigger={
+        <UiBadge
+          variant="outline"
+          className={cn(
+            "cursor-help border-transparent",
+            config.className /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */,
+          )}
+        >
+          {config.icon}
+          {t(config.label)}
+        </UiBadge>
+      }
+    >
+      <p>{t(config.description)}</p>
+    </ProviderInfoPopover>
   );
 }
 

@@ -9,6 +9,7 @@ import { getBlogPostData } from "@/lib/blog";
 import { formatBlogDate } from "@/lib/blog-date";
 import { getBlogPageImage } from "@/lib/og";
 import {
+  createBlogPostingStructuredData,
   createBreadcrumbStructuredData,
   createStructuredDataGraph,
   createWebPageStructuredData,
@@ -105,6 +106,7 @@ export const Route = createFileRoute("/blog/$slug")({
           ? `${data.post.title} blog preview`
           : "SoulFire blog preview",
         ogType: "article",
+        publishedTime: data?.post.date,
       }),
       links: getCanonicalLinks(path),
       scripts: [
@@ -130,6 +132,19 @@ export const Route = createFileRoute("/blog/$slug")({
               imageUrl,
               withBreadcrumb: true,
             }),
+            ...(data
+              ? [
+                  createBlogPostingStructuredData({
+                    path,
+                    title: data.post.title,
+                    description,
+                    imageUrl,
+                    author: data.post.author,
+                    datePublished: data.post.date,
+                    keywords: data.post.tags,
+                  }),
+                ]
+              : []),
             createBreadcrumbStructuredData(path, [
               { name: "Home", path: "/" },
               { name: "Blog", path: "/blog" },

@@ -73,9 +73,9 @@ function FeedbackForm({ url }: { url: string }) {
         <ToggleGroup
           value={activeOpinion ? [activeOpinion] : []}
           onValueChange={([value]) => {
-            if (value && previous === null) {
-              setOpinion(value as "good" | "bad");
-            }
+            if (previous !== null) return;
+            // Pressing the active option again cancels the rating.
+            setOpinion(value === "good" || value === "bad" ? value : null);
           }}
           spacing={2}
         >
@@ -124,10 +124,10 @@ function FeedbackForm({ url }: { url: string }) {
           <form className="flex flex-col gap-3" onSubmit={submit}>
             <Textarea
               autoFocus
-              required
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               className="min-h-24 resize-none bg-fd-secondary text-fd-secondary-foreground placeholder:text-fd-muted-foreground"
+              aria-label={t("common.leaveYourFeedback")}
               placeholder={t("common.leaveYourFeedback")}
               onKeyDown={(e) => {
                 if (!e.shiftKey && e.key === "Enter") {

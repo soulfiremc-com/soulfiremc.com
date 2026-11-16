@@ -2,14 +2,64 @@ import { useT, useLocale } from "@/lib/i18n-react";
 import { localizeHref } from "@/lib/i18n";
 import { Link } from "@tanstack/react-router";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
-import type { ReactNode } from "react";
+import {
+  useEffect,
+  type ComponentPropsWithoutRef,
+  type ReactNode,
+} from "react";
 import { UserButton } from "@/components/auth/user/user-button";
 import { getBaseLayoutOptions } from "@/lib/layout-options";
+import { cn } from "@/lib/utils";
+
+// Fumadocs wraps the layout in <main>, but each page renders its own <main>.
+// A plain container keeps one top-level main and lets the footer stay a
+// contentinfo landmark.
+function ShellContainer({
+  className,
+  ...props
+}: ComponentPropsWithoutRef<"main">) {
+  return (
+    <div
+      id="nd-home-layout"
+      {...props}
+      className={cn(
+        "flex flex-1 flex-col [--fd-layout-width:1400px]",
+        className,
+      )}
+    />
+  );
+}
+
+// The Fumadocs mobile menu ignores Escape. Close it and return focus to its
+// toggle, like the other overlays on the site.
+function closeMobileMenuOnEscape(event: KeyboardEvent) {
+  if (event.key !== "Escape" || event.defaultPrevented) return;
+  const header = document.getElementById("nd-nav");
+  if (!header?.hasAttribute("data-open")) return;
+  const toggle = Array.from(
+    header.querySelectorAll<HTMLButtonElement>(
+      'button[aria-expanded="true"][aria-controls]',
+    ),
+  ).find((button) =>
+    header.contains(
+      document.getElementById(button.getAttribute("aria-controls") ?? ""),
+    ),
+  );
+  if (!toggle) return;
+  toggle.click();
+  toggle.focus();
+}
 
 export function SiteShell({ children }: { children: ReactNode }) {
   const t = useT();
   const locale = useLocale();
   const baseOptions = getBaseLayoutOptions(locale);
+
+  useEffect(() => {
+    document.addEventListener("keydown", closeMobileMenuOnEscape);
+    return () =>
+      document.removeEventListener("keydown", closeMobileMenuOnEscape);
+  }, []);
 
   return (
     <>
@@ -21,6 +71,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
       </a>
       <HomeLayout
         {...baseOptions}
+        slots={{ container: ShellContainer }}
         links={[
           {
             text: t("nav.docs"),
@@ -78,7 +129,10 @@ export function SiteShell({ children }: { children: ReactNode }) {
             <p suppressHydrationWarning>
               &copy; {new Date().getFullYear()} SoulFire
             </p>
-            <nav className="flex flex-wrap justify-center gap-x-4 gap-y-2">
+            <nav
+              aria-label={t("nav.legal")}
+              className="flex flex-wrap justify-center gap-x-4 gap-y-2"
+            >
               <Link
                 to="/privacy-policy"
                 className="hover:text-fd-foreground transition-colors"

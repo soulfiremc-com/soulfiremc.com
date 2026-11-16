@@ -114,6 +114,8 @@ export type GetReviewsResult = {
   summaries: Record<string, ReviewSummary>;
   userReviews: Record<string, UserReviewRecord>;
   writtenReviews?: PaginatedPublicReviewRecords;
+  /** Set when storage failed and the result holds empty fallback data. */
+  unavailable?: true;
 };
 export type SubmitReviewResult =
   | { ok: true }
@@ -155,6 +157,7 @@ function emptyReviews(
       slugs.map((slug) => [slug, emptyReviewSummary()]),
     ),
     userReviews: {},
+    unavailable: true,
     writtenReviews:
       input.includeWrittenReviews && slugs.length === 1
         ? {

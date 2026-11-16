@@ -13,6 +13,8 @@ import type {
 
 export type ReviewMutationResult = {
   error: "unauthorized" | "verification" | null;
+  /** Another request was running, so this one did not reach the server. */
+  skipped?: true;
 };
 
 export type ReviewMutationVariables = { slug: string } & (

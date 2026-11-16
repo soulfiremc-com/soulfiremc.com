@@ -87,6 +87,17 @@ export function useReviews(
   const { data: reviewsData, isPending: loading } =
     useHydratedQueryResult(reviewsQuery);
   const refreshing = !loading && reviewsQuery.isPlaceholderData;
+  // Storage failures return empty fallback data. Transport failures leave no
+  // data. Neither result may read as an item without reviews.
+  const failed =
+    !loading &&
+    (reviewsData?.unavailable === true ||
+      (reviewsQuery.isError && reviewsData === undefined));
+  const retrying = failed && reviewsQuery.isFetching;
+  const { refetch } = reviewsQuery;
+  const retryReviews = useCallback(() => {
+    void refetch();
+  }, [refetch]);
   const mutationKey = reviewMutationKey(itemType, session?.user.id);
   const { mutateAsync } = useMutation(
     reviewMutationOptions({
@@ -150,7 +161,7 @@ export function useReviews(
           selectReviewMutationSlug(mutation) === variables.slug,
       }) > 0
     ) {
-      return { error: null };
+      return { error: null, skipped: true };
     }
 
     return mutateAsync(variables);
@@ -176,6 +187,9 @@ export function useReviews(
     writtenReviews,
     loading,
     refreshing,
+    failed,
+    retrying,
+    retryReviews,
     pendingBySlug,
     upsertReview,
     deleteReview,

@@ -6,6 +6,7 @@ import { Schema, Effect, Option } from "effect";
 import { useHydratedQueryResult } from "@/hooks/use-hydrated-query-result";
 import { usePrerenderedSearch } from "@/hooks/use-prerendered-search";
 import { SiGithub } from "@icons-pack/react-simple-icons";
+import { useCopyButton } from "fumadocs-ui/utils/use-copy-button";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 import {
   createFileRoute,
@@ -19,11 +20,13 @@ import {
   Check,
   CircuitBoard,
   Coffee,
+  Copy,
   Cpu,
   Download,
   Heart,
   PlayCircle,
   Server,
+  Smartphone,
   Terminal,
 } from "lucide-react";
 import { Suspense, useEffect, useRef, useState } from "react";
@@ -50,7 +53,10 @@ import {
 } from "@/components/ui/credenza";
 import { Skeleton } from "@/components/ui/skeleton";
 import { trackClientDownload } from "@/lib/analytics";
-import { detectDownloadPlatform } from "@/lib/download-platform";
+import {
+  detectDownloadCpuFromHints,
+  detectDownloadPlatform,
+} from "@/lib/download-platform";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   createClientDownloads,
@@ -176,11 +182,14 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
     Schema.decodeUnknownSync(downloadSearchSchema)({}),
   );
   const navigate = Route.useNavigate();
-  const hasExplicitParams = useRouterState({
-    select: ({ location }) =>
-      location.search.os !== undefined || location.search.cpu !== undefined,
+  const hasExplicitOs = useRouterState({
+    select: ({ location }) => location.search.os !== undefined,
+  });
+  const hasExplicitCpu = useRouterState({
+    select: ({ location }) => location.search.cpu !== undefined,
   });
   const hasDetectedPlatform = useRef(false);
+  const hasChosenPlatform = useRef(false);
   const [showThankYou, setShowThankYou] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -189,19 +198,32 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
     hasDetectedPlatform.current = true;
     const { os, cpu, mobile } = detectDownloadPlatform(window.navigator);
     setIsMobile(mobile);
-    if (hasExplicitParams || mobile) return;
-    if (!os && !cpu) return;
+    if (mobile || (hasExplicitOs && hasExplicitCpu)) return;
 
-    void navigate({
-      search: (previous) => ({
-        ...previous,
-        os: os ?? previous.os,
-        cpu: cpu ?? (os ? PREFERRED_CPU_BY_OS[os] : previous.cpu),
-      }),
-      replace: true,
-      resetScroll: false,
-    }).catch(ignoreAbortError);
-  }, [hasExplicitParams, navigate]);
+    void detectDownloadCpuFromHints(window.navigator).then((hintedCpu) => {
+      // Keep a choice the visitor made while the browser answered.
+      if (hasChosenPlatform.current) return;
+      const detectedCpu = hintedCpu ?? cpu;
+      if (!os && !detectedCpu) return;
+      return navigate({
+        search: (previous) => {
+          const nextOs = hasExplicitOs ? previous.os : (os ?? previous.os);
+          // This computer's CPU only applies to its own operating system.
+          const cpuForOs =
+            detectedCpu && (!os || os === nextOs)
+              ? detectedCpu
+              : PREFERRED_CPU_BY_OS[nextOs];
+          return {
+            ...previous,
+            os: nextOs,
+            cpu: hasExplicitCpu ? previous.cpu : cpuForOs,
+          };
+        },
+        replace: true,
+        resetScroll: false,
+      }).catch(ignoreAbortError);
+    });
+  }, [hasExplicitOs, hasExplicitCpu, navigate]);
 
   const downloadHref = links[selection.os]?.[selection.cpu];
   const isDirectGithubDownload = downloadHref?.includes("github.com") ?? false;
@@ -213,6 +235,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
     selection.os;
 
   const handleOsChange = (os: DownloadSelection["os"]) => {
+    hasChosenPlatform.current = true;
     void navigate({
       search: (previous) => ({ ...previous, os, cpu: PREFERRED_CPU_BY_OS[os] }),
       replace: true,
@@ -221,6 +244,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
   };
 
   const handleCpuChange = (cpu: DownloadSelection["cpu"]) => {
+    hasChosenPlatform.current = true;
     void navigate({
       search: (previous) => ({ ...previous, cpu }),
       replace: true,
@@ -239,14 +263,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
         </CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-8">
-        {isMobile && (
-          <Alert>
-            <AlertTitle>{t("download.downloadOnAComputer")}</AlertTitle>
-            <AlertDescription>
-              {t("download.mobile.description")}
-            </AlertDescription>
-          </Alert>
-        )}
+        {isMobile && <MobileDownloadNotice />}
         <div className="flex flex-col gap-3">
           <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
             {t("download.operatingSystem")}
@@ -343,7 +360,12 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
               setShowThankYou(true);
             }}
             className={cn(
-              buttonVariants({ size: "lg" }),
+              // Phones cannot run the installers, so the copy link and demo
+              // in the notice above take the primary role there.
+              buttonVariants({
+                size: "lg",
+                variant: isMobile ? "outline" : "default",
+              }),
               "w-full gap-2 text-xs sm:text-sm",
             )}
           >
@@ -397,7 +419,8 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
             </CredenzaDescription>
           </CredenzaHeader>
           <CredenzaBody>
-            <p className="text-sm text-muted-foreground">
+            <DownloadNextSteps os={selection.os} osLabel={selectedOsLabel} />
+            <p className="mt-6 text-sm text-muted-foreground">
               {t("download.soulfireIsFreeOpenSourceAndCommunityDrivenIf")}
             </p>
             <div className="mt-4 flex flex-col gap-3">
@@ -435,6 +458,97 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
         </CredenzaContent>
       </Credenza>
     </Card>
+  );
+}
+
+function MobileDownloadNotice() {
+  const t = useT();
+  const [copied, handleCopy] = useCopyButton(() =>
+    navigator.clipboard.writeText(
+      `${window.location.origin}${window.location.pathname}`,
+    ),
+  );
+  return (
+    <Alert>
+      <Smartphone />
+      <AlertTitle>{t("download.downloadOnAComputer")}</AlertTitle>
+      <AlertDescription>
+        <p>{t("download.mobile.description")}</p>
+        <div className="mt-2 flex flex-wrap gap-2">
+          <Button type="button" size="sm" onClick={handleCopy}>
+            {copied ? (
+              <Check data-icon="inline-start" />
+            ) : (
+              <Copy data-icon="inline-start" />
+            )}
+            {copied ? t("download.pageLinkCopied") : t("download.copyPageLink")}
+          </Button>
+          <a
+            href="https://demo.soulfiremc.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={buttonVariants({ size: "sm", variant: "outline" })}
+          >
+            <PlayCircle data-icon="inline-start" />
+            {t("download.tryTheBrowserDemo")}
+          </a>
+        </div>
+        <span className="sr-only" aria-live="polite">
+          {copied ? t("download.pageLinkCopied") : ""}
+        </span>
+      </AlertDescription>
+    </Alert>
+  );
+}
+
+function DownloadNextSteps({
+  os,
+  osLabel,
+}: {
+  os: DownloadSelection["os"];
+  osLabel: string;
+}) {
+  const t = useT();
+  return (
+    <div className="flex flex-col gap-3">
+      <p className="text-sm font-medium">{t("download.nextSteps")}</p>
+      <ol className="flex flex-col gap-3 text-sm">
+        <li className="flex gap-3">
+          <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
+            1
+          </span>
+          <div className="flex flex-col gap-0.5">
+            <Link
+              to="/{-$lang}/docs/$"
+              params={{ _splat: `start-here/${os}` }}
+              className="font-medium text-primary underline-offset-4 hover:underline"
+            >
+              {t("download.installOn", { os: osLabel })}
+            </Link>
+            <span className="text-muted-foreground">
+              {t("download.installOn.description")}
+            </span>
+          </div>
+        </li>
+        <li className="flex gap-3">
+          <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
+            2
+          </span>
+          <div className="flex flex-col gap-0.5">
+            <Link
+              to="/{-$lang}/docs/$"
+              params={{ _splat: "start-here/gui-mode" }}
+              className="font-medium text-primary underline-offset-4 hover:underline"
+            >
+              {t("download.connectYourFirstBot")}
+            </Link>
+            <span className="text-muted-foreground">
+              {t("download.connectYourFirstBot.description")}
+            </span>
+          </div>
+        </li>
+      </ol>
+    </div>
   );
 }
 
@@ -711,6 +825,13 @@ function DownloadPageContent({
                 </a>
               </div>
             ))}
+            <Link
+              to="/{-$lang}/docs/$"
+              params={{ _splat: "start-here/choose-your-setup" }}
+              className="text-sm font-medium text-primary underline-offset-4 hover:underline"
+            >
+              {t("download.whichSetupDoINeed")}
+            </Link>
           </CardContent>
         </Card>
         <Card>

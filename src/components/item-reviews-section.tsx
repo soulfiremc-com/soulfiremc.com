@@ -3,7 +3,13 @@
 import { useT, useLocale } from "@/lib/i18n-react";
 
 import { useLocation } from "@tanstack/react-router";
-import { ChevronLeft, ChevronRight, MessageSquareText } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  MessageSquareText,
+  RotateCw,
+  TriangleAlert,
+} from "lucide-react";
 import { type ReactNode, useEffect, useId, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { ReviewTurnstileProvider } from "@/components/review-turnstile-provider";
@@ -37,6 +43,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import { useReviews } from "@/hooks/use-reviews";
 import type { ItemType } from "@/lib/review-core";
+import type { ReviewMutationResult } from "@/lib/review-mutations";
 import { cn, generateN } from "@/lib/utils";
 import { ReviewStarInput, ReviewStars } from "./review-stars";
 
@@ -47,7 +54,7 @@ function initial(name: string) {
 }
 
 function handleMutationError(
-  error: "unauthorized" | "verification" | null,
+  error: ReviewMutationResult["error"],
   onUnauthorized: () => void,
   t: ReturnType<typeof useT>,
 ) {
@@ -144,6 +151,9 @@ function ItemReviewsSectionContent({
     writtenReviews,
     loading,
     refreshing,
+    failed,
+    retrying,
+    retryReviews,
     pendingBySlug,
     upsertReview,
     deleteReview,
@@ -209,10 +219,19 @@ function ItemReviewsSectionContent({
       normalizedBody.length > 0 &&
       (currentReview?.commentStatus !== "approved" ||
         (currentReview.body?.trim() ?? "") !== normalizedBody);
-    const result = await upsertReview(slug, {
-      rating,
-      body,
-    });
+    let result: ReviewMutationResult;
+    try {
+      result = await upsertReview(slug, {
+        rating,
+        body,
+      });
+    } catch {
+      toast.error(t("reviews.errors.saveFailed"), {
+        description: t("reviews.errors.connectionDescription"),
+      });
+      return;
+    }
+    if (result.skipped) return;
     handleMutationError(result.error, () => setShowSignInPrompt(true), t);
     if (!result.error) {
       toast(
@@ -228,7 +247,16 @@ function ItemReviewsSectionContent({
   };
 
   const removeReview = async () => {
-    const result = await deleteReview(slug);
+    let result: ReviewMutationResult;
+    try {
+      result = await deleteReview(slug);
+    } catch {
+      toast.error(t("reviews.errors.removeFailed"), {
+        description: t("reviews.errors.connectionDescription"),
+      });
+      return;
+    }
+    if (result.skipped) return;
     handleMutationError(result.error, () => setShowSignInPrompt(true), t);
     if (!result.error) {
       toast(t("reviews.reviewRemoved"));
@@ -266,6 +294,29 @@ function ItemReviewsSectionContent({
                     <Skeleton key={skeletonId} className="h-20 rounded-xl" />
                   ))}
                 </div>
+              </div>
+            ) : failed ? (
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-start gap-3">
+                  <TriangleAlert className="mt-0.5 size-5 shrink-0 text-destructive" />
+                  <div className="flex flex-col gap-1">
+                    <div className="text-lg font-semibold">
+                      {t("reviews.errors.loadFailed")}
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      {t("reviews.errors.connectionDescription")}
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={retryReviews}
+                  disabled={retrying}
+                >
+                  <RotateCw data-icon="inline-start" />
+                  {t("errors.tryAgain")}
+                </Button>
               </div>
             ) : summary.averageRating !== null ? (
               <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -366,6 +417,16 @@ function ItemReviewsSectionContent({
               <div className="flex justify-end text-xs text-muted-foreground">
                 {body.length}/2000
               </div>
+              {currentReview?.body &&
+              currentReview.commentStatus !== "approved" ? (
+                <FieldDescription>
+                  {t(
+                    currentReview.commentStatus === "rejected"
+                      ? "reviews.commentRejectedNotice"
+                      : "reviews.commentPendingNotice",
+                  )}
+                </FieldDescription>
+              ) : null}
             </Field>
           </CardContent>
 
@@ -373,7 +434,7 @@ function ItemReviewsSectionContent({
             <Button
               type="button"
               onClick={saveReview}
-              disabled={pending || loading || refreshing}
+              disabled={pending || loading || refreshing || failed}
             >
               {currentReview
                 ? t("reviews.updateReview")
@@ -483,6 +544,10 @@ function ItemReviewsSectionContent({
                 </Card>
               ))}
             </div>
+          ) : failed ? (
+            <p className="text-sm text-muted-foreground">
+              {t("reviews.errors.loadFailed")}
+            </p>
           ) : hasWrittenReviews ? (
             <div
               aria-busy={refreshing}
@@ -523,7 +588,7 @@ function ItemReviewsSectionContent({
                     </div>
                   </div>
                   {entry.body ? (
-                    <p className="text-sm leading-6 text-muted-foreground">
+                    <p className="text-sm leading-6 break-words whitespace-pre-line text-muted-foreground">
                       {entry.body}
                     </p>
                   ) : entry.commentStatus === "pending" ? (

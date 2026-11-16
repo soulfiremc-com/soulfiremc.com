@@ -6,6 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { PROVIDERS } from "@/lib/accounts-data";
 import { localizePath, type Locale } from "@/lib/i18n";
 import { useLocale, useT } from "@/lib/i18n-react";
 import { translate } from "@/lib/messages";
@@ -43,10 +44,15 @@ export const providerFaqs = {
       question: "faq.accounts.areTheseProvidersAffiliatedWithSoulfire.question",
       answer: "faq.accounts.areTheseProvidersAffiliatedWithSoulfire.answer",
     },
-    {
-      question: "faq.accounts.whatDoesTheFreeBadgeMean.question",
-      answer: "faq.accounts.whatDoesTheFreeBadgeMean.answer",
-    },
+    // Explain the Free badge only while a listing shows it.
+    ...(PROVIDERS.some((provider) => provider.badges.includes("free"))
+      ? ([
+          {
+            question: "faq.accounts.whatDoesTheFreeBadgeMean.question",
+            answer: "faq.accounts.whatDoesTheFreeBadgeMean.answer",
+          },
+        ] as const)
+      : []),
   ],
   proxies: [
     {

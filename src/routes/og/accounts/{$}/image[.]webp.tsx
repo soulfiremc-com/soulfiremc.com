@@ -2,7 +2,7 @@ import { isLocale, localizePath } from "@/lib/i18n";
 import { translate, resolveMessage } from "@/lib/messages";
 import { DocsOgImage } from "@/components/og/soulfire";
 import { soulfireLogoDataUri } from "@/lib/og-image";
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { AccountOgImage } from "@/components/og/site";
 import { getShopBySlug } from "@/lib/accounts-data";
 import { stripOgSuffix } from "@/lib/og";
@@ -18,7 +18,7 @@ export const Route = createFileRoute("/og/accounts/{$}/image.webp")({
         const [shopSlug] = stripOgSuffix(slugs);
         const shop = shopSlug ? getShopBySlug(shopSlug) : undefined;
 
-        if (!shop) throw notFound();
+        if (!shop) return new Response(null, { status: 404 });
 
         const listings = Object.entries(shop.listings).map(
           ([category, listing]) => ({

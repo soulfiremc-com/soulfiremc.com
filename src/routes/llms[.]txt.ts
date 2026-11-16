@@ -1,40 +1,93 @@
 import { createFileRoute } from "@tanstack/react-router";
+import type { Node } from "fumadocs-core/page-tree";
+import { absoluteUrl, siteDescription, siteName } from "@/lib/site";
+
+const textHeaders = { "Content-Type": "text/plain; charset=utf-8" };
+
+type Section = { heading: string; urls: string[] };
+
+/** Groups page URLs by sidebar folder, in sidebar order. */
+function collectSections(nodes: Node[], section: Section, sections: Section[]) {
+  const heading = section.heading;
+  let current = section;
+
+  for (const node of nodes) {
+    if (node.type === "page") {
+      if (!node.external) current.urls.push(node.url);
+    } else if (node.type === "separator") {
+      const name = typeof node.name === "string" ? node.name : undefined;
+      current = { heading: name ? `${heading}: ${name}` : heading, urls: [] };
+      sections.push(current);
+    } else {
+      const folder: Section = {
+        heading: typeof node.name === "string" ? node.name : heading,
+        urls: node.index ? [node.index.url] : [],
+      };
+      sections.push(folder);
+      collectSections(node.children, folder, sections);
+      // Pages after a folder belong to the parent heading again.
+      current = { heading, urls: [] };
+      sections.push(current);
+    }
+  }
+
+  return sections;
+}
 
 export const Route = createFileRoute("/llms.txt")({
   server: {
     handlers: {
-      HEAD: async () =>
-        new Response(null, {
-          headers: {
-            "Content-Type": "text/plain; charset=utf-8",
-          },
-        }),
+      HEAD: async () => new Response(null, { headers: textHeaders }),
       GET: async () => {
         const { getSource } = await import("@/lib/source");
         const source = await getSource();
-        const scanned: string[] = [];
-        scanned.push("# Docs");
-        const map = new Map<string, string[]>();
+        const pages = new Map(
+          source.getPages("en").map((page) => [page.url, page]),
+        );
+        const listed = new Set<string>();
+        const lines = [
+          `# ${siteName}`,
+          `> ${siteDescription}`,
+          `Each link points to a Markdown copy of a documentation page. The full documentation is also available as one file at ${absoluteUrl("/llms-full.txt")}.`,
+        ];
 
-        for (const page of source.getPages("en")) {
-          const dir = page.slugs[0] ?? "overview";
-          const list = map.get(dir) ?? [];
-          list.push(
-            `- [${page.data.title ?? page.slugs.at(-1) ?? "Docs"}](${page.url}): ${page.data.description ?? ""}`,
+        const root: Section = { heading: "Docs", urls: [] };
+        const sections = collectSections(
+          source.getPageTree("en").children,
+          root,
+          [root],
+        );
+        for (const { heading, urls } of sections) {
+          const entries = urls.flatMap((url) => {
+            const page = pages.get(url);
+            if (!page || listed.has(url)) return [];
+            listed.add(url);
+            const title = page.data.title ?? page.slugs.at(-1) ?? "Docs";
+            const description = page.data.description?.trim();
+            return [
+              `- [${title}](${absoluteUrl(`${url}.mdx`)})${description ? `: ${description}` : ""}`,
+            ];
+          });
+          if (entries.length > 0)
+            lines.push(`## ${heading}`, entries.join("\n"));
+        }
+
+        const unlisted = [...pages.values()].filter(
+          (page) => !listed.has(page.url),
+        );
+        if (unlisted.length > 0) {
+          lines.push(
+            "## Other pages",
+            unlisted
+              .map(
+                (page) =>
+                  `- [${page.data.title ?? page.slugs.at(-1) ?? "Docs"}](${absoluteUrl(`${page.url}.mdx`)})`,
+              )
+              .join("\n"),
           );
-          map.set(dir, list);
         }
 
-        for (const [key, value] of map) {
-          scanned.push(`## ${key}`);
-          scanned.push(value.join("\n"));
-        }
-
-        return new Response(scanned.join("\n\n"), {
-          headers: {
-            "Content-Type": "text/plain; charset=utf-8",
-          },
-        });
+        return new Response(lines.join("\n\n"), { headers: textHeaders });
       },
     },
   },

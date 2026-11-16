@@ -1,10 +1,10 @@
 import { translate } from "@/lib/messages";
 import { TranslatedMessage } from "@/components/translated-message";
-import { useT } from "@/lib/i18n-react";
-import { isLocale } from "@/lib/i18n";
+import { useLocale, useT } from "@/lib/i18n-react";
+import { formatEuro, isLocale } from "@/lib/i18n";
 import { SiKofi } from "@icons-pack/react-simple-icons";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Check, Code, Gift, Heart, Users } from "lucide-react";
+import { Check, Download, Gift, Heart, Users } from "lucide-react";
 import { SiteShell } from "@/components/site-shell";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
@@ -37,6 +37,7 @@ const freeTierFeatures = [
 ] as const;
 
 const supporterTierFeatures = [
+  "support.everythingInFree",
   "support.prioritySupportViaDiscord",
   "support.priorityWithFeatureRequests",
   "support.supporterRoleInDiscord",
@@ -46,6 +47,7 @@ const supporterTierFeatures = [
 
 function PricingPageContent() {
   const t = useT();
+  const locale = useLocale();
   return (
     <main className="px-4 py-12 w-full max-w-(--fd-layout-width) mx-auto">
       <div className="flex flex-col items-center text-center gap-4 mb-12">
@@ -66,7 +68,9 @@ function PricingPageContent() {
               <CardTitle className="text-xl">{t("common.free")}</CardTitle>
             </div>
             <div className="flex items-baseline gap-1">
-              <span className="text-4xl font-bold">0€</span>
+              <span className="text-4xl font-bold">
+                {formatEuro(0, locale)}
+              </span>
               <span className="text-muted-foreground">
                 {t("support.month")}
               </span>
@@ -90,8 +94,8 @@ function PricingPageContent() {
               to="/{-$lang}/download"
               className={cn(buttonVariants({ variant: "outline" }), "w-full")}
             >
-              <Code className="h-4 w-4" />
-              {t("support.getStarted")}
+              <Download className="h-4 w-4" />
+              {t("download.title")}
             </Link>
           </CardFooter>
         </Card>
@@ -104,10 +108,12 @@ function PricingPageContent() {
               <CardTitle className="text-xl">
                 {t("support.supporter")}
               </CardTitle>
-              <Badge>{t("support.popular")}</Badge>
+              <Badge variant="secondary">{t("support.optional")}</Badge>
             </div>
             <div className="flex items-baseline gap-1">
-              <span className="text-4xl font-bold">5€</span>
+              <span className="text-4xl font-bold">
+                {formatEuro(5, locale)}
+              </span>
               <span className="text-muted-foreground">
                 {t("support.month")}
               </span>

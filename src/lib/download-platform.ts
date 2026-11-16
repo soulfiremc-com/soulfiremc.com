@@ -80,3 +80,47 @@ function detectBrowserCPU(
 
   return null;
 }
+
+type UserAgentArchitectureHints = {
+  architecture?: string;
+  bitness?: string;
+};
+
+type NavigatorWithUserAgentData = {
+  userAgent: string;
+  userAgentData?: {
+    getHighEntropyValues?: (
+      hints: string[],
+    ) => Promise<UserAgentArchitectureHints>;
+  };
+};
+
+/**
+ * Chromium browsers report the real CPU through client hints. The user agent
+ * string always says x64 on Windows on ARM and Intel on every Mac.
+ */
+export function cpuFromArchitectureHints(
+  hints: UserAgentArchitectureHints,
+): ClientDownloadArch | null {
+  const architecture = hints.architecture?.toLowerCase();
+  if (architecture === "arm" && hints.bitness !== "32") return "arm64";
+  if (architecture === "x86" && hints.bitness === "64") return "x64";
+  return null;
+}
+
+export async function detectDownloadCpuFromHints(
+  browser: NavigatorWithUserAgentData,
+): Promise<ClientDownloadArch | null> {
+  const getHighEntropyValues = browser.userAgentData?.getHighEntropyValues;
+  if (!getHighEntropyValues) return null;
+  try {
+    return cpuFromArchitectureHints(
+      await getHighEntropyValues.call(browser.userAgentData, [
+        "architecture",
+        "bitness",
+      ]),
+    );
+  } catch {
+    return null;
+  }
+}

@@ -54,6 +54,23 @@ export function localizeHref(href: string, locale: Locale): string {
     : href;
 }
 
+/** Format in UTC with the URL locale so server and browser output match. */
+export function formatLocaleDate(date: Date | string | number, locale: Locale) {
+  return new Intl.DateTimeFormat(locale, {
+    dateStyle: "long",
+    timeZone: "UTC",
+  }).format(new Date(date));
+}
+
+/** Whole euro amounts, such as "€5" in English and "5 €" in German. */
+export function formatEuro(amount: number, locale: Locale) {
+  return new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency: "EUR",
+    maximumFractionDigits: 0,
+  }).format(amount);
+}
+
 /** Parse Fumadocs' dot convention without treating the locale as a slug. */
 export function docFileInfo(file: string) {
   const match = /^(.*?)(?:\.(en|de|pl|ru))?\.mdx?$/.exec(

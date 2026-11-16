@@ -4,12 +4,7 @@ import { useLocale, useT } from "@/lib/i18n-react";
 import { localizeHref } from "@/lib/i18n";
 import { isLocale } from "@/lib/i18n";
 import { createFileRoute } from "@tanstack/react-router";
-import type {
-  BreadcrumbList,
-  FAQPage,
-  SoftwareApplication,
-  WithContext,
-} from "schema-dts";
+import type { FAQPage, SoftwareApplication, WithContext } from "schema-dts";
 import { HomeFrontpage } from "@/components/home/HomeFrontpage";
 import { JsonLd } from "@/components/json-ld";
 import { SiteShell } from "@/components/site-shell";
@@ -127,24 +122,10 @@ function HomePage() {
     })),
   };
 
-  const breadcrumbJsonLd: WithContext<BreadcrumbList> = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: "https://soulfiremc.com",
-      },
-    ],
-  };
-
   return (
     <SiteShell>
       <JsonLd data={softwareJsonLd} />
       <JsonLd data={faqJsonLd} />
-      <JsonLd data={breadcrumbJsonLd} />
       <HomeFrontpage githubLink={githubLink} faqItems={localizedFaqItems} />
     </SiteShell>
   );

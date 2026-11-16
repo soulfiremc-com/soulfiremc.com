@@ -158,6 +158,8 @@ export function ReviewModeration() {
               }
             : current,
       );
+      // Public review pages cache comments, so refresh them after moderation.
+      void queryClient.invalidateQueries({ queryKey: ["reviews"] });
       toast(
         variables.commentStatus === "approved"
           ? "Comment approved"
@@ -291,7 +293,7 @@ export function ReviewModeration() {
                     <span aria-hidden="true">·</span>
                     <CustomTimeAgo date={comment.createdAt} />
                   </div>
-                  <p className="rounded-md border bg-muted/20 p-3 text-sm leading-6 break-words">
+                  <p className="rounded-md border bg-muted/20 p-3 text-sm leading-6 break-words whitespace-pre-line">
                     {comment.body}
                   </p>
                 </CardContent>

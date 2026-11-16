@@ -6,7 +6,6 @@ import { useRouter } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import {
   Credenza,
-  CredenzaBody,
   CredenzaClose,
   CredenzaContent,
   CredenzaDescription,
@@ -36,11 +35,6 @@ export function SignInRequiredCredenza({
           <CredenzaTitle>{title}</CredenzaTitle>
           <CredenzaDescription>{description}</CredenzaDescription>
         </CredenzaHeader>
-        <CredenzaBody>
-          <div className="rounded-xl border border-border/70 bg-muted/30 px-4 py-3 text-sm text-muted-foreground">
-            {t("common.signInToYourAccountToSubmitRatingsAnd")}
-          </div>
-        </CredenzaBody>
         <CredenzaFooter>
           <CredenzaClose
             render={
