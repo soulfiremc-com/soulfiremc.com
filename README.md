@@ -10,7 +10,7 @@ bun run db:migrate
 bun dev
 ```
 
-The Cloudflare development server stores the local D1 database in `.wrangler/state`.
+The Cloudflare development server stores the local D1 database in `.cloudflare/state`.
 
 ## Database migrations
 
