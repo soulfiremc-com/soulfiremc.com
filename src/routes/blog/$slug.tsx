@@ -6,6 +6,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { Suspense } from "react";
 import { SiteShell } from "@/components/site-shell";
 import { getBlogPostData } from "@/lib/blog";
+import { formatBlogDate } from "@/lib/blog-date";
 import { getBlogPageImage } from "@/lib/og";
 import {
   createBreadcrumbStructuredData,
@@ -24,7 +25,7 @@ const blogPostLoader = createServerFn({ method: "GET" })
     ),
   )
   .handler(async ({ data }) => {
-    const post = await getBlogPostData(data.slug);
+    const post = getBlogPostData(data.slug);
     if (!post) {
       throw notFound();
     }
@@ -79,7 +80,11 @@ const clientLoader = browserCollections.blog.createClientLoader<{
 
 export const Route = createFileRoute("/blog/$slug")({
   loader: async ({ params }) => {
-    return await blogPostLoader({ data: { slug: params.slug } });
+    const data = await blogPostLoader({ data: { slug: params.slug } });
+    // Load the MDX module before rendering so client navigation does not
+    // suspend on an empty article and shift the footer.
+    await clientLoader.preload(data.path);
+    return data;
   },
   head: ({ loaderData }) => {
     const data = loaderData;
@@ -144,33 +149,34 @@ function BlogPostPage() {
   return (
     <SiteShell>
       <main className="mx-auto flex w-full max-w-(--fd-layout-width) flex-col gap-10 px-4 py-8 sm:py-12">
-        <div className="mx-auto flex max-w-3xl flex-col gap-4">
-          <nav className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+        <div className="mx-auto flex w-full max-w-3xl min-w-0 flex-col gap-4">
+          <nav
+            aria-label="Breadcrumb"
+            className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground"
+          >
             <Link
               to="/{-$lang}"
               className="transition-colors hover:text-foreground"
             >
               Home
             </Link>
-            <span>/</span>
+            <span aria-hidden="true">/</span>
             <Link
               to="/blog"
               className="transition-colors hover:text-foreground"
             >
               Blog
             </Link>
-            <span>/</span>
-            <span className="text-foreground">{data.post.title}</span>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page" className="text-foreground">
+              {data.post.title}
+            </span>
           </nav>
 
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
             {data.post.date ? (
               <time dateTime={new Date(data.post.date).toISOString()}>
-                {new Date(data.post.date).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                })}
+                {formatBlogDate(data.post.date)}
               </time>
             ) : null}
             <span>{data.post.author}</span>
@@ -201,7 +207,7 @@ function BlogPostPage() {
           ) : null}
         </div>
 
-        <div className="mx-auto max-w-3xl">
+        <div className="mx-auto w-full max-w-3xl min-w-0">
           <Suspense>
             {clientLoader.useContent(data.path, {
               relatedPosts: data.relatedPosts,

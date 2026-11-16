@@ -1,6 +1,4 @@
-"use client";
-
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import {
@@ -60,10 +58,57 @@ function formatNumber(n: number): string {
   return n.toString();
 }
 
+const usdFormat = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+});
+const compactUsdFormat = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  notation: "compact",
+  maximumFractionDigits: 1,
+});
+
+export function formatUsd(n: number): string {
+  return n >= 1_000_000 ? compactUsdFormat.format(n) : usdFormat.format(n);
+}
+
+const MIN_BOTS = 1;
+const MAX_BOTS = 1000;
+const MAX_PRICE = 1;
+
+/**
+ * Reads a number from a text field value and clamps it to a range. Empty or
+ * partial input such as "" or "0." falls back instead of being rewritten,
+ * so the field keeps what the user typed.
+ */
+export function parseCalculatorNumber(
+  value: string,
+  { min, max, fallback }: { min: number; max: number; fallback: number },
+) {
+  const parsed = Number.parseFloat(value);
+  if (!Number.isFinite(parsed)) return fallback;
+  return Math.min(max, Math.max(min, parsed));
+}
+
 export function DonutCalculator() {
-  const [botCount, setBotCount] = useState(5);
-  const [pricePerMillion, setPricePerMillion] = useState(0.05);
+  const id = useId();
+  const [botInput, setBotInput] = useState("5");
+  const [priceInput, setPriceInput] = useState("0.05");
   const [selectedMethod, setSelectedMethod] = useState(0);
+
+  const botCount = Math.round(
+    parseCalculatorNumber(botInput, {
+      min: MIN_BOTS,
+      max: MAX_BOTS,
+      fallback: MIN_BOTS,
+    }),
+  );
+  const pricePerMillion = parseCalculatorNumber(priceInput, {
+    min: 0,
+    max: MAX_PRICE,
+    fallback: 0,
+  });
 
   const method = METHODS[selectedMethod];
   const dailyMoney = method.moneyPerDay * botCount;
@@ -77,12 +122,13 @@ export function DonutCalculator() {
         DonutSMP Earnings Calculator
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
-        <Field>
-          <FieldLabel>Farming Method</FieldLabel>
+        <Field className="*:data-[slot=native-select-wrapper]:w-full">
+          <FieldLabel htmlFor={`${id}-method`}>Farming Method</FieldLabel>
           <NativeSelect
+            id={`${id}-method`}
             value={selectedMethod}
             onChange={(e) => setSelectedMethod(Number(e.target.value))}
-            className="w-full min-w-full bg-fd-background"
+            className="bg-fd-background"
           >
             {METHODS.map((m, i) => (
               <NativeSelectOption key={m.name} value={i}>
@@ -92,51 +138,62 @@ export function DonutCalculator() {
           </NativeSelect>
         </Field>
         <Field>
-          <FieldLabel>Number of Bots</FieldLabel>
+          <FieldLabel htmlFor={`${id}-bots`}>Number of Bots</FieldLabel>
           <Input
+            id={`${id}-bots`}
             type="number"
-            min={1}
-            max={1000}
-            value={botCount}
-            onChange={(e) => setBotCount(Math.max(1, Number(e.target.value)))}
+            inputMode="numeric"
+            min={MIN_BOTS}
+            max={MAX_BOTS}
+            step={1}
+            value={botInput}
+            onChange={(e) => setBotInput(e.target.value)}
+            onBlur={() => setBotInput(String(botCount))}
             className="bg-fd-background"
           />
         </Field>
         <Field className="sm:col-span-2">
-          <FieldLabel>USD per Million (current market rate)</FieldLabel>
+          <FieldLabel htmlFor={`${id}-price`}>
+            USD per Million (current market rate)
+          </FieldLabel>
           <Input
+            id={`${id}-price`}
             type="number"
-            min={0.001}
-            max={1}
-            step={0.005}
-            value={pricePerMillion}
-            onChange={(e) =>
-              setPricePerMillion(Math.max(0.001, Number(e.target.value)))
-            }
+            inputMode="decimal"
+            min={0}
+            max={MAX_PRICE}
+            step={0.01}
+            value={priceInput}
+            onChange={(e) => setPriceInput(e.target.value)}
+            onBlur={() => setPriceInput(String(pricePerMillion))}
             className="bg-fd-background"
           />
         </Field>
       </div>
 
       <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <div className="rounded-md border bg-fd-background p-3">
+        <div className="min-w-0 rounded-md border bg-fd-background p-3">
           <div className="text-xs text-fd-muted-foreground">Daily Money</div>
-          <div className="text-lg font-bold">{formatNumber(dailyMoney)}</div>
-        </div>
-        <div className="rounded-md border bg-fd-background p-3">
-          <div className="text-xs text-fd-muted-foreground">Daily Shards</div>
-          <div className="text-lg font-bold">{formatNumber(dailyShards)}</div>
-        </div>
-        <div className="rounded-md border bg-fd-background p-3">
-          <div className="text-xs text-fd-muted-foreground">Daily USD</div>
-          <div className="text-lg font-bold text-success">
-            ${dailyUsd.toFixed(2)}
+          <div className="text-lg font-bold tabular-nums">
+            {formatNumber(dailyMoney)}
           </div>
         </div>
-        <div className="rounded-md border bg-fd-background p-3">
+        <div className="min-w-0 rounded-md border bg-fd-background p-3">
+          <div className="text-xs text-fd-muted-foreground">Daily Shards</div>
+          <div className="text-lg font-bold tabular-nums">
+            {formatNumber(dailyShards)}
+          </div>
+        </div>
+        <div className="min-w-0 rounded-md border bg-fd-background p-3">
+          <div className="text-xs text-fd-muted-foreground">Daily USD</div>
+          <div className="text-lg font-bold break-words text-success tabular-nums">
+            {formatUsd(dailyUsd)}
+          </div>
+        </div>
+        <div className="min-w-0 rounded-md border bg-fd-background p-3">
           <div className="text-xs text-fd-muted-foreground">Monthly USD</div>
-          <div className="text-lg font-bold text-success">
-            ${monthlyUsd.toFixed(2)}
+          <div className="text-lg font-bold break-words text-success tabular-nums">
+            {formatUsd(monthlyUsd)}
           </div>
         </div>
       </div>

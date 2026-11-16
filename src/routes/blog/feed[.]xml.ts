@@ -2,14 +2,23 @@ import { createFileRoute } from "@tanstack/react-router";
 import { getSortedBlogPages } from "@/lib/blog";
 import { siteUrl } from "@/lib/site";
 
+function escapeXml(value: string) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&apos;");
+}
+
 export const Route = createFileRoute("/blog/feed.xml")({
   server: {
     handlers: {
       GET: async () => {
-        const posts = await getSortedBlogPages();
+        const posts = getSortedBlogPages();
 
         const rss = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
     <title>SoulFire Blog</title>
     <link>${siteUrl}/blog</link>
@@ -24,13 +33,13 @@ export const Route = createFileRoute("/blog/feed.xml")({
 
         return `
     <item>
-      <title><![CDATA[${post.data.title}]]></title>
+      <title>${escapeXml(post.data.title)}</title>
       <link>${siteUrl}${post.url}</link>
       <guid isPermaLink="true">${siteUrl}${post.url}</guid>
-      <description><![CDATA[${post.data.description || ""}]]></description>
+      <description>${escapeXml(post.data.description ?? "")}</description>
       <pubDate>${pubDate}</pubDate>
-      ${post.data.author ? `<author>${post.data.author}</author>` : ""}
-      ${post.data.tags?.map((tag) => `<category>${tag}</category>`).join("\n      ") || ""}
+      ${post.data.author ? `<dc:creator>${escapeXml(post.data.author)}</dc:creator>` : ""}
+      ${post.data.tags?.map((tag) => `<category>${escapeXml(tag)}</category>`).join("\n      ") || ""}
     </item>`;
       })
       .join("")}

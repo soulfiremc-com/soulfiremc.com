@@ -4,6 +4,7 @@ import { Image } from "@/components/image";
 import { SiteShell } from "@/components/site-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getAllBlogPostSummaries } from "@/lib/blog";
+import { formatBlogDate } from "@/lib/blog-date";
 import {
   createBreadcrumbStructuredData,
   createStructuredDataGraph,
@@ -74,13 +75,13 @@ function BlogIndexPage() {
           {posts.map((post) => (
             <Card
               key={post.url}
-              className="group flex flex-col overflow-hidden transition-all hover:shadow-lg"
+              className="group relative flex flex-col overflow-hidden transition-all hover:shadow-lg"
             >
               {post.cover ? (
                 <div className="aspect-video w-full overflow-hidden bg-muted">
                   <Image
                     src={post.cover}
-                    alt={post.title}
+                    alt=""
                     fill
                     sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                     objectFit="cover"
@@ -90,7 +91,11 @@ function BlogIndexPage() {
               ) : null}
               <CardHeader className="gap-3">
                 <CardTitle className="text-xl transition-colors group-hover:text-primary sm:text-2xl">
-                  <Link to="/blog/$slug" params={{ slug: post.slug }}>
+                  <Link
+                    to="/blog/$slug"
+                    params={{ slug: post.slug }}
+                    className="outline-none after:absolute after:inset-0 after:rounded-xl focus-visible:after:ring-2 focus-visible:after:ring-ring"
+                  >
                     {post.title}
                   </Link>
                 </CardTitle>
@@ -117,11 +122,7 @@ function BlogIndexPage() {
                   {post.author ? <span>{post.author}</span> : null}
                   {post.date ? (
                     <time dateTime={new Date(post.date).toISOString()}>
-                      {new Date(post.date).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
+                      {formatBlogDate(post.date)}
                     </time>
                   ) : null}
                   <span>{post.readingTime} min read</span>
