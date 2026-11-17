@@ -9,10 +9,15 @@ import {
   RotateCcw,
   StepForward,
 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useIsHydrated } from "@/components/auth/use-is-hydrated";
 import { Button } from "@/components/ui/button";
 import { useT } from "@/lib/i18n-react";
-import { fallbackSummary, VoxelFallback } from "./VoxelFallback";
+import {
+  createStillScene,
+  fallbackSummary,
+  VoxelFallback,
+} from "./VoxelFallback";
 import { selectionOptions, VoxelSettings } from "./VoxelSettings";
 import { useReducedMotion } from "./use-reduced-motion";
 import type { createVoxelRenderer } from "./voxel-renderer";
@@ -32,10 +37,20 @@ export function VoxelScene() {
   const [status, setStatus] = useState<"loading" | "ready" | "unavailable">(
     "loading",
   );
-  const [summary, setSummary] = useState<SimulationSummary>(fallbackSummary);
+  const [liveSummary, setLiveSummary] =
+    useState<SimulationSummary>(fallbackSummary);
+  // Each visit starts a different world. The prerendered page cannot know the
+  // seed, so the still scene appears once the page hydrates.
+  const [seed] = useState(() => Math.floor(Math.random() * 2 ** 32));
+  const hydrated = useIsHydrated();
   const [announcement, setAnnouncement] = useState("");
   const reducedMotion = useReducedMotion();
   const ready = status === "ready";
+  const still = useMemo(
+    () => (hydrated && !ready ? createStillScene(seed) : null),
+    [hydrated, ready, seed],
+  );
+  const summary = ready ? liveSummary : (still?.summary ?? fallbackSummary);
   const stopped = paused ?? reducedMotion !== false;
   const playbackLabel = t(
     stopped
@@ -65,10 +80,10 @@ export function VoxelScene() {
           canvasRef.current,
           () => {
             rendererRef.current = null;
-            setSummary(fallbackSummary);
             setStatus("unavailable");
           },
-          setSummary,
+          setLiveSummary,
+          seed,
         );
         rendererRef.current = renderer;
         setStatus(renderer ? "ready" : "unavailable");
@@ -81,7 +96,7 @@ export function VoxelScene() {
       rendererRef.current?.destroy();
       rendererRef.current = null;
     };
-  }, []);
+  }, [seed]);
 
   useEffect(() => {
     rendererRef.current?.setMotion(stopped, reducedMotion !== false);
@@ -124,7 +139,7 @@ export function VoxelScene() {
       aria-label={t("simulation.evolvingBotSimulation")}
     >
       <div className="voxel-stage">
-        {!ready && <VoxelFallback />}
+        {still && <VoxelFallback faces={still.faces} />}
         <canvas
           ref={canvasRef}
           className="voxel-canvas"
