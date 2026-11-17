@@ -41,9 +41,20 @@ export function createAdventure(
   generation: number,
   enabled: boolean,
 ): AdventureState {
-  return {
+  const world: AdventureState = {
     enabled,
-    rng: (seed ^ Math.imul(generation, 0x9e3779b1)) >>> 0,
+    mood: {
+      blast: 1,
+      waveGap: 1,
+      siegeGap: 1,
+      lavaGap: 1,
+      boltGap: 3.5,
+      stormLength: 12,
+      stormGap: 14,
+      dusk: 0.18,
+      dawn: 0.84,
+    },
+    rng: scramble(seed ^ Math.imul(generation, 0x9e3779b1)),
     nextId: 1,
     night: 0,
     storm: 0,
@@ -58,6 +69,40 @@ export function createAdventure(
     breachReadyAt: 0,
     stormReadyAt: 0,
   };
+  // Each round rolls its own pace, so that no two rounds play out alike.
+  const roll = (min: number, max: number) => between(world, min, max);
+  world.mood = {
+    blast: roll(0.7, 1.4),
+    waveGap: roll(0.5, 1.6),
+    siegeGap: roll(0.6, 1.6),
+    lavaGap: roll(0.6, 1.8),
+    boltGap: roll(2, 5),
+    stormLength: roll(7, 16),
+    stormGap: roll(12, 36),
+    dusk: roll(0.1, 0.4),
+    dawn: roll(0.72, 0.9),
+  };
+  world.nextWave = roll(1, 6);
+  world.nextSiege = roll(4, 12);
+  world.nextLava = roll(3, 8);
+  // Some rounds open with a storm. Most get one later, or not at all.
+  world.nextStorm = random(world) < 0.3 ? roll(0.8, 5) : roll(12, 60);
+  return world;
+}
+
+/**
+ * Spreads nearby seeds apart. Without it, seeds that differ by one give
+ * almost the same first rolls, and so almost the same round.
+ */
+function scramble(value: number) {
+  let hash = value >>> 0;
+  hash = Math.imul(hash ^ (hash >>> 16), 0x85ebca6b);
+  hash = Math.imul(hash ^ (hash >>> 13), 0xc2b2ae35);
+  return (hash ^ (hash >>> 16)) >>> 0;
+}
+
+function between(world: AdventureState, min: number, max: number) {
+  return min + random(world) * (max - min);
 }
 
 function protectedGround(state: SimulationState, tile: SimulationTile) {
@@ -104,6 +149,7 @@ function armCharge(
     originX: owner?.x ?? tile.x,
     originZ: owner?.z ?? tile.z,
     flight: owner ? 0.8 : 0,
+    power: 2.4 * world.mood.blast * between(world, 0.85, 1.2),
   });
   return true;
 }
@@ -118,8 +164,17 @@ export function decorateAdventure(state: SimulationState) {
       if (tile) tile.torch = true;
     }
   }
-  armCharge(state, -2, -1, null, 3.2);
-  armCharge(state, 2, 1, null, 3.8);
+  // A round starts with up to three charges in random spots near the middle.
+  const world = state.adventure;
+  const charges = Math.floor(random(world) * 4);
+  for (let index = 0; index < charges; index++)
+    armCharge(
+      state,
+      (index % 2 ? 1 : -1) * between(world, 1, 4),
+      between(world, -4, 4),
+      null,
+      between(world, 2.5, 7),
+    );
 }
 
 export function primeBreach(state: SimulationState) {
@@ -143,10 +198,11 @@ export function primeBreach(state: SimulationState) {
 export function summonStorm(state: SimulationState) {
   if (!state.adventure.enabled || state.elapsed < state.adventure.stormReadyAt)
     return false;
-  state.adventure.storm = 12;
+  const { stormLength, stormGap } = state.adventure.mood;
+  state.adventure.storm = stormLength;
   state.adventure.nextBolt = state.elapsed;
-  state.adventure.stormReadyAt = state.elapsed + 15;
-  state.adventure.nextStorm = state.elapsed + 26;
+  state.adventure.stormReadyAt = state.elapsed + stormLength + 3;
+  state.adventure.nextStorm = state.elapsed + stormLength + stormGap;
   return true;
 }
 
@@ -306,7 +362,7 @@ function updateMobs(state: SimulationState, host: AdventureHost, dt: number) {
         mob.fuse -= dt;
         if (mob.fuse <= 0) {
           mob.health = 0;
-          blast(state, host, mob.x, mob.z, 2.1, null);
+          blast(state, host, mob.x, mob.z, 2.1 * world.mood.blast, null);
           continue;
         }
       } else moveMob(mob, target.x, target.z, 1.65 * dt, host);
@@ -524,8 +580,8 @@ export function stepAdventure(
   const world = state.adventure;
   if (!world.enabled) return;
   const phase = state.elapsed / state.roundDuration;
-  const dusk = Math.min(1, Math.max(0, (phase - 0.18) / 0.14));
-  const dawn = 1 - Math.min(1, Math.max(0, (phase - 0.84) / 0.14));
+  const dusk = Math.min(1, Math.max(0, (phase - world.mood.dusk) / 0.14));
+  const dawn = 1 - Math.min(1, Math.max(0, (phase - world.mood.dawn) / 0.14));
   world.storm = Math.max(0, world.storm - dt);
   world.night = Math.max(dusk * dawn, world.storm > 0 ? 0.65 : 0);
   for (const tile of state.tiles)
@@ -536,18 +592,27 @@ export function stepAdventure(
   if (state.elapsed >= world.nextStorm) summonStorm(state);
   if (world.storm > 0 && state.elapsed >= world.nextBolt) {
     strike(state, host);
-    world.nextBolt = state.elapsed + 3.5;
+    world.nextBolt = state.elapsed + world.mood.boltGap;
   }
   for (const charge of [...world.charges]) {
     charge.flight = Math.max(0, charge.flight - dt);
     charge.fuse -= dt;
     if (charge.fuse <= 0) {
       world.charges = world.charges.filter((other) => other.id !== charge.id);
-      blast(state, host, charge.x, charge.z, 2.4, charge.owner, charge.chain);
+      blast(
+        state,
+        host,
+        charge.x,
+        charge.z,
+        charge.power,
+        charge.owner,
+        charge.chain,
+      );
     }
   }
   if (state.elapsed >= world.nextWave) {
-    world.nextWave = state.elapsed + (world.night > 0.3 ? 3.5 : 7);
+    world.nextWave =
+      state.elapsed + (world.night > 0.3 ? 3.5 : 7) * world.mood.waveGap;
     const kind =
       world.night > 0.3
         ? random(world) < 0.45
@@ -560,15 +625,17 @@ export function stepAdventure(
       world.mobs.some((mob) => mob.kind === "creeper") ? kind : "creeper",
     );
     if (world.night > 0.4) spawnMob(state, host, kind);
+    // Now and then a wave brings one more.
+    if (random(world) < 0.3) spawnMob(state, host, kind);
   }
   if (state.elapsed >= world.nextSiege) {
     siege(state, host);
-    world.nextSiege = state.elapsed + 5;
+    world.nextSiege = state.elapsed + 5 * world.mood.siegeGap;
     buildTorches(state, host);
   }
   if (state.elapsed >= world.nextLava) {
     spreadLava(state, host);
-    world.nextLava = state.elapsed + 3;
+    world.nextLava = state.elapsed + 3 * world.mood.lavaGap;
   }
   updateMobs(state, host, dt);
   updateArrows(state, host, dt);

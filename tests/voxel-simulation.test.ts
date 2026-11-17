@@ -121,7 +121,12 @@ void test("the island has walkable flat camps, ledges, water gaps and bounded re
     for (const [index, team] of state.teams.entries()) {
       const home = getTile(state, ...team.home);
       assert.ok(home && isWalkable(home));
-      assert.equal(team.home[0], index === 0 ? -5 : 5);
+      // Camps mirror each other, and their place differs between worlds.
+      assert.equal(Math.sign(team.home[0]), index === 0 ? -1 : 1);
+      assert.ok(Math.abs(team.home[0]) >= 4 && Math.abs(team.home[0]) <= 5);
+      assert.ok(Math.abs(team.home[1]) <= 2);
+      assert.equal(team.home[0], -state.teams[1 - index].home[0]);
+      assert.equal(team.home[1], state.teams[1 - index].home[1]);
     }
     assert.equal(state.bots.length, BOTS_PER_TEAM * 2);
     assert.equal(
@@ -454,7 +459,8 @@ void test("bots that meet at exactly the same position separate safely", () => {
   for (const bot of [first, second]) {
     const tile = getTile(state, bot.x, bot.z);
     assert.ok(tile && isWalkable(tile));
-    assert.ok(Math.hypot(bot.x + 5, bot.z) <= 0.35);
+    const [hx, hz] = state.teams[0].home;
+    assert.ok(Math.hypot(bot.x - hx, bot.z - hz) <= 0.35);
   }
 });
 

@@ -15,7 +15,6 @@ import { collectLights, MAX_LIGHTS } from "./voxel-lights";
 import {
   createSimulation,
   getSimulationSummary,
-  INITIAL_SIMULATION_SEED,
   setSelectionPressure,
   stepSimulation,
   triggerBreach,
@@ -149,6 +148,8 @@ export function createVoxelRenderer(
   canvas: HTMLCanvasElement,
   onUnavailable: () => void,
   onUpdate: (summary: SimulationSummary) => void,
+  /** The first world. Every visit starts a different one by default. */
+  seed = Math.floor(Math.random() * 2 ** 32),
 ) {
   const gl = canvas.getContext("webgl", {
     alpha: true,
@@ -228,7 +229,7 @@ export function createVoxelRenderer(
   gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
   gl.clearColor(0, 0, 0, 0);
 
-  let state = createSimulation(INITIAL_SIMULATION_SEED);
+  let state = createSimulation(seed);
   const animator = createAnimator();
   let flora = createFloraGrowth();
   let floraStale = true;

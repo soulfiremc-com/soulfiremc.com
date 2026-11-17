@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { createVoxelRenderer } from "@/components/home/voxel-renderer";
+import { INITIAL_SIMULATION_SEED } from "@/components/home/voxel-simulation";
 import type { SimulationSummary } from "@/components/home/voxel-simulation-types";
 
 function rendererHarness() {
@@ -119,6 +120,7 @@ function rendererHarness() {
     (value) => {
       summary = value;
     },
+    INITIAL_SIMULATION_SEED,
   );
   assert.ok(renderer);
   function advance(count: number, milliseconds = 100) {

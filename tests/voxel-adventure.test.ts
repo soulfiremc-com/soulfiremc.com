@@ -92,6 +92,7 @@ void test("TNT chains, destroys defenses, deforms terrain and hurts bots", () =>
       originX: x,
       originZ: -1,
       flight: 0,
+      power: 2.4,
     });
   const height = center.height,
     fitness = owner.fitness;
@@ -249,6 +250,8 @@ void test("night mobs avoid torchlit spawns and burn after dawn", () => {
   }
   isolate(state);
   state.adventure.storm = 0;
+  // Dawn time differs per round. Pin it so that the night is over by now.
+  state.adventure.mood.dawn = 0.8;
   state.elapsed = 73;
   state.adventure.mobs.push({
     id: 90,
@@ -298,4 +301,55 @@ void test("the full ecosystem stays bounded and preserves traversable bot positi
     }
   }
   assert.ok(state.generation > 1);
+});
+
+void test("rounds differ in pace, blast size, opening charges and camp position", () => {
+  const moods = new Set<string>();
+  const openings = new Set<number>();
+  const camps = new Set<string>();
+  const storms = new Set<boolean>();
+  for (let seed = 1; seed <= 40; seed++) {
+    const state = createSimulation(seed);
+    const { mood, charges, nextStorm } = state.adventure;
+    assert.deepEqual(createSimulation(seed).adventure, state.adventure);
+    assert.ok(mood.blast >= 0.7 && mood.blast <= 1.4);
+    assert.ok(mood.waveGap >= 0.5 && mood.waveGap <= 1.6);
+    assert.ok(mood.dusk < mood.dawn);
+    assert.ok(charges.length <= 3);
+    for (const charge of charges) {
+      assert.ok(charge.power >= 2.4 * 0.7 * 0.85 - 1e-9);
+      assert.ok(charge.power <= 2.4 * 1.4 * 1.2 + 1e-9);
+    }
+    moods.add(mood.blast.toFixed(2));
+    openings.add(charges.length);
+    camps.add(state.teams[0].home.join(":"));
+    storms.add(nextStorm < 6);
+  }
+  assert.ok(moods.size > 20);
+  assert.equal(openings.size, 4);
+  assert.ok(camps.size >= 6);
+  assert.equal(storms.size, 2);
+});
+
+void test("a charge blasts with its own power", () => {
+  const blastRadius = (power: number) => {
+    const world = createSimulation(7);
+    isolate(world);
+    world.adventure.charges.push({
+      id: 90,
+      x: 3,
+      z: 0,
+      fuse: 0.05,
+      owner: null,
+      chain: 0,
+      originX: 3,
+      originZ: 0,
+      flight: 0,
+      power,
+    });
+    stepSimulation(world, 0.1);
+    return world.events.find((event) => event.kind === "explode")?.power;
+  };
+  assert.equal(blastRadius(1.5), 1.5);
+  assert.equal(blastRadius(3.6), 3.6);
 });

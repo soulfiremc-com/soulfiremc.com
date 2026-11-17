@@ -85,7 +85,8 @@ export const STRUCTURE_COSTS = {
 
 const STRUCTURE_HEALTH = { wall: 8, bridge: 12 } as const;
 const STARTING_STOCK = { wood: 3, stone: 3 } as const;
-const HOMES: [Point, Point] = [
+/** Camp positions when a world cannot place varied ones. */
+const DEFAULT_HOMES: [Point, Point] = [
   [-5, 0],
   [5, 0],
 ];
@@ -292,8 +293,8 @@ function countReachable(tiles: SimulationTile[], start: number, blocked = -1) {
   return queue.length;
 }
 
-function homeIndex(team: TeamId) {
-  return tileIndex(HOMES[team][0], HOMES[team][1]);
+function homeIndex(home: Point) {
+  return tileIndex(home[0], home[1]);
 }
 
 function generateWorld(seed: number, generation: number) {
@@ -311,6 +312,17 @@ function tryGenerateWorld(rand: () => number, plain = false) {
     (value) => Math.PI * (0.6 + value * 0.8),
   );
   const edgeNoise = Array.from({ length: GRID_SIZE * GRID_SIZE }, () => rand());
+  // The camps mirror each other, but each world puts them somewhere else.
+  const homes: [Point, Point] = plain
+    ? DEFAULT_HOMES
+    : (() => {
+        const x = 4 + Math.floor(rand() * 2);
+        const z = Math.floor(rand() * 5) - 2;
+        return [
+          [-x, z],
+          [x, z],
+        ];
+      })();
   const tiles: SimulationTile[] = [];
   for (let z = -GRID_RADIUS; z <= GRID_RADIUS; z++) {
     for (let x = -GRID_RADIUS; x <= GRID_RADIUS; x++) {
@@ -356,7 +368,7 @@ function tryGenerateWorld(rand: () => number, plain = false) {
         const x = -1 - Math.floor(rand() * 8);
         const z = Math.floor(rand() * 15) - 7;
         const tile = tiles[tileIndex(x, z)];
-        const home = HOMES[0];
+        const home = homes[0];
         const homeDistance = Math.hypot(x - home[0], z - home[1]);
         if (!isWalkable(tile) || homeDistance < 2 || homeDistance > 6.5)
           continue;
@@ -375,13 +387,13 @@ function tryGenerateWorld(rand: () => number, plain = false) {
         count--;
       }
     };
-    place("wood", 5);
-    place("stone", 3);
+    place("wood", 3 + Math.floor(rand() * 4));
+    place("stone", 2 + Math.floor(rand() * 3));
   }
 
   // Keep both homes connected and every resource node reachable.
   const reachable = new Uint8Array(tiles.length);
-  const start = homeIndex(0);
+  const start = homeIndex(homes[0]);
   if (!isWalkable(tiles[start])) return null;
   reachable[start] = 1;
   const queue = [start];
@@ -394,12 +406,13 @@ function tryGenerateWorld(rand: () => number, plain = false) {
       queue.push(next);
     }
   }
-  if (!reachable[homeIndex(1)]) return null;
+  if (!reachable[homeIndex(homes[1])]) return null;
   for (const team of [0, 1] as const) {
-    const home = tiles[homeIndex(team)];
+    const home = tiles[homeIndex(homes[team])];
     for (const [dx, dz] of [[0, 0] as const, ...NEIGHBORS]) {
       const tile = tiles[tileIndex(home.x + dx, home.z + dz)];
-      if (!isWalkable(tile)) return null;
+      // A camp stands on flat ground, never on a ledge.
+      if (!isWalkable(tile) || tile.height !== 1) return null;
     }
   }
   for (const site of sites) {
@@ -410,7 +423,7 @@ function tryGenerateWorld(rand: () => number, plain = false) {
     });
     if (!accessible) return null;
   }
-  return { tiles, sites };
+  return { tiles, sites, homes };
 }
 
 function emptyMetrics(): SimulationMetrics {
@@ -437,10 +450,11 @@ function spawnBots(
   generation: number,
   genomes: [Genome[], Genome[]],
   parents: [(string | null)[], (string | null)[]],
+  homes: [Point, Point],
 ): SimulationBot[] {
   const bots: SimulationBot[] = [];
   for (const team of [0, 1] as const) {
-    const [hx, hz] = HOMES[team];
+    const [hx, hz] = homes[team];
     for (let index = 0; index < BOTS_PER_TEAM; index++) {
       const [dx, dz] = NEIGHBORS[index];
       bots.push({
@@ -465,10 +479,13 @@ function spawnBots(
   return bots;
 }
 
-function newTeams(wins: [number, number]): [SimulationTeam, SimulationTeam] {
+function newTeams(
+  wins: [number, number],
+  homes: [Point, Point],
+): [SimulationTeam, SimulationTeam] {
   return [0, 1].map((id) => ({
     id: id as TeamId,
-    home: HOMES[id],
+    home: homes[id],
     wood: STARTING_STOCK.wood,
     stone: STARTING_STOCK.stone,
     wins: wins[id],
@@ -508,8 +525,8 @@ export function createSimulation(
     roundDuration: ROUND_SECONDS,
     pressure: isPressure(pressure) ? pressure : "balanced",
     tiles: world.tiles,
-    bots: spawnBots(1, genomes, [nulls, nulls]),
-    teams: newTeams([0, 0]),
+    bots: spawnBots(1, genomes, [nulls, nulls], world.homes),
+    teams: newTeams([0, 0], world.homes),
     events: [],
     metrics: emptyMetrics(),
     terrainVersion: 1,
@@ -625,8 +642,8 @@ function setTask(
   brain.repath = 0;
 }
 
-function distanceToHome(bot: SimulationBot) {
-  const [hx, hz] = HOMES[bot.team];
+function distanceToHome(state: SimulationState, bot: SimulationBot) {
+  const [hx, hz] = state.teams[bot.team].home;
   return Math.hypot(bot.x - hx, bot.z - hz);
 }
 
@@ -698,7 +715,7 @@ function canPlace(
   }
   if (tile.material === "water") return false;
   // A wall must never cut any walkable area off from the rest of the island.
-  const home = homeIndex(0);
+  const home = homeIndex(state.teams[0].home);
   return (
     countReachable(state.tiles, home, index) ===
     countReachable(state.tiles, home) - 1
@@ -725,9 +742,9 @@ function chooseBuildSite(
     team.stone >= STRUCTURE_COSTS.wall.stone &&
     structureCount(state, bot.team, "wall") < MAX_WALLS_PER_TEAM
   ) {
-    const [hx] = HOMES[bot.team];
+    const [hx, hz] = team.home;
     const x = hx + (bot.team === 0 ? 2 : -2);
-    for (let z = -2; z <= 2; z++) {
+    for (let z = hz - 2; z <= hz + 2; z++) {
       const index = tileIndex(x, z);
       if (canPlace(state, "wall", index))
         options.push({ kind: "wall", index, score: Math.abs(z) + 0.5 });
@@ -754,7 +771,7 @@ function decide(
   const carried = bot.wood + bot.stone;
   if (carried >= CARRY_CAPACITY) return setTask(bot, brain, "deliver");
 
-  if (bot.tool === "none" && distanceToHome(bot) <= 2.6) {
+  if (bot.tool === "none" && distanceToHome(state, bot) <= 2.6) {
     const tool: Tool = genome.aggression > 0.5 ? "sword" : "pickaxe";
     const cost = RECIPES[tool];
     if (team.wood >= cost.wood && team.stone >= cost.stone) {
@@ -882,7 +899,7 @@ function move(
 
 function isHomeTile(state: SimulationState, team: TeamId, index: number) {
   const tile = state.tiles[index];
-  const [hx, hz] = HOMES[team];
+  const [hx, hz] = state.teams[team].home;
   return !!tile && Math.max(Math.abs(tile.x - hx), Math.abs(tile.z - hz)) <= 1;
 }
 
@@ -1384,8 +1401,8 @@ function nextGeneration(state: SimulationState, internal: Internal) {
   const world = generateWorld(state.seed, state.generation);
   state.elapsed = 0;
   state.tiles = world.tiles;
-  state.bots = spawnBots(state.generation, genomes, parents);
-  state.teams = newTeams(wins);
+  state.bots = spawnBots(state.generation, genomes, parents, world.homes);
+  state.teams = newTeams(wins, world.homes);
   state.events = [];
   state.metrics = emptyMetrics();
   state.terrainVersion++;

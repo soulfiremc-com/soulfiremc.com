@@ -100,6 +100,26 @@ export interface PrimedCharge {
   originX: number;
   originZ: number;
   flight: number;
+  /** Blast radius in tiles. */
+  power: number;
+}
+
+/** What makes one round differ from the next. Rolled when a round starts. */
+export interface AdventureMood {
+  /** Multiplier for every blast radius. */
+  blast: number;
+  /** Multipliers for the time between mob waves, sieges and lava spread. */
+  waveGap: number;
+  siegeGap: number;
+  lavaGap: number;
+  /** Seconds between lightning bolts in a storm. */
+  boltGap: number;
+  /** Seconds a storm lasts, and the calm seconds after it. */
+  stormLength: number;
+  stormGap: number;
+  /** Round progress, from 0 to 1, at which dusk and dawn begin. */
+  dusk: number;
+  dawn: number;
 }
 
 export interface SimulationArrow {
@@ -116,6 +136,7 @@ export interface SimulationArrow {
 
 export interface AdventureState {
   enabled: boolean;
+  mood: AdventureMood;
   rng: number;
   nextId: number;
   night: number;
