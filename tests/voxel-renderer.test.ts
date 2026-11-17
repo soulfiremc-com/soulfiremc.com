@@ -61,6 +61,11 @@ function rendererHarness() {
       uniforms.set(location.name, value);
     },
     uniform3fv: () => {},
+    uniform4fv: () => {},
+    uniform4f: () => {},
+    blendFunc: () => {},
+    depthMask: () => {},
+    disable: () => {},
     uniform2f: (location: { name: string }, x: number, y: number) => {
       uniforms.set(location.name, [x, y]);
       if (location.name === "u_pointer") pointer = [x, y];
@@ -290,7 +295,7 @@ void test("context loss disposes resources and publishes unavailable only once",
     h.canvas.dispatchEvent(lost);
     assert.equal(lost.defaultPrevented, true);
     assert.equal(h.unavailable, 1);
-    assert.equal(h.deletedBuffers, 3);
+    assert.equal(h.deletedBuffers, 4);
     assert.equal(h.observersDisconnected, 2);
     assert.equal(h.pendingFrames, 0);
     h.canvas.dispatchEvent(new Event("webglcontextlost"));

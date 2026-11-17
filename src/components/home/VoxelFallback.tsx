@@ -4,6 +4,7 @@ import {
   VERTEX_STRIDE,
 } from "./voxel-geometry";
 import { createEffectsGeometry } from "./voxel-effects-geometry";
+import { createFloraGeometry } from "./voxel-flora-geometry";
 import {
   createSimulation,
   getSimulationSummary,
@@ -12,11 +13,15 @@ import {
 
 const state = createSimulation(INITIAL_SIMULATION_SEED);
 export const fallbackSummary = getSimulationSummary(state);
+// The still scene keeps solid faces only and skips the grass to stay small.
 const vertices = [
-  ...createTerrainGeometry(state),
-  ...createActorGeometry(state, new Map(), 0, new Set()),
-  ...createEffectsGeometry(state, 0),
-];
+  createTerrainGeometry(state),
+  createFloraGeometry(state, undefined, false),
+  createActorGeometry(state, new Map(), 0),
+  createEffectsGeometry(state, 0),
+].flatMap((mesh) => [
+  ...mesh.vertices.subarray(0, mesh.opaque * VERTEX_STRIDE),
+]);
 const faces: { id: string; points: string; depth: number; color: string }[] =
   [];
 for (let offset = 0; offset < vertices.length; offset += VERTEX_STRIDE * 6) {
