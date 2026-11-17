@@ -143,6 +143,7 @@ void test("lights stay within the shader limit and favor torches over lava", () 
   const torch = state.tiles.find((tile) => tile.torch) ?? land[40];
   torch.torch = true;
   const lights = collectLights(state, 1);
+  assert.equal(lights.count, MAX_LIGHTS);
   assert.equal(lights.positions.length, MAX_LIGHTS * 4);
   assert.equal(lights.colors.length, MAX_LIGHTS * 3);
   assert.ok(Math.abs(lights.positions[0] - (torch.x + 0.22)) < 1e-6);

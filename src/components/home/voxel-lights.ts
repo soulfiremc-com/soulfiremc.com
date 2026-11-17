@@ -1,10 +1,12 @@
 import { tileSurface, tileTop } from "./voxel-geometry";
 import type { SimulationState } from "./voxel-simulation-types";
 
-/** The vertex shader loops over exactly this many lights. */
+/** The fragment shader loops over at most this many lights. */
 export const MAX_LIGHTS = 16;
 
 export interface SceneLights {
+  /** How many of the slots hold a light. */
+  count: number;
   /** X, Y, Z and radius for each light. */
   positions: Float32Array;
   /** Red, green and blue, already multiplied by the intensity. */
@@ -119,6 +121,7 @@ export function collectLights(state: SimulationState, time: number) {
         0.5 + Math.sin(time * 1.3 + tile.x * 2 + tile.z) * 0.08,
       );
   const result: SceneLights = {
+    count: Math.min(lights.length, MAX_LIGHTS),
     positions: new Float32Array(MAX_LIGHTS * 4),
     colors: new Float32Array(MAX_LIGHTS * 3),
   };

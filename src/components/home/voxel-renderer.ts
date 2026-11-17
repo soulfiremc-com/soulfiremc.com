@@ -41,11 +41,8 @@ uniform float u_aspect;
 uniform float u_time;
 uniform vec2 u_pointer;
 uniform vec2 u_shake;
-uniform vec4 u_lights[${MAX_LIGHTS}];
-uniform vec3 u_lightColors[${MAX_LIGHTS}];
 varying mediump vec3 v_color;
 varying mediump vec2 v_uv;
-varying mediump vec3 v_light;
 varying mediump float v_glow;
 varying mediump vec2 v_fx;
 varying mediump vec3 v_world;
@@ -69,19 +66,14 @@ void main() {
   if (kind > 3.5 && kind < 4.5) {
     // A halo is a point that grows into a quad facing the camera.
     gl_Position.xy += (a_uv - 0.5) * 2.0 * a_fx.y * 0.105 * vec2(1.0 / u_aspect, 1.0);
-    gl_Position.z -= 0.02;
+    // Draw it in front of everything. With a real depth, nearby blocks cut
+    // the glow along a hard diagonal line.
+    gl_Position.z = -0.999;
   }
   v_color = a_color;
   v_uv = a_uv;
   v_fx = a_fx;
   v_glow = a_glow;
-  vec3 light = vec3(0.0);
-  for (int i = 0; i < ${MAX_LIGHTS}; i++) {
-    vec3 offset = a_position - u_lights[i].xyz;
-    offset.y *= 0.6;
-    light += u_lightColors[i] * exp(-dot(offset, offset) / (u_lights[i].w * u_lights[i].w));
-  }
-  v_light = min(light, vec3(2.0));
 }`;
 
 const fragmentSource = `
@@ -89,9 +81,11 @@ precision mediump float;
 uniform float u_night;
 uniform float u_flash;
 uniform vec4 u_wave;
+uniform float u_lightCount;
+uniform vec4 u_lights[${MAX_LIGHTS}];
+uniform vec3 u_lightColors[${MAX_LIGHTS}];
 varying mediump vec3 v_color;
 varying mediump vec2 v_uv;
-varying mediump vec3 v_light;
 varying mediump float v_glow;
 varying mediump vec2 v_fx;
 varying mediump vec3 v_world;
@@ -114,7 +108,16 @@ void main() {
   border = mix(border, 1.0, smoothstep(0.75, 1.0, v_glow));
   float ambient = mix(1.0, 0.38, u_night);
   vec3 moonlight = mix(vec3(1.0), vec3(0.68, 0.79, 1.0), u_night);
-  vec3 light = moonlight * ambient + v_light * mix(0.3, 1.0, u_night) + u_flash;
+  // Lights are summed per pixel. Per-vertex sums showed the triangle seam
+  // on large faces next to a light.
+  vec3 lamps = vec3(0.0);
+  for (int i = 0; i < ${MAX_LIGHTS}; i++) {
+    if (float(i) >= u_lightCount) break;
+    vec3 offset = v_world - u_lights[i].xyz;
+    offset.y *= 0.6;
+    lamps += u_lightColors[i] * exp(-dot(offset, offset) / (u_lights[i].w * u_lights[i].w));
+  }
+  vec3 light = moonlight * ambient + min(lamps, vec3(2.0)) * mix(0.3, 1.0, u_night) + u_flash;
   vec3 color = v_color;
   float glow = v_glow;
   float alpha = 1.0;
@@ -218,6 +221,7 @@ export function createVoxelRenderer(
   const timeUniform = gl.getUniformLocation(program, "u_time");
   const waveUniform = gl.getUniformLocation(program, "u_wave");
   const lightsUniform = gl.getUniformLocation(program, "u_lights[0]");
+  const lightCountUniform = gl.getUniformLocation(program, "u_lightCount");
   const lightColorsUniform = gl.getUniformLocation(program, "u_lightColors[0]");
   gl.enable(gl.DEPTH_TEST);
   // Fragments are premultiplied, so glows can add light without a second mode.
@@ -344,6 +348,7 @@ export function createVoxelRenderer(
       (time * 0.5) % (Math.PI * 2),
     );
     const lights = collectLights(state, time);
+    gl.uniform1f(lightCountUniform, lights.count);
     gl.uniform4fv(lightsUniform, lights.positions);
     gl.uniform3fv(lightColorsUniform, lights.colors);
     gl.uniform1f(
