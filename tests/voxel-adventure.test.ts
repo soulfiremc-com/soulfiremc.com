@@ -353,3 +353,137 @@ void test("a charge blasts with its own power", () => {
   assert.equal(blastRadius(1.5), 1.5);
   assert.equal(blastRadius(3.6), 3.6);
 });
+
+function loneBot(state: SimulationState, aggression: number, caution: number) {
+  const bot = state.bots[0];
+  // A round ends when a camp has no bots, so one peaceful rival stays.
+  const rival = state.bots.find((other) => other.team === 1)!;
+  rival.genome = { aggression: 0, building: 0, caution: 0 };
+  state.bots = [bot, rival];
+  bot.genome = { aggression, building: 0, caution };
+  bot.x = -3;
+  bot.z = 3;
+  for (let dx = -3; dx <= 3; dx++)
+    for (let dz = -3; dz <= 3; dz++) clearGround(state, -3 + dx, 3 + dz);
+  return bot;
+}
+
+function charge(x: number, z: number, fuse: number, power: number) {
+  return {
+    id: 70,
+    x,
+    z,
+    fuse,
+    owner: null,
+    chain: 0,
+    originX: x,
+    originZ: z,
+    flight: 0,
+    power,
+  };
+}
+
+void test("cautious bots run out of a blast and reckless bots ignore the fuse", () => {
+  const fled = createSimulation(7);
+  isolate(fled);
+  const careful = loneBot(fled, 0.5, 0.9);
+  fled.adventure.charges.push(charge(-3, 2, 2.5, 2));
+  stepSimulation(fled, 0.1);
+  assert.equal(careful.task, "flee");
+  run(fled, 2.3);
+  assert.ok(Math.hypot(careful.x + 3, careful.z - 2) > 2.6);
+  const tile = getTile(fled, careful.x, careful.z);
+  assert.ok(tile && tile.material !== "water" && tile.hazard !== "lava");
+  run(fled, 1);
+  assert.equal(careful.health, 10);
+  assert.notEqual(careful.task, "flee");
+
+  // The same bot waits for a long fuse to burn down before it runs.
+  const patient = createSimulation(7);
+  isolate(patient);
+  const waiting = loneBot(patient, 0.5, 0.4);
+  patient.adventure.charges.push(charge(-3, 2, 6, 2));
+  stepSimulation(patient, 0.1);
+  assert.notEqual(waiting.task, "flee");
+
+  const stayed = createSimulation(7);
+  isolate(stayed);
+  const reckless = loneBot(stayed, 0.5, 0.1);
+  stayed.adventure.charges.push(charge(-3, 2, 1, 2));
+  run(stayed, 0.8);
+  assert.notEqual(reckless.task, "flee");
+});
+
+void test("timid bots run from monsters and attackers, bold bots fight them", () => {
+  const zombie = (state: SimulationState) =>
+    state.adventure.mobs.push({
+      id: 60,
+      kind: "zombie",
+      x: -3,
+      z: 1.5,
+      health: 8,
+      facing: [0, 1],
+      fuse: -1,
+      cooldown: 5,
+      hurt: 0,
+    });
+  const scared = createSimulation(7);
+  isolate(scared);
+  scared.adventure.storm = 100;
+  const timid = loneBot(scared, 0.1, 0.9);
+  zombie(scared);
+  stepSimulation(scared, 0.1);
+  assert.equal(timid.task, "flee");
+  run(scared, 1);
+  const mob = scared.adventure.mobs[0];
+  assert.ok(Math.hypot(timid.x - mob.x, timid.z - mob.z) > 1.5);
+
+  const brave = createSimulation(7);
+  isolate(brave);
+  brave.adventure.storm = 100;
+  const bold = loneBot(brave, 0.9, 0.2);
+  zombie(brave);
+  stepSimulation(brave, 0.1);
+  assert.equal(bold.task, "defend");
+
+  const hunted = createSimulation(7);
+  isolate(hunted);
+  const prey = loneBot(hunted, 0.1, 0.9);
+  const attacker = hunted.bots[1];
+  attacker.x = -3;
+  attacker.z = 2;
+  attacker.task = "idle";
+  stepSimulation(hunted, 0.1);
+  // An enemy that only passes by is no reason to run.
+  assert.notEqual(prey.task, "flee");
+  attacker.task = "attack";
+  stepSimulation(hunted, 0.1);
+  assert.equal(prey.task, "flee");
+});
+
+void test("a bot that flees for too long turns and stops running", () => {
+  const state = createSimulation(7);
+  isolate(state);
+  state.adventure.storm = 100;
+  const bot = loneBot(state, 0.1, 0.9);
+  let fleeing = 0;
+  for (let tick = 0; tick < 120; tick++) {
+    // The monster always stays right behind the bot.
+    state.adventure.mobs = [
+      {
+        id: 61,
+        kind: "zombie",
+        x: bot.x,
+        z: bot.z - 0.6,
+        health: 8,
+        facing: [0, 1],
+        fuse: -1,
+        cooldown: 5,
+        hurt: 0,
+      },
+    ];
+    stepSimulation(state, 0.1);
+    if (bot.task === "flee") fleeing++;
+  }
+  assert.ok(fleeing > 20 && fleeing < 80);
+});

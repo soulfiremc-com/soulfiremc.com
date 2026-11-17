@@ -31,6 +31,7 @@ export type BotTask =
   | "attack"
   | "defend"
   | "retreat"
+  | "flee"
   | "idle"
   | "dead";
 

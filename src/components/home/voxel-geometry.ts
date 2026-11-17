@@ -605,14 +605,19 @@ function addBot(
   const working = bot.action > 0;
   const look =
     Math.sin(time * 0.6 + seed) * Math.sin(time * 0.23 + seed * 2) * 0.7 * idle;
-  const leftArm = carrying ? 0.8 : -swing;
-  const rightArm = working
-    ? 1.1 + Math.sin(time * 20) * 0.9
-    : carrying
-      ? 0.8
-      : bot.tool === "none"
-        ? swing
-        : 0.35 + swing * 0.5;
+  // A fleeing bot throws its arms up and waves them.
+  const panic =
+    bot.task === "flee" ? 2.7 + Math.sin(time * 16 + seed) * 0.35 : null;
+  const leftArm = panic ?? (carrying ? 0.8 : -swing);
+  const rightArm = panic
+    ? panic - 0.3
+    : working
+      ? 1.1 + Math.sin(time * 20) * 0.9
+      : carrying
+        ? 0.8
+        : bot.tool === "none"
+          ? swing
+          : 0.35 + swing * 0.5;
   geometry.shadow(pose.x, height, pose.z, 0.27 * pose.scale, 0.34);
   geometry.part(
     rig,

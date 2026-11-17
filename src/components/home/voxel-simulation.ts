@@ -96,6 +96,13 @@ const RETREAT_SPEED = 2.6;
 const ATTACK_RANGE = 1.3;
 const HEAL_PER_SECOND = 2.5;
 const SEPARATION = 0.5;
+/** Bots at or below this caution ignore a lit fuse. */
+const RECKLESS = 0.15;
+/** Bots run from monsters and attackers when caution beats aggression by more than this. */
+const TIMID = 0.25;
+/** A bot that ran this long, or got cornered, turns and fights for a while. */
+const MAX_FLEE_SECONDS = 3.5;
+const NERVE_SECONDS = 7;
 const MAX_SEPARATION_STEP = 0.08;
 const DEFAULT_SEED = 0x50f1;
 
@@ -131,6 +138,8 @@ interface Brain {
   cooldown: number;
   rethink: number;
   repath: number;
+  /** Seconds for which the bot will not run from monsters or attackers. */
+  nerve: number;
   phase: "fetch" | "place";
   structure: StructureKind;
   craft: Tool;
@@ -440,6 +449,7 @@ function newBrain(): Brain {
     cooldown: 0,
     rethink: 0,
     repath: 0,
+    nerve: 0,
     phase: "fetch",
     structure: "wall",
     craft: "pickaxe",
@@ -659,6 +669,86 @@ function nearestEnemy(state: SimulationState, bot: SimulationBot) {
     }
   }
   return { enemy: best, distance: bestDistance };
+}
+
+interface Threat {
+  x: number;
+  z: number;
+  /** The bot wants to be at least this far away. */
+  radius: number;
+}
+
+/**
+ * Lists what the bot wants to get away from right now. Caution decides how
+ * early a bot notices a fuse. Caution minus aggression decides whether it
+ * runs from monsters and attackers or stands and fights. A bot that already
+ * flees keeps going a little farther, so that it does not turn back at once.
+ */
+function threatsTo(
+  state: SimulationState,
+  bot: SimulationBot,
+  genome: Genome,
+  blastOnly: boolean,
+  fleeing: boolean,
+) {
+  const world = state.adventure;
+  const threats: Threat[] = [];
+  const slack = fleeing ? 1.25 : 1;
+  const add = (x: number, z: number, radius: number) => {
+    if (Math.hypot(x - bot.x, z - bot.z) < radius * slack)
+      threats.push({ x, z, radius: radius * slack });
+  };
+  if (genome.caution > RECKLESS) {
+    const notice = 1 + genome.caution * 3;
+    for (const charge of world.charges)
+      if (charge.fuse < notice) add(charge.x, charge.z, charge.power + 0.6);
+    for (const mob of world.mobs)
+      if (mob.kind === "creeper" && mob.fuse >= 0)
+        add(mob.x, mob.z, 2.1 * world.mood.blast + 0.6);
+  }
+  const fear = genome.caution - genome.aggression;
+  if (blastOnly || fear <= TIMID) return threats;
+  for (const mob of world.mobs)
+    if (mob.health > 0) add(mob.x, mob.z, 1 + fear * 2.2);
+  for (const other of state.bots)
+    if (other.team !== bot.team && other.health > 0 && other.task === "attack")
+      add(other.x, other.z, 0.8 + fear * 2);
+  return threats;
+}
+
+/** Picks the neighboring tile that gets the bot farthest out of danger. */
+function fleeStep(
+  state: SimulationState,
+  bot: SimulationBot,
+  threats: readonly Threat[],
+) {
+  const margin = (x: number, z: number) =>
+    Math.min(
+      ...threats.map(
+        (threat) => Math.hypot(threat.x - x, threat.z - z) - threat.radius,
+      ),
+    );
+  const here = state.tiles[indexOf(bot.x, bot.z)];
+  let best = -1;
+  let bestMargin = margin(bot.x, bot.z);
+  if (!here) return best;
+  for (const [dx, dz] of NEIGHBORS) {
+    const index = tileIndex(here.x + dx, here.z + dz);
+    if (index < 0 || !isWalkable(state.tiles[index])) continue;
+    // A diagonal step must not cut a blocked corner.
+    if (dx !== 0 && dz !== 0) {
+      const sideX = state.tiles[tileIndex(here.x + dx, here.z)];
+      const sideZ = state.tiles[tileIndex(here.x, here.z + dz)];
+      if (!sideX || !sideZ || !isWalkable(sideX) || !isWalkable(sideZ))
+        continue;
+    }
+    const value = margin(here.x + dx, here.z + dz);
+    if (value > bestMargin + 1e-6) {
+      best = index;
+      bestMargin = value;
+    }
+  }
+  return best;
 }
 
 function isOccupied(state: SimulationState, tile: SimulationTile) {
@@ -1105,21 +1195,21 @@ function updateBot(
   const team = state.teams[bot.team];
   const genome = traits(state, bot);
 
-  if (state.adventure.enabled && bot.task !== "retreat") {
-    const threat =
-      state.adventure.charges.some(
-        (charge) =>
-          charge.fuse < 2 &&
-          Math.hypot(charge.x - bot.x, charge.z - bot.z) < 2.6,
-      ) ||
-      state.adventure.mobs.some(
-        (mob) =>
-          mob.kind === "creeper" &&
-          mob.fuse >= 0 &&
-          Math.hypot(mob.x - bot.x, mob.z - bot.z) < 2.7,
-      );
-    if (threat && genome.caution > 0.3) setTask(bot, brain, "retreat");
-    else {
+  if (state.adventure.enabled) {
+    // A hurt bot heads home and a cornered one fights, so only a blast can
+    // turn those aside.
+    brain.nerve = Math.max(0, brain.nerve - dt);
+    const blastOnly = brain.nerve > 0 || bot.health < 2 + genome.caution * 5;
+    const fleeing = bot.task === "flee";
+    const threats = threatsTo(state, bot, genome, blastOnly, fleeing);
+    if (threats.length > 0) {
+      if (!fleeing) setTask(bot, brain, "flee");
+    } else if (
+      !fleeing &&
+      bot.task !== "retreat" &&
+      (brain.nerve > 0 || genome.caution - genome.aggression <= TIMID)
+    ) {
+      // Bold bots go after a monster that comes close.
       const mob = state.adventure.mobs
         .filter(
           (mob) =>
@@ -1139,7 +1229,11 @@ function updateBot(
     }
   }
 
-  if (bot.task !== "retreat" && bot.health < 2 + genome.caution * 5)
+  if (
+    bot.task !== "retreat" &&
+    bot.task !== "flee" &&
+    bot.health < 2 + genome.caution * 5
+  )
     setTask(bot, brain, "retreat");
 
   switch (bot.task) {
@@ -1153,6 +1247,23 @@ function updateBot(
       deposit(state, bot);
       bot.health = Math.min(MAX_HEALTH, bot.health + HEAL_PER_SECOND * dt);
       if (bot.health >= MAX_HEALTH) decide(state, internal, bot);
+      return;
+    }
+    case "flee": {
+      brain.timer += dt;
+      if (brain.path.length === 0) {
+        const threats = threatsTo(state, bot, genome, brain.nerve > 0, true);
+        if (threats.length === 0) return decide(state, internal, bot);
+        const next = fleeStep(state, bot, threats);
+        if (next < 0 || brain.timer > MAX_FLEE_SECONDS) {
+          // Cornered or worn out: stop running and face what comes.
+          brain.nerve = NERVE_SECONDS;
+          return decide(state, internal, bot);
+        }
+        brain.path = [next];
+      }
+      if (move(state, bot, brain, RETREAT_SPEED, dt) === "blocked")
+        brain.path = [];
       return;
     }
     case "deliver": {
