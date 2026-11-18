@@ -316,9 +316,9 @@ void test("rounds differ in pace, blast size, opening charges and camp position"
     assert.ok(mood.waveGap >= 0.5 && mood.waveGap <= 1.6);
     assert.ok(mood.dusk < mood.dawn);
     assert.ok(charges.length <= 3);
-    for (const charge of charges) {
-      assert.ok(charge.power >= 2.4 * 0.7 * 0.85 - 1e-9);
-      assert.ok(charge.power <= 2.4 * 1.4 * 1.2 + 1e-9);
+    for (const placed of charges) {
+      assert.ok(placed.power >= 2.4 * 0.7 * 0.85 - 1e-9);
+      assert.ok(placed.power <= 2.4 * 1.4 * 1.2 + 1e-9);
     }
     moods.add(mood.blast.toFixed(2));
     openings.add(charges.length);
@@ -331,25 +331,38 @@ void test("rounds differ in pace, blast size, opening charges and camp position"
   assert.equal(storms.size, 2);
 });
 
+const blastRadius = (power: number) => {
+  const world = createSimulation(7);
+  isolate(world);
+  world.adventure.charges.push({
+    id: 90,
+    x: 3,
+    z: 0,
+    fuse: 0.05,
+    owner: null,
+    chain: 0,
+    originX: 3,
+    originZ: 0,
+    flight: 0,
+    power,
+  });
+  stepSimulation(world, 0.1);
+  return world.events.find((event) => event.kind === "explode")?.power;
+};
+const zombie = (state: SimulationState) =>
+  state.adventure.mobs.push({
+    id: 60,
+    kind: "zombie",
+    x: -3,
+    z: 1.5,
+    health: 8,
+    facing: [0, 1],
+    fuse: -1,
+    cooldown: 5,
+    hurt: 0,
+  });
+
 void test("a charge blasts with its own power", () => {
-  const blastRadius = (power: number) => {
-    const world = createSimulation(7);
-    isolate(world);
-    world.adventure.charges.push({
-      id: 90,
-      x: 3,
-      z: 0,
-      fuse: 0.05,
-      owner: null,
-      chain: 0,
-      originX: 3,
-      originZ: 0,
-      flight: 0,
-      power,
-    });
-    stepSimulation(world, 0.1);
-    return world.events.find((event) => event.kind === "explode")?.power;
-  };
   assert.equal(blastRadius(1.5), 1.5);
   assert.equal(blastRadius(3.6), 3.6);
 });
@@ -415,18 +428,6 @@ void test("cautious bots run out of a blast and reckless bots ignore the fuse", 
 });
 
 void test("timid bots run from monsters and attackers, bold bots fight them", () => {
-  const zombie = (state: SimulationState) =>
-    state.adventure.mobs.push({
-      id: 60,
-      kind: "zombie",
-      x: -3,
-      z: 1.5,
-      health: 8,
-      facing: [0, 1],
-      fuse: -1,
-      cooldown: 5,
-      hurt: 0,
-    });
   const scared = createSimulation(7);
   isolate(scared);
   scared.adventure.storm = 100;

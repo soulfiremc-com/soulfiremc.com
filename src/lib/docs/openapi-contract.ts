@@ -13,6 +13,7 @@ export function referencedSchemas(
       value.forEach(visit);
       return;
     }
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- the visitor only walks JSON objects from the OpenAPI document
     const object = value as Record<string, unknown>;
     const reference = object.$ref;
     if (

@@ -94,14 +94,14 @@ await test("price sorting keeps unknown prices last in both directions", () => {
   assert.deepEqual(
     providers
       .slice()
-      .sort((a, b) => compareProviderPrices(a, b, "price-asc"))
+      .toSorted((a, b) => compareProviderPrices(a, b, "price-asc"))
       .map((provider) => provider.slug),
     ["free", "budget", "paid", "variable", "another-variable"],
   );
   assert.deepEqual(
     providers
       .slice()
-      .sort((a, b) => compareProviderPrices(a, b, "price-desc"))
+      .toSorted((a, b) => compareProviderPrices(a, b, "price-desc"))
       .map((provider) => provider.slug),
     ["paid", "budget", "free", "variable", "another-variable"],
   );

@@ -73,6 +73,7 @@ export function javaString(source: string): string {
   if (!/^"(?:[^"\\]|\\.)*"$/su.test(source)) {
     throw new Error(`Expected a literal Java string: ${source}`);
   }
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- the source is a Java string literal, which parses to a string
   return JSON.parse(source) as string;
 }
 
@@ -139,6 +140,7 @@ export function parsePort(
   };
   if (factory in standard) {
     if (args.length) throw new Error(`Unexpected arguments for ${name}`);
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- the in check above proves the factory is a key of standard
     return { ...standard[factory as keyof typeof standard], required: false };
   }
   const factories = new Set([

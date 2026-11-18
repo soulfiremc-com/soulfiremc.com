@@ -8,6 +8,7 @@ import {
   parsePort,
   type NodePort,
 } from "./lib/java-metadata";
+import { printLine } from "./lib/output";
 
 const checkout = sdkSource();
 const scriptDir = join(
@@ -155,7 +156,7 @@ const body = categories
   .map((category) => {
     const items = nodes
       .filter((node) => node.category === category.id)
-      .sort((a, b) => a.name.localeCompare(b.name, "en"));
+      .toSorted((a, b) => a.name.localeCompare(b.name, "en"));
     if (!items.length) return "";
     return `## ${category.name}\n\n${items.map((node) => `### ${node.name}\n\n\`${node.type}\`${node.trigger ? " (trigger)" : ""}${node.expensive ? " (expensive operation)" : ""}\n\n${escape(node.description)}${aliases(node)}\n\n**Inputs**\n\n${portsTable(node.inputs, true)}\n\n**Outputs**\n\n${portsTable(node.outputs, false)}\n\n[Implementation](${node.source})`).join("\n\n")}`;
   })
@@ -169,6 +170,6 @@ docsOutput(
   resolve("public/docs/node-catalog.json"),
   `${JSON.stringify({ revision: sdkRevision, categories, nodes }, null, 2)}\n`,
 );
-console.log(
+printLine(
   `Generated ${nodes.length} nodes and ${categories.length} categories.`,
 );

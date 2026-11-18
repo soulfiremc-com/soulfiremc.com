@@ -50,7 +50,7 @@ void test(
         response.headers.has("etag"),
         `Metadata is not a static asset: ${path}`,
       );
-      const data = fromJSON(await response.json()) as Metadata;
+      const data = fromJSON<Metadata>(await response.json());
       assert.equal(data.result.url, path);
       assert.ok(data.result.title);
       return data.result;

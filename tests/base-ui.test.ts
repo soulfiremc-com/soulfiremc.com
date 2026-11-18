@@ -12,13 +12,14 @@ import {
 
 test("select resolves the human label without mounting its popup", () => {
   const html = renderToStaticMarkup(
-    createElement(Select, {
-      items: [{ value: "createdAt:desc", label: "Newest" }],
-      defaultValue: "createdAt:desc",
-      children: createElement(SelectTrigger, {
-        children: createElement(SelectValue),
-      }),
-    }),
+    createElement(
+      Select,
+      {
+        items: [{ value: "createdAt:desc", label: "Newest" }],
+        defaultValue: "createdAt:desc",
+      },
+      createElement(SelectTrigger, null, createElement(SelectValue)),
+    ),
   );
   assert.ok(html.includes("Newest"));
   assert.ok(!html.includes('role="option"'));
@@ -26,11 +27,14 @@ test("select resolves the human label without mounting its popup", () => {
 
 test("link buttons retain their content and semantic element", () => {
   const html = renderToStaticMarkup(
-    createElement(Button, {
-      render: createElement("a", { href: "/download" }),
-      nativeButton: false,
-      children: "Download",
-    }),
+    createElement(
+      Button,
+      {
+        render: createElement("a", { href: "/download" }),
+        nativeButton: false,
+      },
+      "Download",
+    ),
   );
   assert.ok(html.includes('href="/download"'));
   assert.ok(html.includes("Download"));

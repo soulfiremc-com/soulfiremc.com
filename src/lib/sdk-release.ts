@@ -22,6 +22,7 @@ const tokenPattern =
 export function replaceSdkReleaseTokens(text: string) {
   return text.replaceAll(
     tokenPattern,
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- tokenPattern only matches the keys of tokens
     (token) => tokens[token as keyof typeof tokens],
   );
 }

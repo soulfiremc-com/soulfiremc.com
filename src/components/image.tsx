@@ -62,7 +62,7 @@ export function Image({
       "scale-down": "object-scale-down",
     }[objectFit],
     objectFit === "contain" && "bg-contain! bg-center",
-    fill && "h-full! w-full!",
+    fill && "size-full!",
     className,
   );
   const pixelated = className?.includes("image-rendering:pixelated");
@@ -72,6 +72,7 @@ export function Image({
 
   if (!metadata || !variants?.length) {
     return (
+      // oxlint-disable-next-line jsx-a11y/alt-text -- callers pass alt through the spread props
       <img
         {...props}
         src={src}

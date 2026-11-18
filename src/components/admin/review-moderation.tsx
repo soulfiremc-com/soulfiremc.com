@@ -58,6 +58,8 @@ function getItemTypeLabel(itemType: ItemType) {
       return "Proxy";
     case "resource":
       return "Resource";
+    default:
+      return itemType satisfies never;
   }
 }
 
@@ -69,6 +71,8 @@ function getItemPath(itemType: ItemType, itemSlug: string) {
       return `/get-proxies/${itemSlug}`;
     case "resource":
       return null;
+    default:
+      return itemType satisfies never;
   }
 }
 
@@ -315,7 +319,7 @@ export function ReviewModeration() {
                     <span aria-hidden="true">·</span>
                     <CustomTimeAgo date={comment.createdAt} />
                   </div>
-                  <p className="rounded-md border bg-muted/20 p-3 text-sm leading-6 break-words whitespace-pre-line">
+                  <p className="rounded-md border bg-muted/20 p-3 text-sm/6 wrap-break-word whitespace-pre-line">
                     {comment.body}
                   </p>
                 </CardContent>

@@ -36,6 +36,7 @@ function FeedbackForm({ url }: { url: string }) {
   useEffect(() => {
     try {
       const item = localStorage.getItem(storageKey);
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- the stored feedback is written by this component
       if (item) setPrevious(JSON.parse(item) as PageFeedback);
     } catch {
       // Feedback remains available when browser storage is unavailable.

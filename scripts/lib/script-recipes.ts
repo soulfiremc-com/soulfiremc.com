@@ -86,14 +86,14 @@ export function validateRecipe(value: unknown, catalog: CatalogNode[]) {
   }
   for (const node of recipe.nodes) {
     const definition = metadata.get(node.id)!;
-    for (const [key, value] of Object.entries(node.data)) {
+    for (const [key, dataValue] of Object.entries(node.data)) {
       const input = definition.inputs.find((port) => port.id === key);
       if (!input || input.type === "exec")
         throw new Error(`Unknown inline input ${node.id}:${key}`);
       if (
         (["string", "boolean", "number"].includes(input.type) &&
-          typeof value !== input.type) ||
-        (typeof value === "number" && !Number.isFinite(value))
+          typeof dataValue !== input.type) ||
+        (typeof dataValue === "number" && !Number.isFinite(dataValue))
       )
         throw new Error(`Invalid inline type ${node.id}:${key}`);
     }

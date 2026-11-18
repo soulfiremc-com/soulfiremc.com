@@ -8,7 +8,7 @@ import { useT, useLocale } from "@/lib/i18n-react";
 import { TranslatedMessage } from "@/components/translated-message";
 import { ProviderFaq } from "@/components/provider-faq";
 import { createProviderFaqJsonLd } from "@/lib/provider-faq-data";
-import { Schema, Effect, Option } from "effect";
+import { Schema, Effect } from "effect";
 import { usePrerenderedSearch } from "@/hooks/use-prerendered-search";
 import { usePrerenderedSearchOrder } from "@/hooks/use-prerendered-search-order";
 import { SiDiscord, SiTrustpilot } from "@icons-pack/react-simple-icons";
@@ -66,17 +66,14 @@ import {
   BADGE_CONFIG,
   type Badge,
   CATEGORY_CONFIG,
-  type Category,
   FILTER_BADGES,
   FILTER_CATEGORIES,
-  type FilterableBadge,
   getDiscordInviteUrl,
   getShopBySlug,
   PROVIDER_THEMES,
   PROVIDERS,
   type Provider,
   SORT_CONFIG,
-  type SortOption,
 } from "@/lib/accounts-data";
 import {
   countAccountFilterOptions,
@@ -99,6 +96,7 @@ import { reviewsQueryOptions } from "@/lib/reviews-query";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 import { JsonLdScript } from "@/components/json-ld";
+import { isOneOf } from "@/lib/is-one-of";
 
 function DiscordMemberBadge({ providerSlug }: { providerSlug: string }) {
   const t = useT();
@@ -176,14 +174,16 @@ const SORT_OPTIONS = [
 
 const accountsSearchSchema = Schema.Struct({
   category: Schema.optional(Schema.Literals(CATEGORIES)).pipe(
-    Schema.catchDecoding(() => Effect.succeed(Option.some(undefined))),
+    Schema.catchDecoding(() => Effect.succeedSome(undefined)),
   ),
-  badges: Schema.mutable(Schema.Array(Schema.Literals(BADGES)))
-    .pipe(Schema.catchDecoding(() => Effect.succeed(Option.some([]))))
-    .pipe(Schema.withDecodingDefaultType(Effect.succeed([]))),
-  sort: Schema.Literals(SORT_OPTIONS)
-    .pipe(Schema.catchDecoding(() => Effect.succeed(Option.some("default"))))
-    .pipe(Schema.withDecodingDefaultType(Effect.succeed("default"))),
+  badges: Schema.mutable(Schema.Array(Schema.Literals(BADGES))).pipe(
+    Schema.catchDecoding(() => Effect.succeedSome([])),
+    Schema.withDecodingDefaultType(Effect.succeed([])),
+  ),
+  sort: Schema.Literals(SORT_OPTIONS).pipe(
+    Schema.catchDecoding(() => Effect.succeedSome("default")),
+    Schema.withDecodingDefaultType(Effect.succeed("default" as const)),
+  ),
 });
 
 type AccountsSearch = typeof accountsSearchSchema.Type;
@@ -258,7 +258,7 @@ function ProviderLogo({ provider }: { provider: Provider }) {
     );
   }
   return (
-    <div className="flex h-full w-full items-center justify-center bg-linear-to-br from-primary/20 to-primary/5 text-2xl font-bold text-primary">
+    <div className="flex size-full items-center justify-center bg-linear-to-br from-primary/20 to-primary/5 text-2xl font-bold text-primary">
       {provider.name.charAt(0).toUpperCase()}
     </div>
   );
@@ -305,7 +305,7 @@ const ProviderCard = memo(function ProviderCard({
       <div className="relative flex flex-col gap-4 p-6 sm:flex-row">
         <div
           className={cn(
-            "relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-muted",
+            "relative size-16 shrink-0 overflow-hidden rounded-lg bg-muted",
             theme?.logo,
           )}
         >
@@ -325,7 +325,7 @@ const ProviderCard = memo(function ProviderCard({
             </h3>
             {provider.startDate && (
               <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
-                <Calendar className="h-3 w-3" />
+                <Calendar className="size-3" />
                 {t("providers.accounts.since", {
                   date: formatProviderSince(provider.startDate, locale),
                 })}
@@ -405,7 +405,7 @@ const ProviderCard = memo(function ProviderCard({
               params={{ slug: provider.slug }}
               className="relative z-10 inline-flex w-fit items-center gap-1 text-xs text-muted-foreground transition-colors hover:text-foreground"
             >
-              <ImageIcon className="h-3 w-3" />
+              <ImageIcon className="size-3" />
               {t("providers.accounts.photos", {
                 count: provider.gallery.length,
               })}
@@ -527,9 +527,10 @@ function MainContent() {
   const t = useT();
   const { renderedAt } = Route.useLoaderData();
   const hydrated = useHydrated();
+  // oxlint-disable-next-line react/purity -- after hydration the list uses the current time for promotion windows
   const now = hydrated ? Date.now() : renderedAt;
   const providers = PROVIDERS;
-  const slugs = useMemo(() => [...new Set(providers.map((p) => p.slug))], []);
+  const slugs = useMemo(() => [...new Set(PROVIDERS.map((p) => p.slug))], []);
   const {
     summaries,
     summaryStatus,
@@ -540,7 +541,7 @@ function MainContent() {
   } = useReviews("account", slugs);
   const { category, badges, sort } = usePrerenderedSearch(
     Route.useSearch(),
-    Schema.decodeUnknownSync(accountsSearchSchema)({}),
+    Schema.decodeSync(accountsSearchSchema)({}),
   );
   const navigate = Route.useNavigate();
   const resultsRef = useRef<HTMLDivElement>(null);
@@ -690,7 +691,7 @@ function MainContent() {
           onValueChange={([value]) =>
             updateSearch((previous) => ({
               ...previous,
-              category: value ? (value as Category) : undefined,
+              category: isOneOf(value, CATEGORIES) ? value : undefined,
             }))
           }
           spacing={2}
@@ -728,7 +729,7 @@ function MainContent() {
           onValueChange={(value) =>
             updateSearch((previous) => ({
               ...previous,
-              badges: value as FilterableBadge[],
+              badges: value.filter((badge) => isOneOf(badge, BADGES)),
             }))
           }
           spacing={2}
@@ -777,7 +778,7 @@ function MainContent() {
             // Pressing the active sort again returns to the default order.
             updateSearch((previous) => ({
               ...previous,
-              sort: (value as SortOption | undefined) ?? "default",
+              sort: isOneOf(value, SORT_OPTIONS) ? value : "default",
             }))
           }
           spacing={2}
@@ -848,9 +849,7 @@ function MainContent() {
         data-provider-results
         className="flex min-w-0 flex-1 scroll-mt-20 flex-col gap-10"
       >
-        <p role="status" className="sr-only">
-          {resultCount}
-        </p>
+        <output className="sr-only">{resultCount}</output>
         {resultProviders.length === 0 ? (
           <Empty className="border">
             <EmptyHeader>
@@ -948,7 +947,7 @@ function GetAccountsClient() {
           {t("providers.accounts.social.description")}
         </p>
         <p className="text-sm text-muted-foreground">
-          <BookOpen className="inline h-4 w-4 align-text-bottom" />{" "}
+          <BookOpen className="inline size-4 align-text-bottom" />{" "}
           <TranslatedMessage
             text="providers.accounts.guide.description"
             values={{

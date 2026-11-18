@@ -93,7 +93,7 @@ export function ReviewInlineActions({
 
   return (
     <>
-      <div className="flex flex-col gap-2 rounded-xl border border-border/70 bg-muted/20 px-3 py-3">
+      <div className="flex flex-col gap-2 rounded-xl border border-border/70 bg-muted/20 p-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <ReviewSummaryBadge
             summary={summary}

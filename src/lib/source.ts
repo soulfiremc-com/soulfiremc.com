@@ -4,7 +4,7 @@ import { lucideIconsPlugin } from "fumadocs-core/source/lucide-icons";
 import { toFumadocsSource } from "fumadocs-mdx/runtime/server";
 import { openapiPlugin, openapiSource } from "fumadocs-openapi/server";
 import { openapi } from "@/lib/docs/openapi";
-import { i18n, docFileInfo, type Locale } from "@/lib/i18n";
+import { i18n, docFileInfo } from "@/lib/i18n";
 import { docsNavigationPlugin } from "@/lib/docs/navigation";
 
 async function createDocsSource() {
@@ -47,5 +47,5 @@ export async function getDocsLanguages(slugs: string[]) {
   return i18n.languages.filter((locale) => {
     const page = source.getPage(slugs, locale);
     return page && docFileInfo(page.path).locale === locale;
-  }) as Locale[];
+  });
 }

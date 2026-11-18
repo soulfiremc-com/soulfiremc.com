@@ -16,7 +16,7 @@ export const i18n = defineI18n({
 });
 
 export function isLocale(value: string | undefined): value is Locale {
-  return locales.includes(value as Locale);
+  return (locales as readonly (string | undefined)[]).includes(value);
 }
 
 /** The URL owns the locale, including during SSR. Never use a module global. */
@@ -77,7 +77,7 @@ export function docFileInfo(file: string) {
     file.replaceAll("\\", "/"),
   );
   if (!match) throw new Error(`Invalid documentation file: ${file}`);
-  const locale = (match[2] ?? "en") as Locale;
+  const locale = isLocale(match[2]) ? match[2] : "en";
   const slug = match[1]
     .replaceAll(/(^|\/)\([^/]+\)/g, "")
     .replace(/^\//, "")

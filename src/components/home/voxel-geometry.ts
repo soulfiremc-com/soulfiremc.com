@@ -390,13 +390,14 @@ export function tileNoise(x: number, z: number, salt = 0) {
   return value - Math.floor(value);
 }
 
+const rendered = (tile: SimulationTile) =>
+  tile.material !== "water" || Math.hypot(tile.x, tile.z) <= 9.2;
+
 export function createTerrainGeometry(state: SimulationState) {
   const geometry = new Geometry();
   const tiles = new Map(
     state.tiles.map((tile) => [`${tile.x}:${tile.z}`, tile]),
   );
-  const rendered = (tile: SimulationTile) =>
-    tile.material !== "water" || Math.hypot(tile.x, tile.z) <= 9.2;
   for (const tile of state.tiles) {
     if (!rendered(tile)) continue;
     const top = tileTop(tile);

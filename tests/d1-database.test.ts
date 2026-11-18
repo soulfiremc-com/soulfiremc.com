@@ -70,8 +70,8 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
       new URL("../drizzle-d1/", import.meta.url),
     );
     for (const name of migrations
-      .filter((name) => name.endsWith(".sql"))
-      .sort()) {
+      .filter((file) => file.endsWith(".sql"))
+      .toSorted()) {
       const sql = await readFile(
         new URL(`../drizzle-d1/${name}`, import.meta.url),
         "utf8",
@@ -107,6 +107,25 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
       });
       const userId = created.user.id;
 
+      const run = <A, E>(
+        program: Effect.Effect<
+          A,
+          E,
+          ReviewSession | ReviewStore | ReviewVerification
+        >,
+      ) =>
+        Effect.runPromise(
+          program.pipe(
+            Effect.provideService(ReviewStore, reviewStore),
+            Effect.provideService(ReviewSession, {
+              currentUser: Effect.succeed({ id: userId, role: "admin" }),
+            }),
+            Effect.provideService(ReviewVerification, {
+              verify: Effect.void,
+            }),
+          ),
+        );
+
       await t.test(
         "Effect review workflows persist, moderate, edit, and delete through D1",
         async () => {
@@ -117,24 +136,6 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
             rating: 5,
             body: "Useful service",
           } as const;
-          const run = <A, E>(
-            program: Effect.Effect<
-              A,
-              E,
-              ReviewSession | ReviewStore | ReviewVerification
-            >,
-          ) =>
-            Effect.runPromise(
-              program.pipe(
-                Effect.provideService(ReviewStore, reviewStore),
-                Effect.provideService(ReviewSession, {
-                  currentUser: Effect.succeed({ id: userId, role: "admin" }),
-                }),
-                Effect.provideService(ReviewVerification, {
-                  verify: Effect.void,
-                }),
-              ),
-            );
           assert.deepEqual(await run(submitReview(input)), { ok: true });
           let result = await run(
             getReviews({
@@ -365,7 +366,9 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
 test("review sessions carry write bookmarks without GET responses overwriting them", () => {
   const bookmark = crypto.randomUUID();
   const constraints: (string | undefined)[] = [];
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- test double implements only the members this test uses
   const session = { getBookmark: () => bookmark } as D1DatabaseSession;
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- test double implements only the members this test uses
   const database = {
     withSession: (constraint?: string) => {
       constraints.push(constraint);

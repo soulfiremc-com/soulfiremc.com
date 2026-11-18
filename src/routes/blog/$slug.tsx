@@ -64,7 +64,7 @@ const clientLoader = browserCollections.blog.createClientLoader<{
                   <div className="flex flex-col gap-2">
                     <h3 className="text-base font-semibold">{post.title}</h3>
                     {post.description ? (
-                      <p className="text-sm leading-6 text-muted-foreground">
+                      <p className="text-sm/6 text-muted-foreground">
                         {post.description}
                       </p>
                     ) : null}
@@ -203,7 +203,7 @@ function BlogPostPage() {
           </h1>
 
           {data.post.description ? (
-            <p className="text-lg leading-8 text-muted-foreground">
+            <p className="text-lg/8 text-muted-foreground">
               {data.post.description}
             </p>
           ) : null}

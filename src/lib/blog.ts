@@ -21,7 +21,7 @@ export function getReadingTime(structuredData?: {
 }
 
 export function getSortedBlogPages() {
-  return blogSource.getPages().sort((left, right) => {
+  return blogSource.getPages().toSorted((left, right) => {
     const leftDate = left.data.date ? new Date(left.data.date).getTime() : 0;
     const rightDate = right.data.date ? new Date(right.data.date).getTime() : 0;
     return rightDate - leftDate;

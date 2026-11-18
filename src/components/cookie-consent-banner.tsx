@@ -46,7 +46,7 @@ const CookieConsentBanner = () => {
   // focused fields clear of it.
   useEffect(() => {
     const section = sectionRef.current;
-    if (!open || !section) return;
+    if (!open || !section) return undefined;
     const root = document.documentElement;
     const observer = new ResizeObserver(() => {
       root.style.setProperty(
@@ -90,7 +90,7 @@ const CookieConsentBanner = () => {
         ref={sectionRef}
         tabIndex={-1}
         aria-labelledby="cookie-consent-title"
-        className="fixed bottom-0 left-0 z-45 outline-none sm:bottom-4 sm:left-4 short:right-0 short:bottom-0 short:left-0"
+        className="fixed bottom-0 left-0 z-45 outline-none sm:bottom-4 sm:left-4 short:inset-x-0 short:bottom-0"
       >
         {/* Tighter side padding on phones leaves more room for page actions. */}
         {/* Short landscape screens get one row so forms stay visible. */}

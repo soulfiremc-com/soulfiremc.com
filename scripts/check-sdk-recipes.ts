@@ -14,6 +14,7 @@ import remarkMdx from "remark-mdx";
 import { buildSdk, sdkSource, sdkRevision } from "./sdk-source";
 import { sdkCodeExamples } from "../src/lib/sdk-code-examples";
 import { replaceSdkReleaseTokens } from "../src/lib/sdk-release";
+import { printLine } from "./lib/output";
 
 type AstNode = {
   type: string;
@@ -46,6 +47,7 @@ try {
   pythonFiles.push(homepagePython);
   for (const document of documents) {
     const path = resolve("content/docs/(main)/(automation)/sdk", document);
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- remark returns an mdast Root, which is the AstNode shape this walker reads
     const tree = remark()
       .use(remarkMdx)
       .parse(readFileSync(path, "utf8")) as AstNode;
@@ -140,7 +142,7 @@ try {
   execFileSync(python, ["-m", "py_compile", ...pythonFiles], {
     stdio: "inherit",
   });
-  console.log(
+  printLine(
     `Typechecked ${typescriptFiles.length} TypeScript and ${pythonFiles.length} Python programs from ${documents.length} SDK pages and the homepage.`,
   );
 } finally {

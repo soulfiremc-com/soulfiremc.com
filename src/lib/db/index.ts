@@ -24,6 +24,7 @@ export function runWithD1Database<T>(
 function createDatabase(target: "primary" | "reviews") {
   // Resolve the binding when a query runs, while keeping Drizzle's schema
   // available at module initialization for Better Auth and its CLI.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- the proxy forwards every call to the request's D1 binding, so the empty target is never read
   const client = new Proxy({} as D1Database, {
     get(_target, property) {
       const context = databaseStorage.getStore();

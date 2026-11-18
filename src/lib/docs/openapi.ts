@@ -68,6 +68,7 @@ export function formatOpenApiTagName(name: string) {
 
 export const openapi = createOpenAPI({
   input: {
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- fumadocs-openapi types the bundled document loosely; the API spec has this shape
     sf: {
       ...openApiDocument,
       // Fumadocs splits every capital letter, which turns `MC` into `M C`.
@@ -123,11 +124,13 @@ function getOpenApiSections(
   includeContracts = false,
 ): OpenApiSection[] {
   const props = page.data.getOpenAPIPageProps();
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- fumadocs-openapi types the bundled document loosely; the API spec has this shape
   const document = props.payload.bundled as OpenApiContentDocument;
   const sections: OpenApiSection[] = [];
 
   for (const item of props.operations ?? []) {
     const pathItem = document.paths?.[item.path];
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- fumadocs-openapi types the bundled document loosely; the API spec has this shape
     const operation = pathItem?.[item.method] as OpenApiOperation | undefined;
 
     sections.push({
@@ -141,6 +144,7 @@ function getOpenApiSections(
 
   for (const item of props.webhooks ?? []) {
     const pathItem = document.webhooks?.[item.name];
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- fumadocs-openapi types the bundled document loosely; the API spec has this shape
     const operation = pathItem?.[item.method] as OpenApiOperation | undefined;
 
     sections.push({

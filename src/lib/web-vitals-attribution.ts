@@ -5,8 +5,9 @@ const METRICS = ["CLS", "FCP", "INP", "LCP"] as const;
 function getNavigationUrl(measurement: unknown): URL | null {
   if (!measurement || typeof measurement !== "object") return null;
 
-  const metadata = measurement as Record<string, unknown>;
-  const value = metadata.navigationURL ?? metadata.$current_url;
+  const value: unknown =
+    Reflect.get(measurement, "navigationURL") ??
+    Reflect.get(measurement, "$current_url");
   if (typeof value !== "string") return null;
 
   try {

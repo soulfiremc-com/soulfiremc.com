@@ -5,11 +5,11 @@ import {
   validateRecipe,
   type CatalogNode,
 } from "../scripts/lib/script-recipes";
-const catalog = (
-  JSON.parse(readFileSync("public/docs/node-catalog.json", "utf8")) as {
-    nodes: CatalogNode[];
-  }
-).nodes;
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- public/docs/node-catalog.json is generated from the server and has this shape
+const catalogFile = JSON.parse(
+  readFileSync("public/docs/node-catalog.json", "utf8"),
+) as { nodes: CatalogNode[] };
+const catalog = catalogFile.nodes;
 const fixture = () =>
   JSON.parse(
     readFileSync("public/docs/scripts/join-log.soulfire-script.json", "utf8"),

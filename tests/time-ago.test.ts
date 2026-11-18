@@ -4,13 +4,14 @@ import { createElement } from "react";
 import { renderToString } from "react-dom/server";
 import { CustomTimeAgo } from "../src/components/time-ago";
 
+const render = () =>
+  renderToString(
+    createElement(CustomTimeAgo, { date: "2026-11-02T00:30:00Z" }),
+  );
+
 test("review dates have the same initial text in server and browser time zones", () => {
   const previousTimeZone = process.env.TZ;
   try {
-    const render = () =>
-      renderToString(
-        createElement(CustomTimeAgo, { date: "2026-11-02T00:30:00Z" }),
-      );
     process.env.TZ = "UTC";
     const serverHtml = render();
     for (const timeZone of [

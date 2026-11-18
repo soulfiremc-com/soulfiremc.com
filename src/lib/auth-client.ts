@@ -15,6 +15,7 @@ import { createAuthClient } from "better-auth/react";
 import type { auth } from "@/lib/auth";
 
 function asClientPlugin(plugin: unknown): BetterAuthClientPlugin {
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Better Auth plugins and the client are typed by their factories, which this wrapper cannot express
   return plugin as BetterAuthClientPlugin;
 }
 
@@ -37,6 +38,7 @@ const clientOptions = {
   ],
 };
 
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Better Auth plugins and the client are typed by their factories, which this wrapper cannot express
 export const authClient = createAuthClient(
   clientOptions,
 ) as unknown as AuthClient;

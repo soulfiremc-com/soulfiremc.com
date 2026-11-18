@@ -2,7 +2,7 @@ import { translate } from "@/lib/messages";
 import { TranslatedMessage } from "@/components/translated-message";
 import { useT } from "@/lib/i18n-react";
 import { isLocale } from "@/lib/i18n";
-import { Schema, Effect, Option } from "effect";
+import { Schema, Effect } from "effect";
 import { useHydratedQueryResult } from "@/hooks/use-hydrated-query-result";
 import { usePrerenderedSearch } from "@/hooks/use-prerendered-search";
 import { SiGithub } from "@icons-pack/react-simple-icons";
@@ -122,6 +122,7 @@ const PREFERRED_CPU_BY_OS = OS_OPTIONS.reduce(
     acc[option.id] = option.preferredCpuId;
     return acc;
   },
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- the reduce fills one entry for every operating system
   {} as Record<OsOption["id"], CpuOption["id"]>,
 );
 
@@ -130,16 +131,14 @@ const OS_IDS = OS_OPTIONS.map((option) => option.id);
 const CPU_IDS = CPU_OPTIONS.map((option) => option.id);
 
 const downloadSearchSchema = Schema.Struct({
-  os: Schema.Literals(OS_IDS)
-    .pipe(
-      Schema.catchDecoding(() => Effect.succeed(Option.some(DEFAULT_OS.id))),
-    )
-    .pipe(Schema.withDecodingDefaultType(Effect.succeed(DEFAULT_OS.id))),
-  cpu: Schema.Literals(CPU_IDS)
-    .pipe(
-      Schema.catchDecoding(() => Effect.succeed(Option.some(DEFAULT_CPU.id))),
-    )
-    .pipe(Schema.withDecodingDefaultType(Effect.succeed(DEFAULT_CPU.id))),
+  os: Schema.Literals(OS_IDS).pipe(
+    Schema.catchDecoding(() => Effect.succeedSome(DEFAULT_OS.id)),
+    Schema.withDecodingDefaultType(Effect.succeed(DEFAULT_OS.id)),
+  ),
+  cpu: Schema.Literals(CPU_IDS).pipe(
+    Schema.catchDecoding(() => Effect.succeedSome(DEFAULT_CPU.id)),
+    Schema.withDecodingDefaultType(Effect.succeed(DEFAULT_CPU.id)),
+  ),
 });
 
 type DownloadSelection = (typeof downloadSearchSchema)["Type"];
@@ -165,7 +164,7 @@ function DownloadSelectionComponent({
 }) {
   const selection = usePrerenderedSearch(
     Route.useSearch(),
-    Schema.decodeUnknownSync(downloadSearchSchema)({}),
+    Schema.decodeSync(downloadSearchSchema)({}),
   );
   return (
     <>
@@ -179,7 +178,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
   const t = useT();
   const selection = usePrerenderedSearch(
     Route.useSearch(),
-    Schema.decodeUnknownSync(downloadSearchSchema)({}),
+    Schema.decodeSync(downloadSearchSchema)({}),
   );
   const navigate = Route.useNavigate();
   const hasExplicitOs = useRouterState({
@@ -202,9 +201,9 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
 
     void detectDownloadCpuFromHints(window.navigator).then((hintedCpu) => {
       // Keep a choice the visitor made while the browser answered.
-      if (hasChosenPlatform.current) return;
+      if (hasChosenPlatform.current) return undefined;
       const detectedCpu = hintedCpu ?? cpu;
-      if (!os && !detectedCpu) return;
+      if (!os && !detectedCpu) return undefined;
       return navigate({
         search: (previous) => {
           const nextOs = hasExplicitOs ? previous.os : (os ?? previous.os);
@@ -269,6 +268,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
             {t("download.operatingSystem")}
           </p>
           <div
+            // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- a labelled group of choice cards; fieldset would add form semantics and min-content sizing
             role="group"
             aria-label={t("download.operatingSystem")}
             className="grid gap-4 sm:grid-cols-3"
@@ -315,6 +315,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
             {t("download.cpuArchitecture")}
           </p>
           <div
+            // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- a labelled group of choice cards; fieldset would add form semantics and min-content sizing
             role="group"
             aria-label={t("download.cpuArchitecture")}
             className="grid gap-4 sm:grid-cols-2"
@@ -335,9 +336,9 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
                 <div className="flex items-center gap-3">
                   <div className="rounded-lg bg-primary/10 p-2 text-primary">
                     {option.icon === "cpu" ? (
-                      <Cpu className="h-5 w-5 text-primary" />
+                      <Cpu className="size-5 text-primary" />
                     ) : (
-                      <CircuitBoard className="h-5 w-5 text-primary" />
+                      <CircuitBoard className="size-5 text-primary" />
                     )}
                   </div>
                   <div>
@@ -377,7 +378,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
               "w-full gap-2 text-xs sm:text-sm",
             )}
           >
-            <Download className="h-5 w-5" />
+            <Download className="size-5" />
             {downloadHref === FLATHUB_URL
               ? t("download.getOnFlathub")
               : t("download.downloadFor", { os: selectedOsLabel })}
@@ -388,7 +389,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
             className="w-full gap-2 text-xs sm:text-sm"
             disabled
           >
-            <Download className="h-5 w-5" />
+            <Download className="size-5" />
             {t("download.comingSoon")}
           </Button>
         )}
@@ -397,7 +398,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
         <CredenzaContent>
           <CredenzaHeader>
             <CredenzaTitle className="flex items-center gap-2">
-              <Heart className="h-5 w-5 text-destructive" />
+              <Heart className="size-5 text-destructive" />
               {t("download.thankYouForDownloading")}
             </CredenzaTitle>
             <CredenzaDescription>
@@ -441,7 +442,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
                   "w-full gap-2",
                 )}
               >
-                <Coffee className="h-4 w-4" />
+                <Coffee className="size-4" />
                 {t("download.buyMeACoffeeOnKoFi")}
               </a>
               <a
@@ -453,7 +454,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
                   "w-full gap-2",
                 )}
               >
-                <SiGithub className="h-4 w-4" />
+                <SiGithub className="size-4" />
                 {t("download.starOnGithub")}
               </a>
             </div>
@@ -666,8 +667,8 @@ function DownloadSelectionSkeleton() {
 }
 
 const SERVER_ICONS = {
-  "SoulFire CLI": <Terminal className="h-5 w-5" />,
-  "SoulFire Dedicated": <Server className="h-5 w-5" />,
+  "SoulFire CLI": <Terminal className="size-5" />,
+  "SoulFire Dedicated": <Server className="size-5" />,
 } as const;
 
 type DownloadPageContentProps = {
@@ -745,7 +746,7 @@ function DownloadPageContent({
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-xl">
-              <BookOpen className="h-5 w-5 text-primary" />
+              <BookOpen className="size-5 text-primary" />
               {t("download.learnTheWorkflow")}
             </CardTitle>
             <CardDescription>{t("download.learn.description")}</CardDescription>
@@ -766,7 +767,7 @@ function DownloadPageContent({
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-xl">
-              <PlayCircle className="h-5 w-5 text-primary" />
+              <PlayCircle className="size-5 text-primary" />
               {t("download.watchItInAction")}
             </CardTitle>
             <CardDescription>
@@ -804,9 +805,7 @@ function DownloadPageContent({
               >
                 <div className="flex items-center gap-3">
                   <div className="rounded-lg bg-primary/10 p-2 text-primary">
-                    {SERVER_ICONS[item.name as keyof typeof SERVER_ICONS] ?? (
-                      <Server className="h-5 w-5" />
-                    )}
+                    {serverIcon(item.name) ?? <Server className="size-5" />}
                   </div>
                   <div>
                     <p
@@ -845,7 +844,7 @@ function DownloadPageContent({
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-xl">
-              <Heart className="h-5 w-5 text-primary" />
+              <Heart className="size-5 text-primary" />
               {t("download.supportTheProject")}
             </CardTitle>
             <CardDescription>
@@ -957,4 +956,8 @@ function DownloadPage() {
       />
     </SiteShell>
   );
+}
+
+function serverIcon(name: string) {
+  return Object.entries(SERVER_ICONS).find(([key]) => key === name)?.[1];
 }

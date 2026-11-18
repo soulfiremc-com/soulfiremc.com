@@ -8,7 +8,7 @@ import { useT, useLocale } from "@/lib/i18n-react";
 import { TranslatedMessage } from "@/components/translated-message";
 import { ProviderFaq } from "@/components/provider-faq";
 import { createProviderFaqJsonLd } from "@/lib/provider-faq-data";
-import { Schema, Effect, Option } from "effect";
+import { Schema, Effect } from "effect";
 import { usePrerenderedSearch } from "@/hooks/use-prerendered-search";
 import { usePrerenderedSearchOrder } from "@/hooks/use-prerendered-search-order";
 import { noop, useSuspenseQuery } from "@tanstack/react-query";
@@ -60,7 +60,6 @@ import {
   BADGE_CONFIG,
   type Badge,
   FILTER_BADGES,
-  type FilterableBadge,
   PROVIDERS,
   type Provider,
 } from "@/lib/proxies-data";
@@ -75,6 +74,7 @@ import { reviewsQueryOptions } from "@/lib/reviews-query";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 import { JsonLdScript } from "@/components/json-ld";
+import { isOneOf } from "@/lib/is-one-of";
 
 const BADGES = [
   "residential",
@@ -91,12 +91,14 @@ const BADGES = [
 const SORT_OPTIONS = ["default", "best-rated"] as const;
 
 const proxiesSearchSchema = Schema.Struct({
-  badges: Schema.mutable(Schema.Array(Schema.Literals(BADGES)))
-    .pipe(Schema.catchDecoding(() => Effect.succeed(Option.some([]))))
-    .pipe(Schema.withDecodingDefaultType(Effect.succeed([]))),
-  sort: Schema.Literals(SORT_OPTIONS)
-    .pipe(Schema.catchDecoding(() => Effect.succeed(Option.some("default"))))
-    .pipe(Schema.withDecodingDefaultType(Effect.succeed("default"))),
+  badges: Schema.mutable(Schema.Array(Schema.Literals(BADGES))).pipe(
+    Schema.catchDecoding(() => Effect.succeedSome([])),
+    Schema.withDecodingDefaultType(Effect.succeed([])),
+  ),
+  sort: Schema.Literals(SORT_OPTIONS).pipe(
+    Schema.catchDecoding(() => Effect.succeedSome("default")),
+    Schema.withDecodingDefaultType(Effect.succeed("default" as const)),
+  ),
 });
 
 const PENDING_SEARCH_STYLE_ID = "get-proxies-pending-search";
@@ -110,11 +112,11 @@ const hidePrerenderedResultsScript = `(()=>{const s=new URLSearchParams(location
 const SORT_CONFIG = {
   default: {
     label: "providers.sort.default",
-    icon: <ArrowDownWideNarrow className="h-3 w-3" />,
+    icon: <ArrowDownWideNarrow className="size-3" />,
   },
   "best-rated": {
     label: "providers.sort.best-rated",
-    icon: <Star className="h-3 w-3 fill-current" />,
+    icon: <Star className="size-3 fill-current" />,
   },
 } as const;
 
@@ -156,7 +158,7 @@ function ProviderLogo({ provider }: { provider: Provider }) {
     );
   }
   return (
-    <div className="flex h-full w-full items-center justify-center bg-linear-to-br from-primary/20 to-primary/5 text-2xl font-bold text-primary">
+    <div className="flex size-full items-center justify-center bg-linear-to-br from-primary/20 to-primary/5 text-2xl font-bold text-primary">
       {provider.name.charAt(0).toUpperCase()}
     </div>
   );
@@ -190,7 +192,7 @@ const ProviderCard = memo(function ProviderCard({
   return (
     <Card className="relative overflow-hidden transition-all duration-300 hover:shadow-lg">
       <div className="relative flex flex-col gap-4 p-6 sm:flex-row">
-        <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-muted">
+        <div className="relative size-16 shrink-0 overflow-hidden rounded-lg bg-muted">
           <ProviderLogo provider={provider} />
         </div>
         <div className="flex flex-1 flex-col gap-3">
@@ -206,7 +208,7 @@ const ProviderCard = memo(function ProviderCard({
             </h2>
             {provider.startDate && (
               <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
-                <Calendar className="h-3 w-3" />
+                <Calendar className="size-3" />
                 {t("providers.accounts.since", {
                   date: formatProviderSince(provider.startDate, locale),
                 })}
@@ -225,7 +227,7 @@ const ProviderCard = memo(function ProviderCard({
               params={{ slug: provider.slug }}
               className="inline-flex items-center gap-1 text-xs text-muted-foreground transition-colors hover:text-foreground"
             >
-              <ImageIcon className="h-3 w-3" />
+              <ImageIcon className="size-3" />
               {t("providers.accounts.photos", {
                 count: provider.gallery.length,
               })}
@@ -270,7 +272,6 @@ const ProviderCard = memo(function ProviderCard({
 
 function MainContent() {
   const t = useT();
-  const providers = PROVIDERS;
   const {
     summaries,
     summaryStatus,
@@ -281,7 +282,7 @@ function MainContent() {
   } = useReviews("proxy", proxyReviewSlugs);
   const { badges, sort } = usePrerenderedSearch(
     Route.useSearch(),
-    Schema.decodeUnknownSync(proxiesSearchSchema)({}),
+    Schema.decodeSync(proxiesSearchSchema)({}),
   );
   const navigate = Route.useNavigate();
   const hydrated = useHydrated();
@@ -327,14 +328,14 @@ function MainContent() {
   const filteredProviders = useMemo(() => {
     const filtered =
       badges.length === 0
-        ? providers
-        : providers.filter((provider) =>
+        ? PROVIDERS
+        : PROVIDERS.filter((provider) =>
             badges.every((filter) => provider.badges.includes(filter)),
           );
 
     // "Featured" keeps the curated data order and ignores reviews.
     if (sort === "default") return filtered;
-    return [...filtered].sort((a, b) => {
+    return filtered.toSorted((a, b) => {
       return (
         compareReviewSummaries(
           orderSummaries[a.slug],
@@ -374,11 +375,11 @@ function MainContent() {
           aria-label={t("providers.accounts.sort")}
           value={[sort]}
           onValueChange={([value]) => {
-            if (value) {
+            if (isOneOf(value, SORT_OPTIONS)) {
               void navigate({
                 search: (previous) => ({
                   ...previous,
-                  sort: value as (typeof SORT_OPTIONS)[number],
+                  sort: value,
                 }),
                 replace: true,
                 resetScroll: false,
@@ -412,7 +413,7 @@ function MainContent() {
           void navigate({
             search: (previous) => ({
               ...previous,
-              badges: value as FilterableBadge[],
+              badges: value.filter((badge) => isOneOf(badge, BADGES)),
             }),
             replace: true,
             resetScroll: false,
@@ -489,12 +490,12 @@ function MainContent() {
         dangerouslySetInnerHTML={{ __html: hidePrerenderedResultsScript }}
       />
       <div className="flex-1" data-provider-results>
-        <p role="status" className="sr-only">
+        <output className="sr-only">
           {t("providers.accounts.resultCount", {
             count: filteredProviders.length,
-            total: providers.length,
+            total: PROVIDERS.length,
           })}
-        </p>
+        </output>
         {filteredProviders.length === 0 ? (
           <Empty className="border">
             <EmptyHeader>
@@ -540,7 +541,7 @@ function GetProxiesClient() {
           {t("providers.proxies.introduction")}
         </p>
         <p className="text-sm text-muted-foreground">
-          <BookOpen className="inline h-4 w-4 align-text-bottom" />{" "}
+          <BookOpen className="inline size-4 align-text-bottom" />{" "}
           <TranslatedMessage
             text="providers.proxies.forMoreInformationOnHowToUseProxiesWith"
             values={{

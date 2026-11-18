@@ -2,6 +2,7 @@ import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { SdkRelease } from "../src/lib/sdk-release";
+import { printError, printLine } from "./lib/output";
 
 /**
  * Point the SDK docs at the latest published SoulFire release.
@@ -13,6 +14,7 @@ import type { SdkRelease } from "../src/lib/sdk-release";
  */
 const releaseFile = resolve("src/lib/sdk-release.json");
 const repository = "https://github.com/soulfiremc-com/SoulFire";
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- the release file is written by this script with this shape
 const current = JSON.parse(readFileSync(releaseFile, "utf8")) as SdkRelease;
 
 async function latestSdkVersion() {
@@ -21,7 +23,7 @@ async function latestSdkVersion() {
     { signal: AbortSignal.timeout(15_000) },
   );
   if (!response.ok) throw new Error(`npm registry returned ${response.status}`);
-  const tags = (await response.json()) as { latest?: unknown };
+  const tags = await response.json<{ latest?: unknown }>();
   if (typeof tags.latest !== "string" || !/^\d+\.\d+\.\d+$/u.test(tags.latest))
     throw new Error("npm registry returned no stable latest version");
   return tags.latest;
@@ -65,16 +67,16 @@ async function resolveRelease(): Promise<SdkRelease> {
 try {
   const release = await resolveRelease();
   if (JSON.stringify(release) === JSON.stringify(current)) {
-    console.log(`SoulFire SDK ${release.version} is current.`);
+    printLine(`SoulFire SDK ${release.version} is current.`);
   } else {
     writeFileSync(releaseFile, `${JSON.stringify(release, null, 2)}\n`);
-    console.log(
+    printLine(
       `SoulFire SDK ${current.version} -> ${release.version} (${release.revision}).`,
     );
   }
 } catch (error) {
   if (process.env.CI || process.env.SOULFIRE_SDK_VERSION) throw error;
-  console.warn(
+  printError(
     `Could not check the latest SoulFire SDK, keeping ${current.version}:`,
     error instanceof Error ? error.message : error,
   );

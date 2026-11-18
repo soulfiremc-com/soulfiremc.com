@@ -41,7 +41,7 @@ export function generateStaticImages({
           /\.(png|jpe?g|webp|gif|avif|svg)$/i.test(source)
         );
       })
-      .sort();
+      .toSorted();
     yield* makeDirectory(output);
     const generated = new Set<string>();
     const entries = yield* Effect.forEach(
@@ -60,12 +60,10 @@ export function generateStaticImages({
           const width = rotated ? info.height : info.width;
           const height = rotated ? info.width : info.height;
           if (!width || !height) {
-            return yield* Effect.fail(
-              new StaticImageError({
-                operation: "read image dimensions",
-                cause: source,
-              }),
-            );
+            return yield* new StaticImageError({
+              operation: "read image dimensions",
+              cause: source,
+            });
           }
           const metadata: StaticImageManifest[string] = { width, height };
           if (
@@ -162,6 +160,10 @@ import {
   writeFile,
 } from "node:fs/promises";
 
+class StaticImageAccessError extends Data.TaggedError(
+  "StaticImageAccessError",
+)<{ readonly cause: unknown }> {}
+
 function operation<A>(name: string, work: () => PromiseLike<A>) {
   return Effect.tryPromise({
     try: async () => work(),
@@ -179,9 +181,10 @@ const makeDirectory = (directory: string) =>
     mkdir(directory, { recursive: true }),
   );
 const exists = (file: string) =>
-  Effect.tryPromise(() => access(file)).pipe(
-    Effect.match({ onSuccess: () => true, onFailure: () => false }),
-  );
+  Effect.tryPromise({
+    try: () => access(file),
+    catch: (cause) => new StaticImageAccessError({ cause }),
+  }).pipe(Effect.isSuccess);
 const removeFile = (file: string) =>
   operation("remove stale image", () => rm(file));
 const listFiles = (directory: string) =>

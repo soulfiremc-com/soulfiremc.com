@@ -32,6 +32,7 @@ export function reviewMutationKey(itemType: ItemType, viewerId?: string) {
 }
 
 export function selectReviewMutationSlug(mutation: Mutation) {
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- review mutations always receive ReviewMutationVariables
   return (mutation.state.variables as ReviewMutationVariables).slug;
 }
 

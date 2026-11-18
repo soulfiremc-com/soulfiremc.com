@@ -158,13 +158,13 @@ export function DonutCalculator() {
         </div>
         <div className="min-w-0 rounded-md border bg-fd-background p-3">
           <div className="text-xs text-fd-muted-foreground">Daily USD</div>
-          <div className="text-lg font-bold break-words text-success tabular-nums">
+          <div className="text-lg font-bold wrap-break-word text-success tabular-nums">
             {formatUsd(dailyUsd)}
           </div>
         </div>
         <div className="min-w-0 rounded-md border bg-fd-background p-3">
           <div className="text-xs text-fd-muted-foreground">Monthly USD</div>
-          <div className="text-lg font-bold break-words text-success tabular-nums">
+          <div className="text-lg font-bold wrap-break-word text-success tabular-nums">
             {formatUsd(monthlyUsd)}
           </div>
         </div>

@@ -489,7 +489,7 @@ export function createEffectsGeometry(
       }
   }
   for (const event of state.events
-    .filter((event) => event.kind === "lightning" && event.age < 0.42)
+    .filter((effect) => effect.kind === "lightning" && effect.age < 0.42)
     .slice(-2)) {
     const height = heightAt(event.x, event.z);
     g.halo(

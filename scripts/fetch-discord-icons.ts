@@ -4,24 +4,23 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { promisify } from "node:util";
 import { Client, GatewayIntentBits } from "discord.js";
+import { printError, printLine } from "./lib/output";
 
 const execFileAsync = promisify(execFile);
 
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 
 if (!DISCORD_TOKEN) {
-  console.error("Error: DISCORD_TOKEN environment variable is required");
+  printError("Error: DISCORD_TOKEN environment variable is required");
   process.exit(1);
 }
 
 const args = process.argv.slice(2);
 if (args.length < 2) {
-  console.error(
+  printError(
     "Usage: tsx scripts/fetch-discord-icons.ts <invite_code> <output_name>",
   );
-  console.error(
-    "Example: tsx scripts/fetch-discord-icons.ts ravealts ravealts",
-  );
+  printError("Example: tsx scripts/fetch-discord-icons.ts ravealts ravealts");
   process.exit(1);
 }
 
@@ -62,14 +61,14 @@ async function main() {
   const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
   await client.login(DISCORD_TOKEN);
-  console.log(`Logged in as ${client.user?.tag}`);
+  printLine(`Logged in as ${client.user?.tag}`);
 
   try {
-    console.log(`Fetching invite: ${inviteCode}`);
+    printLine(`Fetching invite: ${inviteCode}`);
     const invite = await client.fetchInvite(inviteCode);
 
     if (!invite.guild) {
-      console.error(`No guild found for invite ${inviteCode}`);
+      printError(`No guild found for invite ${inviteCode}`);
       process.exit(1);
     }
 
@@ -77,33 +76,33 @@ async function main() {
     const extension = animated ? "gif" : "png";
     const iconUrl = invite.guild.iconURL({ size: 256, extension });
     if (!iconUrl) {
-      console.error(`No icon found for guild ${invite.guild.name}`);
+      printError(`No icon found for guild ${invite.guild.name}`);
       process.exit(1);
     }
 
     const outputPath = path.join(OUTPUT_DIR, `${outputName}.${extension}`);
-    console.log(
+    printLine(
       `Downloading ${animated ? "animated " : ""}icon for ${invite.guild.name}...`,
     );
     await downloadIcon(iconUrl, outputPath);
-    console.log(`Saved to ${outputPath}`);
+    printLine(`Saved to ${outputPath}`);
 
     if (animated) {
-      console.log("Optimizing GIF...");
+      printLine("Optimizing GIF...");
       await optimizeGif(outputPath);
-      console.log("GIF optimized");
+      printLine("GIF optimized");
     }
   } catch (error) {
-    console.error(`Error fetching ${inviteCode}:`, error);
+    printError(`Error fetching ${inviteCode}:`, error);
     process.exit(1);
   }
 
   await client.destroy();
-  console.log("Done!");
+  printLine("Done!");
 }
 
 try {
   await main();
 } catch (error) {
-  console.error(error);
+  printError(error);
 }

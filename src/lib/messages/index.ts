@@ -30,6 +30,6 @@ export function translate(
 ) {
   return (messages[locale][key] ?? en[key]).replaceAll(
     /\{(\w+)\}/g,
-    (token, key: string) => String(values[key] ?? token),
+    (token, name: string) => String(values[name] ?? token),
   );
 }

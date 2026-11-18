@@ -555,6 +555,7 @@ function checkChildren(
 void test("selection pressure persists and shifts behavior, rewards and evolution", () => {
   const state = createSimulation(7);
   setSelectionPressure(state, "build");
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- test double implements only the members this test uses
   setSelectionPressure(state, "invalid" as SelectionPressure);
   assert.equal(state.pressure, "build");
   runUntilGeneration(state, 2);

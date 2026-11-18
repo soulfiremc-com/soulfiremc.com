@@ -26,7 +26,7 @@ export function StatusMessage({
       <div className="flex max-w-lg flex-col items-center gap-6 text-center">
         <div className="flex flex-col gap-3">
           <h1 className="text-3xl font-semibold text-balance">{title}</h1>
-          <p className="text-pretty break-words text-muted-foreground">
+          <p className="text-pretty wrap-break-word text-muted-foreground">
             {text}
           </p>
         </div>

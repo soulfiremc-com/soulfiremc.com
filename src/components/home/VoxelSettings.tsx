@@ -53,7 +53,7 @@ export function VoxelSettings({
       <PopoverContent
         side="top"
         align="end"
-        className="max-h-[var(--available-height)] w-80 max-w-[calc(100vw-2rem)] overflow-y-auto"
+        className="max-h-(--available-height) w-80 max-w-[calc(100vw-2rem)] overflow-y-auto"
       >
         <div className="flex flex-col gap-5">
           <PopoverHeader>

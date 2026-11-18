@@ -68,6 +68,7 @@ function AuthUIProviders({ children }: { children: React.ReactNode }) {
   // render lacks. Read it from the router so server and browser links match.
   const requestedRedirectTo = useRouterState({
     select: (state) => {
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- redirectTo is read as unknown and checked before use
       const value = (state.location.search as { redirectTo?: unknown })
         .redirectTo;
       // Only same-site paths. Protocol-relative URLs leave the site.

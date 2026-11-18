@@ -218,10 +218,12 @@ await test("authentication email programs keep destination, subject, tokens and 
   });
   assert.equal(messages[1].subject, "Your sign-in code for SoulFire");
   assert.equal(
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- test double implements only the members this test uses
     (messages[1].react.props as { verificationCode: string }).verificationCode,
     "123456",
   );
   assert.equal(
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- test double implements only the members this test uses
     (messages[1].react.props as { expirationMinutes: number })
       .expirationMinutes,
     5,
@@ -292,6 +294,7 @@ await test("email submission is never retried and finishes before cancellation r
     { signal: controller.signal },
   ).then(() => {
     settled = true;
+    return undefined;
   });
   await started;
   controller.abort();
@@ -341,6 +344,7 @@ await test("an executing review statement settles before cancellation returns", 
     { signal: controller.signal },
   ).then(() => {
     settled = true;
+    return undefined;
   });
   await started;
   controller.abort();

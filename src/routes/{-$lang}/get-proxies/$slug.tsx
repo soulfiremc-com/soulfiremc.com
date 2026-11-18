@@ -77,7 +77,7 @@ function ProviderLogo({ provider }: { provider: Provider }) {
     );
   }
   return (
-    <div className="flex h-full w-full items-center justify-center bg-linear-to-br from-primary/20 to-primary/5 text-4xl font-bold text-primary">
+    <div className="flex size-full items-center justify-center bg-linear-to-br from-primary/20 to-primary/5 text-4xl font-bold text-primary">
       {provider.name.charAt(0).toUpperCase()}
     </div>
   );
@@ -143,9 +143,9 @@ function ProxyProviderPageContent({
   const t = useT();
   const locale = useLocale();
   const navigate = Route.useNavigate();
-  const setReviewPage = (reviewsPage: number) => {
+  const setReviewPage = (nextPage: number) => {
     void navigate({
-      search: (previous) => ({ ...previous, reviewsPage }),
+      search: (previous) => ({ ...previous, reviewsPage: nextPage }),
       resetScroll: false,
     });
   };
@@ -189,20 +189,20 @@ function ProxyProviderPageContent({
         >
           {t("nav.home")}
         </Link>
-        <ChevronRight className="h-3.5 w-3.5" />
+        <ChevronRight className="size-3.5" />
         <Link
           to="/{-$lang}/get-proxies"
           className="transition-colors hover:text-foreground"
         >
           {t("common.getProxies")}
         </Link>
-        <ChevronRight className="h-3.5 w-3.5" />
+        <ChevronRight className="size-3.5" />
         <span className="truncate text-foreground">{provider.name}</span>
       </nav>
 
       <Card className="relative gap-5 overflow-hidden p-6">
         <div className="relative flex flex-col gap-6 sm:flex-row">
-          <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-muted">
+          <div className="relative size-20 shrink-0 overflow-hidden rounded-xl bg-muted">
             <ProviderLogo provider={provider} />
           </div>
           <div className="flex flex-1 flex-col gap-4">
@@ -212,7 +212,7 @@ function ProxyProviderPageContent({
               </h1>
               {provider.startDate ? (
                 <span className="inline-flex items-center gap-1 text-sm text-muted-foreground">
-                  <Calendar className="h-3.5 w-3.5" />
+                  <Calendar className="size-3.5" />
                   {t("providers.accounts.since", {
                     date: formatProviderSince(provider.startDate, locale),
                   })}

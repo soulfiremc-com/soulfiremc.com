@@ -18,7 +18,7 @@ export function makeReviewStore(database: {
   primary: typeof db;
   reviews: typeof reviewDb;
 }): ReviewStoreService {
-  const { primary: db, reviews: reviewDb } = database;
+  const { primary: primaryDb, reviews: reviewsDb } = database;
   const provide = <A, E>(program: Effect.Effect<A, E, ReviewDatabase>) =>
     program.pipe(Effect.provideService(ReviewDatabase, database));
   return {
@@ -30,7 +30,7 @@ export function makeReviewStore(database: {
       provide(getPaginatedWrittenReviews(itemType, slug, totalCount, options)),
     find: (userId, itemType, slug) =>
       reviewQuery("find", () =>
-        db
+        primaryDb
           .select({
             id: review.id,
             body: review.body,
@@ -47,18 +47,18 @@ export function makeReviewStore(database: {
           .limit(1),
       ).pipe(Effect.map((rows) => rows[0])),
     create: (input) =>
-      reviewQuery("create", () => reviewDb.insert(review).values(input)).pipe(
+      reviewQuery("create", () => reviewsDb.insert(review).values(input)).pipe(
         Effect.asVoid,
       ),
     update: (id, input) =>
       reviewQuery("update", () =>
-        reviewDb.update(review).set(input).where(eq(review.id, id)),
+        reviewsDb.update(review).set(input).where(eq(review.id, id)),
       ).pipe(Effect.asVoid),
     pendingComments: provide(getPendingReviewComments()),
     moderate: (id, status) => provide(updateReviewCommentStatus(id, status)),
     delete: (userId, itemType, slug) =>
       reviewQuery("delete", () =>
-        reviewDb
+        reviewsDb
           .delete(review)
           .where(
             and(

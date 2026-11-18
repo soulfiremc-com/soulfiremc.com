@@ -46,7 +46,7 @@ export const loadAllAccountStock = Effect.fn("Providers.allStock")(
           .pipe(Effect.map((stock) => [shop.slug, stock] as const)),
       { concurrency: 4 },
     );
-    return Object.fromEntries(entries) as LiveShopDataBySlug;
+    return Object.fromEntries<LiveShopData>(entries);
   },
 );
 
@@ -77,6 +77,6 @@ export const loadAllAccountInvites = Effect.fn("Providers.allInvites")(
         ),
       { concurrency: 4 },
     );
-    return Object.fromEntries(entries) as DiscordInvites;
+    return Object.fromEntries<DiscordInviteResponse | null>(entries);
   },
 );

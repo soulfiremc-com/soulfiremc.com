@@ -1,21 +1,11 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import {
-  Suspense,
-  use,
-  useDeferredValue,
-  useEffect,
-  useId,
-  useState,
-} from "react";
+import { Suspense, use, useDeferredValue, useId } from "react";
+import { useHydrated } from "@tanstack/react-router";
 
 export function Mermaid({ chart }: { chart: string }) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useHydrated();
 
   const placeholder = (
     <div
@@ -42,6 +32,7 @@ function cachePromise<T>(
   setPromise: () => Promise<T>,
 ): Promise<T> {
   const cached = cache.get(key);
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- the cache stores the promise that the same loader produced for this key
   if (cached) return cached as Promise<T>;
 
   const promise = setPromise();

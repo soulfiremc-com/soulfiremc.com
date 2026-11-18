@@ -149,6 +149,7 @@ export function VoxelScene() {
         <span>{t("simulation.gen", { generation: summary.generation })}</span>
         <div className="voxel-scores">
           <span
+            // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- the elements and their label form one labelled image
             role="img"
             data-team="cyan"
             aria-label={t("simulation.cyanCamp", { count: summary.alive[0] })}
@@ -157,6 +158,7 @@ export function VoxelScene() {
             {summary.alive[0]}
           </span>
           <span
+            // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- the elements and their label form one labelled image
             role="img"
             data-team="amber"
             aria-label={t("simulation.amberCamp", { count: summary.alive[1] })}
@@ -263,7 +265,7 @@ export function VoxelScene() {
       <p className="sr-only">
         {t("simulation.localSimulationNoMinecraftServerConnection")}
       </p>
-      <p className="sr-only" role="status">
+      <output className="sr-only">
         {announcement && `${announcement} `}
         {t("simulation.generationReward", {
           generation: summary.generation,
@@ -272,7 +274,7 @@ export function VoxelScene() {
               ?.label ?? "simulation.balanced",
           ),
         })}
-      </p>
+      </output>
     </section>
   );
 }

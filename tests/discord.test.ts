@@ -18,6 +18,7 @@ await test("Discord validates OAuth responses and never retries a token exchange
     async (_url: string, init: RequestInit) => {
       assert.equal(init.method, "POST");
       assert.ok(init.signal instanceof AbortSignal);
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- test double implements only the members this test uses
       assert.equal((init.body as URLSearchParams).get("code"), "one-use-code");
       return new Response(null, { status: 503 });
     },
@@ -158,9 +159,7 @@ await test("interrupted Discord lookups release waiters and allow the next reque
     );
     const code = crypto.randomUUID();
     const leader = Effect.runFork(fetchDiscordInviteEffect(code));
-    const waiter = Effect.runPromise(
-      Effect.exit(fetchDiscordInviteEffect(code)),
-    );
+    const waiter = Effect.runPromiseExit(fetchDiscordInviteEffect(code));
     await Effect.runPromise(Fiber.interrupt(leader));
     assert.equal(Exit.isFailure(await waiter), true);
     assert.equal(signal?.aborted, true);
@@ -220,12 +219,12 @@ await test("Discord retains Cloudflare cache TTLs, negative entries, and cache f
   assert.deepEqual(
     [...entries.values()]
       .map((entry) => entry.headers.get("cache-control"))
-      .sort((a, b) => (a ?? "").localeCompare(b ?? "")),
+      .toSorted((a, b) => (a ?? "").localeCompare(b ?? "")),
     ["public, max-age=600", "public, max-age=86400"],
   );
 
-  const key = [...entries.keys()].find((key) =>
-    key.endsWith("/invite/cached-code"),
+  const key = [...entries.keys()].find((candidate) =>
+    candidate.endsWith("/invite/cached-code"),
   );
   assert.ok(key);
   entries.set(key, Response.json({ value: { code: 123 } }));

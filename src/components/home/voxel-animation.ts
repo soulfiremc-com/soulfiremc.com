@@ -53,6 +53,14 @@ function popIn(age: number) {
   return 1 + 2.4 * (t - 1) ** 3 + 1.4 * (t - 1) ** 2;
 }
 
+function entities(state: SimulationState) {
+  const list: [string, Entity][] = [];
+  for (const bot of state.bots) if (bot.health > 0) list.push([bot.id, bot]);
+  for (const mob of state.adventure.mobs)
+    if (mob.health > 0) list.push([mobKey(mob.id), mob]);
+  return list;
+}
+
 /**
  * Tracks render-only motion for bots and mobs: positions between simulation
  * ticks, smooth turning, walk cycles, and the pop when an entity appears.
@@ -62,14 +70,6 @@ export function createAnimator() {
   const tracked = new Map<string, Tracked>();
   let settled = false;
   let snap = true;
-
-  function entities(state: SimulationState) {
-    const list: [string, Entity][] = [];
-    for (const bot of state.bots) if (bot.health > 0) list.push([bot.id, bot]);
-    for (const mob of state.adventure.mobs)
-      if (mob.health > 0) list.push([mobKey(mob.id), mob]);
-    return list;
-  }
 
   return {
     /** Call before each simulation tick to remember where entities were. */

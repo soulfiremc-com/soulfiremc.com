@@ -11,8 +11,8 @@ const formatters = {
   ru: buildFormatter(ru),
 };
 
-import { useEffect, useState } from "react";
 import TimeAgo, { type Props } from "react-timeago";
+import { useHydrated } from "@tanstack/react-router";
 
 function toDate(value: Props["date"]): Date | null {
   if (value instanceof Date) {
@@ -25,11 +25,7 @@ function toDate(value: Props["date"]): Date | null {
 
 export function CustomTimeAgo(props: Props) {
   const locale = useLocale();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useHydrated();
 
   if (!mounted) {
     const date = toDate(props.date);

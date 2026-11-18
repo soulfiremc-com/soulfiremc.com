@@ -114,6 +114,7 @@ export const validateTurnstileTokenEffect = Effect.fn("validateTurnstileToken")(
         errorCodes: ["hostname-mismatch"],
       });
     }
+    return undefined;
   },
 );
 

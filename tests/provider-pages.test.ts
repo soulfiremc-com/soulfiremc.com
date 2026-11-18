@@ -50,6 +50,7 @@ void test(
             );
             assert.equal(
               attribute(link ?? "", "href"),
+              // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- test double implements only the members this test uses
               `${host}${localizePath(`/get-${kind}${suffix}`, lang === "x-default" ? "en" : (lang as typeof locale))}`,
             );
           }

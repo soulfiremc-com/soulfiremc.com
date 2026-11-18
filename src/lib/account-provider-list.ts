@@ -26,7 +26,7 @@ export function sortAccountProviders(
   summaries: Record<string, ReviewSummary>,
   now: number,
 ): Provider[] {
-  return providers.slice().sort((a, b) => {
+  return providers.toSorted((a, b) => {
     // "Featured" shows promoted shops first, then the curated order of the
     // data. It ignores reviews, so the list doesn't move when they load.
     if (sort === "default") {
@@ -61,12 +61,14 @@ export function countAccountFilterOptions(
   badges: FilterableBadge[],
 ): AccountFilterCounts {
   return {
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Object.fromEntries loses the key type of the counted categories and badges
     categories: Object.fromEntries(
       categories.map((option) => [
         option,
         filterAccountProviders(providers, option, badges).length,
       ]),
     ) as Record<Category, number>,
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Object.fromEntries loses the key type of the counted categories and badges
     badges: Object.fromEntries(
       filterBadges.map((badge) => [
         badge,

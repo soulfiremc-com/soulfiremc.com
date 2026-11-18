@@ -138,10 +138,11 @@ void test("Fumadocs resolves the translated onboarding and English fallback in e
   }
 });
 
+const readMeta = (path: string): Record<string, unknown> =>
+  JSON.parse(readFileSync(path, "utf8"));
+
 void test("every titled docs folder has localized metadata with the English page order", () => {
   const root = join(process.cwd(), "content/docs");
-  const readMeta = (path: string): Record<string, unknown> =>
-    JSON.parse(readFileSync(path, "utf8"));
   function walk(directory: string) {
     const names = readdirSync(directory, { withFileTypes: true });
     if (names.some((entry) => entry.name === "meta.json")) {
@@ -262,22 +263,23 @@ void test("sitemap excludes fallback clones and advertises only real translation
 void test("translation catalogs use stable keys and preserve English interpolation tokens", () => {
   const catalogs = ["de", "pl", "ru"].map(
     (locale) =>
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- test double implements only the members this test uses
       JSON.parse(
         readFileSync(`src/lib/messages/${locale}.json`, "utf8"),
       ) as Record<string, string>,
   );
   for (const catalog of catalogs) {
     assert.deepEqual(
-      Object.keys(catalog).sort(),
-      Object.keys(catalogs[0]).sort(),
+      Object.keys(catalog).toSorted(),
+      Object.keys(catalogs[0]).toSorted(),
     );
     for (const [key, value] of Object.entries(catalog)) {
       assert.ok(isMessageKey(key), key);
       assert.match(key, /^[a-z][a-zA-Z0-9-]*(\.[a-zA-Z0-9-]+)+$/);
       assert.ok(value.trim());
       assert.deepEqual(
-        (en[key as keyof typeof en].match(/\{\w+\}/g) ?? []).sort(),
-        (value.match(/\{\w+\}/g) ?? []).sort(),
+        (en[key].match(/\{\w+\}/g) ?? []).toSorted(),
+        (value.match(/\{\w+\}/g) ?? []).toSorted(),
         key,
       );
     }

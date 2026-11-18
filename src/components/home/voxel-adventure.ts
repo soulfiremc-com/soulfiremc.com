@@ -134,8 +134,10 @@ function armCharge(
   const world = state.adventure;
   if (world.charges.length >= MAX_CHARGES) return false;
   const tile = state.tiles
-    .filter((tile) => safeTile(tile) && !protectedGround(state, tile))
-    .sort(
+    .filter(
+      (candidate) => safeTile(candidate) && !protectedGround(state, candidate),
+    )
+    .toSorted(
       (a, b) => Math.hypot(a.x - x, a.z - z) - Math.hypot(b.x - x, b.z - z),
     )[0];
   if (!tile) return false;
@@ -159,7 +161,8 @@ export function decorateAdventure(state: SimulationState) {
   for (const team of state.teams) {
     for (const offset of [-1, 1]) {
       const tile = state.tiles.find(
-        (tile) => tile.x === team.home[0] && tile.z === team.home[1] + offset,
+        (candidate) =>
+          candidate.x === team.home[0] && candidate.z === team.home[1] + offset,
       );
       if (tile) tile.torch = true;
     }
@@ -234,13 +237,15 @@ function blast(
         Math.abs(tile.x) < 1.6 &&
         Math.abs(tile.z) < 3.5 &&
         tile.height < 0.65 &&
-        state.tiles.filter((tile) => tile.hazard === "lava").length < MAX_LAVA
+        state.tiles.filter((lavaTile) => lavaTile.hazard === "lava").length <
+          MAX_LAVA
       )
         tile.hazard = "lava";
     } else if (
       Math.abs(tile.x) < 1.6 &&
       Math.abs(tile.z) < 3.5 &&
-      state.tiles.filter((tile) => tile.hazard === "lava").length < MAX_LAVA
+      state.tiles.filter((lavaTile) => lavaTile.hazard === "lava").length <
+        MAX_LAVA
     ) {
       tile.hazard = "lava";
     }
@@ -345,7 +350,7 @@ function updateMobs(state: SimulationState, host: AdventureHost, dt: number) {
     if ((ground?.fire ?? 0) > 0) mob.health = Math.max(0, mob.health - dt * 2);
     const target = state.bots
       .filter((bot) => bot.health > 0)
-      .sort(
+      .toSorted(
         (a, b) =>
           Math.hypot(a.x - mob.x, a.z - mob.z) -
           Math.hypot(b.x - mob.x, b.z - mob.z),
@@ -477,7 +482,7 @@ function strike(state: SimulationState, host: AdventureHost) {
 function siege(state: SimulationState, host: AdventureHost) {
   const candidates = state.bots
     .filter((bot) => bot.health > 0 && bot.genome.aggression > 0.4)
-    .sort((a, b) => b.genome.aggression - a.genome.aggression);
+    .toSorted((a, b) => b.genome.aggression - a.genome.aggression);
   for (const bot of candidates) {
     const camp = state.teams[bot.team];
     if (

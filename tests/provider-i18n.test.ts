@@ -128,6 +128,7 @@ void test("rating labels and numeric formatting follow the page language", () =>
   const html = renderToStaticMarkup(
     createElement(LocaleProvider, {
       locale: "de",
+      // oxlint-disable-next-line react/no-children-prop -- LocaleProvider types children as a required prop, which createElement's child arguments do not satisfy
       children: [
         createElement(ReviewSummaryBadge, {
           key: "summary",

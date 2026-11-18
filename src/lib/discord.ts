@@ -1,6 +1,14 @@
-import { Deferred, Effect, Schema } from "effect";
+import { Data, Deferred, Effect, Schema } from "effect";
 import { AsyncLocalStorage } from "node:async_hooks";
 import { requestJson, requestVoid } from "@/lib/backend-http";
+
+class DiscordCacheError extends Data.TaggedError("DiscordCacheError")<{
+  readonly cause: unknown;
+}> {}
+
+class DiscordRequestError extends Data.TaggedError("DiscordRequestError")<{
+  readonly cause: unknown;
+}> {}
 
 const DISCORD_API_BASE = "https://discord.com/api/v10";
 const DISCORD_INVITE_URL_PATTERN =
@@ -157,41 +165,49 @@ function readCachedValue<T>(
   schema: Schema.Decoder<T>,
 ) {
   return Effect.gen(function* () {
-    const response = yield* Effect.tryPromise(() => cache.match(cacheKey));
+    const response = yield* Effect.tryPromise({
+      try: () => cache.match(cacheKey),
+      catch: (cause) => new DiscordCacheError({ cause }),
+    });
     if (!response) return { hit: false } as const;
 
-    const payload: unknown = yield* Effect.tryPromise(() => response.json());
+    const payload: unknown = yield* Effect.tryPromise({
+      try: () => response.json(),
+      catch: (cause) => new DiscordCacheError({ cause }),
+    });
     const entry = yield* Schema.decodeUnknownEffect(
       Schema.Struct({ value: Schema.NullOr(schema) }),
     )(payload);
     return { hit: true, value: entry.value } as const;
   }).pipe(
     Effect.catch(() =>
-      Effect.tryPromise(() => cache.delete(cacheKey)).pipe(
-        Effect.ignore,
-        Effect.as({ hit: false } as const),
-      ),
+      Effect.tryPromise({
+        try: () => cache.delete(cacheKey),
+        catch: (cause) => new DiscordCacheError({ cause }),
+      }).pipe(Effect.ignore, Effect.as({ hit: false } as const)),
     ),
   );
 }
 
-function writeCachedValue<T>(
+function writeCachedValue(
   cache: Cache,
   cacheKey: string,
-  value: T | null,
+  value: unknown,
   ttlSeconds: number,
 ) {
-  return Effect.tryPromise(() =>
-    cache.put(
-      cacheKey,
-      new Response(JSON.stringify({ value }), {
-        headers: {
-          "Cache-Control": `public, max-age=${ttlSeconds}`,
-          "Content-Type": "application/json; charset=utf-8",
-        },
-      }),
-    ),
-  ).pipe(Effect.ignore);
+  return Effect.tryPromise({
+    try: () =>
+      cache.put(
+        cacheKey,
+        new Response(JSON.stringify({ value }), {
+          headers: {
+            "Cache-Control": `public, max-age=${ttlSeconds}`,
+            "Content-Type": "application/json; charset=utf-8",
+          },
+        }),
+      ),
+    catch: (cause) => new DiscordCacheError({ cause }),
+  }).pipe(Effect.ignore);
 }
 
 // Complete every waiter and remove the slot even if a lookup fails or is interrupted.
@@ -259,21 +275,27 @@ function getCachedValue<T>({
 }
 
 function followInviteRedirects(initialUrl: string, maxRedirects: number) {
-  return Effect.tryPromise(async (signal) => {
-    let currentUrl = initialUrl;
-    for (let step = 0; step < maxRedirects; step++) {
-      const resolvedCode = extractInviteCode(currentUrl);
-      if (resolvedCode !== currentUrl) return resolvedCode;
+  return Effect.tryPromise({
+    try: async (signal) => {
+      let currentUrl = initialUrl;
+      for (let step = 0; step < maxRedirects; step++) {
+        const resolvedCode = extractInviteCode(currentUrl);
+        if (resolvedCode !== currentUrl) return resolvedCode;
 
-      const response = await fetch(currentUrl, { redirect: "manual", signal });
-      const location = response.headers.get("location");
-      await response.body?.cancel();
-      if (response.status < 300 || response.status >= 400 || !location)
-        return null;
-      currentUrl = new URL(location, currentUrl).toString();
-    }
-    const finalCode = extractInviteCode(currentUrl);
-    return finalCode !== currentUrl ? finalCode : null;
+        const response = await fetch(currentUrl, {
+          redirect: "manual",
+          signal,
+        });
+        const location = response.headers.get("location");
+        await response.body?.cancel();
+        if (response.status < 300 || response.status >= 400 || !location)
+          return null;
+        currentUrl = new URL(location, currentUrl).toString();
+      }
+      const finalCode = extractInviteCode(currentUrl);
+      return finalCode !== currentUrl ? finalCode : null;
+    },
+    catch: (cause) => new DiscordRequestError({ cause }),
   }).pipe(
     Effect.timeoutOrElse({
       duration: DISCORD_REQUEST_TIMEOUT_MS,

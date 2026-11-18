@@ -42,6 +42,7 @@ await test("Turnstile checks response schemas, action and hostname without retry
     globalThis,
     "fetch",
     async (_url: string, init: RequestInit) => {
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- test double implements only the members this test uses
       const form = init.body as FormData;
       assert.equal(init.method, "POST");
       assert.equal(init.cache, "no-store");

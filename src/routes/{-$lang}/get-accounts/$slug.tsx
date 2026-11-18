@@ -83,6 +83,7 @@ function DiscordMemberBadge({
   if (pending) {
     return (
       <Skeleton
+        // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Skeleton renders a div, and the status role announces the loading state
         role="status"
         aria-label={t("providers.accounts.loadingDiscordMemberCount")}
         className="h-5 w-16"
@@ -334,7 +335,7 @@ function ShopLogo({ src, name }: { src?: string; name: string }) {
   }
 
   return (
-    <div className="flex h-full w-full items-center justify-center bg-linear-to-br from-primary/20 to-primary/5 text-4xl font-bold text-primary">
+    <div className="flex size-full items-center justify-center bg-linear-to-br from-primary/20 to-primary/5 text-4xl font-bold text-primary">
       {name.charAt(0).toUpperCase()}
     </div>
   );
@@ -495,7 +496,7 @@ function AccountDetailPage() {
           >
             {t("nav.home")}
           </Link>
-          <ChevronRight className="h-3.5 w-3.5" />
+          <ChevronRight className="size-3.5" />
           <Link
             to="/{-$lang}/get-accounts"
             activeOptions={{ exact: true }}
@@ -503,7 +504,7 @@ function AccountDetailPage() {
           >
             {t("common.getAccounts")}
           </Link>
-          <ChevronRight className="h-3.5 w-3.5" />
+          <ChevronRight className="size-3.5" />
           <span aria-current="page" className="truncate text-foreground">
             {data.shop.name}
           </span>
@@ -521,7 +522,7 @@ function AccountDetailPage() {
           <div className="relative flex flex-col gap-6 sm:flex-row">
             <div
               className={cn(
-                "relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-muted",
+                "relative size-20 shrink-0 overflow-hidden rounded-xl bg-muted",
                 theme?.logo,
               )}
             >
@@ -534,7 +535,7 @@ function AccountDetailPage() {
                 </h1>
                 {data.shop.startDate ? (
                   <span className="inline-flex items-center gap-1 text-sm text-muted-foreground">
-                    <Calendar className="h-3.5 w-3.5" />
+                    <Calendar className="size-3.5" />
                     {t("providers.accounts.since", {
                       date: formatProviderSince(data.shop.startDate, locale),
                     })}

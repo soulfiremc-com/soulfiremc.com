@@ -63,7 +63,7 @@ function PricingPageContent() {
           <CardHeader>
             <div className="mb-2 flex items-center gap-3">
               <div className="rounded-lg bg-muted p-2">
-                <Users className="h-5 w-5" />
+                <Users className="size-5" />
               </div>
               <CardTitle className="text-xl">{t("common.free")}</CardTitle>
             </div>
@@ -83,7 +83,7 @@ function PricingPageContent() {
             <ul className="flex flex-col gap-3">
               {freeTierFeatures.map((feature) => (
                 <li key={feature} className="flex items-start gap-3">
-                  <Check className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                  <Check className="mt-0.5 size-5 shrink-0 text-primary" />
                   <span className="text-sm">{t(feature)}</span>
                 </li>
               ))}
@@ -94,7 +94,7 @@ function PricingPageContent() {
               to="/{-$lang}/download"
               className={cn(buttonVariants({ variant: "outline" }), "w-full")}
             >
-              <Download className="h-4 w-4" />
+              <Download className="size-4" />
               {t("download.title")}
             </Link>
           </CardFooter>
@@ -103,7 +103,7 @@ function PricingPageContent() {
           <CardHeader>
             <div className="mb-2 flex items-center gap-3">
               <div className="rounded-lg bg-primary/10 p-2">
-                <Heart className="h-5 w-5 text-primary" />
+                <Heart className="size-5 text-primary" />
               </div>
               <CardTitle className="text-xl">
                 {t("support.supporter")}
@@ -126,7 +126,7 @@ function PricingPageContent() {
             <ul className="flex flex-col gap-3">
               {supporterTierFeatures.map((feature) => (
                 <li key={feature} className="flex items-start gap-3">
-                  <Check className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                  <Check className="mt-0.5 size-5 shrink-0 text-primary" />
                   <span className="text-sm">{t(feature)}</span>
                 </li>
               ))}
@@ -139,7 +139,7 @@ function PricingPageContent() {
               rel="noopener noreferrer"
               className={cn(buttonVariants(), "w-full")}
             >
-              <SiKofi className="h-4 w-4" />
+              <SiKofi className="size-4" />
               {t("support.becomeASupporter")}
             </a>
           </CardFooter>
@@ -167,7 +167,7 @@ function PricingPageContent() {
       </p>
       <div className="mt-20 mb-12 flex flex-col items-center gap-4 text-center">
         <div className="rounded-lg bg-muted p-3">
-          <Gift className="h-6 w-6" />
+          <Gift className="size-6" />
         </div>
         <h2 className="text-3xl font-bold tracking-tight">
           {t("support.oneTimeDonations")}
@@ -183,7 +183,7 @@ function PricingPageContent() {
         <Card className="flex flex-col">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-xl">
-              <SiKofi className="h-5 w-5" />
+              <SiKofi className="size-5" />
               {"Ko-fi"}
             </CardTitle>
             <CardDescription>
@@ -191,6 +191,7 @@ function PricingPageContent() {
             </CardDescription>
           </CardHeader>
           <CardContent className="flex-1">
+            {/* oxlint-disable-next-line react/iframe-missing-sandbox -- the third-party video and payment widgets need popups and navigation that a sandbox would block */}
             <iframe
               src="https://ko-fi.com/alexprogrammerde/?hidefeed=true&widget=true&embed=true&preview=true"
               className="w-full rounded-md border-none bg-muted"
@@ -206,7 +207,7 @@ function PricingPageContent() {
               rel="noopener noreferrer"
               className={cn(buttonVariants({ variant: "outline" }), "w-full")}
             >
-              <SiKofi className="h-4 w-4" />
+              <SiKofi className="size-4" />
               {t("support.openKofi")}
             </a>
           </CardFooter>
@@ -214,7 +215,7 @@ function PricingPageContent() {
         <Card className="flex flex-col">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-xl">
-              <Coins className="h-5 w-5" />
+              <Coins className="size-5" />
               {t("support.crypto")}
             </CardTitle>
             <CardDescription>
@@ -222,6 +223,7 @@ function PricingPageContent() {
             </CardDescription>
           </CardHeader>
           <CardContent className="flex-1">
+            {/* oxlint-disable-next-line react/iframe-missing-sandbox -- the third-party video and payment widgets need popups and navigation that a sandbox would block */}
             <iframe
               src="https://nowpayments.io/embeds/donation-widget?api_key=99dbdb4c-b2d7-4470-a0d9-b8bb978c4881"
               height="623"

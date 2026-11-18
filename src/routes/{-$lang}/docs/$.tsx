@@ -170,6 +170,7 @@ const clientLoader = browserCollections.docs.createClientLoader<{
             components={getMDXComponents({
               a: ({ href, ...anchorProps }) => {
                 if (!href) {
+                  // oxlint-disable-next-line jsx-a11y/anchor-has-content -- the link text arrives through the spread props
                   return <a {...anchorProps} />;
                 }
 
@@ -177,6 +178,7 @@ const clientLoader = browserCollections.docs.createClientLoader<{
 
                 if (!pathname.startsWith("/docs")) {
                   return (
+                    // oxlint-disable-next-line jsx-a11y/anchor-has-content -- the link text arrives through the spread props
                     <a href={localizeHref(href, locale)} {...anchorProps} />
                   );
                 }
@@ -333,7 +335,7 @@ function DocsMarkdownContent({
 function DocsPageRoute() {
   const locale = useLocale();
   const t = useT();
-  const page = useFumadocsLoader(Route.useLoaderData() as DocsLoaderData);
+  const page = useFumadocsLoader<DocsLoaderData>(Route.useLoaderData());
 
   return (
     <DocsLayout tree={page.pageTree} {...getBaseLayoutOptions(locale)}>

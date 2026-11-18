@@ -200,61 +200,61 @@ export const BADGE_CONFIG: Record<
     label: "common.free",
     className: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400",
     description: "providers.accounts.badges.free.description",
-    icon: <Gift className="h-3 w-3" />,
+    icon: <Gift className="size-3" />,
   },
   "high-quality": {
     label: "providers.badges.high-quality.label",
     className: "bg-blue-500/10 text-blue-700 dark:text-blue-400",
     description: "providers.accounts.badges.high-quality.description",
-    icon: <Star className="h-3 w-3" />,
+    icon: <Star className="size-3" />,
   },
   "instant-delivery": {
     label: "providers.badges.instant-delivery.label",
     className: "bg-purple-500/10 text-purple-700 dark:text-purple-400",
     description: "providers.accounts.badges.instant-delivery.description",
-    icon: <Zap className="h-3 w-3" />,
+    icon: <Zap className="size-3" />,
   },
   "replacement-warranty": {
     label: "providers.badges.replacement-warranty.label",
     className: "bg-success/10 text-green-800 dark:text-success",
     description: "providers.accounts.badges.replacement-warranty.description",
-    icon: <Shield className="h-3 w-3" />,
+    icon: <Shield className="size-3" />,
   },
   "lifetime-warranty": {
     label: "providers.badges.lifetime-warranty.label",
     className: "bg-success/10 text-green-800 dark:text-success",
     description: "providers.accounts.badges.lifetime-warranty.description",
-    icon: <Shield className="h-3 w-3" />,
+    icon: <Shield className="size-3" />,
   },
   "12h-warranty": {
     label: "providers.badges.12h-warranty.label",
     className: "bg-yellow-500/10 text-warning dark:text-yellow-400",
     description: "providers.accounts.badges.12h-warranty.description",
-    icon: <Shield className="h-3 w-3" />,
+    icon: <Shield className="size-3" />,
   },
   "bulk-discount": {
     label: "providers.badges.bulk-discount.label",
     className: "bg-orange-500/10 text-orange-700 dark:text-orange-400",
     description: "providers.accounts.badges.bulk-discount.description",
-    icon: <Package className="h-3 w-3" />,
+    icon: <Package className="size-3" />,
   },
   "official-integration": {
     label: "providers.badges.official-integration.label",
     className: "bg-cyan-500/10 text-cyan-700 dark:text-cyan-400",
     description: "providers.accounts.badges.official-integration.description",
-    icon: <Plug className="h-3 w-3" />,
+    icon: <Plug className="size-3" />,
   },
   partner: {
     label: "providers.badges.partner.label",
     className: "bg-amber-500/10 text-amber-800 dark:text-amber-400",
     description: "providers.accounts.badges.partner.description",
-    icon: <Heart className="h-3 w-3 fill-current" />,
+    icon: <Heart className="size-3 fill-current" />,
   },
   affiliate: {
     label: "providers.badges.affiliate.label",
     className: "bg-rose-500/10 text-rose-700 dark:text-rose-400",
     description: "providers.accounts.badges.affiliate.description",
-    icon: <Handshake className="h-3 w-3" />,
+    icon: <Handshake className="size-3" />,
   },
 };
 
@@ -278,19 +278,19 @@ export const SORT_CONFIG: Record<
 > = {
   default: {
     label: "providers.sort.default",
-    icon: <Star className="h-3 w-3" />,
+    icon: <Star className="size-3" />,
   },
   "best-rated": {
     label: "providers.sort.best-rated",
-    icon: <Star className="h-3 w-3 fill-current" />,
+    icon: <Star className="size-3 fill-current" />,
   },
   "price-asc": {
     label: "providers.sort.price-asc",
-    icon: <ArrowUpNarrowWide className="h-3 w-3" />,
+    icon: <ArrowUpNarrowWide className="size-3" />,
   },
   "price-desc": {
     label: "providers.sort.price-desc",
-    icon: <ArrowDownNarrowWide className="h-3 w-3" />,
+    icon: <ArrowDownNarrowWide className="size-3" />,
   },
 };
 

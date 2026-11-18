@@ -51,7 +51,7 @@ export function getBlogSitemapPages(filenames: readonly string[]) {
           .map((slug) => `/blog/${slug}`),
       ),
     ]
-      .sort()
+      .toSorted()
       .map((path) => ({ path })),
   ];
 }

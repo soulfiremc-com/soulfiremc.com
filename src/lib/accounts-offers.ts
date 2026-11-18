@@ -138,12 +138,12 @@ export function getShopAggregateOffer(
   shop: Shop,
   liveData?: LiveShopData,
 ): AggregateOffer | undefined {
-  const listings = (
-    Object.entries(shop.listings) as [
-      Category,
-      NonNullable<Shop["listings"][Category]>,
-    ][]
-  ).flatMap(([category, listing]) =>
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- listing keys are categories by the shop data type
+  const listingEntries = Object.entries(shop.listings) as [
+    Category,
+    NonNullable<Shop["listings"][Category]>,
+  ][];
+  const listings = listingEntries.flatMap(([category, listing]) =>
     listing.priceValue === undefined
       ? []
       : [{ category, price: listing.priceValue }],

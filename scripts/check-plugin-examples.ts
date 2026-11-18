@@ -5,6 +5,7 @@ import { tmpdir } from "node:os";
 import { remark } from "remark";
 import remarkMdx from "remark-mdx";
 import { sdkSource } from "./sdk-source";
+import { printLine } from "./lib/output";
 
 type AstNode = {
   type: string;
@@ -46,6 +47,7 @@ try {
   const files: string[] = [];
   for (const page of ["first-plugin", "bot-control-and-direct-access"]) {
     const path = `content/docs/(main)/development/${page}.mdx`;
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- remark returns an mdast Root, which is the AstNode shape this walker reads
     const tree = remark()
       .use(remarkMdx)
       .parse(readFileSync(path, "utf8")) as AstNode;
@@ -89,7 +91,7 @@ try {
     ],
     { stdio: "inherit" },
   );
-  console.log(
+  printLine(
     `Compiled ${files.length} Java documentation examples against the pinned backend.`,
   );
 } finally {

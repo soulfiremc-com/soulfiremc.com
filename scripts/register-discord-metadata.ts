@@ -1,8 +1,9 @@
+import { printError, printLine } from "./lib/output";
 const DISCORD_BOT_TOKEN = process.env.DISCORD_BOT_TOKEN;
 const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID;
 
 if (!DISCORD_BOT_TOKEN || !DISCORD_CLIENT_ID) {
-  console.error(
+  printError(
     "Error: DISCORD_BOT_TOKEN and DISCORD_CLIENT_ID environment variables are required",
   );
   process.exit(1);
@@ -44,16 +45,16 @@ async function main() {
 
   if (!response.ok) {
     const body = await response.text();
-    console.error(`Failed to register metadata: ${response.status} ${body}`);
+    printError(`Failed to register metadata: ${response.status} ${body}`);
     process.exit(1);
   }
 
   const result = await response.json();
-  console.log(
+  printLine(
     "Metadata registered successfully:",
     JSON.stringify(result, null, 2),
   );
 }
 
 // oxlint-disable-next-line unicorn/prefer-top-level-await -- this file has no imports, so TypeScript compiles it as a script without top-level await
-main().catch(console.error);
+main().catch(printError);

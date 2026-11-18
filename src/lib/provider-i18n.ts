@@ -35,7 +35,10 @@ export function localizeProviderData<T>(data: T, locale: Locale): T {
     if (Array.isArray(value)) return value.map((item) => visit(item));
     if (value && typeof value === "object")
       return Object.fromEntries(
-        Object.entries(value).map(([key, child]) => [key, visit(child, key)]),
+        Object.entries(value).map(([childKey, child]) => [
+          childKey,
+          visit(child, childKey),
+        ]),
       );
     if (typeof value !== "string") return value;
     if (key === "inLanguage") return locale;
@@ -51,6 +54,7 @@ export function localizeProviderData<T>(data: T, locale: Locale): T {
     }
     return value;
   }
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- visit returns a copy with the same shape and translated strings
   return visit(data) as T;
 }
 

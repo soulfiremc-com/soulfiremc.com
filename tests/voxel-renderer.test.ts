@@ -4,6 +4,8 @@ import { createVoxelRenderer } from "@/components/home/voxel-renderer";
 import { INITIAL_SIMULATION_SEED } from "@/components/home/voxel-simulation";
 import type { SimulationSummary } from "@/components/home/voxel-simulation-types";
 
+let intersection: (entries: { isIntersecting: boolean }[]) => void = () => {};
+
 function rendererHarness() {
   const frames = new Map<number, FrameRequestCallback>();
   const saved = new Map<string, PropertyDescriptor | undefined>();
@@ -14,7 +16,6 @@ function rendererHarness() {
     getBoundingClientRect: () => ({ width: 600, height: 500 }),
     getContext: () => gl,
   });
-  let intersection: (entries: { isIntersecting: boolean }[]) => void = () => {};
   let observersDisconnected = 0;
   let deletedBuffers = 0;
   let unavailable = 0;
@@ -113,6 +114,7 @@ function rendererHarness() {
     },
   );
   const renderer = createVoxelRenderer(
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- test double implements only the members this test uses
     canvas as unknown as HTMLCanvasElement,
     () => {
       unavailable++;
@@ -272,10 +274,12 @@ void test("manual chaos inputs obey pause and reduced motion disables active fla
     assert.equal(h.summary().remaining, before);
     h.renderer.setMotion(false, false);
     h.advance(2);
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- test double implements only the members this test uses
     assert.ok((h.uniform("u_flash") as number) > 0);
     h.renderer.setMotion(false, true);
     h.advance(1);
     assert.equal(h.uniform("u_flash"), 0);
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- test double implements only the members this test uses
     assert.ok((h.uniform("u_shake") as number[]).every((value) => value === 0));
     h.renderer.setMotion(true, true);
     h.advance(1);

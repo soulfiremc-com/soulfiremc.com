@@ -129,7 +129,7 @@ export function EnderDashSponsor({
               <h2 className="max-w-4xl text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
                 {t("sponsor.featureTitle")}
               </h2>
-              <p className="max-w-3xl text-sm leading-6 text-zinc-400 sm:text-base">
+              <p className="max-w-3xl text-sm/6 text-zinc-400 sm:text-base">
                 {t("sponsor.featureDescription")}
               </p>
             </div>
@@ -174,7 +174,7 @@ export function EnderDashSponsor({
             <p className="text-base font-semibold tracking-tight text-balance">
               {t("sponsor.footerTitle")}
             </p>
-            <p className="max-w-2xl text-sm leading-6 text-zinc-400">
+            <p className="max-w-2xl text-sm/6 text-zinc-400">
               {t("sponsor.footerDescription")}
             </p>
           </div>

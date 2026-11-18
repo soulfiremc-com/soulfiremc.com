@@ -9,6 +9,7 @@ import { withInlineErrors } from "../src/lib/auth/inline-errors";
 
 void test("inline errors keep the session refresh that runs before onSuccess", () => {
   const options = withInlineErrors(
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- test double implements only the members this test uses
     verifyTotpOptions({} as TwoFactorAuthClient),
   );
 

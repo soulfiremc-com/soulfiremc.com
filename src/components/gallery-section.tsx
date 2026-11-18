@@ -81,9 +81,9 @@ export function GallerySection({
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="absolute top-3 right-3 z-10 h-11 w-11 rounded-full border border-white/10 bg-black/65 text-white hover:bg-black/80 hover:text-white"
+                    className="absolute top-3 right-3 z-10 size-11 rounded-full border border-white/10 bg-black/65 text-white hover:bg-black/80 hover:text-white"
                   >
-                    <X className="h-5 w-5" />
+                    <X className="size-5" />
                     <span className="sr-only">{t("gallery.closeGallery")}</span>
                   </Button>
                 }
@@ -94,9 +94,9 @@ export function GallerySection({
                     variant="ghost"
                     size="icon"
                     onClick={prev}
-                    className="absolute top-1/2 left-3 z-10 h-11 w-11 -translate-y-1/2 rounded-full border border-white/10 bg-black/65 text-white hover:bg-black/80 hover:text-white"
+                    className="absolute top-1/2 left-3 z-10 size-11 -translate-y-1/2 rounded-full border border-white/10 bg-black/65 text-white hover:bg-black/80 hover:text-white"
                   >
-                    <ChevronLeft className="h-5 w-5" />
+                    <ChevronLeft className="size-5" />
                     <span className="sr-only">
                       {t("gallery.previousImage")}
                     </span>
@@ -105,9 +105,9 @@ export function GallerySection({
                     variant="ghost"
                     size="icon"
                     onClick={next}
-                    className="absolute top-1/2 right-3 z-10 h-11 w-11 -translate-y-1/2 rounded-full border border-white/10 bg-black/65 text-white hover:bg-black/80 hover:text-white"
+                    className="absolute top-1/2 right-3 z-10 size-11 -translate-y-1/2 rounded-full border border-white/10 bg-black/65 text-white hover:bg-black/80 hover:text-white"
                   >
-                    <ChevronRight className="h-5 w-5" />
+                    <ChevronRight className="size-5" />
                     <span className="sr-only">{t("gallery.nextImage")}</span>
                   </Button>
                 </>

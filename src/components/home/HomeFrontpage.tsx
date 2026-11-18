@@ -108,6 +108,7 @@ function DemoVideo() {
           {t("home.watchTheSoulfireDemoOnYoutube")}
         </DialogDescription>
         {open && (
+          // oxlint-disable-next-line react/iframe-missing-sandbox -- the third-party video and payment widgets need popups and navigation that a sandbox would block
           <iframe
             className="mt-6 aspect-video w-full"
             src="https://www.youtube-nocookie.com/embed/BD-xE8vbHtQ"
@@ -151,6 +152,7 @@ function ScriptPreview() {
   return (
     <div
       className="workflow-preview"
+      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- the elements and their label form one labelled image
       role="img"
       aria-label={t("home.aVisualScriptConnectsAnOnChatTriggerTo")}
     >

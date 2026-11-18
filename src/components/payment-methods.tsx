@@ -142,7 +142,7 @@ function PaymentMethodLogo({ method }: { method: string }) {
   return (
     <Icon
       aria-hidden="true"
-      className="h-3.5 w-3.5 shrink-0"
+      className="size-3.5 shrink-0"
       focusable="false"
       title=""
     />
@@ -174,7 +174,7 @@ export function PaymentMethods({ methods }: { methods?: string[] }) {
   return (
     <div className="flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
       <span className="inline-flex items-center gap-1 font-medium text-foreground">
-        <CreditCard className="h-3.5 w-3.5" />
+        <CreditCard className="size-3.5" />
         {t("payments.payments")}
       </span>
       {methods.map((method) => {

@@ -3,7 +3,9 @@ import type { AggregateRating, Review as SchemaReview } from "schema-dts";
 export type ItemType = "account" | "proxy" | "resource";
 
 export function normalizeReviewSlugs(slugs: string[]) {
-  return [...new Set(slugs.map((slug) => slug.trim()).filter(Boolean))].sort();
+  return [
+    ...new Set(slugs.map((slug) => slug.trim()).filter(Boolean)),
+  ].toSorted();
 }
 
 /** Build the cache key for review data. Inputs must already be normalized. */

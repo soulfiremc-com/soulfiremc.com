@@ -3,7 +3,6 @@
 import { useT, useLocale } from "@/lib/i18n-react";
 
 import { Star } from "lucide-react";
-import type { CSSProperties } from "react";
 import { cn, generateN } from "@/lib/utils";
 
 type Size = "sm" | "md" | "lg";
@@ -41,6 +40,7 @@ export function ReviewStars({
 
   return (
     <div
+      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- the elements and their label form one labelled image
       role="img"
       aria-label={label}
       // Fit the stars so a stretching flex parent cannot widen the fill area.
@@ -54,7 +54,7 @@ export function ReviewStars({
       </div>
       <div
         className="absolute inset-0 w-(--rating-width) overflow-hidden text-rating"
-        style={{ "--rating-width": width } as CSSProperties}
+        style={{ "--rating-width": width }}
       >
         <div className="flex items-center gap-0.5">
           {generateN(5).map((i) => (
@@ -84,6 +84,7 @@ export function ReviewStarInput({
   const t = useT();
   return (
     <div
+      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- a labelled group of star buttons; fieldset would add form semantics and min-content sizing
       role="group"
       aria-labelledby={labelledBy}
       className={cn("-m-1 inline-flex items-center", className)}

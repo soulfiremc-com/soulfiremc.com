@@ -12,6 +12,7 @@ const plugins = [twoFactorPlugin(), dashPlugin()];
 
 void test("auth UI messages follow the page language", () => {
   const config = resolveAuthConfig({
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- test double implements only the members this test uses
     authClient: {} as never,
     locale: authUiLocale("de", plugins),
     plugins,
@@ -21,6 +22,7 @@ void test("auth UI messages follow the page language", () => {
     config.localization.auth.continueWith,
     "Weiter mit {{provider}}",
   );
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- test double implements only the members this test uses
   const [twoFactor, dash] = config.plugins as [
     ReturnType<typeof twoFactorPlugin>,
     ReturnType<typeof dashPlugin>,

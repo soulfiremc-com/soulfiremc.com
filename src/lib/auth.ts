@@ -70,7 +70,7 @@ const USERNAME_ADJECTIVES = [
   "velvet",
   "wild",
   "winter",
-].sort();
+].toSorted();
 
 const USERNAME_NOUNS = [
   "badger",
@@ -109,7 +109,7 @@ const USERNAME_NOUNS = [
   "wind",
   "wolf",
   "wren",
-].sort();
+].toSorted();
 
 function randomArrayValue(values: string[]): string {
   return values[Math.floor(Math.random() * values.length)] ?? "user";

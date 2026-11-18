@@ -120,6 +120,7 @@ export function captureAnalyticsException(
     void loadPostHog();
     return;
   }
+  // oxlint-disable-next-line promise/no-promise-in-callback -- error is the reported exception, not a Node-style callback error
   void loadPostHog().then((posthog) =>
     posthog?.captureException(error, withContext),
   );

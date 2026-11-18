@@ -35,7 +35,7 @@ void test("meshes keep blended materials after the opaque vertices", () => {
   const total = terrain.vertices.length / VERTEX_STRIDE;
   assert.equal(terrain.vertices.length % (VERTEX_STRIDE * 6), 0);
   assert.deepEqual(
-    [...kinds(terrain, 0, terrain.opaque)].sort((a, b) => a - b),
+    [...kinds(terrain, 0, terrain.opaque)].toSorted((a, b) => a - b),
     [KIND.solid, KIND.lava],
   );
   assert.deepEqual([...kinds(terrain, terrain.opaque, total)], [KIND.water]);
@@ -153,14 +153,20 @@ void test("lights stay within the shader limit and favor torches over lava", () 
   }
 });
 
+const count = (mesh: Mesh, kind: number) => {
+  let found = 0;
+  for (let offset = 9; offset < mesh.vertices.length; offset += VERTEX_STRIDE)
+    if (mesh.vertices[offset] === kind) found++;
+  return found;
+};
+const shadowX = (mesh: Mesh) => {
+  for (let offset = 0; offset < mesh.vertices.length; offset += VERTEX_STRIDE)
+    if (mesh.vertices[offset + 9] === KIND.shadow) return mesh.vertices[offset];
+  return Number.NaN;
+};
+
 void test("light sources draw a glow and mobs follow their animated pose", () => {
   const state = createSimulation(INITIAL_SIMULATION_SEED);
-  const count = (mesh: Mesh, kind: number) => {
-    let found = 0;
-    for (let offset = 9; offset < mesh.vertices.length; offset += VERTEX_STRIDE)
-      if (mesh.vertices[offset] === kind) found++;
-    return found;
-  };
   const before = count(createEffectsGeometry(state, 0), KIND.halo);
   state.tiles.find((tile) => tile.material === "grass" && !tile.torch)!.torch =
     true;
@@ -187,11 +193,5 @@ void test("light sources draw a glow and mobs follow their animated pose", () =>
     animator.frame(state, 0.5, 0.05),
   );
   assert.equal(count(moved, KIND.shadow), count(rest, KIND.shadow));
-  const shadowX = (mesh: Mesh) => {
-    for (let offset = 0; offset < mesh.vertices.length; offset += VERTEX_STRIDE)
-      if (mesh.vertices[offset + 9] === KIND.shadow)
-        return mesh.vertices[offset];
-    return Number.NaN;
-  };
   assert.ok(Math.abs(shadowX(moved) - shadowX(rest) - 1) < 1e-5);
 });

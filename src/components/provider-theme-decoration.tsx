@@ -15,7 +15,7 @@ export function ProviderThemeDecoration({
       className="pointer-events-none absolute inset-0 overflow-hidden"
     >
       {theme === "localts" ? (
-        <div className="absolute top-3 -right-4 flex -rotate-[24deg] flex-col gap-2">
+        <div className="absolute top-3 -right-4 flex rotate-[-24deg] flex-col gap-2">
           <div className="h-3 w-32 bg-localts-blue/10 dark:bg-localts-sky/10" />
           <div className="ml-6 h-2 w-32 bg-localts-sky/20 dark:bg-localts-blue/15" />
         </div>

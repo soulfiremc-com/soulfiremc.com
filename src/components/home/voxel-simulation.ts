@@ -280,7 +280,7 @@ function findPath(
           path.push(step);
           step = previous[step];
         }
-        return path.reverse();
+        return path.toReversed();
       }
       queue.push(next);
     }
@@ -497,7 +497,9 @@ function newTeams(
   wins: [number, number],
   homes: [Point, Point],
 ): [SimulationTeam, SimulationTeam] {
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- the simulation always creates exactly two teams
   return [0, 1].map((id) => ({
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- the simulation always creates exactly two teams
     id: id as TeamId,
     home: homes[id],
     wood: STARTING_STOCK.wood,
@@ -513,7 +515,7 @@ function normalizeSeed(seed: number | undefined) {
 }
 
 function isPressure(value: unknown): value is SelectionPressure {
-  return PRESSURES.has(value as SelectionPressure);
+  return (PRESSURES as ReadonlySet<unknown>).has(value);
 }
 
 export function createSimulation(
@@ -523,6 +525,7 @@ export function createSimulation(
 ): SimulationState {
   const normalized = normalizeSeed(seed);
   const rand = createRandom(mixSeed(normalized, 0x6e6f6d65));
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- the simulation always creates exactly two teams
   const genomes = [0, 1].map(() =>
     Array.from({ length: BOTS_PER_TEAM }, () => ({
       aggression: rand(),
@@ -1216,12 +1219,12 @@ function updateBot(
       // Bold bots go after a monster that comes close.
       const mob = state.adventure.mobs
         .filter(
-          (mob) =>
-            mob.health > 0 &&
-            Math.hypot(mob.x - bot.x, mob.z - bot.z) <
+          (other) =>
+            other.health > 0 &&
+            Math.hypot(other.x - bot.x, other.z - bot.z) <
               2.5 + genome.aggression * 2,
         )
-        .sort(
+        .toSorted(
           (a, b) =>
             Math.hypot(a.x - bot.x, a.z - bot.z) -
             Math.hypot(b.x - bot.x, b.z - bot.z),
@@ -1500,7 +1503,7 @@ function nextGeneration(state: SimulationState, internal: Internal) {
   for (const team of [0, 1] as const) {
     const members = state.bots
       .filter((bot) => bot.team === team)
-      .sort((a, b) => b.fitness - a.fitness);
+      .toSorted((a, b) => b.fitness - a.fitness);
     for (let index = 0; index < BOTS_PER_TEAM; index++) {
       const parent = index === 0 ? members[0] : tournament(internal, members);
       genomes[team].push({
@@ -1567,7 +1570,7 @@ function adventureHost(
         if (tile && isWalkable(tile)) continue;
         const safe = state.tiles
           .filter(isWalkable)
-          .sort(
+          .toSorted(
             (a, b) =>
               Math.hypot(a.x - bot.x, a.z - bot.z) -
               Math.hypot(b.x - bot.x, b.z - bot.z),

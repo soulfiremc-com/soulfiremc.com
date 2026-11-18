@@ -11,6 +11,7 @@ function fakeDocument({
   classes = [] as string[],
   translatedNode = false,
 } = {}): Document {
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- test double implements only the members this test uses
   return {
     documentElement: {
       classList: { contains: (name: string) => classes.includes(name) },

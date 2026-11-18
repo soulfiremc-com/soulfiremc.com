@@ -30,18 +30,15 @@ test("query-dependent content matches the default static page before hydration",
   assert.ok(queriedHtml.includes("default"));
 });
 
+function Download() {
+  const value = usePrerenderedSearch(
+    { os: "linux", cpu: "arm64" },
+    { os: "windows", cpu: "x64" },
+  );
+  return createElement("a", { href: `/${value.os}/${value.cpu}` }, "Download");
+}
+
 test("explicit download selections preserve the prerendered initial markup", () => {
-  function Download() {
-    const value = usePrerenderedSearch(
-      { os: "linux", cpu: "arm64" },
-      { os: "windows", cpu: "x64" },
-    );
-    return createElement(
-      "a",
-      { href: `/${value.os}/${value.cpu}` },
-      "Download",
-    );
-  }
   assert.equal(
     renderToString(createElement(Download)),
     '<a href="/windows/x64">Download</a>',

@@ -27,6 +27,7 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     PopupContent,
     PopupTrigger,
     ...FilesComponents,
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Callout renders a blockquote replacement and accepts its props
     blockquote: Callout as unknown as FC<ComponentProps<"blockquote">>,
     img: MdxImage,
     Image,

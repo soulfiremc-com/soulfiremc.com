@@ -6,6 +6,7 @@ import {
 } from "../src/lib/docs/hydration";
 
 function rootWithPath(path: string | null) {
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- test double implements only the members this test uses
   return {
     querySelector: (selector: string) => {
       assert.equal(selector, "[data-docs-content-path]");

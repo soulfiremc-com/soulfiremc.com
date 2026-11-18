@@ -634,7 +634,7 @@ function ItemReviewsSectionContent({
                     </div>
                   </div>
                   {entry.body ? (
-                    <p className="text-sm leading-6 break-words whitespace-pre-line text-muted-foreground">
+                    <p className="text-sm/6 wrap-break-word whitespace-pre-line text-muted-foreground">
                       {entry.body}
                     </p>
                   ) : entry.commentStatus === "pending" ? (

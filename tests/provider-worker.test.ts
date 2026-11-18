@@ -19,6 +19,7 @@ void test(
   },
   async () => {
     const bundle = resolve(workerBundle!);
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- test double implements only the members this test uses
     const config = JSON.parse(
       await readFile(join(bundle, "../worker.config.json"), "utf8"),
     ) as {

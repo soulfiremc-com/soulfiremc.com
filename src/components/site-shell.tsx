@@ -140,6 +140,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
           <div className="mx-auto flex w-full max-w-(--fd-layout-width) flex-col items-center gap-2 px-4 sm:flex-row sm:justify-between">
             {/* Pages are prerendered, so the build year can trail the visitor's clock. */}
             <p suppressHydrationWarning>
+              {/* oxlint-disable-next-line react/purity -- the footer shows the current year */}
               &copy; {new Date().getFullYear()} SoulFire
             </p>
             <nav
