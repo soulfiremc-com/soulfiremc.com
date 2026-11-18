@@ -671,7 +671,7 @@ export function DirectoryOgImage({
   return (
     <Layout
       section={`${label} Directory`}
-      path={`site/${label.toLowerCase().replace(/\s+/g, "-")}`}
+      path={`site/${label.toLowerCase().replaceAll(/\s+/g, "-")}`}
       accent={accent}
       title={title}
       description={description}

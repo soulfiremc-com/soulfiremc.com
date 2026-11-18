@@ -179,7 +179,7 @@ export function PaymentMethods({ methods }: { methods?: string[] }) {
       </span>
       {methods.map((method) => {
         const labelKey =
-          paymentLabelKeys[method.toLowerCase().replace(/[^a-z0-9]/g, "")];
+          paymentLabelKeys[method.toLowerCase().replaceAll(/[^a-z0-9]/g, "")];
         return (
           <span
             key={method}

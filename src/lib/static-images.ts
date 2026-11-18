@@ -11,10 +11,7 @@ function selectVariant(
   variants: NonNullable<StaticImageMetadata["variants"]>,
   width: number,
 ) {
-  return (
-    variants.find((variant) => variant.width >= width) ??
-    variants[variants.length - 1]
-  );
+  return variants.find((variant) => variant.width >= width) ?? variants.at(-1)!;
 }
 
 export function getStaticImageWidths(

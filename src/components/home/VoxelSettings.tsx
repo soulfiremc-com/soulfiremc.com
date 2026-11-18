@@ -1,4 +1,4 @@
-import { Blocks, Scale, Settings2, Swords } from "lucide-react";
+import { Settings2 } from "lucide-react";
 import { useId } from "react";
 import { Button } from "@/components/ui/button";
 import { Field, FieldLabel } from "@/components/ui/field";
@@ -15,12 +15,7 @@ import type {
   SelectionPressure,
   SimulationSummary,
 } from "./voxel-simulation-types";
-
-export const selectionOptions = [
-  { value: "balanced", label: "simulation.balanced", icon: Scale },
-  { value: "build", label: "simulation.building", icon: Blocks },
-  { value: "battle", label: "simulation.combat", icon: Swords },
-] as const;
+import { selectionOptions } from "./voxel-selection-options";
 
 const traits = [
   { value: "aggression", label: "simulation.aggression" },

@@ -137,7 +137,7 @@ void test(
                 `${localizedPath}: translated page title`,
               );
             }
-            const document = html.replace(
+            const document = html.replaceAll(
               /<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi,
               "",
             );

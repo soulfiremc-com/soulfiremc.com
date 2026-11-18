@@ -55,4 +55,5 @@ async function main() {
   );
 }
 
+// oxlint-disable-next-line unicorn/prefer-top-level-await -- this file has no imports, so TypeScript compiles it as a script without top-level await
 main().catch(console.error);

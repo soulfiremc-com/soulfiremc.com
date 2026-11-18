@@ -21,6 +21,7 @@ export function createRecoverableErrorHandler(
       }
     }
 
+    // oxlint-disable-next-line eslint/no-console -- without a reporter, React's recoverable errors still need to reach the console
     console.error(error);
   };
 }

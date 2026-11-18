@@ -1,7 +1,5 @@
-import {
-  ReviewDatabase,
-  reviewDatabaseLayer,
-} from "../src/lib/review-database";
+import type { ReviewDatabase } from "../src/lib/review-database";
+import { reviewDatabaseLayer } from "../src/lib/review-database";
 import assert from "node:assert/strict";
 import { readdir, readFile } from "node:fs/promises";
 import test from "node:test";
@@ -328,7 +326,9 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
             await db
               .insert(user)
               .values({ id, name: id, email: `${id}@example.com` });
-            await new Promise((resolve) => setTimeout(resolve, 5));
+            await new Promise((resolve) => {
+              setTimeout(resolve, 5);
+            });
             const slug = crypto.randomUUID();
             await Effect.runPromise(
               Effect.gen(function* () {

@@ -3,10 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
-import {
-  createProviderFaqJsonLd,
-  providerFaqs,
-} from "@/components/provider-faq";
+import { createProviderFaqJsonLd, providerFaqs } from "@/lib/provider-faq-data";
 import { ReviewSummaryBadge } from "@/components/review-summary-badge";
 import { ReviewStarInput } from "@/components/review-stars";
 import {
@@ -18,7 +15,7 @@ import {
   PROVIDERS as proxies,
   BADGE_CONFIG as proxyBadges,
 } from "@/lib/proxies-data";
-import { LocaleProvider } from "@/lib/i18n-react";
+import { LocaleProvider } from "@/components/locale-provider";
 import { translate } from "@/lib/messages";
 import { getAccountPageImage, getProxyPageImage } from "@/lib/og";
 import { formatProviderSince, localizeProviderData } from "@/lib/provider-i18n";

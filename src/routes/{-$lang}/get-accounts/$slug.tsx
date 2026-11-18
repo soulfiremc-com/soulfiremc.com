@@ -5,7 +5,7 @@ import { useT, useLocale } from "@/lib/i18n-react";
 import { Schema } from "effect";
 import { discordEmbedScript } from "@/lib/discord-embed";
 import { SiDiscord, SiTrustpilot } from "@icons-pack/react-simple-icons";
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { noop, useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import {
   CatchBoundary,
   createFileRoute,
@@ -371,20 +371,22 @@ export const Route = createFileRoute("/{-$lang}/get-accounts/$slug")({
       slug: params.slug,
       locale: isLocale(params.lang) ? params.lang : "en",
     });
-    void context.queryClient.prefetchQuery(
-      accountLiveShopDataQueryOptions(data.shop.slug),
-    );
-    void context.queryClient.prefetchQuery(
-      accountDiscordInviteQueryOptions(data.shop.slug),
-    );
-    void context.queryClient.prefetchQuery(
-      reviewsQueryOptions({
-        itemType: "account",
-        slugs: [data.shop.slug],
-        includeWrittenReviews: true,
-        reviewsPage: data.reviewsPage,
-      }),
-    );
+    void context.queryClient
+      .query(accountLiveShopDataQueryOptions(data.shop.slug))
+      .catch(noop);
+    void context.queryClient
+      .query(accountDiscordInviteQueryOptions(data.shop.slug))
+      .catch(noop);
+    void context.queryClient
+      .query(
+        reviewsQueryOptions({
+          itemType: "account",
+          slugs: [data.shop.slug],
+          includeWrittenReviews: true,
+          reviewsPage: data.reviewsPage,
+        }),
+      )
+      .catch(noop);
     return data;
   },
   head: ({ loaderData, params }) => {

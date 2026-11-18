@@ -36,8 +36,8 @@ void test(
           ? []
           : bare.slice("/docs/".length).split("/").map(decodeURIComponent);
       const hash = JSON.stringify([locale, ...slugs])
-        .replace(/[/\\?%*:|"<>]/g, "-")
-        .replace(/\s+/g, "_");
+        .replaceAll(/[/\\?%*:|"<>]/g, "-")
+        .replaceAll(/\s+/g, "_");
       const key = createHash("sha1")
         .update(`docs-metadata__${hash}`)
         .digest("hex");
@@ -78,6 +78,7 @@ void test(
     assert.equal(index.status, 200);
     assert.ok(index.headers.has("etag"), "Search index must be a static asset");
     assert.match(index.headers.get("content-type") ?? "", /application\/json/);
+    // oxlint-disable-next-line typescript/no-deprecated -- the site serves an Orama index; staticClient searches with ZBSearch
     const client = oramaStaticClient({
       from: new URL("/api/search", baseUrl).href,
       locale: "en",
@@ -98,6 +99,7 @@ void test(
         (await metadata(`/${locale}/docs/server/docker`)).type,
         "docs",
       );
+      // oxlint-disable-next-line typescript/no-deprecated -- the site serves an Orama index; staticClient searches with ZBSearch
       const localizedClient = oramaStaticClient({
         from: new URL(`/api/search-index/${locale}`, baseUrl).href,
         locale,

@@ -1,8 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  reopenCookieConsent,
-  useAnalyticsConsent,
-} from "@/components/cookie-consent-banner";
+import { reopenCookieConsent, useAnalyticsConsent } from "@/lib/cookie-consent";
 import { SiteShell } from "@/components/site-shell";
 import { Button } from "@/components/ui/button";
 import {

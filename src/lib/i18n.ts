@@ -79,7 +79,7 @@ export function docFileInfo(file: string) {
   if (!match) throw new Error(`Invalid documentation file: ${file}`);
   const locale = (match[2] ?? "en") as Locale;
   const slug = match[1]
-    .replace(/(^|\/)\([^/]+\)/g, "")
+    .replaceAll(/(^|\/)\([^/]+\)/g, "")
     .replace(/^\//, "")
     .replace(/(^|\/)index$/, "");
   const path = `/docs/${slug}`.replace(/\/$/, "");

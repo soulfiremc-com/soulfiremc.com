@@ -139,8 +139,8 @@ export function staticDocsMetadata(): Plugin {
                       // Match the cache key of the pinned staticFunctionMiddleware.
                       // Slugs are string arrays, so no object-key sorting is needed.
                       const hash = JSON.stringify(data)
-                        .replace(/[/\\?%*:|"<>]/g, "-")
-                        .replace(/\s+/g, "_");
+                        .replaceAll(/[/\\?%*:|"<>]/g, "-")
+                        .replaceAll(/\s+/g, "_");
                       const key = createHash("sha1")
                         .update(`${docsMetadataFunctionId}__${hash}`)
                         .digest("hex");

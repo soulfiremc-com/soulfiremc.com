@@ -138,7 +138,7 @@ await test("Effect-clock deadlines release pending headers even if transport ign
   const fetcher: RequestFetch = (_url, init) => {
     calls++;
     signal = init?.signal;
-    return new Promise(() => undefined);
+    return new Promise(() => {});
   };
   await Effect.runPromise(
     Effect.gen(function* () {

@@ -1,10 +1,16 @@
 import type { Thing, WithContext } from "schema-dts";
 
-export function JsonLd<T extends Thing>({ data }: { data: WithContext<T> }) {
+/** Renders serialized JSON-LD. The JSON must already be a string. */
+export function JsonLdScript({ json }: { json: string }) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      // oxlint-disable-next-line react/no-danger -- JSON-LD must be the raw text of the script element
+      dangerouslySetInnerHTML={{ __html: json }}
     />
   );
+}
+
+export function JsonLd<T extends Thing>({ data }: { data: WithContext<T> }) {
+  return <JsonLdScript json={JSON.stringify(data)} />;
 }

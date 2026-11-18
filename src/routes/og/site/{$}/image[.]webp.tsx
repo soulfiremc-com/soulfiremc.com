@@ -1,7 +1,7 @@
 import { isLocale, localizePath } from "@/lib/i18n";
 import { translate } from "@/lib/messages";
 import { DocsOgImage } from "@/components/og/soulfire";
-import { soulfireLogoDataUri } from "@/lib/og-image";
+import { soulfireLogoDataUri, createOgImageResponse } from "@/lib/og-image";
 import { createFileRoute } from "@tanstack/react-router";
 import type { ReactElement } from "react";
 import {
@@ -12,7 +12,6 @@ import {
 import { PROVIDERS as ACCOUNT_PROVIDERS } from "@/lib/accounts-data";
 import { getSortedBlogPages } from "@/lib/blog";
 import { stripOgSuffix } from "@/lib/og";
-import { createOgImageResponse } from "@/lib/og-image";
 import { PROVIDERS as PROXY_PROVIDERS } from "@/lib/proxies-data";
 
 export const Route = createFileRoute("/og/site/{$}/image.webp")({

@@ -6,15 +6,13 @@ import {
 } from "@/lib/provider-i18n";
 import { useT, useLocale } from "@/lib/i18n-react";
 import { TranslatedMessage } from "@/components/translated-message";
-import {
-  ProviderFaq,
-  createProviderFaqJsonLd,
-} from "@/components/provider-faq";
+import { ProviderFaq } from "@/components/provider-faq";
+import { createProviderFaqJsonLd } from "@/lib/provider-faq-data";
 import { Schema, Effect, Option } from "effect";
 import { usePrerenderedSearch } from "@/hooks/use-prerendered-search";
 import { usePrerenderedSearchOrder } from "@/hooks/use-prerendered-search-order";
 import { SiDiscord, SiTrustpilot } from "@icons-pack/react-simple-icons";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { noop, useSuspenseQuery } from "@tanstack/react-query";
 import {
   createFileRoute,
   Link,
@@ -100,6 +98,7 @@ import {
 import { reviewsQueryOptions } from "@/lib/reviews-query";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 import { cn } from "@/lib/utils";
+import { JsonLdScript } from "@/components/json-ld";
 
 function DiscordMemberBadge({ providerSlug }: { providerSlug: string }) {
   const t = useT();
@@ -467,6 +466,7 @@ const ProviderCard = memo(function ProviderCard({
                 render={
                   <a
                     href={discordInviteUrl}
+                    // oxlint-disable-next-line react/jsx-no-target-blank -- noopener is set; the partner invite keeps the referrer on purpose
                     target="_blank"
                     rel="noopener nofollow"
                   >
@@ -840,6 +840,7 @@ function MainContent() {
 
       {/* Main content */}
       <script
+        // oxlint-disable-next-line react/no-danger -- this inline script must run before hydration
         dangerouslySetInnerHTML={{ __html: hidePrerenderedResultsScript }}
       />
       <div
@@ -1118,14 +1119,11 @@ function AccountsItemListStructuredData() {
   );
 
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{
-        __html: localizeProviderJsonLd(
-          createAccountsItemListJsonLd(reviews.summaries, liveShopData),
-          locale,
-        ),
-      }}
+    <JsonLdScript
+      json={localizeProviderJsonLd(
+        createAccountsItemListJsonLd(reviews.summaries, liveShopData),
+        locale,
+      )}
     />
   );
 }
@@ -1136,11 +1134,13 @@ export const Route = createFileRoute("/{-$lang}/get-accounts/")({
     middlewares: [stripSearchParams({ badges: [], sort: "default" })],
   },
   loader: async ({ context }) => {
-    void context.queryClient.prefetchQuery(allAccountLiveShopDataQueryOptions);
-    const discordInvites = context.queryClient.prefetchQuery(
-      accountsDiscordInvitesQueryOptions,
-    );
-    void context.queryClient.prefetchQuery(accountReviewsQueryOptions);
+    void context.queryClient
+      .query(allAccountLiveShopDataQueryOptions)
+      .catch(noop);
+    const discordInvites = context.queryClient
+      .query(accountsDiscordInvitesQueryOptions)
+      .catch(noop);
+    void context.queryClient.query(accountReviewsQueryOptions).catch(noop);
     // The prerendered page must include the member badges. A streamed
     // fallback swaps in late in the large document and shifts each card.
     if (import.meta.env.SSR) await discordInvites;
@@ -1170,38 +1170,24 @@ function GetAccountsPage() {
   const locale = useLocale();
   return (
     <SiteShell>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: localizeProviderJsonLd(accountsPageJsonLd, locale),
-        }}
-      />
+      <JsonLdScript json={localizeProviderJsonLd(accountsPageJsonLd, locale)} />
       <Suspense
         fallback={
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: localizeProviderJsonLd(
-                createAccountsItemListJsonLd(),
-                locale,
-              ),
-            }}
+          <JsonLdScript
+            json={localizeProviderJsonLd(
+              createAccountsItemListJsonLd(),
+              locale,
+            )}
           />
         }
       >
         <AccountsItemListStructuredData />
       </Suspense>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(createProviderFaqJsonLd("accounts", locale)),
-        }}
+      <JsonLdScript
+        json={JSON.stringify(createProviderFaqJsonLd("accounts", locale))}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: localizeProviderJsonLd(accountsBreadcrumbJsonLd, locale),
-        }}
+      <JsonLdScript
+        json={localizeProviderJsonLd(accountsBreadcrumbJsonLd, locale)}
       />
       <GetAccountsClient />
     </SiteShell>

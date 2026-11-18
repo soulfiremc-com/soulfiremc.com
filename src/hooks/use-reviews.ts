@@ -8,7 +8,7 @@ import {
 } from "@tanstack/react-query";
 import { useCallback, useMemo } from "react";
 import { useHydratedQueryResult } from "@/hooks/use-hydrated-query-result";
-import { useReviewTurnstile } from "@/components/review-turnstile-provider";
+import { useReviewTurnstile } from "@/components/review-turnstile-context";
 import { useSession } from "@/lib/auth-hooks";
 import {
   emptyReviewSummary,

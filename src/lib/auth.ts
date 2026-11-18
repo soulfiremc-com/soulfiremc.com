@@ -135,7 +135,7 @@ async function generateUniqueUsername() {
     }
   }
 
-  return `user_${crypto.randomUUID().replace(/-/g, "").slice(0, 12)}`;
+  return `user_${crypto.randomUUID().replaceAll("-", "").slice(0, 12)}`;
 }
 
 export const auth = betterAuth({

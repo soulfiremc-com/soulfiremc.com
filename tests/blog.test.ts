@@ -3,7 +3,7 @@ import test from "node:test";
 import {
   formatUsd,
   parseCalculatorNumber,
-} from "@/components/mdx/donut-calculator";
+} from "@/components/mdx/donut-calculator-format";
 import { formatBlogDate } from "@/lib/blog-date";
 
 void test("formatBlogDate keeps the front-matter calendar day in every time zone", () => {

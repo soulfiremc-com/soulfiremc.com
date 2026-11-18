@@ -20,7 +20,7 @@ const tokenPattern =
 
 /** Replace release placeholders in docs text and code with the current release. */
 export function replaceSdkReleaseTokens(text: string) {
-  return text.replace(
+  return text.replaceAll(
     tokenPattern,
     (token) => tokens[token as keyof typeof tokens],
   );

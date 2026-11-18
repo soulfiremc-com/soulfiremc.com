@@ -28,7 +28,7 @@ export function translate(
   key: MessageKey,
   values: MessageValues = {},
 ) {
-  return (messages[locale][key] ?? en[key]).replace(
+  return (messages[locale][key] ?? en[key]).replaceAll(
     /\{(\w+)\}/g,
     (token, key: string) => String(values[key] ?? token),
   );

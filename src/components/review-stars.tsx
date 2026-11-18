@@ -14,6 +14,7 @@ function sizeClass(size: Size) {
       return "block h-5 w-5 shrink-0";
     case "md":
       return "block h-4.5 w-4.5 shrink-0";
+    case "sm":
     default:
       return "block h-4 w-4 shrink-0";
   }

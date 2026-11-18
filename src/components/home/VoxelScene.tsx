@@ -13,12 +13,10 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useIsHydrated } from "@/components/auth/use-is-hydrated";
 import { Button } from "@/components/ui/button";
 import { useT } from "@/lib/i18n-react";
-import {
-  createStillScene,
-  fallbackSummary,
-  VoxelFallback,
-} from "./VoxelFallback";
-import { selectionOptions, VoxelSettings } from "./VoxelSettings";
+import { VoxelFallback } from "./VoxelFallback";
+import { selectionOptions } from "./voxel-selection-options";
+import { VoxelSettings } from "./VoxelSettings";
+import { createStillScene, fallbackSummary } from "./voxel-still-scene";
 import { useReducedMotion } from "./use-reduced-motion";
 import type { createVoxelRenderer } from "./voxel-renderer";
 import type {

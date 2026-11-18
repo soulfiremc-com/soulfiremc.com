@@ -7,7 +7,7 @@ import { useHydratedQueryResult } from "@/hooks/use-hydrated-query-result";
 import { usePrerenderedSearch } from "@/hooks/use-prerendered-search";
 import { SiGithub } from "@icons-pack/react-simple-icons";
 import { useCopyButton } from "fumadocs-ui/utils/use-copy-button";
-import { queryOptions, useQuery } from "@tanstack/react-query";
+import { noop, queryOptions, useQuery } from "@tanstack/react-query";
 import {
   createFileRoute,
   Link,
@@ -935,7 +935,7 @@ export const Route = createFileRoute("/{-$lang}/download")({
     ),
   }),
   loader: ({ context }) => {
-    void context.queryClient.prefetchQuery(downloadPageQueryOptions);
+    void context.queryClient.query(downloadPageQueryOptions).catch(noop);
   },
   component: DownloadPage,
 });

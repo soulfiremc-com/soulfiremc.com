@@ -1,8 +1,7 @@
 import { translate } from "@/lib/messages";
 import type { MessageKey } from "@/lib/messages";
 import { useLocale, useT } from "@/lib/i18n-react";
-import { localizeHref } from "@/lib/i18n";
-import { isLocale } from "@/lib/i18n";
+import { localizeHref, isLocale } from "@/lib/i18n";
 import { createFileRoute } from "@tanstack/react-router";
 import type { FAQPage, SoftwareApplication, WithContext } from "schema-dts";
 import { HomeFrontpage } from "@/components/home/HomeFrontpage";
@@ -64,14 +63,17 @@ function HomePage() {
   const locale = useLocale();
   const t = useT();
   const localizedFaqItems = faqItems.map((item) => {
-    const answerHtml = t(item.answerHtml, { github: githubLink }).replace(
+    const answerHtml = t(item.answerHtml, { github: githubLink }).replaceAll(
       /href="https:\/\/soulfiremc\.com([^" ]*)"/g,
       (_, path: string) => `href="${localizeHref(path || "/", locale)}"`,
     );
     return {
       question: t(item.question),
       answerHtml,
-      answerElement: <div dangerouslySetInnerHTML={{ __html: answerHtml }} />,
+      answerElement: (
+        // oxlint-disable-next-line react/no-danger -- the answer HTML comes from the site's own translation messages
+        <div dangerouslySetInnerHTML={{ __html: answerHtml }} />
+      ),
     };
   });
   const softwareJsonLd: WithContext<SoftwareApplication> = {

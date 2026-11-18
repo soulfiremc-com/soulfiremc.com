@@ -6,7 +6,8 @@ import {
   localizeHref,
   splitLocalePath,
 } from "@/lib/i18n";
-import { LocaleProvider, useLocale } from "@/lib/i18n-react";
+import { LocaleProvider } from "@/components/locale-provider";
+import { useLocale } from "@/lib/i18n-react";
 import { fumadocsMessages } from "@/lib/messages/fumadocs";
 import { captchaPlugin } from "@better-auth-ui/react/plugins/captcha";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
@@ -79,7 +80,7 @@ function AuthUIProviders({ children }: { children: React.ReactNode }) {
   return (
     <AuthProvider
       authClient={authClient}
-      navigate={navigate}
+      navigate={(options) => void navigate(options)}
       Link={AuthLink}
       redirectTo={requestedRedirectTo ?? DEFAULT_AUTH_REDIRECT_PATH}
       basePaths={AUTH_UI_BASE_PATHS}
@@ -110,6 +111,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
           components={{ Link: LocaleLink, Image: ContentImage }}
           search={{
             options: {
+              // oxlint-disable-next-line typescript/no-deprecated -- the site serves a static Orama index; the replacement client uses a different search engine
               type: "static",
               api:
                 locale === "en" ? "/api/search" : `/api/search-index/${locale}`,

@@ -162,7 +162,7 @@ await test("documentation cancellation stops pending page work before starting m
     data: {
       getText: () => {
         if (++started === 4) ready();
-        return new Promise(() => undefined);
+        return new Promise(() => {});
       },
     },
   }));

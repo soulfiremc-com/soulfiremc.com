@@ -124,7 +124,11 @@ const BEHAVIOR_BIAS: Record<
   battle: { aggression: 0.2, building: -0.1 },
 };
 
-const PRESSURES: readonly SelectionPressure[] = ["balanced", "build", "battle"];
+const PRESSURES: ReadonlySet<SelectionPressure> = new Set<SelectionPressure>([
+  "balanced",
+  "build",
+  "battle",
+]);
 
 type Tool = "pickaxe" | "sword";
 type StructureKind = "wall" | "bridge";
@@ -509,7 +513,7 @@ function normalizeSeed(seed: number | undefined) {
 }
 
 function isPressure(value: unknown): value is SelectionPressure {
-  return PRESSURES.includes(value as SelectionPressure);
+  return PRESSURES.has(value as SelectionPressure);
 }
 
 export function createSimulation(
@@ -936,7 +940,7 @@ function startGather(
   setTask(bot, brain, "gather");
   brain.goal = target;
   brain.path = path;
-  brain.stand = path.length > 0 ? path[path.length - 1] : indexOf(bot.x, bot.z);
+  brain.stand = path.length > 0 ? path.at(-1)! : indexOf(bot.x, bot.z);
   brain.timer = bot.tool === "pickaxe" ? 0.45 : 0.9;
   return true;
 }

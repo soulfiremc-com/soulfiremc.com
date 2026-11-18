@@ -14,31 +14,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  type AnalyticsConsent,
-  loadPostHog,
-  readAnalyticsConsent,
-} from "@/lib/integrations/posthog";
-
-const REOPEN_EVENT = "soulfire:cookie-consent-open";
-const CONSENT_CHANGE_EVENT = "soulfire:cookie-consent-change";
-
-/** Shows the consent banner again so a visitor can change their choice. */
-export function reopenCookieConsent() {
-  window.dispatchEvent(new Event(REOPEN_EVENT));
-}
-
-/** Reads the current choice after hydration. Null until then. */
-export function useAnalyticsConsent() {
-  const [consent, setConsent] = useState<AnalyticsConsent | null>(null);
-  useEffect(() => {
-    const update = () => setConsent(readAnalyticsConsent());
-    update();
-    window.addEventListener(CONSENT_CHANGE_EVENT, update);
-    return () => window.removeEventListener(CONSENT_CHANGE_EVENT, update);
-  }, []);
-  return consent;
-}
+import { CONSENT_CHANGE_EVENT, REOPEN_EVENT } from "@/lib/cookie-consent";
+import { loadPostHog, readAnalyticsConsent } from "@/lib/integrations/posthog";
 
 const CookieConsentBanner = () => {
   const t = useT();

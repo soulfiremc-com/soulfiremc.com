@@ -98,8 +98,12 @@ async function main() {
     process.exit(1);
   }
 
-  client.destroy();
+  await client.destroy();
   console.log("Done!");
 }
 
-main().catch(console.error);
+try {
+  await main();
+} catch (error) {
+  console.error(error);
+}

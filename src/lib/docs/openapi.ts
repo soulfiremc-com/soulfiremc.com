@@ -62,8 +62,8 @@ type OpenApiInputDocument = Exclude<
 /** Splits a service tag such as `MCAuthService` into `MC Auth Service`. */
 export function formatOpenApiTagName(name: string) {
   return name
-    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
-    .replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2");
+    .replaceAll(/([a-z0-9])([A-Z])/g, "$1 $2")
+    .replaceAll(/([A-Z]+)([A-Z][a-z])/g, "$1 $2");
 }
 
 export const openapi = createOpenAPI({
@@ -71,6 +71,7 @@ export const openapi = createOpenAPI({
     sf: {
       ...openApiDocument,
       // Fumadocs splits every capital letter, which turns `MC` into `M C`.
+      // oxlint-disable-next-line oxc/no-map-spread -- the copies must not change the imported OpenAPI document
       tags: openApiDocument.tags.map((tag) => ({
         ...tag,
         "x-displayName": formatOpenApiTagName(tag.name),
@@ -184,7 +185,7 @@ function formatContractContent(
 }
 
 function cleanText(value: string) {
-  return value.replace(/\s+/g, " ").trim();
+  return value.replaceAll(/\s+/g, " ").trim();
 }
 
 function formatSectionContent({
@@ -253,7 +254,7 @@ function formatSectionContent({
 
 function toHeadingId(method: string, value: string) {
   return `${method.toLowerCase()}-${value}`
-    .replace(/[^a-z0-9]+/gi, "-")
-    .replace(/^-+|-+$/g, "")
+    .replaceAll(/[^a-z0-9]+/gi, "-")
+    .replaceAll(/^-+|-+$/g, "")
     .toLowerCase();
 }

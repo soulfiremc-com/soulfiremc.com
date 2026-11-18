@@ -89,7 +89,7 @@ export function filterExceptionNoise(
     ? undefined
     : document,
 ): CaptureResult | null {
-  if (!event || event.event !== "$exception") return event;
+  if (event?.event !== "$exception") return event;
 
   const exceptions = event.properties.$exception_list as unknown;
   const list = Array.isArray(exceptions) ? (exceptions as Exception[]) : [];

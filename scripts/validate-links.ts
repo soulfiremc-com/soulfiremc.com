@@ -343,4 +343,4 @@ async function walkFiles(
   return nested.flat().sort();
 }
 
-void checkLinks();
+await checkLinks();

@@ -25,7 +25,7 @@ export function truncateDescription(
   text: string,
   maxLength = maxDescriptionLength,
 ) {
-  const normalized = text.replace(/\s+/g, " ").trim();
+  const normalized = text.replaceAll(/\s+/g, " ").trim();
   if (normalized.length <= maxLength) return normalized;
 
   const slice = normalized.slice(0, maxLength - 1);

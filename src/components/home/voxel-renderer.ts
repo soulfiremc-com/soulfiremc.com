@@ -320,9 +320,11 @@ export function createVoxelRenderer(
       night += (state.adventure.night - night) * (1 - Math.exp(-elapsed * 3));
     }
     const blast = state.events
+      // oxlint-disable-next-line unicorn/prefer-array-find -- this takes the last match; findLast needs the ES2023 lib
       .filter((event) => event.kind === "explode" && event.age < 0.35)
       .at(-1);
     const bolt = state.events
+      // oxlint-disable-next-line unicorn/prefer-array-find -- this takes the last match; findLast needs the ES2023 lib
       .filter((event) => event.kind === "lightning" && event.age < 0.25)
       .at(-1);
     const shake = reducedMotion

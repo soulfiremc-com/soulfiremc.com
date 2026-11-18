@@ -84,6 +84,7 @@ function MermaidContent({ chart }: { chart: string }) {
       ref={(container) => {
         if (container) bindFunctions?.(container);
       }}
+      // oxlint-disable-next-line react/no-danger -- Mermaid renders the diagram to an SVG string
       dangerouslySetInnerHTML={{ __html: svg }}
     />
   );

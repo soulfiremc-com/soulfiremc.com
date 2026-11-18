@@ -124,7 +124,7 @@ export function ReviewInlineActions({
           <ReviewStarInput
             labelledBy={ratingLabelId}
             value={currentRating ?? 0}
-            onChange={handleRate}
+            onChange={(rating) => void handleRate(rating)}
             // The current rating is unknown until reviews load.
             disabled={pending || summaryStatus !== "ready"}
           />

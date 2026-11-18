@@ -1,4 +1,4 @@
-import { Effect } from "effect";
+import { type Context, Effect } from "effect";
 import { getOpenApiPageText, isOpenApiPage } from "@/lib/docs/openapi";
 import { getSource } from "@/lib/source";
 import {
@@ -24,9 +24,7 @@ const documentationSource: ContextShape = {
       catch: (cause) => new DocumentationError({ operation: "openapi", cause }),
     }),
 };
-type ContextShape = import("effect").Context.Service.Shape<
-  typeof DocumentationSource
->;
+type ContextShape = Context.Service.Shape<typeof DocumentationSource>;
 
 export function getLLMText(page: DocumentationPage, signal?: AbortSignal) {
   return runWebsiteEffect(

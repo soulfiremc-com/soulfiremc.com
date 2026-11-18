@@ -20,8 +20,8 @@ export function referencedSchemas(
       reference.startsWith("#/components/schemas/")
     ) {
       const name = decodeURIComponent(reference.slice(21))
-        .replace(/~1/gu, "/")
-        .replace(/~0/gu, "~");
+        .replaceAll("~1", "/")
+        .replaceAll("~0", "~");
       if (!Object.hasOwn(result, name)) {
         if (!Object.hasOwn(schemas, name))
           throw new Error(`Missing OpenAPI schema: ${name}`);

@@ -229,7 +229,7 @@ export const Route = createFileRoute("/{-$lang}/docs/$")({
   loader: async ({ params }) => {
     const locale = isLocale(params.lang) ? params.lang : "en";
     const slugs = params._splat?.split("/").filter(Boolean) ?? [];
-    const key = params._splat?.replace(/^\/+|\/+$/g, "") ?? "";
+    const key = params._splat?.replaceAll(/^\/+|\/+$/g, "") ?? "";
     const destination = docsRedirects.get(key);
 
     if (destination) {

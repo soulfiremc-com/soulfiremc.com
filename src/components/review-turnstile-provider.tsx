@@ -1,15 +1,7 @@
 "use client";
 
 import { Effect } from "effect";
-import {
-  createContext,
-  type ReactNode,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-} from "react";
+import { type ReactNode, useCallback, useEffect, useMemo, useRef } from "react";
 import {
   type BoundTurnstileObject,
   Turnstile,
@@ -17,21 +9,12 @@ import {
 } from "react-turnstile";
 
 import { createReviewChallenge } from "@/lib/review-challenge";
-
-type ReviewTurnstileContextValue = {
-  executeTurnstile: () => Promise<string>;
-};
-
-const DEFAULT_CONTEXT: ReviewTurnstileContextValue = {
-  executeTurnstile: async () => {
-    throw new Error("Cloudflare Turnstile is unavailable.");
-  },
-};
+import {
+  ReviewTurnstileContext,
+  type ReviewTurnstileContextValue,
+} from "./review-turnstile-context";
 
 const TURNSTILE_ACTION = "review";
-
-const ReviewTurnstileContext =
-  createContext<ReviewTurnstileContextValue>(DEFAULT_CONTEXT);
 
 function toError(message: string, error?: unknown) {
   if (error instanceof Error) {
@@ -180,8 +163,4 @@ export function ReviewTurnstileProvider({ children }: { children: ReactNode }) {
       ) : null}
     </ReviewTurnstileContext.Provider>
   );
-}
-
-export function useReviewTurnstile() {
-  return useContext(ReviewTurnstileContext);
 }

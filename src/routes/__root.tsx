@@ -125,6 +125,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <ClientOnly fallback={null}>
           <script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
           <script
+            // oxlint-disable-next-line react/no-danger -- the Ko-fi widget is configured with a static inline script
             dangerouslySetInnerHTML={{
               __html: `
                 if (window.kofiWidgetOverlay) {

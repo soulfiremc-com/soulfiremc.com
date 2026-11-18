@@ -30,6 +30,7 @@ export function getSortedBlogPages() {
 
 export function getBlogPostSummary(page: BlogPage) {
   const slug =
+    // oxlint-disable-next-line unicorn/prefer-array-find -- this takes the last path segment; findLast needs the ES2023 lib
     page.slugs[0] ?? page.url.split("/").filter(Boolean).at(-1) ?? "";
 
   return {

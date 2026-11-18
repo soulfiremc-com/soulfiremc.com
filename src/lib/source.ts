@@ -9,6 +9,7 @@ import { docsNavigationPlugin } from "@/lib/docs/navigation";
 
 async function createDocsSource() {
   return loader(
+    // oxlint-disable-next-line typescript/no-deprecated -- passing a source record to loader() is a separate migration
     multiple({
       docs: docs.toFumadocsSource(),
       openapi: await openapiSource(openapi, {
@@ -22,6 +23,7 @@ async function createDocsSource() {
     {
       baseUrl: "/docs",
       i18n,
+      // oxlint-disable-next-line typescript/no-deprecated -- loaderPlugin() needs the createOpenAPI() setup, which this site does not use yet
       plugins: [docsNavigationPlugin(), lucideIconsPlugin(), openapiPlugin()],
     },
   );

@@ -14,12 +14,14 @@ type RouteSessionInput = {
 
 export const ensureRouteSession = createIsomorphicFn()
   .server(({ queryClient }: RouteSessionInput) =>
+    // oxlint-disable-next-line typescript/no-deprecated -- queryClient.query with static staleTime would change the 30 second session staleTime
     queryClient.ensureQueryData({
       ...sessionOptionsServer(auth, { headers: getRequestHeaders() }),
       staleTime: ROUTE_SESSION_STALE_TIME,
     }),
   )
   .client(({ queryClient }: RouteSessionInput) =>
+    // oxlint-disable-next-line typescript/no-deprecated -- queryClient.query with static staleTime would change the 30 second session staleTime
     queryClient.ensureQueryData({
       ...sessionOptions(authClient),
       staleTime: ROUTE_SESSION_STALE_TIME,

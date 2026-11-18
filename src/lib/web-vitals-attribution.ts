@@ -20,7 +20,7 @@ function getNavigationUrl(measurement: unknown): URL | null {
 export function attributeWebVitals(
   event: CaptureResult | null,
 ): CaptureResult | null {
-  if (!event || event.event !== "$web_vitals") return event;
+  if (event?.event !== "$web_vitals") return event;
 
   const properties = { ...event.properties };
   const urls = new Map<string, URL>();

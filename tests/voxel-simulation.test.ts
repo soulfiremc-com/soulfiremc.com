@@ -313,6 +313,7 @@ void test("combat deals damage with cooldowns, retreats heal and deaths stop bot
   let sawDeath = false;
   for (const seed of SEEDS) {
     const state = createSimulation(seed);
+    // oxlint-disable-next-line eslint/no-loop-func -- run() calls this callback synchronously, and the flags collect results across seeds
     run(state, 40, (before, after) => {
       if (before.generation !== after.generation) return;
       for (const [index, bot] of after.bots.entries()) {

@@ -4,7 +4,7 @@ import { formatProviderSince, localizeProviderData } from "@/lib/provider-i18n";
 import { useT, useLocale } from "@/lib/i18n-react";
 import { Schema } from "effect";
 import { discordEmbedScript } from "@/lib/discord-embed";
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { noop, useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import {
   CatchBoundary,
   createFileRoute,
@@ -417,14 +417,16 @@ export const Route = createFileRoute("/{-$lang}/get-proxies/$slug")({
       slug: params.slug,
       locale: isLocale(params.lang) ? params.lang : "en",
     });
-    void context.queryClient.prefetchQuery(
-      reviewsQueryOptions({
-        itemType: "proxy",
-        slugs: [data.provider.slug],
-        includeWrittenReviews: true,
-        reviewsPage: data.reviewsPage,
-      }),
-    );
+    void context.queryClient
+      .query(
+        reviewsQueryOptions({
+          itemType: "proxy",
+          slugs: [data.provider.slug],
+          includeWrittenReviews: true,
+          reviewsPage: data.reviewsPage,
+        }),
+      )
+      .catch(noop);
     return data;
   },
   head: ({ loaderData, params }) => {

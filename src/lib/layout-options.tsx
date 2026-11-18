@@ -6,6 +6,7 @@ import { getRequiredEnv } from "@/lib/env";
 
 export function getBaseLayoutOptions(locale: Locale = "en"): BaseLayoutProps {
   return {
+    // oxlint-disable-next-line typescript/no-deprecated -- moving the language switch to layout slots is a separate change
     i18n: true,
     nav: {
       url: localizePath("/", locale),

@@ -476,7 +476,7 @@ function ItemReviewsSectionContent({
             <Button
               ref={saveButtonRef}
               type="button"
-              onClick={saveReview}
+              onClick={() => void saveReview()}
               disabled={pending || loading || refreshing || failed}
               // Saving disables the button. Keep focus here for keyboard users.
               focusableWhenDisabled

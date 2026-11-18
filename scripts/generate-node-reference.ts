@@ -133,12 +133,12 @@ const nodes: Node[] = registered.map((className) => {
 if (new Set(nodes.map((node) => node.type)).size !== nodes.length)
   throw new Error("Duplicate node type");
 const codeCell = (value: string) =>
-  value.replace(/\|/gu, "\\|").replace(/\n/gu, " ");
+  value.replaceAll("|", "\\|").replaceAll("\n", " ");
 const escape = (value: string) =>
   codeCell(value)
-    .replace(/\s*—\s*/gu, "; ")
-    .replace(/</gu, "&lt;")
-    .replace(/>/gu, "&gt;");
+    .replaceAll(/\s*—\s*/gu, "; ")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
 const aliases = (node: Node) => {
   const names = [...new Set(node.keywords)].filter(
     (keyword) => keyword.toLowerCase() !== node.name.toLowerCase(),

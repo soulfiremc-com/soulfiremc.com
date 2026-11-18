@@ -62,7 +62,7 @@ try {
           const imports = [...code.matchAll(/^import .*;$/gmu)].map(
             (match) => match[0],
           );
-          const body = code.replace(/^import .*;\n?/gmu, "");
+          const body = code.replaceAll(/^import .*;\n?/gmu, "");
           code = `${imports.join("\n")}\nclass ${filename.slice(0, -5)} {\n  static void run(com.soulfiremc.server.bot.BotConnection connection) {\n${body}\n  }\n}\n`;
         }
         const target = join(directory, filename);

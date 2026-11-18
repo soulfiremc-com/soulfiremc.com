@@ -1,11 +1,14 @@
 import { isLocale, localizePath } from "@/lib/i18n";
 import { translate } from "@/lib/messages";
 import { DocsOgImage } from "@/components/og/soulfire";
-import { soulfireLogoDataUri } from "@/lib/og-image";
+import {
+  soulfireLogoDataUri,
+  createOgImageResponse,
+  getEmbeddedLogo,
+} from "@/lib/og-image";
 import { createFileRoute } from "@tanstack/react-router";
 import { ProxyOgImage } from "@/components/og/site";
 import { stripOgSuffix } from "@/lib/og";
-import { createOgImageResponse, getEmbeddedLogo } from "@/lib/og-image";
 import { getProviderBySlug } from "@/lib/proxies-data";
 
 export const Route = createFileRoute("/og/proxies/{$}/image.webp")({

@@ -6,14 +6,12 @@ import {
 } from "@/lib/provider-i18n";
 import { useT, useLocale } from "@/lib/i18n-react";
 import { TranslatedMessage } from "@/components/translated-message";
-import {
-  ProviderFaq,
-  createProviderFaqJsonLd,
-} from "@/components/provider-faq";
+import { ProviderFaq } from "@/components/provider-faq";
+import { createProviderFaqJsonLd } from "@/lib/provider-faq-data";
 import { Schema, Effect, Option } from "effect";
 import { usePrerenderedSearch } from "@/hooks/use-prerendered-search";
 import { usePrerenderedSearchOrder } from "@/hooks/use-prerendered-search-order";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { noop, useSuspenseQuery } from "@tanstack/react-query";
 import {
   createFileRoute,
   Link,
@@ -76,6 +74,7 @@ import {
 import { reviewsQueryOptions } from "@/lib/reviews-query";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 import { cn } from "@/lib/utils";
+import { JsonLdScript } from "@/components/json-ld";
 
 const BADGES = [
   "residential",
@@ -486,6 +485,7 @@ function MainContent() {
 
       {/* Main content */}
       <script
+        // oxlint-disable-next-line react/no-danger -- this inline script must run before hydration
         dangerouslySetInnerHTML={{ __html: hidePrerenderedResultsScript }}
       />
       <div className="flex-1" data-provider-results>
@@ -644,14 +644,11 @@ function ProxiesItemListStructuredData() {
   const { data } = useSuspenseQuery(proxyReviewsQueryOptions);
 
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{
-        __html: localizeProviderJsonLd(
-          createProxiesItemListJsonLd(data.summaries),
-          locale,
-        ),
-      }}
+    <JsonLdScript
+      json={localizeProviderJsonLd(
+        createProxiesItemListJsonLd(data.summaries),
+        locale,
+      )}
     />
   );
 }
@@ -728,7 +725,7 @@ export const Route = createFileRoute("/{-$lang}/get-proxies/")({
     };
   },
   loader: ({ context }) => {
-    void context.queryClient.prefetchQuery(proxyReviewsQueryOptions);
+    void context.queryClient.query(proxyReviewsQueryOptions).catch(noop);
   },
   component: GetProxiesPage,
 });
@@ -737,41 +734,26 @@ function GetProxiesPage() {
   const locale = useLocale();
   return (
     <SiteShell>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: localizeProviderJsonLd(proxiesPageData.pageJsonLd, locale),
-        }}
+      <JsonLdScript
+        json={localizeProviderJsonLd(proxiesPageData.pageJsonLd, locale)}
       />
       <Suspense
         fallback={
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: localizeProviderJsonLd(
-                proxiesPageData.itemListJsonLd,
-                locale,
-              ),
-            }}
+          <JsonLdScript
+            json={localizeProviderJsonLd(
+              proxiesPageData.itemListJsonLd,
+              locale,
+            )}
           />
         }
       >
         <ProxiesItemListStructuredData />
       </Suspense>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(createProviderFaqJsonLd("proxies", locale)),
-        }}
+      <JsonLdScript
+        json={JSON.stringify(createProviderFaqJsonLd("proxies", locale))}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: localizeProviderJsonLd(
-            proxiesPageData.breadcrumbJsonLd,
-            locale,
-          ),
-        }}
+      <JsonLdScript
+        json={localizeProviderJsonLd(proxiesPageData.breadcrumbJsonLd, locale)}
       />
       <GetProxiesClient />
     </SiteShell>
