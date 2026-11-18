@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { defined } from "./support/defined";
 import { createVoxelRenderer } from "@/components/home/voxel-renderer";
 import { INITIAL_SIMULATION_SEED } from "@/components/home/voxel-simulation";
 import type { SimulationSummary } from "@/components/home/voxel-simulation-types";
@@ -237,7 +238,7 @@ void test("pause preserves the camera and reduced motion keeps playback without 
     h.renderer.setPointer(1, -1);
     h.advance(10);
     const pointer = h.pointer;
-    assert.ok(pointer[0] > 0.9 && pointer[1] < -0.9);
+    assert.ok(defined(pointer[0]) > 0.9 && defined(pointer[1]) < -0.9);
     h.renderer.setMotion(true, false);
     h.advance(1);
     assert.deepEqual(h.pointer, pointer);

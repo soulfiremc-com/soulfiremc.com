@@ -37,7 +37,7 @@ function collectSections(nodes: Node[], section: Section, sections: Section[]) {
 export const Route = createFileRoute("/llms.txt")({
   server: {
     handlers: {
-      HEAD: async () => new Response(null, { headers: textHeaders }),
+      HEAD: () => new Response(null, { headers: textHeaders }),
       GET: async () => {
         const { getSource } = await import("@/lib/source");
         const source = await getSource();

@@ -1,6 +1,7 @@
 import { useId, useState } from "react";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { itemAt } from "@/lib/item-at";
 import {
   NativeSelect,
   NativeSelectOption,
@@ -82,7 +83,7 @@ export function DonutCalculator() {
     fallback: 0,
   });
 
-  const method = METHODS[selectedMethod];
+  const method = itemAt(METHODS, selectedMethod);
   const dailyMoney = method.moneyPerDay * botCount;
   const dailyShards = method.shardsPerDay * botCount;
   const dailyUsd = (dailyMoney / 1_000_000) * pricePerMillion;

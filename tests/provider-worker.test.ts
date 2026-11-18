@@ -2,12 +2,13 @@ import assert from "node:assert/strict";
 import { readFile, readdir } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import test from "node:test";
+import { defined } from "./support/defined";
 import { convertV4MiniflareOptions, Miniflare } from "miniflare";
 import { locales, localizePath } from "@/lib/i18n";
 import { translate } from "@/lib/messages";
 import en from "@/lib/messages/en.json";
 
-const workerBundle = process.env.PROVIDER_WORKER_BUNDLE;
+const workerBundle = process.env["PROVIDER_WORKER_BUNDLE"];
 
 // Run against the actual production Worker, without prerendered HTML or live
 // provider services. Ordinary Node tests cannot enforce Worker I/O ownership.
@@ -18,7 +19,7 @@ void test(
     timeout: 60_000,
   },
   async () => {
-    const bundle = resolve(workerBundle!);
+    const bundle = resolve(defined(workerBundle));
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- test double implements only the members this test uses
     const config = JSON.parse(
       await readFile(join(bundle, "../worker.config.json"), "utf8"),
@@ -53,7 +54,7 @@ void test(
                 .filter(([, value]) => value.type === "text")
                 .map(([key, value]) => [key, value.value ?? ""]),
             ),
-            outboundService: async (request) => {
+            outboundService: (request) => {
               const url = new URL(request.url);
               if (
                 url.hostname === "discord.com" &&
@@ -151,7 +152,7 @@ void test(
             for (const [, json] of html.matchAll(
               /<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g,
             )) {
-              const structuredData = JSON.parse(json);
+              const structuredData = JSON.parse(defined(json));
               const values: string[] = [];
               JSON.stringify(structuredData, (_, value) => {
                 if (typeof value === "string") values.push(value);

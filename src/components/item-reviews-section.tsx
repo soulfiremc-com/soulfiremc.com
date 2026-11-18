@@ -49,8 +49,8 @@ import {
 } from "@/components/ui/pagination";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
-import { useReviews } from "@/hooks/use-reviews";
-import type { ItemType } from "@/lib/review-core";
+import { emptyWrittenReviews, useReviews } from "@/hooks/use-reviews";
+import { emptyReviewSummary, type ItemType } from "@/lib/review-core";
 import {
   type ReviewDraft,
   saveReviewDraft,
@@ -177,9 +177,10 @@ function ItemReviewsSectionContent({
     writtenReviewsPage: reviewPage,
   });
 
-  const summary = summaries[slug];
+  const summary = summaries[slug] ?? emptyReviewSummary();
   const currentReview = userReviews[slug];
-  const reviewPageData = writtenReviews[slug];
+  const reviewPageData =
+    writtenReviews[slug] ?? emptyWrittenReviews(reviewPage);
   const visibleReviews = reviewPageData.entries;
   const pending = pendingBySlug[slug] ?? false;
 

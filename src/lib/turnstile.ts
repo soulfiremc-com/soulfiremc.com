@@ -73,7 +73,7 @@ export const validateTurnstileTokenEffect = Effect.fn("validateTurnstileToken")(
       });
     }
 
-    const secret = process.env.REVIEW_TURNSTILE_SECRET_KEY;
+    const secret = process.env["REVIEW_TURNSTILE_SECRET_KEY"];
     if (!secret) {
       return yield* new TurnstileVerificationError({
         errorCodes: ["missing-input-secret"],

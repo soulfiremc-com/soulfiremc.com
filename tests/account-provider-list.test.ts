@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { defined } from "./support/defined";
 import {
   countAccountFilterOptions,
   filterAccountProviders,
@@ -9,10 +10,12 @@ import { PROVIDERS, type Provider } from "@/lib/accounts-data";
 import { emptyReviewSummary } from "@/lib/review-core";
 
 const now = Date.parse("2026-11-06T12:00:00Z");
-const promoted = PROVIDERS.find(
-  (provider) =>
-    provider.slug === "localts" && provider.category === "nfa-accounts",
-)!;
+const promoted = defined(
+  PROVIDERS.find(
+    (provider) =>
+      provider.slug === "localts" && provider.category === "nfa-accounts",
+  ),
+);
 const free: Provider = {
   ...promoted,
   slug: "free",
@@ -70,12 +73,15 @@ await test("promotion affects default ordering but not an explicit rating sort",
     free: { ...emptyReviewSummary(), averageRating: 5, reviewCount: 20 },
   };
   assert.equal(
-    sortAccountProviders([free, promoted], "default", summaries, now)[0].slug,
+    defined(
+      sortAccountProviders([free, promoted], "default", summaries, now)[0],
+    ).slug,
     "localts",
   );
   assert.equal(
-    sortAccountProviders([promoted, free], "best-rated", summaries, now)[0]
-      .slug,
+    defined(
+      sortAccountProviders([promoted, free], "best-rated", summaries, now)[0],
+    ).slug,
     "free",
   );
 });

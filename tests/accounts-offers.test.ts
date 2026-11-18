@@ -15,14 +15,10 @@ await test("live stock requests include cancellation and normalize category coun
   const shop = getShopBySlug("ravealts");
   assert.ok(shop);
 
-  t.mock.method(
-    globalThis,
-    "fetch",
-    async (_input: unknown, init?: RequestInit) => {
-      assert.ok(init?.signal instanceof AbortSignal);
-      return Response.json({ mfa: 8 });
-    },
-  );
+  t.mock.method(globalThis, "fetch", (_input: unknown, init?: RequestInit) => {
+    assert.ok(init?.signal instanceof AbortSignal);
+    return Promise.resolve(Response.json({ mfa: 8 }));
+  });
 
   const result = await getLiveShopData(shop);
   assert.deepEqual(result.stockByCategory, { "mfa-accounts": 8 });
@@ -115,10 +111,8 @@ await test("missing or failed stock lookups do not claim availability", async (t
     undefined,
   );
   assert.equal(getShopAggregateOffer(shop)?.availability, undefined);
-  t.mock.method(
-    globalThis,
-    "fetch",
-    async () => new Response("Unavailable", { status: 503 }),
+  t.mock.method(globalThis, "fetch", () =>
+    Promise.resolve(new Response("Unavailable", { status: 503 })),
   );
   const liveData = await getLiveShopData(shop);
   assert.equal(

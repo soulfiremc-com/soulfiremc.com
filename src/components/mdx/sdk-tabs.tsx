@@ -83,9 +83,10 @@ export function Tabs({
     () => null,
   );
   const fallback = tabValue(items[defaultIndex] ?? items[0] ?? "");
-  const value = items.some((item) => tabValue(item) === selected)
-    ? selected!
-    : fallback;
+  const value =
+    selected !== null && items.some((item) => tabValue(item) === selected)
+      ? selected
+      : fallback;
 
   return (
     <ControlledTabs

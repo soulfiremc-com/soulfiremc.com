@@ -107,8 +107,8 @@ try {
   );
   const environment = join(tmpdir(), `soulfire-docs-python-${sdkRevision}`);
   const python =
-    process.env.SOULFIRE_DOCS_PYTHON ?? join(environment, "bin/python");
-  if (!process.env.SOULFIRE_DOCS_PYTHON && !existsSync(python))
+    process.env["SOULFIRE_DOCS_PYTHON"] ?? join(environment, "bin/python");
+  if (!process.env["SOULFIRE_DOCS_PYTHON"] && !existsSync(python))
     execFileSync("python3.14", ["-m", "venv", environment], {
       stdio: "inherit",
     });

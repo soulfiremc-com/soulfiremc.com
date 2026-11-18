@@ -78,12 +78,13 @@ function isIndexableCanonicalPage(path: string, html: string, host: string) {
     }
   }
 
-  const canonicalLinks = [...head.matchAll(/<link\b[^>]*>/gi)].filter(
-    ([tag]) => getAttribute(tag, "rel")?.toLowerCase() === "canonical",
-  );
-  if (canonicalLinks.length !== 1) return false;
+  const canonicalLinks = [...head.matchAll(/<link\b[^>]*>/gi)]
+    .map(([tag]) => tag)
+    .filter((tag) => getAttribute(tag, "rel")?.toLowerCase() === "canonical");
+  const [canonicalLink] = canonicalLinks;
+  if (canonicalLinks.length !== 1 || canonicalLink === undefined) return false;
 
-  const href = getAttribute(canonicalLinks[0][0], "href");
+  const href = getAttribute(canonicalLink, "href");
   if (!href) return false;
 
   try {

@@ -14,7 +14,7 @@ import {
   jsonLdScript,
 } from "@/lib/seo";
 
-const blogIndexLoader = createServerFn({ method: "GET" }).handler(async () => {
+const blogIndexLoader = createServerFn({ method: "GET" }).handler(() => {
   return {
     posts: getAllBlogPostSummaries(),
   };

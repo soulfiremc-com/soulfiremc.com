@@ -5,7 +5,7 @@ import { test } from "node:test";
 import { oramaStaticClient } from "fumadocs-core/search/client/orama-static";
 import { fromJSON } from "seroval";
 
-const baseUrl = process.env.SITE_TEST_URL;
+const baseUrl = process.env["SITE_TEST_URL"];
 
 type Metadata = {
   result: { url: string; title: string; type: string; pageTree: unknown };
@@ -90,7 +90,7 @@ void test(
       ["de", "Erste"],
       ["pl", "Pierwsze"],
       ["ru", "Подключите"],
-    ]) {
+    ] as const) {
       assert.equal(
         (await metadata(`/${locale}/docs/start-here/gui-mode`)).type,
         "docs",

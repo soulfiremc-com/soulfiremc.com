@@ -16,8 +16,8 @@ test("API text includes transitive recursive schemas exactly once", () => {
   const contract = { requestBody: { $ref: "#/components/schemas/Tree" } };
   const result = referencedSchemas(contract, schemas);
   assert.deepEqual(Object.keys(result).toSorted(), ["Tree", "Value"]);
-  assert.equal(result.Tree, schemas.Tree);
-  assert.equal(result.Value, schemas.Value);
+  assert.equal(result["Tree"], schemas.Tree);
+  assert.equal(result["Value"], schemas.Value);
 });
 
 test("API schema references decode JSON pointers and reject missing local contracts", () => {

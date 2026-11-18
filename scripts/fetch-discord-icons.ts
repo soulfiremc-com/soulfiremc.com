@@ -8,15 +8,15 @@ import { printError, printLine } from "./lib/output";
 
 const execFileAsync = promisify(execFile);
 
-const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
+const DISCORD_TOKEN = process.env["DISCORD_TOKEN"];
 
 if (!DISCORD_TOKEN) {
   printError("Error: DISCORD_TOKEN environment variable is required");
   process.exit(1);
 }
 
-const args = process.argv.slice(2);
-if (args.length < 2) {
+const [inviteArg, outputArg] = process.argv.slice(2);
+if (inviteArg === undefined || outputArg === undefined) {
   printError(
     "Usage: tsx scripts/fetch-discord-icons.ts <invite_code> <output_name>",
   );
@@ -24,7 +24,8 @@ if (args.length < 2) {
   process.exit(1);
 }
 
-const [inviteCode, outputName] = args;
+const inviteCode: string = inviteArg;
+const outputName: string = outputArg;
 const OUTPUT_DIR = path.join(process.cwd(), "public", "accounts");
 
 async function downloadIcon(url: string, outputPath: string): Promise<void> {

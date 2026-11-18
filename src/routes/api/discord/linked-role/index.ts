@@ -4,7 +4,7 @@ import { setCookie } from "@tanstack/react-start/server";
 export const Route = createFileRoute("/api/discord/linked-role/")({
   server: {
     handlers: {
-      GET: async () => {
+      GET: () => {
         const state = crypto.randomUUID();
 
         setCookie("discord_oauth_state", state, {
@@ -16,7 +16,7 @@ export const Route = createFileRoute("/api/discord/linked-role/")({
         });
 
         const params = new URLSearchParams({
-          client_id: process.env.DISCORD_CLIENT_ID ?? "",
+          client_id: process.env["DISCORD_CLIENT_ID"] ?? "",
           redirect_uri:
             "https://soulfiremc.com/api/discord/linked-role/callback",
           response_type: "code",

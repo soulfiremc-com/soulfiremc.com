@@ -18,6 +18,7 @@ import {
   type SimulationState,
   type SimulationTile,
 } from "@/components/home/voxel-simulation";
+import { itemAt } from "@/lib/item-at";
 
 const SEEDS = [1, 2, 3, 4, 5, 6];
 
@@ -125,8 +126,9 @@ void test("the island has walkable flat camps, ledges, water gaps and bounded re
       assert.equal(Math.sign(team.home[0]), index === 0 ? -1 : 1);
       assert.ok(Math.abs(team.home[0]) >= 4 && Math.abs(team.home[0]) <= 5);
       assert.ok(Math.abs(team.home[1]) <= 2);
-      assert.equal(team.home[0], -state.teams[1 - index].home[0]);
-      assert.equal(team.home[1], state.teams[1 - index].home[1]);
+      const other = state.teams[index === 0 ? 1 : 0];
+      assert.equal(team.home[0], -other.home[0]);
+      assert.equal(team.home[1], other.home[1]);
     }
     assert.equal(state.bots.length, BOTS_PER_TEAM * 2);
     assert.equal(
@@ -164,7 +166,7 @@ void test("bots move smoothly on walkable tiles and resources are fully accounte
       let spent = 0;
       let lost = 0;
       for (const [index, bot] of after.bots.entries()) {
-        const previous = before.bots[index];
+        const previous = itemAt(before.bots, index);
         const step = Math.hypot(bot.x - previous.x, bot.z - previous.z);
         assert.ok(step <= 0.35, `${bot.id} jumped ${step}`);
         if (previous.tool === "none" && bot.tool !== "none") {
@@ -179,7 +181,7 @@ void test("bots move smoothly on walkable tiles and resources are fully accounte
         }
       }
       for (const [index, tile] of after.tiles.entries()) {
-        if (tile.structure && !before.tiles[index].structure) {
+        if (tile.structure && !itemAt(before.tiles, index).structure) {
           const cost = STRUCTURE_COSTS[tile.structure.kind];
           spent += cost.wood + cost.stone;
         }
@@ -208,7 +210,7 @@ void test("crafting spends the recipe from team stock", () => {
   let crafted = 0;
   run(state, 30, (before, after) => {
     for (const [index, bot] of after.bots.entries()) {
-      const previous = before.bots[index];
+      const previous = itemAt(before.bots, index);
       if (bot.team !== 0 || previous.tool !== "none" || bot.tool === "none")
         continue;
       crafted++;
@@ -233,8 +235,8 @@ void test("crafting spends the recipe from team stock", () => {
     stepSimulation(fresh, 0.1);
   assert.ok(fresh.metrics.crafted > 0);
   for (const team of fresh.teams) {
-    let wood = stock[team.id].wood;
-    let stoneLeft = stock[team.id].stone;
+    let wood = itemAt(stock, team.id).wood;
+    let stoneLeft = itemAt(stock, team.id).stone;
     for (const bot of fresh.bots) {
       if (bot.team !== team.id || bot.tool === "none") continue;
       wood -= RECIPES[bot.tool].wood;
@@ -285,11 +287,13 @@ void test("structures keep both camps connected", () => {
   for (const seed of SEEDS) {
     const state = createSimulation(seed, "build");
     run(state, 40);
-    const homes = state.teams.map((team) => getTile(state, ...team.home)!);
-    const seen = new Set<SimulationTile>([homes[0]]);
-    const queue = [homes[0]];
-    while (queue.length > 0) {
-      const tile = queue.pop()!;
+    const [start, goal] = state.teams.map((team) =>
+      getTile(state, ...team.home),
+    );
+    assert.ok(start && goal);
+    const seen = new Set<SimulationTile>([start]);
+    const queue = [start];
+    for (let tile = queue.pop(); tile; tile = queue.pop()) {
       for (const [dx, dz] of [
         [1, 0],
         [-1, 0],
@@ -303,23 +307,20 @@ void test("structures keep both camps connected", () => {
         }
       }
     }
-    assert.ok(seen.has(homes[1]));
+    assert.ok(seen.has(goal));
   }
 });
 
 void test("combat deals damage with cooldowns, retreats heal and deaths stop bots", () => {
-  let sawHurt = false;
-  let sawHeal = false;
-  let sawDeath = false;
+  const saw = { hurt: false, heal: false, death: false };
   for (const seed of SEEDS) {
     const state = createSimulation(seed);
-    // oxlint-disable-next-line eslint/no-loop-func -- run() calls this callback synchronously, and the flags collect results across seeds
     run(state, 40, (before, after) => {
       if (before.generation !== after.generation) return;
       for (const [index, bot] of after.bots.entries()) {
-        const previous = before.bots[index];
+        const previous = itemAt(before.bots, index);
         if (bot.health < previous.health) {
-          sawHurt = true;
+          saw.hurt = true;
           assert.ok(bot.hurt > 0);
           assert.ok(
             after.bots.some(
@@ -331,7 +332,7 @@ void test("combat deals damage with cooldowns, retreats heal and deaths stop bot
           );
         }
         if (bot.health > previous.health) {
-          sawHeal = true;
+          saw.heal = true;
           const home = after.teams[bot.team].home;
           assert.ok(
             Math.max(Math.abs(bot.x - home[0]), Math.abs(bot.z - home[1])) <=
@@ -339,14 +340,14 @@ void test("combat deals damage with cooldowns, retreats heal and deaths stop bot
           );
         }
         if (previous.health > 0 && bot.health <= 0) {
-          sawDeath = true;
+          saw.death = true;
           assert.equal(bot.task, "dead");
           assert.ok(after.events.some((event) => event.kind === "defeat"));
         }
       }
     });
   }
-  assert.ok(sawHurt && sawHeal && sawDeath);
+  assert.ok(saw.hurt && saw.heal && saw.death);
 });
 
 function duel() {
@@ -360,11 +361,12 @@ function duel() {
     return (
       tile.x < -1 && isWalkable(tile) && next !== undefined && isWalkable(next)
     );
-  })!;
+  });
+  assert.ok(spot);
   const [attacker, victim, bystander] = [
-    state.bots[0],
-    state.bots[8],
-    state.bots[9],
+    itemAt(state.bots, 0),
+    itemAt(state.bots, 8),
+    itemAt(state.bots, 9),
   ];
   Object.assign(attacker, { x: spot.x, z: spot.z, tool: "sword" });
   Object.assign(victim, { x: spot.x + 1, z: spot.z });
@@ -414,7 +416,7 @@ void test("combat respects cooldown, faces the target and dead bots stop", () =>
   assert.ok(hits.length >= 2);
   assert.ok(deathTime > 0);
   for (let index = 1; index < hits.length; index++)
-    assert.ok(hits[index] - hits[index - 1] >= 0.7 - 1e-9);
+    assert.ok(itemAt(hits, index) - itemAt(hits, index - 1) >= 0.7 - 1e-9);
   assert.equal(state.generation, 1);
 });
 
@@ -424,7 +426,7 @@ void test("cautious bots retreat home and heal", () => {
   victim.health = 5;
   state.bots = state.bots.filter((bot) => bot.team === 1);
   state.bots.push(
-    Object.assign(structuredClone(state.bots[1]), {
+    Object.assign(structuredClone(itemAt(state.bots, 1)), {
       id: "far-enemy",
       team: 0 as const,
       x: -5,
@@ -447,7 +449,8 @@ void test("cautious bots retreat home and heal", () => {
 void test("bots that meet at exactly the same position separate safely", () => {
   const state = createSimulation(42);
   const [first, second] = state.bots;
-  const enemy = state.bots.find((bot) => bot.team === 1)!;
+  const enemy = state.bots.find((bot) => bot.team === 1);
+  assert.ok(first && second && enemy);
   state.bots = [first, second, enemy];
   for (const bot of [first, second]) {
     [bot.x, bot.z] = state.teams[0].home;
@@ -475,7 +478,8 @@ void test("partial harvesting invalidates the visible resource geometry", () => 
     stepSimulation(state, 0.1);
     if (state.metrics.gathered > gathered) {
       const partiallyMined = state.tiles.some(
-        (tile, index) => tile.quantity > 0 && tile.quantity < quantities[index],
+        (tile, index) =>
+          tile.quantity > 0 && tile.quantity < itemAt(quantities, index),
       );
       if (partiallyMined) {
         assert.ok(state.terrainVersion > version);
@@ -514,6 +518,15 @@ void test("rounds end on time or elimination and breed mutated children of fit p
   checkChildren(parents, eliminated);
 });
 
+function parentOf(
+  byId: ReadonlyMap<string, SimulationState["bots"][number]>,
+  child: SimulationState["bots"][number],
+) {
+  const parent = child.parentId === null ? undefined : byId.get(child.parentId);
+  assert.ok(parent, `parent of ${child.id} exists`);
+  return parent;
+}
+
 function checkChildren(
   parents: SimulationState["bots"],
   state: SimulationState,
@@ -542,10 +555,8 @@ function checkChildren(
     const children = state.bots.filter((bot) => bot.team === team);
     assert.ok(children.some((child) => child.parentId === best.id));
     const parentFitness =
-      children.reduce(
-        (sum, child) => sum + byId.get(child.parentId!)!.fitness,
-        0,
-      ) / children.length;
+      children.reduce((sum, child) => sum + parentOf(byId, child).fitness, 0) /
+      children.length;
     const meanFitness =
       members.reduce((sum, bot) => sum + bot.fitness, 0) / members.length;
     assert.ok(parentFitness >= meanFitness);
@@ -618,7 +629,6 @@ void test("events stay bounded, age and keep unique ids", () => {
     assert.ok(after.events.length <= MAX_EVENTS);
     for (const event of after.events) {
       assert.ok(event.age >= 0 && event.age <= EVENT_LIFETIME);
-      assert.ok(event.team === 0 || event.team === 1);
     }
     const ids = after.events.map((event) => event.id);
     assert.equal(new Set(ids).size, ids.length);

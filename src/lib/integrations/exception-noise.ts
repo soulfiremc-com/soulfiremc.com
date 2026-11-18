@@ -32,7 +32,7 @@ const HYDRATION_ERROR =
 type ExceptionFrame = { filename?: unknown };
 type Exception = {
   value?: unknown;
-  stacktrace?: { frames?: ExceptionFrame[] } | null;
+  stacktrace?: { frames?: (ExceptionFrame | null | undefined)[] } | null;
 };
 
 const EXTENSION_URL =
@@ -91,14 +91,14 @@ export function filterExceptionNoise(
 ): CaptureResult | null {
   if (event?.event !== "$exception") return event;
 
-  const exceptions = event.properties.$exception_list as unknown;
+  const exceptions = event.properties["$exception_list"] as unknown;
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- PostHog passes exception lists as any; each entry is checked before use
   const list = Array.isArray(exceptions) ? (exceptions as Exception[]) : [];
   if (list.length > 0 && list.every((item) => classifyExceptionNoise(item))) {
     return null;
   }
 
-  const recorded = event.properties.document_translated as unknown;
+  const recorded = event.properties["document_translated"] as unknown;
   const translated =
     typeof recorded === "boolean" ? recorded : isMachineTranslated(doc);
   if (

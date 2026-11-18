@@ -224,8 +224,8 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
     });
   }, [hasExplicitOs, hasExplicitCpu, navigate]);
 
-  const downloadHref = links[selection.os]?.[selection.cpu];
-  const isDirectGithubDownload = downloadHref?.includes("github.com") ?? false;
+  const downloadHref = links[selection.os][selection.cpu];
+  const isDirectGithubDownload = downloadHref.includes("github.com");
   const downloadLinkProps = isDirectGithubDownload
     ? { download: "" }
     : { target: "_blank", rel: "noopener noreferrer" };
@@ -407,7 +407,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
                 values={{
                   retry: (
                     <a
-                      href={downloadHref ?? "#"}
+                      href={downloadHref}
                       onClick={() => {
                         if (downloadHref)
                           trackClientDownload({
@@ -877,8 +877,8 @@ const downloadPageLoader = createServerFn({ method: "GET" }).handler(
       getServerVersion().catch(() => undefined),
     ]);
     const serverVersion =
-      serverVersionFile ?? clientManifest?.version?.trim() ?? "latest";
-    const clientVersion = clientManifest?.version?.trim() ?? "latest";
+      serverVersionFile ?? clientManifest?.version.trim() ?? "latest";
+    const clientVersion = clientManifest?.version.trim() ?? "latest";
 
     return {
       clientDownloads: createClientDownloads(clientManifest),

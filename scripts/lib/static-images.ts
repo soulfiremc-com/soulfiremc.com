@@ -108,7 +108,7 @@ export function generateStaticImages({
           const sizes = [
             ...new Set([
               ...widths.filter((size) => size < width),
-              Math.min(width, widths.at(-1)!),
+              Math.min(width, Math.max(...widths)),
             ]),
           ];
           metadata.variants = yield* Effect.forEach(

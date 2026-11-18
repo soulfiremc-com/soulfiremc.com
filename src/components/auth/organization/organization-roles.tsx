@@ -161,7 +161,7 @@ export function OrganizationRoles({
   const { globalFilter, pagination } = tableState;
   useEffect(() => {
     tableState.setColumnVisibility((current) =>
-      current.permissionResources === false
+      current["permissionResources"] === false
         ? current
         : { ...current, permissionResources: false },
     );

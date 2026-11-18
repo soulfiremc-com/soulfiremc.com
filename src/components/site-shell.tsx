@@ -109,7 +109,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
             url: localizeHref("/pricing", locale),
             description: t("nav.support.description"),
           },
-          ...(baseOptions.links || []),
+          ...(baseOptions.links ?? []),
           // Fumadocs renders desktop nav items inside a <ul>, so the custom
           // item needs its own <li>. The mobile menu wraps items in a <div>.
           {

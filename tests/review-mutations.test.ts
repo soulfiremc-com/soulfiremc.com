@@ -23,9 +23,9 @@ function setup(
     itemType: "account",
     viewerId: "viewer",
     queryClient,
-    executeTurnstile: async () => "token",
-    submitReview: async () => ({ ok: true }),
-    deleteReview: async () => ({ ok: true }),
+    executeTurnstile: () => Promise.resolve("token"),
+    submitReview: () => Promise.resolve({ ok: true }),
+    deleteReview: () => Promise.resolve({ ok: true }),
     ...overrides,
   });
   return { queryClient, observer: new MutationObserver(queryClient, options) };
@@ -37,9 +37,9 @@ await test("pending mutations remain shared through verification and cache refre
   const refreshStarted = deferred<void>();
   const { queryClient, observer } = setup({
     executeTurnstile: () => verification.promise,
-    submitReview: async ({ data }) => {
+    submitReview: ({ data }) => {
       assert.equal(data.turnstileToken, "verified");
-      return { ok: true };
+      return Promise.resolve({ ok: true });
     },
   });
   queryClient.invalidateQueries = async (filters) => {
@@ -83,12 +83,10 @@ await test("pending mutations remain shared through verification and cache refre
 
 await test("verification failures skip submission and invalidation and release pending state", async () => {
   const { queryClient, observer } = setup({
-    executeTurnstile: async () => {
-      throw new Error();
-    },
-    submitReview: async () => assert.fail(),
+    executeTurnstile: () => Promise.reject(new Error()),
+    submitReview: () => assert.fail(),
   });
-  queryClient.invalidateQueries = async () => assert.fail();
+  queryClient.invalidateQueries = () => assert.fail();
   assert.deepEqual(
     await observer.mutate({
       action: "upsert",
@@ -104,13 +102,13 @@ await test("verification failures skip submission and invalidation and release p
 
 await test("edits bypass verification and rejected deletes do not refresh reviews", async () => {
   const { queryClient, observer } = setup({
-    executeTurnstile: async () => assert.fail(),
-    submitReview: async ({ data }) => {
+    executeTurnstile: () => assert.fail(),
+    submitReview: ({ data }) => {
       assert.equal(data.turnstileToken, null);
       assert.equal(data.body, null);
-      return { ok: true };
+      return Promise.resolve({ ok: true });
     },
-    deleteReview: async () => ({ ok: false, error: "unauthorized" }),
+    deleteReview: () => Promise.resolve({ ok: false, error: "unauthorized" }),
   });
   assert.deepEqual(
     await observer.mutate({
@@ -121,7 +119,7 @@ await test("edits bypass verification and rejected deletes do not refresh review
     }),
     { error: null },
   );
-  queryClient.invalidateQueries = async () => assert.fail();
+  queryClient.invalidateQueries = () => assert.fail();
   assert.deepEqual(await observer.mutate({ action: "delete", slug: "shop" }), {
     error: "unauthorized",
   });
@@ -133,9 +131,9 @@ await test("network failures propagate without retrying and release pending stat
   const failure = new Error();
   let calls = 0;
   const { queryClient, observer } = setup({
-    deleteReview: async () => {
+    deleteReview: () => {
       calls++;
-      throw failure;
+      return Promise.reject(failure);
     },
   });
   await assert.rejects(
@@ -150,12 +148,14 @@ await test("network failures propagate without retrying and release pending stat
 await test("server rejections preserve their result and skip review cache refresh", async () => {
   for (const error of ["unauthorized", "verification"] as const) {
     const { queryClient, observer } = setup({
-      submitReview: async () =>
-        error === "verification"
-          ? { ok: false, error, errorCodes: ["invalid-input-response"] }
-          : { ok: false, error },
+      submitReview: () =>
+        Promise.resolve(
+          error === "verification"
+            ? { ok: false, error, errorCodes: ["invalid-input-response"] }
+            : { ok: false, error },
+        ),
     });
-    queryClient.invalidateQueries = async () =>
+    queryClient.invalidateQueries = () =>
       assert.fail("Rejected submissions must not refresh");
     assert.deepEqual(
       await observer.mutate({
@@ -175,14 +175,12 @@ await test("refresh failures preserve their cause and never resubmit a successfu
   const failure = new Error("Refresh failed");
   let writes = 0;
   const { queryClient, observer } = setup({
-    submitReview: async () => {
+    submitReview: () => {
       writes++;
-      return { ok: true };
+      return Promise.resolve({ ok: true });
     },
   });
-  queryClient.invalidateQueries = async () => {
-    throw failure;
-  };
+  queryClient.invalidateQueries = () => Promise.reject(failure);
   await assert.rejects(
     observer.mutate({
       action: "upsert",

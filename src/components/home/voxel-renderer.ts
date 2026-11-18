@@ -158,32 +158,42 @@ export function createVoxelRenderer(
   });
   if (!gl) return null;
   const shaders: WebGLShader[] = [];
-  const program = gl.createProgram();
-  const terrainBuffer = gl.createBuffer();
-  const actorBuffer = gl.createBuffer();
-  const effectsBuffer = gl.createBuffer();
-  const floraBuffer = gl.createBuffer();
+  // WebGL returns null while the context is lost. The DOM types omit that case.
+  const factory: {
+    createProgram(): WebGLProgram | null;
+    createBuffer(): WebGLBuffer | null;
+  } = gl;
+  const maybeProgram = factory.createProgram();
+  const maybeTerrain = factory.createBuffer();
+  const maybeActor = factory.createBuffer();
+  const maybeEffects = factory.createBuffer();
+  const maybeFlora = factory.createBuffer();
   let disposed = false;
   function dispose() {
     if (disposed) return;
     disposed = true;
-    if (terrainBuffer) gl?.deleteBuffer(terrainBuffer);
-    if (actorBuffer) gl?.deleteBuffer(actorBuffer);
-    if (effectsBuffer) gl?.deleteBuffer(effectsBuffer);
-    if (floraBuffer) gl?.deleteBuffer(floraBuffer);
-    if (program) gl?.deleteProgram(program);
+    if (maybeTerrain) gl?.deleteBuffer(maybeTerrain);
+    if (maybeActor) gl?.deleteBuffer(maybeActor);
+    if (maybeEffects) gl?.deleteBuffer(maybeEffects);
+    if (maybeFlora) gl?.deleteBuffer(maybeFlora);
+    if (maybeProgram) gl?.deleteProgram(maybeProgram);
     for (const shader of shaders) gl?.deleteShader(shader);
   }
   if (
-    !program ||
-    !terrainBuffer ||
-    !actorBuffer ||
-    !effectsBuffer ||
-    !floraBuffer
+    !maybeProgram ||
+    !maybeTerrain ||
+    !maybeActor ||
+    !maybeEffects ||
+    !maybeFlora
   ) {
     dispose();
     return null;
   }
+  const program: WebGLProgram = maybeProgram;
+  const terrainBuffer: WebGLBuffer = maybeTerrain;
+  const actorBuffer: WebGLBuffer = maybeActor;
+  const effectsBuffer: WebGLBuffer = maybeEffects;
+  const floraBuffer: WebGLBuffer = maybeFlora;
   for (const [type, source] of [
     [gl.VERTEX_SHADER, vertexSource],
     [gl.FRAGMENT_SHADER, fragmentSource],

@@ -25,7 +25,7 @@ const blogPostLoader = createServerFn({ method: "GET" })
       Schema.Struct({ slug: Schema.String.check(Schema.isMinLength(1)) }),
     ),
   )
-  .handler(async ({ data }) => {
+  .handler(({ data }) => {
     const post = getBlogPostData(data.slug);
     if (!post) {
       throw notFound();

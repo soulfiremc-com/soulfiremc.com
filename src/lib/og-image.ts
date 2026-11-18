@@ -4,15 +4,15 @@ import type { ReactElement } from "react";
 import { ImageResponse } from "takumi-js/response";
 import logoSvgUrl from "@/assets/logo-square.svg?inline";
 
-const cyrillic = Uint8Array.from(
-  atob(cyrillicFont.split(",")[1]),
-  (character) => character.charCodeAt(0),
-);
+function dataUriBytes(dataUri: string) {
+  return Uint8Array.from(
+    atob(dataUri.slice(dataUri.indexOf(",") + 1)),
+    (character) => character.charCodeAt(0),
+  );
+}
 
-const latinExtended = Uint8Array.from(
-  atob(latinExtendedFont.split(",")[1]),
-  (character) => character.charCodeAt(0),
-);
+const cyrillic = dataUriBytes(cyrillicFont);
+const latinExtended = dataUriBytes(latinExtendedFont);
 
 const baseImageOptions = {
   format: "webp" as const,

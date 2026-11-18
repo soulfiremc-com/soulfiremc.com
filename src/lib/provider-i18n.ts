@@ -1,10 +1,11 @@
-import { isProviderPath, localizePath, type Locale } from "./i18n";
+import { hrefPath, isProviderPath, localizePath, type Locale } from "./i18n";
 import { resolveMessage } from "./messages";
 
 export function formatProviderSince(date: string, locale: Locale) {
-  const match =
-    /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{4})$/.exec(date);
-  if (!match) return date;
+  const [, monthName, year] =
+    /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{4})$/.exec(date) ??
+    [];
+  if (monthName === undefined || year === undefined) return date;
   const month = [
     "Jan",
     "Feb",
@@ -18,15 +19,15 @@ export function formatProviderSince(date: string, locale: Locale) {
     "Oct",
     "Nov",
     "Dec",
-  ].indexOf(match[1]);
+  ].indexOf(monthName);
   // A day gives Polish and Russian the month form needed after "since".
   const parts = new Intl.DateTimeFormat(locale, {
     day: "numeric",
     month: locale === "en" ? "short" : "long",
     year: "numeric",
     timeZone: "UTC",
-  }).formatToParts(new Date(Date.UTC(Number(match[2]), month, 1)));
-  return `${parts.find((part) => part.type === "month")?.value} ${match[2]}`;
+  }).formatToParts(new Date(Date.UTC(Number(year), month, 1)));
+  return `${parts.find((part) => part.type === "month")?.value} ${year}`;
 }
 
 /** Localize our catalog metadata before user-written reviews are added. */
@@ -46,10 +47,7 @@ export function localizeProviderData<T>(data: T, locale: Locale): T {
       return resolveMessage(locale, value);
     if (value.startsWith("https://soulfiremc.com")) {
       const path = value.slice("https://soulfiremc.com".length) || "/";
-      if (
-        isProviderPath(path.split(/[?#]/)[0]) ||
-        (key === "item" && path === "/")
-      )
+      if (isProviderPath(hrefPath(path)) || (key === "item" && path === "/"))
         return `https://soulfiremc.com${localizePath(path, locale)}`;
     }
     return value;

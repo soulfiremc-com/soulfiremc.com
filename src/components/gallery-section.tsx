@@ -19,6 +19,7 @@ export function GallerySection({
 }) {
   const t = useT();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const openImage = openIndex === null ? undefined : images[openIndex];
 
   const prev = () =>
     setOpenIndex((i) =>
@@ -59,7 +60,7 @@ export function GallerySection({
           className="flex h-[calc(100dvh-1rem)] max-h-[calc(100dvh-1rem)] w-[calc(100vw-1rem)] max-w-[calc(100vw-1rem)] flex-col gap-0 overflow-hidden border-white/10 bg-black/90 p-2 shadow-2xl sm:h-[calc(100dvh-3rem)] sm:max-h-[calc(100dvh-3rem)] sm:w-[calc(100vw-3rem)] sm:max-w-[calc(100vw-3rem)] sm:p-4"
         >
           <DialogTitle className="sr-only">
-            {t(openIndex !== null ? images[openIndex].alt : "gallery.image")}
+            {t(openImage?.alt ?? "gallery.image")}
           </DialogTitle>
           <DialogDescription className="sr-only">
             {t("gallery.position", {
@@ -67,12 +68,12 @@ export function GallerySection({
               count: images.length,
             })}
           </DialogDescription>
-          {openIndex !== null && (
+          {openIndex !== null && openImage && (
             <div className="relative min-h-0 flex-1 overflow-hidden rounded-lg bg-black/40">
               <Image
                 loading="eager"
-                src={images[openIndex].src}
-                alt={t(images[openIndex].alt)}
+                src={openImage.src}
+                alt={t(openImage.alt)}
                 fill
                 className="size-full object-contain"
               />
@@ -114,7 +115,7 @@ export function GallerySection({
               )}
               <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 bg-linear-to-t from-black/85 via-black/30 to-transparent p-3 sm:p-4">
                 <p className="max-w-[75%] text-sm text-white/80">
-                  {t(images[openIndex].alt)}
+                  {t(openImage.alt)}
                 </p>
                 <span className="rounded-full border border-white/10 bg-black/60 px-3 py-1 text-xs font-medium text-white/75">
                   {openIndex + 1} / {images.length}

@@ -20,6 +20,7 @@ import type {
   SimulationTile,
   TeamId,
 } from "@/components/home/voxel-simulation-types";
+import { itemAt } from "@/lib/item-at";
 
 export type {
   BotTask,
@@ -262,14 +263,15 @@ function findPath(
   previous[start] = start;
   const queue = [start];
   for (let head = 0; head < queue.length; head++) {
-    const current = queue[head];
-    const tile = tiles[current];
+    const current = itemAt(queue, head);
+    const tile = itemAt(tiles, current);
     for (const [dx, dz] of NEIGHBORS) {
       const next = tileIndex(tile.x + dx, tile.z + dz);
-      if (next < 0 || previous[next] !== -1 || !canEnter(tiles[next])) continue;
+      if (next < 0 || previous[next] !== -1 || !canEnter(itemAt(tiles, next)))
+        continue;
       if (dx !== 0 && dz !== 0) {
-        const sideA = tiles[tileIndex(tile.x + dx, tile.z)];
-        const sideB = tiles[tileIndex(tile.x, tile.z + dz)];
+        const sideA = itemAt(tiles, tileIndex(tile.x + dx, tile.z));
+        const sideB = itemAt(tiles, tileIndex(tile.x, tile.z + dz));
         if (!canEnter(sideA) || !canEnter(sideB)) continue;
       }
       previous[next] = current;
@@ -278,7 +280,7 @@ function findPath(
         let step = current;
         while (step !== start) {
           path.push(step);
-          step = previous[step];
+          step = itemAt(previous, step);
         }
         return path.toReversed();
       }
@@ -290,15 +292,16 @@ function findPath(
 
 function countReachable(tiles: SimulationTile[], start: number, blocked = -1) {
   const seen = new Uint8Array(tiles.length);
-  if (start < 0 || start === blocked || !isWalkable(tiles[start])) return 0;
+  if (start < 0 || start === blocked || !isWalkable(itemAt(tiles, start)))
+    return 0;
   seen[start] = 1;
   const queue = [start];
   for (let head = 0; head < queue.length; head++) {
-    const tile = tiles[queue[head]];
+    const tile = itemAt(tiles, itemAt(queue, head));
     for (const [dx, dz] of NEIGHBORS.slice(0, 4)) {
       const next = tileIndex(tile.x + dx, tile.z + dz);
       if (next < 0 || next === blocked || seen[next]) continue;
-      if (!isWalkable(tiles[next])) continue;
+      if (!isWalkable(itemAt(tiles, next))) continue;
       seen[next] = 1;
       queue.push(next);
     }
@@ -316,7 +319,9 @@ function generateWorld(seed: number, generation: number) {
     const world = tryGenerateWorld(rand);
     if (world) return world;
   }
-  return tryGenerateWorld(rand, true)!;
+  const plain = tryGenerateWorld(rand, true);
+  if (!plain) throw new Error("The plain fallback world failed to generate");
+  return plain;
 }
 
 function tryGenerateWorld(rand: () => number, plain = false) {
@@ -343,7 +348,7 @@ function tryGenerateWorld(rand: () => number, plain = false) {
       const mx = -Math.abs(x);
       const distance = Math.hypot(mx, z);
       const angle = (Math.atan2(z, mx) + Math.PI * 2) % (Math.PI * 2);
-      const noise = edgeNoise[tileIndex(mx, z)];
+      const noise = itemAt(edgeNoise, tileIndex(mx, z));
       const ledge =
         distance >= 6.5 &&
         ledgeCenters.some((center) => Math.abs(angle - center) < 0.4);
@@ -380,7 +385,7 @@ function tryGenerateWorld(rand: () => number, plain = false) {
       for (let tries = 0; tries < 200 && count > 0; tries++) {
         const x = -1 - Math.floor(rand() * 8);
         const z = Math.floor(rand() * 15) - 7;
-        const tile = tiles[tileIndex(x, z)];
+        const tile = itemAt(tiles, tileIndex(x, z));
         const home = homes[0];
         const homeDistance = Math.hypot(x - home[0], z - home[1]);
         if (!isWalkable(tile) || homeDistance < 2 || homeDistance > 6.5)
@@ -392,7 +397,7 @@ function tryGenerateWorld(rand: () => number, plain = false) {
         });
         if (crowded) continue;
         for (const mirrorX of [x, -x]) {
-          const target = tiles[tileIndex(mirrorX, z)];
+          const target = itemAt(tiles, tileIndex(mirrorX, z));
           target.resource = kind;
           target.quantity = RESOURCE_QUANTITY[kind];
           sites.push({ index: tileIndex(mirrorX, z), kind });
@@ -407,29 +412,30 @@ function tryGenerateWorld(rand: () => number, plain = false) {
   // Keep both homes connected and every resource node reachable.
   const reachable = new Uint8Array(tiles.length);
   const start = homeIndex(homes[0]);
-  if (!isWalkable(tiles[start])) return null;
+  if (!isWalkable(itemAt(tiles, start))) return null;
   reachable[start] = 1;
   const queue = [start];
   for (let head = 0; head < queue.length; head++) {
-    const tile = tiles[queue[head]];
+    const tile = itemAt(tiles, itemAt(queue, head));
     for (const [dx, dz] of NEIGHBORS.slice(0, 4)) {
       const next = tileIndex(tile.x + dx, tile.z + dz);
-      if (next < 0 || reachable[next] || !isWalkable(tiles[next])) continue;
+      if (next < 0 || reachable[next] || !isWalkable(itemAt(tiles, next)))
+        continue;
       reachable[next] = 1;
       queue.push(next);
     }
   }
   if (!reachable[homeIndex(homes[1])]) return null;
   for (const team of [0, 1] as const) {
-    const home = tiles[homeIndex(homes[team])];
+    const home = itemAt(tiles, homeIndex(homes[team]));
     for (const [dx, dz] of [[0, 0] as const, ...NEIGHBORS]) {
-      const tile = tiles[tileIndex(home.x + dx, home.z + dz)];
+      const tile = itemAt(tiles, tileIndex(home.x + dx, home.z + dz));
       // A camp stands on flat ground, never on a ledge.
       if (!isWalkable(tile) || tile.height !== 1) return null;
     }
   }
   for (const site of sites) {
-    const tile = tiles[site.index];
+    const tile = itemAt(tiles, site.index);
     const accessible = NEIGHBORS.some(([dx, dz]) => {
       const near = tileIndex(tile.x + dx, tile.z + dz);
       return near >= 0 && reachable[near] === 1;
@@ -470,7 +476,7 @@ function spawnBots(
   for (const team of [0, 1] as const) {
     const [hx, hz] = homes[team];
     for (let index = 0; index < BOTS_PER_TEAM; index++) {
-      const [dx, dz] = NEIGHBORS[index];
+      const [dx, dz] = itemAt(NEIGHBORS, index);
       bots.push({
         id: `g${generation}-t${team}-b${index}`,
         team,
@@ -481,9 +487,10 @@ function spawnBots(
         stone: 0,
         tool: "none",
         task: "idle",
-        genome: genomes[team][index],
+        genome: itemAt(genomes[team], index),
         fitness: 0,
-        parentId: parents[team][index],
+        parentId: itemAt(parents[team], index),
+
         facing: [team === 0 ? 1 : -1, 0],
         action: 0,
         hurt: 0,
@@ -741,7 +748,7 @@ function fleeStep(
   if (!here) return best;
   for (const [dx, dz] of NEIGHBORS) {
     const index = tileIndex(here.x + dx, here.z + dz);
-    if (index < 0 || !isWalkable(state.tiles[index])) continue;
+    if (index < 0 || !isWalkable(itemAt(state.tiles, index))) continue;
     // A diagonal step must not cut a blocked corner.
     if (dx !== 0 && dz !== 0) {
       const sideX = state.tiles[tileIndex(here.x + dx, here.z)];
@@ -795,9 +802,10 @@ function canPlace(
   kind: StructureKind,
   index: number,
 ): boolean {
-  const tile = state.tiles[index];
+  const tile = itemAt(state.tiles, index);
   if (tile.hazard === "lava" || (tile.fire ?? 0) > 0) return false;
   if (tile.resource || tile.structure || isOccupied(state, tile)) return false;
+
   if (kind === "bridge") {
     if (
       tile.material !== "water" ||
@@ -927,10 +935,10 @@ function startGather(
     indexOf(bot.x, bot.z),
     (index) => {
       if (isClaimed(state, internal, bot, index, "stand")) return false;
-      const tile = state.tiles[index];
+      const tile = itemAt(state.tiles, index);
       for (const [dx, dz] of NEIGHBORS) {
         const near = tileIndex(tile.x + dx, tile.z + dz);
-        if (near >= 0 && state.tiles[near].resource === kind) {
+        if (near >= 0 && itemAt(state.tiles, near).resource === kind) {
           target = near;
           return true;
         }
@@ -943,7 +951,7 @@ function startGather(
   setTask(bot, brain, "gather");
   brain.goal = target;
   brain.path = path;
-  brain.stand = path.length > 0 ? path.at(-1)! : indexOf(bot.x, bot.z);
+  brain.stand = path.at(-1) ?? indexOf(bot.x, bot.z);
   brain.timer = bot.tool === "pickaxe" ? 0.45 : 0.9;
   return true;
 }
@@ -959,8 +967,10 @@ function move(
 ) {
   let budget = speed * dt;
   while (budget > 0) {
-    if (brain.path.length === 0) return "arrived";
-    const tile = state.tiles[brain.path[0]];
+    const [next] = brain.path;
+    if (next === undefined) return "arrived";
+    const tile = itemAt(state.tiles, next);
+
     if (!isWalkable(tile)) {
       if (breakWalls && isPassable(tile, bot.team, true)) return "wall";
       return "blocked";
@@ -1124,11 +1134,12 @@ function updateAttack(
   }
   brain.repath -= dt;
   if (brain.path.length === 0 || brain.repath <= 0) {
-    const target = state.tiles[indexOf(enemy.x, enemy.z)];
+    const target = getTile(state, enemy.x, enemy.z);
+    if (!target) return decide(state, internal, bot);
     const path = findPath(
       state.tiles,
       indexOf(bot.x, bot.z),
-      (index) => chebyshev(state.tiles[index], target) <= 1,
+      (index) => chebyshev(itemAt(state.tiles, index), target) <= 1,
       (tile) => isPassable(tile, bot.team, true),
     );
     brain.repath = 0.5;
@@ -1138,7 +1149,7 @@ function updateAttack(
   const result = move(state, bot, brain, WALK_SPEED, dt, true);
   if (result === "wall") {
     if (brain.cooldown <= 0) {
-      hitWall(state, internal, bot, state.tiles[brain.path[0]]);
+      hitWall(state, internal, bot, itemAt(state.tiles, itemAt(brain.path, 0)));
       brain.cooldown = bot.tool === "sword" ? 0.7 : 0.85;
     }
   } else if (result === "blocked") brain.path = [];
@@ -1183,7 +1194,8 @@ function updateDefense(
       findPath(
         state.tiles,
         indexOf(bot.x, bot.z),
-        (index) => chebyshev(state.tiles[index], tile) <= 1,
+        (index) => chebyshev(itemAt(state.tiles, index), tile) <= 1,
+
         isWalkable,
       ) ?? [];
     brain.repath = 0.5;
@@ -1305,8 +1317,9 @@ function updateBot(
           decide(state, internal, bot);
         return;
       }
-      const here = state.tiles[indexOf(bot.x, bot.z)];
-      if (chebyshev(here, resource) > 1) return decide(state, internal, bot);
+      const here = getTile(state, bot.x, bot.z);
+      if (!here || chebyshev(here, resource) > 1)
+        return decide(state, internal, bot);
       face(bot, resource.x, resource.z);
       brain.timer -= dt;
       if (brain.timer > 0) return;
@@ -1348,15 +1361,17 @@ function updateBot(
         return;
       }
       const site = state.tiles[brain.goal];
+      if (!site) return decide(state, internal, bot);
       if (
         brain.path.length === 0 &&
-        chebyshev(state.tiles[indexOf(bot.x, bot.z)], site) > 1
+        chebyshev(itemAt(state.tiles, indexOf(bot.x, bot.z)), site) > 1
       ) {
         const path = findPath(
           state.tiles,
           indexOf(bot.x, bot.z),
           (index) =>
-            index !== brain.goal && chebyshev(state.tiles[index], site) <= 1,
+            index !== brain.goal &&
+            chebyshev(itemAt(state.tiles, index), site) <= 1,
           isWalkable,
         );
         if (!path) return decide(state, internal, bot);
@@ -1401,12 +1416,15 @@ function updateBot(
 }
 
 function separate(state: SimulationState) {
-  const alive = state.bots.filter((bot) => bot.health > 0);
-  const pushes = alive.map(() => [0, 0]);
-  for (let i = 0; i < alive.length; i++) {
-    for (let j = i + 1; j < alive.length; j++) {
-      let dx = alive[j].x - alive[i].x;
-      let dz = alive[j].z - alive[i].z;
+  const pushes = state.bots
+    .filter((bot) => bot.health > 0)
+    .map((bot) => ({ bot, x: 0, z: 0 }));
+  for (let i = 0; i < pushes.length; i++) {
+    const a = itemAt(pushes, i);
+    for (let j = i + 1; j < pushes.length; j++) {
+      const b = itemAt(pushes, j);
+      let dx = b.bot.x - a.bot.x;
+      let dz = b.bot.z - a.bot.z;
       let distance = Math.hypot(dx, dz);
       if (distance >= SEPARATION) continue;
       const overlap = SEPARATION - distance;
@@ -1417,14 +1435,13 @@ function separate(state: SimulationState) {
         distance = 1;
       }
       const push = overlap * 0.25;
-      pushes[i][0] -= (dx / distance) * push;
-      pushes[i][1] -= (dz / distance) * push;
-      pushes[j][0] += (dx / distance) * push;
-      pushes[j][1] += (dz / distance) * push;
+      a.x -= (dx / distance) * push;
+      a.z -= (dz / distance) * push;
+      b.x += (dx / distance) * push;
+      b.z += (dz / distance) * push;
     }
   }
-  for (const [index, bot] of alive.entries()) {
-    const [px, pz] = pushes[index];
+  for (const { bot, x: px, z: pz } of pushes) {
     const length = Math.hypot(px, pz);
     if (length < 1e-9) continue;
     const scale = Math.min(1, MAX_SEPARATION_STEP / length);
@@ -1443,7 +1460,7 @@ function regrow(state: SimulationState, internal: Internal, dt: number) {
   if (internal.regrow > 0) return;
   internal.regrow = REGROW_SECONDS;
   for (const site of internal.sites) {
-    const tile = state.tiles[site.index];
+    const tile = itemAt(state.tiles, site.index);
     const max = RESOURCE_QUANTITY[site.kind];
     if (
       tile.quantity >= max ||
@@ -1464,9 +1481,10 @@ function regrow(state: SimulationState, internal: Internal, dt: number) {
 }
 
 function tournament(internal: Internal, bots: SimulationBot[]) {
-  let best = bots[Math.floor(random(internal) * bots.length)];
+  let best = itemAt(bots, Math.floor(random(internal) * bots.length));
   for (let round = 0; round < 2; round++) {
-    const challenger = bots[Math.floor(random(internal) * bots.length)];
+    const challenger = itemAt(bots, Math.floor(random(internal) * bots.length));
+
     if (challenger.fitness > best.fitness) best = challenger;
   }
   return best;
@@ -1479,15 +1497,14 @@ function mutate(internal: Internal, value: number) {
 }
 
 function nextGeneration(state: SimulationState, internal: Internal) {
-  const alive = [0, 1].map(
-    (team) =>
-      state.bots.filter((bot) => bot.team === team && bot.health > 0).length,
-  );
-  const score = [0, 1].map((team) =>
+  const aliveOn = (team: TeamId) =>
+    state.bots.filter((bot) => bot.team === team && bot.health > 0).length;
+  const scoreOf = (team: TeamId) =>
     state.bots
       .filter((bot) => bot.team === team)
-      .reduce((sum, bot) => sum + bot.fitness, 0),
-  );
+      .reduce((sum, bot) => sum + bot.fitness, 0);
+  const alive = [aliveOn(0), aliveOn(1)] as const;
+  const score = [scoreOf(0), scoreOf(1)] as const;
   let winner: TeamId | null = null;
   if (alive[0] !== alive[1]) winner = alive[0] > alive[1] ? 0 : 1;
   else if (score[0] !== score[1]) winner = score[0] > score[1] ? 0 : 1;
@@ -1505,7 +1522,8 @@ function nextGeneration(state: SimulationState, internal: Internal) {
       .filter((bot) => bot.team === team)
       .toSorted((a, b) => b.fitness - a.fitness);
     for (let index = 0; index < BOTS_PER_TEAM; index++) {
-      const parent = index === 0 ? members[0] : tournament(internal, members);
+      const parent =
+        index === 0 ? itemAt(members, 0) : tournament(internal, members);
       genomes[team].push({
         aggression: mutate(internal, parent.genome.aggression),
         building: mutate(internal, parent.genome.building),
@@ -1649,9 +1667,10 @@ function meanGenome(bots: SimulationBot[]): Genome {
 export function getSimulationSummary(
   state: SimulationState,
 ): SimulationSummary {
-  const teams = [0, 1].map((team) =>
-    state.bots.filter((bot) => bot.team === team),
-  );
+  const membersOf = (team: TeamId) =>
+    state.bots.filter((bot) => bot.team === team);
+  const teams = [membersOf(0), membersOf(1)] as const;
+
   return {
     generation: state.generation,
     remaining: Math.max(0, state.roundDuration - state.elapsed),

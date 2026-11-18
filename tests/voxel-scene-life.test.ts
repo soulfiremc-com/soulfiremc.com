@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { defined } from "./support/defined";
 import { createAnimator, mobKey } from "@/components/home/voxel-animation";
 import { createEffectsGeometry } from "@/components/home/voxel-effects-geometry";
 import {
@@ -23,13 +24,13 @@ import {
 function kinds(mesh: Mesh, from: number, to: number) {
   const found = new Set<number>();
   for (let vertex = from; vertex < to; vertex++)
-    found.add(mesh.vertices[vertex * VERTEX_STRIDE + 9]);
+    found.add(defined(mesh.vertices[vertex * VERTEX_STRIDE + 9]));
   return found;
 }
 
 void test("meshes keep blended materials after the opaque vertices", () => {
   const state = createSimulation(INITIAL_SIMULATION_SEED);
-  const lava = state.tiles.find((tile) => tile.material === "grass")!;
+  const lava = defined(state.tiles.find((tile) => tile.material === "grass"));
   lava.hazard = "lava";
   const terrain = createTerrainGeometry(state);
   const total = terrain.vertices.length / VERTEX_STRIDE;
@@ -43,7 +44,9 @@ void test("meshes keep blended materials after the opaque vertices", () => {
 
 void test("water fills its channel so things stand near the bank height", () => {
   const state = createSimulation(INITIAL_SIMULATION_SEED);
-  const river = state.tiles.find((tile) => tile.x === 0 && tile.z === 0)!;
+  const river = defined(
+    state.tiles.find((tile) => tile.x === 0 && tile.z === 0),
+  );
   assert.equal(river.material, "water");
   const surface = tileSurface(river);
   assert.ok(surface > 0.7 && surface < 1);
@@ -54,9 +57,9 @@ void test("water fills its channel so things stand near the bank height", () => 
 void test("the animator turns, walks and pops in without touching the simulation", () => {
   const state = createSimulation(INITIAL_SIMULATION_SEED);
   const animator = createAnimator();
-  const bot = state.bots[0];
+  const bot = defined(state.bots[0]);
   bot.facing = [0, 1];
-  const first = animator.frame(state, 1, 0).get(bot.id)!;
+  const first = defined(animator.frame(state, 1, 0).get(bot.id));
   assert.equal(first.scale, 1);
   assert.equal(first.walk, 0);
   assert.equal(Math.abs(first.yaw), 0);
@@ -66,14 +69,14 @@ void test("the animator turns, walks and pops in without touching the simulation
   bot.x += 0.2;
   bot.facing = [1, 0];
   const snapshot = JSON.stringify(state);
-  const half = animator.frame(state, 0.5, 0.05).get(bot.id)!;
+  const half = defined(animator.frame(state, 0.5, 0.05).get(bot.id));
   assert.ok(Math.abs(half.x - (start + 0.1)) < 1e-9);
   assert.ok(half.walk > 0 && half.walk < 1);
   // The model turns toward +X, which is a yaw of -90 degrees, but not at once.
   assert.ok(half.yaw < 0 && half.yaw > -Math.PI / 2);
   const stride = half.stride;
   animator.frame(state, 1, 0.05);
-  assert.ok(animator.frame(state, 1, 0).get(bot.id)!.stride > stride);
+  assert.ok(defined(animator.frame(state, 1, 0).get(bot.id)).stride > stride);
   assert.equal(JSON.stringify(state), snapshot);
 
   state.adventure.mobs.push({
@@ -88,11 +91,11 @@ void test("the animator turns, walks and pops in without touching the simulation
     hurt: 0,
   });
   assert.equal(
-    animator.frame(state, 1, 0.01).get(mobKey(7))!.scale < 0.5,
+    defined(animator.frame(state, 1, 0.01).get(mobKey(7))).scale < 0.5,
     true,
   );
   for (let frame = 0; frame < 60; frame++) animator.frame(state, 1, 0.016);
-  assert.equal(animator.frame(state, 1, 0).get(mobKey(7))!.scale, 1);
+  assert.equal(defined(animator.frame(state, 1, 0).get(mobKey(7))).scale, 1);
   state.adventure.mobs = [];
   assert.equal(animator.frame(state, 1, 0).has(mobKey(7)), false);
 });
@@ -101,32 +104,34 @@ void test("grass burns away fast, regrows slowly, and trees follow their stock",
   const state = createSimulation(INITIAL_SIMULATION_SEED);
   const growth = createFloraGrowth();
   const homes = new Set(state.teams.map((team) => team.home.join(":")));
-  const meadow = state.tiles.find(
-    (tile) =>
-      tile.material === "grass" &&
-      tile.resource === null &&
-      !homes.has(tile.id),
-  )!;
-  const tree = state.tiles.find((tile) => tile.resource === "wood")!;
+  const meadow = defined(
+    state.tiles.find(
+      (tile) =>
+        tile.material === "grass" &&
+        tile.resource === null &&
+        !homes.has(tile.id),
+    ),
+  );
+  const tree = defined(state.tiles.find((tile) => tile.resource === "wood"));
   // The first pass adopts the current world without an animation.
   assert.equal(advanceFlora(growth, state, 0), true);
   assert.equal(growth.grass.get(meadow.id), 1);
   assert.equal(advanceFlora(growth, state, 0.1), false);
   const full = createFloraGeometry(state, growth).vertices.length;
-  const grown = growth.trees.get(tree.id)!;
+  const grown = defined(growth.trees.get(tree.id));
 
   meadow.hazard = "scorch";
   tree.quantity = 1;
   assert.equal(advanceFlora(growth, state, 0.1), true);
-  assert.ok(growth.grass.get(meadow.id)! < 1);
-  assert.ok(growth.trees.get(tree.id)! < grown);
+  assert.ok(defined(growth.grass.get(meadow.id)) < 1);
+  assert.ok(defined(growth.trees.get(tree.id)) < grown);
   for (let tick = 0; tick < 10; tick++) advanceFlora(growth, state, 0.1);
   assert.equal(growth.grass.get(meadow.id), 0);
   assert.ok(createFloraGeometry(state, growth).vertices.length < full);
 
   delete meadow.hazard;
   advanceFlora(growth, state, 1);
-  const sprout = growth.grass.get(meadow.id)!;
+  const sprout = defined(growth.grass.get(meadow.id));
   assert.ok(sprout > 0 && sprout < 0.5);
   // The still fallback asks for trees only.
   assert.ok(
@@ -140,16 +145,16 @@ void test("lights stay within the shader limit and favor torches over lava", () 
   for (const tile of land.slice(0, 30)) tile.hazard = "lava";
   // Primed TNT also shines, and it ranks before the steady lights.
   state.adventure.charges = [];
-  const torch = state.tiles.find((tile) => tile.torch) ?? land[40];
+  const torch = state.tiles.find((tile) => tile.torch) ?? defined(land[40]);
   torch.torch = true;
   const lights = collectLights(state, 1);
   assert.equal(lights.count, MAX_LIGHTS);
   assert.equal(lights.positions.length, MAX_LIGHTS * 4);
   assert.equal(lights.colors.length, MAX_LIGHTS * 3);
-  assert.ok(Math.abs(lights.positions[0] - (torch.x + 0.22)) < 1e-6);
+  assert.ok(Math.abs(defined(lights.positions[0]) - (torch.x + 0.22)) < 1e-6);
   for (let index = 0; index < MAX_LIGHTS; index++) {
-    assert.ok(lights.positions[index * 4 + 3] > 0);
-    assert.ok(lights.colors[index * 3] > 0);
+    assert.ok(defined(lights.positions[index * 4 + 3]) > 0);
+    assert.ok(defined(lights.colors[index * 3]) > 0);
   }
 });
 
@@ -161,15 +166,17 @@ const count = (mesh: Mesh, kind: number) => {
 };
 const shadowX = (mesh: Mesh) => {
   for (let offset = 0; offset < mesh.vertices.length; offset += VERTEX_STRIDE)
-    if (mesh.vertices[offset + 9] === KIND.shadow) return mesh.vertices[offset];
+    if (mesh.vertices[offset + 9] === KIND.shadow)
+      return defined(mesh.vertices[offset]);
   return Number.NaN;
 };
 
 void test("light sources draw a glow and mobs follow their animated pose", () => {
   const state = createSimulation(INITIAL_SIMULATION_SEED);
   const before = count(createEffectsGeometry(state, 0), KIND.halo);
-  state.tiles.find((tile) => tile.material === "grass" && !tile.torch)!.torch =
-    true;
+  defined(
+    state.tiles.find((tile) => tile.material === "grass" && !tile.torch),
+  ).torch = true;
   assert.equal(count(createEffectsGeometry(state, 0), KIND.halo), before + 6);
 
   state.adventure.mobs.push({
@@ -186,7 +193,7 @@ void test("light sources draw a glow and mobs follow their animated pose", () =>
   const animator = createAnimator();
   const rest = createEffectsGeometry(state, 0, animator.frame(state, 1, 0));
   animator.beforeTick(state);
-  state.adventure.mobs[0].x = 3;
+  defined(state.adventure.mobs[0]).x = 3;
   const moved = createEffectsGeometry(
     state,
     0,

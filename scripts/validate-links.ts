@@ -32,7 +32,7 @@ type AstNode = {
 type RouteFile = FileObject & {
   hashes: string[];
   populateKey: "blog/[slug]" | "docs/[[..._splat]]";
-  routeValue: Record<string, string | string[]>;
+  routeValue: { slug: string | string[] };
 };
 
 async function checkLinks() {
@@ -268,7 +268,7 @@ function getHeadings(content: string): string[] {
     }
 
     const explicit = /\s*\[#([^\]]+)\]$/.exec(text);
-    headings.push(explicit ? explicit[1] : slugger.slug(text));
+    headings.push(explicit?.[1] ?? slugger.slug(text));
   });
 
   return headings;

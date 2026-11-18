@@ -1,5 +1,6 @@
 import { strict as assert } from "node:assert";
 import { test } from "node:test";
+import { defined } from "./support/defined";
 import {
   builderCalls,
   parsePort,
@@ -22,7 +23,7 @@ test("builder scanning ignores parentheses and commas inside escaped strings", (
     '.description("Comma, bracket ) and \\"quote\\"").addInputs(PortDefinition.execIn()).isTrigger(true)',
   );
   assert.equal(calls.length, 3);
-  assert.equal(calls[1].args.length, 1);
+  assert.equal(defined(calls[1]).args.length, 1);
   assert.throws(() => builderCalls('.description("unfinished") .futureField('));
 });
 

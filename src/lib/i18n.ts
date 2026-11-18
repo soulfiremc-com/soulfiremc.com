@@ -42,10 +42,15 @@ export function isProviderPath(path: string) {
   return /^\/get-(accounts|proxies)(?:\/|$)/.test(path);
 }
 
+/** The path part of a link, without its query string or fragment. */
+export function hrefPath(href: string) {
+  return href.replace(/[?#][\s\S]*$/, "");
+}
+
 /** Legal text and service endpoints remain at their existing English URLs. */
 export function localizeHref(href: string, locale: Locale): string {
   if (!href.startsWith("/") || href.startsWith("//")) return href;
-  const path = splitLocalePath(href.split(/[?#]/)[0]).path;
+  const path = splitLocalePath(hrefPath(href)).path;
   return path === "/" ||
     ["/download", "/pricing", "/docs"].includes(path) ||
     path.startsWith("/docs/") ||
@@ -77,8 +82,9 @@ export function docFileInfo(file: string) {
     file.replaceAll("\\", "/"),
   );
   if (!match) throw new Error(`Invalid documentation file: ${file}`);
-  const locale = isLocale(match[2]) ? match[2] : "en";
-  const slug = match[1]
+  const [, base = "", localeSuffix] = match;
+  const locale = isLocale(localeSuffix) ? localeSuffix : "en";
+  const slug = base
     .replaceAll(/(^|\/)\([^/]+\)/g, "")
     .replace(/^\//, "")
     .replace(/(^|\/)index$/, "");
@@ -89,10 +95,10 @@ export function docFileInfo(file: string) {
 /** English-only pages switch to the chosen language's home page. */
 export function localeDestination(href: string, locale: Locale) {
   const target = localizeHref(href, locale);
-  const path = splitLocalePath(href.split(/[?#]/)[0]).path;
+  const path = splitLocalePath(hrefPath(href)).path;
   return target === href &&
     !["/", "/download", "/pricing", "/docs"].includes(
-      splitLocalePath(href.split(/[?#]/)[0]).path,
+      splitLocalePath(hrefPath(href)).path,
     ) &&
     !path.startsWith("/docs/") &&
     !isProviderPath(path)

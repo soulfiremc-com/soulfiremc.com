@@ -3,12 +3,14 @@ import assert from "node:assert/strict";
 import { readdirSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 import test from "node:test";
+import { defined } from "./support/defined";
 import { loader, type VirtualFile } from "fumadocs-core/source";
 import type { Node } from "fumadocs-core/page-tree";
 import {
   docFileInfo,
   formatEuro,
   formatLocaleDate,
+  hrefPath,
   i18n,
   locales,
   localeDestination,
@@ -163,9 +165,9 @@ void test("every titled docs folder has localized metadata with the English page
           `${label} is missing`,
         );
         const localized = readMeta(file);
-        assert.equal(typeof localized.title, "string", `${label} title`);
+        assert.equal(typeof localized["title"], "string", `${label} title`);
         assert.equal(
-          localized.description === undefined,
+          localized["description"] === undefined,
           description === undefined,
           `${label} description`,
         );
@@ -224,7 +226,7 @@ void test("localized metadata includes translated titles, descriptions and OG lo
       path: "/download",
       locale,
     });
-    assert.equal(meta[0].title, translate(locale, "download.title"));
+    assert.equal(defined(meta[0]).title, translate(locale, "download.title"));
     assert.notEqual(
       meta.find((value) => value.name === "description")?.content,
       "Pick your OS and CPU to grab the right SoulFire build.",
@@ -271,7 +273,7 @@ void test("translation catalogs use stable keys and preserve English interpolati
   for (const catalog of catalogs) {
     assert.deepEqual(
       Object.keys(catalog).toSorted(),
-      Object.keys(catalogs[0]).toSorted(),
+      Object.keys(defined(catalogs[0])).toSorted(),
     );
     for (const [key, value] of Object.entries(catalog)) {
       assert.ok(isMessageKey(key), key);
@@ -292,7 +294,7 @@ void test("translation catalogs use stable keys and preserve English interpolati
         (key) => !(key in catalog) && !untranslated.test(key),
       ),
       [],
-      ["de", "pl", "ru"][index],
+      defined(["de", "pl", "ru"][index]),
     );
   }
   assert.equal(
@@ -372,4 +374,11 @@ void test("localized sitemap keeps canonical checks and English page priorities"
     ),
     { exclude: true },
   );
+});
+
+void test("hrefPath drops the query string and fragment", () => {
+  assert.equal(hrefPath("/docs/install?tab=linux#setup"), "/docs/install");
+  assert.equal(hrefPath("/pricing#plans?x"), "/pricing");
+  assert.equal(hrefPath("/download"), "/download");
+  assert.equal(hrefPath("?only=query"), "");
 });

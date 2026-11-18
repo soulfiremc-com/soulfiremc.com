@@ -66,6 +66,7 @@
         "allow": ["_tag", "_splat", "_notFound"]
       }
     ],
+    "eslint/no-useless-call": "error",
     "import/no-cycle": "error",
     "import/no-duplicates": "error",
     "import/no-unassigned-import": [
@@ -83,6 +84,7 @@
       }
     ],
     "jsx-a11y/prefer-tag-over-role": "error",
+    "oxc/no-accumulating-spread": "error",
     "promise/always-return": [
       "error",
       {
@@ -95,10 +97,14 @@
     "react/button-has-type": "error",
     "react/exhaustive-effect-dependencies": "error",
     "react/iframe-missing-sandbox": "error",
+    "react/jsx-no-constructed-context-values": "error",
     "react/jsx-no-target-blank": "error",
     "react/jsx-no-useless-fragment": "error",
+    "react/no-array-index-key": "error",
     "react/no-children-prop": "error",
     "react/no-danger": "error",
+    "react/no-deriving-state-in-effects": "error",
+    "react/no-object-type-as-default-prop": "error",
     "react/no-unknown-property": "error",
     "react/no-unstable-nested-components": [
       "error",
@@ -147,10 +153,20 @@
       }
     ],
     "typescript/no-misused-promises": "error",
+    "typescript/no-non-null-assertion": "error",
+    "typescript/no-unnecessary-condition": [
+      "error",
+      {
+        "allowConstantLoopConditions": "only-allowed-literals"
+      }
+    ],
+    "typescript/no-unnecessary-template-expression": "error",
+    "typescript/no-unnecessary-type-arguments": "error",
     "typescript/no-unnecessary-type-assertion": "error",
     "typescript/no-unnecessary-type-parameters": "error",
     "typescript/no-unsafe-enum-assignment": "error",
     "typescript/no-unsafe-type-assertion": "error",
+    "typescript/no-useless-empty-export": "error",
     "typescript/only-throw-error": [
       "error",
       {
@@ -163,18 +179,34 @@
         ]
       }
     ],
+    "typescript/prefer-nullish-coalescing": [
+      "error",
+      {
+        "ignorePrimitives": {
+          "string": true,
+          "boolean": true
+        }
+      }
+    ],
     "typescript/prefer-optional-chain": "error",
     "typescript/prefer-promise-reject-errors": "error",
+    "typescript/prefer-readonly": "error",
+    "typescript/prefer-reduce-type-parameter": "error",
     "typescript/prefer-ts-expect-error": "error",
+    "typescript/require-await": "error",
     "typescript/restrict-plus-operands": "error",
+    "typescript/restrict-template-expressions": "error",
     "typescript/return-await": "error",
     "typescript/switch-exhaustiveness-check": "error",
     "unicorn/consistent-function-scoping": "error",
     "unicorn/no-abusive-eslint-disable": "error",
     "unicorn/no-array-reverse": "error",
     "unicorn/no-array-sort": "error",
+    "unicorn/prefer-array-find": "error",
+    "unicorn/prefer-array-flat-map": "error",
     "unicorn/prefer-at": "error",
     "unicorn/prefer-node-protocol": "error",
+    "unicorn/prefer-set-has": "error",
     "unicorn/prefer-string-replace-all": "error",
     "unicorn/prefer-top-level-await": "error",
     "shadcn/no-arbitrary-values": [

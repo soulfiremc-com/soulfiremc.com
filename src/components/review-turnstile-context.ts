@@ -5,9 +5,8 @@ export type ReviewTurnstileContextValue = {
 };
 
 const DEFAULT_CONTEXT: ReviewTurnstileContextValue = {
-  executeTurnstile: async () => {
-    throw new Error("Cloudflare Turnstile is unavailable.");
-  },
+  executeTurnstile: () =>
+    Promise.reject(new Error("Cloudflare Turnstile is unavailable.")),
 };
 
 export const ReviewTurnstileContext =

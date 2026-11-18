@@ -18,8 +18,8 @@ const pageTitleKeys: Record<string, MessageKey> = {
 
 /** Browser tab title for an auth or account settings view. */
 export function authPageTitle(path: string, locale: Locale) {
-  const key = Object.hasOwn(pageTitleKeys, path)
-    ? pageTitleKeys[path]
-    : "authUi.auth.account";
+  const key =
+    (Object.hasOwn(pageTitleKeys, path) ? pageTitleKeys[path] : undefined) ??
+    "authUi.auth.account";
   return `${translate(locale, key)} - ${translate(locale, "common.brand")}`;
 }

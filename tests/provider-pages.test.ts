@@ -1,9 +1,10 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { defined } from "./support/defined";
 import { localizePath, locales } from "@/lib/i18n";
 import { translate } from "@/lib/messages";
 
-const baseUrl = process.env.SITE_TEST_URL;
+const baseUrl = process.env["SITE_TEST_URL"];
 const host = "https://soulfiremc.com";
 
 function attribute(tag: string, name: string) {
@@ -80,7 +81,7 @@ void test(
             ...html.matchAll(
               /<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g,
             ),
-          ].map((match) => JSON.parse(match[1]));
+          ].map((match) => JSON.parse(defined(match[1])));
           const page = schema.find(
             (data) => data["@type"] === (suffix ? "WebPage" : "CollectionPage"),
           );

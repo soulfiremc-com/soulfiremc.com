@@ -84,8 +84,8 @@ export function exchangeDiscordCodeEffect(code: string, redirectUri: string) {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({
-          client_id: process.env.DISCORD_CLIENT_ID ?? "",
-          client_secret: process.env.DISCORD_CLIENT_SECRET ?? "",
+          client_id: process.env["DISCORD_CLIENT_ID"] ?? "",
+          client_secret: process.env["DISCORD_CLIENT_SECRET"] ?? "",
           grant_type: "authorization_code",
           code,
           redirect_uri: redirectUri,
@@ -116,7 +116,7 @@ export function pushLinkedRoleMetadataEffect(
   accessToken: string,
   metadata: LinkedRoleMetadata,
 ) {
-  const appId = process.env.DISCORD_CLIENT_ID ?? "";
+  const appId = process.env["DISCORD_CLIENT_ID"] ?? "";
   return requestVoid(
     `${DISCORD_API_BASE}/users/@me/applications/${appId}/role-connection`,
     {
@@ -351,7 +351,7 @@ export const fetchDiscordInviteEffect = Effect.fn("fetchDiscordInvite")(
     return yield* getCachedValue({
       cacheKey: getDiscordCacheKey("invite", inviteCode),
       load: Effect.suspend(() => {
-        const token = process.env.DISCORD_BOT_TOKEN;
+        const token = process.env["DISCORD_BOT_TOKEN"];
         return requestJson(
           `${DISCORD_API_BASE}/invites/${inviteCode}?with_counts=true`,
           discordInviteSchema,

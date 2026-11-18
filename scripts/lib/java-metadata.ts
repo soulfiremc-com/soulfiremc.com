@@ -1,4 +1,6 @@
 /** Parse the literal factory-call DSL used by Java node metadata, not arbitrary Java. */
+import { itemAt } from "../../src/lib/item-at";
+
 export type JavaCall = { name: string; args: string[] };
 
 export function splitArguments(source: string): string[] {
@@ -36,7 +38,7 @@ export function splitArguments(source: string): string[] {
 export function parseCall(source: string): JavaCall {
   const match = /^([\w.]+)\(([\s\S]*)\)$/u.exec(source.trim());
   if (!match) throw new Error(`Unsupported metadata call: ${source}`);
-  return { name: match[1], args: splitArguments(match[2]) };
+  return { name: itemAt(match, 1), args: splitArguments(itemAt(match, 2)) };
 }
 
 export function builderCalls(source: string): JavaCall[] {
@@ -61,7 +63,7 @@ export function builderCalls(source: string): JavaCall[] {
     }
     if (depth || quoted) throw new Error("Incomplete metadata builder call");
     calls.push({
-      name: start[1],
+      name: itemAt(start, 1),
       args: splitArguments(rest.slice(start[0].length, end - 1)),
     });
     rest = rest.slice(end).trim();
@@ -69,8 +71,8 @@ export function builderCalls(source: string): JavaCall[] {
   return calls;
 }
 
-export function javaString(source: string): string {
-  if (!/^"(?:[^"\\]|\\.)*"$/su.test(source)) {
+export function javaString(source: string | undefined): string {
+  if (source === undefined || !/^"(?:[^"\\]|\\.)*"$/su.test(source)) {
     throw new Error(`Expected a literal Java string: ${source}`);
   }
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- the source is a Java string literal, which parses to a string
@@ -87,7 +89,8 @@ export type NodePort = {
   multiInput?: boolean;
 };
 
-function descriptor(source: string): string {
+function descriptor(source: string | undefined): string {
+  if (source === undefined) throw new Error("Missing port type descriptor");
   if (/^PortType\.\w+$/u.test(source)) return source.slice(9).toLowerCase();
   const { name, args } = parseCall(source);
   const factory = name.replace(/^TypeDescriptor\./u, "");
@@ -167,12 +170,13 @@ export function parsePort(
   ) {
     throw new Error(`Unsupported port definition: ${source}`);
   }
-  const id = args[0].startsWith("StandardPorts.exec(")
-    ? `exec_${javaString(parseCall(args[0]).args[0])}`
-    : args[0].startsWith("StandardPorts.")
-      ? constants[args[0].slice(14)]
-      : javaString(args[0]);
-  if (!id) throw new Error(`Unknown port ID: ${args[0]}`);
+  const portId = itemAt(args, 0);
+  const id = portId.startsWith("StandardPorts.exec(")
+    ? `exec_${javaString(parseCall(portId).args[0])}`
+    : portId.startsWith("StandardPorts.")
+      ? constants[portId.slice(14)]
+      : javaString(portId);
+  if (!id) throw new Error(`Unknown port ID: ${portId}`);
   let type = descriptor(args[2]);
   if (/list/iu.test(factory)) type = `list<${type}>`;
   else if (/set/iu.test(factory)) type = `set<${type}>`;
@@ -181,7 +185,7 @@ export function parsePort(
     id,
     name: javaString(args[1]),
     type,
-    description: javaString(args.at(-1)!),
+    description: javaString(args.at(-1)),
     required: /input$/iu.test(factory) && factory !== "multiInput",
     ...(factory === "inputWithDefault" && javaString(args[3]) !== ""
       ? { defaultValue: JSON.parse(javaString(args[3])) as unknown }

@@ -1,6 +1,7 @@
 import {
   locales,
   splitLocalePath,
+  hrefPath,
   localizePath,
   isProviderPath,
   type Locale,
@@ -110,7 +111,7 @@ export function getCanonicalLinks(
   locale = splitLocalePath(path).locale,
   languages?: readonly Locale[],
 ) {
-  const bare = splitLocalePath(path.split(/[?#]/)[0]).path;
+  const bare = splitLocalePath(hrefPath(path)).path;
   const available =
     languages ??
     (["/", "/download", "/pricing"].includes(bare) || isProviderPath(bare)

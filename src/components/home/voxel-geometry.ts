@@ -8,6 +8,7 @@ import type {
 
 export type Color = readonly [number, number, number];
 export type Vertex = readonly [number, number, number];
+type Quad = readonly [Vertex, Vertex, Vertex, Vertex];
 /** Position, color, face UV, glow, then the material kind and its parameter. */
 export const VERTEX_STRIDE = 11;
 /**
@@ -49,7 +50,7 @@ export interface Rig {
 /** Center X, bottom Y and center Z relative to the pivot, then the size. */
 export type Box = readonly [number, number, number, number, number, number];
 
-const campColors: readonly Color[] = [
+const campColors: readonly [Color, Color] = [
   [0.4, 0.85, 0.83],
   [0.93, 0.69, 0.46],
 ];
@@ -69,7 +70,7 @@ const quadOrder = [0, 1, 2, 0, 2, 3] as const;
 /** Unit vector from the scene toward the fixed isometric camera. */
 const toCamera: Vertex = [0.591, 0.549, 0.591];
 /** Local normal, then the corner signs (x, y, z) of each box face. */
-const boxFaces: readonly (readonly [Vertex, readonly Vertex[]])[] = [
+const boxFaces: readonly (readonly [Vertex, Quad])[] = [
   [
     [0, 0, 1],
     [
@@ -131,8 +132,8 @@ function isBlended(kind: number) {
 }
 
 export class Geometry {
-  private opaque: number[] = [];
-  private blended: number[] = [];
+  private readonly opaque: number[] = [];
+  private readonly blended: number[] = [];
 
   cube(
     x: number,
@@ -158,29 +159,38 @@ export class Geometry {
       y + py,
       z + px * Math.sin(angle) + pz * Math.cos(angle),
     ];
-    const faces = [
+    /** Each face's corners, then its shade. */
+    const faces: readonly (readonly [Quad, number])[] = [
       [
-        vertex(-halfX, 0, halfZ),
-        vertex(halfX, 0, halfZ),
-        vertex(halfX, height, halfZ),
-        vertex(-halfX, height, halfZ),
+        [
+          vertex(-halfX, 0, halfZ),
+          vertex(halfX, 0, halfZ),
+          vertex(halfX, height, halfZ),
+          vertex(-halfX, height, halfZ),
+        ],
+        0.54,
       ],
       [
-        vertex(halfX, 0, -halfZ),
-        vertex(halfX, 0, halfZ),
-        vertex(halfX, height, halfZ),
-        vertex(halfX, height, -halfZ),
+        [
+          vertex(halfX, 0, -halfZ),
+          vertex(halfX, 0, halfZ),
+          vertex(halfX, height, halfZ),
+          vertex(halfX, height, -halfZ),
+        ],
+        0.72,
       ],
       [
-        vertex(-halfX, height, -halfZ),
-        vertex(halfX, height, -halfZ),
-        vertex(halfX, height, halfZ),
-        vertex(-halfX, height, halfZ),
+        [
+          vertex(-halfX, height, -halfZ),
+          vertex(halfX, height, -halfZ),
+          vertex(halfX, height, halfZ),
+          vertex(-halfX, height, halfZ),
+        ],
+        1,
       ],
     ];
-    for (const [face, corners] of faces.entries()) {
+    for (const [face, [corners, shade]] of faces.entries()) {
       if (!(faceMask & (1 << face))) continue;
-      const shade = [0.54, 0.72, 1][face];
       for (const index of quadOrder) {
         const corner = corners[index];
         target.push(
@@ -332,7 +342,7 @@ export class Geometry {
     const horizontal = Math.hypot(dx, dz);
     const right: Vertex =
       horizontal > 0.0001 ? [-dz / horizontal, 0, dx / horizontal] : [1, 0, 0];
-    const upRaw = [
+    const upRaw: Vertex = [
       dy * right[2],
       dz * right[0] - dx * right[2],
       -dy * right[0],
@@ -344,12 +354,17 @@ export class Geometry {
       upRaw[2] / length,
     ];
     for (const normal of [right, up]) {
-      const corners = [from, to, to, from].map((point, index) =>
-        point.map(
-          (value, axis) =>
-            value + normal[axis] * width * (index < 2 ? -0.5 : 0.5),
-        ),
-      );
+      const offset = (point: Vertex, side: number): Vertex => [
+        point[0] + normal[0] * width * side,
+        point[1] + normal[1] * width * side,
+        point[2] + normal[2] * width * side,
+      ];
+      const corners: Quad = [
+        offset(from, -0.5),
+        offset(to, -0.5),
+        offset(to, 0.5),
+        offset(from, 0.5),
+      ];
       for (const index of quadOrder)
         target.push(
           ...corners[index],
@@ -405,7 +420,7 @@ export function createTerrainGeometry(state: SimulationState) {
     for (const [dx, dz, mask] of [
       [0, 1, 1],
       [1, 0, 2],
-    ]) {
+    ] as const) {
       const neighbor = tiles.get(`${tile.x + dx}:${tile.z + dz}`);
       if (!neighbor || !rendered(neighbor) || tileTop(neighbor) < top)
         faceMask |= mask;
@@ -520,7 +535,7 @@ export function createTerrainGeometry(state: SimulationState) {
           [-0.3, 0.3],
           [0.3, -0.3],
           [0.3, 0.3],
-        ])
+        ] as const)
           geometry.cube(
             tile.x + dx,
             base + 1.1,

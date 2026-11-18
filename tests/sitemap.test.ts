@@ -99,7 +99,7 @@ void test("redirect destinations, non-HTML responses and noncanonical pages stay
     ["/blog", page("/blog?filter=news")],
     ["/blog", page("/blog").replace(host, "https://elsewhere.test")],
     ["/blog", page("/blog", '<link rel="canonical" href="/blog"/>')],
-  ]) {
+  ] as const) {
     assert.deepEqual(getRenderedPageSitemap(path, html, host), {
       exclude: true,
     });

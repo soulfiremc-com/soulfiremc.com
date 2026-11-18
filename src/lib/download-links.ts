@@ -49,7 +49,7 @@ function buildClientInstallerUrl(
 export function createClientDownloads(
   manifest: ClientReleaseManifest | null,
 ): DownloadLinkMap {
-  const version = manifest?.version?.trim();
+  const version = manifest?.version.trim();
 
   return {
     windows: {

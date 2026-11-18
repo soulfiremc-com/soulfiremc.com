@@ -141,7 +141,7 @@ async function generateUniqueUsername() {
 export const auth = betterAuth({
   appName: "SoulFire",
   baseURL: "https://soulfiremc.com",
-  secret: process.env.BETTER_AUTH_SECRET ?? "",
+  secret: process.env["BETTER_AUTH_SECRET"] ?? "",
   database: drizzleAdapter(db, {
     provider: "sqlite",
     transaction: false,
@@ -192,8 +192,8 @@ export const auth = betterAuth({
             data: {
               ...user,
               image: getAvatarUrl(user.image, user.email),
-              username: user.username ?? uniqueUsername,
-              displayUsername: user.displayUsername ?? uniqueUsername,
+              username: user["username"] ?? uniqueUsername,
+              displayUsername: user["displayUsername"] ?? uniqueUsername,
             },
           };
         },
@@ -202,16 +202,16 @@ export const auth = betterAuth({
   },
   socialProviders: {
     google: {
-      clientId: process.env.GOOGLE_CLIENT_ID ?? "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
+      clientId: process.env["GOOGLE_CLIENT_ID"] ?? "",
+      clientSecret: process.env["GOOGLE_CLIENT_SECRET"] ?? "",
     },
     discord: {
-      clientId: process.env.DISCORD_CLIENT_ID ?? "",
-      clientSecret: process.env.DISCORD_CLIENT_SECRET ?? "",
+      clientId: process.env["DISCORD_CLIENT_ID"] ?? "",
+      clientSecret: process.env["DISCORD_CLIENT_SECRET"] ?? "",
     },
     github: {
-      clientId: process.env.GITHUB_CLIENT_ID ?? "",
-      clientSecret: process.env.GITHUB_CLIENT_SECRET ?? "",
+      clientId: process.env["GITHUB_CLIENT_ID"] ?? "",
+      clientSecret: process.env["GITHUB_CLIENT_SECRET"] ?? "",
     },
   },
   emailAndPassword: {
@@ -292,7 +292,7 @@ export const auth = betterAuth({
     }),
     captcha({
       provider: "cloudflare-turnstile",
-      secretKey: process.env.TURNSTILE_SECRET_KEY ?? "",
+      secretKey: process.env["TURNSTILE_SECRET_KEY"] ?? "",
     }),
     dash({
       activityTracking: {

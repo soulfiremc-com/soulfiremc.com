@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/llms-full.txt")({
   server: {
     handlers: {
-      HEAD: async () =>
+      HEAD: () =>
         new Response(null, {
           headers: {
             "Content-Type": "text/plain; charset=utf-8",

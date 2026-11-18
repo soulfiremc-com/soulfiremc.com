@@ -737,10 +737,7 @@ export function ProxyOgImage({
             },
             {
               label: "Network",
-              value:
-                normalizedBadges.length > 0
-                  ? normalizedBadges[0]
-                  : "Proxy network",
+              value: normalizedBadges[0] ?? "Proxy network",
             },
           ]}
         />

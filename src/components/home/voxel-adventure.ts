@@ -6,6 +6,7 @@ import type {
   SimulationState,
   SimulationTile,
 } from "./voxel-simulation-types";
+import { itemAt } from "@/lib/item-at";
 
 export const MAX_MOBS = 6;
 export const MAX_CHARGES = 4;
@@ -549,10 +550,10 @@ function spreadLava(state: SimulationState, host: AdventureHost) {
       [-1, 0],
       [0, 1],
       [0, -1],
-    ];
+    ] as const;
     const start = Math.floor(random(state.adventure) * directions.length);
     for (let index = 0; index < directions.length; index++) {
-      const [dx, dz] = directions[(start + index) % directions.length];
+      const [dx, dz] = itemAt(directions, (start + index) % directions.length);
       const tile = host.tile(source.x + dx, source.z + dz);
       if (
         !tile ||

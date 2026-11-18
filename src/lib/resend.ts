@@ -37,7 +37,7 @@ export class WebsiteMailer extends Context.Service<
 export function makeWebsiteMailer(
   submit: (email: WebsiteEmailSubmission) => Promise<{ error: unknown }> = (
     email,
-  ) => new Resend(process.env.RESEND_API_KEY).emails.send(email),
+  ) => new Resend(process.env["RESEND_API_KEY"]).emails.send(email),
 ): Context.Service.Shape<typeof WebsiteMailer> {
   const submitEmail = (email: WebsiteEmailSubmission) =>
     Effect.tryPromise({

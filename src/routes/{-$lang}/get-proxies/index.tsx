@@ -65,6 +65,7 @@ import {
 } from "@/lib/proxies-data";
 import {
   compareReviewSummaries,
+  emptyReviewSummary,
   getAggregateRatingJsonLd,
   type ReviewSummary,
   type ReviewSummaryStatus,
@@ -513,7 +514,7 @@ function MainContent() {
               <ProviderCard
                 key={provider.slug}
                 provider={provider}
-                reviewSummary={summaries[provider.slug]}
+                reviewSummary={summaries[provider.slug] ?? emptyReviewSummary()}
                 reviewSummaryStatus={summaryStatus}
                 userReview={userReviews[provider.slug]}
                 reviewPending={pendingBySlug[provider.slug] ?? false}

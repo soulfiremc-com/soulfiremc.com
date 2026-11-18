@@ -14,7 +14,7 @@ void test("inline errors keep the session refresh that runs before onSuccess", (
   );
 
   assert.equal(getAuthErrorPresentation(options.meta), "inline");
-  assert.deepEqual(options.meta?.awaits, [authQueryKeys.session]);
+  assert.deepEqual(options.meta?.["awaits"], [authQueryKeys.session]);
 });
 
 void test("inline errors work for options without meta", () => {

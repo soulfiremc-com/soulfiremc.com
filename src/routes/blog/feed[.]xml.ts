@@ -14,7 +14,7 @@ function escapeXml(value: string) {
 export const Route = createFileRoute("/blog/feed.xml")({
   server: {
     handlers: {
-      GET: async () => {
+      GET: () => {
         const posts = getSortedBlogPages();
 
         const rss = `<?xml version="1.0" encoding="UTF-8"?>

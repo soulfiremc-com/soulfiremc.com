@@ -17,7 +17,7 @@ function formatDate(date?: string | Date) {
 export const Route = createFileRoute("/og/blog/{$}/image.webp")({
   server: {
     handlers: {
-      GET: async ({ params }) => {
+      GET: ({ params }) => {
         const slugs = params._splat?.split("/").filter(Boolean) ?? [];
         const page = blogSource.getPage(stripOgSuffix(slugs));
 

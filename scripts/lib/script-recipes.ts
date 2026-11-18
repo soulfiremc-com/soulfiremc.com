@@ -85,7 +85,8 @@ export function validateRecipe(value: unknown, catalog: CatalogNode[]) {
     ]);
   }
   for (const node of recipe.nodes) {
-    const definition = metadata.get(node.id)!;
+    const definition = metadata.get(node.id);
+    if (!definition) throw new Error(`Unknown node: ${node.id}`);
     for (const [key, dataValue] of Object.entries(node.data)) {
       const input = definition.inputs.find((port) => port.id === key);
       if (!input || input.type === "exec")

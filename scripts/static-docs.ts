@@ -50,7 +50,7 @@ export function staticDocsMetadata(): Plugin {
     buildApp: {
       order: "post",
       async handler(builder) {
-        const output = builder.environments.client?.config.build.outDir;
+        const output = builder.environments["client"]?.config.build.outDir;
         if (!output) throw new Error("Client build output is unavailable");
         await Effect.runPromise(
           Effect.acquireUseRelease(

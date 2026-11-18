@@ -48,14 +48,15 @@ async function minecraftVersion(revision: string) {
   );
   if (!response.ok)
     throw new Error(`gradle.properties returned ${response.status}`);
-  const match = /^minecraft_version=(\S+)$/mu.exec(await response.text());
-  if (!match) throw new Error("gradle.properties has no minecraft_version");
-  return match[1];
+  const [, version] =
+    /^minecraft_version=(\S+)$/mu.exec(await response.text()) ?? [];
+  if (!version) throw new Error("gradle.properties has no minecraft_version");
+  return version;
 }
 
 async function resolveRelease(): Promise<SdkRelease> {
   const version =
-    process.env.SOULFIRE_SDK_VERSION?.trim() || (await latestSdkVersion());
+    process.env["SOULFIRE_SDK_VERSION"]?.trim() || (await latestSdkVersion());
   const revision = tagRevision(version);
   return {
     version,
@@ -75,7 +76,7 @@ try {
     );
   }
 } catch (error) {
-  if (process.env.CI || process.env.SOULFIRE_SDK_VERSION) throw error;
+  if (process.env["CI"] || process.env["SOULFIRE_SDK_VERSION"]) throw error;
   printError(
     `Could not check the latest SoulFire SDK, keeping ${current.version}:`,
     error instanceof Error ? error.message : error,

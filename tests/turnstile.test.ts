@@ -3,14 +3,15 @@ import test from "node:test";
 import { validateTurnstileToken } from "@/lib/turnstile";
 
 await test("Turnstile validates tokens and configuration before making requests", async (t) => {
-  const original = process.env.REVIEW_TURNSTILE_SECRET_KEY;
+  const original = process.env["REVIEW_TURNSTILE_SECRET_KEY"];
   t.after(() => {
-    if (original === undefined) delete process.env.REVIEW_TURNSTILE_SECRET_KEY;
-    else process.env.REVIEW_TURNSTILE_SECRET_KEY = original;
+    if (original === undefined)
+      delete process.env["REVIEW_TURNSTILE_SECRET_KEY"];
+    else process.env["REVIEW_TURNSTILE_SECRET_KEY"] = original;
   });
-  delete process.env.REVIEW_TURNSTILE_SECRET_KEY;
-  const fetch = t.mock.method(globalThis, "fetch", async () =>
-    Response.json({ success: true }),
+  delete process.env["REVIEW_TURNSTILE_SECRET_KEY"];
+  const fetch = t.mock.method(globalThis, "fetch", () =>
+    Promise.resolve(Response.json({ success: true })),
   );
   for (const token of ["", "x".repeat(2049)]) {
     assert.deepEqual(await validateTurnstileToken({ token }), {
@@ -26,11 +27,12 @@ await test("Turnstile validates tokens and configuration before making requests"
 });
 
 await test("Turnstile checks response schemas, action and hostname without retrying tokens", async (t) => {
-  const original = process.env.REVIEW_TURNSTILE_SECRET_KEY;
-  process.env.REVIEW_TURNSTILE_SECRET_KEY = "test-secret";
+  const original = process.env["REVIEW_TURNSTILE_SECRET_KEY"];
+  process.env["REVIEW_TURNSTILE_SECRET_KEY"] = "test-secret";
   t.after(() => {
-    if (original === undefined) delete process.env.REVIEW_TURNSTILE_SECRET_KEY;
-    else process.env.REVIEW_TURNSTILE_SECRET_KEY = original;
+    if (original === undefined)
+      delete process.env["REVIEW_TURNSTILE_SECRET_KEY"];
+    else process.env["REVIEW_TURNSTILE_SECRET_KEY"] = original;
   });
   const input = {
     token: "token",
@@ -41,7 +43,7 @@ await test("Turnstile checks response schemas, action and hostname without retry
   const fetch = t.mock.method(
     globalThis,
     "fetch",
-    async (_url: string, init: RequestInit) => {
+    (_url: string, init: RequestInit) => {
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- test double implements only the members this test uses
       const form = init.body as FormData;
       assert.equal(init.method, "POST");
@@ -51,11 +53,13 @@ await test("Turnstile checks response schemas, action and hostname without retry
       assert.equal(form.get("remoteip"), "192.0.2.1");
       assert.ok(form.get("idempotency_key"));
       assert.ok(init.signal instanceof AbortSignal);
-      return Response.json({
-        success: true,
-        action: "review",
-        hostname: "example.com",
-      });
+      return Promise.resolve(
+        Response.json({
+          success: true,
+          action: "review",
+          hostname: "example.com",
+        }),
+      );
     },
   );
   assert.deepEqual(await validateTurnstileToken(input), {
@@ -78,15 +82,17 @@ await test("Turnstile checks response schemas, action and hostname without retry
     ],
     [{ success: "true" }, "internal-error"],
   ] as const) {
-    fetch.mock.mockImplementation(async () => Response.json(payload));
+    fetch.mock.mockImplementation(() =>
+      Promise.resolve(Response.json(payload)),
+    );
     assert.deepEqual(await validateTurnstileToken(input), {
       success: false,
       errorCodes: [expected],
     });
   }
   const before = fetch.mock.callCount();
-  fetch.mock.mockImplementation(
-    async () => new Response(null, { status: 503 }),
+  fetch.mock.mockImplementation(() =>
+    Promise.resolve(new Response(null, { status: 503 })),
   );
   assert.deepEqual(await validateTurnstileToken(input), {
     success: false,

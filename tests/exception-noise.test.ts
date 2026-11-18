@@ -64,7 +64,7 @@ await test("drops hydration errors only when a translator changed the page", () 
     exception([hydrationError]),
     fakeDocument(),
   );
-  assert.equal(kept?.properties.document_translated, false);
+  assert.equal(kept?.properties["document_translated"], false);
 });
 
 await test("prefers the translation state recorded when the error happened", () => {
@@ -95,7 +95,7 @@ await test("tags other errors on translated pages instead of dropping them", () 
     exception([error]),
     fakeDocument({ classes: ["translated-rtl"] }),
   );
-  assert.equal(result?.properties.document_translated, true);
+  assert.equal(result?.properties["document_translated"], true);
 });
 
 await test("drops errors that cannot come from site code", () => {

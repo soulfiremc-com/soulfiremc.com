@@ -1,6 +1,6 @@
 import { printError, printLine } from "./lib/output";
-const DISCORD_BOT_TOKEN = process.env.DISCORD_BOT_TOKEN;
-const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID;
+const DISCORD_BOT_TOKEN = process.env["DISCORD_BOT_TOKEN"];
+const DISCORD_CLIENT_ID = process.env["DISCORD_CLIENT_ID"];
 
 if (!DISCORD_BOT_TOKEN || !DISCORD_CLIENT_ID) {
   printError(

@@ -9,6 +9,7 @@ import {
   type NodePort,
 } from "./lib/java-metadata";
 import { printLine } from "./lib/output";
+import { itemAt } from "../src/lib/item-at";
 
 const checkout = sdkSource();
 const scriptDir = join(
@@ -36,7 +37,11 @@ const categories = [
   ...readFileSync(join(scriptDir, "CategoryRegistry.java"), "utf8").matchAll(
     /(\w+) = register\(\s*NodeCategory.of\("([^"]+)", "([^"]+)"/gu,
   ),
-].map((match) => ({ constant: match[1], id: match[2], name: match[3] }));
+].map((match) => ({
+  constant: itemAt(match, 1),
+  id: itemAt(match, 2),
+  name: itemAt(match, 3),
+}));
 type Node = {
   type: string;
   name: string;
@@ -74,7 +79,7 @@ const nodes: Node[] = registered.map((className) => {
     outputs: [],
     source: `${sdkRepository}/blob/${sdkRevision}/${relative(checkout, path)}`,
   };
-  for (const call of builderCalls(metadata[1])) {
+  for (const call of builderCalls(itemAt(metadata, 1))) {
     switch (call.name) {
       case "type":
         node.type = javaString(call.args[0]);

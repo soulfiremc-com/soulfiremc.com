@@ -1,3 +1,4 @@
+import { itemAt } from "@/lib/item-at";
 import { Geometry, tileNoise, timber, type Color } from "./voxel-geometry";
 import type { SimulationState, SimulationTile } from "./voxel-simulation-types";
 
@@ -197,7 +198,7 @@ export function createFloraGeometry(
           0.12 * open,
           0.09 * open,
           0.12 * open,
-          petals[Math.floor(bloom * 1000) % petals.length],
+          itemAt(petals, Math.floor(bloom * 1000) % petals.length),
           0,
           7,
           0.12,

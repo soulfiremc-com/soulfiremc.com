@@ -2,6 +2,7 @@ import { createElement } from "react";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
+import { defined } from "./support/defined";
 import { renderToStaticMarkup } from "react-dom/server";
 import { createProviderFaqJsonLd, providerFaqs } from "@/lib/provider-faq-data";
 import { ReviewSummaryBadge } from "@/components/review-summary-badge";
@@ -70,7 +71,8 @@ void test("provider metadata localizes IDs, navigation and descriptions while re
       },
       {
         name: "Localts",
-        description: accounts.find((p) => p.slug === "localts")!.summary,
+        description: defined(accounts.find((p) => p.slug === "localts"))
+          .summary,
         url: "https://soulfiremc.com/get-accounts/localts#reviews",
         offers: {
           price: "4.50",
@@ -88,20 +90,23 @@ void test("provider metadata localizes IDs, navigation and descriptions while re
     "https://soulfiremc.com/de/get-accounts#provider-list",
   );
   assert.equal(result.inLanguage, "de");
-  assert.equal(result.itemListElement[0].item, "https://soulfiremc.com/de");
-  assert.equal(result.itemListElement[0].name, "Startseite");
-  assert.equal(result.itemListElement[1].name, "Localts");
+  assert.equal(
+    defined(result.itemListElement[0]).item,
+    "https://soulfiremc.com/de",
+  );
+  assert.equal(defined(result.itemListElement[0]).name, "Startseite");
+  assert.equal(defined(result.itemListElement[1]).name, "Localts");
   assert.notEqual(
-    result.itemListElement[1].description,
-    source.itemListElement[1].description,
+    defined(result.itemListElement[1]).description,
+    defined(source.itemListElement[1]).description,
   );
   assert.equal(
-    result.itemListElement[1].url,
+    defined(result.itemListElement[1]).url,
     "https://soulfiremc.com/de/get-accounts/localts#reviews",
   );
   assert.deepEqual(
-    result.itemListElement[1].offers,
-    source.itemListElement[1].offers,
+    defined(result.itemListElement[1]).offers,
+    defined(source.itemListElement[1]).offers,
   );
   assert.deepEqual(result.isPartOf, source.isPartOf);
   assert.equal(source.inLanguage, "en-US");
@@ -113,8 +118,11 @@ void test("FAQ structured data translates full answers and their guide links", (
       const faq = createProviderFaqJsonLd(kind, locale);
       assert.equal(faq.inLanguage, locale);
       assert.equal(faq.mainEntity.length, providerFaqs[kind].length);
-      assert.notEqual(faq.mainEntity[0].name, providerFaqs[kind][0].question);
-      const answer = faq.mainEntity[0].acceptedAnswer.text;
+      assert.notEqual(
+        defined(faq.mainEntity[0]).name,
+        providerFaqs[kind][0].question,
+      );
+      const answer = defined(faq.mainEntity[0]).acceptedAnswer.text;
       assert.ok(
         answer.includes(
           `https://soulfiremc.com/${locale}/docs/how-to/import-${kind}`,
@@ -165,7 +173,7 @@ void test("localized catalog and provider previews have distinct image URLs", ()
       locale,
     });
     assert.equal(
-      meta[0].title,
+      defined(meta[0]).title,
       translate(locale, "providers.proxies.meta.title"),
     );
     assert.equal(

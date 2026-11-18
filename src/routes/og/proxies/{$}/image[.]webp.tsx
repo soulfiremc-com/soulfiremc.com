@@ -14,7 +14,7 @@ import { getProviderBySlug } from "@/lib/proxies-data";
 export const Route = createFileRoute("/og/proxies/{$}/image.webp")({
   server: {
     handlers: {
-      GET: async ({ params }) => {
+      GET: ({ params }) => {
         const slugs = params._splat?.split("/").filter(Boolean) ?? [];
         const locale = isLocale(slugs[0]) ? slugs[0] : "en";
         if (isLocale(slugs[0])) slugs.shift();

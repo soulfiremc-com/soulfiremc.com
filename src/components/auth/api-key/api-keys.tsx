@@ -174,6 +174,7 @@ export function ApiKeys({
         onValueChange={(value) => {
           if (value === null) return;
           const [id, direction] = value.split(":");
+          if (id === undefined) return;
           table.setSorting([{ id, desc: direction === "desc" }]);
         }}
       >

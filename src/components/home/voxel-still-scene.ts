@@ -10,6 +10,7 @@ import {
   getSimulationSummary,
   INITIAL_SIMULATION_SEED,
 } from "./voxel-simulation";
+import { itemAt } from "@/lib/item-at";
 
 export interface StillFace {
   id: string;
@@ -45,7 +46,11 @@ export function createStillScene(seed: number) {
   for (let offset = 0; offset < vertices.length; offset += VERTEX_STRIDE * 6) {
     const corners = [0, 1, 2, 5].map((index) => {
       const start = offset + index * VERTEX_STRIDE;
-      return vertices.slice(start, start + 3);
+      return [
+        itemAt(vertices, start),
+        itemAt(vertices, start + 1),
+        itemAt(vertices, start + 2),
+      ] as const;
     });
     const points = corners
       .map(

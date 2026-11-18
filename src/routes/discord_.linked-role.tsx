@@ -40,7 +40,7 @@ const statusMessages: Record<
 
 export const Route = createFileRoute("/discord_/linked-role")({
   validateSearch: (search): { status: LinkedRoleStatus } => ({
-    status: isLinkedRoleStatus(search.status) ? search.status : "failed",
+    status: isLinkedRoleStatus(search["status"]) ? search["status"] : "failed",
   }),
   head: () => ({
     meta: [

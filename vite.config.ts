@@ -60,7 +60,7 @@ function getDocsPrerenderPages() {
 export default defineConfig(({ command }) => ({
   define: {
     "import.meta.env.VITE_APP_VERSION": JSON.stringify(
-      process.env.VITE_APP_VERSION?.trim() ||
+      process.env["VITE_APP_VERSION"]?.trim() ||
         execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(),
     ),
   },
@@ -184,18 +184,18 @@ export default defineConfig(({ command }) => ({
     }),
     staticDocsMetadata(),
     react(),
-    ...(command === "build" && process.env.POSTHOG_PERSONAL_API_KEY
+    ...(command === "build" && process.env["POSTHOG_PERSONAL_API_KEY"]
       ? [
           {
             ...posthog({
-              personalApiKey: process.env.POSTHOG_PERSONAL_API_KEY,
+              personalApiKey: process.env["POSTHOG_PERSONAL_API_KEY"],
               projectId: "101553",
               host: "https://eu.posthog.com",
               sourcemaps: {
                 enabled: true,
                 releaseName: "soulfiremc.com",
                 releaseVersion:
-                  process.env.GITHUB_SHA ??
+                  process.env["GITHUB_SHA"] ??
                   execFileSync("git", ["rev-parse", "HEAD"], {
                     encoding: "utf8",
                   }).trim(),

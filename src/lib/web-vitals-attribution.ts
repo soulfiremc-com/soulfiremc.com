@@ -42,18 +42,18 @@ export function attributeWebVitals(
     urls.set(url.href, url);
   }
 
-  if (urls.size === 1 && !missingNavigation) {
-    const url = [...urls.values()][0];
-    properties.$current_url = url.href;
-    properties.$pathname = url.pathname;
-    properties.$host = url.host;
-    properties.$web_vitals_page_attribution = "navigation";
+  const [url] = urls.values();
+  if (urls.size === 1 && !missingNavigation && url) {
+    properties["$current_url"] = url.href;
+    properties["$pathname"] = url.pathname;
+    properties["$host"] = url.host;
+    properties["$web_vitals_page_attribution"] = "navigation";
   } else if (urls.size > 0) {
     // A batch can contain measurements from different navigations. Keep their
     // metric-specific URLs instead of assigning every value to one page.
-    delete properties.$current_url;
-    delete properties.$pathname;
-    properties.$web_vitals_page_attribution = missingNavigation
+    delete properties["$current_url"];
+    delete properties["$pathname"];
+    properties["$web_vitals_page_attribution"] = missingNavigation
       ? "incomplete"
       : "mixed";
   }

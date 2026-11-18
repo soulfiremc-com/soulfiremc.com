@@ -3,6 +3,7 @@ import { reviewDatabaseLayer } from "../src/lib/review-database";
 import assert from "node:assert/strict";
 import { readdir, readFile } from "node:fs/promises";
 import test from "node:test";
+import { defined } from "./support/defined";
 import { passkey } from "@better-auth/passkey";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { betterAuth } from "better-auth/minimal";
@@ -145,8 +146,11 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
               reviewsPage: 1,
             }),
           );
-          assert.equal(result.summaries[slug].reviewCount, 1);
-          assert.equal(result.userReviews[slug].commentStatus, "pending");
+          assert.equal(defined(result.summaries[slug]).reviewCount, 1);
+          assert.equal(
+            defined(result.userReviews[slug]).commentStatus,
+            "pending",
+          );
           const entry = result.writtenReviews?.entries[0];
           assert.ok(entry);
           assert.equal(entry.body, null);
@@ -163,14 +167,15 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
             }),
           );
           assert.equal(
-            result.writtenReviews?.entries[0].body,
+            defined(result.writtenReviews?.entries[0]).body,
             "Useful service",
           );
-          assert.equal(result.summaries[slug].averageRating, 4);
+          assert.equal(defined(result.summaries[slug]).averageRating, 4);
           await run(deleteReview(input));
           assert.equal(
-            (await runQuery(getReviewSummaries("account", [slug])))[slug]
-              .reviewCount,
+            defined(
+              (await runQuery(getReviewSummaries("account", [slug])))[slug],
+            ).reviewCount,
             0,
           );
         },
@@ -191,8 +196,8 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
           const headers = new Headers({ cookie });
           const current = await auth.api.getSession({ headers });
           assert.equal(current?.user.id, userId);
-          assert.equal(current?.user.emailVerified, false);
-          assert.ok(current?.session.expiresAt instanceof Date);
+          assert.equal(current.user.emailVerified, false);
+          assert.ok(current.session.expiresAt instanceof Date);
           await auth.api.signOut({ headers });
           assert.equal(await auth.api.getSession({ headers }), null);
         },
@@ -223,7 +228,7 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
             where: eq(dbSchema.twoFactor.userId, userId),
           });
           assert.equal(factor?.verified, false);
-          assert.equal(factor?.failedVerificationCount, 0);
+          assert.equal(factor.failedVerificationCount, 0);
           await auth.api.disableTwoFactor({ headers, body: { password } });
           assert.equal(
             await db.query.twoFactor.findFirst({
@@ -270,28 +275,33 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
             getReviewSummaries("account", slugs),
           );
           assert.equal(Object.keys(summaries).length, 100);
-          assert.equal(summaries[slugs[99]].reviewCount, 1);
-          assert.equal(summaries[slugs[99]].averageRating, 5);
+          const last = defined(summaries[defined(slugs[99])]);
+          assert.equal(last.reviewCount, 1);
+          assert.equal(last.averageRating, 5);
           assert.equal(
             Object.keys(
               await runQuery(getUserReviews(userId, "account", slugs)),
             ).length,
             100,
           );
+          const firstSlug = defined(slugs[0]);
           const [entry] = await runQuery(
-            getWrittenReviews("account", slugs[0]),
+            getWrittenReviews("account", firstSlug),
           );
+          assert.ok(entry);
           assert.equal(entry.body, null);
           assert.ok(Number.isFinite(Date.parse(entry.createdAt)));
           await runQuery(updateReviewCommentStatus(entry.id, "approved"));
           assert.equal(
-            (await runQuery(getWrittenReviews("account", slugs[0])))[0].body,
-            slugs[0],
+            defined(
+              (await runQuery(getWrittenReviews("account", firstSlug)))[0],
+            ).body,
+            firstSlug,
           );
           await assert.rejects(
             reviewDb
               .insert(review)
-              .values({ userId, itemType: "account", itemSlug: slugs[0] }),
+              .values({ userId, itemType: "account", itemSlug: firstSlug }),
           );
           await assert.rejects(
             reviewDb.insert(review).values({
@@ -311,8 +321,9 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
           );
           await db.delete(user).where(eq(user.id, userId));
           assert.equal(
-            (await runQuery(getReviewSummaries("account", slugs)))[slugs[0]]
-              .reviewCount,
+            defined(
+              (await runQuery(getReviewSummaries("account", slugs)))[firstSlug],
+            ).reviewCount,
             0,
           );
         },

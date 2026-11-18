@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { defined } from "./support/defined";
 import {
   MAX_ARROWS,
   MAX_CHARGES,
@@ -35,7 +36,7 @@ function isolate(state: SimulationState) {
 }
 
 function clearGround(state: SimulationState, x: number, z: number) {
-  const tile = getTile(state, x, z)!;
+  const tile = defined(getTile(state, x, z));
   tile.resource = null;
   tile.quantity = 0;
   tile.structure = null;
@@ -73,15 +74,15 @@ void test("TNT chains, destroys defenses, deforms terrain and hurts bots", () =>
   const center = clearGround(state, -2, -1);
   const wall = clearGround(state, -2, 0);
   wall.structure = { kind: "wall", team: 0, health: 8 };
-  const victim = state.bots[0];
+  const victim = defined(state.bots[0]);
   victim.x = -3;
   victim.z = -1;
   clearGround(state, -3, -1);
-  const owner = state.bots.find((bot) => bot.team === 1)!;
+  const owner = defined(state.bots.find((bot) => bot.team === 1));
   for (const [id, x, fuse] of [
     [80, -2, 0.1],
     [81, -1, 4],
-  ])
+  ] as const)
     state.adventure.charges.push({
       id,
       x,
@@ -126,8 +127,8 @@ void test("manual inputs are bounded, have cooldowns and freeze without simulati
 void test("siege kits consume team stock and retain the crafting bot as owner", () => {
   const state = createSimulation(4);
   isolate(state);
-  const owner = state.bots[0],
-    enemy = state.bots.find((bot) => bot.team === 1)!;
+  const owner = defined(state.bots[0]),
+    enemy = defined(state.bots.find((bot) => bot.team === 1));
   state.bots = [owner, enemy];
   owner.x = -5;
   owner.z = 0;
@@ -142,8 +143,8 @@ void test("siege kits consume team stock and retain the crafting bot as owner", 
   assert.equal(state.teams[0].wood, 4);
   assert.equal(state.teams[0].stone, 4);
   assert.equal(state.metrics.crafted, 1);
-  assert.equal(state.adventure.charges[0].owner, owner.id);
-  assert.ok(state.adventure.charges[0].flight > 0);
+  assert.equal(defined(state.adventure.charges[0]).owner, owner.id);
+  assert.ok(defined(state.adventure.charges[0]).flight > 0);
 });
 
 void test("bots spend carried wood to place useful torches", () => {
@@ -153,7 +154,7 @@ void test("bots spend carried wood to place useful torches", () => {
     bot.genome.aggression = 0;
     bot.genome.building = 0;
   }
-  const builder = state.bots[0];
+  const builder = defined(state.bots[0]);
   builder.x = -3;
   builder.z = 3;
   builder.wood = 1;
@@ -169,8 +170,8 @@ void test("bots spend carried wood to place useful torches", () => {
 void test("skeletons fire moving arrows that can hit bots", () => {
   const state = createSimulation(5);
   isolate(state);
-  const target = state.bots[0],
-    enemy = state.bots.find((bot) => bot.team === 1)!;
+  const target = defined(state.bots[0]),
+    enemy = defined(state.bots.find((bot) => bot.team === 1));
   state.bots = [target, enemy];
   target.x = -5;
   target.z = 0;
@@ -206,8 +207,8 @@ void test("skeletons fire moving arrows that can hit bots", () => {
 void test("a nearby creeper primes its fuse and explodes", () => {
   const state = createSimulation(5);
   isolate(state);
-  const target = state.bots[0],
-    enemy = state.bots.find((bot) => bot.team === 1)!;
+  const target = defined(state.bots[0]),
+    enemy = defined(state.bots.find((bot) => bot.team === 1));
   state.bots = [target, enemy];
   target.x = -5;
   target.z = 0;
@@ -225,7 +226,7 @@ void test("a nearby creeper primes its fuse and explodes", () => {
     hurt: 0,
   });
   stepSimulation(state, 0.1);
-  assert.ok(state.adventure.mobs[0].fuse > 0);
+  assert.ok(defined(state.adventure.mobs[0]).fuse > 0);
   run(state, 2);
   assert.ok(state.events.some((event) => event.kind === "explode"));
   assert.ok(target.health < 10);
@@ -266,7 +267,7 @@ void test("night mobs avoid torchlit spawns and burn after dawn", () => {
   });
   stepSimulation(state, 0.1);
   assert.ok(state.adventure.night < 0.2);
-  assert.ok(state.adventure.mobs[0].health < 8);
+  assert.ok(defined(state.adventure.mobs[0]).health < 8);
 });
 
 void test("the full ecosystem stays bounded and preserves traversable bot positions", () => {
@@ -285,10 +286,8 @@ void test("the full ecosystem stays bounded and preserves traversable bot positi
       assert.ok(Number.isFinite(bot.x) && Number.isFinite(bot.z));
       assert.ok(bot.wood >= 0 && bot.stone >= 0);
       if (bot.health <= 0) continue;
-      const tile = getTile(state, bot.x, bot.z)!;
-      assert.ok(
-        tile && !tile.resource && tile.hazard !== "lava" && !(tile.fire ?? 0),
-      );
+      const tile = defined(getTile(state, bot.x, bot.z));
+      assert.ok(!tile.resource && tile.hazard !== "lava" && !(tile.fire ?? 0));
       assert.ok(tile.material !== "water" || tile.structure?.kind === "bridge");
       assert.notEqual(tile.structure?.kind, "wall");
     }
@@ -368,9 +367,9 @@ void test("a charge blasts with its own power", () => {
 });
 
 function loneBot(state: SimulationState, aggression: number, caution: number) {
-  const bot = state.bots[0];
+  const bot = defined(state.bots[0]);
   // A round ends when a camp has no bots, so one peaceful rival stays.
-  const rival = state.bots.find((other) => other.team === 1)!;
+  const rival = defined(state.bots.find((other) => other.team === 1));
   rival.genome = { aggression: 0, building: 0, caution: 0 };
   state.bots = [bot, rival];
   bot.genome = { aggression, building: 0, caution };
@@ -436,7 +435,7 @@ void test("timid bots run from monsters and attackers, bold bots fight them", ()
   stepSimulation(scared, 0.1);
   assert.equal(timid.task, "flee");
   run(scared, 1);
-  const mob = scared.adventure.mobs[0];
+  const mob = defined(scared.adventure.mobs[0]);
   assert.ok(Math.hypot(timid.x - mob.x, timid.z - mob.z) > 1.5);
 
   const brave = createSimulation(7);
@@ -450,7 +449,7 @@ void test("timid bots run from monsters and attackers, bold bots fight them", ()
   const hunted = createSimulation(7);
   isolate(hunted);
   const prey = loneBot(hunted, 0.1, 0.9);
-  const attacker = hunted.bots[1];
+  const attacker = defined(hunted.bots[1]);
   attacker.x = -3;
   attacker.z = 2;
   attacker.task = "idle";

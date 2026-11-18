@@ -17,7 +17,7 @@ function rootWithPath(path: string | null) {
 
 void test("hydration preloads the server-rendered docs page", async () => {
   const loaded: string[] = [];
-  setDocsContentPreloader(async (path) => loaded.push(path));
+  setDocsContentPreloader((path) => Promise.resolve(loaded.push(path)));
 
   await preloadDocsContentForHydration(rootWithPath("how-to/commands.mdx"));
   await preloadDocsContentForHydration(rootWithPath(null));

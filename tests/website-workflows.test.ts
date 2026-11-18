@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { defined } from "./support/defined";
 import { Deferred, Effect, Fiber } from "effect";
 import { createElement } from "react";
 import { render } from "react-email";
@@ -59,7 +60,7 @@ await test("provider aggregation bounds concurrency and preserves each provider'
       assert.equal(Object.keys(results).length, SHOPS.length);
       for (const shop of SHOPS)
         assert.equal(
-          results[shop.slug].stockByCategory?.["mfa-accounts"],
+          defined(results[shop.slug]).stockByCategory?.["mfa-accounts"],
           shop.slug.length,
         );
     }),
@@ -106,7 +107,7 @@ await test("documentation assembly preserves page order and content across bound
     data: {
       title: `Page ${index}`,
       description: "Description",
-      getText: async () => `Body ${index}`,
+      getText: () => Promise.resolve(`Body ${index}`),
     },
   }));
   const source = {
@@ -206,9 +207,12 @@ await test("authentication email programs keep destination, subject, tokens and 
     ),
   );
   assert.equal(messages.length, 2);
-  assert.equal(messages[0].to, "current@example.com");
-  assert.equal(messages[0].subject, "Approve your email change for SoulFire");
-  assert.deepEqual(messages[0].react.props, {
+  assert.equal(defined(messages[0]).to, "current@example.com");
+  assert.equal(
+    defined(messages[0]).subject,
+    "Approve your email change for SoulFire",
+  );
+  assert.deepEqual(defined(messages[0]).react.props, {
     appName: "SoulFire",
     currentEmail: user.email,
     expirationMinutes: 60,
@@ -216,15 +220,16 @@ await test("authentication email programs keep destination, subject, tokens and 
     newEmail: "new@example.com",
     url: "https://example.com/confirm?token=private",
   });
-  assert.equal(messages[1].subject, "Your sign-in code for SoulFire");
+  assert.equal(defined(messages[1]).subject, "Your sign-in code for SoulFire");
   assert.equal(
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- test double implements only the members this test uses
-    (messages[1].react.props as { verificationCode: string }).verificationCode,
+    (defined(messages[1]).react.props as { verificationCode: string })
+      .verificationCode,
     "123456",
   );
   assert.equal(
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- test double implements only the members this test uses
-    (messages[1].react.props as { expirationMinutes: number })
+    (defined(messages[1]).react.props as { expirationMinutes: number })
       .expirationMinutes,
     5,
   );
@@ -232,9 +237,9 @@ await test("authentication email programs keep destination, subject, tokens and 
 
 await test("code emails name their purpose and submit a readable plain-text part", async () => {
   const submitted: WebsiteEmailSubmission[] = [];
-  const mailer = makeWebsiteMailer(async (email) => {
+  const mailer = makeWebsiteMailer((email) => {
     submitted.push(email);
-    return { error: null };
+    return Promise.resolve({ error: null });
   });
   await Effect.runPromise(
     Effect.gen(function* () {
@@ -250,6 +255,7 @@ await test("code emails name their purpose and submit a readable plain-text part
     }).pipe(Effect.provideService(WebsiteMailer, mailer)),
   );
   const [twoFactor, changeEmail] = submitted;
+  assert.ok(twoFactor && changeEmail);
   assert.equal(twoFactor.subject, "Your two-factor code for SoulFire");
   assert.match(
     await render(twoFactor.react),
@@ -357,9 +363,10 @@ await test("an executing review statement settles before cancellation returns", 
 
 await test("email rejection and lost acknowledgements produce one submission each", async () => {
   let calls = 0;
-  const mailer = makeWebsiteMailer(async () => {
-    if (++calls === 1) return { error: { message: "private provider body" } };
-    throw new Error("lost acknowledgement");
+  const mailer = makeWebsiteMailer(() => {
+    if (++calls === 1)
+      return Promise.resolve({ error: { message: "private provider body" } });
+    return Promise.reject(new Error("lost acknowledgement"));
   });
   const message: WebsiteEmail = {
     from: "from",

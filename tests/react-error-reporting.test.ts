@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { mock, test } from "node:test";
+import { defined } from "./support/defined";
 import { createRecoverableErrorHandler } from "../src/lib/react-error-reporting";
 
 await test("recoverable errors retain the original error and React component stack", () => {
@@ -12,7 +13,7 @@ await test("recoverable errors retain the original error and React component sta
   });
 
   assert.equal(captureException.mock.callCount(), 1);
-  assert.deepEqual(captureException.mock.calls[0].arguments, [
+  assert.deepEqual(defined(captureException.mock.calls[0]).arguments, [
     error,
     {
       react_error_type: "recoverable",
@@ -25,7 +26,7 @@ await test("recoverable errors retain the original error and React component sta
 await test("missing component stacks do not discard recoverable errors", () => {
   const captureException = mock.fn();
   createRecoverableErrorHandler(captureException)("recoverable failure", {});
-  assert.deepEqual(captureException.mock.calls[0].arguments, [
+  assert.deepEqual(defined(captureException.mock.calls[0]).arguments, [
     "recoverable failure",
     { react_error_type: "recoverable", react_component_stack: null },
   ]);
@@ -38,12 +39,12 @@ await test("analytics failures fall back to the console without interrupting rec
     throw new Error("Analytics unavailable");
   });
   assert.doesNotThrow(() => report(error, {}));
-  assert.deepEqual(log.mock.calls[0].arguments, [error]);
+  assert.deepEqual(defined(log.mock.calls[0]).arguments, [error]);
 });
 
 await test("recoverable errors remain visible when analytics is not configured", (t) => {
   const log = t.mock.method(console, "error", () => {});
   const error = new Error("Hydration failed");
   createRecoverableErrorHandler()(error, {});
-  assert.deepEqual(log.mock.calls[0].arguments, [error]);
+  assert.deepEqual(defined(log.mock.calls[0]).arguments, [error]);
 });

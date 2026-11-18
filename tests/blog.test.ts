@@ -7,15 +7,15 @@ import {
 import { formatBlogDate } from "@/lib/blog-date";
 
 void test("formatBlogDate keeps the front-matter calendar day in every time zone", () => {
-  const previous = process.env.TZ;
+  const previous = process.env["TZ"];
   try {
     for (const zone of ["America/Los_Angeles", "UTC", "Pacific/Kiritimati"]) {
-      process.env.TZ = zone;
+      process.env["TZ"] = zone;
       assert.equal(formatBlogDate("2026-02-24T00:00:00.000Z"), "Feb 24, 2026");
       assert.equal(formatBlogDate(new Date("2026-02-24")), "Feb 24, 2026");
     }
   } finally {
-    process.env.TZ = previous;
+    process.env["TZ"] = previous;
   }
 });
 

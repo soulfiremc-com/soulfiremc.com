@@ -49,7 +49,7 @@ export function getLiveShopData(shop: Shop): Promise<LiveShopData> {
 function parseLocaltsStockByCategory(
   payload: unknown,
 ): LiveStockByCategory | undefined {
-  if (!isRecord(payload) || !Array.isArray(payload.products)) {
+  if (!isRecord(payload) || !Array.isArray(payload["products"])) {
     return undefined;
   }
 
@@ -58,24 +58,24 @@ function parseLocaltsStockByCategory(
   let hasNfaMatch = false;
   let hasMfaMatch = false;
 
-  for (const product of payload.products) {
-    if (!isRecord(product) || typeof product.stock !== "number") {
+  for (const product of payload["products"]) {
+    if (!isRecord(product) || typeof product["stock"] !== "number") {
       continue;
     }
 
     const searchableText = [
-      product.name,
-      product.description,
-      product.category,
-      product.id,
-      product.type,
+      product["name"],
+      product["description"],
+      product["category"],
+      product["id"],
+      product["type"],
     ]
       .filter((value) => typeof value === "string")
       .join(" ")
       .toLowerCase();
 
     if (includesAny(searchableText, ["mfa", "full access", "full-access"])) {
-      mfaStock += product.stock;
+      mfaStock += product["stock"];
       hasMfaMatch = true;
       continue;
     }
@@ -89,7 +89,7 @@ function parseLocaltsStockByCategory(
         "hypixel",
       ])
     ) {
-      nfaStock += product.stock;
+      nfaStock += product["stock"];
       hasNfaMatch = true;
     }
   }

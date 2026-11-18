@@ -59,7 +59,7 @@ export function UserProfile({ className }: UserProfileProps) {
   const savedValues = useMemo(
     () => ({
       additionalFields: getAdditionalFieldDefaultValues(modelFields),
-      name: typeof sessionUser?.name === "string" ? sessionUser.name : "",
+      name: typeof sessionUser?.["name"] === "string" ? sessionUser["name"] : "",
     }),
     [modelFields, sessionUser],
   );

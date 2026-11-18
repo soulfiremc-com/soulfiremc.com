@@ -63,7 +63,7 @@ function mobGeometry(
       [-0.13, 0.15],
       [0.13, -0.15],
       [0.13, 0.15],
-    ])
+    ] as const)
       g.part(
         rig,
         [dx, 0.23, dz],
@@ -390,7 +390,7 @@ export function createEffectsGeometry(
         [0, 0.2, 0.55],
         [-0.3, 0.7, 0.25],
         [0.3, 0.8, -0.25],
-      ])
+      ] as const)
         glowCube(
           g,
           event.x + dx * spread,

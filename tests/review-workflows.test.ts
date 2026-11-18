@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { defined } from "./support/defined";
 import { Effect } from "effect";
 import {
   deleteReview,
@@ -126,10 +127,10 @@ await test("new reviews verify before inserting and normalize comments for moder
     commentStatus: "pending",
   });
   await run(submitReview({ ...input, body: "  " }));
-  assert.equal(written[1].body, null);
-  assert.equal(written[1].commentStatus, "approved");
+  assert.equal(defined(written[1]).body, null);
+  assert.equal(defined(written[1]).commentStatus, "approved");
   await run(submitReview({ ...input, body: "x".repeat(2001) }));
-  assert.equal(written[2].body?.length, 2000);
+  assert.equal(defined(written[2]).body?.length, 2000);
 });
 
 await test("review edits skip verification and retain approval only for unchanged approved comments", async () => {

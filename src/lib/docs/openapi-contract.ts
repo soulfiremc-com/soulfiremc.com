@@ -15,7 +15,7 @@ export function referencedSchemas(
     }
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- the visitor only walks JSON objects from the OpenAPI document
     const object = value as Record<string, unknown>;
-    const reference = object.$ref;
+    const reference = object["$ref"];
     if (
       typeof reference === "string" &&
       reference.startsWith("#/components/schemas/")

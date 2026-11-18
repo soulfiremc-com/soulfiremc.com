@@ -15,12 +15,12 @@ await test("Discord validates OAuth responses and never retries a token exchange
   const fetch = t.mock.method(
     globalThis,
     "fetch",
-    async (_url: string, init: RequestInit) => {
+    (_url: string, init: RequestInit) => {
       assert.equal(init.method, "POST");
       assert.ok(init.signal instanceof AbortSignal);
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- test double implements only the members this test uses
       assert.equal((init.body as URLSearchParams).get("code"), "one-use-code");
-      return new Response(null, { status: 503 });
+      return Promise.resolve(new Response(null, { status: 503 }));
     },
   );
   await assert.rejects(
@@ -28,8 +28,8 @@ await test("Discord validates OAuth responses and never retries a token exchange
     { status: 503 },
   );
   assert.equal(fetch.mock.callCount(), 1);
-  fetch.mock.mockImplementation(async () =>
-    Response.json({ access_token: "incomplete" }),
+  fetch.mock.mockImplementation(() =>
+    Promise.resolve(Response.json({ access_token: "incomplete" })),
   );
   await assert.rejects(
     exchangeDiscordCode("code", "https://example.com/callback"),
@@ -42,24 +42,26 @@ await test("Discord user reads retry transient failures and metadata writes rema
   const fetch = t.mock.method(
     globalThis,
     "fetch",
-    async (_url: string, init: RequestInit) => {
+    (_url: string, init: RequestInit) => {
       assert.equal(
         new Headers(init.headers).get("authorization"),
         "Bearer token",
       );
-      if (++reads === 1) throw new TypeError("offline");
-      return Response.json({
-        id: "123",
-        username: "bot",
-        discriminator: "0",
-        avatar: null,
-      });
+      if (++reads === 1) return Promise.reject(new TypeError("offline"));
+      return Promise.resolve(
+        Response.json({
+          id: "123",
+          username: "bot",
+          discriminator: "0",
+          avatar: null,
+        }),
+      );
     },
   );
   assert.equal((await getDiscordUser("token")).id, "123");
   assert.equal(reads, 2);
-  fetch.mock.mockImplementation(
-    async () => new Response(null, { status: 503 }),
+  fetch.mock.mockImplementation(() =>
+    Promise.resolve(new Response(null, { status: 503 })),
   );
   await assert.rejects(
     pushLinkedRoleMetadata("token", {
@@ -76,17 +78,19 @@ await test("Discord resolves relative redirects, bounds redirect loops, and acce
   const fetch = t.mock.method(
     globalThis,
     "fetch",
-    async (url: string, init: RequestInit) => {
+    (url: string, init: RequestInit) => {
       assert.equal(init.redirect, "manual");
       assert.ok(init.signal instanceof AbortSignal);
-      return new Response(null, {
-        status: 302,
-        headers: {
-          location: url.endsWith("/start")
-            ? "/next"
-            : "https://discord.gg/resolved-code",
-        },
-      });
+      return Promise.resolve(
+        new Response(null, {
+          status: 302,
+          headers: {
+            location: url.endsWith("/start")
+              ? "/next"
+              : "https://discord.gg/resolved-code",
+          },
+        }),
+      );
     },
   );
   assert.equal(
@@ -102,9 +106,10 @@ await test("Discord resolves relative redirects, bounds redirect loops, and acce
   assert.equal(await resolveDiscordInviteCode("invalid url"), null);
   assert.equal(fetch.mock.callCount(), 2);
 
-  fetch.mock.mockImplementation(
-    async () =>
+  fetch.mock.mockImplementation(() =>
+    Promise.resolve(
       new Response(null, { status: 302, headers: { location: "/loop" } }),
+    ),
   );
   assert.equal(
     await resolveDiscordInviteCode("https://example.com/loop", 3),
@@ -133,15 +138,17 @@ await test("concurrent Discord lookups share a request and release the slot afte
     ]);
     assert.equal(fetch.mock.callCount(), 1);
 
-    fetch.mock.mockImplementation(
-      async () => new Response(null, { status: 404 }),
+    fetch.mock.mockImplementation(() =>
+      Promise.resolve(new Response(null, { status: 404 })),
     );
     assert.deepEqual(
       await Promise.all([fetchDiscordInvite(code), fetchDiscordInvite(code)]),
       [null, null],
     );
     assert.equal(fetch.mock.callCount(), 2);
-    fetch.mock.mockImplementation(async () => Response.json({ code }));
+    fetch.mock.mockImplementation(() =>
+      Promise.resolve(Response.json({ code })),
+    );
     assert.deepEqual(await fetchDiscordInvite(code), { code });
     assert.equal(fetch.mock.callCount(), 3);
   }));
@@ -164,7 +171,9 @@ await test("interrupted Discord lookups release waiters and allow the next reque
     assert.equal(Exit.isFailure(await waiter), true);
     assert.equal(signal?.aborted, true);
     assert.equal(fetch.mock.callCount(), 1);
-    fetch.mock.mockImplementation(async () => Response.json({ code }));
+    fetch.mock.mockImplementation(() =>
+      Promise.resolve(Response.json({ code })),
+    );
     assert.deepEqual(await fetchDiscordInvite(code), { code });
     assert.equal(fetch.mock.callCount(), 2);
   }));
@@ -178,17 +187,20 @@ await test("Discord retains Cloudflare cache TTLs, negative entries, and cache f
     configurable: true,
     value: {
       default: {
-        async match(key: string) {
-          if (cacheUnavailable) throw new Error("cache unavailable");
-          return entries.get(key)?.clone();
+        match(key: string) {
+          if (cacheUnavailable)
+            return Promise.reject(new Error("cache unavailable"));
+          return Promise.resolve(entries.get(key)?.clone());
         },
-        async put(key: string, response: Response) {
-          if (cacheUnavailable) throw new Error("cache unavailable");
+        put(key: string, response: Response) {
+          if (cacheUnavailable)
+            return Promise.reject(new Error("cache unavailable"));
           entries.set(key, response.clone());
+          return Promise.resolve();
         },
-        async delete(key: string) {
+        delete(key: string) {
           deleted.push(key);
-          return entries.delete(key);
+          return Promise.resolve(entries.delete(key));
         },
       },
     },
@@ -197,13 +209,15 @@ await test("Discord retains Cloudflare cache TTLs, negative entries, and cache f
     if (original) Object.defineProperty(globalThis, "caches", original);
     else Reflect.deleteProperty(globalThis, "caches");
   });
-  const fetch = t.mock.method(globalThis, "fetch", async (url: string) =>
-    url.startsWith("https://example.com")
-      ? new Response(null, {
-          status: 302,
-          headers: { location: "https://discord.gg/cached-code" },
-        })
-      : Response.json({ code: "cached-code", approximate_member_count: 42 }),
+  const fetch = t.mock.method(globalThis, "fetch", (url: string) =>
+    Promise.resolve(
+      url.startsWith("https://example.com")
+        ? new Response(null, {
+            status: 302,
+            headers: { location: "https://discord.gg/cached-code" },
+          })
+        : Response.json({ code: "cached-code", approximate_member_count: 42 }),
+    ),
   );
   assert.equal(
     (await fetchDiscordInvite("https://example.com/cache-test"))
@@ -228,8 +242,13 @@ await test("Discord retains Cloudflare cache TTLs, negative entries, and cache f
   );
   assert.ok(key);
   entries.set(key, Response.json({ value: { code: 123 } }));
-  fetch.mock.mockImplementation(async () =>
-    Response.json({ code: "cached-code", approximate_member_count: "invalid" }),
+  fetch.mock.mockImplementation(() =>
+    Promise.resolve(
+      Response.json({
+        code: "cached-code",
+        approximate_member_count: "invalid",
+      }),
+    ),
   );
   assert.equal(await fetchDiscordInvite("cached-code"), null);
   assert.ok(deleted.includes(key));
@@ -242,16 +261,16 @@ await test("Discord retains Cloudflare cache TTLs, negative entries, and cache f
   assert.equal(fetch.mock.callCount(), count);
 
   cacheUnavailable = true;
-  fetch.mock.mockImplementation(async () =>
-    Response.json({ code: "no-cache" }),
+  fetch.mock.mockImplementation(() =>
+    Promise.resolve(Response.json({ code: "no-cache" })),
   );
   assert.deepEqual(await fetchDiscordInvite("no-cache"), { code: "no-cache" });
 });
 
 await test("Discord pending lookups stay within their request scope", async (t) => {
   const code = crypto.randomUUID();
-  const fetch = t.mock.method(globalThis, "fetch", async () =>
-    Response.json({ code }),
+  const fetch = t.mock.method(globalThis, "fetch", () =>
+    Promise.resolve(Response.json({ code })),
   );
   const requests = Array.from({ length: 2 }, () =>
     runWithDiscordLookupScope(() =>

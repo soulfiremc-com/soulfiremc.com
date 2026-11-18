@@ -9,7 +9,7 @@ export const sdkRevision = sdkRelease.revision;
 
 export function sdkSource() {
   const directory = resolve(
-    process.env.SOULFIRE_SDK_SOURCE ??
+    process.env["SOULFIRE_SDK_SOURCE"] ??
       join(tmpdir(), "soulfire-docs-sdk", sdkRevision),
   );
   if (!existsSync(join(directory, ".git"))) {

@@ -193,12 +193,15 @@ export const getReviews = Effect.fn("getReviews")(function* (
       ],
       { concurrency: 2 },
     );
+    const [onlySlug] = slugs;
     const writtenReviews =
-      input.includeWrittenReviews && slugs.length === 1
+      input.includeWrittenReviews &&
+      slugs.length === 1 &&
+      onlySlug !== undefined
         ? yield* store.writtenReviews(
             input.itemType,
-            slugs[0],
-            summaries[slugs[0]]?.reviewCount ?? 0,
+            onlySlug,
+            summaries[onlySlug]?.reviewCount ?? 0,
             {
               page: input.reviewsPage,
               pageSize: REVIEWS_PAGE_SIZE,

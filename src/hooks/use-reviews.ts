@@ -46,7 +46,9 @@ function withEmptySummaries(
   );
 }
 
-function emptyWrittenReviews(page: number): PaginatedPublicReviewRecords {
+export function emptyWrittenReviews(
+  page: number,
+): PaginatedPublicReviewRecords {
   return {
     entries: [],
     page,
@@ -131,13 +133,21 @@ export function useReviews(
     () => withEmptySummaries(normalizedSlugs, reviewsData?.summaries),
     [normalizedSlugs, reviewsData?.summaries],
   );
-  const writtenReviews = useMemo(() => {
-    if (!includeWrittenReviews || normalizedSlugs.length !== 1) {
+  const writtenReviews = useMemo((): Record<
+    string,
+    PaginatedPublicReviewRecords
+  > => {
+    const [onlySlug] = normalizedSlugs;
+    if (
+      !includeWrittenReviews ||
+      normalizedSlugs.length !== 1 ||
+      onlySlug === undefined
+    ) {
       return {};
     }
 
     return {
-      [normalizedSlugs[0]]:
+      [onlySlug]:
         reviewsData?.writtenReviews ?? emptyWrittenReviews(writtenReviewsPage),
     };
   }, [
