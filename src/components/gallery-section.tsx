@@ -30,13 +30,13 @@ export function GallerySection({
   return (
     <section className="flex flex-col gap-4">
       <h2 className="text-2xl font-semibold">{t("gallery.title")}</h2>
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
         {images.map((img, i) => (
           <button
             key={img.src}
             type="button"
             onClick={() => setOpenIndex(i)}
-            className="relative aspect-video overflow-hidden rounded-lg bg-muted ring-offset-background transition-shadow hover:ring-2 hover:ring-ring hover:ring-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            className="relative aspect-video overflow-hidden rounded-lg bg-muted ring-offset-background transition-shadow hover:ring-2 hover:ring-ring hover:ring-offset-2 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
           >
             <Image
               src={img.src}
@@ -94,7 +94,7 @@ export function GallerySection({
                     variant="ghost"
                     size="icon"
                     onClick={prev}
-                    className="absolute left-3 top-1/2 z-10 h-11 w-11 -translate-y-1/2 rounded-full border border-white/10 bg-black/65 text-white hover:bg-black/80 hover:text-white"
+                    className="absolute top-1/2 left-3 z-10 h-11 w-11 -translate-y-1/2 rounded-full border border-white/10 bg-black/65 text-white hover:bg-black/80 hover:text-white"
                   >
                     <ChevronLeft className="h-5 w-5" />
                     <span className="sr-only">
@@ -105,7 +105,7 @@ export function GallerySection({
                     variant="ghost"
                     size="icon"
                     onClick={next}
-                    className="absolute right-3 top-1/2 z-10 h-11 w-11 -translate-y-1/2 rounded-full border border-white/10 bg-black/65 text-white hover:bg-black/80 hover:text-white"
+                    className="absolute top-1/2 right-3 z-10 h-11 w-11 -translate-y-1/2 rounded-full border border-white/10 bg-black/65 text-white hover:bg-black/80 hover:text-white"
                   >
                     <ChevronRight className="h-5 w-5" />
                     <span className="sr-only">{t("gallery.nextImage")}</span>

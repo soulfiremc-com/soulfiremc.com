@@ -224,7 +224,7 @@ const ProviderCard = memo(function ProviderCard({
             <Link
               to="/{-$lang}/get-proxies/$slug"
               params={{ slug: provider.slug }}
-              className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+              className="inline-flex items-center gap-1 text-xs text-muted-foreground transition-colors hover:text-foreground"
             >
               <ImageIcon className="h-3 w-3" />
               {t("providers.accounts.photos", {
@@ -435,7 +435,7 @@ function MainContent() {
                 isActive
                   ? cn(
                       config.className /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */,
-                      "ring-2 ring-offset-2 ring-offset-background ring-current",
+                      "ring-2 ring-current ring-offset-2 ring-offset-background",
                     )
                   : "bg-muted text-muted-foreground hover:bg-muted/80",
               )}
@@ -449,7 +449,7 @@ function MainContent() {
   );
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6 max-w-(--fd-layout-width) mx-auto w-full">
+    <div className="mx-auto flex w-full max-w-(--fd-layout-width) flex-col gap-6 lg:flex-row">
       {/* Mobile filter toggle */}
       <Button
         type="button"
@@ -473,7 +473,7 @@ function MainContent() {
       {filtersOpen && (
         <div
           id="proxy-filters-mobile"
-          className="lg:hidden rounded-lg border p-4"
+          className="rounded-lg border p-4 lg:hidden"
         >
           {filterContent}
         </div>
@@ -507,7 +507,7 @@ function MainContent() {
             </EmptyHeader>
           </Empty>
         ) : (
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
             {filteredProviders.map((provider) => (
               <ProviderCard
                 key={provider.slug}

@@ -5,7 +5,7 @@ import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 
 function TermsOfService() {
   return (
-    <main className="px-4 py-12 w-full max-w-3xl mx-auto prose">
+    <main className="mx-auto prose w-full max-w-3xl px-4 py-12">
       <h1>Terms of Service</h1>
       <p>
         <strong>Last updated:</strong> February 25, 2026

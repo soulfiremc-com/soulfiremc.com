@@ -378,7 +378,7 @@ function ItemReviewsSectionContent({
                 </div>
                 <div className="grid grid-cols-2 gap-3 sm:min-w-64">
                   <div className="rounded-xl border border-border/70 bg-muted/20 px-4 py-3">
-                    <div className="text-xs uppercase tracking-review text-muted-foreground">
+                    <div className="text-xs tracking-review text-muted-foreground uppercase">
                       {t("reviews.average")}
                     </div>
                     <div className="mt-1 text-2xl font-semibold tabular-nums">
@@ -389,7 +389,7 @@ function ItemReviewsSectionContent({
                     </div>
                   </div>
                   <div className="rounded-xl border border-border/70 bg-muted/20 px-4 py-3">
-                    <div className="text-xs uppercase tracking-review text-muted-foreground">
+                    <div className="text-xs tracking-review text-muted-foreground uppercase">
                       {t("reviews.totalRatings")}
                     </div>
                     <div className="mt-1 text-2xl font-semibold tabular-nums">
@@ -638,7 +638,7 @@ function ItemReviewsSectionContent({
                       {entry.body}
                     </p>
                   ) : entry.commentStatus === "pending" ? (
-                    <p className="text-sm italic text-muted-foreground/80">
+                    <p className="text-sm text-muted-foreground/80 italic">
                       {t("reviews.reviewPending")}
                     </p>
                   ) : null}

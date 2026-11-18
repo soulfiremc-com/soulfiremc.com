@@ -135,7 +135,7 @@ export function ProviderFaq({ kind }: { kind: ProviderKind }) {
                           lang: locale === "en" ? undefined : locale,
                           _splat: `how-to/import-${kind}`,
                         }}
-                        className="underline text-primary"
+                        className="text-primary underline"
                       >
                         {t(item.guide)}
                       </Link>

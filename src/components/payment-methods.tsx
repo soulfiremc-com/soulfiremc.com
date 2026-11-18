@@ -126,7 +126,7 @@ function PaymentMethodLogo({ method }: { method: string }) {
     return (
       <span
         aria-hidden="true"
-        className="inline-flex h-3.5 min-w-3.5 items-center justify-center rounded-xs border bg-muted px-0.5 text-4xs font-bold leading-none text-foreground"
+        className="inline-flex h-3.5 min-w-3.5 items-center justify-center rounded-xs border bg-muted px-0.5 text-4xs leading-none font-bold text-foreground"
       >
         {logo.mark}
       </span>

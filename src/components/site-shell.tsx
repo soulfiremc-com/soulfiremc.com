@@ -148,25 +148,25 @@ export function SiteShell({ children }: { children: ReactNode }) {
             >
               <Link
                 to="/privacy-policy"
-                className="inline-flex min-h-8 items-center hover:text-fd-foreground transition-colors"
+                className="inline-flex min-h-8 items-center transition-colors hover:text-fd-foreground"
               >
                 {t("legal.privacyPolicy")}
               </Link>
               <Link
                 to="/terms-of-service"
-                className="inline-flex min-h-8 items-center hover:text-fd-foreground transition-colors"
+                className="inline-flex min-h-8 items-center transition-colors hover:text-fd-foreground"
               >
                 {t("legal.termsOfService")}
               </Link>
               <Link
                 to="/cookie-policy"
-                className="inline-flex min-h-8 items-center hover:text-fd-foreground transition-colors"
+                className="inline-flex min-h-8 items-center transition-colors hover:text-fd-foreground"
               >
                 {t("legal.cookiePolicy")}
               </Link>
               <Link
                 to="/imprint"
-                className="inline-flex min-h-8 items-center hover:text-fd-foreground transition-colors"
+                className="inline-flex min-h-8 items-center transition-colors hover:text-fd-foreground"
               >
                 {t("legal.imprint")}
               </Link>

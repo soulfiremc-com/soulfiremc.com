@@ -25,7 +25,7 @@ export function docsFunctionId(options: {
 async function listFiles(directory: string): Promise<string[]> {
   const entries = await readdir(directory, { withFileTypes: true });
   const files = await Promise.all(
-    entries.map((entry) => {
+    entries.map(async (entry) => {
       const path = join(directory, entry.name);
       return entry.isDirectory() ? listFiles(path) : [path];
     }),

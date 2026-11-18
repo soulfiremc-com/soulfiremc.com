@@ -57,7 +57,7 @@ export function LinkDiscountNotice({
       href={href}
       target="_blank"
       rel="noopener noreferrer nofollow"
-      className="flex items-center justify-between gap-2 rounded-lg bg-offer/10 p-3 text-sm font-medium text-offer transition-colors hover:bg-offer/15 outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+      className="flex items-center justify-between gap-2 rounded-lg bg-offer/10 p-3 text-sm font-medium text-offer transition-colors outline-none hover:bg-offer/15 focus-visible:ring-3 focus-visible:ring-ring/50"
     >
       {t(message)}
       <ExternalLink aria-hidden="true" className="size-4 shrink-0" />

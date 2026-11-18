@@ -265,7 +265,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
       <CardContent className="flex flex-col gap-8">
         {isMobile && <MobileDownloadNotice />}
         <div className="flex flex-col gap-3">
-          <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+          <p className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
             {t("download.operatingSystem")}
           </p>
           <div
@@ -311,7 +311,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
           </div>
         </div>
         <div className="flex flex-col gap-3">
-          <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+          <p className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
             {t("download.cpuArchitecture")}
           </p>
           <div
@@ -416,7 +416,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
                             retry: true,
                           });
                       }}
-                      className="underline text-primary"
+                      className="text-primary underline"
                       {...downloadLinkProps}
                     >
                       {t("download.retryTheDownload")}
@@ -606,7 +606,7 @@ function DownloadSelectionSkeleton() {
         </CardHeader>
         <CardContent className="flex flex-col gap-8">
           <div className="flex flex-col gap-3">
-            <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+            <p className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
               {t("download.operatingSystem")}
             </p>
             <div className="grid gap-4 sm:grid-cols-3">
@@ -627,7 +627,7 @@ function DownloadSelectionSkeleton() {
             </div>
           </div>
           <div className="flex flex-col gap-3">
-            <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+            <p className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
               {t("download.cpuArchitecture")}
             </p>
             <div className="grid gap-4 sm:grid-cols-2">

@@ -49,19 +49,19 @@ function PricingPageContent() {
   const t = useT();
   const locale = useLocale();
   return (
-    <main className="px-4 py-12 w-full max-w-(--fd-layout-width) mx-auto">
-      <div className="flex flex-col items-center text-center gap-4 mb-12">
+    <main className="mx-auto w-full max-w-(--fd-layout-width) px-4 py-12">
+      <div className="mb-12 flex flex-col items-center gap-4 text-center">
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
           {t("support.simpleTransparentPricing")}
         </h1>
-        <p className="text-lg text-muted-foreground max-w-2xl">
+        <p className="max-w-2xl text-lg text-muted-foreground">
           {t("support.soulfireIsAndAlwaysWillBeFreeIfYou")}
         </p>
       </div>
-      <div className="grid gap-8 md:grid-cols-2 max-w-4xl mx-auto">
+      <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-2">
         <Card className="flex flex-col">
           <CardHeader>
-            <div className="flex items-center gap-3 mb-2">
+            <div className="mb-2 flex items-center gap-3">
               <div className="rounded-lg bg-muted p-2">
                 <Users className="h-5 w-5" />
               </div>
@@ -83,7 +83,7 @@ function PricingPageContent() {
             <ul className="flex flex-col gap-3">
               {freeTierFeatures.map((feature) => (
                 <li key={feature} className="flex items-start gap-3">
-                  <Check className="h-5 w-5 shrink-0 text-primary mt-0.5" />
+                  <Check className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                   <span className="text-sm">{t(feature)}</span>
                 </li>
               ))}
@@ -101,7 +101,7 @@ function PricingPageContent() {
         </Card>
         <Card className="flex flex-col border-primary">
           <CardHeader>
-            <div className="flex items-center gap-3 mb-2">
+            <div className="mb-2 flex items-center gap-3">
               <div className="rounded-lg bg-primary/10 p-2">
                 <Heart className="h-5 w-5 text-primary" />
               </div>
@@ -126,7 +126,7 @@ function PricingPageContent() {
             <ul className="flex flex-col gap-3">
               {supporterTierFeatures.map((feature) => (
                 <li key={feature} className="flex items-start gap-3">
-                  <Check className="h-5 w-5 shrink-0 text-primary mt-0.5" />
+                  <Check className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                   <span className="text-sm">{t(feature)}</span>
                 </li>
               ))}
@@ -145,7 +145,7 @@ function PricingPageContent() {
           </CardFooter>
         </Card>
       </div>
-      <p className="text-center text-sm text-muted-foreground mt-8 max-w-2xl mx-auto">
+      <p className="mx-auto mt-8 max-w-2xl text-center text-sm text-muted-foreground">
         <TranslatedMessage
           text="support.perks.delivery"
           values={{
@@ -157,7 +157,7 @@ function PricingPageContent() {
                 )}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline text-primary"
+                className="text-primary underline"
               >
                 {t("support.discordServer")}
               </a>
@@ -165,24 +165,24 @@ function PricingPageContent() {
           }}
         />
       </p>
-      <div className="flex flex-col items-center text-center gap-4 mt-20 mb-12">
+      <div className="mt-20 mb-12 flex flex-col items-center gap-4 text-center">
         <div className="rounded-lg bg-muted p-3">
           <Gift className="h-6 w-6" />
         </div>
         <h2 className="text-3xl font-bold tracking-tight">
           {t("support.oneTimeDonations")}
         </h2>
-        <p className="text-lg text-muted-foreground max-w-2xl">
+        <p className="max-w-2xl text-lg text-muted-foreground">
           {t("support.donation.description")}
         </p>
-        <p className="text-sm text-muted-foreground max-w-2xl">
+        <p className="max-w-2xl text-sm text-muted-foreground">
           {t("support.onlyTheKoFiMembershipGrantsSupporterPerksOne")}
         </p>
       </div>
-      <div className="grid gap-8 md:grid-cols-2 max-w-4xl mx-auto">
+      <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-2">
         <Card className="flex flex-col">
           <CardHeader>
-            <CardTitle className="text-xl flex items-center gap-2">
+            <CardTitle className="flex items-center gap-2 text-xl">
               <SiKofi className="h-5 w-5" />
               {"Ko-fi"}
             </CardTitle>
@@ -213,7 +213,7 @@ function PricingPageContent() {
         </Card>
         <Card className="flex flex-col">
           <CardHeader>
-            <CardTitle className="text-xl flex items-center gap-2">
+            <CardTitle className="flex items-center gap-2 text-xl">
               <Coins className="h-5 w-5" />
               {t("support.crypto")}
             </CardTitle>

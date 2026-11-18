@@ -102,7 +102,7 @@ export function ReviewStarInput({
             }}
             aria-disabled={disabled || undefined}
             className={cn(
-              "rounded-sm p-1 text-rating outline-none transition-transform hover:scale-105 focus-visible:ring-3 focus-visible:ring-ring/50 aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:hover:scale-100",
+              "rounded-sm p-1 text-rating transition-transform outline-none hover:scale-105 focus-visible:ring-3 focus-visible:ring-ring/50 aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:hover:scale-100",
               !active && "text-rating-muted/70",
             )}
             aria-label={t("reviews.setRating5", { count: starValue })}

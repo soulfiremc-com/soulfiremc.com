@@ -53,7 +53,7 @@ export function Image({
     height ??
     (width && aspectRatio ? Math.round(width / aspectRatio) : metadata?.height);
   const classes = cn(
-    "bg-origin-content bg-clip-content",
+    "bg-clip-content bg-origin-content",
     {
       contain: "object-contain",
       cover: "object-cover",

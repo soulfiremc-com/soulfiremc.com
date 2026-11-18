@@ -13,7 +13,7 @@ import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 
 function PrivacyPolicy() {
   return (
-    <main className="px-4 py-12 w-full max-w-3xl mx-auto prose">
+    <main className="mx-auto prose w-full max-w-3xl px-4 py-12">
       <h1>Privacy Policy</h1>
       <p>
         <strong>Last updated:</strong> November 16, 2026

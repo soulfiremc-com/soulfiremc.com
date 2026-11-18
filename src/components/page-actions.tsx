@@ -250,7 +250,7 @@ export function ViewOptions({
           >
             {item.icon}
             {t(item.title)}
-            <ExternalLinkIcon className="text-fd-muted-foreground size-3.5 ms-auto" />
+            <ExternalLinkIcon className="ms-auto size-3.5 text-fd-muted-foreground" />
           </a>
         ))}
       </PopoverContent>

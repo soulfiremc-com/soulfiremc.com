@@ -594,7 +594,7 @@ export function stepAdventure(
     strike(state, host);
     world.nextBolt = state.elapsed + world.mood.boltGap;
   }
-  for (const charge of [...world.charges]) {
+  for (const charge of world.charges) {
     charge.flight = Math.max(0, charge.flight - dt);
     charge.fuse -= dt;
     if (charge.fuse <= 0) {

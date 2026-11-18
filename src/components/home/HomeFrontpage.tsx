@@ -207,7 +207,7 @@ function AutomationSection() {
   const t = useT();
   return (
     <section
-      className="home-section home-automation"
+      className="home-automation home-section"
       id="automation"
       aria-labelledby="automation-title"
     >
@@ -497,7 +497,7 @@ export function HomeFrontpage({
               </Reveal>
             </section>
             <section
-              className="home-section home-faq"
+              className="home-faq home-section"
               aria-labelledby="faq-title"
             >
               <Reveal className="home-section-copy">
@@ -529,7 +529,7 @@ export function HomeFrontpage({
               <EnderDashSponsor placement="homepage" />
             </div>
             <section
-              className="home-section home-final"
+              className="home-final home-section"
               aria-labelledby="final-title"
             >
               <Reveal>

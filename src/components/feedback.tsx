@@ -71,7 +71,7 @@ function FeedbackForm({ url }: { url: string }) {
       className="border-y py-3"
     >
       <div className="flex flex-row items-center gap-2">
-        <p className="text-sm font-medium pe-2">{t("common.howIsThisPage")}</p>
+        <p className="pe-2 text-sm font-medium">{t("common.howIsThisPage")}</p>
         <ToggleGroup
           aria-label={t("common.howIsThisPage")}
           value={activeOpinion ? [activeOpinion] : []}
@@ -102,7 +102,7 @@ function FeedbackForm({ url }: { url: string }) {
       </div>
       <CollapsibleContent className="mt-3">
         {previous ? (
-          <div className="px-3 py-6 flex flex-col items-center gap-3 bg-fd-card text-fd-muted-foreground text-sm text-center rounded-xl">
+          <div className="flex flex-col items-center gap-3 rounded-xl bg-fd-card px-3 py-6 text-center text-sm text-fd-muted-foreground">
             <p
               tabIndex={-1}
               className="outline-none"
