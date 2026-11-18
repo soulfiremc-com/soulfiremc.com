@@ -1,11 +1,75 @@
 {
   "$schema": "./node_modules/@effect/tsgo/oxlint-schema.json",
+  "extends": ["./node_modules/@effect/tsgo/oxlint-presets/recommended.json"],
+  "plugins": [
+    "typescript",
+    "unicorn",
+    "oxc",
+    "import",
+    "promise",
+    "react",
+    "jsx-a11y",
+    "node",
+    "effecttsgo"
+  ],
   "jsPlugins": ["@shadcn/lint"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error"
+  },
   "options": {
     "reportUnusedDisableDirectives": "error",
     "typeAware": true
   },
+  "env": {
+    "builtin": true,
+    "browser": true,
+    "node": true
+  },
+  "ignorePatterns": [
+    "src/components/ui/**",
+    "src/components/auth/**",
+    "src/lib/auth/**",
+    "src/components/data-table/**",
+    "src/routeTree.gen.ts"
+  ],
   "rules": {
+    "effecttsgo/any-unknown-in-error-context": "off",
+    "effecttsgo/effect-try-without-catch": "off",
+    "effecttsgo/match-boolean-to-is-success": "off",
+    "effecttsgo/prefer-succeed-some-or-none": "off",
+    "effecttsgo/prefer-typed-schema-decoder": "off",
+    "effecttsgo/run-of-exit-to-run-exit": "off",
+    "effecttsgo/strict-effect-provide": "off",
+    "effecttsgo/unnecessary-fail-yieldable-error": "off",
+    "effecttsgo/unnecessary-pipe-chain": "off",
+    "effecttsgo/unsafe-effect-type-assertion": "off",
+    "eslint/no-shadow": "off",
+    "eslint/no-underscore-dangle": "off",
+    "import/no-unassigned-import": "off",
+    "jsx-a11y/alt-text": "off",
+    "jsx-a11y/anchor-has-content": "off",
+    "jsx-a11y/no-autofocus": "off",
+    "jsx-a11y/prefer-tag-over-role": "off",
+    "promise/always-return": "off",
+    "promise/no-promise-in-callback": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "react/exhaustive-effect-dependencies": "off",
+    "react/iframe-missing-sandbox": "off",
+    "react/no-children-prop": "off",
+    "react/no-unstable-nested-components": "off",
+    "react/purity": "off",
+    "react/set-state-in-effect": "off",
+    "typescript/consistent-return": "off",
+    "typescript/no-floating-promises": "off",
+    "typescript/no-unnecessary-type-parameters": "off",
+    "typescript/no-unsafe-enum-assignment": "off",
+    "typescript/no-unnecessary-type-assertion": "off",
+    "typescript/no-unsafe-type-assertion": "off",
+    "unicorn/consistent-function-scoping": "off",
+    "unicorn/no-array-reverse": "off",
+    "unicorn/no-array-sort": "off",
+    "react/react-in-jsx-scope": "off",
     "shadcn/no-unknown-classes": [
       "error",
       {
@@ -238,10 +302,7 @@
       }
     ],
     "shadcn/require-static-classes": "error",
-    "shadcn/no-inline-styles": "error",
-    "effecttsgo/any-unknown-in-error-context": "off",
-    "effecttsgo/unsafe-effect-type-assertion": "off",
-    "effecttsgo/strict-effect-provide": "off"
+    "shadcn/no-inline-styles": "error"
   },
   "overrides": [
     {
@@ -250,14 +311,5 @@
         "shadcn/no-inline-styles": "off"
       }
     }
-  ],
-  "ignorePatterns": [
-    "src/components/ui/**",
-    "src/components/auth/**",
-    "src/lib/auth/**",
-    "src/components/data-table/**",
-    "src/routeTree.gen.ts"
-  ],
-  "extends": ["./node_modules/@effect/tsgo/oxlint-presets/recommended.json"],
-  "plugins": ["typescript", "effecttsgo"]
+  ]
 }

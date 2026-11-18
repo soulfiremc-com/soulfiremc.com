@@ -585,7 +585,9 @@ function AccountDetailPage() {
                   }
                   nativeButton={false}
                   size="lg"
-                  className={theme?.primaryButton}
+                  className={
+                    theme?.primaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
+                  }
                 />
                 {data.shop.websiteUrl ? (
                   <Button
@@ -602,7 +604,9 @@ function AccountDetailPage() {
                     nativeButton={false}
                     variant="secondary"
                     size="lg"
-                    className={theme?.secondaryButton}
+                    className={
+                      theme?.secondaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
+                    }
                   />
                 ) : null}
                 {discordInviteUrl ? (
@@ -620,7 +624,9 @@ function AccountDetailPage() {
                     nativeButton={false}
                     variant="secondary"
                     size="lg"
-                    className={theme?.secondaryButton}
+                    className={
+                      theme?.secondaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
+                    }
                   />
                 ) : null}
                 {data.shop.trustpilotUrl ? (
@@ -638,7 +644,9 @@ function AccountDetailPage() {
                     nativeButton={false}
                     variant="secondary"
                     size="lg"
-                    className={theme?.secondaryButton}
+                    className={
+                      theme?.secondaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
+                    }
                   />
                 ) : null}
                 <SocialLinks

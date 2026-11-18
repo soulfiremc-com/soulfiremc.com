@@ -11,6 +11,10 @@
   "arrowParens": "always",
   "bracketSameLine": false,
   "bracketSpacing": true,
+  "sortTailwindcss": {
+    "stylesheet": "./src/style.css",
+    "functions": ["cn", "cva", "clsx", "twMerge"]
+  },
   "ignorePatterns": [
     "node_modules",
     ".next",

@@ -10,6 +10,7 @@ export async function runWebsiteEffect<A, E>(
   } catch (error) {
     signal?.throwIfAborted();
     // Framework serializers copy Error properties, including private cause trees.
+    // oxlint-disable-next-line eslint/preserve-caught-error
     throw new Error(error instanceof Error ? error.message : "Request failed");
   }
 }
