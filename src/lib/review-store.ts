@@ -3,7 +3,7 @@ import { Effect } from "effect";
 import { db, reviewDb } from "@/lib/db";
 import { ReviewDatabase, reviewQuery } from "@/lib/review-database";
 import { review } from "@/lib/db/schema";
-import { type ReviewStoreService } from "@/lib/review-workflows";
+import type { ReviewStoreService } from "@/lib/review-workflows";
 import {
   getPaginatedWrittenReviews,
   getPendingReviewComments,
