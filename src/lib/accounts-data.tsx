@@ -137,7 +137,7 @@ export function getDiscordInviteUrl(
   provider: Pick<Provider, "discordUrl" | "url">,
 ): string | null {
   const discordLink = provider.discordUrl ?? provider.url;
-  return /(discord\.gg|discord\.com\/invite)/i.test(discordLink) ||
+  return /(discord\.gg|discord\.com\/invite)/iu.test(discordLink) ||
     provider.discordUrl
     ? discordLink
     : null;

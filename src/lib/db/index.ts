@@ -26,13 +26,13 @@ function createDatabase(target: "primary" | "reviews") {
   // available at module initialization for Better Auth and its CLI.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- the proxy forwards every call to the request's D1 binding, so the empty target is never read
   const client = new Proxy({} as D1Database, {
-    get(_target, property) {
+    get(_target, property): unknown {
       const context = databaseStorage.getStore();
       if (!context) {
         throw new Error("Database access requires a Worker request context.");
       }
       const binding = context[target];
-      const value = Reflect.get(binding, property);
+      const value: unknown = Reflect.get(binding, property);
       return typeof value === "function" ? value.bind(binding) : value;
     },
   });

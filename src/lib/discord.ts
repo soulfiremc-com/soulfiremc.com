@@ -12,8 +12,8 @@ class DiscordRequestError extends Data.TaggedError("DiscordRequestError")<{
 
 const DISCORD_API_BASE = "https://discord.com/api/v10";
 const DISCORD_INVITE_URL_PATTERN =
-  /(?:discord\.gg\/|discord\.com\/invite\/)([a-zA-Z0-9-]+)/i;
-const RAW_DISCORD_INVITE_CODE_PATTERN = /^[a-zA-Z0-9-]+$/;
+  /(?:discord\.gg\/|discord\.com\/invite\/)([a-zA-Z0-9-]+)/iu;
+const RAW_DISCORD_INVITE_CODE_PATTERN = /^[a-zA-Z0-9-]+$/u;
 const DISCORD_CACHE_KEY_BASE =
   "https://soulfiremc.com/__internal/cache/discord/v1";
 const DISCORD_INVITE_CACHE_TTL_SECONDS = 10 * 60;
@@ -325,7 +325,9 @@ function resolveDiscordInviteCodeEffect(
       `${maxRedirects}:${initialUrl}`,
     ),
     load: followInviteRedirects(initialUrl, maxRedirects),
-    pendingLoads: lookupStorage.getStore()?.resolutions ?? new Map(),
+    pendingLoads:
+      lookupStorage.getStore()?.resolutions ??
+      new Map<string, Deferred.Deferred<string | null>>(),
     successTtlSeconds: DISCORD_INVITE_RESOLUTION_CACHE_TTL_SECONDS,
     schema: Schema.String,
   });
@@ -360,7 +362,9 @@ export const fetchDiscordInviteEffect = Effect.fn("fetchDiscordInvite")(
           },
         );
       }).pipe(Effect.orElseSucceed(() => null)),
-      pendingLoads: lookupStorage.getStore()?.invites ?? new Map(),
+      pendingLoads:
+        lookupStorage.getStore()?.invites ??
+        new Map<string, Deferred.Deferred<DiscordInviteResponse | null>>(),
       successTtlSeconds: DISCORD_INVITE_CACHE_TTL_SECONDS,
       schema: discordInviteSchema,
     });

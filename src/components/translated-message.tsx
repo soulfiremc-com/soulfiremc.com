@@ -11,7 +11,7 @@ export function TranslatedMessage({
 }) {
   const t = useT();
   return t(text)
-    .split(/(\{\w+\})/)
+    .split(/(\{\w+\})/u)
     .map((part) =>
       part.startsWith("{") && part.endsWith("}") ? (
         <Fragment key={part}>{values[part.slice(1, -1)] ?? part}</Fragment>

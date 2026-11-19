@@ -34,7 +34,7 @@ const docLanguages: Record<string, Locale[]> = {};
 function getDocsPrerenderPages() {
   const directory = resolve(MdxConfig.docs.dir);
   const pages = readdirSync(directory, { recursive: true, withFileTypes: true })
-    .filter((entry) => entry.isFile() && /\.mdx?$/.test(entry.name))
+    .filter((entry) => entry.isFile() && /\.mdx?$/u.test(entry.name))
     .map((entry) => {
       const file = docFileInfo(
         relative(directory, join(entry.parentPath, entry.name)).replaceAll(
@@ -112,7 +112,7 @@ export default defineConfig(({ command }) => ({
           // Provider page loaders read the shop and proxy catalogs. Splitting
           // them with the page component keeps that data out of the entry.
           splitBehavior: ({ routeId }) =>
-            /\/get-(accounts|proxies)\//.test(routeId)
+            /\/get-(accounts|proxies)\//u.test(routeId)
               ? [
                   ["loader", "component"],
                   ["pendingComponent"],

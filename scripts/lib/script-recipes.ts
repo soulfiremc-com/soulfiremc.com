@@ -7,7 +7,7 @@ export type CatalogNode = {
   inputs: NodePort[];
   outputs: NodePort[];
 };
-const recipeSchema = Schema.Struct({
+export const recipeSchema = Schema.Struct({
   version: Schema.Literal(1),
   name: Schema.String.check(Schema.isMinLength(1)),
   description: Schema.String,
@@ -115,10 +115,12 @@ export function validateRecipe(value: unknown, catalog: CatalogNode[]) {
       throw new Error("Documentation recipe contains a cycle");
     if (visited.has(id)) return;
     visiting.add(id);
-    adjacency.get(id)?.forEach(visit);
+    for (const next of adjacency.get(id) ?? []) visit(next);
     visiting.delete(id);
     visited.add(id);
   }
-  recipe.nodes.forEach((node) => visit(node.id));
+  recipe.nodes.forEach((node) => {
+    visit(node.id);
+  });
   return recipe;
 }

@@ -31,7 +31,7 @@ void test(
     const modules = [
       { type: "ESModule" as const, path: join(bundle, "index.js") },
       ...(await readdir(bundle, { recursive: true }))
-        .filter((path) => path !== "index.js" && /\.(js|wasm)$/.test(path))
+        .filter((path) => path !== "index.js" && /\.(js|wasm)$/u.test(path))
         .map((path) => ({
           type: path.endsWith(".wasm")
             ? ("CompiledWasm" as const)
@@ -140,7 +140,7 @@ void test(
               );
             }
             const document = html.replaceAll(
-              /<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi,
+              /<(script|style)\b[^>]*>[\s\S]*?<\/\1>/giu,
               "",
             );
             for (const key of Object.keys(en)) {
@@ -150,11 +150,11 @@ void test(
               );
             }
             for (const [, json] of html.matchAll(
-              /<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g,
+              /<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/gu,
             )) {
-              const structuredData = JSON.parse(defined(json));
+              const structuredData: unknown = JSON.parse(defined(json));
               const values: string[] = [];
-              JSON.stringify(structuredData, (_, value) => {
+              JSON.stringify(structuredData, (_: string, value: unknown) => {
                 if (typeof value === "string") values.push(value);
                 return value;
               });

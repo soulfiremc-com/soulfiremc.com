@@ -7,7 +7,7 @@ import logoSvgUrl from "@/assets/logo-square.svg?inline";
 function dataUriBytes(dataUri: string) {
   return Uint8Array.from(
     atob(dataUri.slice(dataUri.indexOf(",") + 1)),
-    (character) => character.charCodeAt(0),
+    (character) => character.codePointAt(0) ?? 0,
   );
 }
 
@@ -45,7 +45,7 @@ const embeddedLogos = import.meta.glob<string>(
 
 const logosByPublicPath = new Map<string, string>(
   Object.entries(embeddedLogos).map(([modulePath, dataUri]) => {
-    const publicPath = modulePath.replace(/^.*\/src\/assets/, "");
+    const publicPath = modulePath.replace(/^.*\/src\/assets/u, "");
     return [publicPath, dataUri];
   }),
 );

@@ -36,7 +36,7 @@ await test("a second challenge cannot replace the active one", async () => {
   const pending = Effect.runPromise(challenge.execute(widget));
   await assert.rejects(
     Effect.runPromise(challenge.execute(widget)),
-    /already verifying/,
+    /already verifying/u,
   );
   assert.equal(calls, 1);
   challenge.resolve("original-token");
@@ -64,7 +64,7 @@ await test("widget errors and unmounts release the challenge without leaking to 
   );
   const widget = { reset() {}, execute() {} };
   const pending = Effect.runPromise(challenge.execute(widget));
-  const rejection = assert.rejects(pending, /was unloaded/);
+  const rejection = assert.rejects(pending, /was unloaded/u);
   challenge.reject("Cloudflare Turnstile was unloaded.");
   const next = Effect.runPromise(challenge.execute(widget));
   await rejection;
@@ -77,7 +77,7 @@ await test("timeouts and interruption clean up pending challenges", async () => 
   const widget = { reset() {}, execute() {} };
   await assert.rejects(
     Effect.runPromise(challenge.execute(widget)),
-    /timed out/,
+    /timed out/u,
   );
   const fiber = Effect.runFork(challenge.execute(widget));
   await Effect.runPromise(Fiber.interrupt(fiber));

@@ -12,11 +12,11 @@ type Metadata = {
 };
 
 function collectUrls(value: unknown): string[] {
-  if (Array.isArray(value)) return value.flatMap(collectUrls);
+  if (Array.isArray(value)) return value.flatMap((item) => collectUrls(item));
   if (!value || typeof value !== "object") return [];
   const own =
     "url" in value && typeof value.url === "string" ? [value.url] : [];
-  return [...own, ...Object.values(value).flatMap(collectUrls)];
+  return [...own, ...Object.values(value).flatMap((item) => collectUrls(item))];
 }
 
 void test(
@@ -34,10 +34,13 @@ void test(
       const slugs =
         bare === "/docs"
           ? []
-          : bare.slice("/docs/".length).split("/").map(decodeURIComponent);
+          : bare
+              .slice("/docs/".length)
+              .split("/")
+              .map((segment) => decodeURIComponent(segment));
       const hash = JSON.stringify([locale, ...slugs])
-        .replaceAll(/[/\\?%*:|"<>]/g, "-")
-        .replaceAll(/\s+/g, "_");
+        .replaceAll(/[/\\?%*:|"<>]/gu, "-")
+        .replaceAll(/\s+/gu, "_");
       const key = createHash("sha1")
         .update(`docs-metadata__${hash}`)
         .digest("hex");
@@ -62,12 +65,12 @@ void test(
       (url) =>
         url.startsWith("/docs/") &&
         !url.startsWith("/docs/openapi") &&
-        !/[?#]/.test(url),
+        !/[?#]/u.test(url),
     );
     assert.ok(guide, "Documentation navigation must contain a guide");
     assert.equal((await metadata(guide)).type, "docs");
     const api = urls.find(
-      (url) => url.startsWith("/docs/openapi/") && !/[?#]/.test(url),
+      (url) => url.startsWith("/docs/openapi/") && !/[?#]/u.test(url),
     );
     assert.ok(api, "Documentation navigation must contain API reference pages");
     assert.equal((await metadata(api)).type, "openapi");
@@ -77,7 +80,7 @@ void test(
     });
     assert.equal(index.status, 200);
     assert.ok(index.headers.has("etag"), "Search index must be a static asset");
-    assert.match(index.headers.get("content-type") ?? "", /application\/json/);
+    assert.match(index.headers.get("content-type") ?? "", /application\/json/u);
     // oxlint-disable-next-line typescript/no-deprecated -- the site serves an Orama index; staticClient searches with ZBSearch
     const client = oramaStaticClient({
       from: new URL("/api/search", baseUrl).href,

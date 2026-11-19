@@ -10,7 +10,9 @@ export function referencedSchemas(
       return;
     visited.add(value);
     if (Array.isArray(value)) {
-      value.forEach(visit);
+      value.forEach((item) => {
+        visit(item);
+      });
       return;
     }
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- the visitor only walks JSON objects from the OpenAPI document
@@ -30,7 +32,7 @@ export function referencedSchemas(
         visit(schemas[name]);
       }
     }
-    Object.values(object).forEach(visit);
+    for (const item of Object.values(object)) visit(item);
   }
   visit(contract);
   return result;

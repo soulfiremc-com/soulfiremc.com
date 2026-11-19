@@ -7,17 +7,11 @@ import { cn, generateN } from "@/lib/utils";
 
 type Size = "sm" | "md" | "lg";
 
-function sizeClass(size: Size) {
-  switch (size) {
-    case "lg":
-      return "block h-5 w-5 shrink-0";
-    case "md":
-      return "block h-4.5 w-4.5 shrink-0";
-    case "sm":
-    default:
-      return "block h-4 w-4 shrink-0";
-  }
-}
+const sizeClasses: Record<Size, string> = {
+  lg: "block h-5 w-5 shrink-0",
+  md: "block h-4.5 w-4.5 shrink-0",
+  sm: "block h-4 w-4 shrink-0",
+};
 
 export function ReviewStars({
   value,
@@ -49,7 +43,7 @@ export function ReviewStars({
     >
       <div className="flex items-center gap-0.5 text-rating-muted/70">
         {generateN(5).map((i) => (
-          <Star key={i} className={sizeClass(size)} />
+          <Star key={i} className={sizeClasses[size]} />
         ))}
       </div>
       <div
@@ -58,7 +52,7 @@ export function ReviewStars({
       >
         <div className="flex items-center gap-0.5">
           {generateN(5).map((i) => (
-            <Star key={i} className={cn(sizeClass(size), "fill-current")} />
+            <Star key={i} className={cn(sizeClasses[size], "fill-current")} />
           ))}
         </div>
       </div>
@@ -110,7 +104,7 @@ export function ReviewStarInput({
             aria-label={t("reviews.setRating5", { count: starValue })}
             aria-pressed={value === starValue}
           >
-            <Star className={cn(sizeClass(size), active && "fill-current")} />
+            <Star className={cn(sizeClasses[size], active && "fill-current")} />
           </button>
         );
       })}

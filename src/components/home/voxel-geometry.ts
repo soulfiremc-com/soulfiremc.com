@@ -596,7 +596,8 @@ function addBot(
   height: number,
   time: number,
 ) {
-  const seed = bot.id.charCodeAt(bot.id.length - 1) * 1.7 + bot.team * 2.9;
+  const seed =
+    (bot.id.codePointAt(bot.id.length - 1) ?? 0) * 1.7 + bot.team * 2.9;
   const walk = pose.walk;
   const idle = 1 - walk;
   const swing = Math.sin(pose.stride) * 0.75 * walk;

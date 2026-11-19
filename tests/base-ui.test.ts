@@ -48,7 +48,7 @@ test("slider renders one thumb for a scalar and two for a range", () => {
   ] as const) {
     const html = renderToStaticMarkup(createElement(Slider, { value }));
     assert.equal(
-      (html.match(/<input\b[^>]*type="range"/g) ?? []).length,
+      (html.match(/<input\b[^>]*type="range"/gu) ?? []).length,
       expectedCount,
     );
   }

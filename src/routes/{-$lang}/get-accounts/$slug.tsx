@@ -162,7 +162,7 @@ function getAccountDetailPageData({
   }
 
   const providers = PROVIDERS.filter((provider) => provider.slug === shop.slug);
-  const productJsonLd = {
+  const productJsonLd: WithContext<Product> = {
     "@context": "https://schema.org",
     "@type": "Product",
     "@id": `https://soulfiremc.com/get-accounts/${shop.slug}#product`,
@@ -182,7 +182,7 @@ function getAccountDetailPageData({
     ...(shop.startDate && { dateCreated: shop.startDate }),
   };
 
-  const breadcrumbJsonLd = {
+  const breadcrumbJsonLd: WithContext<BreadcrumbList> = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "@id": `https://soulfiremc.com/get-accounts/${shop.slug}#breadcrumb`,
@@ -208,7 +208,7 @@ function getAccountDetailPageData({
     ],
   };
 
-  const pageJsonLd = {
+  const pageJsonLd: WithContext<WebPage> = {
     "@context": "https://schema.org",
     "@type": "WebPage",
     "@id": `https://soulfiremc.com/get-accounts/${shop.slug}#webpage`,
@@ -234,18 +234,9 @@ function getAccountDetailPageData({
   };
 
   return {
-    breadcrumbJsonLd: localizeProviderData(
-      JSON.parse(JSON.stringify(breadcrumbJsonLd)),
-      locale,
-    ),
-    pageJsonLd: localizeProviderData(
-      JSON.parse(JSON.stringify(pageJsonLd)),
-      locale,
-    ),
-    productJsonLd: localizeProviderData(
-      JSON.parse(JSON.stringify(productJsonLd)),
-      locale,
-    ),
+    breadcrumbJsonLd: localizeProviderData(breadcrumbJsonLd, locale),
+    pageJsonLd: localizeProviderData(pageJsonLd, locale),
+    productJsonLd: localizeProviderData(productJsonLd, locale),
     providers,
     reviewsPage,
     shop,

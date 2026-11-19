@@ -293,7 +293,13 @@ function ItemReviewsSectionContent({
       return;
     }
     if (result.skipped) return;
-    handleMutationError(result.error, () => setShowSignInPrompt(true), t);
+    handleMutationError(
+      result.error,
+      () => {
+        setShowSignInPrompt(true);
+      },
+      t,
+    );
     if (!result.error) {
       setDraft(null);
       toast(t("reviews.reviewRemoved"));
@@ -450,7 +456,9 @@ function ItemReviewsSectionContent({
               <Textarea
                 id={`review-body-${slug}`}
                 value={body}
-                onChange={(event) => setBody(event.target.value)}
+                onChange={(event) => {
+                  setBody(event.target.value);
+                }}
                 disabled={pending}
                 rows={6}
                 maxLength={2000}
@@ -490,7 +498,9 @@ function ItemReviewsSectionContent({
               <Button
                 type="button"
                 variant="outline"
-                onClick={() => setConfirmRemove(true)}
+                onClick={() => {
+                  setConfirmRemove(true);
+                }}
                 disabled={pending || refreshing}
                 focusableWhenDisabled
               >
@@ -531,9 +541,9 @@ function ItemReviewsSectionContent({
                           ? reviewPageHref(reviewPageData.page - 1)
                           : undefined
                       }
-                      onNavigate={() =>
-                        changeReviewPage(reviewPageData.page - 1)
-                      }
+                      onNavigate={() => {
+                        changeReviewPage(reviewPageData.page - 1);
+                      }}
                     >
                       <ChevronLeft />
                       <span className="hidden sm:block">
@@ -560,9 +570,9 @@ function ItemReviewsSectionContent({
                           ? reviewPageHref(reviewPageData.page + 1)
                           : undefined
                       }
-                      onNavigate={() =>
-                        changeReviewPage(reviewPageData.page + 1)
-                      }
+                      onNavigate={() => {
+                        changeReviewPage(reviewPageData.page + 1);
+                      }}
                     >
                       <span className="hidden sm:block">
                         {t("common.next")}

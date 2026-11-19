@@ -91,7 +91,7 @@ export function staticDocsMetadata(): Plugin {
                     ),
                   )
                   .toSorted();
-                if (!pages.length)
+                if (pages.length === 0)
                   throw new Error("No prerendered documentation pages found");
                 yield* Effect.forEach(
                   pages,
@@ -109,7 +109,7 @@ export function staticDocsMetadata(): Plugin {
                             : path
                                 .slice("docs/".length)
                                 .split("/")
-                                .map(decodeURIComponent);
+                                .map((segment) => decodeURIComponent(segment));
                         const data = [locale, ...slugs];
                         const payload = await toJSONAsync({ data });
                         const url = new URL(
@@ -156,8 +156,8 @@ export function staticDocsMetadata(): Plugin {
                         // Match the cache key of the pinned staticFunctionMiddleware.
                         // Slugs are string arrays, so no object-key sorting is needed.
                         const hash = JSON.stringify(data)
-                          .replaceAll(/[/\\?%*:|"<>]/g, "-")
-                          .replaceAll(/\s+/g, "_");
+                          .replaceAll(/[/\\?%*:|"<>]/gu, "-")
+                          .replaceAll(/\s+/gu, "_");
                         const key = createHash("sha1")
                           .update(`${docsMetadataFunctionId}__${hash}`)
                           .digest("hex");

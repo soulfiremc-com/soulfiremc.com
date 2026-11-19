@@ -310,7 +310,7 @@ function getProxyDetailPageData({
     throw notFound();
   }
 
-  const productJsonLd = {
+  const productJsonLd: WithContext<Product> = {
     "@context": "https://schema.org",
     "@type": "Product",
     "@id": `https://soulfiremc.com/get-proxies/${provider.slug}#product`,
@@ -336,7 +336,7 @@ function getProxyDetailPageData({
       }),
   };
 
-  const breadcrumbJsonLd = {
+  const breadcrumbJsonLd: WithContext<BreadcrumbList> = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "@id": `https://soulfiremc.com/get-proxies/${provider.slug}#breadcrumb`,
@@ -362,7 +362,7 @@ function getProxyDetailPageData({
     ],
   };
 
-  const pageJsonLd = {
+  const pageJsonLd: WithContext<WebPage> = {
     "@context": "https://schema.org",
     "@type": "WebPage",
     "@id": `https://soulfiremc.com/get-proxies/${provider.slug}#webpage`,
@@ -386,18 +386,9 @@ function getProxyDetailPageData({
   };
 
   return {
-    breadcrumbJsonLd: localizeProviderData(
-      JSON.parse(JSON.stringify(breadcrumbJsonLd)),
-      locale,
-    ),
-    pageJsonLd: localizeProviderData(
-      JSON.parse(JSON.stringify(pageJsonLd)),
-      locale,
-    ),
-    productJsonLd: localizeProviderData(
-      JSON.parse(JSON.stringify(productJsonLd)),
-      locale,
-    ),
+    breadcrumbJsonLd: localizeProviderData(breadcrumbJsonLd, locale),
+    pageJsonLd: localizeProviderData(pageJsonLd, locale),
+    productJsonLd: localizeProviderData(productJsonLd, locale),
     provider,
     reviewsPage,
   };

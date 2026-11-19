@@ -6,7 +6,7 @@ import { resolveMessage } from "@/lib/messages";
 // Reads the lowest USD amount from a shown price such as "$4.00-$5.50",
 // "10-15¢" or "0.8-1¢/credit".
 function lowestShownPrice(price: string): number | undefined {
-  const match = /^(\$)?(\d+(?:\.\d+)?)/.exec(price);
+  const match = /^(\$)?(\d+(?:\.\d+)?)/u.exec(price);
   if (!match) return undefined;
   const amount = Number(match[2]);
   return match[1] ? amount : amount / 100;

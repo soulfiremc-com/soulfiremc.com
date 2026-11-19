@@ -21,7 +21,7 @@ const registry = readFileSync(join(nodesDir, "NodeRegistry.java"), "utf8");
 const registered = [...registry.matchAll(/register\((\w+)\.METADATA,/gu)].map(
   (match) => match[1],
 );
-if (!registered.length || new Set(registered).size !== registered.length)
+if (registered.length === 0 || new Set(registered).size !== registered.length)
   throw new Error("Invalid node registry");
 const files = readdirSync(nodesDir, { recursive: true }).filter(
   (file): file is string => typeof file === "string" && file.endsWith(".java"),
@@ -31,7 +31,11 @@ const constants = Object.fromEntries(
     ...readFileSync(join(scriptDir, "StandardPorts.java"), "utf8").matchAll(
       /String (\w+) = ("[^"]+")/gu,
     ),
-  ].map((match) => [match[1], javaString(match[2])]),
+  ].map((match) => {
+    const name = match[1];
+    if (name === undefined) throw new Error("Invalid StandardPorts constant");
+    return [name, javaString(match[2])] as const;
+  }),
 );
 const categories = [
   ...readFileSync(join(scriptDir, "CategoryRegistry.java"), "utf8").matchAll(
@@ -149,12 +153,12 @@ const aliases = (node: Node) => {
   const names = [...new Set(node.keywords)].filter(
     (keyword) => keyword.toLowerCase() !== node.name.toLowerCase(),
   );
-  return names.length
-    ? `\n\nAlso called: ${names.map(escape).join(", ")}.`
+  return names.length > 0
+    ? `\n\nAlso called: ${names.map((name) => escape(name)).join(", ")}.`
     : "";
 };
 const portsTable = (ports: NodePort[], input: boolean) =>
-  ports.length
+  ports.length > 0
     ? `| Port | Type | ${input ? "Required / default" : "Description"} |${input ? " Description |" : ""}\n| --- | --- | --- |${input ? " --- |" : ""}\n${ports.map((port) => `| \`${port.id}\` (${escape(port.name)}) | \`${codeCell(port.type)}\` | ${input ? `${port.defaultValue !== undefined ? `\`${codeCell(JSON.stringify(port.defaultValue))}\`` : port.required ? "Required" : "Optional"} | ` : ""}${escape(port.description)}${port.multiInput ? " Multi-input collection is not implemented by the reactive engine." : ""} |`).join("\n")}`
     : "None.";
 const body = categories
@@ -162,7 +166,7 @@ const body = categories
     const items = nodes
       .filter((node) => node.category === category.id)
       .toSorted((a, b) => a.name.localeCompare(b.name, "en"));
-    if (!items.length) return "";
+    if (items.length === 0) return "";
     return `## ${category.name}\n\n${items.map((node) => `### ${node.name}\n\n\`${node.type}\`${node.trigger ? " (trigger)" : ""}${node.expensive ? " (expensive operation)" : ""}\n\n${escape(node.description)}${aliases(node)}\n\n**Inputs**\n\n${portsTable(node.inputs, true)}\n\n**Outputs**\n\n${portsTable(node.outputs, false)}\n\n[Implementation](${node.source})`).join("\n\n")}`;
   })
   .filter(Boolean)

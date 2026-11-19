@@ -27,7 +27,7 @@ export function getClientDownloadMeasurement({
   }
 
   const release = url.pathname.match(
-    /^\/soulfiremc-com\/SoulFireClient\/releases\/download\/([^/]+)\/SoulFire-[^/]+\.(exe|dmg)$/,
+    /^\/soulfiremc-com\/SoulFireClient\/releases\/download\/([^/]+)\/SoulFire-[^/]+\.(exe|dmg)$/u,
   );
   if (url.origin === "https://github.com" && release) {
     return {

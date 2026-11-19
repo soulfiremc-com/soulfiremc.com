@@ -139,8 +139,9 @@ function rendererHarness() {
     canvas,
     document,
     advance,
-    intersect: (entries: boolean[]) =>
-      intersection(entries.map((isIntersecting) => ({ isIntersecting }))),
+    intersect: (entries: boolean[]) => {
+      intersection(entries.map((isIntersecting) => ({ isIntersecting })));
+    },
     get pendingFrames() {
       return frames.size;
     },

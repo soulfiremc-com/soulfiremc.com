@@ -61,9 +61,9 @@ await test("review drafts survive blocked storage without throwing", () => {
       throw new Error("blocked");
     },
   };
-  assert.doesNotThrow(() =>
-    saveReviewDraft("proxy", "x", { rating: 5, body: "" }, blocked),
-  );
+  assert.doesNotThrow(() => {
+    saveReviewDraft("proxy", "x", { rating: 5, body: "" }, blocked);
+  });
   assert.equal(takeReviewDraft("proxy", "x", blocked), null);
 });
 

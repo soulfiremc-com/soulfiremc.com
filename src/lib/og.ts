@@ -45,7 +45,7 @@ export function getAccountPageImage(slug: string, locale: Locale = "en") {
 
 export function labelize(value: string) {
   return value
-    .split(/[-/]/g)
+    .split(/[-/]/gu)
     .filter(Boolean)
     .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
     .join(" ");

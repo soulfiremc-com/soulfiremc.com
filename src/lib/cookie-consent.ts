@@ -16,10 +16,14 @@ export function reopenCookieConsent() {
 export function useAnalyticsConsent() {
   const [consent, setConsent] = useState<AnalyticsConsent | null>(null);
   useEffect(() => {
-    const update = () => setConsent(readAnalyticsConsent());
+    const update = () => {
+      setConsent(readAnalyticsConsent());
+    };
     update();
     window.addEventListener(CONSENT_CHANGE_EVENT, update);
-    return () => window.removeEventListener(CONSENT_CHANGE_EVENT, update);
+    return () => {
+      window.removeEventListener(CONSENT_CHANGE_EVENT, update);
+    };
   }, []);
   return consent;
 }

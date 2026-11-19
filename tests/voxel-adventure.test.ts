@@ -46,8 +46,8 @@ function clearGround(state: SimulationState, x: number, z: number) {
 }
 
 void test("the live world is deterministic and the opening has real consequences", () => {
-  const a = createSimulation(1847),
-    b = createSimulation(1847);
+  const a = createSimulation(1847);
+  const b = createSimulation(1847);
   const kinds = new Set<string>();
   for (let tick = 0; tick < 200; tick++) {
     stepSimulation(a, 0.1);
@@ -95,8 +95,8 @@ void test("TNT chains, destroys defenses, deforms terrain and hurts bots", () =>
       flight: 0,
       power: 2.4,
     });
-  const height = center.height,
-    fitness = owner.fitness;
+  const height = center.height;
+  const fitness = owner.fitness;
   run(state, 0.5);
   assert.equal(state.adventure.charges.length, 0);
   assert.equal(
@@ -127,8 +127,8 @@ void test("manual inputs are bounded, have cooldowns and freeze without simulati
 void test("siege kits consume team stock and retain the crafting bot as owner", () => {
   const state = createSimulation(4);
   isolate(state);
-  const owner = defined(state.bots[0]),
-    enemy = defined(state.bots.find((bot) => bot.team === 1));
+  const owner = defined(state.bots[0]);
+  const enemy = defined(state.bots.find((bot) => bot.team === 1));
   state.bots = [owner, enemy];
   owner.x = -5;
   owner.z = 0;
@@ -170,8 +170,8 @@ void test("bots spend carried wood to place useful torches", () => {
 void test("skeletons fire moving arrows that can hit bots", () => {
   const state = createSimulation(5);
   isolate(state);
-  const target = defined(state.bots[0]),
-    enemy = defined(state.bots.find((bot) => bot.team === 1));
+  const target = defined(state.bots[0]);
+  const enemy = defined(state.bots.find((bot) => bot.team === 1));
   state.bots = [target, enemy];
   target.x = -5;
   target.z = 0;
@@ -207,8 +207,8 @@ void test("skeletons fire moving arrows that can hit bots", () => {
 void test("a nearby creeper primes its fuse and explodes", () => {
   const state = createSimulation(5);
   isolate(state);
-  const target = defined(state.bots[0]),
-    enemy = defined(state.bots.find((bot) => bot.team === 1));
+  const target = defined(state.bots[0]);
+  const enemy = defined(state.bots.find((bot) => bot.team === 1));
   state.bots = [target, enemy];
   target.x = -5;
   target.z = 0;

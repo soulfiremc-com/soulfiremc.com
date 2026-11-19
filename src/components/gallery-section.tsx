@@ -21,12 +21,14 @@ export function GallerySection({
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const openImage = openIndex === null ? undefined : images[openIndex];
 
-  const prev = () =>
+  const prev = () => {
     setOpenIndex((i) =>
       i !== null ? (i - 1 + images.length) % images.length : null,
     );
-  const next = () =>
+  };
+  const next = () => {
     setOpenIndex((i) => (i !== null ? (i + 1) % images.length : null));
+  };
 
   return (
     <section className="flex flex-col gap-4">
@@ -36,7 +38,9 @@ export function GallerySection({
           <button
             key={img.src}
             type="button"
-            onClick={() => setOpenIndex(i)}
+            onClick={() => {
+              setOpenIndex(i);
+            }}
             className="relative aspect-video overflow-hidden rounded-lg bg-muted ring-offset-background transition-shadow hover:ring-2 hover:ring-ring hover:ring-offset-2 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
           >
             <Image
@@ -53,7 +57,9 @@ export function GallerySection({
 
       <Dialog
         open={openIndex !== null}
-        onOpenChange={(open) => !open && setOpenIndex(null)}
+        onOpenChange={(open) => {
+          if (!open) setOpenIndex(null);
+        }}
       >
         <DialogContent
           showCloseButton={false}

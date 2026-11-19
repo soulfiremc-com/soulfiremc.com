@@ -1,10 +1,31 @@
 import { strict as assert } from "node:assert";
 import { test } from "node:test";
+import { Schema } from "effect";
 import {
   createDiscordEmbed,
   discordEmbedScript,
   serializeDiscordEmbed,
 } from "../src/lib/discord-embed";
+import { defined } from "./support/defined";
+
+const decodePayload = Schema.decodeUnknownSync(
+  Schema.fromJsonString(
+    Schema.Struct({
+      component: Schema.Struct({
+        components: Schema.Array(
+          Schema.Struct({
+            content: Schema.optional(Schema.String),
+            components: Schema.optional(
+              Schema.Array(
+                Schema.Struct({ url: Schema.optional(Schema.String) }),
+              ),
+            ),
+          }),
+        ),
+      }),
+    }),
+  ),
+);
 
 test("serializes page content and navigation as safe, bounded Discord JSON", () => {
   const [script] = discordEmbedScript({
@@ -17,10 +38,10 @@ test("serializes page content and navigation as safe, bounded Discord JSON", () 
   assert.ok(script);
   assert.equal(script.id, "discord:component-embed");
   assert.ok(!script.children.includes("<"));
-  const payload = JSON.parse(script.children);
-  assert.match(payload.component.components[0].content, /New guide/);
+  const { components } = decodePayload(script.children).component;
+  assert.match(defined(components[0]?.content), /New guide/u);
   assert.equal(
-    payload.component.components.at(-1).components[1].url,
+    components.at(-1)?.components?.[1]?.url,
     "https://example.com/install",
   );
   const card = createDiscordEmbed({
@@ -47,7 +68,8 @@ test("omits unsupported URLs instead of creating unsafe buttons", () => {
   });
   assert.ok(script);
   assert.equal(
-    JSON.parse(script.children).component.components.at(-1).components.length,
+    decodePayload(script.children).component.components.at(-1)?.components
+      ?.length,
     1,
   );
 });

@@ -3,7 +3,7 @@ import { resolveMessage } from "./messages";
 
 export function formatProviderSince(date: string, locale: Locale) {
   const [, monthName, year] =
-    /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{4})$/.exec(date) ??
+    /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{4})$/u.exec(date) ??
     [];
   if (monthName === undefined || year === undefined) return date;
   const month = [

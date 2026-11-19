@@ -34,7 +34,9 @@ const CookieConsentBanner = () => {
       setReopened(true);
     };
     window.addEventListener(REOPEN_EVENT, show);
-    return () => window.removeEventListener(REOPEN_EVENT, show);
+    return () => {
+      window.removeEventListener(REOPEN_EVENT, show);
+    };
   }, []);
 
   // A reopened banner takes focus so keyboard users land on the choices.
@@ -112,7 +114,9 @@ const CookieConsentBanner = () => {
           <CardFooter className="flex gap-2 px-4 sm:px-6 short:shrink-0 short:pl-0">
             <Button
               type="button"
-              onClick={() => respond("denied")}
+              onClick={() => {
+                respond("denied");
+              }}
               variant="secondary"
               className="flex-1"
             >
@@ -120,7 +124,9 @@ const CookieConsentBanner = () => {
             </Button>
             <Button
               type="button"
-              onClick={() => respond("granted")}
+              onClick={() => {
+                respond("granted");
+              }}
               className="flex-1"
             >
               {t("cookies.accept")}

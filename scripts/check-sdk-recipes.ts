@@ -52,11 +52,11 @@ try {
       .use(remarkMdx)
       .parse(readFileSync(path, "utf8")) as AstNode;
     const blocks: AstNode[] = [];
-    function visit(node: AstNode) {
+    const visit = (node: AstNode) => {
       if (node.type === "code" && node.meta?.split(/\s+/u).includes("doc-test"))
         blocks.push(node);
-      node.children?.forEach(visit);
-    }
+      for (const child of node.children ?? []) visit(child);
+    };
     visit(tree);
     if (
       document.startsWith("recipes/") &&
@@ -83,7 +83,7 @@ try {
       else pythonFiles.push(output);
     }
   }
-  if (!typescriptFiles.length || !pythonFiles.length)
+  if (typescriptFiles.length === 0 || pythonFiles.length === 0)
     throw new Error("No SDK examples found");
   execFileSync(
     "bunx",

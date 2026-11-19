@@ -29,7 +29,7 @@ export function translate(
   values: MessageValues = {},
 ) {
   return (messages[locale][key] ?? en[key]).replaceAll(
-    /\{(\w+)\}/g,
+    /\{(\w+)\}/gu,
     (token, name: string) => String(values[name] ?? token),
   );
 }

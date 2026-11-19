@@ -68,7 +68,9 @@ export function ReviewInlineActions({
   const handleRate = (rating: number) =>
     handleMutation(
       onRate(rating),
-      () => setShowSignInPrompt(true),
+      () => {
+        setShowSignInPrompt(true);
+      },
       t,
       "reviews.errors.ratingSaveFailed",
     );
@@ -77,7 +79,9 @@ export function ReviewInlineActions({
     if (!onClear) return;
     await handleMutation(
       onClear(),
-      () => setShowSignInPrompt(true),
+      () => {
+        setShowSignInPrompt(true);
+      },
       t,
       "reviews.errors.removeFailed",
     );
@@ -105,7 +109,9 @@ export function ReviewInlineActions({
               type="button"
               variant="ghost"
               size="sm"
-              onClick={() => setConfirmRemove(true)}
+              onClick={() => {
+                setConfirmRemove(true);
+              }}
               disabled={pending}
               focusableWhenDisabled
               className="h-8 px-2 text-xs text-muted-foreground"

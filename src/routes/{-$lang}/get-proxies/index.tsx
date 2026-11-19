@@ -314,7 +314,7 @@ function MainContent() {
 
   useEffect(() => {
     if (hydrated) {
-      document.getElementById(PENDING_SEARCH_STYLE_ID)?.remove();
+      document.querySelector(`#${PENDING_SEARCH_STYLE_ID}`)?.remove();
     }
   }, [hydrated]);
 
@@ -456,7 +456,9 @@ function MainContent() {
         type="button"
         variant="outline"
         size="sm"
-        onClick={() => setFiltersOpen(!filtersOpen)}
+        onClick={() => {
+          setFiltersOpen(!filtersOpen);
+        }}
         aria-expanded={filtersOpen}
         aria-controls="proxy-filters-mobile"
         className="self-start lg:hidden"

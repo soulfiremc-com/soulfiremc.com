@@ -9,7 +9,7 @@ export const siteDescription = en["home.meta.description"];
 export const defaultSocialImageUrl = `${siteUrl}/og/site/home/image.webp`;
 
 export function absoluteUrl(path: string) {
-  if (/^https?:\/\//.test(path)) {
+  if (/^https?:\/\//u.test(path)) {
     return path;
   }
 

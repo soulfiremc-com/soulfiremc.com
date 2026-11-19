@@ -24,10 +24,10 @@ export function splitLocalePath(pathname: string): {
   locale: Locale;
   path: string;
 } {
-  const [first, ...rest] = pathname.replace(/^\//, "").split("/");
+  const [first, ...rest] = pathname.replace(/^\//u, "").split("/");
   return isLocale(first)
-    ? { locale: first, path: `/${rest.join("/")}`.replace(/\/$/, "") || "/" }
-    : { locale: "en", path: pathname.replace(/\/$/, "") || "/" };
+    ? { locale: first, path: `/${rest.join("/")}`.replace(/\/$/u, "") || "/" }
+    : { locale: "en", path: pathname.replace(/\/$/u, "") || "/" };
 }
 
 export function localizePath(path: string, locale: Locale): string {
@@ -39,12 +39,12 @@ export function localizePath(path: string, locale: Locale): string {
 }
 
 export function isProviderPath(path: string) {
-  return /^\/get-(accounts|proxies)(?:\/|$)/.test(path);
+  return /^\/get-(accounts|proxies)(?:\/|$)/u.test(path);
 }
 
 /** The path part of a link, without its query string or fragment. */
 export function hrefPath(href: string) {
-  return href.replace(/[?#][\s\S]*$/, "");
+  return href.replace(/[?#][\s\S]*$/u, "");
 }
 
 /** Legal text and service endpoints remain at their existing English URLs. */
@@ -78,17 +78,17 @@ export function formatEuro(amount: number, locale: Locale) {
 
 /** Parse Fumadocs' dot convention without treating the locale as a slug. */
 export function docFileInfo(file: string) {
-  const match = /^(.*?)(?:\.(en|de|pl|ru))?\.mdx?$/.exec(
+  const match = /^(.*?)(?:\.(en|de|pl|ru))?\.mdx?$/u.exec(
     file.replaceAll("\\", "/"),
   );
   if (!match) throw new Error(`Invalid documentation file: ${file}`);
   const [, base = "", localeSuffix] = match;
   const locale = isLocale(localeSuffix) ? localeSuffix : "en";
   const slug = base
-    .replaceAll(/(^|\/)\([^/]+\)/g, "")
-    .replace(/^\//, "")
-    .replace(/(^|\/)index$/, "");
-  const path = `/docs/${slug}`.replace(/\/$/, "");
+    .replaceAll(/(^|\/)\([^/]+\)/gu, "")
+    .replace(/^\//u, "")
+    .replace(/(^|\/)index$/u, "");
+  const path = `/docs/${slug}`.replace(/\/$/u, "");
   return { locale, path, slugs: slug.split("/").filter(Boolean) };
 }
 

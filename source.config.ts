@@ -31,7 +31,7 @@ const frontmatterFields = {
 };
 const calendarDate = Schema.String.check(
   Schema.makeFilter((value) => {
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return "Invalid calendar date";
+    if (!/^\d{4}-\d{2}-\d{2}$/u.test(value)) return "Invalid calendar date";
     const date = new Date(`${value}T00:00:00Z`);
     return (
       (!Number.isNaN(date.getTime()) &&

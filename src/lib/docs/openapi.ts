@@ -62,8 +62,8 @@ type OpenApiInputDocument = Exclude<
 /** Splits a service tag such as `MCAuthService` into `MC Auth Service`. */
 export function formatOpenApiTagName(name: string) {
   return name
-    .replaceAll(/([a-z0-9])([A-Z])/g, "$1 $2")
-    .replaceAll(/([A-Z]+)([A-Z][a-z])/g, "$1 $2");
+    .replaceAll(/([a-z0-9])([A-Z])/gu, "$1 $2")
+    .replaceAll(/([A-Z]+)([A-Z][a-z])/gu, "$1 $2");
 }
 
 export const openapi = createOpenAPI({
@@ -189,7 +189,7 @@ function formatContractContent(
 }
 
 function cleanText(value: string) {
-  return value.replaceAll(/\s+/g, " ").trim();
+  return value.replaceAll(/\s+/gu, " ").trim();
 }
 
 function formatSectionContent({
@@ -258,7 +258,7 @@ function formatSectionContent({
 
 function toHeadingId(method: string, value: string) {
   return `${method.toLowerCase()}-${value}`
-    .replaceAll(/[^a-z0-9]+/gi, "-")
-    .replaceAll(/^-+|-+$/g, "")
+    .replaceAll(/[^a-z0-9]+/giu, "-")
+    .replaceAll(/^-+|-+$/gu, "")
     .toLowerCase();
 }

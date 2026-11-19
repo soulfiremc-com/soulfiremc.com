@@ -7,7 +7,7 @@ import { twoFactorPlugin } from "@/lib/auth/two-factor-plugin";
 import { authPageTitle } from "@/lib/auth-ui-titles";
 
 const validAuthPathSegments = new Set([
-  ...Object.values(viewPaths.auth),
+  ...Object.values<string>({ ...viewPaths.auth }),
   emailOtpPlugin().viewPaths.auth.emailOtp,
   twoFactorPlugin().viewPaths.auth.twoFactor,
 ]);

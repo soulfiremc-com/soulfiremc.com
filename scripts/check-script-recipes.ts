@@ -10,7 +10,7 @@ const directory = resolve("public/docs/scripts");
 const files = readdirSync(directory).filter((file) =>
   file.endsWith(".soulfire-script.json"),
 );
-if (!files.length) throw new Error("No downloadable script recipes found");
+if (files.length === 0) throw new Error("No downloadable script recipes found");
 for (const file of files)
   validateRecipe(
     JSON.parse(readFileSync(join(directory, file), "utf8")),

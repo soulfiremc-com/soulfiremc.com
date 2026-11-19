@@ -585,7 +585,7 @@ function MainContent() {
     resultsSort === sort;
   useEffect(() => {
     if (resultsMatchSearch) {
-      document.getElementById(PENDING_SEARCH_STYLE_ID)?.remove();
+      document.querySelector(`#${PENDING_SEARCH_STYLE_ID}`)?.remove();
     }
   }, [resultsMatchSearch]);
 
@@ -689,12 +689,12 @@ function MainContent() {
         <ToggleGroup
           aria-label={t("providers.accounts.category")}
           value={category ? [category] : []}
-          onValueChange={([value]) =>
+          onValueChange={([value]) => {
             updateSearch((previous) => ({
               ...previous,
               category: isOneOf(value, CATEGORIES) ? value : undefined,
-            }))
-          }
+            }));
+          }}
           spacing={2}
           className="flex-wrap"
         >
@@ -727,12 +727,12 @@ function MainContent() {
           aria-label={t("providers.accounts.features")}
           multiple
           value={badges}
-          onValueChange={(value) =>
+          onValueChange={(value) => {
             updateSearch((previous) => ({
               ...previous,
               badges: value.filter((badge) => isOneOf(badge, BADGES)),
-            }))
-          }
+            }));
+          }}
           spacing={2}
           className="flex-wrap"
         >
@@ -775,13 +775,13 @@ function MainContent() {
         <ToggleGroup
           aria-label={t("providers.accounts.sort")}
           value={[sort]}
-          onValueChange={([value]) =>
+          onValueChange={([value]) => {
             // Pressing the active sort again returns to the default order.
             updateSearch((previous) => ({
               ...previous,
               sort: isOneOf(value, SORT_OPTIONS) ? value : "default",
-            }))
-          }
+            }));
+          }}
           spacing={2}
           className="flex-wrap"
         >
@@ -811,7 +811,9 @@ function MainContent() {
         type="button"
         variant="outline"
         size="sm"
-        onClick={() => setFiltersOpen(!filtersOpen)}
+        onClick={() => {
+          setFiltersOpen(!filtersOpen);
+        }}
         aria-expanded={filtersOpen}
         aria-controls={filtersOpen ? "account-filters-mobile" : undefined}
         className="self-start lg:hidden"

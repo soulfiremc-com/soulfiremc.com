@@ -278,7 +278,9 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
                 key={option.id}
                 type="button"
                 aria-pressed={selection.os === option.id}
-                onClick={() => handleOsChange(option.id)}
+                onClick={() => {
+                  handleOsChange(option.id);
+                }}
                 className={cn(
                   "relative rounded-xl border p-4 pr-10 text-left transition outline-none hover:border-primary/60 focus-visible:ring-3 focus-visible:ring-ring/50",
                   selection.os === option.id
@@ -325,7 +327,9 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
                 key={option.id}
                 type="button"
                 aria-pressed={selection.cpu === option.id}
-                onClick={() => handleCpuChange(option.id)}
+                onClick={() => {
+                  handleCpuChange(option.id);
+                }}
                 className={cn(
                   "relative rounded-xl border p-4 pr-10 text-left transition outline-none hover:border-primary/60 focus-visible:ring-3 focus-visible:ring-ring/50",
                   selection.cpu === option.id

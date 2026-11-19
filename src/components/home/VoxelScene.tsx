@@ -208,7 +208,9 @@ export function VoxelScene() {
             <Button
               variant="outline"
               size="icon-sm"
-              onClick={() => setPaused(!stopped)}
+              onClick={() => {
+                setPaused(!stopped);
+              }}
               aria-label={playbackLabel}
               title={playbackLabel}
               disabled={!ready}
@@ -228,7 +230,9 @@ export function VoxelScene() {
             <Button
               variant={speed === 3 ? "secondary" : "ghost"}
               size="sm"
-              onClick={() => setSpeed(speed === 1 ? 3 : 1)}
+              onClick={() => {
+                setSpeed(speed === 1 ? 3 : 1);
+              }}
               aria-label={speedLabel}
               title={speedLabel}
               disabled={!ready}

@@ -28,5 +28,7 @@ function replace(node: Node) {
  * samples always name the same release.
  */
 export function remarkSdkRelease() {
-  return (tree: Node) => replace(tree);
+  return (tree: Node) => {
+    replace(tree);
+  };
 }

@@ -16,7 +16,7 @@ export function getReadingTime(structuredData?: {
 }) {
   const text =
     structuredData?.contents?.map((item) => item.content).join(" ") ?? "";
-  const words = text.split(/\s+/).filter(Boolean).length;
+  const words = text.split(/\s+/u).filter(Boolean).length;
   return Math.max(1, Math.round(words / 200));
 }
 
@@ -49,7 +49,7 @@ export function getBlogPostSummary(page: BlogPage) {
 }
 
 export function getAllBlogPostSummaries() {
-  return getSortedBlogPages().map(getBlogPostSummary);
+  return getSortedBlogPages().map((page) => getBlogPostSummary(page));
 }
 
 export function getBlogPostData(slug: string) {

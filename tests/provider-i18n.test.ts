@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import { defined } from "./support/defined";
+import { decodeJsonRecord } from "./support/json";
 import { renderToStaticMarkup } from "react-dom/server";
 import { createProviderFaqJsonLd, providerFaqs } from "@/lib/provider-faq-data";
 import { ReviewSummaryBadge } from "@/components/review-summary-badge";
@@ -33,7 +34,7 @@ void test("all provider descriptions, offer details, badges and FAQs have transl
       "linkDiscountMessage",
     ] as const) {
       const value = (provider as Record<string, unknown>)[field];
-      if (typeof value === "string" && /[a-z]/i.test(value))
+      if (typeof value === "string" && /[a-z]/iu.test(value))
         messages.add(value);
     }
     for (const image of provider.gallery ?? []) messages.add(image.alt);
@@ -52,7 +53,7 @@ void test("all provider descriptions, offer details, badges and FAQs have transl
       messages.add(item.answer);
     }
   for (const locale of ["de", "pl", "ru"] as const) {
-    const catalog = JSON.parse(
+    const catalog = decodeJsonRecord(
       readFileSync(`src/lib/messages/${locale}.json`, "utf8"),
     );
     for (const message of messages)
@@ -150,9 +151,9 @@ void test("rating labels and numeric formatting follow the page language", () =>
       ],
     }),
   );
-  assert.match(html, /4,5/);
-  assert.match(html, /Bewertungen: 3/);
-  assert.match(html, /Bewertung setzen: 3\/5/);
+  assert.match(html, /4,5/u);
+  assert.match(html, /Bewertungen: 3/u);
+  assert.match(html, /Bewertung setzen: 3\/5/u);
   assert.ok(!html.includes("ratings"));
 });
 

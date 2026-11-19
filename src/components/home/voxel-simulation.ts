@@ -175,6 +175,7 @@ function mixSeed(seed: number, salt: number) {
 function createRandom(seed: number) {
   let state = seed >>> 0;
   return () => {
+    // oxlint-disable-next-line unicorn/prefer-math-trunc -- mulberry32 needs the int32 wraparound of | 0, which Math.trunc does not do
     state = (state + 0x6d2b79f5) | 0;
     let t = Math.imul(state ^ (state >>> 15), 1 | state);
     t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
@@ -183,6 +184,7 @@ function createRandom(seed: number) {
 }
 
 function random(internal: Internal) {
+  // oxlint-disable-next-line unicorn/prefer-math-trunc -- mulberry32 needs the int32 wraparound of | 0, which Math.trunc does not do
   internal.rng = (internal.rng + 0x6d2b79f5) | 0;
   let t = Math.imul(internal.rng ^ (internal.rng >>> 15), 1 | internal.rng);
   t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
@@ -874,7 +876,10 @@ function decide(
   const team = state.teams[bot.team];
   const genome = traits(state, bot);
   const carried = bot.wood + bot.stone;
-  if (carried >= CARRY_CAPACITY) return setTask(bot, brain, "deliver");
+  if (carried >= CARRY_CAPACITY) {
+    setTask(bot, brain, "deliver");
+    return;
+  }
 
   if (bot.tool === "none" && distanceToHome(state, bot) <= 2.6) {
     const tool: Tool = genome.aggression > 0.5 ? "sword" : "pickaxe";
@@ -900,7 +905,10 @@ function decide(
   }
 
   if (random(internal) < genome.building * 0.8) {
-    if (carried > 0) return setTask(bot, brain, "deliver");
+    if (carried > 0) {
+      setTask(bot, brain, "deliver");
+      return;
+    }
     const site = chooseBuildSite(state, internal, bot);
     if (site) {
       setTask(bot, brain, "build");
@@ -918,7 +926,10 @@ function decide(
   ] as const) {
     if (startGather(state, internal, bot, brain, kind)) return;
   }
-  if (carried > 0) return setTask(bot, brain, "deliver");
+  if (carried > 0) {
+    setTask(bot, brain, "deliver");
+    return;
+  }
   brain.rethink = 0.5;
 }
 
@@ -1120,8 +1131,10 @@ function updateAttack(
 ) {
   const enemy = state.bots.find((other) => other.id === brain.enemy);
   brain.rethink -= dt;
-  if (!enemy || enemy.health <= 0 || brain.rethink <= 0)
-    return decide(state, internal, bot);
+  if (!enemy || enemy.health <= 0 || brain.rethink <= 0) {
+    decide(state, internal, bot);
+    return;
+  }
   const distance = Math.hypot(enemy.x - bot.x, enemy.z - bot.z);
   if (distance <= ATTACK_RANGE) {
     brain.path = [];
@@ -1135,7 +1148,10 @@ function updateAttack(
   brain.repath -= dt;
   if (brain.path.length === 0 || brain.repath <= 0) {
     const target = getTile(state, enemy.x, enemy.z);
-    if (!target) return decide(state, internal, bot);
+    if (!target) {
+      decide(state, internal, bot);
+      return;
+    }
     const path = findPath(
       state.tiles,
       indexOf(bot.x, bot.z),
@@ -1143,7 +1159,10 @@ function updateAttack(
       (tile) => isPassable(tile, bot.team, true),
     );
     brain.repath = 0.5;
-    if (!path) return decide(state, internal, bot);
+    if (!path) {
+      decide(state, internal, bot);
+      return;
+    }
     brain.path = path;
   }
   const result = move(state, bot, brain, WALK_SPEED, dt, true);
@@ -1165,7 +1184,10 @@ function updateDefense(
   const target = state.adventure.mobs.find(
     (mob) => `mob:${mob.id}` === brain.enemy && mob.health > 0,
   );
-  if (!target) return decide(state, internal, bot);
+  if (!target) {
+    decide(state, internal, bot);
+    return;
+  }
   const distance = Math.hypot(target.x - bot.x, target.z - bot.z);
   face(bot, target.x, target.z);
   if (distance <= 1.3) {
@@ -1187,9 +1209,12 @@ function updateDefense(
     return;
   }
   brain.repath -= dt;
-  if (!brain.path.length || brain.repath <= 0) {
+  if (brain.path.length === 0 || brain.repath <= 0) {
     const tile = getTile(state, target.x, target.z);
-    if (!tile) return decide(state, internal, bot);
+    if (!tile) {
+      decide(state, internal, bot);
+      return;
+    }
     brain.path =
       findPath(
         state.tiles,
@@ -1272,12 +1297,16 @@ function updateBot(
       brain.timer += dt;
       if (brain.path.length === 0) {
         const threats = threatsTo(state, bot, genome, brain.nerve > 0, true);
-        if (threats.length === 0) return decide(state, internal, bot);
+        if (threats.length === 0) {
+          decide(state, internal, bot);
+          return;
+        }
         const next = fleeStep(state, bot, threats);
         if (next < 0 || brain.timer > MAX_FLEE_SECONDS) {
           // Cornered or worn out: stop running and face what comes.
           brain.nerve = NERVE_SECONDS;
-          return decide(state, internal, bot);
+          decide(state, internal, bot);
+          return;
         }
         brain.path = [next];
       }
@@ -1288,7 +1317,8 @@ function updateBot(
     case "deliver": {
       if (!walkHome(state, bot, brain, WALK_SPEED, dt)) return;
       deposit(state, bot);
-      return decide(state, internal, bot);
+      decide(state, internal, bot);
+      return;
     }
     case "craft": {
       brain.timer -= dt;
@@ -1307,19 +1337,25 @@ function updateBot(
         reward(state, bot, "economy", 2);
         addEvent(state, internal, "craft", bot.x, bot.z, bot.team);
       }
-      return decide(state, internal, bot);
+      decide(state, internal, bot);
+      return;
     }
     case "gather": {
       const resource = state.tiles[brain.goal];
-      if (!resource?.resource) return decide(state, internal, bot);
+      if (!resource?.resource) {
+        decide(state, internal, bot);
+        return;
+      }
       if (brain.path.length > 0) {
         if (move(state, bot, brain, WALK_SPEED, dt) === "blocked")
           decide(state, internal, bot);
         return;
       }
       const here = getTile(state, bot.x, bot.z);
-      if (!here || chebyshev(here, resource) > 1)
-        return decide(state, internal, bot);
+      if (!here || chebyshev(here, resource) > 1) {
+        decide(state, internal, bot);
+        return;
+      }
       face(bot, resource.x, resource.z);
       brain.timer -= dt;
       if (brain.timer > 0) return;
@@ -1349,8 +1385,10 @@ function updateBot(
           team.wood < cost.wood ||
           team.stone < cost.stone ||
           !canPlace(state, brain.structure, brain.goal)
-        )
-          return decide(state, internal, bot);
+        ) {
+          decide(state, internal, bot);
+          return;
+        }
         team.wood -= cost.wood;
         team.stone -= cost.stone;
         bot.wood += cost.wood;
@@ -1361,7 +1399,10 @@ function updateBot(
         return;
       }
       const site = state.tiles[brain.goal];
-      if (!site) return decide(state, internal, bot);
+      if (!site) {
+        decide(state, internal, bot);
+        return;
+      }
       if (
         brain.path.length === 0 &&
         chebyshev(itemAt(state.tiles, indexOf(bot.x, bot.z)), site) > 1
@@ -1374,7 +1415,10 @@ function updateBot(
             chebyshev(itemAt(state.tiles, index), site) <= 1,
           isWalkable,
         );
-        if (!path) return decide(state, internal, bot);
+        if (!path) {
+          decide(state, internal, bot);
+          return;
+        }
         brain.path = path;
       }
       if (brain.path.length > 0) {
@@ -1404,14 +1448,19 @@ function updateBot(
         addEvent(state, internal, "build", site.x, site.z, bot.team);
       }
       // Unused materials go back home through the deliver task.
-      return decide(state, internal, bot);
-    }
-    case "attack":
-      return updateAttack(state, internal, bot, brain, dt);
-    case "defend":
-      return updateDefense(state, internal, bot, brain, dt);
-    case "dead":
+      decide(state, internal, bot);
       return;
+    }
+    case "attack": {
+      updateAttack(state, internal, bot, brain, dt);
+      break;
+    }
+    case "defend": {
+      updateDefense(state, internal, bot, brain, dt);
+      break;
+    }
+    case "dead":
+      break;
   }
 }
 
@@ -1560,9 +1609,12 @@ function adventureHost(
   return {
     tile: (x, z) => getTile(state, x, z),
     walkable: isWalkable,
-    emit: (kind, x, z, power) =>
-      addEvent(state, internal, kind, x, z, 0, power),
-    reward: (bot, kind, amount) => reward(state, bot, kind, amount),
+    emit: (kind, x, z, power) => {
+      addEvent(state, internal, kind, x, z, 0, power);
+    },
+    reward: (bot, kind, amount) => {
+      reward(state, bot, kind, amount);
+    },
     hurt(bot, amount, owner) {
       if (bot.health <= 0) return;
       const dealt = Math.min(bot.health, amount);

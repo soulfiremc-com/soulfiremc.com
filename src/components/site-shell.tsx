@@ -34,17 +34,18 @@ function ShellContainer({
 // toggle, like the other overlays on the site.
 function closeMobileMenuOnEscape(event: KeyboardEvent) {
   if (event.key !== "Escape" || event.defaultPrevented) return;
-  const header = document.getElementById("nd-nav");
-  if (!header?.hasAttribute("data-open")) return;
+  const header = document.querySelector("#nd-nav");
+  if (!(header instanceof HTMLElement) || !("open" in header.dataset)) return;
   const toggle = Array.from(
     header.querySelectorAll<HTMLButtonElement>(
       'button[aria-expanded="true"][aria-controls]',
     ),
-  ).find((button) =>
-    header.contains(
-      document.getElementById(button.getAttribute("aria-controls") ?? ""),
-    ),
-  );
+  ).find((button) => {
+    const id = button.getAttribute("aria-controls");
+    return (
+      !!id && header.contains(document.querySelector(`#${CSS.escape(id)}`))
+    );
+  });
   if (!toggle) return;
   toggle.click();
   toggle.focus();
@@ -57,8 +58,9 @@ export function SiteShell({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     document.addEventListener("keydown", closeMobileMenuOnEscape);
-    return () =>
+    return () => {
       document.removeEventListener("keydown", closeMobileMenuOnEscape);
+    };
   }, []);
 
   return (

@@ -259,16 +259,16 @@ await test("code emails name their purpose and submit a readable plain-text part
   assert.equal(twoFactor.subject, "Your two-factor code for SoulFire");
   assert.match(
     await render(twoFactor.react),
-    /Your SoulFire two-factor code is 482913/,
+    /Your SoulFire two-factor code is 482913/u,
   );
-  assert.match(twoFactor.text, /482913/);
-  assert.match(twoFactor.text, /someone else might know your password/);
-  assert.doesNotMatch(twoFactor.text, /two-factor code is/);
-  assert.doesNotMatch(twoFactor.text, /typed your email address by mistake/);
+  assert.match(twoFactor.text, /482913/u);
+  assert.match(twoFactor.text, /someone else might know your password/u);
+  assert.doesNotMatch(twoFactor.text, /two-factor code is/u);
+  assert.doesNotMatch(twoFactor.text, /typed your email address by mistake/u);
   assert.equal(changeEmail.to, "new@example.com");
   assert.match(
     changeEmail.text,
-    /make new@example\.com the new email address of your SoulFire account/,
+    /make new@example\.com the new email address of your SoulFire account/u,
   );
 });
 
@@ -277,7 +277,9 @@ await test("email submission is never retried and finishes before cancellation r
   let complete!: () => void;
   let began!: () => void;
   const pending = new Promise<{ data: null; error: null }>((resolve) => {
-    complete = () => resolve({ data: null, error: null });
+    complete = () => {
+      resolve({ data: null, error: null });
+    };
   });
   const started = new Promise<void>((resolve) => {
     began = resolve;

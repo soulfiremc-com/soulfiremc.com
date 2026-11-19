@@ -26,13 +26,13 @@ export function truncateDescription(
   text: string,
   maxLength = maxDescriptionLength,
 ) {
-  const normalized = text.replaceAll(/\s+/g, " ").trim();
+  const normalized = text.replaceAll(/\s+/gu, " ").trim();
   if (normalized.length <= maxLength) return normalized;
 
   const slice = normalized.slice(0, maxLength - 1);
   const lastSpace = slice.lastIndexOf(" ");
   const cut = lastSpace > maxLength / 2 ? slice.slice(0, lastSpace) : slice;
-  return `${cut.replace(/[\s,;:.\-–(]+$/, "")}…`;
+  return `${cut.replace(/[\s,;:.\-–(]+$/u, "")}…`;
 }
 
 export function getPageMeta({

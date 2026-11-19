@@ -3,7 +3,9 @@ import assert from "node:assert/strict";
 import { readdirSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 import test from "node:test";
+import { decodeDocsMeta } from "../scripts/lib/docs-meta";
 import { defined } from "./support/defined";
+import { decodeJsonRecord } from "./support/json";
 import { loader, type VirtualFile } from "fumadocs-core/source";
 import type { Node } from "fumadocs-core/page-tree";
 import {
@@ -101,19 +103,19 @@ function docsSource() {
     for (const entry of readdirSync(directory, { withFileTypes: true })) {
       const path = join(directory, entry.name);
       if (entry.isDirectory()) walk(path);
-      else if (/\.mdx?$/.test(entry.name))
+      else if (/\.mdx?$/u.test(entry.name))
         files.push({
           type: "page",
           path: relative(root, path),
           data: {
-            title: /^title: (.+)$/m.exec(readFileSync(path, "utf8"))?.[1],
+            title: /^title: (.+)$/mu.exec(readFileSync(path, "utf8"))?.[1],
           },
         });
-      else if (/^meta(?:\.(de|pl|ru))?\.json$/.test(entry.name))
+      else if (/^meta(?:\.(de|pl|ru))?\.json$/u.test(entry.name))
         files.push({
           type: "meta",
           path: relative(root, path),
-          data: JSON.parse(readFileSync(path, "utf8")),
+          data: decodeDocsMeta(readFileSync(path, "utf8")),
         });
     }
   }
@@ -130,7 +132,7 @@ void test("Fumadocs resolves the translated onboarding and English fallback in e
       assert.equal(docFileInfo(page.path).locale, locale);
       assert.equal(
         page.url,
-        localizePath(`/docs/${slugs.join("/")}`.replace(/\/$/, ""), locale),
+        localizePath(`/docs/${slugs.join("/")}`.replace(/\/$/u, ""), locale),
       );
       assert.ok(source.getPageTree(locale).children.length);
     }
@@ -140,8 +142,7 @@ void test("Fumadocs resolves the translated onboarding and English fallback in e
   }
 });
 
-const readMeta = (path: string): Record<string, unknown> =>
-  JSON.parse(readFileSync(path, "utf8"));
+const readMeta = (path: string) => decodeJsonRecord(readFileSync(path, "utf8"));
 
 void test("every titled docs folder has localized metadata with the English page order", () => {
   const root = join(process.cwd(), "content/docs");
@@ -210,7 +211,7 @@ void test("canonical and reciprocal hreflang links omit query data and use Engli
       alternatives.find((link) => link.hrefLang === "x-default")?.href,
       "https://soulfiremc.com/download",
     );
-    assert.ok(alternatives.every((link) => !/[?#]/.test(link.href)));
+    assert.ok(alternatives.every((link) => !/[?#]/u.test(link.href)));
   }
   const fallback = getCanonicalLinks("/ru/docs/server/docker", "en", ["en"]);
   assert.deepEqual(fallback, [
@@ -277,17 +278,17 @@ void test("translation catalogs use stable keys and preserve English interpolati
     );
     for (const [key, value] of Object.entries(catalog)) {
       assert.ok(isMessageKey(key), key);
-      assert.match(key, /^[a-z][a-zA-Z0-9-]*(\.[a-zA-Z0-9-]+)+$/);
+      assert.match(key, /^[a-z][a-zA-Z0-9-]*(\.[a-zA-Z0-9-]+)+$/u);
       assert.ok(value.trim());
       assert.deepEqual(
-        (en[key].match(/\{\w+\}/g) ?? []).toSorted(),
-        (value.match(/\{\w+\}/g) ?? []).toSorted(),
+        (en[key].match(/\{\w+\}/gu) ?? []).toSorted(),
+        (value.match(/\{\w+\}/gu) ?? []).toSorted(),
         key,
       );
     }
   }
   // Brand and service names are the only values that may use the English text.
-  const untranslated = /^(common\.brand|social\.[a-z]+)$/;
+  const untranslated = /^(common\.brand|social\.[a-z]+)$/u;
   for (const [index, catalog] of catalogs.entries()) {
     assert.deepEqual(
       Object.keys(en).filter(
@@ -331,9 +332,9 @@ void test("locale dates use the page language and UTC calendar day", () => {
 
 void test("euro prices follow each language's symbol position", () => {
   assert.equal(formatEuro(5, "en"), "€5");
-  assert.equal(formatEuro(5, "de"), "5\u00a0€");
-  assert.equal(formatEuro(0, "pl"), "0\u00a0€");
-  assert.equal(formatEuro(5, "ru"), "5\u00a0€");
+  assert.equal(formatEuro(5, "de"), "5\u00A0€");
+  assert.equal(formatEuro(0, "pl"), "0\u00A0€");
+  assert.equal(formatEuro(5, "ru"), "5\u00A0€");
 });
 
 void test("Fumadocs external identifiers map to application keys", () => {

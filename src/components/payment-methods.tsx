@@ -81,7 +81,7 @@ const paymentLogos: Record<string, PaymentLogoConfig> = {
 };
 
 function normalizePaymentMethod(method: string) {
-  return method.toLowerCase().replaceAll(/[^a-z0-9]/g, "");
+  return method.toLowerCase().replaceAll(/[^a-z0-9]/gu, "");
 }
 
 function getPaymentLogo(method: string): PaymentLogoConfig {
@@ -179,7 +179,7 @@ export function PaymentMethods({ methods }: { methods?: string[] }) {
       </span>
       {methods.map((method) => {
         const labelKey =
-          paymentLabelKeys[method.toLowerCase().replaceAll(/[^a-z0-9]/g, "")];
+          paymentLabelKeys[method.toLowerCase().replaceAll(/[^a-z0-9]/gu, "")];
         return (
           <span
             key={method}

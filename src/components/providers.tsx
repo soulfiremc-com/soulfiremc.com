@@ -72,7 +72,7 @@ function AuthUIProviders({ children }: { children: React.ReactNode }) {
       const value = (state.location.search as { redirectTo?: unknown })
         .redirectTo;
       // Only same-site paths. Protocol-relative URLs leave the site.
-      return typeof value === "string" && /^\/(?![/\\])/.test(value.trim())
+      return typeof value === "string" && /^\/(?![/\\])/u.test(value.trim())
         ? value.trim()
         : null;
     },

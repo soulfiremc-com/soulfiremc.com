@@ -140,7 +140,9 @@ function FeedbackForm({ url }: { url: string }) {
             <Textarea
               autoFocus
               value={message}
-              onChange={(e) => setMessage(e.target.value)}
+              onChange={(e) => {
+                setMessage(e.target.value);
+              }}
               className="min-h-24 resize-none bg-fd-secondary text-fd-secondary-foreground placeholder:text-fd-muted-foreground"
               aria-label={t("common.leaveYourFeedback")}
               placeholder={t("common.leaveYourFeedback")}

@@ -38,7 +38,7 @@ export function generateStaticImages({
         const source = relative(directory, file).replaceAll("\\", "/");
         return (
           !source.startsWith(`${outputName}/`) &&
-          /\.(png|jpe?g|webp|gif|avif|svg)$/i.test(source)
+          /\.(png|jpe?g|webp|gif|avif|svg)$/iu.test(source)
         );
       })
       .toSorted();

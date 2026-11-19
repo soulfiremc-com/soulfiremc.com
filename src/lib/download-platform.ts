@@ -10,7 +10,9 @@ export function detectDownloadPlatform(browser: BrowserPlatform) {
   const userAgent = browser.userAgent.toLowerCase();
   const platform = browser.platform?.toLowerCase() ?? "";
   const mobile =
-    /android|iphone|ipad|ipod|windows phone/.test(userAgent + " " + platform) ||
+    /android|iphone|ipad|ipod|windows phone/u.test(
+      userAgent + " " + platform,
+    ) ||
     (platform.includes("mac") && (browser.maxTouchPoints ?? 0) > 1);
 
   return {

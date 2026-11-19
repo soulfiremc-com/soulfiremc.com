@@ -64,7 +64,7 @@ function HomePage() {
   const t = useT();
   const localizedFaqItems = faqItems.map((item) => {
     const answerHtml = t(item.answerHtml, { github: githubLink }).replaceAll(
-      /href="https:\/\/soulfiremc\.com([^" ]*)"/g,
+      /href="https:\/\/soulfiremc\.com([^" ]*)"/gu,
       (_, path: string) => `href="${localizeHref(path || "/", locale)}"`,
     );
     return {

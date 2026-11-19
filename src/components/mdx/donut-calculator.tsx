@@ -100,7 +100,9 @@ export function DonutCalculator() {
           <NativeSelect
             id={`${id}-method`}
             value={selectedMethod}
-            onChange={(e) => setSelectedMethod(Number(e.target.value))}
+            onChange={(e) => {
+              setSelectedMethod(Number(e.target.value));
+            }}
             className="bg-fd-background"
           >
             {METHODS.map((m, i) => (
@@ -120,8 +122,12 @@ export function DonutCalculator() {
             max={MAX_BOTS}
             step={1}
             value={botInput}
-            onChange={(e) => setBotInput(e.target.value)}
-            onBlur={() => setBotInput(String(botCount))}
+            onChange={(e) => {
+              setBotInput(e.target.value);
+            }}
+            onBlur={() => {
+              setBotInput(String(botCount));
+            }}
             className="bg-fd-background"
           />
         </Field>
@@ -137,8 +143,12 @@ export function DonutCalculator() {
             max={MAX_PRICE}
             step={0.01}
             value={priceInput}
-            onChange={(e) => setPriceInput(e.target.value)}
-            onBlur={() => setPriceInput(String(pricePerMillion))}
+            onChange={(e) => {
+              setPriceInput(e.target.value);
+            }}
+            onBlur={() => {
+              setPriceInput(String(pricePerMillion));
+            }}
             className="bg-fd-background"
           />
         </Field>

@@ -93,7 +93,9 @@ export function Tabs({
       {...props}
       items={items}
       value={value}
-      onValueChange={(nextValue) => saveSelection(key, nextValue)}
+      onValueChange={(nextValue) => {
+        saveSelection(key, nextValue);
+      }}
     />
   );
 }

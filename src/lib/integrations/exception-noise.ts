@@ -27,7 +27,7 @@ export function isMachineTranslated(doc: Document | undefined): boolean {
 }
 
 const HYDRATION_ERROR =
-  /react\.dev\/errors\/(?:418|423|425)\b|Hydration failed|didn't match the client/i;
+  /react\.dev\/errors\/(?:418|423|425)\b|Hydration failed|didn't match the client/iu;
 
 type ExceptionFrame = { filename?: unknown };
 type Exception = {
@@ -36,7 +36,7 @@ type Exception = {
 };
 
 const EXTENSION_URL =
-  /^(?:chrome|moz|safari|safari-web|ms-browser)-extension:\/\//;
+  /^(?:chrome|moz|safari|safari-web|ms-browser)-extension:\/\//u;
 
 function framesOf(exception: Exception): string[] {
   const frames = exception.stacktrace?.frames;

@@ -27,7 +27,9 @@ export function AuthTurnstile({
 
   useEffect(() => {
     setReset(() => turnstileRef.current?.reset());
-    return () => setReset(null);
+    return () => {
+      setReset(null);
+    };
   }, [setReset]);
 
   const handleLoad = useCallback<NonNullable<TurnstileProps["onLoad"]>>(
@@ -54,23 +56,34 @@ export function AuthTurnstile({
   );
 
   const handleError = useCallback<NonNullable<TurnstileProps["onError"]>>(
-    (_error, boundTurnstile) => handleClear(boundTurnstile),
+    (_error, boundTurnstile) => {
+      handleClear(boundTurnstile);
+    },
     [handleClear],
   );
 
   const handleExpire = useCallback<NonNullable<TurnstileProps["onExpire"]>>(
-    (_token, boundTurnstile) => handleClear(boundTurnstile),
+    (_token, boundTurnstile) => {
+      handleClear(boundTurnstile);
+    },
     [handleClear],
   );
 
   const handleTimeout = useCallback<NonNullable<TurnstileProps["onTimeout"]>>(
-    (boundTurnstile) => handleClear(boundTurnstile),
+    (boundTurnstile) => {
+      handleClear(boundTurnstile);
+    },
     [handleClear],
   );
 
   const handleUnsupported = useCallback<
     NonNullable<TurnstileProps["onUnsupported"]>
-  >((boundTurnstile) => handleClear(boundTurnstile), [handleClear]);
+  >(
+    (boundTurnstile) => {
+      handleClear(boundTurnstile);
+    },
+    [handleClear],
+  );
 
   if (!siteKey) {
     return null;

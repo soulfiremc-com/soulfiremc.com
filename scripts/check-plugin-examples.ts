@@ -51,7 +51,7 @@ try {
     const tree = remark()
       .use(remarkMdx)
       .parse(readFileSync(path, "utf8")) as AstNode;
-    function visit(node: AstNode) {
+    const visit = (node: AstNode) => {
       if (
         node.type === "code" &&
         node.meta?.split(/\s+/u).includes("doc-test")
@@ -71,8 +71,8 @@ try {
         writeFileSync(target, code);
         files.push(target);
       }
-      node.children?.forEach(visit);
-    }
+      for (const child of node.children ?? []) visit(child);
+    };
     visit(tree);
   }
   if (files.length < 4)

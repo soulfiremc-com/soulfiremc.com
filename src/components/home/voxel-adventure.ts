@@ -406,12 +406,11 @@ function updateMobs(state: SimulationState, host: AdventureHost, dt: number) {
         });
         mob.cooldown = 1.8;
       }
-    } else {
-      if (distance > 1.05) moveMob(mob, target.x, target.z, 1.2 * dt, host);
-      else if (mob.cooldown <= 0) {
-        host.hurt(target, 1.8, null);
-        mob.cooldown = 1.1;
-      }
+    } else if (distance > 1.05) {
+      moveMob(mob, target.x, target.z, 1.2 * dt, host);
+    } else if (mob.cooldown <= 0) {
+      host.hurt(target, 1.8, null);
+      mob.cooldown = 1.1;
     }
     if (mob.kind !== "creeper" && world.night < 0.2)
       mob.health = Math.max(0, mob.health - dt * 0.7);

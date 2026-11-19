@@ -12,7 +12,7 @@ import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { test } from "node:test";
 import { defined } from "./support/defined";
-import { Effect } from "effect";
+import { Effect, Schema } from "effect";
 import sharp from "sharp";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -25,6 +25,26 @@ import {
 } from "../src/lib/static-images";
 import { Image } from "../src/components/image";
 import imageMetadata from "../src/lib/image-metadata.json" with { type: "json" };
+
+const decodeManifest = Schema.decodeUnknownSync(
+  Schema.fromJsonString(
+    Schema.Record(
+      Schema.String,
+      Schema.Struct({
+        width: Schema.Finite,
+        height: Schema.Finite,
+        background: Schema.optional(Schema.String),
+        variants: Schema.optional(
+          Schema.mutable(
+            Schema.Array(
+              Schema.Struct({ width: Schema.Finite, src: Schema.String }),
+            ),
+          ),
+        ),
+      }),
+    ),
+  ),
+);
 
 void test("generate static variants, reserve oriented dimensions, and preserve special images", async () => {
   const directory = await mkdtemp(join(tmpdir(), "static-images-"));
@@ -81,11 +101,11 @@ void test("generate static variants, reserve oriented dimensions, and preserve s
         }),
       );
     await run();
-    const manifest: StaticImageManifest = JSON.parse(
+    const manifest: StaticImageManifest = decodeManifest(
       await readFile(metadataFile, "utf8"),
     );
     const photo = defined(manifest["/photo sample.png"]);
-    assert.match(photo.background ?? "", /^data:image\/bmp;base64,/);
+    assert.match(photo.background ?? "", /^data:image\/bmp;base64,/u);
     assert.equal(defined(manifest["/transparent.png"]).background, undefined);
     const alphaVariant = defined(manifest["/transparent.png"]).variants?.[0];
     assert.ok(alphaVariant);
@@ -139,7 +159,7 @@ void test("generate static variants, reserve oriented dimensions, and preserve s
     );
     await writeFile(join(publicDirectory, "photo sample.png"), transparent);
     await run();
-    const changed: StaticImageManifest = JSON.parse(
+    const changed: StaticImageManifest = decodeManifest(
       await readFile(metadataFile, "utf8"),
     );
     assert.notEqual(
@@ -176,9 +196,9 @@ void test("render static placeholders and responsive URLs while preserving remot
   const html = renderToStaticMarkup(
     createElement(Image, { src, alt: "Static sample", width: 96 }),
   );
-  assert.match(html, /srcSet="\/_images\//);
-  assert.match(html, /background-image:url\(/);
-  assert.match(html, /aspect-ratio:/);
+  assert.match(html, /srcSet="\/_images\//u);
+  assert.match(html, /background-image:url\(/u);
+  assert.match(html, /aspect-ratio:/u);
   assert.ok(!html.includes("/cdn-cgi/image/"));
   for (const [source, extra] of [
     [src, { unoptimized: true }],

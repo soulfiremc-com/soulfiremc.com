@@ -1,14 +1,25 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { Schema } from "effect";
 import { defined } from "./support/defined";
+import { decodeJsonRecord } from "./support/json";
 import { localizePath, locales } from "@/lib/i18n";
 import { translate } from "@/lib/messages";
 
 const baseUrl = process.env["SITE_TEST_URL"];
+const decodeFaqPage = Schema.decodeUnknownSync(
+  Schema.Struct({
+    inLanguage: Schema.String,
+    mainEntity: Schema.Array(
+      Schema.Struct({ acceptedAnswer: Schema.Struct({ text: Schema.String }) }),
+    ),
+  }),
+);
+
 const host = "https://soulfiremc.com";
 
 function attribute(tag: string, name: string) {
-  return new RegExp(`\\b${name}="([^"]*)"`, "i").exec(tag)?.[1];
+  return new RegExp(`\\b${name}="([^"]*)"`, "iu").exec(tag)?.[1];
 }
 
 void test(
@@ -26,11 +37,11 @@ void test(
           assert.equal(response.status, 200, path);
           const html = await response.text();
           assert.equal(
-            attribute(/<html\b[^>]*>/.exec(html)?.[0] ?? "", "lang"),
+            attribute(/<html\b[^>]*>/u.exec(html)?.[0] ?? "", "lang"),
             locale,
             path,
           );
-          const links = html.match(/<link\b[^>]*>/g) ?? [];
+          const links = html.match(/<link\b[^>]*>/gu) ?? [];
           const canonical = links.find(
             (tag) => attribute(tag, "rel") === "canonical",
           );
@@ -55,7 +66,7 @@ void test(
               `${host}${localizePath(`/get-${kind}${suffix}`, lang === "x-default" ? "en" : (lang as typeof locale))}`,
             );
           }
-          const meta = html.match(/<meta\b[^>]*>/g) ?? [];
+          const meta = html.match(/<meta\b[^>]*>/gu) ?? [];
           const image = meta.find(
             (tag) => attribute(tag, "property") === "og:image",
           );
@@ -79,19 +90,21 @@ void test(
           );
           const schema = [
             ...html.matchAll(
-              /<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g,
+              /<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/gu,
             ),
-          ].map((match) => JSON.parse(defined(match[1])));
+          ].map((match) => decodeJsonRecord(defined(match[1])));
           const page = schema.find(
             (data) => data["@type"] === (suffix ? "WebPage" : "CollectionPage"),
           );
-          assert.equal(page?.inLanguage, locale, path);
-          assert.equal(page?.url, `${host}${path}`, path);
+          assert.equal(page?.["inLanguage"], locale, path);
+          assert.equal(page["url"], `${host}${path}`, path);
           if (!suffix) {
-            const faq = schema.find((data) => data["@type"] === "FAQPage");
-            assert.equal(faq?.inLanguage, locale, path);
+            const faq = decodeFaqPage(
+              schema.find((data) => data["@type"] === "FAQPage"),
+            );
+            assert.equal(faq.inLanguage, locale, path);
             assert.ok(
-              faq.mainEntity[0].acceptedAnswer.text.includes(
+              defined(faq.mainEntity[0]).acceptedAnswer.text.includes(
                 localizePath(`/docs/how-to/import-${kind}`, locale),
               ),
             );

@@ -297,7 +297,7 @@ await test("review reads fall back for operational failures while defects still 
       userReviews: () => Effect.succeed({}),
     },
   });
-  await assert.rejects(broken(getReviews(readInput)), /programming defect/);
+  await assert.rejects(broken(getReviews(readInput)), /programming defect/u);
   await assert.rejects(
     dependencies({
       currentUser: Effect.fail(

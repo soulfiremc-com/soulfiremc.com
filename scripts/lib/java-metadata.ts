@@ -110,7 +110,7 @@ function descriptor(source: string | undefined): string {
   if (!collection || args.length !== (collection === "map" ? 2 : 1)) {
     throw new Error(`Unsupported type descriptor: ${source}`);
   }
-  return `${collection}<${args.map(descriptor).join(", ")}>`;
+  return `${collection}<${args.map((arg) => descriptor(arg)).join(", ")}>`;
 }
 
 export function parsePort(
@@ -142,7 +142,7 @@ export function parsePort(
     },
   };
   if (factory in standard) {
-    if (args.length) throw new Error(`Unexpected arguments for ${name}`);
+    if (args.length > 0) throw new Error(`Unexpected arguments for ${name}`);
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- the in check above proves the factory is a key of standard
     return { ...standard[factory as keyof typeof standard], required: false };
   }

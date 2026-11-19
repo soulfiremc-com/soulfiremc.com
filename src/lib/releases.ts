@@ -8,7 +8,7 @@ const SERVER_VERSION_URL =
   "https://raw.githubusercontent.com/soulfiremc-com/SoulFireClient/refs/heads/main/soulfire-server-version.txt";
 
 const clientReleaseManifestSchema = Schema.Struct({
-  version: Schema.String.check(Schema.isPattern(/\S/)),
+  version: Schema.String.check(Schema.isPattern(/\S/u)),
   pub_date: Schema.optionalKey(Schema.String),
 });
 

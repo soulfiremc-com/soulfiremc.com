@@ -38,7 +38,9 @@ await test("analytics failures fall back to the console without interrupting rec
   const report = createRecoverableErrorHandler(() => {
     throw new Error("Analytics unavailable");
   });
-  assert.doesNotThrow(() => report(error, {}));
+  assert.doesNotThrow(() => {
+    report(error, {});
+  });
   assert.deepEqual(defined(log.mock.calls[0]).arguments, [error]);
 });
 

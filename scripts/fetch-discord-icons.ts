@@ -1,12 +1,9 @@
-import { execFile } from "node:child_process";
+import { execFileSync } from "node:child_process";
 import { existsSync } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { promisify } from "node:util";
 import { Client, GatewayIntentBits } from "discord.js";
 import { printError, printLine } from "./lib/output";
-
-const execFileAsync = promisify(execFile);
 
 const DISCORD_TOKEN = process.env["DISCORD_TOKEN"];
 
@@ -39,7 +36,7 @@ async function downloadIcon(url: string, outputPath: string): Promise<void> {
 
 async function optimizeGif(filePath: string): Promise<void> {
   const tmpPath = `${filePath}.tmp.gif`;
-  await execFileAsync("ffmpeg", [
+  execFileSync("ffmpeg", [
     "-y",
     "-i",
     filePath,

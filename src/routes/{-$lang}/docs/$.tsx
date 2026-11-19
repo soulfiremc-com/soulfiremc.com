@@ -137,7 +137,11 @@ const clientLoader = browserCollections.docs.createClientLoader<{
   contentLocale: Locale;
 }>({
   id: "docs-page",
-  component({ default: MDX, toc, frontmatter, lastModified }, props) {
+  // fumadocs calls this as a hook inside its renderer component.
+  component: function useDocsPage(
+    { default: MDX, toc, frontmatter, lastModified },
+    props,
+  ) {
     const locale = useLocale();
     const t = useT();
     return (
@@ -231,7 +235,7 @@ export const Route = createFileRoute("/{-$lang}/docs/$")({
   loader: async ({ params }) => {
     const locale = isLocale(params.lang) ? params.lang : "en";
     const slugs = params._splat?.split("/").filter(Boolean) ?? [];
-    const key = params._splat?.replaceAll(/^\/+|\/+$/g, "") ?? "";
+    const key = params._splat?.replaceAll(/^\/+|\/+$/gu, "") ?? "";
     const destination = docsRedirects.get(key);
 
     if (destination) {

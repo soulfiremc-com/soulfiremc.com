@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 
 function isExternalUrl(value: string) {
-  return /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(value);
+  return /^(?:[a-z][a-z0-9+.-]*:|\/\/)/iu.test(value);
 }
 
 export function AuthLink({
