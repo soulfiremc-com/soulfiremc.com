@@ -7,7 +7,7 @@ import type { Category, Shop } from "@/lib/accounts-data";
 const RAVEALTS_STOCK_URL = "https://api.ravealts.com/alts/stock";
 const LOCALTS_PRODUCTS_URL = "https://localts.store/v1/products";
 const OUT_OF_STOCK_THRESHOLD = 0;
-const LIVE_SHOP_REQUEST_TIMEOUT_MS = 5_000;
+const LIVE_SHOP_REQUEST_TIMEOUT_MS = 5000;
 
 type LiveStockByCategory = Partial<Record<Category, number>>;
 

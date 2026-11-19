@@ -1,12 +1,16 @@
-import { Context, Data, Effect } from "effect";
+import { Context, Schema, Effect } from "effect";
 import { render } from "react-email";
 import { Resend } from "resend";
 import { runWebsiteEffect } from "@/lib/effect-runtime";
 
-export class EmailDeliveryError extends Data.TaggedError("EmailDeliveryError")<{
-  readonly reason: "transport" | "rejected" | "prepare";
-  readonly cause: unknown;
-}> {
+// oxlint-disable-next-line unicorn/throw-new-error -- Schema.TaggedError is a class factory.
+export class EmailDeliveryError extends Schema.TaggedError<
+  EmailDeliveryError,
+  { readonly brand: unique symbol }
+>()("EmailDeliveryError", {
+  reason: Schema.Literals(["transport", "rejected", "prepare"]),
+  cause: Schema.Unknown,
+}) {
   override get message() {
     return "Failed to send email";
   }

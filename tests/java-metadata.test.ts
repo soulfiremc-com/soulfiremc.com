@@ -8,8 +8,7 @@ import {
 } from "../scripts/lib/java-metadata";
 
 test("metadata DSL preserves nested generic expressions and quoted punctuation", () => {
-  const expression =
-    '"items", "Items (a, b)", TypeDescriptor.map(TypeDescriptor.simple(PortType.STRING), TypeDescriptor.list(TypeDescriptor.typeVar("T"))), "A \\"quoted\\" description"';
+  const expression = String.raw`"items", "Items (a, b)", TypeDescriptor.map(TypeDescriptor.simple(PortType.STRING), TypeDescriptor.list(TypeDescriptor.typeVar("T"))), "A \"quoted\" description"`;
   const args = splitArguments(expression);
   assert.equal(args.length, 4);
   const port = parsePort(`PortDefinition.genericInput(${expression})`, {});
@@ -20,7 +19,7 @@ test("metadata DSL preserves nested generic expressions and quoted punctuation",
 
 test("builder scanning ignores parentheses and commas inside escaped strings", () => {
   const calls = builderCalls(
-    '.description("Comma, bracket ) and \\"quote\\"").addInputs(PortDefinition.execIn()).isTrigger(true)',
+    String.raw`.description("Comma, bracket ) and \"quote\"").addInputs(PortDefinition.execIn()).isTrigger(true)`,
   );
   assert.equal(calls.length, 3);
   assert.equal(defined(calls[1]).args.length, 1);
@@ -29,7 +28,7 @@ test("builder scanning ignores parentheses and commas inside escaped strings", (
 
 test("port defaults distinguish JSON empty strings from an absent metadata default", () => {
   const explicit = parsePort(
-    'PortDefinition.inputWithDefault("value", "Value", PortType.STRING, "\\"\\"", "Text")',
+    String.raw`PortDefinition.inputWithDefault("value", "Value", PortType.STRING, "\"\"", "Text")`,
     {},
   );
   const absent = parsePort(

@@ -67,7 +67,7 @@ const searchAPIs = new Map<Locale, ReturnType<typeof createSearchAPI>>();
 export async function exportDocsSearch(locale: Locale) {
   let api = searchAPIs.get(locale);
   if (!api) {
-    api = createSearchAPI(locale).catch((error) => {
+    api = createSearchAPI(locale).catch((error: unknown) => {
       searchAPIs.delete(locale);
       throw error;
     });

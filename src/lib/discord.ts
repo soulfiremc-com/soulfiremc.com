@@ -1,14 +1,18 @@
-import { Data, Deferred, Effect, Schema } from "effect";
+import { Config, ConfigProvider, Deferred, Effect, Schema } from "effect";
 import { AsyncLocalStorage } from "node:async_hooks";
 import { requestJson, requestVoid } from "@/lib/backend-http";
 
-class DiscordCacheError extends Data.TaggedError("DiscordCacheError")<{
-  readonly cause: unknown;
-}> {}
+// oxlint-disable-next-line unicorn/throw-new-error -- Schema.TaggedError is a class factory.
+class DiscordCacheError extends Schema.TaggedError<
+  DiscordCacheError,
+  { readonly brand: unique symbol }
+>()("DiscordCacheError", { cause: Schema.Unknown }) {}
 
-class DiscordRequestError extends Data.TaggedError("DiscordRequestError")<{
-  readonly cause: unknown;
-}> {}
+// oxlint-disable-next-line unicorn/throw-new-error -- Schema.TaggedError is a class factory.
+class DiscordRequestError extends Schema.TaggedError<
+  DiscordRequestError,
+  { readonly brand: unique symbol }
+>()("DiscordRequestError", { cause: Schema.Unknown }) {}
 
 const DISCORD_API_BASE = "https://discord.com/api/v10";
 const DISCORD_INVITE_URL_PATTERN =
@@ -19,7 +23,7 @@ const DISCORD_CACHE_KEY_BASE =
 const DISCORD_INVITE_CACHE_TTL_SECONDS = 10 * 60;
 const DISCORD_INVITE_RESOLUTION_CACHE_TTL_SECONDS = 24 * 60 * 60;
 const DISCORD_NEGATIVE_CACHE_TTL_SECONDS = 60;
-const DISCORD_REQUEST_TIMEOUT_MS = 5_000;
+const DISCORD_REQUEST_TIMEOUT_MS = 5000;
 
 const discordOAuthTokensSchema = Schema.Struct({
   access_token: Schema.String,
@@ -199,12 +203,15 @@ function writeCachedValue(
     try: () =>
       cache.put(
         cacheKey,
-        new Response(JSON.stringify({ value }), {
-          headers: {
-            "Cache-Control": `public, max-age=${ttlSeconds}`,
-            "Content-Type": "application/json; charset=utf-8",
+        Response.json(
+          { value },
+          {
+            headers: {
+              "Cache-Control": `public, max-age=${ttlSeconds}`,
+              "Content-Type": "application/json; charset=utf-8",
+            },
           },
-        }),
+        ),
       ),
     catch: (cause) => new DiscordCacheError({ cause }),
   }).pipe(Effect.ignore);
@@ -282,6 +289,7 @@ function followInviteRedirects(initialUrl: string, maxRedirects: number) {
         const resolvedCode = extractInviteCode(currentUrl);
         if (resolvedCode !== currentUrl) return resolvedCode;
 
+        // oxlint-disable-next-line effecttsgo/global-fetch-in-effect -- Inspect manual redirects and cancel each native response body.
         const response = await fetch(currentUrl, {
           redirect: "manual",
           signal,
@@ -352,9 +360,16 @@ export const fetchDiscordInviteEffect = Effect.fn("fetchDiscordInvite")(
 
     return yield* getCachedValue({
       cacheKey: getDiscordCacheKey("invite", inviteCode),
-      load: Effect.suspend(() => {
-        const token = process.env["DISCORD_BOT_TOKEN"];
-        return requestJson(
+      load: Effect.gen(function* () {
+        const token = yield* Config.String("DISCORD_BOT_TOKEN").pipe(
+          Config.withDefault(""),
+          Effect.provideService(
+            ConfigProvider.ConfigProvider,
+            ConfigProvider.fromEnv(),
+          ),
+          Effect.orElseSucceed(() => ""),
+        );
+        return yield* requestJson(
           `${DISCORD_API_BASE}/invites/${inviteCode}?with_counts=true`,
           discordInviteSchema,
           {

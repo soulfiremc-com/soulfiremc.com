@@ -31,8 +31,8 @@ await test("provider aggregation bounds concurrency and preserves each provider'
   let maximum = 0;
   await Effect.runPromise(
     Effect.gen(function* () {
-      const started = yield* Deferred.make<void>();
-      const release = yield* Deferred.make<void>();
+      const started = yield* Deferred.make<undefined>();
+      const release = yield* Deferred.make<undefined>();
       const program = loadAllAccountStock().pipe(
         Effect.provideService(AccountProviderSources, {
           stock: (shop) =>
@@ -74,7 +74,7 @@ await test("cancelling provider aggregation closes all in-flight child programs"
   let closed = 0;
   await Effect.runPromise(
     Effect.gen(function* () {
-      const ready = yield* Deferred.make<void>();
+      const ready = yield* Deferred.make<undefined>();
       const fiber = yield* loadAllAccountStock().pipe(
         Effect.provideService(AccountProviderSources, {
           stock: () =>

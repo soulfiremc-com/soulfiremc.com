@@ -28,9 +28,9 @@ void test(
         signal: AbortSignal.timeout(15_000),
       });
       assert.equal(document.status, 200, path);
-      path = new URL(document.url).pathname;
+      const renderedPath = new URL(document.url).pathname;
       await document.body?.cancel();
-      const { path: bare, locale } = splitLocalePath(path);
+      const { path: bare, locale } = splitLocalePath(renderedPath);
       const slugs =
         bare === "/docs"
           ? []

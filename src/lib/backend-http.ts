@@ -1,14 +1,16 @@
-import { Data, Effect, Schedule, Schema } from "effect";
+import { Effect, Schedule, Schema } from "effect";
 
-export class ExternalRequestError extends Data.TaggedError(
-  "ExternalRequestError",
-)<{
-  readonly url: string;
-  readonly reason: "transport" | "status" | "timeout" | "decode";
-  readonly status?: number;
-  readonly retryable: boolean;
-  readonly cause?: unknown;
-}> {}
+// oxlint-disable-next-line unicorn/throw-new-error -- Schema.TaggedError is a class factory.
+export class ExternalRequestError extends Schema.TaggedError<
+  ExternalRequestError,
+  { readonly brand: unique symbol }
+>()("ExternalRequestError", {
+  url: Schema.String,
+  reason: Schema.Literals(["transport", "status", "timeout", "decode"]),
+  status: Schema.optionalKey(Schema.Finite),
+  retryable: Schema.Boolean,
+  cause: Schema.optionalKey(Schema.Unknown),
+}) {}
 
 /** The injected transport needs the fetch call signature, not runtime-specific helpers. */
 export type RequestFetch = (
@@ -30,7 +32,7 @@ function request(
   readBody: boolean,
   {
     init,
-    timeoutMs = 5_000,
+    timeoutMs = 5000,
     retries = 2,
     maxBytes = 8 * 1024 * 1024,
     fetch: fetcher = (input, options) => fetch(input, options),
@@ -140,19 +142,7 @@ export function requestJson<A>(
   options?: RequestOptions,
 ) {
   return request(url, true, options).pipe(
-    Effect.flatMap((text) =>
-      Effect.try({
-        try: () => JSON.parse(text) as unknown,
-        catch: (cause) =>
-          new ExternalRequestError({
-            url,
-            reason: "decode",
-            retryable: false,
-            cause,
-          }),
-      }),
-    ),
-    Effect.flatMap(Schema.decodeUnknownEffect(schema)),
+    Effect.flatMap(Schema.decodeUnknownEffect(Schema.fromJsonString(schema))),
     Effect.mapError((cause) =>
       cause instanceof ExternalRequestError
         ? cause

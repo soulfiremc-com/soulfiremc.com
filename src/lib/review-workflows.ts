@@ -1,4 +1,4 @@
-import { Context, Data, Effect } from "effect";
+import { Context, Schema, Effect } from "effect";
 import {
   emptyReviewSummary,
   type ItemType,
@@ -27,17 +27,24 @@ export type ReviewWrite = {
   commentStatus: ReviewCommentStatus;
 };
 
-export class ReviewSessionError extends Data.TaggedError("ReviewSessionError")<{
-  readonly operation: "session";
-  readonly cause: unknown;
-}> {}
-export class ReviewStoreError extends Data.TaggedError("ReviewStoreError")<{
-  readonly operation: string;
-  readonly cause: unknown;
-}> {}
-class ReviewUnauthorizedError extends Data.TaggedError(
-  "ReviewUnauthorizedError",
-) {}
+// oxlint-disable-next-line unicorn/throw-new-error -- Schema.TaggedError is a class factory.
+export class ReviewSessionError extends Schema.TaggedError<
+  ReviewSessionError,
+  { readonly brand: unique symbol }
+>()("ReviewSessionError", {
+  operation: Schema.Literals(["session"]),
+  cause: Schema.Unknown,
+}) {}
+// oxlint-disable-next-line unicorn/throw-new-error -- Schema.TaggedError is a class factory.
+export class ReviewStoreError extends Schema.TaggedError<
+  ReviewStoreError,
+  { readonly brand: unique symbol }
+>()("ReviewStoreError", { operation: Schema.String, cause: Schema.Unknown }) {}
+// oxlint-disable-next-line unicorn/throw-new-error -- Schema.TaggedError is a class factory.
+class ReviewUnauthorizedError extends Schema.TaggedError<
+  ReviewUnauthorizedError,
+  { readonly brand: unique symbol }
+>()("ReviewUnauthorizedError", {}) {}
 
 export class ReviewSession extends Context.Service<
   ReviewSession,
@@ -226,7 +233,7 @@ export const submitReview = Effect.fn("submitReview")(function* (
     const user = yield* requireUser;
     const store = yield* ReviewStore;
     const existing = yield* store.find(user.id, input.itemType, input.itemSlug);
-    const body = input.body?.trim().slice(0, 2_000) || null;
+    const body = input.body?.trim().slice(0, 2000) || null;
     const commentStatus: ReviewCommentStatus =
       !body ||
       (existing?.commentStatus === "approved" &&

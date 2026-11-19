@@ -44,6 +44,7 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
       : translate(locale, "home.meta.description");
     return {
       meta: [
+        // oxlint-disable-next-line unicorn/text-encoding-identifier-case -- HTML requires the UTF-8 encoding label.
         { charSet: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
         { title },
@@ -119,11 +120,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           src="https://analytics.ahrefs.com/analytics.js"
           data-key="qRgsfQEDB7kSuRdyL3PfiA"
           async
-        ></script>
+        />
       </head>
       <body suppressHydrationWarning>
         <ClientOnly fallback={null}>
-          <script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
+          <script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js" />
           <script
             // oxlint-disable-next-line react/no-danger -- the Ko-fi widget is configured with a static inline script
             dangerouslySetInnerHTML={{

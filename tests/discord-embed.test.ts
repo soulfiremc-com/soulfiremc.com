@@ -48,7 +48,7 @@ test("serializes page content and navigation as safe, bounded Discord JSON", () 
     title: "🌍".repeat(200),
     description: "🌍</script>".repeat(1000),
     url: "https://example.com",
-    images: ["https://example.com/" + "x".repeat(1900)],
+    images: [`https://example.com/${"x".repeat(1900)}`],
   });
   assert.ok(card);
   assert.ok(
@@ -58,6 +58,7 @@ test("serializes page content and navigation as safe, bounded Discord JSON", () 
 
 test("omits unsupported URLs instead of creating unsafe buttons", () => {
   assert.deepEqual(
+    // oxlint-disable-next-line eslint/no-script-url -- Exercise rejection of script URLs.
     discordEmbedScript({ title: "Bad", url: "javascript:alert(1)" }),
     [],
   );

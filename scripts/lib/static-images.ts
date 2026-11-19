@@ -3,14 +3,15 @@ import { fileURLToPath } from "node:url";
 import { join, relative } from "node:path";
 import { blurhashToDataUri } from "@unpic/placeholder";
 import { encode } from "blurhash";
-import { Data, Effect } from "effect";
+import { Schema, Effect } from "effect";
 import sharp from "sharp";
 import type { StaticImageManifest } from "../../src/lib/static-images";
 
-class StaticImageError extends Data.TaggedError("StaticImageError")<{
-  readonly operation: string;
-  readonly cause: unknown;
-}> {
+// oxlint-disable-next-line unicorn/throw-new-error -- Schema.TaggedError is a class factory.
+class StaticImageError extends Schema.TaggedError<
+  StaticImageError,
+  { readonly brand: unique symbol }
+>()("StaticImageError", { operation: Schema.String, cause: Schema.Unknown }) {
   override get message() {
     return `${this.operation}: ${this.cause instanceof Error ? this.cause.message : String(this.cause)}`;
   }
@@ -139,10 +140,18 @@ export function generateStaticImages({
       { concurrency: 2 },
     );
     const manifest = Object.fromEntries(entries);
-    yield* writeText(
-      fileURLToPath(metadataFile),
-      `${JSON.stringify(manifest, null, 2)}\n`,
+    const manifestJson = yield* Schema.encodeEffect(
+      Schema.fromJsonString(Schema.Unknown, { space: 2 }),
+    )(manifest).pipe(
+      Effect.mapError(
+        (cause) =>
+          new StaticImageError({
+            operation: "serialize image manifest",
+            cause,
+          }),
+      ),
     );
+    yield* writeText(fileURLToPath(metadataFile), `${manifestJson}\n`);
     const stale = (yield* listFiles(output)).filter(
       (file) => !generated.has(relative(output, file)),
     );
@@ -160,9 +169,11 @@ import {
   writeFile,
 } from "node:fs/promises";
 
-class StaticImageAccessError extends Data.TaggedError(
-  "StaticImageAccessError",
-)<{ readonly cause: unknown }> {}
+// oxlint-disable-next-line unicorn/throw-new-error -- Schema.TaggedError is a class factory.
+class StaticImageAccessError extends Schema.TaggedError<
+  StaticImageAccessError,
+  { readonly brand: unique symbol }
+>()("StaticImageAccessError", { cause: Schema.Unknown }) {}
 
 function operation<A>(name: string, work: () => PromiseLike<A>) {
   return Effect.tryPromise({

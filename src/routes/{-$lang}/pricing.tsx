@@ -184,7 +184,7 @@ function PricingPageContent() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-xl">
               <SiKofi className="size-5" />
-              {"Ko-fi"}
+              Ko-fi
             </CardTitle>
             <CardDescription>
               {t("support.donateViaPaypalOrCardMembershipAndOneTime")}

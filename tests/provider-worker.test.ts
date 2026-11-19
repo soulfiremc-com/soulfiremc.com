@@ -68,7 +68,7 @@ void test(
                     icon: null,
                     description: null,
                   },
-                  approximate_member_count: 12345,
+                  approximate_member_count: 12_345,
                   approximate_presence_count: 123,
                 });
               if (url.hostname === "localts.store")

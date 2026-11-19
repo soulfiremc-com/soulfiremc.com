@@ -39,6 +39,7 @@ export function VoxelScene() {
     useState<SimulationSummary>(fallbackSummary);
   // Each visit starts a different world. The prerendered page cannot know the
   // seed, so the still scene appears once the page hydrates.
+  // oxlint-disable-next-line react/hook-use-state -- The seed is fixed for the mounted scene.
   const [seed] = useState(() => Math.floor(Math.random() * 2 ** 32));
   const hydrated = useIsHydrated();
   const [announcement, setAnnouncement] = useState("");

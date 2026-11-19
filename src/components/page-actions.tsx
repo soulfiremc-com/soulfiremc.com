@@ -40,12 +40,12 @@ export function LLMCopyButton({
   markdownUrl: string;
 }) {
   const t = useT();
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [checked, onClick] = useCopyButton(async () => {
     const cached = cache.get(markdownUrl);
     if (cached) return navigator.clipboard.writeText(cached);
 
-    setLoading(true);
+    setIsLoading(true);
     const content = fetchMarkdown(markdownUrl);
 
     try {
@@ -58,7 +58,7 @@ export function LLMCopyButton({
       // Older browsers reject a pending ClipboardItem value.
       await navigator.clipboard.writeText(await content);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   });
 

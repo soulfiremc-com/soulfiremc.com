@@ -54,10 +54,10 @@ export function getPageMeta({
   publishedTime?: string;
   locale?: Locale;
 }) {
-  path = localizePath(path, locale);
-  description = truncateDescription(description);
-  imageUrl = absoluteUrl(imageUrl);
-  const bare = splitLocalePath(path).path;
+  const localizedPath = localizePath(path, locale);
+  const summary = truncateDescription(description);
+  let absoluteImageUrl = absoluteUrl(imageUrl);
+  const bare = splitLocalePath(localizedPath).path;
   if (
     locale !== "en" &&
     ["/", "/download", "/pricing", "/get-accounts", "/get-proxies"].includes(
@@ -65,11 +65,11 @@ export function getPageMeta({
     )
   ) {
     const name = bare === "/" ? "home" : bare.slice(1);
-    imageUrl = absoluteUrl(`/og/site/${locale}/${name}/image.webp`);
+    absoluteImageUrl = absoluteUrl(`/og/site/${locale}/${name}/image.webp`);
   }
   return [
     { title },
-    { name: "description", content: description },
+    { name: "description", content: summary },
     { property: "og:type", content: ogType },
     {
       property: "og:locale",
@@ -77,15 +77,15 @@ export function getPageMeta({
     },
     { property: "og:site_name", content: siteName },
     { property: "og:title", content: title },
-    { property: "og:description", content: description },
-    { property: "og:url", content: absoluteUrl(path) },
-    { property: "og:image", content: imageUrl },
+    { property: "og:description", content: summary },
+    { property: "og:url", content: absoluteUrl(localizedPath) },
+    { property: "og:image", content: absoluteImageUrl },
     { property: "og:image:alt", content: imageAlt },
     { property: "og:image:type", content: "image/webp" },
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: title },
-    { name: "twitter:description", content: description },
-    { name: "twitter:image", content: imageUrl },
+    { name: "twitter:description", content: summary },
+    { name: "twitter:image", content: absoluteImageUrl },
     { name: "twitter:image:alt", content: imageAlt },
     ...(ogType === "article" && publishedTime
       ? [{ property: "article:published_time", content: publishedTime }]
@@ -179,17 +179,17 @@ export function createWebPageStructuredData({
   withBreadcrumb?: boolean;
   locale?: Locale;
 }) {
-  path = localizePath(path, locale);
+  const localizedPath = localizePath(path, locale);
   return {
     inLanguage: locale,
     "@type": type,
-    "@id": `${absoluteUrl(path)}#webpage`,
-    url: absoluteUrl(path),
+    "@id": `${absoluteUrl(localizedPath)}#webpage`,
+    url: absoluteUrl(localizedPath),
     name: title,
     description,
     isPartOf: { "@id": `${siteUrl}/#website` },
     breadcrumb: withBreadcrumb
-      ? { "@id": `${absoluteUrl(path)}#breadcrumb` }
+      ? { "@id": `${absoluteUrl(localizedPath)}#breadcrumb` }
       : undefined,
     primaryImageOfPage: imageUrl
       ? {

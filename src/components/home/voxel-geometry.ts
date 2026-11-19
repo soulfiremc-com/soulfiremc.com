@@ -401,7 +401,7 @@ export function tileSurface(tile: SimulationTile | undefined) {
 
 /** Stable pseudo-random value in [0, 1) for a tile and a salt. */
 export function tileNoise(x: number, z: number, salt = 0) {
-  const value = Math.sin(x * 127.1 + z * 311.7 + salt * 74.7) * 43758.5453;
+  const value = Math.sin(x * 127.1 + z * 311.7 + salt * 74.7) * 43_758.5453;
   return value - Math.floor(value);
 }
 

@@ -1,4 +1,4 @@
-import { Context, Data, Effect } from "effect";
+import { Context, Schema, Effect } from "effect";
 import { replaceSdkReleaseTokens } from "./sdk-release";
 
 export type DocumentationPage = {
@@ -12,10 +12,14 @@ export type DocumentationPage = {
   readonly url: string;
 };
 
-export class DocumentationError extends Data.TaggedError("DocumentationError")<{
-  readonly operation: "source" | "page" | "openapi";
-  readonly cause: unknown;
-}> {
+// oxlint-disable-next-line unicorn/throw-new-error -- Schema.TaggedError is a class factory.
+export class DocumentationError extends Schema.TaggedError<
+  DocumentationError,
+  { readonly brand: unique symbol }
+>()("DocumentationError", {
+  operation: Schema.Literals(["source", "page", "openapi"]),
+  cause: Schema.Unknown,
+}) {
   override get message() {
     return "Unable to load documentation";
   }

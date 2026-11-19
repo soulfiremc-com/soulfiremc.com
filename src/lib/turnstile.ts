@@ -1,4 +1,5 @@
-import { Data, Effect, Schema } from "effect";
+import { SecureRandom } from "effect/crypto";
+import { Config, ConfigProvider, Effect, Schema } from "effect";
 import { requestJson } from "@/lib/backend-http";
 
 const TURNSTILE_SITEVERIFY_URL =
@@ -15,11 +16,13 @@ const turnstileResponseSchema = Schema.Struct({
   "error-codes": Schema.optionalKey(Schema.Array(Schema.String)),
 });
 
-export class TurnstileVerificationError extends Data.TaggedError(
-  "TurnstileVerificationError",
-)<{
-  readonly errorCodes: string[];
-}> {}
+// oxlint-disable-next-line unicorn/throw-new-error -- Schema.TaggedError is a class factory.
+export class TurnstileVerificationError extends Schema.TaggedError<
+  TurnstileVerificationError,
+  { readonly brand: unique symbol }
+>()("TurnstileVerificationError", {
+  errorCodes: Schema.mutable(Schema.Array(Schema.String)),
+}) {}
 
 export function getTurnstileRemoteIp(headers: Headers): string | null {
   const cfConnectingIp = headers.get("cf-connecting-ip");
@@ -73,7 +76,14 @@ export const validateTurnstileTokenEffect = Effect.fn("validateTurnstileToken")(
       });
     }
 
-    const secret = process.env["REVIEW_TURNSTILE_SECRET_KEY"];
+    const secret = yield* Config.String("REVIEW_TURNSTILE_SECRET_KEY").pipe(
+      Config.withDefault(""),
+      Effect.provideService(
+        ConfigProvider.ConfigProvider,
+        ConfigProvider.fromEnv(),
+      ),
+      Effect.orElseSucceed(() => ""),
+    );
     if (!secret) {
       return yield* new TurnstileVerificationError({
         errorCodes: ["missing-input-secret"],
@@ -83,7 +93,10 @@ export const validateTurnstileTokenEffect = Effect.fn("validateTurnstileToken")(
     const formData = new FormData();
     formData.set("secret", secret);
     formData.set("response", token);
-    formData.set("idempotency_key", crypto.randomUUID());
+    // oxlint-disable-next-line effecttsgo/unstable-api-usage -- Effect v4 provides secure UUIDs through this service.
+    const secureRandom = yield* SecureRandom.SecureRandom;
+    const idempotencyKey = yield* secureRandom.uuidV4();
+    formData.set("idempotency_key", idempotencyKey);
     if (remoteIp) formData.set("remoteip", remoteIp);
 
     const result = yield* requestJson(
@@ -116,6 +129,8 @@ export const validateTurnstileTokenEffect = Effect.fn("validateTurnstileToken")(
     }
     return undefined;
   },
+  // oxlint-disable-next-line effecttsgo/unstable-api-usage -- Supply the Web Crypto implementation for secure UUIDs.
+  Effect.provide(SecureRandom.layerWebCrypto),
 );
 
 export function validateTurnstileToken(input: TurnstileInput) {

@@ -3,7 +3,7 @@ import {
   mutationOptions,
   type QueryClient,
 } from "@tanstack/react-query";
-import { Data, Effect } from "effect";
+import { Schema, Effect } from "effect";
 import { ReviewChallengeError } from "@/lib/review-challenge";
 import type { ItemType } from "@/lib/review-core";
 import type {
@@ -36,12 +36,14 @@ export function selectReviewMutationSlug(mutation: Mutation) {
   return (mutation.state.variables as ReviewMutationVariables).slug;
 }
 
-class ReviewMutationRequestError extends Data.TaggedError(
-  "ReviewMutationRequestError",
-)<{
-  readonly operation: "submit" | "delete" | "refresh";
-  readonly cause: unknown;
-}> {}
+// oxlint-disable-next-line unicorn/throw-new-error -- Schema.TaggedError is a class factory.
+class ReviewMutationRequestError extends Schema.TaggedError<
+  ReviewMutationRequestError,
+  { readonly brand: unique symbol }
+>()("ReviewMutationRequestError", {
+  operation: Schema.Literals(["submit", "delete", "refresh"]),
+  cause: Schema.Unknown,
+}) {}
 
 function request<A>(
   operation: ReviewMutationRequestError["operation"],

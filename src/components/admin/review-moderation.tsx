@@ -1,5 +1,7 @@
 "use client";
 
+import { Schema } from "effect";
+
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Check,
@@ -44,7 +46,11 @@ import { generateN } from "@/lib/utils";
 
 const pendingReviewCommentsQueryKey = ["admin", "pending-reviews"] as const;
 
-class ModerationAccessError extends Error {}
+// oxlint-disable-next-line unicorn/throw-new-error -- Schema.TaggedError is a class factory.
+class ModerationAccessError extends Schema.TaggedError<
+  ModerationAccessError,
+  { readonly brand: unique symbol }
+>()("ModerationAccessError", {}) {}
 
 function getInitial(name: string) {
   return name.trim().charAt(0).toUpperCase() || "?";

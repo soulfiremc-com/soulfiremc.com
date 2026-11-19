@@ -153,7 +153,7 @@ const nodes: Node[] = registered.map((className) => {
 if (new Set(nodes.map((node) => node.type)).size !== nodes.length)
   throw new Error("Duplicate node type");
 const codeCell = (value: string) =>
-  value.replaceAll("|", "\\|").replaceAll("\n", " ");
+  value.replaceAll("|", String.raw`\|`).replaceAll("\n", " ");
 const escape = (value: string) =>
   codeCell(value)
     .replaceAll(/\s*—\s*/gu, "; ")

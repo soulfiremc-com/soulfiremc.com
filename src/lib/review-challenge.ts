@@ -1,11 +1,13 @@
-import { Data, Effect } from "effect";
+import { Schema, Effect } from "effect";
 
-export class ReviewChallengeError extends Data.TaggedError(
-  "ReviewChallengeError",
-)<{
-  readonly message: string;
-  readonly cause?: unknown;
-}> {}
+// oxlint-disable-next-line unicorn/throw-new-error -- Schema.TaggedError is a class factory.
+export class ReviewChallengeError extends Schema.TaggedError<
+  ReviewChallengeError,
+  { readonly brand: unique symbol }
+>()("ReviewChallengeError", {
+  message: Schema.String,
+  cause: Schema.optionalKey(Schema.Unknown),
+}) {}
 
 type ChallengeWidget = { reset(): void; execute(): void };
 type PendingChallenge = {

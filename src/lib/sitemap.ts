@@ -101,22 +101,22 @@ export function getRenderedPageSitemap(
 ) {
   if (!isIndexableCanonicalPage(path, html, host)) return { exclude: true };
 
-  path = splitLocalePath(path).path;
+  const barePath = splitLocalePath(path).path;
   let priority = 0.5;
   let changefreq: "daily" | "weekly" = "weekly";
-  if (path === "/") {
+  if (barePath === "/") {
     priority = 1;
     changefreq = "daily";
-  } else if (DAILY_PAGES.has(path)) {
+  } else if (DAILY_PAGES.has(barePath)) {
     priority = 0.9;
     changefreq = "daily";
-  } else if (path.startsWith("/docs/openapi/")) {
+  } else if (barePath.startsWith("/docs/openapi/")) {
     priority = 0.3;
-  } else if (path.startsWith("/blog/") || path.startsWith("/docs/")) {
+  } else if (barePath.startsWith("/blog/") || barePath.startsWith("/docs/")) {
     priority = 0.7;
   } else if (
-    path.startsWith("/get-accounts/") ||
-    path.startsWith("/get-proxies/")
+    barePath.startsWith("/get-accounts/") ||
+    barePath.startsWith("/get-proxies/")
   ) {
     priority = 0.6;
   }

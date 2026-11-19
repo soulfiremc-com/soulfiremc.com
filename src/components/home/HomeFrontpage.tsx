@@ -158,7 +158,7 @@ function ScriptPreview() {
     >
       <div className="workflow-title">
         <Workflow className="size-4" />
-        <span>{"hello-world.sfscript"}</span>
+        <span>hello-world.sfscript</span>
         <span>{t("home.visualScript")}</span>
       </div>
       <div className="workflow-canvas">
@@ -215,7 +215,7 @@ function AutomationSection() {
     >
       <Reveal className="home-section-copy">
         <h2 id="automation-title">
-          <TranslatedLines text={"home.giveYourBotsAJob"} />
+          <TranslatedLines text="home.giveYourBotsAJob" />
         </h2>
         <p>{t("home.connectEventsToActionsInTheVisualEditorTo")}</p>
         <Link
@@ -246,7 +246,7 @@ function AutomationSection() {
             <div className="terminal-preview">
               <div className="workflow-title">
                 <Terminal className="size-4" />
-                <span>{"SoulFire CLI"}</span>
+                <span>SoulFire CLI</span>
                 <span>{t("home.exampleSession")}</span>
               </div>
               <pre>
@@ -297,7 +297,7 @@ function SdkSection() {
         <div>
           <Code2 className="home-section-icon" />
           <h2 id="sdk-title">
-            <TranslatedLines text={"home.typescriptAndPythonSdks"} />
+            <TranslatedLines text="home.typescriptAndPythonSdks" />
           </h2>
         </div>
         <p>{t("home.startWithAServerAddressAndUsernameTheSdk")}</p>
@@ -307,8 +307,8 @@ function SdkSection() {
           <Tabs defaultValue="typescript">
             <div className="home-code-bar">
               <TabsList variant="line" aria-label={t("home.sdkLanguage")}>
-                <TabsTrigger value="typescript">{"TypeScript"}</TabsTrigger>
-                <TabsTrigger value="python">{"Python"}</TabsTrigger>
+                <TabsTrigger value="typescript">TypeScript</TabsTrigger>
+                <TabsTrigger value="python">Python</TabsTrigger>
               </TabsList>
             </div>
             <TabsContent value="typescript">
@@ -385,7 +385,7 @@ export function HomeFrontpage({
                   <ArrowUpRight className="size-3.5" />
                 </a>
                 <h1 id="hero-title">
-                  <TranslatedLines text={"home.putBotsToWork"} accent />
+                  <TranslatedLines text="home.putBotsToWork" accent />
                 </h1>
                 <p>
                   {t("home.stressTestYourMinecraftServerAutomateTasksWithReal")}
@@ -427,7 +427,7 @@ export function HomeFrontpage({
             >
               <Reveal className="home-section-heading">
                 <h2 id="intro-title">
-                  <TranslatedLines text={"home.seeHowYourServerHoldsUp"} />
+                  <TranslatedLines text="home.seeHowYourServerHoldsUp" />
                 </h2>
                 <p>{t("home.findOutHowYourServerHandlesPlayersJoiningAnd")}</p>
               </Reveal>
@@ -460,7 +460,7 @@ export function HomeFrontpage({
               <Reveal>
                 <SiGithub className="home-community-icon" />
                 <h2 id="community-title">
-                  <TranslatedLines text={"home.comeBuildWithUs"} />
+                  <TranslatedLines text="home.comeBuildWithUs" />
                 </h2>
                 <p>{t("home.shareYourScriptsAndGetHelpOnDiscordIf")}</p>
                 <div className="home-community-actions">
@@ -536,7 +536,7 @@ export function HomeFrontpage({
             >
               <Reveal>
                 <h2 id="final-title">
-                  <TranslatedLines text={"home.startYourFirstSession"} />
+                  <TranslatedLines text="home.startYourFirstSession" />
                 </h2>
                 <div className="home-final-actions">
                   <Button

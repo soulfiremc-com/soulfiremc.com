@@ -118,7 +118,7 @@ function randomArrayValue(values: string[]): string {
 function generateGenericUsername(): string {
   const adjective = randomArrayValue(USERNAME_ADJECTIVES);
   const noun = randomArrayValue(USERNAME_NOUNS);
-  const suffix = Math.floor(Math.random() * 9_000 + 1_000);
+  const suffix = Math.floor(Math.random() * 9000 + 1000);
   return `${adjective}_${noun}_${suffix}`;
 }
 

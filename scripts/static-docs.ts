@@ -2,14 +2,16 @@ import { locales, localizePath, splitLocalePath } from "../src/lib/i18n.ts";
 import { createHash } from "node:crypto";
 import { mkdir, readdir, writeFile } from "node:fs/promises";
 import { dirname, join, relative } from "node:path";
-import { Data, Effect } from "effect";
+import { Schema, Effect } from "effect";
 import { fromCrossJSON, toJSONAsync } from "seroval";
 import { type Plugin, preview } from "vite";
 import { printLine } from "./lib/output.ts";
 
-class StaticDocsError extends Data.TaggedError("StaticDocsError")<{
-  readonly cause: unknown;
-}> {}
+// oxlint-disable-next-line unicorn/throw-new-error -- Schema.TaggedError is a class factory.
+class StaticDocsError extends Schema.TaggedError<
+  StaticDocsError,
+  { readonly brand: unique symbol }
+>()("StaticDocsError", { cause: Schema.Unknown }) {}
 
 export const docsMetadataFunctionId = "docs-metadata";
 
@@ -118,8 +120,12 @@ export function staticDocsMetadata(): Plugin {
                         );
                         url.searchParams.set(
                           "payload",
-                          JSON.stringify(payload),
+                          // oxlint-disable-next-line effecttsgo/schema-sync-in-effect -- The build task maps exceptions from this promise to StaticDocsError.
+                          Schema.encodeSync(
+                            Schema.fromJsonString(Schema.Unknown),
+                          )(payload),
                         );
+                        // oxlint-disable-next-line effecttsgo/global-fetch-in-effect -- Keep native response cleanup within the static build request timeout.
                         const result = await fetch(url, {
                           headers: {
                             "x-tsr-serverfn": "true",
@@ -155,7 +161,10 @@ export function staticDocsMetadata(): Plugin {
                         }
                         // Match the cache key of the pinned staticFunctionMiddleware.
                         // Slugs are string arrays, so no object-key sorting is needed.
-                        const hash = JSON.stringify(data)
+                        // oxlint-disable-next-line effecttsgo/schema-sync-in-effect -- The build task maps exceptions from this promise to StaticDocsError.
+                        const hash = Schema.encodeSync(
+                          Schema.fromJsonString(Schema.Array(Schema.String)),
+                        )(data)
                           .replaceAll(/[/\\?%*:|"<>]/gu, "-")
                           .replaceAll(/\s+/gu, "_");
                         const key = createHash("sha1")
@@ -166,9 +175,10 @@ export function staticDocsMetadata(): Plugin {
                           "__tsr/staticServerFnCache",
                           `${key}.json`,
                         );
-                        const json = JSON.stringify(
-                          await toJSONAsync(response),
-                        );
+                        // oxlint-disable-next-line effecttsgo/schema-sync-in-effect -- The build task maps exceptions from this promise to StaticDocsError.
+                        const json = Schema.encodeSync(
+                          Schema.fromJsonString(Schema.Unknown),
+                        )(await toJSONAsync(response));
                         await mkdir(dirname(destination), { recursive: true });
                         await writeFile(destination, json);
                       },

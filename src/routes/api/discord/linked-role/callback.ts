@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { deleteCookie, getCookie } from "@tanstack/react-start/server";
 import { and, eq } from "drizzle-orm";
-import { Data, Effect } from "effect";
+import { DateTime, Schema, Effect } from "effect";
 import { db } from "@/lib/db";
 import { account, user } from "@/lib/db/auth-schema";
 import {
@@ -18,11 +18,11 @@ import { runWebsiteEffect } from "@/lib/effect-runtime";
 
 const REDIRECT_URI = "https://soulfiremc.com/api/discord/linked-role/callback";
 
-class DiscordAccountLookupError extends Data.TaggedError(
-  "DiscordAccountLookupError",
-)<{
-  readonly cause: unknown;
-}> {}
+// oxlint-disable-next-line unicorn/throw-new-error -- Schema.TaggedError is a class factory.
+class DiscordAccountLookupError extends Schema.TaggedError<
+  DiscordAccountLookupError,
+  { readonly brand: unique symbol }
+>()("DiscordAccountLookupError", { cause: Schema.Unknown }) {}
 
 export const Route = createFileRoute("/api/discord/linked-role/callback")({
   server: {
@@ -80,13 +80,14 @@ export const Route = createFileRoute("/api/discord/linked-role/callback")({
                 },
               });
             } else {
+              const now = yield* DateTime.now;
               yield* pushLinkedRoleMetadataEffect(tokens.access_token, {
                 platform_name: "SoulFire",
                 platform_username: null,
                 metadata: {
                   verified_account: 0,
                   email_verified: 0,
-                  account_created: new Date().toISOString(),
+                  account_created: DateTime.formatIso(now),
                 },
               });
             }

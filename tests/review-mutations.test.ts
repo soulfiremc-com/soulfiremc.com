@@ -33,8 +33,8 @@ function setup(
 
 await test("pending mutations remain shared through verification and cache refresh", async () => {
   const verification = deferred<string>();
-  const refresh = deferred<void>();
-  const refreshStarted = deferred<void>();
+  const refresh = deferred<undefined>();
+  const refreshStarted = deferred<undefined>();
   const { queryClient, observer } = setup({
     executeTurnstile: () => verification.promise,
     submitReview: ({ data }) => {
@@ -44,7 +44,7 @@ await test("pending mutations remain shared through verification and cache refre
   });
   queryClient.invalidateQueries = async (filters) => {
     assert.deepEqual(filters?.queryKey, ["reviews", "account"]);
-    refreshStarted.resolve();
+    refreshStarted.resolve(undefined);
     await refresh.promise;
   };
   const filters = {
@@ -75,7 +75,7 @@ await test("pending mutations remain shared through verification and cache refre
   verification.resolve("verified");
   await refreshStarted.promise;
   assert.equal(queryClient.isMutating(filters), 1);
-  refresh.resolve();
+  refresh.resolve(undefined);
   assert.deepEqual(await pending, { error: null });
   assert.equal(queryClient.isMutating(filters), 0);
   queryClient.clear();
@@ -83,7 +83,7 @@ await test("pending mutations remain shared through verification and cache refre
 
 await test("verification failures skip submission and invalidation and release pending state", async () => {
   const { queryClient, observer } = setup({
-    executeTurnstile: () => Promise.reject(new Error()),
+    executeTurnstile: () => Promise.reject(new Error("Unexpected test call")),
     submitReview: () => assert.fail(),
   });
   queryClient.invalidateQueries = () => assert.fail();
@@ -128,7 +128,7 @@ await test("edits bypass verification and rejected deletes do not refresh review
 });
 
 await test("network failures propagate without retrying and release pending state", async () => {
-  const failure = new Error();
+  const failure = new Error("Unexpected test call");
   let calls = 0;
   const { queryClient, observer } = setup({
     deleteReview: () => {

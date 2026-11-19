@@ -105,7 +105,7 @@ const TIMID = 0.25;
 const MAX_FLEE_SECONDS = 3.5;
 const NERVE_SECONDS = 7;
 const MAX_SEPARATION_STEP = 0.08;
-const DEFAULT_SEED = 0x50f1;
+const DEFAULT_SEED = 0x50_f1;
 
 const REWARD_WEIGHTS: Record<
   SelectionPressure,
@@ -166,9 +166,9 @@ type Internal = {
 const internals = new WeakMap<SimulationState, Internal>();
 
 function mixSeed(seed: number, salt: number) {
-  let value = (seed ^ Math.imul(salt + 1, 0x9e3779b1)) >>> 0;
-  value = Math.imul(value ^ (value >>> 16), 0x85ebca6b) >>> 0;
-  value = Math.imul(value ^ (value >>> 13), 0xc2b2ae35) >>> 0;
+  let value = (seed ^ Math.imul(salt + 1, 0x9e_37_79_b1)) >>> 0;
+  value = Math.imul(value ^ (value >>> 16), 0x85_eb_ca_6b) >>> 0;
+  value = Math.imul(value ^ (value >>> 13), 0xc2_b2_ae_35) >>> 0;
   return (value ^ (value >>> 16)) >>> 0;
 }
 
@@ -176,19 +176,19 @@ function createRandom(seed: number) {
   let state = seed >>> 0;
   return () => {
     // oxlint-disable-next-line unicorn/prefer-math-trunc -- mulberry32 needs the int32 wraparound of | 0, which Math.trunc does not do
-    state = (state + 0x6d2b79f5) | 0;
+    state = (state + 0x6d_2b_79_f5) | 0;
     let t = Math.imul(state ^ (state >>> 15), 1 | state);
     t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    return ((t ^ (t >>> 14)) >>> 0) / 4_294_967_296;
   };
 }
 
 function random(internal: Internal) {
   // oxlint-disable-next-line unicorn/prefer-math-trunc -- mulberry32 needs the int32 wraparound of | 0, which Math.trunc does not do
-  internal.rng = (internal.rng + 0x6d2b79f5) | 0;
+  internal.rng = (internal.rng + 0x6d_2b_79_f5) | 0;
   let t = Math.imul(internal.rng ^ (internal.rng >>> 15), 1 | internal.rng);
   t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-  return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  return ((t ^ (t >>> 14)) >>> 0) / 4_294_967_296;
 }
 
 function clamp01(value: number) {
@@ -384,7 +384,8 @@ function tryGenerateWorld(rand: () => number, plain = false) {
   const sites: ResourceSite[] = [];
   if (!plain) {
     const place = (kind: ResourceKind, count: number) => {
-      for (let tries = 0; tries < 200 && count > 0; tries++) {
+      let remaining = count;
+      for (let tries = 0; tries < 200 && remaining > 0; tries++) {
         const x = -1 - Math.floor(rand() * 8);
         const z = Math.floor(rand() * 15) - 7;
         const tile = itemAt(tiles, tileIndex(x, z));
@@ -404,7 +405,7 @@ function tryGenerateWorld(rand: () => number, plain = false) {
           target.quantity = RESOURCE_QUANTITY[kind];
           sites.push({ index: tileIndex(mirrorX, z), kind });
         }
-        count--;
+        remaining--;
       }
     };
     place("wood", 3 + Math.floor(rand() * 4));
@@ -533,7 +534,7 @@ export function createSimulation(
   options: { spectacle?: boolean } = {},
 ): SimulationState {
   const normalized = normalizeSeed(seed);
-  const rand = createRandom(mixSeed(normalized, 0x6e6f6d65));
+  const rand = createRandom(mixSeed(normalized, 0x6e_6f_6d_65));
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- the simulation always creates exactly two teams
   const genomes = [0, 1].map(() =>
     Array.from({ length: BOTS_PER_TEAM }, () => ({
@@ -560,7 +561,7 @@ export function createSimulation(
   };
   decorateAdventure(state);
   internals.set(state, {
-    rng: mixSeed(normalized, 0x62726169),
+    rng: mixSeed(normalized, 0x62_72_61_69),
     nextEventId: 1,
     brains: new Map(state.bots.map((bot) => [bot.id, newBrain()])),
     sites: world.sites,

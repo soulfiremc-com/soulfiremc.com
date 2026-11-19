@@ -33,8 +33,8 @@ export type AdventureHost = {
 };
 
 function random(world: AdventureState) {
-  world.rng = (Math.imul(world.rng, 1664525) + 1013904223) >>> 0;
-  return world.rng / 4294967296;
+  world.rng = (Math.imul(world.rng, 1_664_525) + 1_013_904_223) >>> 0;
+  return world.rng / 4_294_967_296;
 }
 
 export function createAdventure(
@@ -55,7 +55,7 @@ export function createAdventure(
       dusk: 0.18,
       dawn: 0.84,
     },
-    rng: scramble(seed ^ Math.imul(generation, 0x9e3779b1)),
+    rng: scramble(seed ^ Math.imul(generation, 0x9e_37_79_b1)),
     nextId: 1,
     night: 0,
     storm: 0,
@@ -97,8 +97,8 @@ export function createAdventure(
  */
 function scramble(value: number) {
   let hash = value >>> 0;
-  hash = Math.imul(hash ^ (hash >>> 16), 0x85ebca6b);
-  hash = Math.imul(hash ^ (hash >>> 13), 0xc2b2ae35);
+  hash = Math.imul(hash ^ (hash >>> 16), 0x85_eb_ca_6b);
+  hash = Math.imul(hash ^ (hash >>> 13), 0xc2_b2_ae_35);
   return (hash ^ (hash >>> 16)) >>> 0;
 }
 
