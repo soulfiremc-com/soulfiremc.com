@@ -914,6 +914,9 @@ export const Route = createFileRoute("/{-$lang}/download")({
       stripSearchParams({ os: DEFAULT_OS.id, cpu: DEFAULT_CPU.id }),
     ],
   },
+  loader: ({ context }) => {
+    void context.queryClient.query(downloadPageQueryOptions).catch(noop);
+  },
   head: ({ params }) => ({
     meta: getPageMeta({
       locale: isLocale(params.lang) ? params.lang : "en",
@@ -937,9 +940,6 @@ export const Route = createFileRoute("/{-$lang}/download")({
       isLocale(params.lang) ? params.lang : "en",
     ),
   }),
-  loader: ({ context }) => {
-    void context.queryClient.query(downloadPageQueryOptions).catch(noop);
-  },
   component: DownloadPage,
 });
 

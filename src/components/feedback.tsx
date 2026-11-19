@@ -8,7 +8,12 @@ import {
   CollapsibleContent,
 } from "fumadocs-ui/components/ui/collapsible";
 import { ThumbsDown, ThumbsUp } from "lucide-react";
-import { type SubmitEvent, useEffect, useRef, useState } from "react";
+import {
+  type SubmitEvent,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { captureAnalyticsEvent } from "@/lib/integrations/posthog";
@@ -19,6 +24,41 @@ type PageFeedback = {
   message: string;
 };
 
+function subscribeToFeedback(onChange: () => void) {
+  window.addEventListener("storage", onChange);
+  return () => {
+    window.removeEventListener("storage", onChange);
+  };
+}
+
+function readFeedback(storageKey: string): string | null {
+  try {
+    return localStorage.getItem(storageKey);
+  } catch {
+    return null;
+  }
+}
+
+function parseFeedback(item: string | null): PageFeedback | null {
+  if (!item) return null;
+  try {
+    const value: unknown = JSON.parse(item);
+    if (
+      typeof value === "object" &&
+      value !== null &&
+      "opinion" in value &&
+      (value.opinion === "good" || value.opinion === "bad") &&
+      "message" in value &&
+      typeof value.message === "string"
+    ) {
+      return { opinion: value.opinion, message: value.message };
+    }
+  } catch {
+    // Ignore stored feedback that cannot be parsed.
+  }
+  return null;
+}
+
 export function Feedback() {
   const url = useLocation({ select: (location) => location.pathname });
   return <FeedbackForm key={url} url={url} />;
@@ -27,21 +67,21 @@ export function Feedback() {
 function FeedbackForm({ url }: { url: string }) {
   const t = useT();
   const storageKey = `docs-feedback-${url}`;
-  const [previous, setPrevious] = useState<PageFeedback | null>(null);
+  const savedFeedback = useSyncExternalStore(
+    subscribeToFeedback,
+    () => readFeedback(storageKey),
+    () => null,
+  );
+  const [feedbackOverride, setFeedbackOverride] =
+    useState<PageFeedback | null>();
+  const previous =
+    feedbackOverride === undefined
+      ? parseFeedback(savedFeedback)
+      : feedbackOverride;
   const [opinion, setOpinion] = useState<"good" | "bad" | null>(null);
   const [message, setMessage] = useState("");
   // Submitting replaces the focused form, so focus moves to the thank-you note.
   const focusThanksRef = useRef(false);
-
-  useEffect(() => {
-    try {
-      const item = localStorage.getItem(storageKey);
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- the stored feedback is written by this component
-      if (item) setPrevious(JSON.parse(item) as PageFeedback);
-    } catch {
-      // Feedback remains available when browser storage is unavailable.
-    }
-  }, [storageKey]);
 
   function submit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -50,7 +90,7 @@ function FeedbackForm({ url }: { url: string }) {
     const feedback: PageFeedback = { opinion, message };
     captureAnalyticsEvent("on_rate_docs", { ...feedback });
     focusThanksRef.current = true;
-    setPrevious(feedback);
+    setFeedbackOverride(feedback);
     setMessage("");
     setOpinion(null);
 
@@ -123,7 +163,7 @@ function FeedbackForm({ url }: { url: string }) {
                 size="sm"
                 onClick={() => {
                   setOpinion(previous.opinion);
-                  setPrevious(null);
+                  setFeedbackOverride(null);
                   try {
                     localStorage.removeItem(storageKey);
                   } catch {

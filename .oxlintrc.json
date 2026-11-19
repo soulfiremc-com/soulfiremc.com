@@ -15,7 +15,17 @@
     "node",
     "effecttsgo"
   ],
-  "jsPlugins": ["@shadcn/lint", "eslint-plugin-better-tailwindcss"],
+  "jsPlugins": [
+    "@shadcn/lint",
+    "eslint-plugin-better-tailwindcss",
+    {
+      "name": "tanstack-router",
+      "specifier": "@tanstack/eslint-plugin-router"
+    },
+    { "name": "tanstack-query", "specifier": "@tanstack/eslint-plugin-query" },
+    { "name": "drizzle", "specifier": "eslint-plugin-drizzle" },
+    { "name": "react-hooks-js", "specifier": "eslint-plugin-react-hooks" }
+  ],
   "categories": {
     "correctness": "error",
     "suspicious": "error",
@@ -35,12 +45,44 @@
   },
   "ignorePatterns": [
     "src/components/ui/**",
+    // Keep the copied Better Auth UI registry intact for upstream updates.
     "src/components/auth/**",
     "src/lib/auth/**",
     "src/components/data-table/**",
     "src/routeTree.gen.ts"
   ],
   "rules": {
+    "tanstack-router/create-route-property-order": "error",
+    "tanstack-router/route-param-names": "error",
+    "tanstack-query/exhaustive-deps": "error",
+    "tanstack-query/stable-query-client": "error",
+    "tanstack-query/no-rest-destructuring": "error",
+    "tanstack-query/no-unstable-deps": "error",
+    "tanstack-query/infinite-query-property-order": "error",
+    "tanstack-query/mutation-property-order": "error",
+    "drizzle/enforce-delete-with-where": [
+      "error",
+      { "drizzleObjectName": ["db", "reviewDb", "reviewsDb"] }
+    ],
+    "drizzle/enforce-update-with-where": [
+      "error",
+      { "drizzleObjectName": ["db", "reviewDb", "reviewsDb"] }
+    ],
+    "react-hooks-js/component-hook-factories": "error",
+    "react-hooks-js/static-components": "error",
+    "react-hooks-js/use-memo": "error",
+    "react-hooks-js/preserve-manual-memoization": "error",
+    "react-hooks-js/incompatible-library": "error",
+    "react-hooks-js/immutability": "error",
+    "react-hooks-js/globals": "error",
+    "react-hooks-js/refs": "error",
+    "react-hooks-js/set-state-in-effect": "error",
+    "react-hooks-js/error-boundaries": "error",
+    "react-hooks-js/purity": "error",
+    "react-hooks-js/set-state-in-render": "error",
+    "react-hooks-js/unsupported-syntax": "error",
+    "react-hooks-js/config": "error",
+    "react-hooks-js/gating": "error",
     "better-tailwindcss/enforce-canonical-classes": "error",
     "better-tailwindcss/no-conflicting-classes": "error",
     "better-tailwindcss/no-deprecated-classes": "error",

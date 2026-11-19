@@ -184,12 +184,21 @@ function ItemReviewsSectionContent({
   const visibleReviews = reviewPageData.entries;
   const pending = pendingBySlug[slug] ?? false;
 
-  const [rating, setRating] = useState(currentReview?.rating ?? 5);
-  const [body, setBody] = useState(currentReview?.body ?? "");
   const [showSignInPrompt, setShowSignInPrompt] = useState(false);
   const [confirmRemove, setConfirmRemove] = useState(false);
   // A draft saved before sign-in replaces the stored review until it is saved.
   const [draft, setDraft] = useState<ReviewDraft | null>(null);
+  const source = draft ?? currentReview;
+  const initialForm = {
+    source,
+    rating: source?.rating ?? 5,
+    body: source?.body ?? "",
+  };
+  const [form, setForm] = useState(initialForm);
+  const { rating, body } = form.source === source ? form : initialForm;
+  if (form.source !== source) {
+    setForm(initialForm);
+  }
   const ratingLabelId = useId();
   const location = useLocation();
   const reviewPageHref = (page: number) => {
@@ -210,16 +219,16 @@ function ItemReviewsSectionContent({
   };
 
   useEffect(() => {
-    // Reading removes the draft, so a repeated effect run must not clear it.
-    const restored = takeReviewDraft(itemType, slug);
-    if (restored) setDraft(restored);
+    // Consume the draft only after mount. Cancel if React replays the effect
+    // or the visitor navigates away before the first frame.
+    const frame = requestAnimationFrame(() => {
+      const restored = takeReviewDraft(itemType, slug);
+      if (restored) setDraft(restored);
+    });
+    return () => {
+      cancelAnimationFrame(frame);
+    };
   }, [itemType, slug]);
-
-  useEffect(() => {
-    const source = draft ?? currentReview;
-    setRating(source?.rating ?? 5);
-    setBody(source?.body ?? "");
-  }, [currentReview, draft]);
 
   const hasWrittenReviews = visibleReviews.length > 0;
   const hasPreviousPage = reviewPageData.page > 1;
@@ -438,7 +447,9 @@ function ItemReviewsSectionContent({
               <div className="rounded-xl border border-border/70 bg-muted/20 px-4 py-3">
                 <ReviewStarInput
                   value={rating}
-                  onChange={setRating}
+                  onChange={(value) => {
+                    setForm({ source, rating: value, body });
+                  }}
                   disabled={pending}
                   size="lg"
                   labelledBy={ratingLabelId}
@@ -457,7 +468,7 @@ function ItemReviewsSectionContent({
                 id={`review-body-${slug}`}
                 value={body}
                 onChange={(event) => {
-                  setBody(event.target.value);
+                  setForm({ source, rating, body: event.target.value });
                 }}
                 disabled={pending}
                 rows={6}

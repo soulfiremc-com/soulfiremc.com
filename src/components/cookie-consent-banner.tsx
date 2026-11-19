@@ -14,23 +14,28 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { CONSENT_CHANGE_EVENT, REOPEN_EVENT } from "@/lib/cookie-consent";
-import { loadPostHog, readAnalyticsConsent } from "@/lib/integrations/posthog";
+import {
+  CONSENT_CHANGE_EVENT,
+  REOPEN_EVENT,
+  useAnalyticsConsent,
+} from "@/lib/cookie-consent";
+import { loadPostHog } from "@/lib/integrations/posthog";
 
 const CookieConsentBanner = () => {
   const t = useT();
-  const [open, setOpen] = useState(false);
+  const consent = useAnalyticsConsent();
+  const [openOverride, setOpenOverride] = useState<boolean | null>(null);
+  const open = openOverride ?? consent === "pending";
   const [reopened, setReopened] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const returnFocusRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    setOpen(readAnalyticsConsent() === "pending");
     const show = () => {
       if (document.activeElement instanceof HTMLElement) {
         returnFocusRef.current = document.activeElement;
       }
-      setOpen(true);
+      setOpenOverride(true);
       setReopened(true);
     };
     window.addEventListener(REOPEN_EVENT, show);
@@ -64,6 +69,7 @@ const CookieConsentBanner = () => {
   }, [open]);
 
   const respond = (status: "granted" | "denied") => {
+    setOpenOverride(true);
     void loadPostHog().then((posthog) => {
       if (!posthog) return;
       if (status === "granted") posthog.opt_in_capturing();
@@ -75,7 +81,7 @@ const CookieConsentBanner = () => {
     // banner close. Closing in the next task keeps the response measurable.
     // A reopened banner hands focus back to the control that opened it.
     setTimeout(() => {
-      setOpen(false);
+      setOpenOverride(false);
       returnFocusRef.current?.focus();
       returnFocusRef.current = null;
     }, 0);

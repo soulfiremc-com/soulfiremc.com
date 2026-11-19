@@ -19,6 +19,7 @@ const blogIndexLoader = createServerFn({ method: "GET" }).handler(() => ({
 }));
 
 export const Route = createFileRoute("/blog/")({
+  loader: async () => blogIndexLoader(),
   head: () => {
     const title = "Blog - SoulFire";
     const description =
@@ -53,7 +54,6 @@ export const Route = createFileRoute("/blog/")({
       ],
     };
   },
-  loader: async () => blogIndexLoader(),
   component: BlogIndexPage,
 });
 

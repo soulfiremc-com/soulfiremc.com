@@ -710,6 +710,9 @@ export const Route = createFileRoute("/{-$lang}/get-proxies/")({
   search: {
     middlewares: [stripSearchParams({ badges: [], sort: "default" })],
   },
+  loader: ({ context }) => {
+    void context.queryClient.query(proxyReviewsQueryOptions).catch(noop);
+  },
   head: ({ params }) => {
     const locale = isLocale(params.lang) ? params.lang : "en";
     return {
@@ -726,9 +729,6 @@ export const Route = createFileRoute("/{-$lang}/get-proxies/")({
       }),
       links: getCanonicalLinks("/get-proxies", locale),
     };
-  },
-  loader: ({ context }) => {
-    void context.queryClient.query(proxyReviewsQueryOptions).catch(noop);
   },
   component: GetProxiesPage,
 });

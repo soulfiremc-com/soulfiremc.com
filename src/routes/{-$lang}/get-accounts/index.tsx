@@ -39,6 +39,7 @@ import {
   useMemo,
   useRef,
   useState,
+  useSyncExternalStore,
 } from "react";
 import { CouponCode, LinkDiscountNotice } from "@/components/coupon-code";
 import { Image } from "@/components/image";
@@ -524,12 +525,45 @@ const ProviderCard = memo(function ProviderCard({
   );
 });
 
+const promotionDeadlines = PROVIDERS.flatMap(({ promotedUntil }) =>
+  promotedUntil === undefined ? [] : [Date.parse(promotedUntil)],
+).toSorted((a, b) => a - b);
+
+function getPromotionTime() {
+  const now = Date.now();
+  return promotionDeadlines.findLast((deadline) => deadline <= now) ?? 0;
+}
+
+function subscribeToPromotionTime(onChange: () => void) {
+  let timeout: number | undefined;
+  const schedule = () => {
+    const now = Date.now();
+    const nextDeadline = promotionDeadlines.find((deadline) => deadline > now);
+    if (nextDeadline === undefined) return;
+    // A timer cannot represent delays longer than a signed 32-bit integer.
+    timeout = window.setTimeout(
+      () => {
+        onChange();
+        schedule();
+      },
+      Math.min(nextDeadline - now, 2_147_483_647),
+    );
+  };
+  schedule();
+  return () => {
+    window.clearTimeout(timeout);
+  };
+}
+
 function MainContent() {
   const t = useT();
   const { renderedAt } = Route.useLoaderData();
   const hydrated = useHydrated();
-  // oxlint-disable-next-line react/purity -- after hydration the list uses the current time for promotion windows
-  const now = hydrated ? Date.now() : renderedAt;
+  const now = useSyncExternalStore(
+    subscribeToPromotionTime,
+    getPromotionTime,
+    () => renderedAt,
+  );
   const providers = PROVIDERS;
   const slugs = useMemo(() => [...new Set(PROVIDERS.map((p) => p.slug))], []);
   const {

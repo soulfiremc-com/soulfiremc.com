@@ -1,8 +1,5 @@
-import { useEffect, useState } from "react";
-import {
-  type AnalyticsConsent,
-  readAnalyticsConsent,
-} from "@/lib/integrations/posthog";
+import { useSyncExternalStore } from "react";
+import { readAnalyticsConsent } from "@/lib/integrations/posthog";
 
 export const REOPEN_EVENT = "soulfire:cookie-consent-open";
 export const CONSENT_CHANGE_EVENT = "soulfire:cookie-consent-change";
@@ -12,18 +9,18 @@ export function reopenCookieConsent() {
   window.dispatchEvent(new Event(REOPEN_EVENT));
 }
 
+function subscribeToConsent(onChange: () => void) {
+  window.addEventListener(CONSENT_CHANGE_EVENT, onChange);
+  return () => {
+    window.removeEventListener(CONSENT_CHANGE_EVENT, onChange);
+  };
+}
+
 /** Reads the current choice after hydration. Null until then. */
 export function useAnalyticsConsent() {
-  const [consent, setConsent] = useState<AnalyticsConsent | null>(null);
-  useEffect(() => {
-    const update = () => {
-      setConsent(readAnalyticsConsent());
-    };
-    update();
-    window.addEventListener(CONSENT_CHANGE_EVENT, update);
-    return () => {
-      window.removeEventListener(CONSENT_CHANGE_EVENT, update);
-    };
-  }, []);
-  return consent;
+  return useSyncExternalStore(
+    subscribeToConsent,
+    readAnalyticsConsent,
+    () => null,
+  );
 }
