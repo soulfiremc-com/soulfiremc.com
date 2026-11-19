@@ -3,13 +3,13 @@ export type SelectionPressure = "balanced" | "build" | "battle";
 export type ResourceKind = "wood" | "stone";
 export type Point = readonly [number, number];
 
-export interface Genome {
+export type Genome = {
   aggression: number;
   building: number;
   caution: number;
-}
+};
 
-export interface SimulationTile {
+export type SimulationTile = {
   id: string;
   x: number;
   z: number;
@@ -21,7 +21,7 @@ export interface SimulationTile {
   hazard?: "scorch" | "lava";
   torch?: boolean;
   fire?: number;
-}
+};
 
 export type BotTask =
   | "gather"
@@ -35,7 +35,7 @@ export type BotTask =
   | "idle"
   | "dead";
 
-export interface SimulationBot {
+export type SimulationBot = {
   id: string;
   team: TeamId;
   x: number;
@@ -51,17 +51,17 @@ export interface SimulationBot {
   facing: Point;
   action: number;
   hurt: number;
-}
+};
 
-export interface SimulationTeam {
+export type SimulationTeam = {
   id: TeamId;
   home: Point;
   wood: number;
   stone: number;
   wins: number;
-}
+};
 
-export interface SimulationEvent {
+export type SimulationEvent = {
   id: number;
   kind:
     | "mine"
@@ -77,9 +77,9 @@ export interface SimulationEvent {
   team: TeamId;
   age: number;
   power?: number;
-}
+};
 
-export interface SimulationMob {
+export type SimulationMob = {
   id: number;
   kind: "creeper" | "skeleton" | "zombie";
   x: number;
@@ -89,9 +89,9 @@ export interface SimulationMob {
   fuse: number;
   cooldown: number;
   hurt: number;
-}
+};
 
-export interface PrimedCharge {
+export type PrimedCharge = {
   id: number;
   x: number;
   z: number;
@@ -103,10 +103,10 @@ export interface PrimedCharge {
   flight: number;
   /** Blast radius in tiles. */
   power: number;
-}
+};
 
 /** What makes one round differ from the next. Rolled when a round starts. */
-export interface AdventureMood {
+export type AdventureMood = {
   /** Multiplier for every blast radius. */
   blast: number;
   /** Multipliers for the time between mob waves, sieges and lava spread. */
@@ -121,9 +121,9 @@ export interface AdventureMood {
   /** Round progress, from 0 to 1, at which dusk and dawn begin. */
   dusk: number;
   dawn: number;
-}
+};
 
-export interface SimulationArrow {
+export type SimulationArrow = {
   id: number;
   x: number;
   y: number;
@@ -133,9 +133,9 @@ export interface SimulationArrow {
   vz: number;
   age: number;
   stuck: boolean;
-}
+};
 
-export interface AdventureState {
+export type AdventureState = {
   enabled: boolean;
   mood: AdventureMood;
   rng: number;
@@ -152,17 +152,17 @@ export interface AdventureState {
   nextLava: number;
   breachReadyAt: number;
   stormReadyAt: number;
-}
+};
 
-export interface SimulationMetrics {
+export type SimulationMetrics = {
   gathered: number;
   crafted: number;
   built: number;
   destroyed: number;
   hits: number;
-}
+};
 
-export interface SimulationState {
+export type SimulationState = {
   seed: number;
   generation: number;
   elapsed: number;
@@ -175,9 +175,9 @@ export interface SimulationState {
   metrics: SimulationMetrics;
   terrainVersion: number;
   adventure: AdventureState;
-}
+};
 
-export interface SimulationSummary {
+export type SimulationSummary = {
   generation: number;
   remaining: number;
   alive: [number, number];
@@ -188,4 +188,4 @@ export interface SimulationSummary {
   storm: boolean;
   canBreach: boolean;
   canStorm: boolean;
-}
+};

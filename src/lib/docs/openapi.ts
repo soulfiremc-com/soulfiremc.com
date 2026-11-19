@@ -16,12 +16,12 @@ export type OpenApiPageLike = {
 
 type OpenApiOperation = {
   description?: string;
-  parameters?: Array<{
+  parameters?: {
     description?: string;
     in?: string;
     name?: string;
     required?: boolean;
-  }>;
+  }[];
   requestBody?: {
     content?: Record<string, unknown>;
     required?: boolean;

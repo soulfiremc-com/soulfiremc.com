@@ -6,31 +6,31 @@ import { AUTH_UI_BASE_PATHS, AUTH_UI_VIEW_PATHS } from "./auth-ui-config";
 import { Effect } from "effect";
 import { EmailDeliveryError, runEmailEffect, sendEmailEffect } from "./resend";
 
-interface BaseEmailParams {
+type BaseEmailParams = {
   user: {
     id: string;
     name?: string | null;
     email: string;
   };
-}
+};
 
-interface EmailWithUrlParams extends BaseEmailParams {
+type EmailWithUrlParams = {
   url: string;
-}
+} & BaseEmailParams;
 
-interface ChangeEmailConfirmationParams extends EmailWithUrlParams {
+type ChangeEmailConfirmationParams = {
   newEmail: string;
-}
+} & EmailWithUrlParams;
 
-interface OTPEmailParams extends BaseEmailParams {
+type OTPEmailParams = {
   otp: string;
-}
+} & BaseEmailParams;
 
-interface EmailOTPParams {
+type EmailOTPParams = {
   email: string;
   otp: string;
   type: "sign-in" | "email-verification" | "forget-password" | "change-email";
-}
+};
 
 const siteName = "SoulFire";
 const baseUrl = "https://soulfiremc.com";

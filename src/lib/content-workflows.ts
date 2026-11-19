@@ -1,7 +1,7 @@
 import { Context, Data, Effect } from "effect";
 import { replaceSdkReleaseTokens } from "./sdk-release";
 
-export interface DocumentationPage {
+export type DocumentationPage = {
   readonly data: {
     readonly description?: string;
     readonly getText?: (mode: "processed") => Promise<string>;
@@ -10,7 +10,7 @@ export interface DocumentationPage {
   };
   readonly slugs: string[];
   readonly url: string;
-}
+};
 
 export class DocumentationError extends Data.TaggedError("DocumentationError")<{
   readonly operation: "source" | "page" | "openapi";

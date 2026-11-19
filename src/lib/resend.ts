@@ -12,18 +12,18 @@ export class EmailDeliveryError extends Data.TaggedError("EmailDeliveryError")<{
   }
 }
 
-export interface WebsiteEmail {
+export type WebsiteEmail = {
   readonly from: string;
   readonly to: string;
   readonly replyTo: string;
   readonly subject: string;
   readonly react: React.ReactElement;
-}
+};
 
 /** React Email's plain-text render skips the hidden preheader, so send it with the HTML. */
-export interface WebsiteEmailSubmission extends WebsiteEmail {
+export type WebsiteEmailSubmission = {
   readonly text: string;
-}
+} & WebsiteEmail;
 
 export class WebsiteMailer extends Context.Service<
   WebsiteMailer,

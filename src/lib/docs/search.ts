@@ -4,8 +4,8 @@ import { translate } from "@/lib/messages";
 import { replaceSdkReleaseTokens } from "@/lib/sdk-release";
 
 type SearchStructuredData = {
-  contents: Array<{ content: string; heading: string }>;
-  headings: Array<{ content: string; id: string }>;
+  contents: { content: string; heading: string }[];
+  headings: { content: string; id: string }[];
 };
 
 function hasStructuredData(

@@ -14,7 +14,7 @@ export const MAX_ARROWS = 8;
 export const MAX_LAVA = 10;
 export const MAX_TORCHES = 8;
 
-export interface AdventureHost {
+export type AdventureHost = {
   tile: (x: number, z: number) => SimulationTile | undefined;
   walkable: (tile: SimulationTile) => boolean;
   hurt: (bot: SimulationBot, amount: number, owner: string | null) => void;
@@ -30,7 +30,7 @@ export interface AdventureHost {
     power?: number,
   ) => void;
   settle: () => void;
-}
+};
 
 function random(world: AdventureState) {
   world.rng = (Math.imul(world.rng, 1664525) + 1013904223) >>> 0;

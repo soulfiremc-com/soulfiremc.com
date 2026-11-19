@@ -35,13 +35,13 @@ const blogPostLoader = createServerFn({ method: "GET" })
   });
 
 const clientLoader = browserCollections.blog.createClientLoader<{
-  relatedPosts: Array<{
+  relatedPosts: {
     date?: string;
     description?: string;
     readingTime: number;
     slug: string;
     title: string;
-  }>;
+  }[];
 }>({
   id: "blog-post",
   component({ default: MDX }, props) {

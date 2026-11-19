@@ -1,7 +1,7 @@
 import type { Point, SimulationState } from "./voxel-simulation-types";
 
 /** How an entity is drawn this frame. The simulation never reads it. */
-export interface Pose {
+export type Pose = {
   x: number;
   z: number;
   /** Rotation that turns the model's front toward its facing. */
@@ -12,17 +12,17 @@ export interface Pose {
   walk: number;
   /** Size multiplier. It grows from 0 while a new entity appears. */
   scale: number;
-}
+};
 
-interface Tracked extends Pose {
+type Tracked = {
   age: number;
-}
+} & Pose;
 
-interface Entity {
+type Entity = {
   x: number;
   z: number;
   facing: Point;
-}
+};
 
 const SPAWN_SECONDS = 0.35;
 const STRIDE_PER_TILE = 7.5;

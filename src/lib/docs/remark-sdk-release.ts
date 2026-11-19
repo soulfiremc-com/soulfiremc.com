@@ -5,7 +5,7 @@ type Node = {
   value?: unknown;
   url?: unknown;
   meta?: unknown;
-  attributes?: Array<{ value?: unknown }>;
+  attributes?: { value?: unknown }[];
   children?: Node[];
 };
 

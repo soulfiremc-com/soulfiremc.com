@@ -52,27 +52,35 @@ function getInitial(name: string) {
 
 function getItemTypeLabel(itemType: ItemType) {
   switch (itemType) {
-    case "account":
+    case "account": {
       return "Account";
-    case "proxy":
+    }
+    case "proxy": {
       return "Proxy";
-    case "resource":
+    }
+    case "resource": {
       return "Resource";
-    default:
+    }
+    default: {
       return itemType satisfies never;
+    }
   }
 }
 
 function getItemPath(itemType: ItemType, itemSlug: string) {
   switch (itemType) {
-    case "account":
+    case "account": {
       return `/get-accounts/${itemSlug}`;
-    case "proxy":
+    }
+    case "proxy": {
       return `/get-proxies/${itemSlug}`;
-    case "resource":
+    }
+    case "resource": {
       return null;
-    default:
+    }
+    default: {
       return itemType satisfies never;
+    }
   }
 }
 

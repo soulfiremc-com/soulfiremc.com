@@ -17,7 +17,7 @@ const componentType = {
 };
 const linkButtonStyle = 5 as ButtonStyle.Link;
 
-export interface DiscordEmbedOptions {
+export type DiscordEmbedOptions = {
   title: string;
   label?: string;
   description?: string;
@@ -26,7 +26,7 @@ export interface DiscordEmbedOptions {
   images?: readonly string[];
   links?: readonly { label: string; url: string }[];
   color?: number;
-}
+};
 
 function shorten(value: string, length: number) {
   if (length <= 0) return "";

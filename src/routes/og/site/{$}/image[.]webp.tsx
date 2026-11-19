@@ -88,12 +88,14 @@ export const Route = createFileRoute("/og/site/{$}/image.webp")({
         let image: ReactElement;
 
         switch (page) {
-          case "home":
+          case "home": {
             image = <HomeOgImage />;
             break;
-          case "download":
+          }
+          case "download": {
             image = <DownloadOgImage />;
             break;
+          }
           case "blog": {
             const allPosts = getSortedBlogPages();
             image = (
@@ -109,7 +111,7 @@ export const Route = createFileRoute("/og/site/{$}/image.webp")({
             );
             break;
           }
-          case "get-proxies":
+          case "get-proxies": {
             image = (
               <DirectoryOgImage
                 label="Proxies"
@@ -122,6 +124,7 @@ export const Route = createFileRoute("/og/site/{$}/image.webp")({
               />
             );
             break;
+          }
           case "get-accounts": {
             const uniqueProviders = [
               ...new Map(ACCOUNT_PROVIDERS.map((p) => [p.slug, p])).values(),
@@ -139,8 +142,9 @@ export const Route = createFileRoute("/og/site/{$}/image.webp")({
             );
             break;
           }
-          default:
+          default: {
             return new Response(null, { status: 404 });
+          }
         }
 
         return createOgImageResponse(image);

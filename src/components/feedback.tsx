@@ -14,10 +14,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { captureAnalyticsEvent } from "@/lib/integrations/posthog";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
-interface PageFeedback {
+type PageFeedback = {
   opinion: "good" | "bad";
   message: string;
-}
+};
 
 export function Feedback() {
   const url = useLocation({ select: (location) => location.pathname });

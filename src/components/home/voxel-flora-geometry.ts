@@ -3,12 +3,12 @@ import { Geometry, tileNoise, timber, type Color } from "./voxel-geometry";
 import type { SimulationState, SimulationTile } from "./voxel-simulation-types";
 
 /** Render-only plant sizes. Plants ease toward what the simulation allows. */
-export interface FloraGrowth {
+export type FloraGrowth = {
   /** Grass cover per tile ID, from 0 (bare) to 1 (full). */
   grass: Map<string, number>;
   /** Trunk height per tile ID. */
   trees: Map<string, number>;
-}
+};
 
 const GRASS_GROW_PER_SECOND = 0.14;
 const GRASS_WITHER_PER_SECOND = 2.5;

@@ -25,27 +25,27 @@ export const KIND = {
   shadow: 5,
 } as const;
 
-export interface Mesh {
+export type Mesh = {
   vertices: Float32Array;
   /** Vertices before this index are opaque. The rest need blending. */
   opaque: number;
-}
+};
 
-export interface FaceStyle {
+export type FaceStyle = {
   kind?: number;
   param?: number;
   /** Parameter for the upper vertices of a cube. Defaults to `param`. */
   paramTop?: number;
-}
+};
 
 /** Where an articulated model stands, and how it is turned and scaled. */
-export interface Rig {
+export type Rig = {
   x: number;
   y: number;
   z: number;
   yaw: number;
   scale: number;
-}
+};
 
 /** Center X, bottom Y and center Z relative to the pivot, then the size. */
 export type Box = readonly [number, number, number, number, number, number];

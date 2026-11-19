@@ -85,15 +85,18 @@ const nodes: Node[] = registered.map((className) => {
   };
   for (const call of builderCalls(itemAt(metadata, 1))) {
     switch (call.name) {
-      case "type":
+      case "type": {
         node.type = javaString(call.args[0]);
         break;
-      case "displayName":
+      }
+      case "displayName": {
         node.name = javaString(call.args[0]);
         break;
-      case "description":
+      }
+      case "description": {
         node.description = javaString(call.args[0]);
         break;
+      }
       case "category": {
         const category = categories.find(
           (item) => call.args[0] === `CategoryRegistry.${item.constant}`,
@@ -102,20 +105,24 @@ const nodes: Node[] = registered.map((className) => {
         node.category = category.id;
         break;
       }
-      case "addInputs":
+      case "addInputs": {
         node.inputs.push(...call.args.map((arg) => parsePort(arg, constants)));
         break;
-      case "addOutputs":
+      }
+      case "addOutputs": {
         node.outputs.push(...call.args.map((arg) => parsePort(arg, constants)));
         break;
-      case "isTrigger":
+      }
+      case "isTrigger": {
         node.trigger = call.args[0] === "true";
         break;
-      case "isExpensive":
+      }
+      case "isExpensive": {
         node.expensive = call.args[0] === "true";
         break;
+      }
       case "keywords":
-      case "addKeywords":
+      case "addKeywords": {
         // Search aliases, such as names from earlier releases.
         node.keywords.push(
           ...[...call.args.join(",").matchAll(/"(?:[^"\\]|\\.)*"/gu)].map(
@@ -123,13 +130,16 @@ const nodes: Node[] = registered.map((className) => {
           ),
         );
         break;
+      }
       case "icon":
       case "color":
       case "supportsMuting":
-      case "blocksThread":
+      case "blocksThread": {
         break;
-      default:
+      }
+      default: {
         throw new Error(`Unsupported metadata field: ${call.name}`);
+      }
     }
   }
   if (!node.type || !node.name || !node.category || !node.description)

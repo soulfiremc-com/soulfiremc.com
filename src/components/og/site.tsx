@@ -229,7 +229,7 @@ function Sidebar({
   const visibleEntries =
     entries
       ?.slice(0, 3)
-      .reduce<Array<{ key: string; value: string }>>((acc, value) => {
+      .reduce<{ key: string; value: string }[]>((acc, value) => {
         const occurrence = acc.filter((entry) => entry.value === value).length;
 
         acc.push({

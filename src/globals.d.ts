@@ -1,6 +1,7 @@
 declare module "@fontsource-variable/geist";
 declare module "@fontsource-variable/geist-mono";
 
+// oxlint-disable-next-line typescript/consistent-type-definitions -- this merges with the ImportMetaEnv interface from vite/client
 interface ImportMetaEnv {
   readonly VITE_APP_VERSION?: string;
   readonly VITE_BETTER_AUTH_IDENTIFY_URL?: string;

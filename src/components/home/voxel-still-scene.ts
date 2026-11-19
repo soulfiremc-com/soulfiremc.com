@@ -12,12 +12,12 @@ import {
 } from "./voxel-simulation";
 import { itemAt } from "@/lib/item-at";
 
-export interface StillFace {
+export type StillFace = {
   id: string;
   points: string;
   depth: number;
   color: string;
-}
+};
 
 /**
  * The caption values before the page hydrates. They are the same for every

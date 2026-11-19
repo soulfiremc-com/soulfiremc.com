@@ -134,7 +134,7 @@ const PRESSURES: ReadonlySet<SelectionPressure> = new Set<SelectionPressure>([
 type Tool = "pickaxe" | "sword";
 type StructureKind = "wall" | "bridge";
 
-interface Brain {
+type Brain = {
   path: number[];
   goal: number;
   stand: number;
@@ -148,20 +148,20 @@ interface Brain {
   phase: "fetch" | "place";
   structure: StructureKind;
   craft: Tool;
-}
+};
 
-interface ResourceSite {
+type ResourceSite = {
   index: number;
   kind: ResourceKind;
-}
+};
 
-interface Internal {
+type Internal = {
   rng: number;
   nextEventId: number;
   brains: Map<string, Brain>;
   sites: ResourceSite[];
   regrow: number;
-}
+};
 
 const internals = new WeakMap<SimulationState, Internal>();
 
@@ -687,12 +687,12 @@ function nearestEnemy(state: SimulationState, bot: SimulationBot) {
   return { enemy: best, distance: bestDistance };
 }
 
-interface Threat {
+type Threat = {
   x: number;
   z: number;
   /** The bot wants to be at least this far away. */
   radius: number;
-}
+};
 
 /**
  * Lists what the bot wants to get away from right now. Caution decides how
@@ -1459,8 +1459,9 @@ function updateBot(
       updateDefense(state, internal, bot, brain, dt);
       break;
     }
-    case "dead":
+    case "dead": {
       break;
+    }
   }
 }
 

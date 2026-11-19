@@ -4,14 +4,14 @@ import type { SimulationState } from "./voxel-simulation-types";
 /** The fragment shader loops over at most this many lights. */
 export const MAX_LIGHTS = 16;
 
-export interface SceneLights {
+export type SceneLights = {
   /** How many of the slots hold a light. */
   count: number;
   /** X, Y, Z and radius for each light. */
   positions: Float32Array;
   /** Red, green and blue, already multiplied by the intensity. */
   colors: Float32Array;
-}
+};
 
 /** A soft, never-repeating flicker around 1 for flames. */
 export function flicker(time: number, seed: number) {

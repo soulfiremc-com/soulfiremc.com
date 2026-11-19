@@ -14,10 +14,10 @@ import {
   siteUrl,
 } from "./site";
 
-export interface BreadcrumbItem {
+export type BreadcrumbItem = {
   name: string;
   path: string;
-}
+};
 
 const maxDescriptionLength = 160;
 

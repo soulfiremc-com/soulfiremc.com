@@ -456,7 +456,14 @@
     "unicorn/no-negated-condition": "off",
     "eslint/require-await": "off",
     "typescript/strict-boolean-expressions": "off",
-    "unicorn/no-useless-undefined": "off"
+    "unicorn/no-useless-undefined": "off",
+    "typescript/consistent-type-definitions": ["error", "type"],
+    "typescript/array-type": "error",
+    "typescript/no-inferrable-types": "error",
+    "typescript/prefer-function-type": "error",
+    "typescript/consistent-indexed-object-style": "error",
+    "unicorn/switch-case-braces": "error",
+    "eslint/no-useless-assignment": "error"
   },
   "overrides": [
     {

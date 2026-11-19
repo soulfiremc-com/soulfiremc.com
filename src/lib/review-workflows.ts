@@ -46,7 +46,7 @@ export class ReviewSession extends Context.Service<
   }
 >()("soulfire/ReviewSession") {}
 
-export interface ReviewStoreService {
+export type ReviewStoreService = {
   summaries(
     itemType: ItemType,
     slugs: string[],
@@ -85,7 +85,7 @@ export interface ReviewStoreService {
     itemType: ItemType,
     slug: string,
   ): Effect.Effect<void, ReviewStoreError>;
-}
+};
 export class ReviewStore extends Context.Service<
   ReviewStore,
   ReviewStoreService
