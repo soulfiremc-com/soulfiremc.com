@@ -1,6 +1,11 @@
 import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 import type { ComponentProps } from "react";
+import type { ContentImageSource } from "@/components/content-image";
 import { Image } from "@/components/image";
+
+type MdxImageProps = Omit<ComponentProps<typeof ImageZoom>, "src"> & {
+  src?: ContentImageSource;
+};
 
 export function MdxImage({
   src,
@@ -9,7 +14,7 @@ export function MdxImage({
   zoomInProps,
   rmiz,
   ...props
-}: ComponentProps<typeof ImageZoom>) {
+}: MdxImageProps) {
   const source =
     typeof src === "object" && "default" in src ? src.default : src;
   const url = typeof source === "object" ? source.src : source;

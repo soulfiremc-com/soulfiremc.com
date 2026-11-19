@@ -43,7 +43,7 @@ function request(
   const failure = (cause: unknown) =>
     cause instanceof ExternalRequestError
       ? cause
-      : new ExternalRequestError({
+      : ExternalRequestError.make({
           url,
           reason: "transport",
           retryable: true,
@@ -84,7 +84,7 @@ function request(
         catch: failure,
       });
       if (!response.ok)
-        return yield* new ExternalRequestError({
+        return yield* ExternalRequestError.make({
           url,
           reason: "status",
           status: response.status,
@@ -107,7 +107,7 @@ function request(
           if (chunk.done) break;
           length += chunk.value.byteLength;
           if (length > maxBytes)
-            return yield* new ExternalRequestError({
+            return yield* ExternalRequestError.make({
               url,
               reason: "decode",
               retryable: false,
@@ -126,7 +126,7 @@ function request(
       duration: timeoutMs,
       orElse: () =>
         Effect.fail(
-          new ExternalRequestError({
+          ExternalRequestError.make({
             url,
             reason: "timeout",
             retryable: false,
@@ -146,7 +146,7 @@ export function requestJson<A>(
     Effect.mapError((cause) =>
       cause instanceof ExternalRequestError
         ? cause
-        : new ExternalRequestError({
+        : ExternalRequestError.make({
             url,
             reason: "decode",
             retryable: false,

@@ -162,7 +162,7 @@ export function ReviewModeration() {
       });
 
       if (!result.ok) {
-        throw new ModerationAccessError();
+        throw ModerationAccessError.make();
       }
     },
     onError: (error) => {

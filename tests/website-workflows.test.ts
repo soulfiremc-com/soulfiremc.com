@@ -314,7 +314,7 @@ await test("email submission is never retried and finishes before cancellation r
 });
 
 await test("public failures preserve messages while excluding provider credentials and typed fields", async () => {
-  const internal = new EmailDeliveryError({
+  const internal = EmailDeliveryError.make({
     reason: "transport",
     cause: new Error("private API key"),
   });

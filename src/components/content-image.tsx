@@ -1,5 +1,21 @@
-import type { ImageProps } from "fumadocs-core/framework";
+import type { ComponentProps } from "react";
 import { Image } from "@/components/image";
+
+type StaticContentImage = {
+  src: string;
+  width: number;
+  height: number;
+};
+
+export type ContentImageSource =
+  | string
+  | StaticContentImage
+  | { default: StaticContentImage };
+
+type ContentImageProps = Omit<ComponentProps<"img">, "src"> & {
+  src?: ContentImageSource;
+  priority?: boolean;
+};
 
 function dimension(value: unknown) {
   const number = Number(value);
@@ -12,7 +28,7 @@ export function ContentImage({
   width,
   height,
   ...props
-}: ImageProps) {
+}: ContentImageProps) {
   const source =
     typeof src === "object" && "default" in src ? src.default : src;
   const url = typeof source === "object" ? source.src : source;

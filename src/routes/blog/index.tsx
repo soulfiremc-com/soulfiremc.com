@@ -14,11 +14,9 @@ import {
   jsonLdScript,
 } from "@/lib/seo";
 
-const blogIndexLoader = createServerFn({ method: "GET" }).handler(() => {
-  return {
-    posts: getAllBlogPostSummaries(),
-  };
-});
+const blogIndexLoader = createServerFn({ method: "GET" }).handler(() => ({
+  posts: getAllBlogPostSummaries(),
+}));
 
 export const Route = createFileRoute("/blog/")({
   head: () => {

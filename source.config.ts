@@ -1,4 +1,4 @@
-import { Schema } from "effect";
+import { DateTime, Option, Schema } from "effect";
 import {
   defineCollections,
   defineConfig,
@@ -32,10 +32,10 @@ const frontmatterFields = {
 const calendarDate = Schema.String.check(
   Schema.makeFilter((value) => {
     if (!/^\d{4}-\d{2}-\d{2}$/u.test(value)) return "Invalid calendar date";
-    const date = new Date(`${value}T00:00:00Z`);
+    const date = DateTime.make(`${value}T00:00:00Z`);
     return (
-      (!Number.isNaN(date.getTime()) &&
-        date.toISOString().slice(0, 10) === value) ||
+      (Option.isSome(date) &&
+        DateTime.formatIsoDateUtc(date.value) === value) ||
       "Invalid calendar date"
     );
   }),

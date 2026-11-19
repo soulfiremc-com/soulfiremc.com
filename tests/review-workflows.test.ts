@@ -185,7 +185,7 @@ await test("verification failures keep their public result and database failures
       find: () => Effect.succeed<ExistingReview | undefined>(undefined),
     },
     verify: Effect.fail(
-      new TurnstileVerificationError({ errorCodes: ["action-mismatch"] }),
+      TurnstileVerificationError.make({ errorCodes: ["action-mismatch"] }),
     ),
   });
   assert.deepEqual(await rejected(submitReview(input)), {
@@ -200,7 +200,7 @@ await test("verification failures keep their public result and database failures
       create: () =>
         Effect.suspend(() => {
           attempts++;
-          return new ReviewStoreError({
+          return ReviewStoreError.make({
             operation: "create",
             cause: new Error("database unavailable"),
           });
@@ -271,7 +271,7 @@ await test("review reads fall back for operational failures while defects still 
     store: {
       summaries: () =>
         Effect.fail(
-          new ReviewStoreError({
+          ReviewStoreError.make({
             operation: "summaries",
             cause: new Error("offline"),
           }),
@@ -301,7 +301,7 @@ await test("review reads fall back for operational failures while defects still 
   await assert.rejects(
     dependencies({
       currentUser: Effect.fail(
-        new ReviewSessionError({ operation: "session", cause: "offline" }),
+        ReviewSessionError.make({ operation: "session", cause: "offline" }),
       ),
     })(deleteReview(input)),
     { _tag: "ReviewSessionError" },

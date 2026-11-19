@@ -64,7 +64,7 @@ export const Route = createFileRoute("/api/discord/linked-role/callback")({
                     ),
                   )
                   .limit(1),
-              catch: (cause) => new DiscordAccountLookupError({ cause }),
+              catch: (cause) => DiscordAccountLookupError.make({ cause }),
             });
 
             const sfUser = sfAccount[0];

@@ -36,7 +36,7 @@ export class DocumentationSource extends Context.Service<
       page: DocumentationPage,
     ) => Effect.Effect<string, DocumentationError>;
   }
->()("soulfire/DocumentationSource") {}
+>()("soulfiremc.com/lib/content-workflows/DocumentationSource") {}
 
 export const documentationPageText = Effect.fn("Documentation.pageText")(
   function* (page: DocumentationPage) {
@@ -50,7 +50,7 @@ export const documentationPageText = Effect.fn("Documentation.pageText")(
     if (!getText) return introduction;
     const processed = yield* Effect.tryPromise({
       try: () => getText("processed"),
-      catch: (cause) => new DocumentationError({ operation: "page", cause }),
+      catch: (cause) => DocumentationError.make({ operation: "page", cause }),
     });
     // Processed markdown keeps the source text, so fill release placeholders
     // here as the rendered page does.

@@ -18,3 +18,5 @@ pre-push:
     types:
       glob: "*.{ts,tsx,mts,cts,json,jsonc}"
       run: bun run typecheck
+    knip:
+      run: bun run knip

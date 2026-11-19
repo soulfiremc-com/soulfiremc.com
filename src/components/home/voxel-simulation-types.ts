@@ -76,7 +76,7 @@ export type SimulationEvent = {
   z: number;
   team: TeamId;
   age: number;
-  power?: number;
+  power?: number | undefined;
 };
 
 export type SimulationMob = {

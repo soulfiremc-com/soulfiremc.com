@@ -26,12 +26,12 @@ startTransition(() => {
     <StrictMode>
       <StartClient />
     </StrictMode>,
-    {
-      onRecoverableError: import.meta.env.DEV
-        ? undefined
-        : createRecoverableErrorHandler(
+    import.meta.env.DEV
+      ? {}
+      : {
+          onRecoverableError: createRecoverableErrorHandler(
             isPostHogConfigured ? captureAnalyticsException : undefined,
           ),
-    },
+        },
   );
 });

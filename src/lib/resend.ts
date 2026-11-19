@@ -36,7 +36,7 @@ export class WebsiteMailer extends Context.Service<
       email: WebsiteEmail,
     ) => Effect.Effect<void, EmailDeliveryError>;
   }
->()("soulfire/WebsiteMailer") {}
+>()("soulfiremc.com/lib/resend/WebsiteMailer") {}
 
 export function makeWebsiteMailer(
   submit: (email: WebsiteEmailSubmission) => Promise<{ error: unknown }> = (
@@ -46,12 +46,12 @@ export function makeWebsiteMailer(
   const submitEmail = (email: WebsiteEmailSubmission) =>
     Effect.tryPromise({
       try: () => submit(email),
-      catch: (cause) => new EmailDeliveryError({ reason: "transport", cause }),
+      catch: (cause) => EmailDeliveryError.make({ reason: "transport", cause }),
     }).pipe(
       Effect.flatMap(({ error }) =>
         error
           ? Effect.fail(
-              new EmailDeliveryError({ reason: "rejected", cause: error }),
+              EmailDeliveryError.make({ reason: "rejected", cause: error }),
             )
           : Effect.void,
       ),
@@ -64,7 +64,7 @@ export function makeWebsiteMailer(
     send: (email) =>
       Effect.tryPromise({
         try: () => render(email.react, { plainText: true }),
-        catch: (cause) => new EmailDeliveryError({ reason: "prepare", cause }),
+        catch: (cause) => EmailDeliveryError.make({ reason: "prepare", cause }),
       }).pipe(Effect.flatMap((text) => submitEmail({ ...email, text }))),
   };
 }

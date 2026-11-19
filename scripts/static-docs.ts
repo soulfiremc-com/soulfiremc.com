@@ -59,10 +59,12 @@ export function staticDocsMetadata(): Plugin {
             Effect.tryPromise({
               try: () =>
                 preview({
-                  configFile: builder.config.configFile,
+                  ...(builder.config.configFile === undefined
+                    ? {}
+                    : { configFile: builder.config.configFile }),
                   preview: { port: 0, open: false },
                 }),
-              catch: (cause) => new StaticDocsError({ cause }),
+              catch: (cause) => StaticDocsError.make({ cause }),
             }),
             (server) =>
               Effect.gen(function* () {
@@ -71,7 +73,7 @@ export function staticDocsMetadata(): Plugin {
                   throw new Error("Metadata preview URL is unavailable");
                 const files = yield* Effect.tryPromise({
                   try: () => listFiles(output),
-                  catch: (cause) => new StaticDocsError({ cause }),
+                  catch: (cause) => StaticDocsError.make({ cause }),
                 });
                 // Fallback URLs are excluded from SEO, but client navigation still
                 // needs a static metadata response for every supported locale.
@@ -99,7 +101,7 @@ export function staticDocsMetadata(): Plugin {
                   pages,
                   (page) =>
                     Effect.tryPromise({
-                      catch: (cause) => new StaticDocsError({ cause }),
+                      catch: (cause) => StaticDocsError.make({ cause }),
                       try: async () => {
                         const { path: absolute, locale } = splitLocalePath(
                           `/${page.slice(0, -".html".length)}`,

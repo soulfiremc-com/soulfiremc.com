@@ -51,7 +51,7 @@ export class ReviewSession extends Context.Service<
   {
     readonly currentUser: Effect.Effect<ReviewUser | null, ReviewSessionError>;
   }
->()("soulfire/ReviewSession") {}
+>()("soulfiremc.com/lib/review-workflows/ReviewSession") {}
 
 export type ReviewStoreService = {
   summaries(
@@ -96,14 +96,14 @@ export type ReviewStoreService = {
 export class ReviewStore extends Context.Service<
   ReviewStore,
   ReviewStoreService
->()("soulfire/ReviewStore") {}
+>()("soulfiremc.com/lib/review-workflows/ReviewStore") {}
 
 export class ReviewVerification extends Context.Service<
   ReviewVerification,
   {
     readonly verify: Effect.Effect<void, TurnstileVerificationError>;
   }
->()("soulfire/ReviewVerification") {}
+>()("soulfiremc.com/lib/review-workflows/ReviewVerification") {}
 
 export type GetReviewsInput = {
   itemType: ItemType;
@@ -141,7 +141,7 @@ export type ModerateReviewCommentResult =
 const requireUser = Effect.gen(function* () {
   const { currentUser } = yield* ReviewSession;
   const user = yield* currentUser;
-  if (!user) return yield* new ReviewUnauthorizedError();
+  if (!user) return yield* ReviewUnauthorizedError.make();
   return user;
 });
 const requireAdmin = requireUser.pipe(
@@ -151,7 +151,7 @@ const requireAdmin = requireUser.pipe(
       .map((role) => role.trim().toLowerCase());
     return roles?.includes("admin")
       ? Effect.succeed(user)
-      : Effect.fail(new ReviewUnauthorizedError());
+      : Effect.fail(ReviewUnauthorizedError.make());
   }),
 );
 

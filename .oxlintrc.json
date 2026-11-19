@@ -1,6 +1,9 @@
 {
   "$schema": "./node_modules/@effect/tsgo/oxlint-schema.json",
-  "extends": ["./node_modules/@effect/tsgo/oxlint-presets/strict.json"],
+  "extends": [
+    "./node_modules/@effect/tsgo/oxlint-presets/strict.json",
+    "./node_modules/@effect/tsgo/oxlint-presets/antipattern.json"
+  ],
   "plugins": [
     "typescript",
     "unicorn",
@@ -73,7 +76,12 @@
       }
     ],
     "eslint/no-useless-call": "error",
-    "import/no-cycle": "error",
+    "import/no-cycle": [
+      "error",
+      {
+        "ignoreTypes": true
+      }
+    ],
     "import/no-duplicates": "error",
     "import/no-unassigned-import": [
       "error",
@@ -510,7 +518,101 @@
     "effecttsgo/prefer-schema-over-json": "error",
     "effecttsgo/prefer-schema-tagged-error": "error",
     "effecttsgo/extends-native-error": "error",
-    "effecttsgo/yield-in-call-argument": "error"
+    "effecttsgo/yield-in-call-argument": "error",
+    "effecttsgo/acquire-release-disposable": "error",
+    "effecttsgo/all-of-map-to-for-each": "error",
+    "effecttsgo/catch-all-tag-dispatch-to-catch-tag": "error",
+    "effecttsgo/catch-all-to-map-error": "error",
+    "effecttsgo/catch-chain-to-first-success-of": "error",
+    "effecttsgo/catch-conditional-refail-to-catch-if": "error",
+    "effecttsgo/catch-die-to-or-die": "error",
+    "effecttsgo/catch-if-tag-to-catch-tag": "error",
+    "effecttsgo/catch-refail-to-tap-error": "error",
+    "effecttsgo/catch-tag-to-catch-reason": "error",
+    "effecttsgo/catch-to-ignore": "error",
+    "effecttsgo/catch-to-or-else-succeed": "error",
+    "effecttsgo/deterministic-keys": "error",
+    "effecttsgo/effect-do-notation": "error",
+    "effecttsgo/effect-fn-opportunity": "error",
+    "effecttsgo/effect-map-flatten": "error",
+    "effecttsgo/effect-map-void": "error",
+    "effecttsgo/effect-sleep-zero-to-yield-now": "error",
+    "effecttsgo/effect-succeed-with-undefined": "error",
+    "effecttsgo/effect-succeed-with-void": "error",
+    "effecttsgo/fail-cause-to-constructor": "error",
+    "effecttsgo/flat-map-conditional-to-filter-or-fail": "error",
+    "effecttsgo/flat-map-identity-to-flatten": "error",
+    "effecttsgo/flat-map-ignored-param-to-and-then": "error",
+    "effecttsgo/flat-map-provide-service-to-provide-service-effect": "error",
+    "effecttsgo/flat-map-to-map": "error",
+    "effecttsgo/flat-map-to-tap": "error",
+    "effecttsgo/for-loop-push-to-for-each": "error",
+    "effecttsgo/manual-metric-tap-to-track": "error",
+    "effecttsgo/map-const-to-as": "error",
+    "effecttsgo/map-map-error-to-map-both": "error",
+    "effecttsgo/map-some-catch-no-such-element": "error",
+    "effecttsgo/map-some-to-as-some": "error",
+    "effecttsgo/match-boolean-to-is-success": "error",
+    "effecttsgo/match-effect-to-map-both": "error",
+    "effecttsgo/match-effect-to-match": "error",
+    "effecttsgo/match-to-result-or-option": "error",
+    "effecttsgo/missed-pipeable-opportunity": "error",
+    "effecttsgo/missing-concurrency-option": "error",
+    "effecttsgo/missing-effect-service-dependency": "error",
+    "effecttsgo/missing-pipeable-signature": "off",
+    "effecttsgo/multiple-catch-tag": "error",
+    "effecttsgo/nested-effect-gen-yield": "error",
+    "effecttsgo/new-schema-class": "error",
+    "effecttsgo/on-exit-failure-to-on-error": "error",
+    "effecttsgo/option-match-to-from-option": "error",
+    "effecttsgo/prefer-barrel-import": "error",
+    "effecttsgo/prefer-namespace-import": "error",
+    "effecttsgo/prefer-schema-type-property": "error",
+    "effecttsgo/prefer-succeed-some-or-none": "error",
+    "effecttsgo/prefer-typed-schema-decoder": "error",
+    "effecttsgo/provide-layer-succeed-to-provide-service": "error",
+    "effecttsgo/provide-merge-all-to-array": "error",
+    "effecttsgo/race-first-with-sleep-to-timeout": "error",
+    "effecttsgo/redundant-map-error": "error",
+    "effecttsgo/redundant-or-die": "error",
+    "effecttsgo/redundant-schema-tag-identifier": "error",
+    "effecttsgo/result-match-to-from-result": "error",
+    "effecttsgo/run-of-exit-to-run-exit": "error",
+    "effecttsgo/schema-number": "error",
+    "effecttsgo/schema-struct-with-tag": "error",
+    "effecttsgo/schema-union-of-literals": "error",
+    "effecttsgo/service-not-as-class": "error",
+    "effecttsgo/strict-boolean-expressions": "off",
+    "effecttsgo/suspend-fail-to-fail-sync": "error",
+    "effecttsgo/sync-to-succeed": "error",
+    "effecttsgo/timeout-catch-tag-to-timeout-or-else": "error",
+    "effecttsgo/type-union-to-schema-union": "error",
+    "effecttsgo/unnecessary-arrow-block": "error",
+    "effecttsgo/unnecessary-effect-gen": "error",
+    "effecttsgo/unnecessary-fail-yieldable-error": "error",
+    "effecttsgo/unnecessary-pipe": "error",
+    "effecttsgo/unnecessary-pipe-chain": "error",
+    "effecttsgo/unnecessary-typeof-type": "error",
+    "effecttsgo/catch-unfailable-effect": "error",
+    "effecttsgo/effect-fn-iife": "error",
+    "effecttsgo/effect-gen-uses-adapter": "error",
+    "effecttsgo/effect-in-failure": "error",
+    "effecttsgo/effect-in-void-success": "error",
+    "effecttsgo/effect-try-without-catch": "error",
+    "effecttsgo/global-error-in-effect-catch": "error",
+    "effecttsgo/global-error-in-effect-failure": "error",
+    "effecttsgo/layer-merge-all-with-dependencies": "error",
+    "effecttsgo/lazy-effect": "error",
+    "effecttsgo/lazy-promise-in-effect-sync": "error",
+    "effecttsgo/leaking-requirements": "error",
+    "effecttsgo/multiple-effect-provide": "error",
+    "effecttsgo/prefer-unsafe-constructor": "error",
+    "effecttsgo/return-effect-in-gen": "error",
+    "effecttsgo/run-effect-inside-effect": "error",
+    "effecttsgo/schema-sync-in-effect": "error",
+    "effecttsgo/scope-in-layer-effect": "error",
+    "effecttsgo/try-catch-in-effect-gen": "error",
+    "effecttsgo/unknown-in-effect-catch": "error"
   },
   "overrides": [
     {
@@ -545,6 +647,114 @@
       "files": ["src/components/home/VoxelScene.tsx"],
       "rules": {
         "react/exhaustive-effect-dependencies": "off"
+      }
+    },
+    {
+      "files": [
+        "scripts/**/*.ts",
+        "*.config.ts",
+        "src/server.ts",
+        "src/routes/api/**/*.ts",
+        "src/routes/og/**/*.ts",
+        "src/lib/{auth,backend-http,effect-runtime,account-provider-workflows,content-workflows,review-database,review-workflows}.ts",
+        "src/lib/db/**/*.ts"
+      ],
+      "rules": {
+        "effecttsgo/global-date": "error",
+        "effecttsgo/global-json": "error",
+        "effecttsgo/global-fetch": "error",
+        "effecttsgo/global-timers": "error",
+        "effecttsgo/global-random": "error",
+        "effecttsgo/crypto-random-uuid": "error",
+        "effecttsgo/process-env": "error",
+        "effecttsgo/global-console": "error",
+        "effecttsgo/node-builtin-import": "error"
+      }
+    },
+    {
+      "files": [
+        "src/lib/auth.ts",
+        "src/lib/db/schema.ts",
+        "src/routes/api/discord/linked-role/index.ts"
+      ],
+      "rules": {
+        "effecttsgo/crypto-random-uuid": "off"
+      }
+    },
+    {
+      "files": ["src/lib/db/auth-schema.ts"],
+      "rules": {
+        "effecttsgo/global-date": "off"
+      }
+    },
+    {
+      "files": [
+        "scripts/fetch-discord-icons.ts",
+        "scripts/register-discord-metadata.ts",
+        "scripts/sync-sdk-version.ts",
+        "src/lib/backend-http.ts"
+      ],
+      "rules": {
+        "effecttsgo/global-fetch": "off"
+      }
+    },
+    {
+      "files": [
+        "scripts/check-plugin-examples.ts",
+        "scripts/check-script-recipes.ts",
+        "scripts/check-sdk-recipes.ts",
+        "scripts/fetch-discord-icons.ts",
+        "scripts/generate-auth-schema.ts",
+        "scripts/generate-node-reference.ts",
+        "scripts/generate-routes.ts",
+        "scripts/generate-sdk-code.ts",
+        "scripts/lib/docs-output.ts",
+        "scripts/lib/static-images.ts",
+        "scripts/sdk-source.ts",
+        "scripts/static-docs.ts",
+        "scripts/sync-sdk-version.ts",
+        "scripts/validate-links.ts",
+        "vite.config.ts"
+      ],
+      "rules": {
+        "effecttsgo/node-builtin-import": "off"
+      }
+    },
+    {
+      "files": [
+        "scripts/check-sdk-recipes.ts",
+        "scripts/fetch-discord-icons.ts",
+        "scripts/register-discord-metadata.ts",
+        "scripts/sdk-source.ts",
+        "scripts/sync-sdk-version.ts",
+        "src/lib/auth.ts",
+        "src/routes/api/discord/linked-role/index.ts",
+        "vite.config.ts"
+      ],
+      "rules": {
+        "effecttsgo/process-env": "off"
+      }
+    },
+    {
+      "files": [
+        "scripts/check-plugin-examples.ts",
+        "scripts/check-script-recipes.ts",
+        "scripts/check-sdk-recipes.ts",
+        "scripts/generate-node-reference.ts",
+        "scripts/generate-sdk-code.ts",
+        "scripts/lib/java-metadata.ts",
+        "scripts/register-discord-metadata.ts",
+        "scripts/sync-sdk-version.ts",
+        "vite.config.ts"
+      ],
+      "rules": {
+        "effecttsgo/global-json": "off"
+      }
+    },
+    {
+      "files": ["src/lib/auth.ts"],
+      "rules": {
+        "effecttsgo/global-random": "off"
       }
     }
   ],

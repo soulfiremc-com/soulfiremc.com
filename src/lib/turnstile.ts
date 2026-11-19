@@ -71,7 +71,7 @@ export const validateTurnstileTokenEffect = Effect.fn("validateTurnstileToken")(
       token.length === 0 ||
       token.length > 2048
     ) {
-      return yield* new TurnstileVerificationError({
+      return yield* TurnstileVerificationError.make({
         errorCodes: ["invalid-input-response"],
       });
     }
@@ -85,7 +85,7 @@ export const validateTurnstileTokenEffect = Effect.fn("validateTurnstileToken")(
       Effect.orElseSucceed(() => ""),
     );
     if (!secret) {
-      return yield* new TurnstileVerificationError({
+      return yield* TurnstileVerificationError.make({
         errorCodes: ["missing-input-secret"],
       });
     }
@@ -106,24 +106,23 @@ export const validateTurnstileTokenEffect = Effect.fn("validateTurnstileToken")(
         init: { method: "POST", body: formData, cache: "no-store" },
       },
     ).pipe(
-      Effect.mapError(
-        () =>
-          new TurnstileVerificationError({ errorCodes: ["internal-error"] }),
+      Effect.mapError(() =>
+        TurnstileVerificationError.make({ errorCodes: ["internal-error"] }),
       ),
     );
 
     if (!result.success) {
-      return yield* new TurnstileVerificationError({
+      return yield* TurnstileVerificationError.make({
         errorCodes: [...(result["error-codes"] ?? ["invalid-input-response"])],
       });
     }
     if (expectedAction && result.action !== expectedAction) {
-      return yield* new TurnstileVerificationError({
+      return yield* TurnstileVerificationError.make({
         errorCodes: ["action-mismatch"],
       });
     }
     if (expectedHostname && result.hostname !== expectedHostname) {
-      return yield* new TurnstileVerificationError({
+      return yield* TurnstileVerificationError.make({
         errorCodes: ["hostname-mismatch"],
       });
     }

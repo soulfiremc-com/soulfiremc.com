@@ -139,4 +139,3 @@ const CookieConsentBanner = () => {
 };
 
 export { CookieConsentBanner };
-export default CookieConsentBanner;

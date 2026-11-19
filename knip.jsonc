@@ -1,0 +1,33 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "ignoreExportsUsedInFile": true,
+  "entry": [
+    "cloudflare.config.ts",
+    "scripts/{fetch-discord-icons,generate-auth-schema,register-discord-metadata}.ts",
+    "src/{client,router}.tsx",
+    "src/routes/**/*.{ts,tsx}",
+    "src/style.css",
+    "tests/*.test.ts",
+    // Follow imports from the preserved registry.
+    "src/components/auth/**/*.{ts,tsx}",
+  ],
+  "project": [
+    "*.ts",
+    "scripts/**/*.ts",
+    "src/**/*.{ts,tsx}",
+    "tests/**/*.ts",
+    "src/**/*.css",
+    "content/**/*.mdx",
+    "!src/routeTree.gen.ts",
+  ],
+  "ignore": [
+    // Copied better-auth-ui registry kept complete for registry updates.
+    "src/components/auth/**",
+    "src/lib/auth/{{agent-auth-plugin,anonymous-plugin,api-key-plugin,auth-plugin,billing-plugin,device-authorization-plugin,magic-link-plugin,multi-session-plugin,oauth-provider-plugin,plugin-lookups,siwe-plugin},agent-auth-plugin,anonymous-plugin,api-key-plugin,auth-plugin,billing-plugin,device-authorization-plugin,magic-link-plugin,multi-session-plugin,oauth-provider-plugin,plugin-lookups,siwe-plugin}.ts",
+  ],
+  "ignoreBinaries": ["ffmpeg", "javac", "python3.14"],
+  "ignoreDependencies": [
+    // The Workers runtime supplies cloudflare:workers.
+    "cloudflare",
+  ],
+}

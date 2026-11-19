@@ -175,7 +175,7 @@ export const authNotificationEffects = {
   )(function* ({ user, url }: EmailWithUrlParams) {
     const deleteUrl = yield* Effect.try({
       try: () => new URL(url),
-      catch: (cause) => new EmailDeliveryError({ reason: "prepare", cause }),
+      catch: (cause) => EmailDeliveryError.make({ reason: "prepare", cause }),
     });
     const redirectUrl = new URL(
       `${AUTH_UI_BASE_PATHS.auth}/${AUTH_UI_VIEW_PATHS.auth.redirect}`,

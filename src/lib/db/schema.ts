@@ -8,6 +8,7 @@ import {
   text,
   uniqueIndex,
 } from "drizzle-orm/sqlite-core";
+import { DateTime, Effect } from "effect";
 import { user } from "./auth-schema";
 
 const reviewCommentStatuses = ["approved", "pending", "rejected"] as const;
@@ -33,7 +34,7 @@ export const review = sqliteTable(
       .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" })
       .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-      .$onUpdate(() => /* @__PURE__ */ new Date())
+      .$onUpdate(() => Effect.runSync(DateTime.nowAsDate))
       .notNull(),
   },
   (table) => [
@@ -104,7 +105,7 @@ export const reviewReply = sqliteTable(
       .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" })
       .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-      .$onUpdate(() => /* @__PURE__ */ new Date())
+      .$onUpdate(() => Effect.runSync(DateTime.nowAsDate))
       .notNull(),
   },
   (table) => [

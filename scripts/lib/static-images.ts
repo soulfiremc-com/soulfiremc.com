@@ -61,7 +61,7 @@ export function generateStaticImages({
           const width = rotated ? info.height : info.width;
           const height = rotated ? info.width : info.height;
           if (!width || !height) {
-            return yield* new StaticImageError({
+            return yield* StaticImageError.make({
               operation: "read image dimensions",
               cause: source,
             });
@@ -143,12 +143,11 @@ export function generateStaticImages({
     const manifestJson = yield* Schema.encodeEffect(
       Schema.fromJsonString(Schema.Unknown, { space: 2 }),
     )(manifest).pipe(
-      Effect.mapError(
-        (cause) =>
-          new StaticImageError({
-            operation: "serialize image manifest",
-            cause,
-          }),
+      Effect.mapError((cause) =>
+        StaticImageError.make({
+          operation: "serialize image manifest",
+          cause,
+        }),
       ),
     );
     yield* writeText(fileURLToPath(metadataFile), `${manifestJson}\n`);
@@ -178,7 +177,7 @@ class StaticImageAccessError extends Schema.TaggedError<
 function operation<A>(name: string, work: () => PromiseLike<A>) {
   return Effect.tryPromise({
     try: async () => work(),
-    catch: (cause) => new StaticImageError({ operation: name, cause }),
+    catch: (cause) => StaticImageError.make({ operation: name, cause }),
   }).pipe(Effect.uninterruptible);
 }
 const readBytes = (file: string) =>
@@ -194,7 +193,7 @@ const makeDirectory = (directory: string) =>
 const exists = (file: string) =>
   Effect.tryPromise({
     try: () => access(file),
-    catch: (cause) => new StaticImageAccessError({ cause }),
+    catch: (cause) => StaticImageAccessError.make({ cause }),
   }).pipe(Effect.isSuccess);
 const removeFile = (file: string) =>
   operation("remove stale image", () => rm(file));

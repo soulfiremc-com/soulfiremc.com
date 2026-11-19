@@ -11,7 +11,7 @@ type ReviewsQueryInput = {
   itemType: ItemType;
   reviewsPage?: number;
   slugs: string[];
-  viewerId?: string;
+  viewerId?: string | undefined;
 };
 
 export function reviewsQueryOptions({

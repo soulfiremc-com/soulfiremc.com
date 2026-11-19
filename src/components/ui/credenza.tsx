@@ -9,7 +9,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   Drawer,
@@ -19,7 +18,6 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
 } from "@/components/ui/drawer";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
@@ -61,17 +59,6 @@ const Credenza = ({ children, ...props }: RootCredenzaProps) => {
     <CredenzaContext.Provider value={{ isMobile }}>
       <Credenza {...props}>{children}</Credenza>
     </CredenzaContext.Provider>
-  );
-};
-
-const CredenzaTrigger = ({ className, children, ...props }: CredenzaProps) => {
-  const { isMobile } = useCredenzaContext();
-  const CredenzaTrigger = isMobile ? DrawerTrigger : DialogTrigger;
-
-  return (
-    <CredenzaTrigger className={className} {...props}>
-      {children}
-    </CredenzaTrigger>
   );
 };
 
@@ -162,14 +149,4 @@ const CredenzaFooter = ({ className, children, ...props }: CredenzaProps) => {
   );
 };
 
-export {
-  Credenza,
-  CredenzaBody,
-  CredenzaClose,
-  CredenzaContent,
-  CredenzaDescription,
-  CredenzaFooter,
-  CredenzaHeader,
-  CredenzaTitle,
-  CredenzaTrigger,
-};
+export { Credenza, CredenzaBody, CredenzaClose, CredenzaContent, CredenzaDescription, CredenzaFooter, CredenzaHeader, CredenzaTitle };

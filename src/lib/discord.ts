@@ -171,13 +171,13 @@ function readCachedValue<T>(
   return Effect.gen(function* () {
     const response = yield* Effect.tryPromise({
       try: () => cache.match(cacheKey),
-      catch: (cause) => new DiscordCacheError({ cause }),
+      catch: (cause) => DiscordCacheError.make({ cause }),
     });
     if (!response) return { hit: false } as const;
 
     const payload: unknown = yield* Effect.tryPromise({
       try: () => response.json(),
-      catch: (cause) => new DiscordCacheError({ cause }),
+      catch: (cause) => DiscordCacheError.make({ cause }),
     });
     const entry = yield* Schema.decodeUnknownEffect(
       Schema.Struct({ value: Schema.NullOr(schema) }),
@@ -187,7 +187,7 @@ function readCachedValue<T>(
     Effect.catch(() =>
       Effect.tryPromise({
         try: () => cache.delete(cacheKey),
-        catch: (cause) => new DiscordCacheError({ cause }),
+        catch: (cause) => DiscordCacheError.make({ cause }),
       }).pipe(Effect.ignore, Effect.as({ hit: false } as const)),
     ),
   );
@@ -213,7 +213,7 @@ function writeCachedValue(
           },
         ),
       ),
-    catch: (cause) => new DiscordCacheError({ cause }),
+    catch: (cause) => DiscordCacheError.make({ cause }),
   }).pipe(Effect.ignore);
 }
 
@@ -303,7 +303,7 @@ function followInviteRedirects(initialUrl: string, maxRedirects: number) {
       const finalCode = extractInviteCode(currentUrl);
       return finalCode !== currentUrl ? finalCode : null;
     },
-    catch: (cause) => new DiscordRequestError({ cause }),
+    catch: (cause) => DiscordRequestError.make({ cause }),
   }).pipe(
     Effect.timeoutOrElse({
       duration: DISCORD_REQUEST_TIMEOUT_MS,

@@ -336,15 +336,14 @@ function MainContent() {
 
     // "Featured" keeps the curated data order and ignores reviews.
     if (sort === "default") return filtered;
-    return filtered.toSorted((a, b) => {
-      return (
+    return filtered.toSorted(
+      (a, b) =>
         compareReviewSummaries(
           orderSummaries[a.slug],
           orderSummaries[b.slug],
           sort,
-        ) || a.name.localeCompare(b.name)
-      );
-    });
+        ) || a.name.localeCompare(b.name),
+    );
   }, [badges, sort, orderSummaries]);
 
   const [filtersOpen, setFiltersOpen] = useState(false);

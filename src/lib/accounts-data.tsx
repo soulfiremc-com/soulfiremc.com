@@ -12,12 +12,9 @@ import {
   Zap,
 } from "lucide-react";
 
-import type {
-  SocialLink,
-  SocialPlatform,
-} from "@/components/social-link-buttons";
+import type { SocialLink } from "@/components/social-link-buttons";
 
-export type { SocialLink, SocialPlatform };
+export type { SocialLink };
 
 export type FilterableBadge =
   | "free"
@@ -304,13 +301,6 @@ export const FILTER_BADGES: FilterableBadge[] = [
 ];
 
 export const FILTER_CATEGORIES: Category[] = ["mfa-accounts", "nfa-accounts"];
-
-export const SORT_OPTIONS: SortOption[] = [
-  "default",
-  "best-rated",
-  "price-asc",
-  "price-desc",
-];
 
 // Shop order is arranged to preserve the recommended sort order
 // within both NFA and MFA category sections when derived into PROVIDERS.

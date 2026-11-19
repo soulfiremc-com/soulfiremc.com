@@ -31,11 +31,10 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
-    // exactOptionalPropertyTypes stays off. It reports about 190 errors, and
-    // more than half are in the copied better-auth-ui components. TanStack
-    // Form, react-day-picker, Fumadocs, Simple Icons and Vite declare optional
-    // props without `| undefined`, so these errors are in framework-typed
-    // props that this repository cannot change.
+    // exactOptionalPropertyTypes still fails on the copied Better Auth UI
+    // registry and framework adapters for TanStack, Fumadocs, Base UI, and
+    // other dependencies. Keep it off until those optional props can be
+    // passed with the shape their libraries require.
     "paths": {
       "fumadocs-mdx:collections/*": ["./.source/*"],
       "@/*": ["./src/*"]

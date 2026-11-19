@@ -161,7 +161,13 @@ function TitleBlock({
   );
 }
 
-function Footer({ items, accent }: { items?: string[]; accent: string }) {
+function Footer({
+  items,
+  accent,
+}: {
+  items?: string[] | undefined;
+  accent: string;
+}) {
   if (!items || items.length === 0) return null;
 
   const visibleItems = items.slice(0, 4);
@@ -451,7 +457,7 @@ function LogoHero({
 }: {
   value: string;
   accent: string;
-  logoSrc?: string;
+  logoSrc?: string | undefined;
 }) {
   return (
     <div
@@ -709,7 +715,7 @@ export function ProxyOgImage({
   name: string;
   summary: string;
   badges: string[];
-  logoSrc?: string;
+  logoSrc?: string | undefined;
 }) {
   const normalizedBadges = badges.map((badge) => labelize(badge));
 
@@ -755,7 +761,7 @@ export function AccountOgImage({
   name: string;
   listings: { label: string; price: string }[];
   description: string;
-  logoSrc?: string;
+  logoSrc?: string | undefined;
 }) {
   return (
     <Layout

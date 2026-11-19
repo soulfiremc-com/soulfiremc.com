@@ -27,7 +27,7 @@ export function createReviewChallenge(timeoutMs = 20_000) {
     const challenge = pending;
     pending = null;
     challenge?.resume(
-      Effect.fail(new ReviewChallengeError({ message, cause })),
+      Effect.fail(ReviewChallengeError.make({ message, cause })),
     );
   }
 
@@ -35,7 +35,7 @@ export function createReviewChallenge(timeoutMs = 20_000) {
     widget: ChallengeWidget,
   ) {
     if (pending) {
-      return yield* new ReviewChallengeError({
+      return yield* ReviewChallengeError.make({
         message: "Cloudflare Turnstile is already verifying another request.",
       });
     }
@@ -60,7 +60,7 @@ export function createReviewChallenge(timeoutMs = 20_000) {
         duration: timeoutMs,
         orElse: () =>
           Effect.fail(
-            new ReviewChallengeError({
+            ReviewChallengeError.make({
               message: "Cloudflare Turnstile timed out. Please try again.",
             }),
           ),

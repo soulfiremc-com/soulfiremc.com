@@ -55,11 +55,12 @@ export function ReviewTurnstileProvider({ children }: { children: ReactNode }) {
     [challenge],
   );
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       rejectPending("Cloudflare Turnstile was unloaded.");
-    };
-  }, [rejectPending]);
+    },
+    [rejectPending],
+  );
 
   const executeTurnstile = useCallback(() => {
     if (!siteKey) {

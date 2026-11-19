@@ -51,7 +51,7 @@ function request<A>(
 ) {
   return Effect.tryPromise({
     try: run,
-    catch: (cause) => new ReviewMutationRequestError({ operation, cause }),
+    catch: (cause) => ReviewMutationRequestError.make({ operation, cause }),
   });
 }
 
@@ -64,7 +64,7 @@ export function reviewMutationOptions({
   deleteReview,
 }: {
   itemType: ItemType;
-  viewerId?: string;
+  viewerId?: string | undefined;
   queryClient: QueryClient;
   executeTurnstile: () => Promise<string>;
   submitReview: (
@@ -87,7 +87,7 @@ export function reviewMutationOptions({
       ? yield* Effect.tryPromise({
           try: executeTurnstile,
           catch: (cause) =>
-            new ReviewChallengeError({
+            ReviewChallengeError.make({
               message: "Cloudflare Turnstile could not verify this review.",
               cause,
             }),

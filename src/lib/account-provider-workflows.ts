@@ -14,7 +14,6 @@ import {
   type DiscordInviteResponse,
 } from "@/lib/discord";
 
-export type DiscordInvites = Record<string, DiscordInviteResponse | null>;
 export type LiveShopDataBySlug = Record<string, LiveShopData>;
 
 export class AccountProviderSources extends Context.Service<
@@ -25,7 +24,7 @@ export class AccountProviderSources extends Context.Service<
       url: string,
     ) => Effect.Effect<DiscordInviteResponse | null>;
   }
->()("soulfire/AccountProviderSources") {}
+>()("soulfiremc.com/lib/account-provider-workflows/AccountProviderSources") {}
 
 export const accountProviderSources: Context.Service.Shape<
   typeof AccountProviderSources

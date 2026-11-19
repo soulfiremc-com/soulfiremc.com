@@ -87,7 +87,7 @@ function runReviewWorkflow<A, E>(
         currentUser: Effect.tryPromise({
           try: () => auth.api.getSession({ headers: request.headers }),
           catch: (cause) =>
-            new ReviewSessionError({ operation: "session", cause }),
+            ReviewSessionError.make({ operation: "session", cause }),
         }).pipe(
           Effect.uninterruptible,
           Effect.map((session) => session?.user ?? null),

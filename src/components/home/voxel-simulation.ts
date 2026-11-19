@@ -23,19 +23,10 @@ import type {
 import { itemAt } from "@/lib/item-at";
 
 export type {
-  BotTask,
-  Genome,
-  Point,
-  ResourceKind,
   SelectionPressure,
-  SimulationBot,
-  SimulationEvent,
-  SimulationMetrics,
   SimulationState,
   SimulationSummary,
-  SimulationTeam,
   SimulationTile,
-  TeamId,
 } from "@/components/home/voxel-simulation-types";
 
 /*
