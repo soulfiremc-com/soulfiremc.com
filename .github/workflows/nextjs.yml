@@ -1,8 +1,9 @@
 name: "Build and Test"
 
 on:
-  - push
-  - pull_request
+  push:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
 
 permissions:
   contents: read
@@ -14,8 +15,12 @@ concurrency:
 jobs:
   test:
     name: Build and Test
+    if: github.event.action != 'closed'
 
     runs-on: ubuntu-26.04
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - name: "Checkout repository"
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -58,6 +63,7 @@ jobs:
 
       - name: Build website and upload source maps
         env:
+          CLOUDFLARE_PREVIEW_BUILD: ${{ github.event_name == 'pull_request' }}
           POSTHOG_PERSONAL_API_KEY: ${{ github.event_name == 'push' && secrets.POSTHOG_PERSONAL_API_KEY || '' }}
         run: bun run build
 
@@ -73,9 +79,54 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: bunx cf deploy --prebuilt
 
-      - name: Upload a preview version to Cloudflare
-        if: github.event_name == 'push' && github.ref != 'refs/heads/main'
+      - name: Deploy preview to Cloudflare
+        id: preview
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
         env:
           CF_SEND_TELEMETRY: "false"
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        run: bunx cf workers versions create --prebuilt
+          PREVIEW_NAME: pr-${{ github.event.pull_request.number }}
+        run: |
+          set -o pipefail
+          url="$(bunx cf previews deploy --prebuilt --preview-name "$PREVIEW_NAME" | jq -er '.preview_urls[0]')"
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+
+      - name: Comment preview URL
+        if: steps.preview.outputs.url != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PREVIEW_URL: ${{ steps.preview.outputs.url }}
+          MARKER: "<!-- cloudflare-preview:soulfire-website -->"
+        run: |
+          body="$(printf '%s\nCloudflare preview for soulfire-website: %s\n' "$MARKER" "$PREVIEW_URL")"
+          comment_id="$(gh api "repos/$GH_REPO/issues/$PR_NUMBER/comments" --paginate \
+            --jq '.[] | select(.user.login == "github-actions[bot]" and (.body | contains(env.MARKER))) | .id' | head -n 1)"
+          if [ -n "$comment_id" ]; then
+            gh api --method PATCH "repos/$GH_REPO/issues/comments/$comment_id" -f body="$body" > /dev/null
+          else
+            gh pr comment "$PR_NUMBER" --body "$body"
+          fi
+
+  delete-preview:
+    name: Delete preview
+    if: github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-26.04
+    steps:
+      - name: Install Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 26
+
+      - name: Delete soulfire-website preview from Cloudflare
+        env:
+          CF_SEND_TELEMETRY: "false"
+          CLOUDFLARE_ACCOUNT_ID: 4dd0e72d7bf89402be905fb40cdb230a
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          PREVIEW_NAME: pr-${{ github.event.pull_request.number }}
+        run: |
+          if ! output="$(npx --yes cf@1.0.0-beta.32 previews delete "$PREVIEW_NAME" --worker soulfire-website --force 2>&1)"; then
+            printf '%s\n' "$output"
+            grep -q 'Preview not found' <<< "$output" || exit 1
+          fi
