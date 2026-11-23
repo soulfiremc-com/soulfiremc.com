@@ -137,17 +137,3 @@ export const validateTurnstileTokenEffect = Effect.fn("validateTurnstileToken")(
   // oxlint-disable-next-line effecttsgo/unstable-api-usage -- Supply the Web Crypto implementation for secure UUIDs.
   Effect.provide(SecureRandom.layerWebCrypto),
 );
-
-export function validateTurnstileToken(input: TurnstileInput) {
-  return Effect.runPromise(
-    validateTurnstileTokenEffect(input).pipe(
-      Effect.match({
-        onFailure: (error) => ({
-          success: false,
-          errorCodes: error.errorCodes,
-        }),
-        onSuccess: () => ({ success: true, errorCodes: [] as string[] }),
-      }),
-    ),
-  );
-}

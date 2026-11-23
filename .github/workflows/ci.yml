@@ -64,11 +64,14 @@ jobs:
       - name: Check database migrations
         run: bunx drizzle-kit check
 
+      # Reuse the SDK release and generated docs checked above. `bun run build`
+      # would fetch the latest release again and could deploy unchecked output.
       - name: Build website and upload source maps
         env:
           CLOUDFLARE_PREVIEW_BUILD: ${{ github.event_name == 'pull_request' }}
-          POSTHOG_PERSONAL_API_KEY: ${{ github.event_name == 'push' && secrets.POSTHOG_PERSONAL_API_KEY || '' }}
-        run: bun run build
+          # Only production deploys ship these source maps.
+          POSTHOG_PERSONAL_API_KEY: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && secrets.POSTHOG_PERSONAL_API_KEY || '' }}
+        run: bun run generate-images && bunx cf build
 
       - name: Test concurrent provider rendering in Workers runtime
         env:

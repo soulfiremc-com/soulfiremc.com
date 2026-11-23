@@ -2,14 +2,25 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { Effect, Exit, Fiber } from "effect";
 import {
-  exchangeDiscordCode,
-  fetchDiscordInvite,
+  exchangeDiscordCodeEffect,
   fetchDiscordInviteEffect,
-  getDiscordUser,
-  pushLinkedRoleMetadata,
-  resolveDiscordInviteCode,
+  getDiscordUserEffect,
+  pushLinkedRoleMetadataEffect,
+  resolveDiscordInviteCodeEffect,
   runWithDiscordLookupScope,
 } from "@/lib/discord";
+
+const exchangeDiscordCode = (code: string, redirectUri: string) =>
+  Effect.runPromise(exchangeDiscordCodeEffect(code, redirectUri));
+const getDiscordUser = (accessToken: string) =>
+  Effect.runPromise(getDiscordUserEffect(accessToken));
+const pushLinkedRoleMetadata = (
+  ...args: Parameters<typeof pushLinkedRoleMetadataEffect>
+) => Effect.runPromise(pushLinkedRoleMetadataEffect(...args));
+const resolveDiscordInviteCode = (url: string, maxRedirects?: number) =>
+  Effect.runPromise(resolveDiscordInviteCodeEffect(url, maxRedirects));
+const fetchDiscordInvite = (inviteUrlOrCode: string) =>
+  Effect.runPromise(fetchDiscordInviteEffect(inviteUrlOrCode));
 
 await test("Discord validates OAuth responses and never retries a token exchange", async (t) => {
   const fetch = t.mock.method(

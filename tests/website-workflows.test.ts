@@ -23,6 +23,7 @@ import {
   type WebsiteEmail,
   type WebsiteEmailSubmission,
 } from "../src/lib/resend";
+import { ExternalRequestError } from "../src/lib/backend-http";
 import { runWebsiteEffect } from "../src/lib/effect-runtime";
 import { reviewQuery } from "../src/lib/review-database";
 
@@ -331,6 +332,30 @@ await test("public failures preserve messages while excluding provider credentia
     return true;
   });
   assert.ok(internal.cause instanceof Error);
+});
+
+await test("defects and typed failures without a message reach callers as a generic error", async () => {
+  await assert.rejects(
+    runWebsiteEffect(
+      Effect.promise(() =>
+        Promise.reject(new Error("D1_ERROR: no such column: secret")),
+      ),
+    ),
+    { message: "Request failed" },
+  );
+  await assert.rejects(
+    runWebsiteEffect(
+      Effect.fail(
+        ExternalRequestError.make({
+          url: "https://example.com",
+          reason: "status",
+          status: 500,
+          retryable: false,
+        }),
+      ),
+    ),
+    { message: "Request failed" },
+  );
 });
 
 await test("an executing review statement settles before cancellation returns", async () => {

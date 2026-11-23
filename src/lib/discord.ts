@@ -48,8 +48,6 @@ const discordInviteSchema = Schema.Struct({
   approximate_presence_count: Schema.optionalKey(Schema.Finite),
 });
 
-export type DiscordOAuthTokens = typeof discordOAuthTokensSchema.Type;
-export type DiscordUser = typeof discordUserSchema.Type;
 export type DiscordInviteResponse = typeof discordInviteSchema.Type;
 
 type LinkedRoleMetadata = {
@@ -95,21 +93,10 @@ export function exchangeDiscordCodeEffect(code: string, redirectUri: string) {
   );
 }
 
-export function exchangeDiscordCode(
-  code: string,
-  redirectUri: string,
-): Promise<DiscordOAuthTokens> {
-  return Effect.runPromise(exchangeDiscordCodeEffect(code, redirectUri));
-}
-
 export function getDiscordUserEffect(accessToken: string) {
   return requestJson(`${DISCORD_API_BASE}/users/@me`, discordUserSchema, {
     init: { headers: { Authorization: `Bearer ${accessToken}` } },
   });
-}
-
-export function getDiscordUser(accessToken: string): Promise<DiscordUser> {
-  return Effect.runPromise(getDiscordUserEffect(accessToken));
 }
 
 export function pushLinkedRoleMetadataEffect(
@@ -130,13 +117,6 @@ export function pushLinkedRoleMetadataEffect(
       },
     },
   );
-}
-
-export function pushLinkedRoleMetadata(
-  accessToken: string,
-  metadata: LinkedRoleMetadata,
-): Promise<void> {
-  return Effect.runPromise(pushLinkedRoleMetadataEffect(accessToken, metadata));
 }
 
 function normalizeInviteUrl(url: string): string | null {
@@ -183,9 +163,9 @@ function followInviteRedirects(initialUrl: string, maxRedirects: number) {
   );
 }
 
-function resolveDiscordInviteCodeEffect(
+export function resolveDiscordInviteCodeEffect(
   inviteUrlOrCode: string,
-  maxRedirects: number,
+  maxRedirects = 5,
 ) {
   const directCode = extractInviteCode(inviteUrlOrCode);
   if (
@@ -212,21 +192,9 @@ function resolveDiscordInviteCodeEffect(
   });
 }
 
-export function resolveDiscordInviteCode(
-  inviteUrlOrCode: string,
-  maxRedirects = 5,
-): Promise<string | null> {
-  return Effect.runPromise(
-    resolveDiscordInviteCodeEffect(inviteUrlOrCode, maxRedirects),
-  );
-}
-
 export const fetchDiscordInviteEffect = Effect.fn("fetchDiscordInvite")(
   function* (inviteUrlOrCode: string) {
-    const inviteCode = yield* resolveDiscordInviteCodeEffect(
-      inviteUrlOrCode,
-      5,
-    );
+    const inviteCode = yield* resolveDiscordInviteCodeEffect(inviteUrlOrCode);
     if (!inviteCode) return null;
 
     return yield* getCachedValue({
@@ -257,12 +225,6 @@ export const fetchDiscordInviteEffect = Effect.fn("fetchDiscordInvite")(
     });
   },
 );
-
-export function fetchDiscordInvite(
-  inviteUrlOrCode: string,
-): Promise<DiscordInviteResponse | null> {
-  return Effect.runPromise(fetchDiscordInviteEffect(inviteUrlOrCode));
-}
 
 /** Extract the invite code from discord.gg and discord.com/invite URLs. */
 export function extractInviteCode(url: string): string {

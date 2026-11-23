@@ -1,9 +1,25 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { Effect } from "effect";
 import {
   getExpectedTurnstileHostname,
-  validateTurnstileToken,
+  validateTurnstileTokenEffect,
 } from "@/lib/turnstile";
+
+const validateTurnstileToken = (
+  input: Parameters<typeof validateTurnstileTokenEffect>[0],
+) =>
+  Effect.runPromise(
+    validateTurnstileTokenEffect(input).pipe(
+      Effect.match({
+        onFailure: (error) => ({
+          success: false,
+          errorCodes: error.errorCodes,
+        }),
+        onSuccess: () => ({ success: true, errorCodes: [] as string[] }),
+      }),
+    ),
+  );
 
 await test("Turnstile validates tokens and configuration before making requests", async (t) => {
   const original = process.env["REVIEW_TURNSTILE_SECRET_KEY"];
