@@ -10,7 +10,12 @@ import { LocaleProvider } from "@/components/locale-provider";
 import { useLocale } from "@/lib/i18n-react";
 import { fumadocsMessages } from "@/lib/messages/fumadocs";
 import { captchaPlugin } from "@better-auth-ui/react/plugins/captcha";
-import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import {
+  Link,
+  useNavigate,
+  useRouter,
+  useRouterState,
+} from "@tanstack/react-router";
 import { useMemo } from "react";
 import { RootProvider } from "fumadocs-ui/provider/tanstack";
 import { ContentImage } from "@/components/content-image";
@@ -118,9 +123,14 @@ function AuthUIProviders({ children }: { children: React.ReactNode }) {
 }
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  const location = useRouterState({ select: (state) => state.location });
+  // Select only the pathname, so search and hash changes do not re-render
+  // the whole app.
+  const pathname = useRouterState({
+    select: (state) => state.location.pathname,
+  });
+  const router = useRouter();
   const navigate = useNavigate();
-  const locale = splitLocalePath(location.pathname).locale;
+  const locale = splitLocalePath(pathname).locale;
   return (
     <LocaleProvider locale={locale}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
@@ -144,7 +154,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
             onLocaleChange: (next) => {
               if (isLocale(next))
                 void navigate({
-                  href: localeDestination(location.href, next),
+                  href: localeDestination(router.state.location.href, next),
                 });
             },
           }}

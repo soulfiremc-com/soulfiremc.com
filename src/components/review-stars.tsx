@@ -41,7 +41,7 @@ export function ReviewStars({
       className={cn("relative inline-flex w-fit items-center", className)}
       title={label}
     >
-      <div className="flex items-center gap-0.5 text-rating-muted/70">
+      <div className="flex items-center gap-0.5 text-rating-muted">
         {generateN(5).map((i) => (
           <Star key={i} className={sizeClasses[size]} />
         ))}
@@ -99,7 +99,7 @@ export function ReviewStarInput({
             aria-disabled={disabled || undefined}
             className={cn(
               "rounded-sm p-1 text-rating transition-transform outline-none hover:scale-105 focus-visible:ring-3 focus-visible:ring-ring/50 aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:hover:scale-100",
-              !active && "text-rating-muted/70",
+              !active && "text-rating-muted",
             )}
             aria-label={t("reviews.setRating5", { count: starValue })}
             aria-pressed={value === starValue}

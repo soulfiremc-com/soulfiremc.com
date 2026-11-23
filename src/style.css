@@ -32,6 +32,9 @@
   /* The 700 shades keep text above 4.5:1 on white and on /10 tints. */
   --success: var(--color-green-700);
   --warning: var(--color-yellow-700);
+  /* Stars need 3:1 contrast against white, which amber-500 misses. */
+  --rating: var(--color-amber-600);
+  --rating-muted: var(--color-neutral-500);
   --offer: var(--color-pink-700);
   /* Discord's darker blurple keeps tinted badge text above 4.5:1. */
   --discord: #4752c4;
@@ -73,6 +76,8 @@
   --ring: oklch(0.708 0 0);
   --success: var(--color-green-400);
   --warning: var(--color-yellow-500);
+  --rating: var(--color-amber-500);
+  --rating-muted: color-mix(in oklab, var(--color-amber-200) 70%, transparent);
   --offer: var(--color-pink-400);
   --discord: #8891f5;
   --chart-1: oklch(0.488 0.243 264.376);
@@ -121,8 +126,8 @@
   --color-localts-navy: #002f60;
   --color-localts-blue: #1070e0;
   --color-localts-sky: #85c4f3;
-  --color-rating: var(--color-amber-500);
-  --color-rating-muted: var(--color-amber-200);
+  --color-rating: var(--rating);
+  --color-rating-muted: var(--rating-muted);
   --text-2xs: 0.6875rem;
   --text-3xs: 0.625rem;
   --text-4xs: 0.5rem;

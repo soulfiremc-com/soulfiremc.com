@@ -22,10 +22,9 @@ export function ReviewSummaryBadge({
   const locale = useLocale();
   if (status === "loading") {
     return (
-      <Skeleton
-        aria-label={t("reviews.loadingRatings")}
-        className={cn("h-5 w-32", className)}
-      />
+      <Skeleton className={cn("h-5 w-32", className)}>
+        <span className="sr-only">{t("reviews.loadingRatings")}</span>
+      </Skeleton>
     );
   }
 

@@ -116,7 +116,7 @@ void test(
           (
             [
               ["/", "home.meta.title"],
-              ["/download", "download.downloadSoulfireSoulfire"],
+              ["/download", "download.title"],
               ["/pricing", "support.meta.title"],
               ["/get-accounts", "providers.accounts.meta.title"],
               ["/get-proxies", "providers.proxies.meta.title"],

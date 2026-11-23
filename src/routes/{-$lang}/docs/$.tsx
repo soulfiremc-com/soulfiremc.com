@@ -256,35 +256,30 @@ export const Route = createFileRoute("/{-$lang}/docs/$")({
     return data;
   },
   head: ({ loaderData }) => {
-    const title = loaderData
-      ? `${loaderData.title} - SoulFire`
-      : "Docs - SoulFire";
+    // A missing page keeps the root noindex and gets no canonical or preview.
+    if (!loaderData) return { meta: [] };
+    const title = `${loaderData.title} - SoulFire`;
     const description =
-      loaderData?.description ??
-      (loaderData?.type === "openapi"
+      loaderData.description ??
+      (loaderData.type === "openapi"
         ? `Request and response reference for the ${loaderData.title} endpoint in the SoulFire API.`
         : "SoulFire documentation");
-    const path = localizePath(
-      loaderData?.url ?? "/docs",
-      loaderData?.contentLocale ?? "en",
-    );
-    const imageUrl = loaderData?.imageUrl ?? `${path}/image.webp`;
+    const path = localizePath(loaderData.url, loaderData.contentLocale);
+    const imageUrl = loaderData.imageUrl;
 
     return {
       meta: getPageMeta({
-        locale: loaderData?.contentLocale ?? "en",
+        locale: loaderData.contentLocale,
         title,
         description,
         path,
         imageUrl,
-        imageAlt: loaderData
-          ? `${loaderData.title} documentation preview`
-          : "SoulFire docs preview",
+        imageAlt: `${loaderData.title} documentation preview`,
       }),
       links: getCanonicalLinks(
         path,
-        loaderData?.contentLocale ?? "en",
-        loaderData?.languages ?? ["en"],
+        loaderData.contentLocale,
+        loaderData.languages,
       ),
       scripts: [
         ...discordEmbedScript({
@@ -295,7 +290,7 @@ export const Route = createFileRoute("/{-$lang}/docs/$")({
           images: [new URL(imageUrl, "https://soulfiremc.com").href],
           links: [
             {
-              label: "download.title",
+              label: "Download SoulFire",
               url: "https://soulfiremc.com/download",
             },
           ],
@@ -312,9 +307,7 @@ export const Route = createFileRoute("/{-$lang}/docs/$")({
             createBreadcrumbStructuredData(path, [
               { name: "Home", path: "/" },
               { name: "Docs", path: "/docs" },
-              ...(loaderData && path !== "/docs"
-                ? [{ name: loaderData.title, path }]
-                : []),
+              ...(path !== "/docs" ? [{ name: loaderData.title, path }] : []),
             ]),
           ]),
         ),

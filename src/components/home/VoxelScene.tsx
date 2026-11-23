@@ -42,7 +42,12 @@ export function VoxelScene() {
   // oxlint-disable-next-line react/hook-use-state -- The seed is fixed for the mounted scene.
   const [seed] = useState(() => Math.floor(Math.random() * 2 ** 32));
   const hydrated = useIsHydrated();
-  const [announcement, setAnnouncement] = useState("");
+  // Remember which generation an announcement belongs to, so it is read once
+  // and not repeated with every later generation.
+  const [announcement, setAnnouncement] = useState<{
+    text: string;
+    generation: number;
+  } | null>(null);
   const reducedMotion = useReducedMotion();
   const ready = status === "ready";
   const still = useMemo(
@@ -181,7 +186,10 @@ export function VoxelScene() {
               size="sm"
               onClick={() => {
                 if (rendererRef.current?.breach())
-                  setAnnouncement(t("simulation.tntArmed"));
+                  setAnnouncement({
+                    text: t("simulation.tntArmed"),
+                    generation: summary.generation,
+                  });
               }}
               disabled={!ready || !summary.canBreach}
               // Pressing it disables it, so keep focus on it for keyboard users.
@@ -196,7 +204,10 @@ export function VoxelScene() {
               size="icon-sm"
               onClick={() => {
                 if (rendererRef.current?.storm())
-                  setAnnouncement(t("simulation.stormIncoming"));
+                  setAnnouncement({
+                    text: t("simulation.stormIncoming"),
+                    generation: summary.generation,
+                  });
               }}
               disabled={!ready || !summary.canStorm}
               // Pressing it disables it, so keep focus on it for keyboard users.
@@ -270,8 +281,7 @@ export function VoxelScene() {
       <p className="sr-only">
         {t("simulation.localSimulationNoMinecraftServerConnection")}
       </p>
-      <output className="sr-only">
-        {announcement && `${announcement} `}
+      <p className="sr-only">
         {t("simulation.generationReward", {
           generation: summary.generation,
           reward: t(
@@ -279,6 +289,12 @@ export function VoxelScene() {
               ?.label ?? "simulation.balanced",
           ),
         })}
+      </p>
+      {/* Only announce what the user triggered, not every new generation. */}
+      <output className="sr-only">
+        {announcement?.generation === summary.generation
+          ? announcement.text
+          : null}
       </output>
     </section>
   );

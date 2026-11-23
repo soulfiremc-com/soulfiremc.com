@@ -922,7 +922,7 @@ export const Route = createFileRoute("/{-$lang}/download")({
       locale: isLocale(params.lang) ? params.lang : "en",
       title: translate(
         isLocale(params.lang) ? params.lang : "en",
-        "download.downloadSoulfireSoulfire",
+        "download.title",
       ),
       description: translate(
         isLocale(params.lang) ? params.lang : "en",

@@ -21,7 +21,9 @@ const baseImageOptions = {
 };
 
 const imageHeaders = {
-  "Cache-Control": "public, immutable, max-age=31536000",
+  // OG URLs carry no version, and images show prices and titles that change.
+  // Cache for a day and refresh in the background instead of pinning a year.
+  "Cache-Control": "public, max-age=86400, stale-while-revalidate=604800",
   "Content-Type": "image/webp",
 };
 

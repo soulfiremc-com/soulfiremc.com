@@ -284,6 +284,8 @@ function ActivityFeed({
         limit: pagination.pageSize,
         offset,
       },
+      // Keep the current page and its pagination mounted while the next loads.
+      placeholderData: keepPreviousData,
     },
   );
   const query =

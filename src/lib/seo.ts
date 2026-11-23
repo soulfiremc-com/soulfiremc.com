@@ -249,7 +249,8 @@ export function getOrganizationStructuredData() {
       contentUrl: absoluteUrl("/logo.png"),
     },
     sameAs: [
-      absoluteUrl("/discord"),
+      // The real invite, not this site's own redirect to it.
+      import.meta.env.VITE_DISCORD_LINK ?? absoluteUrl("/discord"),
       "https://github.com/soulfiremc-com/SoulFire",
     ],
   };

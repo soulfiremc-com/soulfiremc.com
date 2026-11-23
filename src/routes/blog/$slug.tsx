@@ -88,13 +88,13 @@ export const Route = createFileRoute("/blog/$slug")({
     return data;
   },
   head: ({ loaderData }) => {
+    // A missing post keeps the root noindex and gets no canonical or preview.
+    if (!loaderData) return { meta: [] };
     const data = loaderData;
-    const title = data ? `${data.post.title} - SoulFire` : "SoulFire Blog";
-    const description = data?.post.description ?? "SoulFire blog post";
-    const path = data?.post.url ?? "/blog";
-    const imageUrl = data
-      ? getBlogPageImage({ slugs: [data.post.slug] }).url
-      : "/og/site/blog/image.webp";
+    const title = `${data.post.title} - SoulFire`;
+    const description = data.post.description ?? "SoulFire blog post";
+    const path = data.post.url;
+    const imageUrl = getBlogPageImage({ slugs: [data.post.slug] }).url;
 
     return {
       meta: getPageMeta({
@@ -102,11 +102,9 @@ export const Route = createFileRoute("/blog/$slug")({
         description,
         path,
         imageUrl,
-        imageAlt: data
-          ? `${data.post.title} blog preview`
-          : "SoulFire blog preview",
+        imageAlt: `${data.post.title} blog preview`,
         ogType: "article",
-        publishedTime: data?.post.date,
+        publishedTime: data.post.date,
       }),
       links: getCanonicalLinks(path),
       scripts: [
@@ -132,23 +130,19 @@ export const Route = createFileRoute("/blog/$slug")({
               imageUrl,
               withBreadcrumb: true,
             }),
-            ...(data
-              ? [
-                  createBlogPostingStructuredData({
-                    path,
-                    title: data.post.title,
-                    description,
-                    imageUrl,
-                    author: data.post.author,
-                    datePublished: data.post.date,
-                    keywords: data.post.tags,
-                  }),
-                ]
-              : []),
+            createBlogPostingStructuredData({
+              path,
+              title: data.post.title,
+              description,
+              imageUrl,
+              author: data.post.author,
+              datePublished: data.post.date,
+              keywords: data.post.tags,
+            }),
             createBreadcrumbStructuredData(path, [
               { name: "Home", path: "/" },
               { name: "Blog", path: "/blog" },
-              ...(data ? [{ name: data.post.title, path }] : []),
+              { name: data.post.title, path },
             ]),
           ]),
         ),
