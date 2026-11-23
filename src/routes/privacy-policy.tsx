@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
+import { LegalTable } from "@/components/legal-table";
 import {
-  Table,
   TableBody,
   TableCell,
   TableHead,
@@ -85,6 +85,10 @@ function PrivacyPolicy() {
         </li>
         <li>Two-factor authentication secrets and backup codes</li>
         <li>Docs feedback text you voluntarily submit</li>
+        <li>
+          Ratings and reviews you post, which we show publicly with your display
+          name and avatar
+        </li>
       </ul>
 
       <h3>Information Collected Automatically</h3>
@@ -117,9 +121,9 @@ function PrivacyPolicy() {
         </li>
         <li>
           <strong>Send you transactional emails</strong> &mdash; email
-          verification, password resets, email change confirmation, account
-          deletion verification, and two-factor authentication codes. These are
-          sent via{" "}
+          verification codes, one-time sign-in codes, password resets, email
+          change confirmation, account deletion verification, and two-factor
+          authentication codes. These are sent via{" "}
           <a
             href="https://resend.com"
             target="_blank"
@@ -217,8 +221,7 @@ function PrivacyPolicy() {
         </li>
         <li>
           <strong>Legitimate interests (Art. 6(1)(f))</strong>: security and
-          abuse prevention, anonymous usage statistics, SEO analytics, and the
-          donation widgets.
+          abuse prevention, anonymous usage statistics, and SEO analytics.
         </li>
       </ul>
 
@@ -228,7 +231,7 @@ function PrivacyPolicy() {
         the following third-party service providers who process it on our
         behalf:
       </p>
-      <Table className="[&_td]:min-w-32 [&_td]:whitespace-normal">
+      <LegalTable label="Third-party service providers">
         <TableHeader>
           <TableRow>
             <TableHead>Service</TableHead>
@@ -281,7 +284,10 @@ function PrivacyPolicy() {
             <TableCell>
               Product analytics (full tracking only with consent)
             </TableCell>
-            <TableCell>Usage data, device info, feedback text</TableCell>
+            <TableCell>
+              Usage data, device info, error reports, and feedback text. Session
+              replays only with your consent
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
@@ -325,7 +331,11 @@ function PrivacyPolicy() {
               </a>
             </TableCell>
             <TableCell>OAuth login &amp; linked roles</TableCell>
-            <TableCell>OAuth tokens, user ID</TableCell>
+            <TableCell>
+              OAuth tokens and user ID. For linked roles, we send Discord the
+              name on your SoulFire account, whether your email is verified, and
+              your account creation date
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
@@ -395,8 +405,14 @@ function PrivacyPolicy() {
                 Gravatar
               </a>
             </TableCell>
-            <TableCell>Avatar fallback</TableCell>
-            <TableCell>MD5 hash of email address</TableCell>
+            <TableCell>
+              Avatar fallback, shown in your account menu and next to your
+              public reviews
+            </TableCell>
+            <TableCell>
+              MD5 hash of your email address, plus the IP address of each
+              visitor whose browser loads the image
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
@@ -408,20 +424,26 @@ function PrivacyPolicy() {
                 YouTube
               </a>
             </TableCell>
-            <TableCell>Embedded demo video</TableCell>
-            <TableCell>Standard YouTube embed data</TableCell>
+            <TableCell>
+              Demo video on the homepage. It loads from youtube-nocookie.com
+              only after you open the video
+            </TableCell>
+            <TableCell>
+              IP address, browser data, and viewing data after you open the
+              video
+            </TableCell>
           </TableRow>
         </TableBody>
-      </Table>
+      </LegalTable>
 
       <h3>Transfers Outside the EU</h3>
       <p>
-        Some of these providers, including Resend, GitHub, Discord, Google,
-        YouTube, Ko-fi, and NOWPayments, may process data outside the European
-        Economic Area. Where a country has no EU adequacy decision, the transfer
-        relies on the provider&apos;s safeguards, such as the EU Standard
-        Contractual Clauses or certification under the EU-U.S. Data Privacy
-        Framework.
+        Some of these providers, including Cloudflare, Resend, Better Auth,
+        Ahrefs, GitHub, Discord, Google, YouTube, Gravatar, Ko-fi, and
+        NOWPayments, may process data outside the European Economic Area. Where
+        a country has no EU adequacy decision, the transfer relies on the
+        provider&apos;s safeguards, such as the EU Standard Contractual Clauses
+        or certification under the EU-U.S. Data Privacy Framework.
       </p>
 
       <h2>4. Do We Use Cookies and Tracking Technologies?</h2>

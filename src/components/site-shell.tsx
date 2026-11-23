@@ -7,8 +7,12 @@ import {
   type ComponentPropsWithoutRef,
   type ReactNode,
 } from "react";
-import { UserButton } from "@/components/auth/user/user-button";
-import { getBaseLayoutOptions } from "@/lib/layout-options";
+import {
+  discordUrl,
+  getBaseLayoutOptions,
+  githubUrl,
+} from "@/lib/layout-options";
+import { HeaderUserButton } from "@/lib/auth/lazy-user-button";
 import { cn } from "@/lib/utils";
 
 // Fumadocs wraps the layout in <main>, but each page renders its own <main>.
@@ -93,43 +97,32 @@ export function SiteShell({ children }: { children: ReactNode }) {
       </a>
       <HomeLayout
         {...baseOptions}
-        slots={{ container: ShellContainer }}
+        slots={{ ...baseOptions.slots, container: ShellContainer }}
         links={[
+          // Flat links in journey order. Nested pages keep their section
+          // highlighted, so visitors can see where they are.
           {
             text: t("nav.docs"),
             url: localizeHref("/docs", locale),
-            description: t("nav.docs.description"),
+            active: "nested-url",
           },
           {
             text: t("nav.downloads"),
             url: localizeHref("/download", locale),
-            description: t("download.title"),
           },
           {
-            type: "menu",
-            text: t("nav.resources"),
-            items: [
-              {
-                text: t("nav.accounts"),
-                url: localizeHref("/get-accounts", locale),
-                description: t("nav.accounts.description"),
-              },
-              {
-                text: t("nav.proxies"),
-                url: localizeHref("/get-proxies", locale),
-                description: t("nav.proxies.description"),
-              },
-              {
-                text: t("nav.blog"),
-                url: "/blog",
-                description: t("nav.blog.description"),
-              },
-            ],
+            text: t("nav.accounts"),
+            url: localizeHref("/get-accounts", locale),
+            active: "nested-url",
           },
           {
-            text: t("nav.support"),
+            text: t("nav.proxies"),
+            url: localizeHref("/get-proxies", locale),
+            active: "nested-url",
+          },
+          {
+            text: t("nav.pricing"),
             url: localizeHref("/pricing", locale),
-            description: t("nav.support.description"),
           },
           ...(baseOptions.links ?? []),
           // Fumadocs renders desktop nav items inside a <ul>, so the custom
@@ -140,7 +133,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
             on: "nav",
             children: (
               <li className="list-none">
-                <UserButton size="icon" />
+                <HeaderUserButton />
               </li>
             ),
           },
@@ -148,7 +141,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
             type: "custom",
             secondary: true,
             on: "menu",
-            children: <UserButton size="icon" />,
+            children: <HeaderUserButton />,
           },
         ]}
       >
@@ -159,6 +152,43 @@ export function SiteShell({ children }: { children: ReactNode }) {
         />
         {children}
         <footer className="mt-auto border-t py-6 text-sm text-fd-muted-foreground">
+          <nav
+            aria-label={t("footer.links")}
+            className="mx-auto mb-4 flex w-full max-w-(--fd-layout-width) flex-wrap justify-center gap-x-4 px-4 sm:justify-start"
+          >
+            <Link
+              to="/{-$lang}/docs/$"
+              params={{
+                lang: locale === "en" ? undefined : locale,
+                _splat: "",
+              }}
+              className="inline-flex min-h-8 items-center transition-colors hover:text-fd-foreground"
+            >
+              {t("nav.docs")}
+            </Link>
+            <a
+              href={discordUrl}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="inline-flex min-h-8 items-center transition-colors hover:text-fd-foreground"
+            >
+              {t("footer.discordHelp")}
+            </a>
+            <a
+              href={githubUrl}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="inline-flex min-h-8 items-center transition-colors hover:text-fd-foreground"
+            >
+              GitHub
+            </a>
+            <Link
+              to="/blog"
+              className="inline-flex min-h-8 items-center transition-colors hover:text-fd-foreground"
+            >
+              {t("nav.blog")}
+            </Link>
+          </nav>
           <div className="mx-auto flex w-full max-w-(--fd-layout-width) flex-col items-center gap-2 px-4 sm:flex-row sm:justify-between">
             {/* Pages are prerendered, so the build year can trail the visitor's clock. */}
             <p suppressHydrationWarning>

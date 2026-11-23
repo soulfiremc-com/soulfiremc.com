@@ -13,7 +13,6 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as CookiePolicyRouteImport } from './routes/cookie-policy'
 import { Route as DemoVideoRouteImport } from './routes/demo-video'
 import { Route as DiscordRouteImport } from './routes/discord'
-import { Route as DonateRouteImport } from './routes/donate'
 import { Route as GithubRouteImport } from './routes/github'
 import { Route as ImprintRouteImport } from './routes/imprint'
 import { Route as LlmsFullDottxtRouteImport } from './routes/llms-full[.]txt'
@@ -21,10 +20,12 @@ import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as TermsOfServiceRouteImport } from './routes/terms-of-service'
 import { Route as Char123LangChar125RouteRouteImport } from './routes/{-$lang}/route'
+import { Route as AccountIndexRouteImport } from './routes/account/index'
 import { Route as AccountPathRouteImport } from './routes/account/$path'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminPathRouteImport } from './routes/admin/$path'
 import { Route as ApiSearchRouteImport } from './routes/api/search'
+import { Route as AuthIndexRouteImport } from './routes/auth/index'
 import { Route as AuthPathRouteImport } from './routes/auth/$path'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
@@ -32,6 +33,7 @@ import { Route as BlogFeedDotxmlRouteImport } from './routes/blog/feed[.]xml'
 import { Route as DiscordLinkedRoleRouteImport } from './routes/discord_.linked-role'
 import { Route as Char123LangChar125IndexRouteImport } from './routes/{-$lang}/index'
 import { Route as Char123LangChar125DocsDotmdxRouteImport } from './routes/{-$lang}/docs[.]mdx'
+import { Route as Char123LangChar125DonateRouteImport } from './routes/{-$lang}/donate'
 import { Route as Char123LangChar125DownloadRouteImport } from './routes/{-$lang}/download'
 import { Route as Char123LangChar125PricingRouteImport } from './routes/{-$lang}/pricing'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
@@ -71,11 +73,6 @@ const DiscordRoute = DiscordRouteImport.update({
   path: '/discord',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DonateRoute = DonateRouteImport.update({
-  id: '/donate',
-  path: '/donate',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const GithubRoute = GithubRouteImport.update({
   id: '/github',
   path: '/github',
@@ -111,6 +108,11 @@ const Char123LangChar125RouteRoute = Char123LangChar125RouteRouteImport.update({
   path: '/{-$lang}',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AccountIndexRoute = AccountIndexRouteImport.update({
+  id: '/account/',
+  path: '/account/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AccountPathRoute = AccountPathRouteImport.update({
   id: '/account/$path',
   path: '/account/$path',
@@ -129,6 +131,11 @@ const AdminPathRoute = AdminPathRouteImport.update({
 const ApiSearchRoute = ApiSearchRouteImport.update({
   id: '/api/search',
   path: '/api/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthIndexRoute = AuthIndexRouteImport.update({
+  id: '/auth/',
+  path: '/auth/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthPathRoute = AuthPathRouteImport.update({
@@ -165,6 +172,12 @@ const Char123LangChar125DocsDotmdxRoute =
   Char123LangChar125DocsDotmdxRouteImport.update({
     id: '/docs.mdx',
     path: '/docs.mdx',
+    getParentRoute: () => Char123LangChar125RouteRoute,
+  } as any)
+const Char123LangChar125DonateRoute =
+  Char123LangChar125DonateRouteImport.update({
+    id: '/donate',
+    path: '/donate',
     getParentRoute: () => Char123LangChar125RouteRoute,
   } as any)
 const Char123LangChar125DownloadRoute =
@@ -279,7 +292,6 @@ export interface FileRoutesByFullPath {
   '/cookie-policy': typeof CookiePolicyRoute
   '/demo-video': typeof DemoVideoRoute
   '/discord': typeof DiscordRoute
-  '/donate': typeof DonateRoute
   '/github': typeof GithubRoute
   '/imprint': typeof ImprintRoute
   '/llms-full.txt': typeof LlmsFullDottxtRoute
@@ -294,9 +306,12 @@ export interface FileRoutesByFullPath {
   '/blog/feed.xml': typeof BlogFeedDotxmlRoute
   '/discord/linked-role': typeof DiscordLinkedRoleRoute
   '/{-$lang}/docs.mdx': typeof Char123LangChar125DocsDotmdxRoute
+  '/{-$lang}/donate': typeof Char123LangChar125DonateRoute
   '/{-$lang}/download': typeof Char123LangChar125DownloadRoute
   '/{-$lang}/pricing': typeof Char123LangChar125PricingRoute
+  '/account/': typeof AccountIndexRoute
   '/admin/': typeof AdminIndexRoute
+  '/auth/': typeof AuthIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/{-$lang}/': typeof Char123LangChar125IndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -320,7 +335,6 @@ export interface FileRoutesByTo {
   '/cookie-policy': typeof CookiePolicyRoute
   '/demo-video': typeof DemoVideoRoute
   '/discord': typeof DiscordRoute
-  '/donate': typeof DonateRoute
   '/github': typeof GithubRoute
   '/imprint': typeof ImprintRoute
   '/llms-full.txt': typeof LlmsFullDottxtRoute
@@ -335,9 +349,12 @@ export interface FileRoutesByTo {
   '/blog/feed.xml': typeof BlogFeedDotxmlRoute
   '/discord/linked-role': typeof DiscordLinkedRoleRoute
   '/{-$lang}/docs.mdx': typeof Char123LangChar125DocsDotmdxRoute
+  '/{-$lang}/donate': typeof Char123LangChar125DonateRoute
   '/{-$lang}/download': typeof Char123LangChar125DownloadRoute
   '/{-$lang}/pricing': typeof Char123LangChar125PricingRoute
+  '/account': typeof AccountIndexRoute
   '/admin': typeof AdminIndexRoute
+  '/auth': typeof AuthIndexRoute
   '/blog': typeof BlogIndexRoute
   '/{-$lang}': typeof Char123LangChar125IndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -364,7 +381,6 @@ export interface FileRoutesById {
   '/cookie-policy': typeof CookiePolicyRoute
   '/demo-video': typeof DemoVideoRoute
   '/discord': typeof DiscordRoute
-  '/donate': typeof DonateRoute
   '/github': typeof GithubRoute
   '/imprint': typeof ImprintRoute
   '/llms-full.txt': typeof LlmsFullDottxtRoute
@@ -379,9 +395,12 @@ export interface FileRoutesById {
   '/blog/feed.xml': typeof BlogFeedDotxmlRoute
   '/discord_/linked-role': typeof DiscordLinkedRoleRoute
   '/{-$lang}/docs.mdx': typeof Char123LangChar125DocsDotmdxRoute
+  '/{-$lang}/donate': typeof Char123LangChar125DonateRoute
   '/{-$lang}/download': typeof Char123LangChar125DownloadRoute
   '/{-$lang}/pricing': typeof Char123LangChar125PricingRoute
+  '/account/': typeof AccountIndexRoute
   '/admin/': typeof AdminIndexRoute
+  '/auth/': typeof AuthIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/{-$lang}/': typeof Char123LangChar125IndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -409,7 +428,6 @@ export interface FileRouteTypes {
     | '/cookie-policy'
     | '/demo-video'
     | '/discord'
-    | '/donate'
     | '/github'
     | '/imprint'
     | '/llms-full.txt'
@@ -424,9 +442,12 @@ export interface FileRouteTypes {
     | '/blog/feed.xml'
     | '/discord/linked-role'
     | '/{-$lang}/docs.mdx'
+    | '/{-$lang}/donate'
     | '/{-$lang}/download'
     | '/{-$lang}/pricing'
+    | '/account/'
     | '/admin/'
+    | '/auth/'
     | '/blog/'
     | '/{-$lang}/'
     | '/api/auth/$'
@@ -450,7 +471,6 @@ export interface FileRouteTypes {
     | '/cookie-policy'
     | '/demo-video'
     | '/discord'
-    | '/donate'
     | '/github'
     | '/imprint'
     | '/llms-full.txt'
@@ -465,9 +485,12 @@ export interface FileRouteTypes {
     | '/blog/feed.xml'
     | '/discord/linked-role'
     | '/{-$lang}/docs.mdx'
+    | '/{-$lang}/donate'
     | '/{-$lang}/download'
     | '/{-$lang}/pricing'
+    | '/account'
     | '/admin'
+    | '/auth'
     | '/blog'
     | '/{-$lang}'
     | '/api/auth/$'
@@ -493,7 +516,6 @@ export interface FileRouteTypes {
     | '/cookie-policy'
     | '/demo-video'
     | '/discord'
-    | '/donate'
     | '/github'
     | '/imprint'
     | '/llms-full.txt'
@@ -508,9 +530,12 @@ export interface FileRouteTypes {
     | '/blog/feed.xml'
     | '/discord_/linked-role'
     | '/{-$lang}/docs.mdx'
+    | '/{-$lang}/donate'
     | '/{-$lang}/download'
     | '/{-$lang}/pricing'
+    | '/account/'
     | '/admin/'
+    | '/auth/'
     | '/blog/'
     | '/{-$lang}/'
     | '/api/auth/$'
@@ -537,7 +562,6 @@ export interface RootRouteChildren {
   CookiePolicyRoute: typeof CookiePolicyRoute
   DemoVideoRoute: typeof DemoVideoRoute
   DiscordRoute: typeof DiscordRoute
-  DonateRoute: typeof DonateRoute
   GithubRoute: typeof GithubRoute
   ImprintRoute: typeof ImprintRoute
   LlmsFullDottxtRoute: typeof LlmsFullDottxtRoute
@@ -550,6 +574,8 @@ export interface RootRouteChildren {
   BlogSlugRoute: typeof BlogSlugRoute
   BlogFeedDotxmlRoute: typeof BlogFeedDotxmlRoute
   DiscordLinkedRoleRoute: typeof DiscordLinkedRoleRoute
+  AccountIndexRoute: typeof AccountIndexRoute
+  AuthIndexRoute: typeof AuthIndexRoute
   BlogIndexRoute: typeof BlogIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiSearchIndexLangRoute: typeof ApiSearchIndexLangRoute
@@ -591,13 +617,6 @@ declare module '@tanstack/react-router' {
       path: '/discord'
       fullPath: '/discord'
       preLoaderRoute: typeof DiscordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/donate': {
-      id: '/donate'
-      path: '/donate'
-      fullPath: '/donate'
-      preLoaderRoute: typeof DonateRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/github': {
@@ -649,6 +668,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char123LangChar125RouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/account/': {
+      id: '/account/'
+      path: '/account'
+      fullPath: '/account/'
+      preLoaderRoute: typeof AccountIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/account/$path': {
       id: '/account/$path'
       path: '/account/$path'
@@ -675,6 +701,13 @@ declare module '@tanstack/react-router' {
       path: '/api/search'
       fullPath: '/api/search'
       preLoaderRoute: typeof ApiSearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/': {
+      id: '/auth/'
+      path: '/auth'
+      fullPath: '/auth/'
+      preLoaderRoute: typeof AuthIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/$path': {
@@ -724,6 +757,13 @@ declare module '@tanstack/react-router' {
       path: '/docs.mdx'
       fullPath: '/{-$lang}/docs.mdx'
       preLoaderRoute: typeof Char123LangChar125DocsDotmdxRouteImport
+      parentRoute: typeof Char123LangChar125RouteRoute
+    }
+    '/{-$lang}/donate': {
+      id: '/{-$lang}/donate'
+      path: '/donate'
+      fullPath: '/{-$lang}/donate'
+      preLoaderRoute: typeof Char123LangChar125DonateRouteImport
       parentRoute: typeof Char123LangChar125RouteRoute
     }
     '/{-$lang}/download': {
@@ -857,6 +897,7 @@ declare module '@tanstack/react-router' {
 
 interface Char123LangChar125RouteRouteChildren {
   Char123LangChar125DocsDotmdxRoute: typeof Char123LangChar125DocsDotmdxRoute
+  Char123LangChar125DonateRoute: typeof Char123LangChar125DonateRoute
   Char123LangChar125DownloadRoute: typeof Char123LangChar125DownloadRoute
   Char123LangChar125PricingRoute: typeof Char123LangChar125PricingRoute
   Char123LangChar125IndexRoute: typeof Char123LangChar125IndexRoute
@@ -871,6 +912,7 @@ interface Char123LangChar125RouteRouteChildren {
 const Char123LangChar125RouteRouteChildren: Char123LangChar125RouteRouteChildren =
   {
     Char123LangChar125DocsDotmdxRoute: Char123LangChar125DocsDotmdxRoute,
+    Char123LangChar125DonateRoute: Char123LangChar125DonateRoute,
     Char123LangChar125DownloadRoute: Char123LangChar125DownloadRoute,
     Char123LangChar125PricingRoute: Char123LangChar125PricingRoute,
     Char123LangChar125IndexRoute: Char123LangChar125IndexRoute,
@@ -910,7 +952,6 @@ const rootRouteChildren: RootRouteChildren = {
   CookiePolicyRoute: CookiePolicyRoute,
   DemoVideoRoute: DemoVideoRoute,
   DiscordRoute: DiscordRoute,
-  DonateRoute: DonateRoute,
   GithubRoute: GithubRoute,
   ImprintRoute: ImprintRoute,
   LlmsFullDottxtRoute: LlmsFullDottxtRoute,
@@ -923,6 +964,8 @@ const rootRouteChildren: RootRouteChildren = {
   BlogSlugRoute: BlogSlugRoute,
   BlogFeedDotxmlRoute: BlogFeedDotxmlRoute,
   DiscordLinkedRoleRoute: DiscordLinkedRoleRoute,
+  AccountIndexRoute: AccountIndexRoute,
+  AuthIndexRoute: AuthIndexRoute,
   BlogIndexRoute: BlogIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiSearchIndexLangRoute: ApiSearchIndexLangRoute,
@@ -942,6 +985,7 @@ export const routeTree = rootRouteImport
   ._addFileTypes<FileRouteTypes>()
 
 import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
 declare module '@tanstack/react-start' {
   interface Register {
     ssr: true

@@ -119,8 +119,9 @@ function TermsOfService() {
       <ul>
         <li>Discord (OAuth login, linked roles, community server)</li>
         <li>GitHub (OAuth login, source code repository)</li>
-        <li>Ko-fi (donations)</li>
-        <li>YouTube (embedded video content)</li>
+        <li>Ko-fi (memberships and donations)</li>
+        <li>NOWPayments (cryptocurrency donations)</li>
+        <li>YouTube (demo video)</li>
         <li>Third-party Minecraft account, proxy, and resource providers</li>
       </ul>
       <p>

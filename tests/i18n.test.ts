@@ -305,15 +305,12 @@ void test("translation catalogs use stable keys and preserve English interpolati
 });
 
 void test("translation keys resolve in English and fall back without displaying identifiers", () => {
-  assert.equal(
-    translate("en", "nav.support.description"),
-    "Support SoulFire development",
-  );
+  assert.equal(translate("en", "footer.discordHelp"), "Get help on Discord");
   assert.equal(translate("de", "social.github"), "GitHub");
-  assert.equal(isMessageKey("Support SoulFire development"), false);
+  assert.equal(isMessageKey("Get help on Discord"), false);
   assert.equal(isMessageKey("constructor"), false);
   assert.equal(isMessageKey("toString"), false);
-  assert.equal(isMessageKey("nav.support.description"), true);
+  assert.equal(isMessageKey("footer.discordHelp"), true);
   assert.equal(resolveMessage("de", "Localts"), "Localts");
   assert.equal(resolveMessage("ru", "$4.50"), "$4.50");
   assert.equal(resolveMessage("de", "common.free"), "Kostenlos");

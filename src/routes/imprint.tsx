@@ -28,8 +28,11 @@ function Imprint() {
         Germany
       </address>
       <p>
-        <strong>Note:</strong> No packages or parcels — acceptance will be
-        refused. (Keine Pakete oder Päckchen — Annahme wird verweigert!)
+        <strong>Note:</strong> No packages or parcels. Acceptance will be
+        refused.{" "}
+        <span lang="de">
+          (Keine Pakete oder Päckchen. Annahme wird verweigert!)
+        </span>
       </p>
 
       <h2>Contact</h2>

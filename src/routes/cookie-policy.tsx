@@ -2,8 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { reopenCookieConsent, useAnalyticsConsent } from "@/lib/cookie-consent";
 import { SiteShell } from "@/components/site-shell";
 import { Button } from "@/components/ui/button";
+import { LegalTable } from "@/components/legal-table";
 import {
-  Table,
   TableBody,
   TableCell,
   TableHead,
@@ -108,7 +108,7 @@ function CookiePolicy() {
         switched off. They are set in response to actions you take, such as
         signing in or filling in forms.
       </p>
-      <Table className="[&_td]:min-w-32 [&_td]:whitespace-normal">
+      <LegalTable label="Strictly necessary cookies">
         <TableHeader>
           <TableRow>
             <TableHead>Cookie / Storage</TableHead>
@@ -126,7 +126,7 @@ function CookiePolicy() {
             <TableCell>
               Maintains your authenticated session after signing in
             </TableCell>
-            <TableCell>Session / up to 7 days</TableCell>
+            <TableCell>7 days, renewed while you use the site</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
@@ -147,7 +147,61 @@ function CookiePolicy() {
             <TableCell>
               CSRF protection during Discord OAuth linked roles flow
             </TableCell>
-            <TableCell>Short-lived (minutes)</TableCell>
+            <TableCell>5 minutes</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <code>__Secure-better-auth.state</code>,{" "}
+              <code>__Secure-better-auth.oauth_popup</code>
+            </TableCell>
+            <TableCell>SoulFire (better-auth)</TableCell>
+            <TableCell>
+              Protects sign-in with Discord, GitHub, or Google against forged
+              requests
+            </TableCell>
+            <TableCell>5 to 10 minutes</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <code>__Secure-better-auth.two_factor</code>
+            </TableCell>
+            <TableCell>SoulFire (better-auth)</TableCell>
+            <TableCell>
+              Links your sign-in to the two-factor step while you enter your
+              code
+            </TableCell>
+            <TableCell>10 minutes</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <code>__Secure-better-auth.trust_device</code>
+            </TableCell>
+            <TableCell>SoulFire (better-auth)</TableCell>
+            <TableCell>
+              Skips the two-factor step on this device if you choose to trust it
+            </TableCell>
+            <TableCell>30 days</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <code>__Secure-better-auth.better-auth-passkey</code>
+            </TableCell>
+            <TableCell>SoulFire (better-auth)</TableCell>
+            <TableCell>
+              Holds the one-time challenge while you register or use a passkey
+            </TableCell>
+            <TableCell>5 minutes</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <code>better-auth.last_used_login_method</code>
+            </TableCell>
+            <TableCell>SoulFire (better-auth)</TableCell>
+            <TableCell>
+              Remembers which sign-in method you used last so the sign-in page
+              can highlight it
+            </TableCell>
+            <TableCell>30 days</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
@@ -160,7 +214,7 @@ function CookiePolicy() {
             <TableCell>Session / up to 30 minutes</TableCell>
           </TableRow>
         </TableBody>
-      </Table>
+      </LegalTable>
 
       <h3>Analytics Cookies (Consent Required)</h3>
       <p>
@@ -181,7 +235,7 @@ function CookiePolicy() {
         anonymously. PostHog groups these events with a temporary hash that
         changes every day, and session replay stays off.
       </p>
-      <Table className="[&_td]:min-w-32 [&_td]:whitespace-normal">
+      <LegalTable label="Analytics cookies">
         <TableHeader>
           <TableRow>
             <TableHead>Cookie / Storage</TableHead>
@@ -216,7 +270,7 @@ function CookiePolicy() {
             </TableCell>
           </TableRow>
         </TableBody>
-      </Table>
+      </LegalTable>
 
       <h3>Performance and SEO Measurement</h3>
       <p>
@@ -234,7 +288,7 @@ function CookiePolicy() {
         The following third-party services embedded on our website may set their
         own cookies:
       </p>
-      <Table className="[&_td]:min-w-32 [&_td]:whitespace-normal">
+      <LegalTable label="Third-party cookies">
         <TableHeader>
           <TableRow>
             <TableHead>Service</TableHead>
@@ -246,8 +300,9 @@ function CookiePolicy() {
           <TableRow>
             <TableCell>YouTube</TableCell>
             <TableCell>
-              Embedded demo video on the homepage. YouTube may set cookies and
-              collect viewing data.
+              Demo video on the homepage. It loads from youtube-nocookie.com
+              only after you open the video. YouTube may then store data in your
+              browser and collect viewing data.
             </TableCell>
             <TableCell>
               <a
@@ -262,8 +317,8 @@ function CookiePolicy() {
           <TableRow>
             <TableCell>Gravatar</TableCell>
             <TableCell>
-              Avatar images loaded from Gravatar. Requests include an MD5 hash
-              of the user&apos;s email.
+              Avatar images in the account menu and next to reviews. Requests
+              include an MD5 hash of the user&apos;s email.
             </TableCell>
             <TableCell>
               <a
@@ -276,13 +331,13 @@ function CookiePolicy() {
             </TableCell>
           </TableRow>
         </TableBody>
-      </Table>
+      </LegalTable>
 
       <h3>Local Storage</h3>
       <p>
         In addition to cookies, we use browser local storage for the following:
       </p>
-      <Table className="[&_td]:min-w-32 [&_td]:whitespace-normal">
+      <LegalTable label="Local storage">
         <TableHeader>
           <TableRow>
             <TableHead>Key</TableHead>
@@ -309,6 +364,15 @@ function CookiePolicy() {
           </TableRow>
           <TableRow>
             <TableCell>
+              <code>soulfire-sdk-tabs:*</code>
+            </TableCell>
+            <TableCell>
+              Remembers the programming language you picked in SDK code examples
+            </TableCell>
+            <TableCell>Persistent (until cleared)</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
               <code>docs-feedback-&#123;url&#125;</code>
             </TableCell>
             <TableCell>
@@ -320,16 +384,19 @@ function CookiePolicy() {
           <TableRow>
             <TableCell>
               <code>tsr-scroll-restoration-*</code>,{" "}
-              <code>better-auth-ui.*</code> (session storage)
+              <code>better-auth-ui.*</code>, <code>review-draft:*</code>,{" "}
+              <code>vite-preload-reload</code> (session storage)
             </TableCell>
             <TableCell>
-              Restores your scroll position and remembers the email address for
-              a pending sign-in, verification, or password reset step
+              Restores your scroll position, remembers the email address and
+              two-factor methods for a pending sign-in, verification, or
+              password reset step, keeps an unsent review while you sign in, and
+              prevents repeated reloads after a site update
             </TableCell>
             <TableCell>Until you close the tab</TableCell>
           </TableRow>
         </TableBody>
-      </Table>
+      </LegalTable>
 
       <h2>4. How to Manage Cookies</h2>
       <h3 id="cookie-settings" className="scroll-mt-20">
