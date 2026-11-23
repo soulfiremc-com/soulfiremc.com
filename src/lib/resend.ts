@@ -24,8 +24,12 @@ export type WebsiteEmail = {
   readonly react: React.ReactElement;
 };
 
-/** React Email's plain-text render skips the hidden preheader, so send it with the HTML. */
+/**
+ * The rendered email. React Email's plain-text render skips the hidden
+ * preheader, so the submission carries both parts.
+ */
 export type WebsiteEmailSubmission = {
+  readonly html: string;
   readonly text: string;
 } & WebsiteEmail;
 
@@ -50,7 +54,6 @@ const RESEND_TIMEOUT_MS = 15_000;
 async function submitToResend(
   email: WebsiteEmailSubmission,
 ): Promise<{ error: unknown }> {
-  const html = await render(email.react);
   try {
     await Effect.runPromise(
       requestVoid(RESEND_EMAILS_URL, {
@@ -65,7 +68,7 @@ async function submitToResend(
             to: email.to,
             reply_to: email.replyTo,
             subject: email.subject,
-            html,
+            html: email.html,
             text: email.text,
           }),
         },
@@ -80,6 +83,21 @@ async function submitToResend(
     }
     throw error;
   }
+}
+
+// Rendering finishes before submission starts, so a template failure is a
+// "prepare" failure and never reaches Resend.
+function prepareEmail(email: WebsiteEmail) {
+  return Effect.tryPromise({
+    try: async (): Promise<WebsiteEmailSubmission> => {
+      const [html, text] = await Promise.all([
+        render(email.react),
+        render(email.react, { plainText: true }),
+      ]);
+      return { ...email, html, text };
+    },
+    catch: (cause) => EmailDeliveryError.make({ reason: "prepare", cause }),
+  });
 }
 
 export function makeWebsiteMailer(
@@ -105,11 +123,7 @@ export function makeWebsiteMailer(
     );
 
   return {
-    send: (email) =>
-      Effect.tryPromise({
-        try: () => render(email.react, { plainText: true }),
-        catch: (cause) => EmailDeliveryError.make({ reason: "prepare", cause }),
-      }).pipe(Effect.flatMap((text) => submitEmail({ ...email, text }))),
+    send: (email) => prepareEmail(email).pipe(Effect.flatMap(submitEmail)),
   };
 }
 

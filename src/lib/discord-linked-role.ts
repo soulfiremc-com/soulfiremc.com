@@ -28,6 +28,25 @@ export function getLinkedRoleResultUrl(
   return url.toString();
 }
 
+/**
+ * Returns the Discord authorization URL, or `undefined` when the Discord
+ * client ID is not configured. Discord cannot start the flow without it.
+ */
+export function getLinkedRoleAuthorizeUrl(
+  clientId: string | undefined,
+  state: string,
+): string | undefined {
+  if (!clientId) return undefined;
+  const params = new URLSearchParams({
+    client_id: clientId,
+    redirect_uri: LINKED_ROLE_CALLBACK_URL,
+    response_type: "code",
+    scope: "identify role_connections.write",
+    state,
+  });
+  return `https://discord.com/oauth2/authorize?${params}`;
+}
+
 /** Discord rejects the whole role connection when the username is too long. */
 export function getLinkedRolePlatformUsername(name: string): string {
   return Array.from(name).slice(0, PLATFORM_USERNAME_MAX_LENGTH).join("");

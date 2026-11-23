@@ -1,7 +1,10 @@
 name: "Build and Test"
 
 on:
+  # Pull requests get CI from the pull_request event. Running push CI on
+  # feature branches too would run every PR commit twice.
   push:
+    branches: [main]
   pull_request:
     types: [opened, synchronize, reopened, closed]
 

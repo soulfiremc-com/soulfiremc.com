@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   checkLinkedRoleCallback,
+  getLinkedRoleAuthorizeUrl,
   getLinkedRolePlatformUsername,
   getLinkedRoleResultUrl,
 } from "@/lib/discord-linked-role";
@@ -41,4 +42,20 @@ await test("linked-role usernames fit Discord's 100 character limit", () => {
   const long = getLinkedRolePlatformUsername("🔥".repeat(150));
   assert.equal(Array.from(long).length, 100);
   assert.equal(long, "🔥".repeat(100));
+});
+
+await test("linked-role authorization needs a Discord client ID", () => {
+  assert.equal(getLinkedRoleAuthorizeUrl(undefined, "s1"), undefined);
+  assert.equal(getLinkedRoleAuthorizeUrl("", "s1"), undefined);
+  const url = new URL(getLinkedRoleAuthorizeUrl("123", "s1") ?? "");
+  assert.equal(
+    url.origin + url.pathname,
+    "https://discord.com/oauth2/authorize",
+  );
+  assert.equal(url.searchParams.get("client_id"), "123");
+  assert.equal(url.searchParams.get("state"), "s1");
+  assert.equal(
+    url.searchParams.get("redirect_uri"),
+    "https://soulfiremc.com/api/discord/linked-role/callback",
+  );
 });

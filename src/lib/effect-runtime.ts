@@ -18,11 +18,14 @@ export async function runWebsiteEffect<A, E>(
   const exit = await Effect.runPromiseExit(
     program.pipe(
       // The thrown error drops causes, so keep them in the Worker logs.
-      Effect.tapCause((cause) =>
-        Cause.hasInterruptsOnly(cause)
-          ? Effect.void
-          : Effect.logError("Website effect failed", cause),
-      ),
+      // Typed failures, such as a rejected sign-in or an unavailable
+      // provider, are part of a workflow's contract. Only defects are bugs.
+      Effect.tapCause((cause) => {
+        if (Cause.hasInterruptsOnly(cause)) return Effect.void;
+        return Cause.hasDies(cause)
+          ? Effect.logError("Website effect failed", cause)
+          : Effect.logWarning("Website effect failed", cause);
+      }),
     ),
     { signal },
   );

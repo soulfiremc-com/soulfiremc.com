@@ -49,3 +49,27 @@ await test("a Resend rejection and a transport failure both fail without a retry
   });
   assert.equal(offline.mock.callCount(), 1);
 });
+
+await test("a template that fails to render is a prepare failure and is never submitted", async (t) => {
+  const fetchMock = t.mock.method(globalThis, "fetch", () =>
+    Promise.resolve(Response.json({ id: "email-1" })),
+  );
+  // Fails only on the second render, so either the HTML or the plain-text
+  // render can be the one that fails.
+  let renders = 0;
+  function FlakyTemplate() {
+    renders++;
+    if (renders > 1) throw new Error("missing template data");
+    return createElement("p", null, "Hello");
+  }
+  await assert.rejects(
+    Effect.runPromise(
+      makeWebsiteMailer().send({
+        ...email,
+        react: createElement(FlakyTemplate),
+      }),
+    ),
+    { _tag: "EmailDeliveryError", reason: "prepare" },
+  );
+  assert.equal(fetchMock.mock.callCount(), 0);
+});

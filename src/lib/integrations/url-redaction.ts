@@ -2,8 +2,14 @@ import type { CaptureResult } from "posthog-js";
 
 // Password reset links carry a one-time `token`, and OAuth redirects carry a
 // `code`. Either one in a captured URL would let anyone with analytics access
-// use it.
-const SECRET_QUERY_PARAM = /([?&#](?:token|code)=)[^&#\s"'<>]*/giu;
+// use it. A nested URL, such as `redirectTo=%2Freset%3Ftoken%3D...`, encodes
+// the separators as `%3F`, `%26`, `%23`, and `%3D`, once per encoding level
+// (`%253F` when encoded twice).
+const ENCODED = "%(?:25)*";
+const SECRET_QUERY_PARAM = new RegExp(
+  String.raw`((?:[?&#]|${ENCODED}(?:3F|26|23))(?:token|code)(?:=|${ENCODED}3D))(?:(?!${ENCODED}(?:26|23))[^&#\s"'<>])*`,
+  "giu",
+);
 
 function redactSecretQueryParams(value: string): string {
   return value.replaceAll(SECRET_QUERY_PARAM, "$1redacted");

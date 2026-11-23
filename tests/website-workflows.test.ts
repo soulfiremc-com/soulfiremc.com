@@ -151,6 +151,25 @@ await test("documentation assembly preserves page order and content across bound
   );
 });
 
+await test("full documentation text leaves out generated API reference pages", async () => {
+  const text = await Effect.runPromise(
+    fullDocumentationText().pipe(
+      Effect.provideService(DocumentationSource, {
+        pages: Effect.succeed([
+          { slugs: ["guide"], url: "/docs/guide", data: { title: "Guide" } },
+          {
+            slugs: ["openapi", "call"],
+            url: "/docs/openapi/call",
+            data: { title: "Call", type: "openapi" },
+          },
+        ]),
+        openapi: () => Effect.succeed("API contract"),
+      }),
+    ),
+  );
+  assert.equal(text, "# Guide\nURL: /docs/guide\n\n");
+});
+
 await test("documentation cancellation stops pending page work before starting more pages", async () => {
   let started = 0;
   const controller = new AbortController();
@@ -356,6 +375,26 @@ await test("defects and typed failures without a message reach callers as a gene
     ),
     { message: "Request failed" },
   );
+});
+
+await test("typed failures log as warnings and defects log as errors", async (t) => {
+  const logged: string[] = [];
+  const log = t.mock.method(console, "log", (...args: unknown[]) => {
+    logged.push(args.map(String).join(" "));
+  });
+  await assert.rejects(
+    runWebsiteEffect(
+      Effect.fail(
+        EmailDeliveryError.make({ reason: "rejected", cause: "invalid" }),
+      ),
+    ),
+  );
+  await assert.rejects(runWebsiteEffect(Effect.die(new Error("bug"))));
+  log.mock.restore();
+  const levels = logged
+    .filter((line) => line.includes("Website effect failed"))
+    .map((line) => /\b(DEBUG|INFO|WARN|ERROR|FATAL)\b/u.exec(line)?.[1]);
+  assert.deepEqual(levels, ["WARN", "ERROR"]);
 });
 
 await test("an executing review statement settles before cancellation returns", async () => {

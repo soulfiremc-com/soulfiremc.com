@@ -42,8 +42,36 @@ test("removes reset tokens from page and referrer URLs", () => {
   assert.equal(result.timestamp, timestamp);
 });
 
+test("removes tokens from URL-encoded nested redirect parameters", () => {
+  const result = redactSecretUrls({
+    uuid: "pageview",
+    event: "$pageview",
+    properties: {
+      $current_url:
+        "https://soulfiremc.com/auth/sign-in?redirectTo=%2Fauth%2Freset-password%3Flang%3Dde%26token%3Dsecret-1%26next%3D1&lang=de",
+      $referrer:
+        "https://soulfiremc.com/auth/sign-in?redirectTo=%2Fauth%2Fcallback%3Fcode%3Dsecret-2",
+      double:
+        "https://soulfiremc.com/out?to=https%3A%2F%2Fx.test%2F%3Fnext%3D%252Freset%253Ftoken%253Dsecret-3%2523top",
+      lowercase: "/auth/sign-in?redirectTo=%2freset%3ftoken%3dsecret-4",
+    },
+  });
+
+  assert.ok(result);
+  assert.deepEqual(result.properties, {
+    $current_url:
+      "https://soulfiremc.com/auth/sign-in?redirectTo=%2Fauth%2Freset-password%3Flang%3Dde%26token%3Dredacted%26next%3D1&lang=de",
+    $referrer:
+      "https://soulfiremc.com/auth/sign-in?redirectTo=%2Fauth%2Fcallback%3Fcode%3Dredacted",
+    double:
+      "https://soulfiremc.com/out?to=https%3A%2F%2Fx.test%2F%3Fnext%3D%252Freset%253Ftoken%253Dredacted%2523top",
+    lowercase: "/auth/sign-in?redirectTo=%2freset%3ftoken%3dredacted",
+  });
+});
+
 test("keeps URLs without secret parameters and dropped events unchanged", () => {
-  const url = "https://soulfiremc.com/docs?tokens=1&barcode=2&q=token";
+  const url =
+    "https://soulfiremc.com/docs?tokens=1&barcode=2&q=token&r=%2Fa%3Ftokens%3D1%26barcode%3D2";
   const result = redactSecretUrls({
     uuid: "pageview",
     event: "$pageview",
