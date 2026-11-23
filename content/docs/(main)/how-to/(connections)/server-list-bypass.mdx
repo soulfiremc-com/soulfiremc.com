@@ -10,54 +10,26 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
 
 ## What this is for
 
-Use **Ping before join** when a target network behaves differently if a client pings the server list before joining.
+Use **Ping before join** when a target network rejects clients that join without a server list ping first.
 Releases up to 2.10.7 call this feature **Server List Bypass**. The plugin ID stays `server-list-bypass`.
 
-The built-in plugin does one simple thing:
+For each bot, the plugin:
 
-1. it performs a status ping first
-2. it waits for a random delay
-3. it starts the real join attempt
+1. sends a status ping, like the multiplayer server list does
+2. waits a random delay
+3. starts the real join
 
 Some anti-bot systems, such as EpicGuard, expect a status ping before login.
 Whether the server then accepts the join depends on its configuration.
 
-## When it helps
-
-Use this plugin when:
-
-- the target uses an anti-bot layer in front of the real server
-- direct join attempts are rejected, slowed down, or challenged
-- the network appears to expect a status ping before a normal login
-
-## When it does not help
-
-Do not treat this as a generic fix for all connection failures.
-
-It does not replace:
-
-- valid accounts
-- working proxies
-- correct proxy forwarding setup
-- correct hostnames or routing
-- anti-cheat or gameplay bypasses after join
-
-If the problem is a dead proxy, a wrong hostname, or broken forwarding, this plugin will not fix it.
-
 <Callout type="info">
-  If you are not testing against a proxy or anti-bot front layer, leave this plugin off.
-  Normal servers usually do not need it.
+  Normal servers do not need this plugin. Leave it off unless the target uses an anti-bot layer.
+  It does not fix dead proxies, wrong addresses, invalid accounts, or broken forwarding.
 </Callout>
 
 ## Enable Ping before join
 
 <Steps>
-  <Step>
-    ### Open the project
-
-    Open the project that will connect to the target server.
-  </Step>
-
   <Step>
     ### Enable the plugin
 
@@ -67,60 +39,25 @@ If the problem is a dead proxy, a wrong hostname, or broken forwarding, this plu
   <Step>
     ### Set the delay range
 
-    Configure the minimum and maximum join delay in seconds.
-    SoulFire will ping first, then wait a random value inside that range.
+    Set **Min delay (seconds)** and **Max delay (seconds)**. The defaults are 1 and 3.
+    Keep the defaults for the first test.
   </Step>
 
   <Step>
-    ### Test with one bot
+    ### Compare one bot with and without the plugin
 
-    Start with one bot before scaling up.
-    If one bot still fails exactly the same way, adding more bots only makes diagnosis harder.
+    Join with one bot without the plugin, then with it.
+    If the result does not change, the ping is not the cause. Turn the plugin off and check the other settings.
   </Step>
 </Steps>
 
-## How to tune the delay
-
-The delay is the main setting.
-
-- Start with the defaults if you have no reason to do otherwise.
-- Increase the delay if the anti-bot layer appears to reject immediate joins after a ping.
-- Keep the range randomized rather than using a single fixed number if you want less uniform behavior.
-- Do not jump straight to large delays unless the network clearly needs them.
-
-Start with this process:
-
-1. test with one bot and the default delay range
-2. increase the delay slightly if the ping succeeds but the join still looks too abrupt
-3. only scale the bot count after a single bot reliably passes
-
-## Safe testing workflow
-
-When you are not sure whether the plugin is helping, isolate it cleanly:
-
-1. try a join without Ping before join
-2. enable it with the default delay range
-3. test one bot
-4. compare the result before touching other settings
-
-This test shows whether the problem is the handshake flow or another network setting.
-
 ## Common failure patterns
 
-**The ping works, but the join still fails**
-
-Try a different delay.
-If the error continues, server-list behavior is not the cause.
-Then review the proxies, forwarding mode, and host routing.
-
-**Everything fails with and without the plugin**
-
-That usually means the root cause is elsewhere.
-Do not keep tuning this plugin if the status ping makes no difference.
-
-**The network lets one bot in, but larger batches fail**
-
-This usually means rate limiting, poor proxies, or too many bots.
+| Symptom | Next step |
+| --- | --- |
+| The ping works, but the join still fails | Increase the delay a little. If the error stays the same, check proxies, [forwarding](/docs/how-to/forwarding-bypass), and the [handshake host](/docs/how-to/fake-virtual-host). |
+| Joins fail with and without the plugin | The cause is elsewhere. See [Cannot connect or times out](/docs/troubleshooting/cannot-connect-or-times-out). |
+| One bot joins, but larger batches fail | The server rate-limits joins, or the proxies are poor. Increase the join delay in **Bot Settings** or [check the proxies](/docs/troubleshooting/proxies). |
 
 ## Related pages
 

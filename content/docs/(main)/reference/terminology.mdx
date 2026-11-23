@@ -6,9 +6,9 @@ icon: Languages
 
 import { Mermaid } from '../../../../src/components/mdx/mermaid';
 
-## Server/Client
+## Server and client
 
-SoulFire has two main components: a server and a client.
+SoulFire has two main parts: a server and a client.
 
 ### Server
 
@@ -18,23 +18,19 @@ It manages users, bots, and projects.
 - **Users**: The server manages the users and their permissions.
 - **Projects**: A project keeps one group of accounts, bots, proxies, scripts, settings, and permissions separate from other groups.
 - **Bots**: Each configured account is one independently controlled bot with its own desired and runtime state.
-- **Plugins**: SoulFire plugins are loaded and managed by the server.
+- **Plugins**: The server loads and manages SoulFire plugins.
 - **Proxies/Accounts**: The server manages the proxies and accounts used by the bots.
 
 ### Client
 
 The client is also called the **frontend**.
-It connects to the SoulFire server and sends requests.
-A GUI client has a graphical interface.
-A CLI client uses a terminal.
-Custom software can use the SoulFire API as an API client.
+It connects to a SoulFire server and sends requests to manage users, projects, bots, plugins, proxies, and accounts.
 
-- **GUI**: The client can be a graphical user interface.
-- **CLI**: The client can be a command-line interface.
-- **API**: The client can be an API client.
-- **Interactions**: The client interacts with the server to manage users, projects, bots, plugins, proxies and accounts.
+- **GUI**: the desktop app.
+- **CLI**: the terminal client.
+- **API client**: your own software that uses the SoulFire API or an SDK.
 
-Clients can connect to any SoulFire server, as long as they have the correct credentials and use the same API version.
+A client can connect to any SoulFire server if it has valid credentials and a compatible API version.
 
 ### Chart
 

@@ -13,12 +13,11 @@ A data wire alone does not mean that an action runs.
 
 For a branch, connect the action to the appropriate **True** or **False** execution output.
 For a loop, distinguish the body output from the output after the loop finishes.
-Use the [node reference](/docs/scripting/node-reference) for the exact port IDs of your backend baseline.
+The [node reference](/docs/scripting/node-reference) lists the exact port IDs.
 
 ## Data wires
 
 A data wire supplies an input value from another node's output.
-The engine resolves that value as part of the workflow.
 Values have types such as string, number, boolean, bot, vector, list, or map.
 
 A required input needs a compatible value.
@@ -33,8 +32,7 @@ Downstream bot actions use that execution context unless a connected bot input o
 This makes the [first script](/docs/scripting/first-script) work with only an execution wire.
 
 A trigger without a bot context needs an explicit bot source for bot actions.
-Choose or iterate the intended bots rather than assuming that a timer selects one automatically.
-Check the trigger's outputs and action requirements in the reference.
+For example, **On Interval** has no bot. Connect it to **Get Bots** and **For Each Bot**, as in the [timer example](/docs/scripting/examples#3-poll-all-bots-on-a-timer).
 
 ## Branches and loops
 
@@ -46,12 +44,12 @@ Check the expected number of actions and the completion path.
 A loop that sends chat, requests HTTP data, or calls an AI model can multiply work quickly.
 Use a delay, rate limit, and the script's quotas where the workload needs them.
 
-## Subscriptions and side effects
+## Repeated actions
 
 Data nodes compute values. Action nodes change the world or backend state.
-Keep those changes on a clear execution path.
-A timer, reconnect, or repeated chat event can run the same action again.
-Design repeated execution deliberately.
+Keep actions on a clear execution path.
+A timer, reconnect, or repeated chat message runs the same actions again.
+Add a condition, cooldown, or rate limit when an action must not repeat.
 
 ## Related guides
 

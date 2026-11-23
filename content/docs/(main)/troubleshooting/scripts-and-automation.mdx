@@ -9,12 +9,10 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 ## Identify the failed automation layer
 
-Start by identifying the process that owns the failing policy:
+Find out which layer runs the failing behavior:
 
-- **visual scripting** in the node editor
-- **SDK applications**, including `@soulfiremc/beat-game`
-
-Identify the correct layer before you continue.
+- **visual scripting** in the node editor. Start at the next section.
+- **SDK applications**, including `@soulfiremc/beat-game`. See [If an SDK runner looks idle or stuck](#if-an-sdk-runner-looks-idle-or-stuck).
 
 ## If a visual script trigger fires but the action does not
 
@@ -37,25 +35,17 @@ For the details, see [Scripting](/docs/scripting) and [Triggers](/docs/scripting
 
 ## Remove timing nodes while isolating
 
-If the graph uses timing nodes, remove them temporarily.
-Then make sure that the simple path works.
-
-That is especially important when:
-
-- a chat trigger stops behaving after an update
-- `Send Chat` appears to run but nothing visible happens
-- the graph only breaks once a delay or branch is added
+If the graph uses delays or other timing nodes, remove them temporarily.
+Make sure that the graph works without them, then add them back one at a time.
 
 ## Use `Log message` to trace the graph
 
-`Log message` is usually the fastest way to answer:
+Add `Log message` nodes to find out:
 
-- did the trigger fire?
-- which branch ran?
-- did the expected value exist?
-- did the graph stop before or after the action node?
-
-Use these results instead of guessing from visible symptoms.
+- whether the trigger fired
+- which branch ran
+- whether the expected value exists
+- whether the graph stopped before or after the action node
 
 ## Keep tick-trigger work small
 
@@ -86,9 +76,7 @@ If you are running first-party progression policy, use the
 
 ## If the issue appeared after an update
 
-Do not edit the graph until the error disappears.
-
-Instead, write down:
+Before you change the graph to work around the problem, write down:
 
 - exact SoulFire version
 - smallest failing graph

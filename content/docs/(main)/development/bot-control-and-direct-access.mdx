@@ -114,7 +114,7 @@ Do not reset another owner's controls from an unrelated callback.
 
 Custom control tasks can implement `onStarted`, `onSuspended`, `onResumed`, and `onStopped`.
 Release or reset owned state in those lifecycle methods.
-Inspect `ControlStopReason` to distinguish completion, cancellation, replacement, and failure.
+Inspect `ControlStopReason` to distinguish completion, marker claim, cancellation, replacement, and failure.
 
 ## Markers and direct access
 

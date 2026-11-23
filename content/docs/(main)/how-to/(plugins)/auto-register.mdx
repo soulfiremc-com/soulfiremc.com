@@ -10,39 +10,24 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
 
 ## What this is for
 
-Use **Auto login and register** when the target server expects players to register or log in through chat commands after joining.
+Use **Auto login and register** when the target server asks players to type `/register` or `/login` in chat after they join.
+This is how AuthMe and similar login plugins work.
 Releases up to 2.10.7 call this feature **Auto Register**. The plugin ID stays `auto-register`.
 
-The current built-in behavior is simple:
+The plugin reads every chat message:
 
-- if a chat message contains `/register` or `/reg`, SoulFire sends the configured register command
-- if a chat message contains `/login` or `/l`, SoulFire sends the configured login command
-- the command is sent after a random delay in milliseconds
+- If the message contains `/register` or `/reg`, the bot sends the register command.
+- Otherwise, if the message contains `/login` or `/l`, the bot sends the login command.
+- The bot waits a random delay before it sends the command.
 
-This works with AuthMe-style flows and similar chat login plugins.
+A prompt that mentions both `/register` and `/login` gets the register command.
+The plugin does not help with GUI-based login or registration that does not use chat.
 
 <Callout type="warn">
   The check looks for these strings anywhere in a message.
   A message that mentions `/lobby` or `/list` contains `/l`, so the bot sends its login command and password in reply.
   Use this plugin only on servers whose chat does not show such commands, and use a test password.
 </Callout>
-
-## What it expects
-
-This plugin works best when the server clearly tells the player which command to use in chat.
-
-It is a good fit when the server displays prompts such as:
-
-- `/register password password`
-- `/login password`
-- `/reg password password`
-- `/l password`
-
-It is a poor fit for:
-
-- GUI-based login systems
-- plugin flows that hide the command entirely
-- custom registration systems that do not expose standard chat prompts
 
 ## Configure Auto login and register
 
@@ -54,122 +39,49 @@ It is a poor fit for:
   </Step>
 
   <Step>
-    ### Set the register command
+    ### Match the server's commands
 
-    Configure the exact command template used for registration.
+    Set **Register Command** and **Login Command** to the syntax that the server prompt shows.
+    SoulFire replaces `%password%` with the password.
 
-    The default is:
-
-    ```text
-    /register %password% %password%
-    ```
+    | Setting | Default |
+    | --- | --- |
+    | **Register Command** | `/register %password% %password%` |
+    | **Login Command** | `/login %password%` |
   </Step>
 
   <Step>
-    ### Set the login command
+    ### Set the password
 
-    Configure the exact command template used for login.
-
-    The default is:
-
-    ```text
-    /login %password%
-    ```
+    Set **Password Format** to the password that the bots use.
+    The default is `SoulFire`. Every bot in the project uses the same password.
   </Step>
 
   <Step>
-    ### Choose the password format
+    ### Set the delay
 
-    Set the password that replaces `%password%`.
-
-    The current implementation uses one shared configured password string.
+    Set the minimum and maximum delay in milliseconds. The defaults are 0 and 1000.
+    Increase the delay only if the server rejects commands that arrive too fast.
   </Step>
 
   <Step>
-    ### Configure the send delay
+    ### Test with one bot
 
-    Set a min/max delay in milliseconds before the command is sent.
-    The random delay changes the send time for each login.
+    Start one bot and check that the server accepts its register or login command.
+    Then start more bots.
   </Step>
 </Steps>
 
-## Test it safely
-
-Start with one bot on one server.
-
-Make sure that:
-
-- the server actually shows a prompt containing `/register`, `/reg`, `/login`, or `/l`
-- the command template matches the server's expected syntax
-- the password format is what you intended
-- the server accepts the command after the chosen delay
-
-After this test works, increase the bot count.
-
-## Command examples
-
-These are reasonable starting points.
-Do not assume every server uses the same syntax.
-
-**Common registration command**
-
-```text
-/register %password% %password%
-```
-
-**Common login command**
-
-```text
-/login %password%
-```
-
-**If the server uses a different alias**
-
-```text
-/reg %password% %password%
-```
-
-## Delay guidance
-
-The delay controls when SoulFire sends the command after the prompt.
-
-- Keep the delay low if the server expects a fast response and the chat prompt is reliable.
-- Increase it slightly if the server, proxy, or chat pipeline is noisy and immediate responses misfire.
-- Do not push it arbitrarily high unless the server clearly needs it.
-
-## Security notes
-
-Treat the configured password as sensitive.
-
-- Do not reuse an important real-world password here.
-- Assume anyone with access to the project settings can see or reuse it.
-- Prefer a dedicated test password for bots.
-
-<Callout type="warn">
-  This plugin does not prove that a server is safe to automate.
-  It only automates a chat-command login flow that already exists.
-</Callout>
-
-## Known limitations
-
-- It uses simple text matches in chat.
-- It does not currently support advanced per-bot password generation logic.
-- It will not help with non-chat registration systems.
-- It depends on the prompt reaching the bot in readable chat text.
+Treat the password as visible to anyone who can open the project settings.
+Do not reuse a password that protects anything else.
 
 ## Common failure patterns
 
-**Nothing happens after join**
-
-The server can use an unsupported prompt format, or the message can bypass normal chat.
-
-**The wrong command is sent**
-
-Your configured command template does not match the server's syntax.
-
-**The command is right, but registration still fails**
-
-Review the password format, command alias, and timing for that server.
+| Symptom | Cause | Fix |
+| --- | --- | --- |
+| Nothing happens after join | The prompt does not contain `/register`, `/reg`, `/login`, or `/l` as chat text | Check the prompt in the project terminal. The plugin cannot read titles, GUIs, or images. |
+| The server says the command is unknown or wrong | The command template does not match the server's syntax | Copy the syntax from the server prompt into the command setting |
+| The bot sends the login command at random times | A chat message contains `/l`, for example `/lobby` | Turn the plugin off on that server |
 
 ## Related pages
 

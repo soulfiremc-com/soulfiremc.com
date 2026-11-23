@@ -132,10 +132,11 @@ The companion module compares the installed plugin version and services before i
   </Tab>
   <Tab value="Python">
     ```python
+    from effect_py import fn, sync
+    from soulfire import example_plugin
+
     plugin = soulfire.plugins.require(example_plugin)
     reply = yield from plugin.echo(instance_id, "hello")
-
-    from effect_py import fn, sync
 
     @fn("consume stream")
     def consume(tick):

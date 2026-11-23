@@ -5,26 +5,26 @@ description: Complete programs for common Minecraft bot jobs.
 icon: BookOpen
 ---
 
-Each recipe starts with a working connection and shows the same job in TypeScript and Python. Copy a program, set the environment variables, and run it against a SoulFire server.
+Each recipe is a complete program that shows the same job in TypeScript and Python.
 
 ## Before you start
 
-Complete the [matching SDK installation](/docs/sdk/compatibility) and one first-program tutorial.
-These recipes attach to saved accounts on an existing backend.
-Use [named setup and ID discovery](/docs/sdk/discover-bots#find-instance-and-bot-ids) to obtain the identifiers below.
-For automatic local setup, use the managed first program instead.
+Complete the [SDK installation](/docs/sdk/compatibility) and one first program.
+Unlike the first program, the recipes attach to a saved bot on a SoulFire backend that is already running.
+They do not install a backend for you.
 
-Python requires CPython 3.14 or newer. Set these values for every recipe:
+Set these values in the terminal that runs the recipe:
 
 ```bash
-export SOULFIRE_URL="https://soulfire.example.com"
+export SOULFIRE_URL="http://127.0.0.1:38765"
 export SOULFIRE_TOKEN="your-api-token"
 export SOULFIRE_INSTANCE_ID="your-instance-uuid"
 export SOULFIRE_BOT_ID="your-bot-uuid"
 ```
 
-The recipes use TypeScript Effect v4 and Python effect-py.
-See the [TypeScript guide](/docs/sdk/typescript) or [Python guide](/docs/sdk/python) for runtime setup and scoped cleanup.
+- `SOULFIRE_URL` is the SoulFire API address, not the Minecraft server address.
+- `SOULFIRE_TOKEN` is an API token. [Connect to an existing backend](/docs/sdk/discover-bots#connect-to-an-existing-backend) shows how to create one.
+- `SOULFIRE_INSTANCE_ID` and `SOULFIRE_BOT_ID` identify the saved bot. [Find instance and bot IDs](/docs/sdk/discover-bots#find-instance-and-bot-ids) prints them.
 
 ## Pick a job
 
@@ -39,9 +39,8 @@ Save the code using the filename in its code block.
 Run a TypeScript file with `bun run <filename.ts>`.
 Run a Python file with your virtual environment's Python, such as `.venv/bin/python <filename.py>`.
 
-Read the recipe's prerequisites and expected result before starting it.
-Continuous recipes run until interrupted. Finite recipes finish after their action or task completes.
-Recipes that use `bot.connect()` stop bots they start when the scope closes. Already-running bots remain running.
-The follow recipe uses the lower-level `start` API so its detached task can continue after the program exits.
-Cancel detached tasks and stop their bots explicitly when that work must end.
+Some recipes run until you press <kbd>Ctrl</kbd>+<kbd>C</kbd>. Others finish when their action or task completes.
+When a recipe calls `bot.connect()`, it stops the bot on exit only if the recipe started it.
+The follow recipe uses the lower-level `start` API, so its task keeps running after the program exits.
+Cancel that task and stop the bot yourself when you are done.
 See [bot state and task ownership](/docs/concepts/bot-lifecycle).

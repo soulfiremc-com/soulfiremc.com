@@ -44,7 +44,8 @@ import { Callout } from 'fumadocs-ui/components/callout';
   <Step>
     ### Check each proxy
 
-    Use the proxy-check options to test the list before you connect bots.
+    Set **Proxy check address** to your target server, then run the proxy check.
+    Remove the proxies that fail before you connect bots.
   </Step>
 </Steps>
 
@@ -68,11 +69,12 @@ For the full flag list, see [Command line flags](/docs/reference/cli-flags).
 
 | Setting | What it changes |
 | --- | --- |
-| **Bots per proxy** | Limits how many bots can use the same proxy |
+| **Bots per proxy** | Limits how many bots can use the same proxy. The default, `-1`, means no limit. |
 | **Shuffle proxies** | Randomizes proxy order before bots join |
-| **Proxy check address** | Controls which server is used to validate the proxies |
+| **Sticky proxies** | Gives a reconnecting bot the proxy it used last time |
+| **Proxy check address** | Sets the Minecraft server that the proxy check connects to. The default is `mc.hypixel.net`. |
 | **Proxy check concurrency** | Controls how many proxy checks run at once |
-| **Proxy check timeout** | Controls how long SoulFire waits before a check fails |
+| **Proxy check timeout** | Sets how many seconds SoulFire waits before a check fails |
 
 ## Related pages
 

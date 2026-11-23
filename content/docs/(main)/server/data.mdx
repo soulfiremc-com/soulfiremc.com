@@ -17,7 +17,9 @@ The current backend includes:
 - `secret-key.bin`: the JWT signing key.
 - `config/`: backend and plugin data.
 - `object-storage/`: stored objects, including script code.
-- Export directories and installed plugin files needed by your workflow.
+- `minecraft/mods/`: installed plugin JARs.
+- `soulfire.properties`, if you created one.
+- Export directories needed by your workflow.
 
 Preserve the complete deployment data and plugin locations rather than selecting only the database.
 An exported visual script does not include accounts, users, signing keys, or every project setting.
@@ -29,7 +31,6 @@ The automated setup keeps deployment files under `/opt/soulfire/`.
 The exact host data location follows that file's volume mapping.
 
 For a dedicated JAR, the launcher uses its working directory as the base directory.
-It sets the internal `sf.baseDir` property from that location.
 Keep the service's working directory stable across restarts.
 For the integrated server, use its diagnostics to locate the application data directory.
 Do not assume that a remote backend stores files beside your client executable.
@@ -64,5 +65,6 @@ java -Ddatabase=mysql -Dmysql.host=db.internal -Dmysql.user=soulfire -Dmysql.pas
 ```
 
 Use `mysql.sslMode=required` when the database is on another machine.
+Other users on the host can read command-line arguments in the process list, so restrict shell access on a shared machine.
 An external database needs its own consistent backup in addition to the filesystem data and signing key.
 The stopped SQLite procedure does not back up an external MySQL server.

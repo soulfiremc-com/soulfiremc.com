@@ -5,10 +5,9 @@ description: Download a graph, inspect it while paused, and verify its result wi
 icon: Download
 ---
 
-These recipes use the [pinned node baseline](/docs/sdk/compatibility).
-Each download uses the client's `.soulfire-script.json` format and starts paused.
-The repository checks node types, ports, required values, and edge compatibility.
-Those checks do not replace validation on your installed backend.
+Each download is a `.soulfire-script.json` graph that starts paused.
+This site checks each graph's node types, ports, required values, and wires against SoulFire `%SOULFIRE_SDK_VERSION%`.
+Still review the validation result on your own SoulFire version before you enable a graph.
 
 ## Greeting on join
 

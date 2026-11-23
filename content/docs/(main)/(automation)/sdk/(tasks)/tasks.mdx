@@ -54,8 +54,9 @@ task.
 
 ## Attach ownership to a stream
 
-`run*` methods start a task and stream all revisions. Their default disconnect
-policy is `CANCEL_WITH_CALL`.
+The `run*` methods (`run_*` in Python) start a task and stream every update.
+By default they use the `CANCEL_WITH_CALL` disconnect policy: the task belongs to
+your call and stops when you stop reading the stream.
 
 ```ts
 yield* bot.tasks.runAutoRespawn({
@@ -73,8 +74,8 @@ def consume(event):
 yield from bot.tasks.run_auto_respawn(maximum_respawns=1).run_for_each(consume)
 ```
 
-Interrupting the stream cancels its call-owned server task. Use a detached task handle when
-the work must survive the SDK process.
+Use a task handle from a normal start method, such as `autoEat`, when the work
+must continue after your program exits.
 
 ## Observe progress
 
@@ -127,7 +128,7 @@ Reconnect policy controls what happens when the Minecraft connection changes:
 
 ## Reattach to a detached task
 
-Store the task ID returned by `start`. A later SDK process can call
+Store `task.id` after you start a task. A later SDK process can call
 `bot.tasks.get(taskId, resultSchema)` in TypeScript or
 `bot.tasks.get(task_id, result_type)` in Python, then resume watching its
 revisions.

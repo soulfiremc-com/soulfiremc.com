@@ -10,37 +10,40 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
 
 ## What this is for
 
-**Auto attack** makes a bot look at and attack nearby targets within configured ranges.
+**Auto attack** makes a bot look at and attack the closest target in range.
+Use it for combat tests, PvP experiments, and entity targeting under load.
 Releases up to 2.10.7 call this feature **Kill Aura** or KillAura. The plugin ID stays `kill-aura`.
 
-This is useful for:
+A target is any attackable entity, including mobs and players.
+The plugin skips players in creative or spectator mode, players in `whitelisted-users`, and bots of the same project.
+It controls only looking, swinging, and attacking. It does not move the bot.
 
-- combat testing
-- PvP behavior experiments
-- checking entity targeting under load
+<Callout type="warn">
+  Set `whitelisted-users` before you test near real players.
+  Every other player in range is a target.
+</Callout>
 
-It is not a general-purpose movement or navigation system.
-It only takes over the parts of control needed for targeting, looking, swinging, and attacking.
+## Settings
 
-## What the main settings mean
+| Setting | Default | What it controls |
+| --- | --- | --- |
+| `whitelisted-users` | Empty | Player names that the bot never attacks. Case does not matter. |
+| `look-range` | 4.8 | Distance at which the bot turns toward a target |
+| `swing-range` | 3.5 | Distance at which the bot swings its arm. `0` turns off swings without a hit. |
+| `hit-range` | 3.0 | Distance at which the bot attacks |
+| `check-walls` | On | Picks only targets that have a visible point |
+| `ignore-cooldown` | Off | Ignores the attack cooldown of Minecraft 1.9 and later |
+| `attack-delay-ticks` | 8 to 12 | Random delay between attacks, used only on 1.8 and older or with `ignore-cooldown` on |
 
-| Setting | What it controls |
-| --- | --- |
-| `whitelisted-users` | Player names that must never be attacked |
-| `look-range` | How close a target must be before the bot starts looking at it |
-| `swing-range` | How close a target must be before the bot swings its arm |
-| `hit-range` | How close a target must be before the bot actually attacks |
-| `check-walls` | Only picks targets with a visible point when enabled |
-| `ignore-cooldown` | Whether to ignore the normal 1.9+ attack cooldown model |
-| `attack-delay-ticks` | Extra randomized delay used for pre-1.9 behavior, or when cooldown is ignored |
+Keep `look-range` the largest and `hit-range` the smallest.
 
-Set the ranges in this order:
+`hit-range` cannot extend the bot's reach.
+Vanilla reach and crosshair targeting still limit each attack, and SoulFire caps the range at 2.65 blocks while the bot moves.
 
-- Use the largest value for `look-range`
-- Use a smaller value for `swing-range`
-- Use the smallest value for `hit-range`
+`check-walls` affects target selection only.
+With it off, the bot can turn toward a target behind a wall, but it still cannot hit through the wall.
 
-## Enable and tune Auto attack
+## Enable Auto attack
 
 <Steps>
   <Step>
@@ -50,115 +53,31 @@ Set the ranges in this order:
   </Step>
 
   <Step>
-    ### Add any protected player names
+    ### Protect players
 
-    Fill `whitelisted-users` first.
-    If there are names the bot must never target, protect them before you test.
-  </Step>
-
-  <Step>
-    ### Start with conservative ranges
-
-    Use the default ranges first unless you have a strong reason to change them.
-  </Step>
-
-  <Step>
-    ### Keep wall checks on initially
-
-    Leave `check-walls` enabled until you know you need different behavior.
+    Add every player name that the bot must not attack to `whitelisted-users`.
   </Step>
 
   <Step>
     ### Test with one bot
 
-    Test targeting and attack timing with one bot before you add more bots.
+    Keep the default ranges and `check-walls` on.
+    Check targeting and attack timing with one bot.
+    Then change one setting at a time.
   </Step>
 </Steps>
 
-## How the range settings interact
-
-### Look range
-
-This controls when the bot begins orienting toward a target.
-
-If the value is too small, the bot can react late.
-If the value is too large, the bot can react to distant entities.
-
-### Swing range
-
-This controls arm swing behavior.
-It can be larger than hit range so the bot visually starts reacting before an actual attack is possible.
-
-If you set it to `0`, swing-only behavior is disabled.
-
-### Hit range
-
-This is the real attack threshold.
-Vanilla reach and crosshair targeting still limit each attack, so a larger value cannot make the bot hit further than a player could.
-While the bot moves, SoulFire also caps the range at 2.65 blocks.
-
-## Cooldown and version behavior
-
-Auto attack respects normal attack strength behavior by default.
-
-The plugin adds custom attack delay logic in two situations:
-
-- on protocol versions up to 1.8
-- when `ignore-cooldown` is enabled
-
-That means `attack-delay-ticks` matters most when you want older-style or intentionally cooldown-ignoring behavior.
-
-If you leave `ignore-cooldown` off on modern versions, normal attack readiness remains the safer default.
-
-## Wall checks and visibility
-
-`check-walls` controls target selection only.
-With it enabled, the bot only picks targets that have a visible point.
-With it disabled, the bot can pick a target behind a wall and turn toward it.
-
-Attacks always respect walls, so the bot cannot hit through them either way.
-Keep it enabled for realistic testing, so bots do not stare at players they cannot see.
-
-## Safe tuning workflow
-
-Use this order:
-
-1. enable the plugin
-2. fill `whitelisted-users`
-3. leave `check-walls` enabled
-4. test default ranges
-5. adjust one range at a time
-6. only then decide whether cooldown changes are necessary
-
-That keeps your changes attributable.
-If you alter every range and timing value at once, it becomes much harder to understand what actually improved or broke the behavior.
-
 ## Common failure patterns
 
-**The bot looks at targets but does not hit**
-
-`look-range` is large enough, but `hit-range` is too small or the cooldown timing is preventing an attack.
-
-**The bot swings too early**
-
-Your `swing-range` is larger than needed for the environment you are testing.
-
-**The bot turns toward targets it cannot see**
-
-Make sure that `check-walls` is enabled.
-Then decrease `look-range`.
-
-**Friendly or protected players get targeted**
-
-Your `whitelisted-users` list is incomplete or misspelled.
-
-<Callout type="warn">
-  Set `whitelisted-users` before testing around real players.
-  The plugin does exactly what you configure, not what you intended.
-</Callout>
+| Symptom | Fix |
+| --- | --- |
+| The bot looks at targets but does not hit | Increase `hit-range`, or wait for the attack cooldown. A moving bot hits only within 2.65 blocks. |
+| The bot swings before it can hit | Decrease `swing-range` |
+| The bot turns toward targets that it cannot see | Turn on `check-walls`, then decrease `look-range` |
+| The bot attacks a protected player | Check the spelling in `whitelisted-users` |
+| The bot ignores a player | The player is in creative or spectator mode, is whitelisted, or is a bot of the same project |
 
 ## Related pages
 
-- [Import accounts](/docs/how-to/import-accounts)
-- [Import proxies](/docs/how-to/import-proxies)
+- [Built-in plugins](/docs/reference/built-in-plugins)
 - [Plugins](/docs/concepts/plugins)

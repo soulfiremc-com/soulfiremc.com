@@ -13,15 +13,12 @@ import { Callout } from 'fumadocs-ui/components/callout';
   Wenn du dich mit Kommandozeilen-Tools nicht auskennst, beginne mit [Deinen ersten Bot verbinden](/docs/start-here/gui-mode).
 </Callout>
 
-Nutze die CLI für Automatisierung im Terminal, SSH-Sitzungen oder Systeme ohne Desktop.
-Die GUI bietet mehr Funktionen, aber die CLI deckt die häufigsten Aufgaben ab.
-
-Die CLI-Distribution läuft ohne Desktop oder Bildschirm.
-Nutze den separaten GUI-Client, wenn du die Desktop-Oberfläche möchtest.
+Nutze die CLI für Automatisierung im Terminal, SSH-Sitzungen oder Computer ohne Desktop.
+Die Desktop-App bietet mehr Funktionen, aber die CLI deckt die häufigsten Aufgaben ab.
 
 ## CLI einrichten [#set-up-the-cli]
 
-Installiere Java 25 und lade dann die CLI-`.jar` aus den [SoulFire-Releases](https://github.com/soulfiremc-com/SoulFire/releases) herunter.
+Installiere Java 25 und lade dann die SoulFire-CLI-`.jar` von der [Download-Seite](/download) herunter.
 Die Befehle unten verwenden `SoulFireCLI.jar`. Ersetze den Namen durch den Namen deiner heruntergeladenen Datei.
 
 Speichere die JVM-Flags in einer Shell-Variable, damit die späteren Befehle kurz bleiben:
@@ -42,27 +39,30 @@ Diese Syntax gilt für Bash und ähnliche Shells. Setze in einer anderen Shell d
 | --- | --- |
 | `-Djava.awt.headless=true` | Startet Java ohne Bildschirm |
 | `-Xmx2G` | Legt das Speicherlimit für den CLI-Prozess fest |
-| `-XX:...`-Flags | Leistungsoptimierung, die SoulFire beim Start empfiehlt |
+| `-XX:...`-Flags | Leistungsoptimierung |
 | `-Dsf.flags.v2=true` | Bestätigt, dass du die Optimierungsflags gesetzt hast. Es blendet die Startwarnung aus und wendet die Flags nicht selbst an. |
 
-Passe `-Xmx2G` an deine Last an. `-Xmx120G` setzt zum Beispiel ein Limit von 120 GB.
+Passe `-Xmx2G` an deine Last an.
 Ohne `-Xmx` nutzt Java bis zu 25 % des gesamten Arbeitsspeichers.
 Wenn die Bots auf einem entfernten Server laufen, reicht für die lokale CLI meist `-Xmx1G`.
 
-Wähle als Nächstes, wo die Bots laufen.
-Für einen lokalen Server geht es weiter mit [CLI-Flags](#cli-flags).
-Für einen entfernten dedizierten Server setzt du diese JVM-Eigenschaften:
+Standardmäßig startet die CLI einen eigenen SoulFire-Server auf deinem Computer, und die Bots laufen dort.
+Lies in diesem Fall weiter bei [CLI-Flags](#cli-flags).
+Um stattdessen einen entfernten dedizierten Server zu nutzen, setze diese JVM-Eigenschaften:
 
-| Eigenschaft        | Beschreibung                                 |
-|--------------------|----------------------------------------------|
-| `sf.remoteAddress` | Die Adresse, mit der sich die CLI verbindet  |
-| `sf.remoteToken`   | Das Token für die Anmeldung                  |
+| Eigenschaft | Beschreibung |
+| --- | --- |
+| `sf.remoteAddress` | Host und Port des Servers, zum Beispiel `host:38765`. Der Standardport ist `38765`. |
+| `sf.remoteToken` | Ein API-Token für den Server. Siehe [Serverzugriff](/docs/server/access). |
 
 Setze die Eigenschaften vor `-jar`:
 
 ```bash
 java -Dsf.remoteAddress=soulfire.example.com:38765 -Dsf.remoteToken=YOUR_API_TOKEN $SF_JVM_FLAGS -jar SoulFireCLI.jar
 ```
+
+Das Token erscheint in deinem Shell-Verlauf und in der Prozessliste.
+Lies es auf einem gemeinsam genutzten Rechner stattdessen aus einer Datei, zum Beispiel mit `-Dsf.remoteToken="$(cat token.txt)"`.
 
 ## CLI-Flags [#cli-flags]
 
@@ -96,7 +96,7 @@ Setze `-Dterminal.ansi=true` oder `-Dterminal.ansi=false`, um Terminalfarben ein
 ## Daten importieren [#importing-data]
 
 Mit `--account-file` und `--account-type` importierst du Konten, mit `--proxy-file` Proxys.
-Beim Import von Konten musst du einen Kontotyp wählen.
+Beim Import von Konten musst du einen Kontotyp wählen. Die möglichen Werte stehen unter [Kontoformate](/docs/reference/account-formats).
 Der Proxytyp ist optional. Ohne Typ behandelt SoulFire die Datei als universelle Proxy-Datei.
 
 ## Befehle ausführen [#run-commands]

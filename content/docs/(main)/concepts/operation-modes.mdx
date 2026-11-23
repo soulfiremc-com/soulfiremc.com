@@ -19,6 +19,7 @@ The GUI and CLI include an integrated SoulFire server.
 It runs bots on your computer without a separate server setup.
 In the desktop app, this is the **Run on this computer** option.
 Only the client that started the integrated server can use it.
+The integrated server stops when you close that client, and its bots stop too.
 For remote access, use a dedicated server.
 
 <Mermaid chart="
@@ -67,14 +68,8 @@ graph LR
 - The **CLI** is best when you want terminal automation, headless runs, or SSH workflows.
 - Both can run locally with an integrated server or connect to a remote dedicated server.
 
-## Choose a mode
-
-- Choose the integrated server when you want the simplest local setup.
-- Choose a dedicated server when you want a long-running backend, remote access, or multiple clients on the same backend.
-- Choose the CLI when you want automation or a keyboard-only workflow.
-
 ## Related pages
 
-- [Choose your setup](/docs/start-here/choose-your-setup) for the practical decision guide
+- [Choose your setup](/docs/start-here/choose-your-setup) to pick a mode
 - [Connect your first bot](/docs/start-here/gui-mode) for the beginner path
 - [Deploy a dedicated server](/docs/server/automated-setup) for the automated remote setup

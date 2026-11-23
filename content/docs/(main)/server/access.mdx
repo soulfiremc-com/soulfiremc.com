@@ -36,6 +36,7 @@ Then generate a new token for each client that still needs access.
 
 Terminate HTTPS at a reverse proxy or tunnel in front of SoulFire.
 Use the [automated setup](/docs/server/automated-setup) or the HTTPS examples in [Docker deployment](/docs/server/docker).
+If you already manage a certificate, the backend can also serve HTTPS itself with the [`sf.grpc.tls.*` properties](/docs/server/java#other-listener-properties).
 The configured hostname must match the certificate presented to the client.
 
 For a local connection, the default backend port is `38765`.

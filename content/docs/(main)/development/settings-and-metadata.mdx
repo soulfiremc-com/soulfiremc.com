@@ -147,6 +147,15 @@ var count = bot.metadata().getOrSet(COUNTER, () -> 0);
 bot.metadata().set(COUNTER, count + 1);
 ```
 
+`persistentMetadata()` only stores Gson `JsonElement` values, so its keys need a `JsonElement` subtype such as `JsonPrimitive`:
+
+```java
+private static final MetadataKey<JsonPrimitive> LAST_GOAL =
+  MetadataKey.of("my-plugin", "last-goal", JsonPrimitive.class);
+
+bot.persistentMetadata().set(LAST_GOAL, new JsonPrimitive("spawn"));
+```
+
 ## Rules for saved metadata
 
 Use persistent metadata for plugin data such as:

@@ -5,18 +5,7 @@ description: Build a plugin when visual scripting cannot provide the Minecraft o
 icon: Code
 ---
 
-import { Cards, Card } from 'fumadocs-ui/components/card';
 import { Callout } from 'fumadocs-ui/components/callout';
-import {
-  Blocks,
-  Bug,
-  Cable,
-  Code,
-  GitBranchPlus,
-  LibraryBig,
-  SlidersHorizontal,
-  Wrench,
-} from 'lucide-react';
 
 Use plugins when visual scripting cannot provide the control that you need.
 Plugins can add low-level hooks, Mixins, packet handling, settings pages, and direct access to Minecraft objects.
@@ -55,99 +44,11 @@ For your first plugin, read these pages in order:
 6. [Mixins and access wideners](/docs/development/mixins-and-access-wideners) only when the public API is not enough
 7. [Architecture and protocols](/docs/development/architecture-and-protocols) when you need to trace how SoulFire wires the internals together
 
+[Developer resources](/docs/development/developer-resources) lists the Javadocs, Maven coordinates, and source links.
+
 The constructor and `@EventHandler` methods cover most plugin work.
 To offer RPCs, events, or tasks to SDK clients, override `onLoad(PluginContext)` in the same plugin class, and start runtime work in `onEnable`.
 [Plugin APIs](/docs/sdk/plugins) covers that lifecycle.
-
-## Development map
-
-<Cards>
-  <Card
-    icon={<Wrench />}
-    title="Environment setup"
-    href="/docs/development/environment-setup"
-  >
-    Set up Java, Gradle, IntelliJ, and a local source checkout that matches the SoulFire version you target.
-  </Card>
-  <Card
-    icon={<Code />}
-    title="Build your first plugin"
-    href="/docs/development/first-plugin"
-  >
-    Start from the official template, register an `ExternalPlugin`, build the jar, and load it into SoulFire.
-  </Card>
-  <Card
-    icon={<GitBranchPlus />}
-    title="Gradle and project layout"
-    href="/docs/development/gradle-and-project-layout"
-  >
-    Configure Loom, Maven repositories, SoulFire dependencies, and the Fabric project files your plugin needs.
-  </Card>
-  <Card
-    icon={<Blocks />}
-    title="Event system"
-    href="/docs/development/event-system"
-  >
-    Learn the public event model, how listeners are registered, and which server lifecycle and bot events exist.
-  </Card>
-  <Card
-    icon={<SlidersHorizontal />}
-    title="Settings and metadata"
-    href="/docs/development/settings-and-metadata"
-  >
-    Define typed settings, add GUI and CLI pages, and store temporary or saved plugin data.
-  </Card>
-  <Card
-    icon={<Cable />}
-    title="Bot control and direct access"
-    href="/docs/development/bot-control-and-direct-access"
-  >
-    Use `ControlState`, `ControlTask`, and direct `BotConnection` access when you need real in-process control.
-  </Card>
-  <Card
-    icon={<Bug />}
-    title="Mixins and access wideners"
-    href="/docs/development/mixins-and-access-wideners"
-  >
-    Inject into Minecraft or SoulFire code when no stable event or API is available.
-  </Card>
-  <Card
-    icon={<LibraryBig />}
-    title="Architecture and protocols"
-    href="/docs/development/architecture-and-protocols"
-  >
-    Understand how the launcher, server, instances, bots, settings, gRPC services, and script runtime fit together.
-  </Card>
-  <Card
-    icon={<LibraryBig />}
-    title="Developer resources"
-    href="/docs/development/developer-resources"
-  >
-    Jump straight to the official Javadocs, Maven coordinates, source trees, built-in plugins, and proto definitions.
-  </Card>
-</Cards>
-
-## Canonical sources
-
-Use these as your SoulFire-specific source of truth when writing or updating a plugin:
-
-- [SoulFire source repository](https://github.com/soulfiremc-com/SoulFire)
-- [SoulFirePluginExample template](https://github.com/soulfiremc-com/SoulFirePluginExample)
-- [Official SoulFire Javadocs](https://ci.codemc.io/job/AlexProgrammerDE/job/SoulFire/javadoc/)
-- [Built-in plugin sources](https://github.com/soulfiremc-com/SoulFire/tree/main/mod/src/main/java/com/soulfiremc/server/plugins)
-- [Proto definitions for server, instance, bot, and scripting APIs](https://github.com/soulfiremc-com/SoulFire/tree/main/proto/src/main/proto/soulfire)
-
-## Fabric and Mixin references
-
-SoulFire plugin development sits on top of Fabric, Loom, and Mixins.
-These are the external references worth keeping open in another tab:
-
-| Topic | Link |
-| --- | --- |
-| Fabric documentation | [docs.fabricmc.net](https://docs.fabricmc.net/) |
-| Fabric wiki: Mixin injection reference | [tutorial:mixin_injects](https://wiki.fabricmc.net/tutorial%3Amixin_injects) |
-| Fabric wiki: Access wideners | [tutorial:accesswideners](https://wiki.fabricmc.net/tutorial%3Aaccesswideners) |
-| SpongePowered Mixin wiki | [github.com/SpongePowered/Mixin/wiki](https://github.com/SpongePowered/Mixin/wiki) |
 
 ## Related pages
 

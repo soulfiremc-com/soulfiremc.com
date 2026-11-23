@@ -32,7 +32,8 @@ Compare logs and resource metrics from both machines before changing settings.
 Record CPU, memory (RAM), network throughput, connected bots, active scripts, and tasks.
 Add load in stages with [the testing procedure](/docs/testing/load-test).
 Inspect a profiler capture if CPU remains high or a repeated action stalls.
-The backend's `spark` command exposes its profiling tools. Use `spark` for the live help.
+The backend's `spark` command exposes its profiling tools. Run `spark` alone to list its subcommands.
+For long-term graphs, enable the Prometheus endpoint described in the [Java guide](/docs/server/java#other-listener-properties).
 
 ## Tune one factor at a time
 

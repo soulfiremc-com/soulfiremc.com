@@ -9,61 +9,39 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 <Callout type="info">
   If you are unsure, use the desktop app and select **Run on this computer**.
-  It is the recommended default for first-time users.
 </Callout>
 
-## The short version
+SoulFire has two parts. A **client** is the app that you use to control bots: the desktop app (GUI) or the terminal client (CLI).
+A **SoulFire server** runs the bots and connects them to the Minecraft server.
+The client can start its own server on your computer, or connect to a server that runs somewhere else.
 
 | If you want to... | Start with... | Why |
 | --- | --- | --- |
-| Learn SoulFire with the least setup | [Connect your first bot](/docs/start-here/gui-mode) | Requires the fewest setup steps |
-| Keep bots running on a VPS or shared machine | [Dedicated server](/docs/server) | Keeps the backend running even when the GUI is closed |
-| Automate from a terminal or use a system without a desktop | [CLI mode](/docs/start-here/cli-mode) | Works well for scripts and SSH sessions |
-| Share one backend with multiple users or clients | [Dedicated server](/docs/server) | GUI and CLI clients can connect to the same remote server |
-
-## What each part means
-
-### GUI client
-
-The GUI is the desktop app.
-Use it to create projects, change settings, view bot state, and manage plugins or scripts.
-
-### CLI client
-
-The CLI is the terminal client.
-Use it for automation, SSH sessions, or systems without a desktop.
-
-### Integrated server
-
-The GUI and CLI include a SoulFire server.
-You can run bots on your computer without a separate server.
-
-### Dedicated server
-
-A dedicated server runs SoulFire separately, usually on another computer.
-GUI and CLI clients connect to it over the network.
+| Learn SoulFire with the least setup | [Connect your first bot](/docs/start-here/gui-mode) | The desktop app starts a server on your computer for you |
+| Keep bots running on a VPS, or share them with other users | [Dedicated server](/docs/server) | Bots keep running when you close the client, and several clients can connect |
+| Automate from a terminal, or use a computer without a desktop | [CLI mode](/docs/start-here/cli-mode) | Works in scripts and SSH sessions |
 
 ## Recommended paths
 
 ### New user
 
-1. [Install SoulFire](/docs/start-here)
-2. [Run your first bots in GUI mode](/docs/start-here/gui-mode)
-3. Use [User guide](/docs/how-to) for accounts, proxies, plugins, and integrations
+1. [Install SoulFire](/docs/start-here).
+2. [Connect your first bot](/docs/start-here/gui-mode).
+3. Use the [User guide](/docs/how-to) for accounts, proxies, plugins, and integrations.
 
 ### Remote operator
 
-1. [Deploy a dedicated server](/docs/server) with the setup script, Docker, or Java
-2. Connect from the GUI with the server URL and an access token. [Server access](/docs/server/access) shows how to create the token
-3. Use [Server administration](/docs/server) for upgrades, backups, and access
+1. [Deploy a dedicated server](/docs/server) with the setup script, Docker, or Java.
+2. In the desktop app, select **Connect to a SoulFire server**. Enter the server URL and an access token. [Server access](/docs/server/access) shows how to create the token.
+3. Use [Server administration](/docs/server) for upgrades, backups, and access.
 
 ### Automation user
 
-1. Decide whether the CLI will use a local or remote server
-2. Read [CLI mode](/docs/start-here/cli-mode)
-3. Read [Automation](/docs/automation) and choose an automation method
-4. Keep [CLI flags](/docs/reference/cli-flags) open as your reference
+1. Decide whether the CLI starts its own server or connects to a remote one.
+2. Read [CLI mode](/docs/start-here/cli-mode).
+3. Read [Automation](/docs/automation) and choose an automation method.
+4. Keep [CLI flags](/docs/reference/cli-flags) open as your reference.
 
 ## Learn more
 
-For the deeper architectural explanation, see [Operation modes](/docs/concepts/operation-modes).
+[Operation modes](/docs/concepts/operation-modes) explains the client and server roles in more detail.

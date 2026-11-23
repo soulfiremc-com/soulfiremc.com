@@ -9,42 +9,31 @@ import { Bot, Blocks, Code2, Terminal, Workflow } from 'lucide-react';
 import { Cards, Card } from 'fumadocs-ui/components/card';
 import { Callout } from 'fumadocs-ui/components/callout';
 
-SoulFire provides several automation options.
-Choose the simplest option that can do your task.
+SoulFire offers several ways to automate bots.
+Choose the simplest one that can do your task.
 
 | Goal | Use |
 | --- | --- |
 | Run one operator action | [Commands](/docs/reference/commands) |
-| React to chat, timers, or events in the GUI | [Visual scripting](/docs/scripting) |
-| Run a long task that continues after your program disconnects | [Durable tasks](/docs/sdk/tasks) |
-| Build a TypeScript or Python program | [Official SDK](/docs/sdk) |
-| Automate Minecraft game progress | [Beat-game runner](/docs/sdk/automation) |
-| Add new server features | [Plugin development](/docs/development) |
+| React to chat, timers, or events without writing code | [Visual scripting](/docs/scripting) |
+| Write a TypeScript or Python program | [Official SDK](/docs/sdk) |
+| Run a long job that continues after your program disconnects | [Durable tasks](/docs/sdk/tasks) |
+| Play through Minecraft with one bot or a team | [Beat-game runner](/docs/sdk/automation) |
 | Call APIs that a server plugin provides | [Plugin APIs](/docs/sdk/plugins) |
+| Add new server features | [Plugin development](/docs/development) |
 
-## What SoulFire manages
+## How the pieces fit
 
-SoulFire manages Minecraft connections, pathfinding, bot input, and reusable tasks.
-Your application chooses the goals and combines these features.
+SoulFire handles Minecraft connections, pathfinding, bot input, and reusable tasks.
+Your script or program decides what to do and when.
+For example, a collect-blocks task only collects blocks. Your program decides when to start it and how many blocks it needs.
 
-The beat-game planner runs in `@soulfiremc/beat-game`.
-It does not run inside the SoulFire server or SoulFireClient.
-The TypeScript worker can resume saved progress, coordinate teams, and call plugin APIs.
-You can change its plan without changing SoulFire.
+The beat-game runner is a TypeScript package, `@soulfiremc/beat-game`, that runs in your own program.
+It uses the SDK and can save and resume progress. You can change its plan without changing SoulFire.
 
 <Callout type="info">
-  SoulFireClient does not contain a native beat-game dashboard. Run and
-  monitor the application from your TypeScript worker, logs, or your own UI.
+  SoulFireClient has no beat-game dashboard. Monitor the runner from your program's logs or your own UI.
 </Callout>
-
-## Tasks and decisions
-
-A collect-blocks task only collects blocks.
-The worker decides when to run it and how many blocks the team needs.
-
-The same rule applies to plugins.
-A plugin can add a typed server feature.
-The application decides when to use that feature.
 
 ## Related pages
 

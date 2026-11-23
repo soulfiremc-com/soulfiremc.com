@@ -10,43 +10,21 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
 
 ## What this changes
 
-**Handshake host override** changes the hostname and port in the client handshake before login.
+**Handshake host override** replaces the hostname and port that the bot sends in the Minecraft handshake.
+SoulFire still opens the network connection to the address in **Bot Settings**.
 Releases up to 2.10.7 call this feature **Fake Virtual Host**. The plugin ID stays `fake-virtual-host`.
 
-That means:
+Use it when a proxy or server routes or checks players by the hostname that they typed, for example:
 
-- SoulFire still connects to the address you configured
-- but the server can be told that the client originally targeted a different hostname and port
+- one proxy IP serves several domains
+- you connect through a different address than normal players, such as a direct IP or an internal address
+- server logic checks the handshake host for branding or access rules
 
-Use this on networks that route or authorize connections by the virtual host.
-
-## When to use it
-
-Use this plugin when:
-
-- a proxy or frontend routes players by hostname
-- the backend expects a specific virtual host value
-- you are testing a network that behaves differently depending on the requested host
-
-Typical examples:
-
-- one proxy IP serving several domains
-- TCP frontends or host-based routing layers
-- server logic that checks the handshake host for branding or access rules
-
-## When not to use it
-
-Do not use this as a generic connectivity fix.
-
-It will not repair:
-
-- broken DNS
-- a dead proxy
-- forwarding misconfiguration
-- invalid credentials
-- wrong target ports at the actual network layer
-
-The plugin cannot fix an incorrect connection address.
+<Callout type="info">
+  This plugin changes only what hostname the server sees.
+  If the backend expects forwarded player identity or IP data from a proxy, use [Player forwarding](/docs/how-to/forwarding-bypass).
+  The plugin does not fix DNS, dead proxies, wrong ports, or invalid accounts.
+</Callout>
 
 ## Configure Handshake host override
 
@@ -58,71 +36,25 @@ The plugin cannot fix an incorrect connection address.
   </Step>
 
   <Step>
-    ### Set the hostname to send
+    ### Set the hostname
 
-    Enter the hostname you want the server to see in the handshake.
-
-    Example:
-
-    ```text
-    play.example.net
-    ```
+    Set **Hostname** to the exact name that normal players use, such as `play.example.net`.
+    The default is `localhost`.
   </Step>
 
   <Step>
-    ### Set the port to send
+    ### Set the port
 
-    Enter the port you want the server to see alongside that hostname.
-
-    Example:
-
-    ```text
-    25565
-    ```
+    Set **Port** to the port that normal players use. The default is `25565`.
   </Step>
 
   <Step>
-    ### Join with one bot first
+    ### Join with one bot
 
-    Test the route with one bot before changing anything else.
+    Check that the bot reaches the expected server or lobby.
+    If the network rejects the bot at once or sends it to the wrong backend, compare the hostname and port with a normal player's address.
   </Step>
 </Steps>
-
-## Practical scenarios
-
-### Hostname-based proxy routing
-
-If one IP hosts several networks, the proxy can route players by the handshake hostname.
-
-Connect to the shared IP and set the hostname that the proxy expects.
-
-### Frontends or reverse proxies
-
-Some infrastructures preserve or inspect the original requested host during the handshake.
-If SoulFire reaches the frontend through a different address than normal players do, overriding the handshake host can restore the expected login context.
-
-## Verification checklist
-
-When you test this plugin, make sure that:
-
-- the target normally works for regular players using that hostname
-- the hostname you configured is exactly the one the network expects
-- the port matches the expected logical entry point
-- the bot reaches the right network path after join
-
-If the connection lands on the wrong backend or gets rejected immediately, the override value is likely wrong or unnecessary.
-
-## What it cannot fix
-
-- It does not emulate proxy forwarding.
-- It does not replace [Player forwarding](/docs/how-to/forwarding-bypass).
-- It does not bypass anti-bot systems by itself.
-- It does not change the actual TCP destination SoulFire connects to.
-
-<Callout type="info">
-  If the problem is about what hostname the server sees, use this page.
-  If the problem is about what player identity or IP the backend expects from a proxy, use [Player forwarding](/docs/how-to/forwarding-bypass) instead.
-</Callout>
 
 ## Related pages
 

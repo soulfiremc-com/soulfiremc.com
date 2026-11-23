@@ -14,8 +14,9 @@ SoulFire has two separate authentication layers:
 - logging a GUI or CLI client into a SoulFire server
 - importing and refreshing Minecraft accounts for bots
 
-If your GUI cannot log into a remote SoulFire server, start with [Cannot connect or times out](/docs/troubleshooting/cannot-connect-or-times-out).
 This page covers bot account imports and Minecraft authentication.
+If your GUI cannot log into a SoulFire server, see [Cannot connect or times out](/docs/troubleshooting/cannot-connect-or-times-out#if-the-gui-or-cli-cannot-connect-to-the-soulfire-server).
+A SoulFire API token is not a Minecraft account credential.
 
 ## Identify the account type first
 
@@ -31,56 +32,33 @@ An incorrect input format often causes authentication errors.
 
 ## Test without proxies first
 
-If you have proxying enabled for account authentication, disable it and try the same account again.
-
-This test shows whether the account or the proxy causes the error.
-
-Only re-enable auth-through-proxy after the plain import path works.
-
-## Use the current install requirements
-
-Use a supported SoulFire release and Java version before you test authentication.
-
-Before going deeper:
-
-- make sure that you use the SoulFire release that you intend to run
-- use Java 25, as [Run the dedicated JAR with Java](/docs/server/java) describes
-- retest with one account before importing a large batch
+If **Use proxies for account auth** is on in **Account Settings**, turn it off and import the same account again.
+If the import now works, the proxies cause the error. See [Proxies](/docs/troubleshooting/proxies).
+Turn the setting on again only after the import works without it.
 
 ## Re-import a minimal sample
 
-If a large account set is failing, do not keep retrying the entire batch.
+If a large batch fails, do not retry the whole batch.
 
-Instead:
+1. Import one account that you know works.
+2. Test it without proxies.
+3. Join your target server with it.
 
-1. pick one known-good account
-2. import only that account
-3. test without proxies
-4. test with the exact target server you care about
-
-If one account works, test a smaller batch before you import all accounts.
+If one account works, import a small batch before you import all accounts.
+Microsoft can rate-limit many logins in a short time. Lower **Account import concurrency** (default 3) if a large batch fails partway.
 
 ## If import succeeds but joining still fails
 
-The problem now occurs after account import.
-Find out which of these applies:
+The account works. Check the join instead:
 
-- The target server needs an additional in-game login or registration.
-- The proxies fail only after the join step.
-- The wrong protocol version is selected.
+| Symptom | Next step |
+| --- | --- |
+| `Failed to verify username` | The server is in online mode and needs a Microsoft account, not an offline account |
+| A register or login prompt in chat | Configure [Auto login and register](/docs/how-to/auto-register) |
+| `Outdated client` or `Outdated server` | Set **Protocol Version** in **Bot Settings** |
+| Fails only with proxies | See [Proxies](/docs/troubleshooting/proxies) |
 
-At that point, continue with [Cannot connect or times out](/docs/troubleshooting/cannot-connect-or-times-out) or [Proxies](/docs/troubleshooting/proxies).
-
-## Access tokens for remote SoulFire servers
-
-If the problem is your GUI or CLI login to a remote SoulFire server, generate a fresh API token. Run this in the SoulFire server console or the app **Terminal**:
-
-```text
-generate-token api
-```
-
-That token is for SoulFire server access.
-It is not the same thing as a Minecraft account credential.
+For other kick messages, see [Cannot connect or times out](/docs/troubleshooting/cannot-connect-or-times-out#if-the-minecraft-server-kicks-the-bots).
 
 ## What to capture before you report it
 

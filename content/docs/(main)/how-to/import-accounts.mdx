@@ -10,9 +10,8 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 ## Before you start
 
-- Add at least one account before starting a run. Generate offline accounts explicitly from the client dialog.
-- Use offline accounts only on servers that accept them.
-  These servers run in offline mode and are sometimes called cracked servers.
+- A project needs at least one account before bots can start.
+- Use offline accounts only on servers that run in offline mode, sometimes called cracked servers.
 - For exact file formats and defaults, see [Account formats](/docs/reference/account-formats).
 
 <Callout type="info">
@@ -42,7 +41,6 @@ Review the duplicate-handling mode before generating accounts.
 
 Check the resulting account list before starting bots.
 If you press **Start** with an empty list, the client can open this dialog for you.
-It does not turn a name format into a persistent server setting.
 
 ## Import accounts in the GUI
 
@@ -94,7 +92,7 @@ For the full flag list, see [Command line flags](/docs/reference/cli-flags).
 | --- | --- |
 | **Shuffle accounts** | Randomizes the account order before bots join |
 | **Use proxies for account auth** | Sends Microsoft authentication through your configured proxies |
-| **Account import concurrency** | Controls how many account imports run at the same time |
+| **Account import concurrency** | Controls how many account imports run at the same time. The default is 3. |
 
 ## Related pages
 

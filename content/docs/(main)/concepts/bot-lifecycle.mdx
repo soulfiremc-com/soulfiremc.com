@@ -7,51 +7,51 @@ icon: Activity
 
 ## Account, bot, and connection
 
-An account is the identity used to log into Minecraft.
-A bot is the SoulFire representation of that account in a project.
-A connection is one live Minecraft session for that bot.
-The bot ID can remain stable across reconnects. The session does not.
+An **account** is the identity that logs in to Minecraft.
+A **bot** is that account inside a SoulFire project.
+A **connection** is one live Minecraft session of that bot.
+The bot ID stays the same when the bot reconnects. The session changes.
 
 ## Requested state and runtime state
 
-Requested state records what the backend must try to do, such as keep a bot running or stopped.
-Runtime state records what the bot is doing now, such as connecting, connected, or disconnected.
-A running request can coexist with a disconnect and retry delay.
+**Requested state** is what you asked the SoulFire server to do: keep the bot running, or keep it stopped.
+**Runtime state** is what the bot does now, such as connecting, connected, or disconnected.
+The two can differ. For example, a bot can be requested to run while it is disconnected and waits to retry.
 
-The SoulFire server owns requested state.
-Closing a remote GUI or SDK connection does not automatically request stopped state.
-The SDK's managed setup and `bot.connect()` add scoped ownership.
-They stop bots that the scope starts and leave bots already requested to run running.
-They also close observation subscriptions. Managed installation stops its local backend when the scope closes.
+The SoulFire server stores the requested state.
+Closing a connection to a remote server does not stop its bots. The SDK stops bots only in the cases below.
 
-The lower-level `bot.start()` changes requested state without registering a stop finalizer.
-Use `bot.stop()` explicitly when that work must end with your application.
+In the SDK, the managed setup and `bot.connect()` clean up when their Effect scope closes.
+They stop the bots that they started. Bots that were already running keep running.
+They also stop the event streams that they opened. A managed local installation also stops its local server.
+
+`bot.start()` only requests the running state. It does not stop the bot when your program ends.
+Call `bot.stop()` when the bot must stop together with your program.
 
 ## Actions and durable tasks
 
-An action performs one operation and reports a final result.
-A stream observes updates while its consumer remains connected.
-A durable task runs on the backend and can survive the SDK connection that created it.
+An **action** does one operation and returns one result.
+A **stream** sends updates while your code stays connected and reads them.
+A **durable task** runs on the SoulFire server. It can continue after the SDK connection that created it closes.
 
 Closing the SDK scope releases its connection and local subscriptions.
 Cancel a detached durable task explicitly if it must not continue.
 `bot.collect` and call-owned `run*` task streams cancel unfinished work on interruption.
-A surviving task still needs an available backend and bot.
+A surviving task still needs a running SoulFire server and bot.
 The [task guide](/docs/sdk/tasks) describes handles, progress, cancellation, and result errors.
 
-## Connection epochs
+## Reconnects
 
 A reconnect replaces the live Minecraft session.
-References to entities, containers, or loaded world state can become stale after that change.
-SDK workflows must obtain fresh references when the current session changes.
-A stable bot ID does not make every reference valid forever.
+After a reconnect, references to entities, containers, or loaded world data from the old session can be out of date.
+Get new references in your SDK code when the session changes. The bot ID alone does not keep them valid.
 
 ## Control ownership
 
-Movement, rotation, hands, inventory, and other resources can have different owners.
-Two actions that need the same resource can conflict even if both use the same bot.
-A control lease expresses ownership for a remote workflow.
-Plugin `ControlTask` objects use resource and priority arbitration inside the backend.
+Movement, rotation, hands, inventory, and other bot resources can each have a different owner.
+Two actions on the same bot conflict when they need the same resource.
+A **control lease** gives a remote workflow ownership of a resource.
+Inside the server, plugin `ControlTask` objects get resources by priority.
 
 Avoid concurrent writers for the same bot resource.
 Use [SDK behaviors](/docs/sdk/behaviors) for composed workflows or [plugin control](/docs/development/bot-control-and-direct-access) for native arbitration.

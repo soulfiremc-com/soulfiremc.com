@@ -73,6 +73,33 @@ For remote clients, keep the listener on loopback and put a reverse proxy or tun
 See [Manage access and HTTPS](/docs/server/access).
 A remote client's `127.0.0.1` refers to that client, not this backend.
 
+### Other listener properties
+
+| Property | Default | Purpose |
+| --- | --- | --- |
+| `sf.grpc.tls.enabled` | `false` | Serve HTTPS directly from the backend |
+| `sf.grpc.tls.cert` | (none) | PEM certificate chain file for HTTPS |
+| `sf.grpc.tls.key` | (none) | PEM private key file for HTTPS |
+| `sf.grpc.tls.key.password` | (none) | Password for an encrypted private key |
+| `sf.grpc.proxy-protocol` | `false` | Accept the PROXY protocol header from a load balancer |
+| `sf.prometheus.enabled` | `false` | Start a Prometheus endpoint at `/metrics` |
+| `sf.prometheus.port` | `9090` | Port of the Prometheus endpoint |
+
+With built-in HTTPS, the API port still accepts plain HTTP, so keep the port firewalled from untrusted networks.
+The Prometheus endpoint binds to the same address as `sf.grpc.host` and has no authentication.
+
+### Store properties in a file
+
+Instead of `-D` flags, you can put `sf.*` properties in `soulfire.properties` in the working directory, one `key=value` per line.
+The backend reads the file at startup and ignores lines that start with `#`.
+A value in the file replaces the same property passed with `-D`.
+Keys that do not start with `sf.` are rejected, so set `database` and `mysql.*` properties with `-D` flags.
+
+```properties title="soulfire.properties"
+sf.grpc.host=127.0.0.1
+sf.grpc.port=38765
+```
+
 ## Console and shutdown
 
 `-Dterminal.jline=true` or `false` controls the interactive terminal.

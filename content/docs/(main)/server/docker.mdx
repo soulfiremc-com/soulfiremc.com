@@ -142,6 +142,20 @@ Preserve its `letsencrypt` volume across replacements.
 Use [Traefik's ACME reference](https://doc.traefik.io/traefik/reference/install-configuration/tls/certificate-resolvers/acme/) for challenge and renewal details.
 For IP-only HTTPS, use the [automated setup](/docs/server/automated-setup) or current upstream IP certificate instructions.
 
+## Set memory and JVM options
+
+The image starts Java with a 2 GB heap and the recommended JVM flags.
+Change them with environment variables on the `app` service:
+
+```yaml
+    environment:
+      SF_RAM: 4G
+```
+
+`SF_RAM` sets the maximum heap. `SF_JVM_FLAGS` adds JVM options and system properties, such as those in the [Java guide](/docs/server/java#configure-the-listener).
+You can also put `sf.*` properties in `soulfire.properties` inside the data directory.
+Do not set `sf.grpc.host` in the container. The container must listen on all interfaces so that Docker can forward the port.
+
 ## Panels and maintenance
 
 For Pterodactyl or Pelican, use the [official SoulFire egg](https://raw.githubusercontent.com/soulfiremc-com/SoulFire/main/soulfire_egg.json).

@@ -1,99 +1,101 @@
 ---
 title: Połącz pierwszego bota
 sidebarTitle: Pierwszy bot
-description: Utwórz jedno konto, połącz się z serwerem testowym, wyślij wiadomość i zatrzymaj bota.
+description: Utwórz jedno konto, połącz się z serwerem testowym, wyślij wiadomość na czacie i zatrzymaj bota.
 icon: Bot
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-Ten samouczek korzysta z aplikacji komputerowej i lokalnego serwera SoulFire, który aplikacja uruchamia za Ciebie.
-Po instalacji zarezerwuj około dziesięciu minut.
-Na końcu otrzymasz jednego bota, którego możesz samodzielnie uruchamiać i zatrzymywać.
+Ten samouczek korzysta z aplikacji komputerowej. Aplikacja sama uruchamia serwer SoulFire na Twoim komputerze.
+Zajmuje to około dziesięciu minut. Na końcu będziesz mieć jednego bota, którego możesz uruchamiać i zatrzymywać.
+
+Samouczek podaje polskie nazwy z aplikacji, a w nawiasach nazwy angielskie.
+Kreator konfiguracji instancji nie jest jeszcze przetłumaczony. Aplikacja pokazuje jego kroki po angielsku, dlatego tutaj też są tylko po angielsku.
 
 ## Zanim zaczniesz [#before-you-start]
 
 - [Zainstaluj aplikację komputerową](/docs/start-here).
-- Uruchom serwer Minecraft Java, którym zarządzasz.
-- Użyj lokalnego serwera testowego w trybie offline pod adresem `127.0.0.1:25565`.
-- Otwórz konsolę serwera Minecraft lub połącz zwykłego gracza, aby widzieć czat.
+- Uruchom serwer Minecraft Java, którym zarządzasz, w trybie offline pod adresem `127.0.0.1:25565`.
+- Zostaw otwartą konsolę serwera albo dołącz zwykłym klientem Minecraft, aby widzieć czat.
 
 <Callout type="info">
-Konto offline nie loguje się do Microsoft. Nie może dołączyć do serwera w trybie online.
-Dla takiego serwera [zaimportuj konto Microsoft](/docs/how-to/import-accounts) i użyj jego nazwy zamiast `DocsBot_1`.
+  Konto offline nie loguje się przez Microsoft, więc nie może dołączyć do serwera w trybie online.
+  Dla serwera w trybie online [zaimportuj konto Microsoft](/docs/how-to/import-accounts) i użyj jego nazwy zamiast `DocsBot_1`.
 </Callout>
 
-## 1. Uruchom lokalny serwer SoulFire [#1-start-a-local-soulfire-server]
+## 1. Uruchom SoulFire [#1-start-soulfire]
 
-Otwórz SoulFire. Wybierz **Serwer zintegrowany (lokalny)** (po angielsku **Run on this computer**).
-Poczekaj na wyświetlenie strony **Instancje** (**Projects**).
-Opcja **Serwer demonstracyjny** (**Try the demo**) pokazuje tylko przykładowe dane. Nie łączy prawdziwych botów.
+Otwórz SoulFire. Na ekranie **Połącz z serwerem SoulFire** (**Choose where SoulFire runs**) wybierz **Serwer zintegrowany (lokalny)** (**Run on this computer**).
+Zostaw ustawienia domyślne i wybierz **Rozpocznij** (**Start local server**).
+Przy pierwszym uruchomieniu aplikacja pobiera serwer SoulFire, więc może to potrwać minutę.
+Poczekaj, aż aplikacja pokaże stronę **Instancje** (**Projects**).
 
-## 2. Utwórz instancję do ćwiczeń [#2-create-a-tutorial-project]
+Nie używaj opcji **Serwer demonstracyjny** (**Try the demo**). Demo pokazuje przykładowe dane i nie łączy botów.
 
-Otwórz **Instancje** (**Projects**). Wybierz **Utwórz instancję** (**Create project**).
-Nadaj instancji nazwę `Docs tutorial` i otwórz ją.
-Instancja przechowuje konta, ustawienia celu, proxy, wtyczki i skrypty tego przebiegu.
+## 2. Utwórz instancję [#2-create-a-project]
 
-Ten samouczek podaje polskie nazwy z aplikacji, a w nawiasach nazwy angielskie.
-Angielska aplikacja nazywa teraz instancję **Project**. Do wersji 2.10.7 nazywa ją **Instance**, a przyciski to **Instances** i **Create Instance**.
-Kroki są takie same. Pozostałe zmienione nazwy opisuje strona [Nazwy i zgodność](/docs/reference/naming).
+Wybierz **Utwórz instancję** (**Create project**). Wpisz `Docs tutorial` w polu **Przyjazna nazwa** (**Project name**), a następnie wybierz **Utwórz** (**Create and continue**).
+Instancja przechowuje konta, proxy, ustawienia i skrypty dla jednej grupy botów.
+Angielska aplikacja nazywa instancję **Project**.
 
-## 3. Ustaw docelowy serwer Minecraft [#3-set-the-minecraft-target]
+Instancja otworzy się z kreatorem **Connect your first bot**. Kolejne kroki odpowiadają temu kreatorowi.
 
-Otwórz **Ustawienia botów** (**Bot Settings**). Ustaw adres serwera na `127.0.0.1:25565`.
-Wybierz wersję protokołu zgodną z serwerem Minecraft.
-W pierwszym przebiegu pozostaw domyślne opóźnienie dołączania i limit czasu.
-Nie importuj jeszcze proxy ani nie włączaj dodatkowej automatyzacji.
+## 3. Wybierz serwer Minecraft [#3-choose-the-minecraft-server]
 
-`127.0.0.1` oznacza komputer, na którym działa backend SoulFire.
-Dla zdalnego backendu podaj adres Minecraft dostępny z tego zdalnego komputera.
+W kroku **Choose the Minecraft server** sprawdź, czy **Address** ma wartość `127.0.0.1:25565`.
+Ustaw **Protocol Version** na wersję swojego serwera Minecraft. Następnie wybierz **Continue**.
 
-## 4. Dodaj dokładnie jedno konto offline [#4-add-exactly-one-offline-account]
+`127.0.0.1` oznacza komputer, na którym działa serwer SoulFire.
+Jeśli później użyjesz zdalnego serwera SoulFire, podaj adres, do którego ten zdalny komputer ma dostęp.
 
-Otwórz **Ustawienia konta** (**Account Settings**) i okno generowania kont offline.
-Ustaw liczbę na `1`, a format nazwy na `DocsBot_%d`.
-Wygeneruj konto. Sprawdź, czy `DocsBot_1` pojawia się na liście kont.
+## 4. Dodaj jedno konto offline [#4-add-one-offline-account]
 
-Jeśli klient otworzy generator po naciśnięciu **Start** przy pustej liście kont, podaj te same wartości.
-Okno jawnie tworzy konta. Format nazwy nie jest globalnym ustawieniem botów na serwerze.
+W kroku **Add bot accounts** wybierz **Create accounts**.
+Ustaw **Ilość** (**Amount**) na `1` i **Format nazwy** (**Name format**) na `DocsBot_%d`, a następnie wybierz **Generuj** (**Generate**).
+SoulFire zastępuje `%d` liczbą, więc konto otrzyma nazwę `DocsBot_1`.
+Wybierz **Continue**.
 
-## 5. Połącz bota [#5-connect-the-bot]
+## 5. Pomiń proxy [#5-skip-proxies]
 
-Wróć do strony **Przegląd** (**Overview**). Uruchom jednego zatrzymanego bota.
-Poczekaj, aż `DocsBot_1` pokaże stan połączenia.
-Sprawdź, czy serwer Minecraft wyświetla tego samego gracza.
+W kroku **Add proxies** wybierz **Continue without proxies**.
+Bot połączy się z Twojego własnego adresu IP.
 
-Jeśli bot się rozłączy, sprawdź powód przed ponownym uruchomieniem.
-Użyj [diagnostyki połączeń](/docs/troubleshooting/cannot-connect-or-times-out) przy limitach czasu, błędach wersji lub odrzuconym logowaniu.
+## 6. Uruchom bota [#6-start-the-bot]
 
-![Przegląd demo z liczbą połączonych botów i sterowaniem cyklem życia nad listą](/docs/images/instance-overview.jpg)
+W kroku **Review and start** pozostaw **Bots to start** na `1`, a następnie wybierz **Start 1 bot**.
+Poczekaj, aż aplikacja pokaże **DocsBot_1 is connected**.
+Serwer Minecraft musi pokazywać `DocsBot_1` na liście graczy.
 
-Zrzut ekranu pokazuje elementy sterowania klienta demo 2.10.1.
-Twoja instancja ćwiczeniowa pokaże `DocsBot_1` zamiast konta demo.
+Jeśli bot się nie połączy, przeczytaj w aplikacji powód rozłączenia.
+Przy przekroczonym limicie czasu, błędach wersji lub odrzuconym logowaniu skorzystaj z [diagnostyki połączeń](/docs/troubleshooting/cannot-connect-or-times-out).
 
-## 6. Wyślij wiadomość [#6-send-a-message]
+## 7. Wyślij wiadomość [#7-send-a-message]
 
-Otwórz stronę **Konsola** (**Terminal**) instancji. Uruchom:
+Na pasku bocznym instancji otwórz **Konsola** (**Terminal**) i uruchom:
 
 ```text
 bot DocsBot_1 say Hello from the SoulFire tutorial
 ```
 
-Serwer Minecraft lub Twój zwykły gracz musi wyświetlić wiadomość od `DocsBot_1`.
-Terminal wykonuje polecenia SoulFire. `say` wysyła wiadomość czatu Minecraft przez wybranego bota.
+Wiadomość od `DocsBot_1` musi pojawić się na czacie serwera Minecraft.
+`bot DocsBot_1` wybiera bota, a `say` wysyła wiadomość na czacie jako ten bot.
 
-## 7. Zatrzymaj bota i sprawdź wynik [#7-stop-and-check-the-result]
+## 8. Zatrzymaj bota [#8-stop-the-bot]
 
-Wróć do strony **Przegląd**. Zatrzymaj `DocsBot_1`.
-Sprawdź, czy stan połączenia znika i bot opuszcza listę graczy Minecraft.
-Zachowaj instancję, jeśli chcesz przejść do samouczków SDK lub skryptów.
+Otwórz **Przegląd** (**Overview**) i wybierz **Zatrzymaj 1 bota** (**Stop 1 bot**).
+`DocsBot_1` musi opuścić serwer Minecraft.
 
-Zamknięcie okna klienta nie gwarantuje zatrzymania bota na zdalnym backendzie.
-Żądany stan bota należy do serwera SoulFire.
+Serwer SoulFire utrzymuje boty, dopóki ich nie zatrzymasz.
+Jeśli zamkniesz aplikację, gdy korzysta ze zdalnego serwera SoulFire, boty będą działać dalej.
 
-## Czego się nauczyłeś [#what-you-have-learned]
+## Następne kroki [#next-steps]
 
-Utworzyłeś instancję, dodałeś konto, ustawiłeś cel, uruchomiłeś bota, wysłałeś wiadomość i zatrzymałeś bota.
-Następnie [przeprowadź mały test serwera](/docs/testing) lub [utwórz pierwszy skrypt](/docs/scripting/first-script).
-Przeczytaj o [cyklu życia instancji](/docs/how-to/instances), aby zrozumieć ponowne połączenia i zapisany stan botów.
+- [Przeprowadź mały test serwera](/docs/testing).
+- [Utwórz pierwszy skrypt](/docs/scripting/first-script).
+- Przeczytaj o [instancjach i cyklu życia bota](/docs/how-to/instances), aby zrozumieć ponowne połączenia i zapisany stan botów.
+
+<Callout type="info">
+  W angielskiej aplikacji wydania do 2.10.7 pokazują **Instances** i **Create Instance** zamiast **Projects** i **Create project**.
+  Pozostałe zmienione nazwy opisuje strona [Nazwy i zgodność](/docs/reference/naming).
+</Callout>

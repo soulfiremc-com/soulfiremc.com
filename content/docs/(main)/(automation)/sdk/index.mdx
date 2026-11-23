@@ -8,47 +8,31 @@ icon: Blocks
 import { Cards, Card } from 'fumadocs-ui/components/card';
 import { Callout } from 'fumadocs-ui/components/callout';
 
-Start with [SDK versions and installation](/docs/sdk/compatibility).
-These guides describe the published `%SOULFIRE_SDK_VERSION%` SDKs, with Effect v4 for TypeScript and effect-py for Python.
+The SoulFire SDK lets your own program control one bot or a fleet.
+SoulFire handles Minecraft connections, reconnects, permissions, tasks, and plugins.
+These guides describe SDK `%SOULFIRE_SDK_VERSION%`. The TypeScript SDK uses Effect v4.
+The Python SDK uses effect-py and requires CPython 3.14 or newer.
 
-The SoulFire SDK is the official API for Minecraft automation.
-Your application controls one bot or a fleet.
-SoulFire manages connections, reconnects, permissions, tasks, and plugins.
+## Start here
 
-<Callout type="info">
-  The TypeScript SDK uses Effect v4.
-  The Python SDK requires CPython 3.14 or newer.
-  The Python SDK uses effect-py.
-</Callout>
-
-<Callout type="info">
-  The app calls saved automation containers **Projects**. SDKs keep their existing `instance` names,
-  such as `client.instance(...)` and `getOrCreateInstance`. See [names and compatibility](/docs/reference/naming).
-  The published SDK version and generated references on this site remain pinned separately from display-name changes.
-</Callout>
-
-## Choose a language
+1. [Install the SDK](/docs/sdk/compatibility) for your language.
+2. Run your first program in [TypeScript](/docs/sdk/typescript) or [Python](/docs/sdk/python). It installs a local backend and sends one chat message.
+3. [Reuse named instances and bots](/docs/sdk/discover-bots), or connect to a backend that is already running.
+4. Copy a [recipe](/docs/sdk/recipes) for a common job.
 
 <Cards>
   <Card title="TypeScript" href="/docs/sdk/typescript">
     Compose operations with Effect and scoped streams.
   </Card>
   <Card title="Python" href="/docs/sdk/python">
-    Compose `SoulFire` operations with effect-py and `yield from`.
+    Compose operations with effect-py and `yield from`.
   </Card>
 </Cards>
 
-## Build something useful
-
-Start with a Minecraft server address and username. The SDK can install a local backend and return a ready bot.
-For an existing backend, use named provisioning or attach to saved bot IDs.
-
-- [Reply to chat](/docs/sdk/recipes/reply-to-chat) with a bot.
-- [Collect blocks](/docs/sdk/recipes/collect-blocks) with a durable task.
-- [Follow an entity](/docs/sdk/recipes/follow-entity) using a connection safe reference.
-- [Transfer items](/docs/sdk/recipes/transfer-items) through a container.
-
-[See all recipes](/docs/sdk/recipes).
+<Callout type="info">
+  The app calls saved automation containers **Projects**. The SDKs keep the older name **instance**,
+  as in `client.instance(...)` and `getOrCreateInstance`. See [names and compatibility](/docs/reference/naming).
+</Callout>
 
 ## Find the right guide
 
@@ -60,65 +44,42 @@ For an existing backend, use named provisioning or attach to saved bot IDs.
 ## How the SDK is organized
 
 ```text
-SoulFire
-├── server metadata and negotiated capabilities
-├── administrative services and scoped telemetry
-├── plugin catalog and reflective RPC
-├── createBot / getOrCreateInstance (TypeScript)
-├── get_or_create_instance (Python)
+SoulFire client
+├── server metadata, administration, and plugins
 └── instance(instanceId)
-    ├── fleet lifecycle and status streams
-    ├── selectors, work distribution, and task groups
-    ├── coordinated automation, memory, roles, and claims
+    ├── fleet lifecycle, selectors, and task groups
     └── bot(botId)
-        ├── session and synchronized state
+        ├── synchronized state and events
         ├── world, registry, inventory, recipes, and chat
-        ├── camera captures, frame streams, and world maps
-        ├── typed player actions and path planning
-        ├── advanced native protocol access
+        ├── camera, player actions, and pathfinding
+        ├── raw protocol access
         └── durable tasks
 ```
 
-An instance separates permissions and settings.
-Each Minecraft account is a separate bot.
-Named setup reuses saved resources. `bot.connect()` owns observation and stops bots that its scope starts.
-The lower-level `start` API changes saved requested state until an explicit stop.
-See [bot lifecycle](/docs/concepts/bot-lifecycle) for cleanup and task ownership.
+An instance groups bots that share settings and permissions.
+Each Minecraft account is one bot in that instance.
 
-## Run the examples
+## How guide snippets run
 
-Guide snippets assume an open connection inside a scoped workflow.
-In TypeScript, compose operations with `yield*` inside `Effect.gen` and run the complete workflow with `Effect.runPromise`.
-In Python, compose operations with `yield from` inside `@gen` or `@fn` and run the workflow with `run_async`.
+Most guide snippets are fragments. They assume an open connection inside a scoped workflow.
+The [first programs](/docs/sdk/typescript) and [recipes](/docs/sdk/recipes) show the complete setup.
 
-The scope owns connections, sessions, subscriptions, and acquired resources.
-Keep their consumers inside the same scope.
-Stream callbacks return effects so cancellation and typed errors stay within the workflow.
-The [recipes](/docs/sdk/recipes) include complete runtime setup.
+- **TypeScript:** put calls inside `Effect.gen` with `yield*`, wrap the workflow in `Effect.scoped`, and run it once with `Effect.runPromise`.
+- **Python:** put calls inside an `@gen` function with `yield from`, wrap it in `scoped`, and run it once with `run_async`.
+
+The scope owns connections, subscriptions, and other resources. It closes them when the workflow ends.
+Keep code that reads a stream or session inside the same scope.
 
 ## Actions, streams, and tasks
 
-Use an action for one short operation, such as sending chat or clicking a slot.
-The `sleep` action finishes after the server reports that the bot entered a bed.
-The `wake` action leaves the current bed.
-Each result has an action ID and a final state.
-The final state is completed, cancelled, or failed.
+- An **action** is one short operation, such as sending chat or clicking a slot. It finishes as completed, cancelled, or failed.
+- A **stream** delivers updates over time, such as chat, inventory, or task progress.
+- A **durable task** is longer work that runs on the SoulFire server. You can read its progress, cancel it, or find it again by ID. See [durable tasks](/docs/sdk/tasks).
 
-Use a stream to receive updates over time.
-For example, a stream can report chat, inventory, world, task, or plugin updates.
-
-Use a durable task for work that takes time.
-The server continues the task if the SDK program disconnects.
-You can read its progress, stop it, or reconnect to it by ID.
-
-## Compatibility and extensions
-
-Each connection starts with a compatibility test.
-The SDK compares API versions, features, and required plugin versions.
-
-Plugins can add RPC services and durable task types.
-An application can use a plugin package or discover the plugin API while it runs.
+`bot.connect()` starts the bot if needed and stops it again when the scope closes.
+A bot that was already running stays running. See [bot lifecycle](/docs/concepts/bot-lifecycle).
 
 ## API reference
 
-The [TypeScript API reference](https://ts.soulfiremc.com/) and [Python API reference](https://py.soulfiremc.com/) document public classes, methods, types, and generated protocol modules. The [server RPC reference](/docs/openapi) covers lower level endpoints.
+The [TypeScript API reference](https://ts.soulfiremc.com/) and [Python API reference](https://py.soulfiremc.com/) list every public class, method, and type.
+The [server RPC reference](/docs/openapi) covers the lower-level endpoints.

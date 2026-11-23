@@ -5,7 +5,6 @@ description: Build scoped TypeScript workflows with Effect, typed errors, and st
 icon: Code
 ---
 
-
 The TypeScript SDK uses Effect for operations, streams, typed errors, and scoped resources.
 SDK calls describe work. They send requests when the Effect runtime executes the workflow.
 
@@ -19,7 +18,7 @@ See the [connection options](https://ts.soulfiremc.com/interfaces/index.SoulFire
 
 Complete the [released SDK installation](/docs/sdk/compatibility) first.
 Use Effect v4 throughout your SDK application.
-The portable HTTP modules now live in `effect/http`; the SDK does not require the Effect v3 `@effect/platform` package.
+The SDK uses the HTTP modules in `effect/http`. It does not need the Effect v3 `@effect/platform` package.
 
 ## Run a managed local server on Node.js
 
@@ -223,9 +222,9 @@ const task = yield* bot.recipes.smelt(
 yield* task.result();
 ```
 
-Crafting and smelting run on the SoulFire server as resource-aware tasks.
-Interrupt the local stream for a call-owned task.
-Keep the task handle when the task must survive the SDK process.
+Crafting and smelting run on the SoulFire server as durable tasks.
+`task.result()` waits until the task finishes.
+Save `task.id` if another process needs to find the task later.
 
 ## Provide a shared layer
 

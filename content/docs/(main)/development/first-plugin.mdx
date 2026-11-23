@@ -5,46 +5,26 @@ description: Build a SoulFire plugin from the official template and load it as a
 icon: Plug
 ---
 
-import { Callout } from 'fumadocs-ui/components/callout';
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 
-This guide builds a plugin that SoulFire can load.
-The official template already contains the required Fabric, Loom, and SoulFire setup.
-
-<Callout type="info">
-  The official template repository is [SoulFirePluginExample](https://github.com/soulfiremc-com/SoulFirePluginExample).
-  Use it as your starting template. Then compare it with the current [Javadocs](https://ci.codemc.io/job/AlexProgrammerDE/job/SoulFire/javadoc/)
-  and current [SoulFire source](https://github.com/soulfiremc-com/SoulFire) for low-level APIs.
-</Callout>
-
-If you are new to Fabric itself, keep [Fabric Documentation](https://docs.fabricmc.net/) open too.
+This guide builds a plugin JAR from the official [SoulFirePluginExample](https://github.com/soulfiremc-com/SoulFirePluginExample) template and loads it into SoulFire.
+The template already contains the Fabric, Loom, and SoulFire setup.
 
 ## Before you start
 
-- Install Java 25.
-- Install Git.
-- Use IntelliJ IDEA for Fabric Loom, Mixins, and Java plugin work.
-- Have a working SoulFire install where you can test jars in `minecraft/mods`.
-
-## Success criteria
-
-At the end of this guide, you will have:
-
-- a plugin project cloned from the template
-- a `ModInitializer` that registers your `ExternalPlugin`
-- a built jar in `build/libs`
-- a jar that loads from SoulFire's `minecraft/mods` directory
+- Install Java 25 and Git.
+- Use IntelliJ IDEA, or another IDE that supports Gradle and Fabric Loom.
+- Have a SoulFire backend where you can copy JARs into `minecraft/mods`.
 
 ## Align the template with your backend
 
-The template is a starting project, not a promise that its pinned dependencies match your backend.
-At this audit, it pins `2.9.1-SNAPSHOT` and Minecraft `1.21.11_unobfuscated`.
-The native examples below compile against the [%SOULFIRE_SDK_VERSION% release baseline](/docs/sdk/compatibility), whose runtime uses Minecraft `%SOULFIRE_MINECRAFT_VERSION%`.
+The template's `gradle/libs.versions.toml` can pin an older SoulFire and Minecraft version than your backend.
+The examples below compile against the [%SOULFIRE_SDK_VERSION% release baseline](/docs/sdk/compatibility), which runs Minecraft `%SOULFIRE_MINECRAFT_VERSION%`.
 
-Compare the template's Minecraft, Fabric Loader, SoulFire, Loom, and Java versions with the backend you will run.
-Update the dependency set together. Do not change only the SoulFire version and retain incompatible Minecraft classes.
-For a released backend, use its matching published artifacts and source.
-For source development, use the matching backend build and local Maven artifacts.
+Update the Minecraft, Fabric Loader, and SoulFire versions together.
+Changing only the SoulFire version leaves Minecraft classes that do not match the runtime.
+If the [CodeMC metadata](https://repo.codemc.org/repository/maven-public/com/soulfiremc/mod/maven-metadata.xml) does not list your backend version, build that SoulFire release tag from source and publish it to your local Maven repository.
+The template already reads `mavenLocal()`.
 
 Read [Gradle and project layout](/docs/development/gradle-and-project-layout) before making that change.
 
@@ -132,6 +112,9 @@ Read [Gradle and project layout](/docs/development/gradle-and-project-layout) be
       }
     }
     ```
+
+    `PluginInfo` takes the ID, version, description, author, license, and website, in that order.
+    The template's example class passes some of these in a different order, so do not copy its arguments.
   </Step>
 
   <Step>
@@ -157,15 +140,26 @@ Read [Gradle and project layout](/docs/development/gradle-and-project-layout) be
   </Step>
 </Steps>
 
+## Check that the plugin loaded
+
+Restart SoulFire, then use one of these checks:
+
+- open the project in the app and view **Plugins**
+- run `plugins` in the terminal
+
+If the plugin is missing, read the startup log.
+Fabric loading problems, missing dependencies, and a bad Mixin config fail before SoulFire sees your `ExternalPlugin`.
+For Fabric errors, see [Gradle and project layout](/docs/development/gradle-and-project-layout) and the [Fabric documentation](https://docs.fabricmc.net/).
+
 ## Check the event with one bot
 
 Start one bot in a test project.
 Expect the backend log to include `Bot <account name> was initialized`.
-This event occurs during initialization, before a usable player and world necessarily exist.
-Use a later lifecycle event for actions that need a joined player.
+This event fires before the bot has a usable player or world.
+For actions that need a joined player, use a tick event such as `BotPostTickEvent` and check that `connection.minecraft().player` is not `null`.
 
 Stop the bot after the check.
-If the plugin appears in `plugins` but produces no event output, inspect event registration and the selected project.
+If the plugin appears in `plugins` but logs nothing, check that your handler has `@EventHandler` and takes the right event type.
 
 ## Add settings and a plugin page
 
@@ -176,23 +170,7 @@ The official example plugin shows the standard pattern:
 3. call `event.settingsPageRegistry().addPluginPage(...)`
 4. read values through `connection.settingsSource()`
 
-That makes your settings appear in the GUI, CLI, and exported instance metadata automatically.
-
-## Make sure that the plugin loaded
-
-Use the built-in plugin inspection tools:
-
-- open the project in the app and view **Plugins**
-- run `plugins` in the terminal
-- run `print-docs plugins` if you want the current built-in plugin documentation output
-
-If the mod failed before registration, read the startup logs first.
-Fabric loading problems, missing dependencies, and bad mixin config usually fail before SoulFire ever sees your `ExternalPlugin`.
-
-If Fabric itself is complaining, go back to:
-
-- [Gradle and project layout](/docs/development/gradle-and-project-layout)
-- [Fabric Documentation](https://docs.fabricmc.net/)
+The page then appears in the GUI and CLI. See [Settings and metadata](/docs/development/settings-and-metadata).
 
 ## What to do next
 

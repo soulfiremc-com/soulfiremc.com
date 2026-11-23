@@ -183,8 +183,8 @@ result = yield from task.result()
 print(result.meals_eaten)
 ```
 
-Detached tasks continue on the server after the SDK disconnects.
-Call-owned `run_*` streams cancel their task when the consumer stops.
+A task started this way keeps running on the server after your program disconnects.
+The `run_*` methods work differently: they start a task and cancel it when you stop reading their stream.
 See [durable tasks](/docs/sdk/tasks) for progress, ownership, and reconnect policies.
 
 ## Handle typed failures

@@ -13,15 +13,12 @@ import { Callout } from 'fumadocs-ui/components/callout';
   If you are not familiar with command-line tools, start with [Connect your first bot](/docs/start-here/gui-mode).
 </Callout>
 
-Use the CLI for terminal automation, SSH sessions, or systems without a desktop.
-The GUI supports more features, but the CLI covers the most common tasks.
-
-The CLI distribution runs without a desktop or display.
-Use the separate GUI client when you want the desktop interface.
+Use the CLI for terminal automation, SSH sessions, or computers without a desktop.
+The desktop app has more features, but the CLI covers the most common tasks.
 
 ## Set up the CLI
 
-Install Java 25, then download the CLI `.jar` from the [SoulFire releases](https://github.com/soulfiremc-com/SoulFire/releases).
+Install Java 25, then download the SoulFire CLI `.jar` from the [download page](/download).
 The commands below use `SoulFireCLI.jar`; replace it with your downloaded filename.
 
 Save the JVM flags in a shell variable so that the later commands stay short:
@@ -42,16 +39,16 @@ This syntax is for Bash and similar shells. In another shell, put the flags in p
 | --- | --- |
 | `-Djava.awt.headless=true` | Runs Java without a display |
 | `-Xmx2G` | Sets the memory limit for the CLI process |
-| `-XX:...` flags | Performance tuning that SoulFire recommends at startup |
+| `-XX:...` flags | Performance tuning |
 | `-Dsf.flags.v2=true` | Confirms that you set the tuning flags. It hides the startup warning and does not apply the flags itself. |
 
-Change `-Xmx2G` to fit your workload. For example, `-Xmx120G` sets a 120 GB limit.
+Change `-Xmx2G` to fit your workload.
 If you omit `-Xmx`, Java uses up to 25% of the total system memory.
 When the bots run on a remote server, `-Xmx1G` is usually enough for the local CLI.
 
-Next, choose where the bots will run.
-For a local server, continue to [CLI flags](#cli-flags).
-For a remote dedicated server, set these JVM properties:
+By default, the CLI starts its own SoulFire server on your computer, and the bots run there.
+In that case, continue to [CLI flags](#cli-flags).
+To use a remote dedicated server instead, set these JVM properties:
 
 | Property           | Description                                                        |
 |--------------------|--------------------------------------------------------------------|

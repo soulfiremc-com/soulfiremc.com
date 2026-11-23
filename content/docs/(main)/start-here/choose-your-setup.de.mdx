@@ -8,62 +8,40 @@ icon: Map
 import { Callout } from 'fumadocs-ui/components/callout';
 
 <Callout type="info">
-  Wenn du unsicher bist, wähle die GUI mit **Integrierter Server (lokal)**. Die englische App nennt diese Option **Run on this computer**.
-  Das ist die empfohlene Wahl für den Einstieg.
+  Wenn du unsicher bist, nutze die Desktop-App und wähle **Integrierter Server (lokal)**. Die englische App nennt diese Option **Run on this computer**.
 </Callout>
 
-## Die Kurzfassung [#the-short-version]
+SoulFire besteht aus zwei Teilen. Ein **Client** ist die App, mit der du Bots steuerst: die Desktop-App (GUI) oder der Terminal-Client (CLI).
+Ein **SoulFire-Server** führt die Bots aus und verbindet sie mit dem Minecraft-Server.
+Der Client kann einen eigenen Server auf deinem Computer starten oder sich mit einem Server verbinden, der woanders läuft.
 
 | Wenn du... | Beginne mit... | Warum |
 | --- | --- | --- |
-| SoulFire mit möglichst wenig Einrichtung kennenlernen willst | [Deinen ersten Bot verbinden](/docs/start-here/gui-mode) | Braucht die wenigsten Einrichtungsschritte |
-| Bots auf einem VPS oder gemeinsam genutzten Rechner laufen lassen willst | [Dedizierter Server](/docs/server/automated-setup) | Das Backend läuft weiter, auch wenn die GUI geschlossen ist |
-| aus einem Terminal automatisieren oder ein System ohne Desktop nutzen willst | [CLI-Modus](/docs/start-here/cli-mode) | Eignet sich gut für Skripte und SSH-Sitzungen |
-| ein Backend mit mehreren Nutzern oder Clients teilen willst | [Dedizierter Server](/docs/server/automated-setup) | GUI- und CLI-Clients können sich mit demselben entfernten Server verbinden |
-
-## Was die einzelnen Teile bedeuten [#what-each-part-means]
-
-### GUI-Client [#gui-client]
-
-Die GUI ist die Desktop-App.
-Damit erstellst du Instanzen, änderst Einstellungen, siehst den Bot-Status und verwaltest Plugins oder Skripte.
-
-### CLI-Client [#cli-client]
-
-Die CLI ist der Terminal-Client.
-Nutze sie für Automatisierung, SSH-Sitzungen oder Systeme ohne Desktop.
-
-### Integrierter Server [#integrated-server]
-
-GUI und CLI enthalten einen SoulFire-Server.
-Du kannst Bots auf deinem Computer ohne separaten Server betreiben.
-
-### Dedizierter Server [#dedicated-server]
-
-Ein dedizierter Server betreibt SoulFire getrennt, meist auf einem anderen Computer.
-GUI- und CLI-Clients verbinden sich über das Netzwerk mit ihm.
+| SoulFire mit möglichst wenig Einrichtung kennenlernen willst | [Deinen ersten Bot verbinden](/docs/start-here/gui-mode) | Die Desktop-App startet für dich einen Server auf deinem Computer |
+| Bots auf einem VPS laufen lassen oder mit anderen Nutzern teilen willst | [Dedizierter Server](/docs/server) | Bots laufen weiter, wenn du den Client schließt, und mehrere Clients können sich verbinden |
+| aus einem Terminal automatisieren oder einen Computer ohne Desktop nutzen willst | [CLI-Modus](/docs/start-here/cli-mode) | Funktioniert in Skripten und SSH-Sitzungen |
 
 ## Empfohlene Wege [#recommended-paths]
 
 ### Neue Nutzer [#new-user]
 
-1. [Installiere SoulFire](/docs/start-here)
-2. [Starte deine ersten Bots im GUI-Modus](/docs/start-here/gui-mode)
-3. Nutze das [Benutzerhandbuch](/docs/how-to) für Konten, Proxys, Plugins und Integrationen
+1. [Installiere SoulFire](/docs/start-here).
+2. [Verbinde deinen ersten Bot](/docs/start-here/gui-mode).
+3. Nutze das [Benutzerhandbuch](/docs/how-to) für Konten, Proxys, Plugins und Integrationen.
 
 ### Betrieb auf einem entfernten Server [#remote-operator]
 
-1. [Richte einen dedizierten Server ein](/docs/server/automated-setup)
-2. Verbinde dich in der GUI mit der Server-URL und dem Zugriffstoken
-3. Nutze das [Benutzerhandbuch](/docs/how-to) für die laufende Verwaltung
+1. [Richte einen dedizierten Server ein](/docs/server), mit dem Setup-Skript, Docker oder Java.
+2. Wähle in der Desktop-App **Dedizierter Server (Remote)** (englisch **Connect to a SoulFire server**). Gib die Server-URL und ein Zugriffstoken ein. Unter [Serverzugriff](/docs/server/access) erfährst du, wie du das Token erstellst.
+3. Nutze die [Serververwaltung](/docs/server) für Upgrades, Backups und Zugriff.
 
 ### Automatisierung [#automation-user]
 
-1. Entscheide, ob die CLI einen lokalen oder entfernten Server nutzt
-2. Lies [CLI-Modus](/docs/start-here/cli-mode)
-3. Lies [Automatisierung](/docs/automation) und wähle eine Automatisierungsmethode
-4. Halte die [CLI-Flags](/docs/reference/cli-flags) als Referenz offen
+1. Entscheide, ob die CLI einen eigenen Server startet oder sich mit einem entfernten Server verbindet.
+2. Lies [CLI-Modus](/docs/start-here/cli-mode).
+3. Lies [Automatisierung](/docs/automation) und wähle eine Automatisierungsmethode.
+4. Halte die [CLI-Flags](/docs/reference/cli-flags) als Referenz offen.
 
 ## Mehr erfahren [#learn-more]
 
-Die ausführliche Erklärung der Architektur findest du unter [Betriebsmodi](/docs/concepts/operation-modes).
+[Betriebsmodi](/docs/concepts/operation-modes) erklärt die Rollen von Client und Server ausführlicher.

@@ -5,19 +5,13 @@ description: Listen for SoulFire events and change behavior through event data.
 icon: BellRing
 ---
 
-import { Callout } from 'fumadocs-ui/components/callout';
-
 Use events before you use Mixins.
 Events cover server lifecycle, bots, chat, packets, and settings.
 They are easier to maintain than Mixins.
 
 ## How listener registration works
 
-Every `Plugin` registers itself in two ways when it is constructed:
-
-- it registers static listeners declared on the class
-- it registers instance listeners declared on the plugin object
-
+`SoulFireAPI.loadPlugin(...)` registers both the static and the instance `@EventHandler` methods of your plugin class.
 Both patterns work:
 
 ```java
@@ -42,34 +36,35 @@ import net.lenni0451.lambdaevents.EventHandler;
 
 ## Event hierarchy
 
-The public event model is split into three scopes:
+Each event has one of three scopes:
 
-- `SoulFireGlobalEvent`: events that belong to the whole SoulFire server
-- `SoulFireInstanceEvent`: events that belong to one instance
-- `SoulFireBotEvent`: events that belong to one bot and also imply instance access
+- `SoulFireGlobalEvent`: the whole SoulFire server
+- `SoulFireInstanceEvent`: one project (called an instance in the API)
+- `SoulFireBotEvent`: one bot, which also gives access to its project
 
 A bot event provides a `BotConnection`.
 From it, you can access the `InstanceManager` and `SoulFireServer`.
 
-## Lifecycle events
-
-These are the main lifecycle hooks currently exposed:
+## Server and project events
 
 | Event | Scope | When it fires |
 | --- | --- | --- |
 | `CommandManagerInitEvent` | global | after built-in commands are registered and before you add your own |
 | `ServerSettingsRegistryInitEvent` | global | while the server settings registry is being assembled |
+| `UserPermissionsChangedEvent` | global | after a user change that can affect permissions is saved |
+| `UserSessionsInvalidatedEvent` | global | after a user's sessions are invalidated or the user is deleted |
 | `InstanceSettingsRegistryInitEvent` | instance | while an instance settings registry is being assembled |
 | `InstanceInitEvent` | instance | immediately after an `InstanceManager` is created |
 
 ## Bot events
 
-These are the current bot-facing events exposed in `com.soulfiremc.server.api.event.bot`:
+These events live in `com.soulfiremc.server.api.event.bot`:
 
 | Event | What it is for |
 | --- | --- |
 | `PreBotConnectEvent` | async pre-connect hook before the bot joins |
 | `BotConnectionInitEvent` | right after the `BotConnection` object exists |
+| `BotConnectedEvent` | after the Minecraft login handshake completes |
 | `BotConnectionRemovedEvent` | after a disconnected bot is removed from its instance |
 | `BotPreTickEvent` | bot tick hook before the tick body finishes |
 | `BotPostTickEvent` | bot tick hook after the tick body finishes |
@@ -79,6 +74,7 @@ These are the current bot-facing events exposed in `com.soulfiremc.server.api.ev
 | `BotPacketPreReceiveEvent` | inspect or replace inbound packets before handling |
 | `BotPacketPreSendEvent` | inspect or replace outbound packets before send |
 | `BotDamageEvent` | health went down |
+| `BotBlockUpdateEvent` | one block state changed in the bot's client world |
 | `BotOpenContainerEvent` | a container or screen opened |
 | `BotClientBrandEvent` | outgoing client brand can be changed |
 | `BotClientSettingsEvent` | outgoing client settings can be changed |
@@ -87,10 +83,8 @@ These are the current bot-facing events exposed in `com.soulfiremc.server.api.ev
 
 ## Mutable hooks
 
-Some events are plain immutable records.
-Some are deliberately mutable and are the lowest-friction way to change behavior without a Mixin.
-
-Use these when they match your need:
+Most events are immutable records.
+These events have setters, so you can change behavior without a Mixin:
 
 - `BotPacketPreReceiveEvent`: replace the packet, or set it to `null` to suppress handling
 - `BotPacketPreSendEvent`: replace the packet, or set it to `null` to suppress sending
@@ -98,17 +92,13 @@ Use these when they match your need:
 - `BotClientSettingsEvent`: change the `ClientInformation`
 - `BotShouldRespawnEvent`: set `shouldRespawn`
 
-<Callout type="info">
-  SoulFire provides `AbstractCancellable`, but most public events use data that a listener can change.
-  For many low-level hooks, replacing a packet or mutating the outgoing value is the intended extension model.
-</Callout>
-
 ## Timing and thread context
 
-The event name alone is not enough. You also need to care about timing:
+Check when and on which thread an event runs:
 
 - `PreBotConnectEvent` runs before the player is ready and can do blocking work
 - `BotConnectionInitEvent` has a fully constructed `BotConnection`, but the bot is not connected yet
+- `BotConnectedEvent` runs after login, but the player can still be missing until the world loads
 - `BotPreTickEvent` and `BotPostTickEvent` run in the live bot tick loop
 - `BotPreEntityTickEvent` and `BotPostEntityTickEvent` are even closer to the entity update path
 
