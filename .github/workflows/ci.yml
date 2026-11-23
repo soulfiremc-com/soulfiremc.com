@@ -61,6 +61,9 @@ jobs:
       - name: Run tests
         run: bun run test
 
+      - name: Check database migrations
+        run: bunx drizzle-kit check
+
       - name: Build website and upload source maps
         env:
           CLOUDFLARE_PREVIEW_BUILD: ${{ github.event_name == 'pull_request' }}
@@ -71,6 +74,14 @@ jobs:
         env:
           PROVIDER_WORKER_BUNDLE: .cloudflare/output/v0/workers/default/bundle
         run: bunx tsx --test tests/provider-worker.test.ts
+
+      # Migrate first, so the new code never runs against an older schema.
+      - name: Apply migrations to the production database
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          CF_SEND_TELEMETRY: "false"
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: bun run db:migrate:remote
 
       - name: Deploy production to Cloudflare
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
