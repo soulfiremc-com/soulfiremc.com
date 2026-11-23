@@ -154,6 +154,11 @@ export const auth = betterAuth({
   rateLimit: {
     enabled: true,
     storage: "database",
+    customRules: {
+      // Session reads run on most page views. Limiting them cost a D1 read
+      // and write each time and returned 429s to people sharing one IP.
+      "/get-session": false,
+    },
   },
   verification: {
     storeIdentifier: "hashed",

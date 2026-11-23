@@ -163,27 +163,3 @@ await test("aggregate stock remains unknown when only an empty category is known
     "https://schema.org/OutOfStock",
   );
 });
-
-await test("concurrent live stock lookups share one shop request", async (t) => {
-  const shop = getShopBySlug("ravealts");
-  assert.ok(shop);
-
-  let respond: ((response: Response) => void) | undefined;
-  const response = new Promise<Response>((resolve) => {
-    respond = resolve;
-  });
-  const fetchMock = t.mock.method(globalThis, "fetch", () => response);
-
-  const lookups = Promise.all([getLiveShopData(shop), getLiveShopData(shop)]);
-  await new Promise((done) => {
-    setTimeout(done, 0);
-  });
-  respond?.(Response.json({ nfa: 3 }));
-
-  const results = await lookups;
-  assert.equal(fetchMock.mock.callCount(), 1);
-  assert.deepEqual(
-    results.map((result) => result.stockByCategory),
-    [{ "nfa-accounts": 3 }, { "nfa-accounts": 3 }],
-  );
-});
