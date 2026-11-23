@@ -22,7 +22,7 @@ export function ReviewStars({
 }) {
   const t = useT();
   const locale = useLocale();
-  const width = `${Math.max(0, Math.min(5, value)) * 20}%`;
+  const rating = Math.max(0, Math.min(5, value));
   const label = t("reviews.outOf5Stars", {
     rating: value.toLocaleString(locale, {
       minimumFractionDigits: 1,
@@ -35,25 +35,33 @@ export function ReviewStars({
       // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- the elements and their label form one labelled image
       role="img"
       aria-label={label}
-      // Fit the stars so a stretching flex parent cannot widen the fill area.
-      className="relative inline-flex w-fit items-center"
+      className="inline-flex w-fit items-center gap-0.5"
       title={label}
     >
-      <div className="flex items-center gap-0.5 text-rating-muted">
-        {generateN(5).map((i) => (
-          <Star key={i} className={sizeClasses[size]} />
-        ))}
-      </div>
-      <div
-        className="absolute inset-0 w-(--rating-width) overflow-hidden text-rating"
-        style={{ "--rating-width": width }}
-      >
-        <div className="flex items-center gap-0.5">
-          {generateN(5).map((i) => (
-            <Star key={i} className={cn(sizeClasses[size], "fill-current")} />
-          ))}
-        </div>
-      </div>
+      {generateN(5).map((i) => {
+        // Clip each star on its own so the gaps between stars do not shift
+        // the partial fill.
+        const fill = Math.max(0, Math.min(1, rating - i + 1));
+        return (
+          <span key={i} className="relative">
+            <Star
+              className={cn(
+                sizeClasses[size],
+                "fill-current text-rating-muted opacity-40",
+              )}
+            />
+            {fill > 0 && (
+              <Star
+                className={cn(
+                  sizeClasses[size],
+                  "absolute inset-0 fill-current text-rating [clip-path:inset(0_var(--star-empty)_0_0)]",
+                )}
+                style={{ "--star-empty": `${(1 - fill) * 100}%` }}
+              />
+            )}
+          </span>
+        );
+      })}
     </div>
   );
 }

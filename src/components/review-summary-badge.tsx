@@ -20,7 +20,7 @@ export function ReviewSummaryBadge({
   const locale = useLocale();
   if (status === "loading") {
     return (
-      <Skeleton className={cn("h-5 w-32", className)}>
+      <Skeleton className={cn("h-8.5 w-32", className)}>
         <span className="sr-only">{t("reviews.loadingRatings")}</span>
       </Skeleton>
     );
@@ -31,7 +31,7 @@ export function ReviewSummaryBadge({
       <Badge
         variant="outline"
         className={cn(
-          "gap-2 border-dashed px-3 py-1.5 text-sm text-muted-foreground",
+          "h-auto gap-2 border-dashed px-3 py-1.5 text-sm text-muted-foreground",
           className,
         )}
       >
@@ -46,7 +46,7 @@ export function ReviewSummaryBadge({
       <Badge
         variant="outline"
         className={cn(
-          "gap-2 border-dashed px-3 py-1.5 text-sm text-muted-foreground",
+          "h-auto gap-2 border-dashed px-3 py-1.5 text-sm text-muted-foreground",
           className,
         )}
       >
@@ -61,7 +61,7 @@ export function ReviewSummaryBadge({
     <Badge
       variant="outline"
       className={cn(
-        "gap-2 bg-background/80 px-3 py-1.5 text-sm shadow-sm",
+        "h-auto gap-2 bg-background/80 px-3 py-1.5 text-sm shadow-sm",
         className,
       )}
     >
