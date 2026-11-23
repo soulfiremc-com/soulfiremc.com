@@ -3,18 +3,9 @@
 import { Link } from "@tanstack/react-router";
 import { useT } from "@/lib/i18n-react";
 
-import { Cookie } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import {
   CONSENT_CHANGE_EVENT,
   REOPEN_EVENT,
@@ -101,31 +92,27 @@ const CookieConsentBanner = () => {
       >
         {/* Tighter side padding on phones leaves more room for page actions. */}
         {/* Short landscape screens get one row so forms stay visible. */}
-        <Card className="m-3 shadow-lg sm:max-w-md short:m-2 short:max-w-none short:flex-row short:items-center">
-          <CardHeader className="flex flex-row items-center justify-between gap-2 px-4 sm:px-6 short:sr-only">
-            <CardTitle id="cookie-consent-title" className="text-lg">
+        {/* A compact card keeps page content and calls to action visible. */}
+        <div className="m-3 flex flex-col gap-3 rounded-xl border bg-popover p-3 text-popover-foreground shadow-lg sm:max-w-sm short:m-2 short:max-w-none short:flex-row short:items-center">
+          <div className="flex flex-1 flex-col gap-1">
+            <h2 id="cookie-consent-title" className="sr-only">
               {t("cookies.title")}
-            </CardTitle>
-            <Cookie aria-hidden="true" className="size-5" />
-          </CardHeader>
-          <CardContent className="flex flex-1 flex-col gap-2 px-4 sm:px-6 short:pr-0">
-            <CardDescription className="text-sm">
-              {t("cookies.description")}
-            </CardDescription>
-            <p className="text-xs text-muted-foreground">
-              {t("cookies.acceptanceNotice")}{" "}
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              {t("cookies.description")}{" "}
               <Link
                 to="/cookie-policy"
                 hash="cookie-settings"
-                className="underline underline-offset-2"
+                className="text-foreground underline underline-offset-2"
               >
                 {t("cookies.cookieSettings")}
               </Link>
             </p>
-          </CardContent>
-          <CardFooter className="flex gap-2 px-4 sm:px-6 short:shrink-0 short:pl-0">
+          </div>
+          <div className="flex gap-2 short:shrink-0">
             <Button
               type="button"
+              size="sm"
               onClick={() => {
                 respond("denied");
               }}
@@ -136,6 +123,7 @@ const CookieConsentBanner = () => {
             </Button>
             <Button
               type="button"
+              size="sm"
               onClick={() => {
                 respond("granted");
               }}
@@ -143,8 +131,8 @@ const CookieConsentBanner = () => {
             >
               {t("cookies.accept")}
             </Button>
-          </CardFooter>
-        </Card>
+          </div>
+        </div>
       </section>
     </>
   );

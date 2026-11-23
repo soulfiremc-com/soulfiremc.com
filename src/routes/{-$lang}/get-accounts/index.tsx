@@ -11,7 +11,6 @@ import { createProviderFaqJsonLd } from "@/lib/provider-faq-data";
 import { Schema, Effect } from "effect";
 import { usePrerenderedSearch } from "@/hooks/use-prerendered-search";
 import { usePrerenderedSearchOrder } from "@/hooks/use-prerendered-search-order";
-import { SiDiscord, SiTrustpilot } from "@icons-pack/react-simple-icons";
 import { noop, useSuspenseQuery } from "@tanstack/react-query";
 import {
   CatchBoundary,
@@ -25,18 +24,14 @@ import {
   Calendar,
   ExternalLink,
   Filter,
-  Globe,
-  ImageIcon,
   Info,
   Users,
 } from "lucide-react";
 import {
   memo,
   Suspense,
-  useCallback,
   useDeferredValue,
   useEffect,
-  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -44,13 +39,11 @@ import {
 } from "react";
 import { CouponCode, LinkDiscountNotice } from "@/components/coupon-code";
 import { Image } from "@/components/image";
-import { PaymentMethods } from "@/components/payment-methods";
 import { ProviderInfoPopover } from "@/components/provider-info-popover";
 import { ProviderThemeDecoration } from "@/components/provider-theme-decoration";
-import { ReviewInlineActions } from "@/components/review-inline-actions";
+import { ReviewSummaryBadge } from "@/components/review-summary-badge";
 import { ReviewTurnstileProvider } from "@/components/review-turnstile-provider";
 import { SiteShell } from "@/components/site-shell";
-import { SocialLinkButtons } from "@/components/social-link-buttons";
 import { Badge as UiBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -93,7 +86,6 @@ import {
   getAggregateRatingJsonLd,
   type ReviewSummary,
   type ReviewSummaryStatus,
-  type UserReviewRecord,
 } from "@/lib/review-core";
 import { reviewsQueryOptions } from "@/lib/reviews-query";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
@@ -277,23 +269,10 @@ const ProviderCard = memo(function ProviderCard({
   provider,
   reviewSummary,
   reviewSummaryStatus,
-  userReview,
-  reviewPending,
-  onRate,
-  onClearRating,
 }: {
   provider: Provider;
   reviewSummary: ReviewSummary;
   reviewSummaryStatus: ReviewSummaryStatus;
-  userReview?: UserReviewRecord;
-  reviewPending: boolean;
-  onRate: (
-    slug: string,
-    rating: number,
-  ) => Promise<{ error: "unauthorized" | "verification" | null }>;
-  onClearRating: (
-    slug: string,
-  ) => Promise<{ error: "unauthorized" | "verification" | null }>;
 }) {
   const t = useT();
   const locale = useLocale();
@@ -310,10 +289,10 @@ const ProviderCard = memo(function ProviderCard({
       )}
     >
       <ProviderThemeDecoration theme={provider.theme} />
-      <div className="relative flex flex-col gap-4 p-6 sm:flex-row">
+      <div className="relative flex flex-row gap-4 p-4 sm:p-6">
         <div
           className={cn(
-            "relative size-16 shrink-0 overflow-hidden rounded-lg bg-muted",
+            "relative size-12 shrink-0 overflow-hidden rounded-lg bg-muted sm:size-16",
             theme?.logo,
           )}
         >
@@ -413,18 +392,6 @@ const ProviderCard = memo(function ProviderCard({
             </div>
           </div>
           <p className="text-muted-foreground">{t(provider.summary)}</p>
-          {provider.gallery && provider.gallery.length > 0 && (
-            <Link
-              to="/{-$lang}/get-accounts/$slug"
-              params={{ slug: provider.slug }}
-              className="relative z-10 inline-flex w-fit items-center gap-1 text-xs text-muted-foreground transition-colors hover:text-foreground"
-            >
-              <ImageIcon className="size-3" />
-              {t("providers.accounts.photos", {
-                count: provider.gallery.length,
-              })}
-            </Link>
-          )}
           {provider.couponCode ? (
             <div className="relative z-10">
               <CouponCode
@@ -440,10 +407,9 @@ const ProviderCard = memo(function ProviderCard({
               />
             </div>
           ) : null}
-          <div className="relative z-10 w-fit">
-            <PaymentMethods methods={provider.paymentMethods} />
-          </div>
-          <div className="relative z-10 flex flex-wrap gap-2">
+          {/* The list compares shops. Payment methods, contact links, and
+              rating live on each shop's own page. */}
+          <div className="relative z-10 flex flex-wrap items-center gap-3">
             <Button
               render={
                 <a href={provider.url} target="_blank" rel="noopener nofollow">
@@ -456,79 +422,9 @@ const ProviderCard = memo(function ProviderCard({
                 theme?.primaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
               }
             />
-            {provider.websiteUrl && (
-              <Button
-                render={
-                  <a
-                    href={provider.websiteUrl}
-                    target="_blank"
-                    rel="noopener nofollow"
-                  >
-                    {t("providers.website")}
-                    <Globe data-icon="inline-end" />
-                  </a>
-                }
-                nativeButton={false}
-                variant="secondary"
-                className={
-                  theme?.secondaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
-                }
-              />
-            )}
-            {discordInviteUrl && (
-              <Button
-                render={
-                  <a
-                    href={discordInviteUrl}
-                    // oxlint-disable-next-line react/jsx-no-target-blank -- noopener is set; the partner invite keeps the referrer on purpose
-                    target="_blank"
-                    rel="noopener nofollow"
-                  >
-                    Discord
-                    <SiDiscord aria-hidden="true" data-icon="inline-end" />
-                  </a>
-                }
-                nativeButton={false}
-                variant="secondary"
-                className={
-                  theme?.secondaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
-                }
-              />
-            )}
-            {provider.trustpilotUrl && (
-              <Button
-                render={
-                  <a
-                    href={provider.trustpilotUrl}
-                    target="_blank"
-                    rel="noopener nofollow"
-                  >
-                    Trustpilot
-                    <SiTrustpilot aria-hidden="true" data-icon="inline-end" />
-                  </a>
-                }
-                nativeButton={false}
-                variant="secondary"
-                className={
-                  theme?.secondaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
-                }
-              />
-            )}
-            <SocialLinkButtons
-              links={provider.socialLinks}
-              className={
-                theme?.secondaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
-              }
-            />
-          </div>
-          <div className="relative z-10">
-            <ReviewInlineActions
+            <ReviewSummaryBadge
               summary={reviewSummary}
-              summaryStatus={reviewSummaryStatus}
-              currentRating={userReview?.rating}
-              pending={reviewPending}
-              onRate={(rating) => onRate(provider.slug, rating)}
-              onClear={() => onClearRating(provider.slug)}
+              status={reviewSummaryStatus}
             />
           </div>
         </div>
@@ -578,14 +474,7 @@ function MainContent() {
   );
   const providers = PROVIDERS;
   const slugs = useMemo(() => [...new Set(PROVIDERS.map((p) => p.slug))], []);
-  const {
-    summaries,
-    summaryStatus,
-    userReviews,
-    pendingBySlug,
-    upsertReview,
-    deleteReview,
-  } = useReviews("account", slugs);
+  const { summaries, summaryStatus } = useReviews("account", slugs);
   const { category, badges, sort } = usePrerenderedSearch(
     Route.useSearch(),
     Schema.decodeSync(accountsSearchSchema)({}),
@@ -606,21 +495,6 @@ function MainContent() {
       // A rating sort from a shared link applies once the reviews arrive.
       resultsSort === "best-rated" && summaryStatus === "loading",
     ]),
-  );
-
-  // Stable handlers let the memoized cards skip renders.
-  const reviewActions = useRef({ upsertReview, deleteReview });
-  useLayoutEffect(() => {
-    reviewActions.current = { upsertReview, deleteReview };
-  });
-  const rateProvider = useCallback(
-    (slug: string, rating: number) =>
-      reviewActions.current.upsertReview(slug, { rating }),
-    [],
-  );
-  const clearProviderRating = useCallback(
-    (slug: string) => reviewActions.current.deleteReview(slug),
-    [],
   );
 
   // Reveal the results only after the deferred render applied the URL filters.
@@ -937,10 +811,6 @@ function MainContent() {
                         summaries[provider.slug] ?? emptyReviewSummary()
                       }
                       reviewSummaryStatus={summaryStatus}
-                      userReview={userReviews[provider.slug]}
-                      reviewPending={pendingBySlug[provider.slug] ?? false}
-                      onRate={rateProvider}
-                      onClearRating={clearProviderRating}
                     />
                   ))}
                 </div>
@@ -971,10 +841,6 @@ function MainContent() {
                         summaries[provider.slug] ?? emptyReviewSummary()
                       }
                       reviewSummaryStatus={summaryStatus}
-                      userReview={userReviews[provider.slug]}
-                      reviewPending={pendingBySlug[provider.slug] ?? false}
-                      onRate={rateProvider}
-                      onClearRating={clearProviderRating}
                     />
                   ))}
                 </div>

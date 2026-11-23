@@ -262,9 +262,8 @@ function CookiePolicy() {
           <TableRow>
             <TableCell>Ko-fi</TableCell>
             <TableCell>
-              Donation button on every page and donation widget on the support
-              page. Ko-fi may set cookies when its widget loads or when you open
-              it.
+              Donation button on every page. Ko-fi may set cookies when its
+              button loads or when you open it.
             </TableCell>
             <TableCell>
               <a
@@ -273,22 +272,6 @@ function CookiePolicy() {
                 rel="noopener noreferrer"
               >
                 Ko-fi Privacy Policy
-              </a>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>NOWPayments</TableCell>
-            <TableCell>
-              Cryptocurrency donation widget on the support page. NOWPayments
-              may set cookies when the widget loads.
-            </TableCell>
-            <TableCell>
-              <a
-                href="https://nowpayments.io/doc/privacy-policy"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                NOWPayments Privacy Policy
               </a>
             </TableCell>
           </TableRow>

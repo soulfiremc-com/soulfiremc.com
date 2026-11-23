@@ -35,7 +35,6 @@ export type Provider = {
   couponCode?: string;
   couponDiscount?: MessageKey;
   startDate?: string;
-  gallery?: { src: string; alt: MessageKey }[];
   paymentMethods?: string[];
   socialLinks?: SocialLink[];
 };

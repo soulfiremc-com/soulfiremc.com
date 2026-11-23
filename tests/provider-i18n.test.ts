@@ -41,7 +41,6 @@ void test("all provider descriptions, offer details, badges and FAQs have transl
       if (typeof value === "string" && /[a-z]/iu.test(value))
         messages.add(value);
     }
-    for (const image of provider.gallery ?? []) messages.add(image.alt);
   }
   for (const badge of [
     ...Object.values(accountBadges),

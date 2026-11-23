@@ -73,7 +73,6 @@ export type Shop = {
   socialLinks?: SocialLink[];
   paymentMethods?: string[];
   startDate?: string;
-  gallery?: { src: string; alt: MessageKey }[];
   promotedUntil?: string;
   listings: Partial<Record<Category, Listing>>;
 };
@@ -92,7 +91,6 @@ export type Provider = {
   socialLinks?: SocialLink[];
   paymentMethods?: string[];
   startDate?: string;
-  gallery?: { src: string; alt: MessageKey }[];
   promotedUntil?: string;
   badges: Badge[];
   category: Category;
@@ -897,7 +895,6 @@ export const PROVIDERS: Provider[] = (
         socialLinks: shop.socialLinks,
         paymentMethods: shop.paymentMethods,
         startDate: shop.startDate,
-        gallery: shop.gallery,
         promotedUntil: shop.promotedUntil,
         category,
         ...listing,

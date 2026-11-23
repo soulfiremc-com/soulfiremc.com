@@ -25,27 +25,15 @@ import {
   Calendar,
   ExternalLink,
   Filter,
-  ImageIcon,
   Star,
 } from "lucide-react";
-import {
-  memo,
-  Suspense,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { memo, Suspense, useEffect, useMemo, useState } from "react";
 import { CouponCode } from "@/components/coupon-code";
 import { Image } from "@/components/image";
 import { ProviderInfoPopover } from "@/components/provider-info-popover";
-import { PaymentMethods } from "@/components/payment-methods";
-import { ReviewInlineActions } from "@/components/review-inline-actions";
+import { ReviewSummaryBadge } from "@/components/review-summary-badge";
 import { ReviewTurnstileProvider } from "@/components/review-turnstile-provider";
 import { SiteShell } from "@/components/site-shell";
-import { SocialLinkButtons } from "@/components/social-link-buttons";
 import { Badge as UiBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -70,7 +58,6 @@ import {
   getAggregateRatingJsonLd,
   type ReviewSummary,
   type ReviewSummaryStatus,
-  type UserReviewRecord,
 } from "@/lib/review-core";
 import { reviewsQueryOptions } from "@/lib/reviews-query";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
@@ -171,30 +158,17 @@ const ProviderCard = memo(function ProviderCard({
   provider,
   reviewSummary,
   reviewSummaryStatus,
-  userReview,
-  reviewPending,
-  onRate,
-  onClearRating,
 }: {
   provider: Provider;
   reviewSummary: ReviewSummary;
   reviewSummaryStatus: ReviewSummaryStatus;
-  userReview?: UserReviewRecord;
-  reviewPending: boolean;
-  onRate: (
-    slug: string,
-    rating: number,
-  ) => Promise<{ error: "unauthorized" | "verification" | null }>;
-  onClearRating: (
-    slug: string,
-  ) => Promise<{ error: "unauthorized" | "verification" | null }>;
 }) {
   const t = useT();
   const locale = useLocale();
   return (
     <Card className="relative overflow-hidden transition-all duration-300 hover:shadow-lg">
-      <div className="relative flex flex-col gap-4 p-6 sm:flex-row">
-        <div className="relative size-16 shrink-0 overflow-hidden rounded-lg bg-muted">
+      <div className="relative flex flex-row gap-4 p-4 sm:p-6">
+        <div className="relative size-12 shrink-0 overflow-hidden rounded-lg bg-muted sm:size-16">
           <ProviderLogo provider={provider} />
         </div>
         <div className="flex flex-1 flex-col gap-3">
@@ -223,26 +197,15 @@ const ProviderCard = memo(function ProviderCard({
             </div>
           </div>
           <p className="text-muted-foreground">{t(provider.summary)}</p>
-          {provider.gallery && provider.gallery.length > 0 && (
-            <Link
-              to="/{-$lang}/get-proxies/$slug"
-              params={{ slug: provider.slug }}
-              className="inline-flex items-center gap-1 text-xs text-muted-foreground transition-colors hover:text-foreground"
-            >
-              <ImageIcon className="size-3" />
-              {t("providers.accounts.photos", {
-                count: provider.gallery.length,
-              })}
-            </Link>
-          )}
           {provider.couponCode && (
             <CouponCode
               code={provider.couponCode}
               discount={provider.couponDiscount}
             />
           )}
-          <PaymentMethods methods={provider.paymentMethods} />
-          <div className="flex flex-wrap gap-2">
+          {/* The list compares providers. Payment methods, contact links,
+              and rating live on each provider's own page. */}
+          <div className="flex flex-wrap items-center gap-3">
             <Button
               render={
                 <a
@@ -256,16 +219,11 @@ const ProviderCard = memo(function ProviderCard({
               }
               nativeButton={false}
             />
-            <SocialLinkButtons links={provider.socialLinks} />
+            <ReviewSummaryBadge
+              summary={reviewSummary}
+              status={reviewSummaryStatus}
+            />
           </div>
-          <ReviewInlineActions
-            summary={reviewSummary}
-            summaryStatus={reviewSummaryStatus}
-            currentRating={userReview?.rating}
-            pending={reviewPending}
-            onRate={(rating) => onRate(provider.slug, rating)}
-            onClear={() => onClearRating(provider.slug)}
-          />
         </div>
       </div>
     </Card>
@@ -274,14 +232,7 @@ const ProviderCard = memo(function ProviderCard({
 
 function MainContent() {
   const t = useT();
-  const {
-    summaries,
-    summaryStatus,
-    userReviews,
-    pendingBySlug,
-    upsertReview,
-    deleteReview,
-  } = useReviews("proxy", proxyReviewSlugs);
+  const { summaries, summaryStatus } = useReviews("proxy", proxyReviewSlugs);
   const { badges, sort } = usePrerenderedSearch(
     Route.useSearch(),
     Schema.decodeSync(proxiesSearchSchema)({}),
@@ -296,21 +247,6 @@ function MainContent() {
       // A rating sort from a shared link applies once the reviews arrive.
       sort === "best-rated" && summaryStatus === "loading",
     ]),
-  );
-
-  // Stable handlers let the memoized cards skip renders.
-  const reviewActions = useRef({ upsertReview, deleteReview });
-  useLayoutEffect(() => {
-    reviewActions.current = { upsertReview, deleteReview };
-  });
-  const rateProvider = useCallback(
-    (slug: string, rating: number) =>
-      reviewActions.current.upsertReview(slug, { rating }),
-    [],
-  );
-  const clearProviderRating = useCallback(
-    (slug: string) => reviewActions.current.deleteReview(slug),
-    [],
   );
 
   useEffect(() => {
@@ -518,10 +454,6 @@ function MainContent() {
                 provider={provider}
                 reviewSummary={summaries[provider.slug] ?? emptyReviewSummary()}
                 reviewSummaryStatus={summaryStatus}
-                userReview={userReviews[provider.slug]}
-                reviewPending={pendingBySlug[provider.slug] ?? false}
-                onRate={rateProvider}
-                onClearRating={clearProviderRating}
               />
             ))}
           </div>

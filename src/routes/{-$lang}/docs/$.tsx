@@ -209,11 +209,7 @@ const clientLoader = browserCollections.docs.createClientLoader<{
           />
         </DocsBody>
         <Feedback />
-        <EnderDashSponsor
-          placement="docs-footer"
-          className="mt-8"
-          variant="footer"
-        />
+        <EnderDashSponsor placement="docs-footer" className="mt-8" />
         {lastModified && (
           <p className="text-sm text-fd-muted-foreground">
             {t("docs.lastUpdatedOn")}{" "}
@@ -356,11 +352,7 @@ function DocsPageRoute() {
               <APIPage {...page.props} />
             </DocsBody>
             <Feedback />
-            <EnderDashSponsor
-              placement="docs-footer"
-              className="mt-8"
-              variant="footer"
-            />
+            <EnderDashSponsor placement="docs-footer" className="mt-8" />
           </DocsPage>
         ) : (
           <DocsMarkdownContent

@@ -28,7 +28,6 @@ import {
 import { Suspense } from "react";
 import type { BreadcrumbList, Product, WebPage, WithContext } from "schema-dts";
 import { CouponCode, LinkDiscountNotice } from "@/components/coupon-code";
-import { GallerySection } from "@/components/gallery-section";
 import { Image } from "@/components/image";
 import { ProviderInfoPopover } from "@/components/provider-info-popover";
 import { ItemReviewsSection } from "@/components/item-reviews-section";
@@ -771,10 +770,6 @@ function AccountDetailPage() {
           reviewPage={data.reviewsPage}
           slug={data.shop.slug}
         />
-
-        {data.shop.gallery && data.shop.gallery.length > 0 ? (
-          <GallerySection images={data.shop.gallery} />
-        ) : null}
 
         <Button
           render={

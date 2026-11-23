@@ -363,12 +363,9 @@ function PrivacyPolicy() {
                 Ko-fi
               </a>
             </TableCell>
+            <TableCell>Donation button on every page</TableCell>
             <TableCell>
-              Donation button on every page and donation widget on the support
-              page
-            </TableCell>
-            <TableCell>
-              Request metadata (IP, headers) when the widget loads, and any
+              Request metadata (IP, headers) when the button loads, and any
               details you enter when you donate
             </TableCell>
           </TableRow>
@@ -383,12 +380,10 @@ function PrivacyPolicy() {
               </a>
             </TableCell>
             <TableCell>
-              Cryptocurrency donation widget on the support page
+              Cryptocurrency donations on the NOWPayments site, after you follow
+              the link on the support page
             </TableCell>
-            <TableCell>
-              Request metadata (IP, headers) when the widget loads, and any
-              details you enter when you donate
-            </TableCell>
+            <TableCell>Any details you enter when you donate</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>

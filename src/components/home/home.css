@@ -29,7 +29,7 @@
 }
 @utility home-mono {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
 }
 /* The hero follows the site theme, so the header theme toggle visibly
    changes the first screen. The dark values keep the night-stage look. */
@@ -292,11 +292,11 @@
   padding: 0 0 20px;
 }
 @utility home-section {
-  padding: 100px 0;
+  padding: 72px 0;
 }
 .home-section h2 {
   font-weight: 540;
-  font-size: clamp(32px, 3.7vw, 48px);
+  font-size: clamp(28px, 2.6vw, 36px);
   line-height: 1.12;
   letter-spacing: -0.055em;
 }
@@ -310,7 +310,7 @@
   justify-content: space-between;
   align-items: end;
   gap: 48px;
-  margin-bottom: 58px;
+  margin-bottom: 40px;
 }
 .home-section-heading > p {
   max-width: 425px;
@@ -411,7 +411,7 @@
   padding: 15px 18px;
   color: var(--home-muted);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
 }
 .workflow-title span:last-child {
   margin-left: auto;
@@ -448,11 +448,11 @@
 .workflow-node > span {
   display: block;
   color: var(--home-accent);
-  font-size: 8px;
+  font-size: 10px;
   margin-bottom: 4px;
 }
 .workflow-node strong {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 550;
 }
 .workflow-node p {
@@ -463,7 +463,7 @@
   margin-top: 8px;
   padding-top: 7px;
   border-top: 1px solid var(--home-line);
-  font-size: 8px;
+  font-size: 10px;
   white-space: nowrap;
 }
 .workflow-node i {
@@ -496,18 +496,18 @@
   border-top: 1px solid var(--home-line);
   padding: 14px 18px;
   color: var(--home-accent);
-  font-size: 10px;
+  font-size: 12px;
 }
 .workflow-result code {
   margin-left: auto;
   color: var(--home-muted);
-  font-size: 9px;
+  font-size: 11px;
 }
 .terminal-preview pre {
   min-height: 245px;
   padding: 28px 24px;
   overflow-x: auto;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 2;
 }
 @utility terminal-comment {
@@ -525,7 +525,7 @@
   gap: 8px;
   border-top: 1px solid var(--home-line);
   padding: 14px 18px;
-  font-size: 11px;
+  font-size: 12px;
 }
 @utility home-sdk {
   border-top: 1px solid var(--home-line);
@@ -558,7 +558,7 @@
 }
 @utility home-code-content {
   display: grid;
-  grid-template-columns: 0.75fr 1.25fr;
+  grid-template-columns: 0.6fr 1.4fr;
 }
 @utility home-code-info {
   display: flex;
@@ -569,7 +569,7 @@
   border-right: 1px solid var(--home-line);
 }
 .home-code-info h3 {
-  font-size: 29px;
+  font-size: 22px;
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.04em;
@@ -579,20 +579,19 @@
   max-width: 230px;
 }
 .home-code-info > code {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--home-muted);
   overflow-wrap: anywhere;
 }
 .home-code-info > .home-text-link {
-  margin-top: auto;
-  padding-top: 15px;
+  padding-top: 4px;
 }
 .home-code-content > div:last-child {
   min-width: 0;
   align-content: center;
 }
 .home-code-content pre {
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.9;
 }
 @utility home-community {
@@ -617,7 +616,7 @@
 }
 .home-community .home-mono {
   color: var(--home-muted);
-  font-size: 10px;
+  font-size: 12px;
 }
 @utility home-faq {
   display: grid;
@@ -655,7 +654,7 @@
   padding-top: 70px;
 }
 .home-final h2 {
-  font-size: clamp(40px, 5vw, 64px);
+  font-size: clamp(32px, 3.4vw, 44px);
 }
 @utility home-final-actions {
   display: flex;
@@ -713,7 +712,7 @@
   }
 
   .home-section {
-    padding-block: 76px;
+    padding-block: 56px;
   }
   .home-body,
   .home-hero-footer {
@@ -780,7 +779,7 @@
     padding-inline: 18px;
   }
   .home-hero-copy > .home-platforms {
-    font-size: 11px;
+    font-size: 12px;
     margin-top: 14px;
   }
   .voxel-experience {
@@ -796,7 +795,7 @@
     flex-direction: row;
     align-items: center;
     margin: -26px 0 13px;
-    font-size: 11px;
+    font-size: 12px;
   }
   .voxel-controls {
     margin-inline: 0;
@@ -807,7 +806,7 @@
   .home-hero-footer {
     margin-inline: 24px;
     padding-block: 19px;
-    font-size: 10px;
+    font-size: 12px;
   }
   .home-hero-footer > span {
     max-width: 150px;
@@ -821,10 +820,10 @@
     padding-bottom: 0;
   }
   .home-section {
-    padding-block: 60px;
+    padding-block: 44px;
   }
   .home-section h2 {
-    font-size: 34px;
+    font-size: 28px;
   }
   .home-section-heading {
     flex-direction: column;
@@ -869,12 +868,12 @@
     font-size: 14px;
   }
   .home-automation-demo [data-slot="tabs-trigger"] {
-    font-size: 11px;
+    font-size: 12px;
     padding-inline: 9px;
   }
   .workflow-title {
     padding: 12px;
-    font-size: 10px;
+    font-size: 12px;
   }
   /* Stack the nodes so their text stays readable on narrow screens. */
   .workflow-canvas {
@@ -902,25 +901,25 @@
     border-left: 2px dashed var(--home-accent);
   }
   .workflow-node > span {
-    font-size: 10px;
+    font-size: 12px;
   }
   .workflow-node strong {
     font-size: 13px;
   }
   .workflow-node p {
-    font-size: 11px;
+    font-size: 12px;
   }
   .workflow-result {
     flex-wrap: wrap;
     padding: 12px;
-    font-size: 11px;
+    font-size: 12px;
   }
   .workflow-result code {
-    font-size: 10px;
+    font-size: 12px;
   }
   .terminal-preview pre {
     padding: 20px 16px;
-    font-size: 11px;
+    font-size: 12px;
     min-height: 210px;
   }
   .home-code-bar {
@@ -947,7 +946,7 @@
     padding-top: 4px;
   }
   .home-code-content pre {
-    font-size: 10px;
+    font-size: 12px;
   }
   .home-community p {
     font-size: 14px;
@@ -968,7 +967,7 @@
     gap: 16px;
   }
   .home-final h2 {
-    font-size: 37px;
+    font-size: 30px;
   }
   .home-final > img {
     display: none;

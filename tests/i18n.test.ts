@@ -299,11 +299,8 @@ void test("translation catalogs use stable keys and preserve English interpolati
     );
   }
   assert.equal(
-    translate("pl", "download.selection.summary", {
-      os: "Linux",
-      cpu: "ARM64",
-    }),
-    "Wybrano: Linux · ARM64",
+    translate("pl", "download.downloadFor", { os: "Linux" }),
+    "Pobierz dla Linux",
   );
 });
 

@@ -33,7 +33,8 @@ function AuthPage() {
   return (
     <SiteShell>
       <main className="flex min-h-[60vh] items-center justify-center p-4">
-        <Auth path={path} />
+        {/* One row of social icons keeps the form short. */}
+        <Auth path={path} socialLayout="horizontal" />
       </main>
     </SiteShell>
   );

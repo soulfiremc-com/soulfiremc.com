@@ -41,8 +41,6 @@ const supporterTierFeatures = [
   "support.prioritySupportViaDiscord",
   "support.priorityWithFeatureRequests",
   "support.supporterRoleInDiscord",
-  "support.supportOngoingDevelopment",
-  "support.helpKeepTheProjectAlive",
 ] as const;
 
 function PricingPageContent() {
@@ -190,17 +188,7 @@ function PricingPageContent() {
               {t("support.donateViaPaypalOrCardMembershipAndOneTime")}
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex-1">
-            {/* oxlint-disable-next-line react/iframe-missing-sandbox -- the third-party video and payment widgets need popups and navigation that a sandbox would block */}
-            <iframe
-              src="https://ko-fi.com/alexprogrammerde/?hidefeed=true&widget=true&embed=true&preview=true"
-              className="w-full rounded-md border-none bg-muted"
-              height="712"
-              title="Ko-fi"
-              loading="lazy"
-            />
-          </CardContent>
-          <CardFooter>
+          <CardFooter className="mt-auto">
             <a
               href="https://ko-fi.com/alexprogrammerde"
               target="_blank"
@@ -222,16 +210,19 @@ function PricingPageContent() {
               {t("support.donateWithCryptocurrencyViaNowpayments")}
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex-1">
-            {/* oxlint-disable-next-line react/iframe-missing-sandbox -- the third-party video and payment widgets need popups and navigation that a sandbox would block */}
-            <iframe
-              src="https://nowpayments.io/embeds/donation-widget?api_key=99dbdb4c-b2d7-4470-a0d9-b8bb978c4881"
-              height="623"
-              className="mx-auto block w-full max-w-[346px] overflow-y-hidden rounded-md border-none bg-muted"
-              title={t("support.nowpaymentsDonationWidget")}
-              loading="lazy"
-            />
-          </CardContent>
+          {/* Links instead of embedded widgets keep the page short and load
+              no payment provider code until someone chooses to donate. */}
+          <CardFooter className="mt-auto">
+            <a
+              href="https://nowpayments.io/embeds/donation-widget?api_key=99dbdb4c-b2d7-4470-a0d9-b8bb978c4881"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(buttonVariants({ variant: "outline" }), "w-full")}
+            >
+              <Coins className="size-4" />
+              {t("support.openNowpayments")}
+            </a>
+          </CardFooter>
         </Card>
       </div>
     </main>

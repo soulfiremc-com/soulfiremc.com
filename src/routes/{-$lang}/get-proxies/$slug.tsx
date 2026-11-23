@@ -18,15 +18,8 @@ import {
 } from "@tanstack/react-router";
 import { ArrowLeft, Calendar, ChevronRight, ExternalLink } from "lucide-react";
 import { Suspense } from "react";
-import type {
-  BreadcrumbList,
-  ImageObject,
-  Product,
-  WebPage,
-  WithContext,
-} from "schema-dts";
+import type { BreadcrumbList, Product, WebPage, WithContext } from "schema-dts";
 import { CouponCode } from "@/components/coupon-code";
-import { GallerySection } from "@/components/gallery-section";
 import { Image } from "@/components/image";
 import { ProviderInfoPopover } from "@/components/provider-info-popover";
 import { ItemReviewsSection } from "@/components/item-reviews-section";
@@ -281,10 +274,6 @@ function ProxyProviderPageContent({
         slug={provider.slug}
       />
 
-      {provider.gallery && provider.gallery.length > 0 ? (
-        <GallerySection images={provider.gallery} />
-      ) : null}
-
       <Button
         render={
           <Link to="/{-$lang}/get-proxies">
@@ -332,14 +321,6 @@ function getProxyDetailPageData({
     ...(provider.startDate && {
       dateCreated: providerSinceIsoDate(provider.startDate),
     }),
-    ...(provider.gallery &&
-      provider.gallery.length > 0 && {
-        image: provider.gallery.map((img): ImageObject => ({
-          "@type": "ImageObject",
-          url: `https://soulfiremc.com${img.src}`,
-          name: img.alt,
-        })),
-      }),
   };
 
   const breadcrumbJsonLd: WithContext<BreadcrumbList> = {

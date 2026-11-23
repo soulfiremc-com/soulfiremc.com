@@ -59,6 +59,12 @@ export const Route = createFileRoute("/blog/")({
 
 function BlogIndexPage() {
   const { posts } = Route.useLoaderData();
+  // A tag on every post does not help tell posts apart.
+  const sharedTags = new Set(
+    posts[0]?.tags.filter((tag) =>
+      posts.every((post) => post.tags.includes(tag)),
+    ),
+  );
 
   return (
     <SiteShell>
@@ -107,18 +113,20 @@ function BlogIndexPage() {
                 ) : null}
                 {post.tags.length > 0 ? (
                   <div className="mb-2 flex flex-wrap gap-2">
-                    {post.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                    {post.tags
+                      .filter((tag) => !sharedTags.has(tag))
+                      .slice(0, 3)
+                      .map((tag) => (
+                        <span
+                          key={tag}
+                          className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary"
+                        >
+                          {tag}
+                        </span>
+                      ))}
                   </div>
                 ) : null}
                 <div className="mt-auto flex flex-col gap-1 border-t pt-4 text-sm text-muted-foreground">
-                  {post.author ? <span>{post.author}</span> : null}
                   <div className="flex flex-wrap items-center gap-x-2">
                     {post.date ? (
                       <>

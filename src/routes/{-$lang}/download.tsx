@@ -170,14 +170,10 @@ function DownloadSelectionComponent({
 }: {
   clientDownloads: DownloadLinkMap;
 }) {
-  const selection = usePrerenderedSearch(
-    Route.useSearch(),
-    Schema.decodeSync(downloadSearchSchema)({}),
-  );
   return (
     <>
       <DownloadConfigurator links={clientDownloads} />
-      <DownloadTip selection={selection} />
+      <DownloadTip />
     </>
   );
 }
@@ -262,9 +258,6 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
         <CardTitle className="text-2xl">
           {t("download.chooseYourBuild")}
         </CardTitle>
-        <CardDescription>
-          {t("download.soulfireIsMultiPlatformTellUsWhatYouAre")}
-        </CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-8">
         {isMobile && <MobileDownloadNotice />}
@@ -570,32 +563,13 @@ function DownloadNextSteps({
   );
 }
 
-function DownloadTip(props: { selection: DownloadSelection }) {
+function DownloadTip() {
   const t = useT();
-  const selectedOs =
-    OS_OPTIONS.find((option) => option.id === props.selection.os) ?? DEFAULT_OS;
-  const selectedCpu =
-    CPU_OPTIONS.find((option) => option.id === props.selection.cpu) ??
-    DEFAULT_CPU;
-
   return (
     <div className="rounded-xl border bg-muted/30 p-4 text-sm">
       <p className="font-semibold text-primary">{t("download.tip")}</p>
       <p className="text-muted-foreground">
         {t("download.x8664MeansIntelAndAmdCpusAarch64Refers")}
-      </p>
-      <p className="mt-2 text-xs text-muted-foreground">
-        <TranslatedMessage
-          text="download.selection.summary"
-          values={{
-            os: (
-              <span className="font-medium text-foreground">
-                {selectedOs.label}
-              </span>
-            ),
-            cpu: selectedCpu.label,
-          }}
-        />
       </p>
     </div>
   );
@@ -610,9 +584,6 @@ function DownloadSelectionSkeleton() {
           <CardTitle className="text-2xl">
             {t("download.chooseYourBuild")}
           </CardTitle>
-          <CardDescription>
-            {t("download.soulfireIsMultiPlatformTellUsWhatYouAre")}
-          </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-8">
           <div className="flex flex-col gap-3">
@@ -665,11 +636,6 @@ function DownloadSelectionSkeleton() {
         <p className="text-muted-foreground">
           {t("download.x8664MeansIntelAndAmdCpusAarch64Refers")}
         </p>
-        <div className="mt-2 text-xs text-muted-foreground">
-          {t("download.currentlySetTo")}{" "}
-          <Skeleton className="inline-block h-3 w-16 align-middle" /> •{" "}
-          <Skeleton className="inline-block h-3 w-24 align-middle" />
-        </div>
       </div>
     </>
   );
@@ -761,9 +727,6 @@ function DownloadPageContent({
             <CardDescription>{t("download.learn.description")}</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
-            <p className="text-muted-foreground">
-              {t("download.followTheStartHereDocsForAFullWalkthrough")}
-            </p>
             <Link
               to="/{-$lang}/docs/$"
               params={{ _splat: "start-here" }}
@@ -784,9 +747,6 @@ function DownloadPageContent({
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
-            <p className="text-muted-foreground">
-              {t("download.demo.description")}
-            </p>
             <a
               href="https://demo.soulfiremc.com"
               target="_blank"
@@ -861,9 +821,6 @@ function DownloadPageContent({
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
-            <p className="text-muted-foreground">
-              {t("download.ifSoulfireSavesYouTimeOrYouJustWant")}
-            </p>
             <a
               href="https://ko-fi.com/alexprogrammerde"
               target="_blank"
