@@ -11,6 +11,7 @@ bun dev
 ```
 
 The Cloudflare development server stores the local D1 database in `.cloudflare/state`.
+Run `bun run db:migrate` again after you pull new migrations. Reviews, sign-in, and other features that use D1 fail locally until the local database has every migration.
 
 ## Database migrations
 
@@ -25,7 +26,7 @@ Update the pinned auth CLI version in that script when upgrading Better Auth.
 After changing a schema, generate a named migration:
 
 ```bash
-bunx drizzle-kit generate --name <migration-name>
+bunx --bun drizzle-kit generate --name <migration-name>
 bun run db:migrate
 ```
 
@@ -37,7 +38,8 @@ Apply remote migrations with:
 bun run db:migrate:remote
 ```
 
-The migration workflow runs this command on pushes to `main`.
+The CI workflow in `.github/workflows/ci.yml` runs this command on pushes to `main`, right before the production deploy.
+For pull requests from this repository, it applies migrations to the preview database with `bun run db:migrate:preview`.
 Set the repository secret `CLOUDFLARE_API_TOKEN` to a token with D1 Edit permission for the configured account.
 Apply migrations before deploying code that requires them.
 
@@ -65,19 +67,20 @@ Documentation lives in `content/docs`, with downloadable recipes and images in
 `public/docs`. Read [CONTRIBUTING.md](CONTRIBUTING.md) for the writing workflow,
 source baseline, and example checks.
 
-Reference generators use the SoulFire revision pinned in `scripts/sdk-source.ts`.
-They cache that checkout in the system's temporary directory. Documentation checks
-require Bun, Git, Python 3.14, and Java 25. Gradle downloads the backend's build
-dependencies on the first run.
+Reference generators use the SoulFire release pinned in `src/lib/sdk-release.json`.
+`bun run sync-sdk-version` updates that pin to the latest published SDK release, and
+`bun dev` and `bun run build` run it first. The generators cache a checkout of the pinned
+revision in the system's temporary directory. They replace the cached checkout when it
+is incomplete, damaged, or at another revision. Documentation checks require Bun, Git,
+Python 3.14, and Java 25. Gradle downloads the backend's build dependencies on the first run.
 
 ```bash
 bun run generate-node-reference
-bun run generate-sdk-reference
 bun run check-docs
 ```
 
 Set `SOULFIRE_SDK_SOURCE` to reuse a local checkout at the pinned revision.
-The generators check its revision before using it.
+The generators check its revision before using it and never replace it.
 
 ## Validation
 

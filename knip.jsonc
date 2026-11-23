@@ -23,7 +23,7 @@
   "ignore": [
     // Copied better-auth-ui registry kept complete for registry updates.
     "src/components/auth/**",
-    "src/lib/auth/{{agent-auth-plugin,anonymous-plugin,api-key-plugin,auth-plugin,billing-plugin,device-authorization-plugin,magic-link-plugin,multi-session-plugin,oauth-provider-plugin,plugin-lookups,siwe-plugin},agent-auth-plugin,anonymous-plugin,api-key-plugin,auth-plugin,billing-plugin,device-authorization-plugin,magic-link-plugin,multi-session-plugin,oauth-provider-plugin,plugin-lookups,siwe-plugin}.ts",
+    "src/lib/auth/{agent-auth-plugin,anonymous-plugin,api-key-plugin,auth-plugin,billing-plugin,device-authorization-plugin,magic-link-plugin,multi-session-plugin,oauth-provider-plugin,plugin-lookups,siwe-plugin}.ts",
   ],
   "ignoreBinaries": ["ffmpeg", "javac", "python3.14"],
   "ignoreDependencies": [

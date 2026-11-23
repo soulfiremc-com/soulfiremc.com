@@ -9,20 +9,12 @@ import {
 } from "node:fs";
 import { join, resolve, basename } from "node:path";
 import { tmpdir } from "node:os";
-import { remark } from "remark";
-import remarkMdx from "remark-mdx";
 import { buildSdk, sdkSource, sdkRevision } from "./sdk-source";
 import { sdkCodeExamples } from "../src/lib/sdk-code-examples";
 import { replaceSdkReleaseTokens } from "../src/lib/sdk-release";
+import { docTestBlocks } from "./lib/doc-tests";
 import { printLine } from "./lib/output";
 
-type AstNode = {
-  type: string;
-  lang?: string;
-  meta?: string;
-  value?: string;
-  children?: AstNode[];
-};
 const source = sdkSource();
 buildSdk(source);
 execFileSync("bun", ["run", "build"], {
@@ -47,17 +39,7 @@ try {
   pythonFiles.push(homepagePython);
   for (const document of documents) {
     const path = resolve("content/docs/(main)/(automation)/sdk", document);
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- remark returns an mdast Root, which is the AstNode shape this walker reads
-    const tree = remark()
-      .use(remarkMdx)
-      .parse(readFileSync(path, "utf8")) as AstNode;
-    const blocks: AstNode[] = [];
-    const visit = (node: AstNode) => {
-      if (node.type === "code" && node.meta?.split(/\s+/u).includes("doc-test"))
-        blocks.push(node);
-      for (const child of node.children ?? []) visit(child);
-    };
-    visit(tree);
+    const blocks = docTestBlocks(readFileSync(path, "utf8"));
     if (
       document.startsWith("recipes/") &&
       document !== "recipes/index.mdx" &&
@@ -67,7 +49,7 @@ try {
         `Recipe must contain two complete doc-test programs: ${path}`,
       );
     for (const block of blocks) {
-      const filename = /title="([^"]+)"/u.exec(block.meta ?? "")?.[1];
+      const filename = /title="([^"]+)"/u.exec(block.meta)?.[1];
       if (
         !filename ||
         !["ts", "python"].includes(block.lang ?? "") ||
@@ -78,7 +60,7 @@ try {
         directory,
         `${typescriptFiles.length + pythonFiles.length}-${filename}`,
       );
-      writeFileSync(output, replaceSdkReleaseTokens(block.value ?? ""));
+      writeFileSync(output, replaceSdkReleaseTokens(block.value));
       if (block.lang === "ts") typescriptFiles.push(output);
       else pythonFiles.push(output);
     }

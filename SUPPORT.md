@@ -18,7 +18,6 @@ Otherwise, use the [issue chooser](https://github.com/soulfiremc-com/soulfiremc.
 Use this repository for website and documentation.
 Use [SoulFire](https://github.com/soulfiremc-com/SoulFire/issues) for server, bot, protocol, or SDK problems.
 Use [SoulFireClient](https://github.com/soulfiremc-com/SoulFireClient/issues) for desktop and browser client problems.
-Use [soulfiremc.com](https://github.com/soulfiremc-com/soulfiremc.com/issues) for published documentation and website problems.
 The [organization support directory](https://github.com/soulfiremc-com/.github/blob/main/SUPPORT.md) lists every project.
 
 ## Private reports

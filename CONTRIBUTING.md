@@ -24,6 +24,7 @@ bun dev
 ```
 
 The migration command above updates the local D1 database, not the remote database.
+Run it again after you pull new migrations. Reviews, sign-in, and other features that use D1 fail locally until the local database has every migration.
 Do not use production OAuth credentials, API tokens, or database exports for ordinary development.
 For features that require secrets, configure private local values according to `cloudflare.config.ts` and keep them out of Git.
 
@@ -35,9 +36,9 @@ For features that require secrets, configure private local values according to `
 - `scripts/`: reference generation, example checks, and development tools.
 - `tests/`: application and documentation logic tests.
 
-For schema changes, edit the schema first and run `bunx drizzle-kit generate --name <migration-name>`.
+For schema changes, edit the schema first and run `bunx --bun drizzle-kit generate --name <migration-name>`.
 Commit the generated `drizzle-d1/` SQL and metadata exactly as produced. Do not hand-edit migration artifacts.
-Run local migrations and relevant tests before submission.
+Run `bun run db:migrate` and the relevant tests before submission.
 Remote migrations and deployment require maintainer coordination. Follow the [README migration workflow](README.md#database-migrations).
 
 Use the existing Oxlint and Oxfmt configuration. Run `bun run check` after every change.
@@ -78,9 +79,10 @@ Do not remove a published URL just to make the sidebar simpler.
 
 ## Check facts against the implementation
 
-The source revision in `scripts/sdk-source.ts` defines the SDK and built-in node
-reference. Keep the SDK baseline aligned with a published release. Verify npm
-and PyPI versions. Update the public installation guide in
+The release in `src/lib/sdk-release.json` defines the SDK and built-in node
+reference. `bun run sync-sdk-version` sets it to the latest published SDK release,
+and builds run it first. Set `SOULFIRE_SDK_VERSION` to use another release.
+Verify npm and PyPI versions. Update the public installation guide in
 `content/docs/(main)/(automation)/sdk/(start)/compatibility.mdx` when changing the
 baseline. Check the backend handshake and required plugins, too.
 
@@ -106,7 +108,7 @@ bun run generate-node-reference
 
 The node generator reads the registry and Java metadata from the pinned source.
 Change the source or generator when a reference is wrong.
-For each SDK release, update the source pin and installation baseline together.
+For each SDK release, update the installation baseline with the release pin.
 The existing `--check` mode compares saved pages with generated output.
 
 The full SDK references live at [ts.soulfiremc.com](https://ts.soulfiremc.com/)
@@ -157,7 +159,7 @@ bun run build
 
 `check-docs` validates internal links and redirects, rejects stale generated
 references, and checks SDK, script, and native plugin examples. CI runs these
-checks. The first run needs network access to fetch the pinned source and build
+checks in `.github/workflows/ci.yml`. The first run needs network access to fetch the pinned source and build
 dependencies. You can reuse a matching checkout through `SOULFIRE_SDK_SOURCE`.
 
 Preview changed pages with `bun dev`. Check the sidebar, code tabs, downloads,
@@ -191,4 +193,4 @@ Respect existing license notices and submit only material that you have the righ
 
 `bun install` installs Lefthook for this checkout and preserves the existing preparation steps.
 Run `bun run pre-commit` to run the commit checks manually.
-The hooks use the existing project tools. Before pushing, they run the relevant project checks for changed files.
+Before each commit, the hooks run Oxlint and Oxfmt on staged files. Before each push, they run `bun run knip`, and `bun run typecheck` when TypeScript or JSON files changed.
