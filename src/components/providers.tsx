@@ -7,112 +7,53 @@ import {
 } from "@/lib/i18n";
 import { LocaleLink } from "@/components/locale-link";
 import { LocaleProvider } from "@/components/locale-provider";
-import { useLocale } from "@/lib/i18n-react";
 import { fumadocsMessages } from "@/lib/messages/fumadocs";
-import { captchaPlugin } from "@better-auth-ui/react/plugins/captcha";
 import { useNavigate, useRouter, useRouterState } from "@tanstack/react-router";
-import { useMemo } from "react";
+import { use } from "react";
 import { RootProvider } from "fumadocs-ui/provider/tanstack";
 import { ContentImage } from "@/components/content-image";
-import { ThemeProvider, useTheme } from "next-themes";
-import { AuthProvider } from "@/components/auth/auth-provider";
+import { ThemeProvider } from "next-themes";
 import { CookieConsentBanner } from "@/components/cookie-consent-banner";
+import { LazySearchDialog } from "@/components/lazy-search-dialog";
 import { Toaster } from "@/components/ui/sonner";
-import { adminPlugin } from "@/lib/auth/admin-plugin";
-import { dashPlugin } from "@/lib/auth/dash-plugin";
-import { deleteUserPlugin } from "@/lib/auth/delete-user-plugin";
-import { emailOtpPlugin } from "@/lib/auth/email-otp-plugin";
-import { lazyAuthUi } from "@/lib/auth/lazy-auth-ui";
-import { lastLoginMethodPlugin } from "@/lib/auth/last-login-method-plugin.ts";
-import { passkeyPlugin } from "@/lib/auth/passkey-plugin";
-import { themePlugin } from "@/lib/auth/theme-plugin";
-import { twoFactorPlugin } from "@/lib/auth/two-factor-plugin";
-import { usernamePlugin } from "@/lib/auth/username-plugin";
-import { authClient } from "@/lib/auth-client";
-import {
-  AUTH_UI_VIEW_PATHS,
-  AUTH_UI_BASE_PATHS,
-  authRedirectPath,
-} from "@/lib/auth-ui-config";
-import { authUiLocale } from "@/lib/auth/auth-ui-locale";
+import { preloadAuthUi } from "@/lib/auth/lazy-auth-ui";
+import { isAuthUiPath } from "@/lib/auth-ui-config";
 import { translate } from "@/lib/messages";
 import { isPostHogConfigured } from "@/lib/integrations/posthog";
-import { AuthLink } from "./auth-link";
 
-const authUiPlugins = [
-  usernamePlugin({ isUsernameAvailable: true }),
-  emailOtpPlugin({
-    emailVerification: true,
-    passwordReset: true,
-    changeEmail: true,
-    verifyCurrentEmail: true,
-  }),
-  twoFactorPlugin(),
-  passkeyPlugin(),
-  captchaPlugin({ render: lazyAuthUi("AuthTurnstile") }),
-  deleteUserPlugin({ sendDeleteAccountVerification: true }),
-  adminPlugin(),
-  dashPlugin({ organization: false }),
-  themePlugin({ useTheme }),
-  lastLoginMethodPlugin(),
-];
-
-function AuthUIProviders({ children }: { children: React.ReactNode }) {
-  const navigate = useNavigate();
-  const locale = useLocale();
-  const authLocale = useMemo(
-    () => authUiLocale(locale, authUiPlugins),
-    [locale],
-  );
-  // Better Auth UI reads `redirectTo` from `window.location`, which the server
-  // render lacks. Read it from the router so server and browser links match.
-  const redirectTo = useRouterState({
-    select: (state) =>
-      authRedirectPath(
-        "redirectTo" in state.location.search
-          ? state.location.search.redirectTo
-          : undefined,
-      ),
-  });
-
-  return (
-    <AuthProvider
-      authClient={authClient}
-      navigate={(options) => void navigate(options)}
-      Link={AuthLink}
-      redirectTo={redirectTo}
-      basePaths={AUTH_UI_BASE_PATHS}
-      viewPaths={AUTH_UI_VIEW_PATHS}
-      socialProviders={["google", "discord", "github"]}
-      socialSignInMode="popup"
-      emailAndPassword={{
-        forgotPassword: true,
-        name: false,
-        requireEmailVerification: true,
-      }}
-      plugins={authUiPlugins}
-      locale={authLocale}
-    >
-      {children}
-    </AuthProvider>
-  );
+// Only auth, account, and admin pages need the Better Auth UI provider. It
+// loads with their forms, which the router preloads before those pages render.
+// No Suspense boundary sits here, so a client navigation keeps showing the
+// previous page until the provider is ready.
+function AuthUIPageProviders({ children }: { children: React.ReactNode }) {
+  const { AuthUIProviders } = use(preloadAuthUi());
+  return <AuthUIProviders>{children}</AuthUIProviders>;
 }
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  // Select only the pathname, so search and hash changes do not re-render
-  // the whole app.
-  const pathname = useRouterState({
-    select: (state) => state.location.pathname,
+  // Select only the locale, so other URL changes do not re-render the whole
+  // app. Read it from the rendered matches: the location changes before the
+  // root route has loaded the next locale's messages.
+  const locale = useRouterState({
+    select: (state) =>
+      splitLocalePath(state.matches.at(-1)?.pathname ?? state.location.pathname)
+        .locale,
+  });
+  // Switch providers with the rendered page, not the URL, so the outgoing page
+  // does not remount inside the auth provider while the next one loads.
+  const authUiPage = useRouterState({
+    select: (state) =>
+      isAuthUiPath(state.matches.at(-1)?.pathname ?? state.location.pathname),
   });
   const router = useRouter();
   const navigate = useNavigate();
-  const locale = splitLocalePath(pathname).locale;
   return (
     <LocaleProvider locale={locale}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <RootProvider
           components={{ Link: LocaleLink, Image: ContentImage }}
           search={{
+            SearchDialog: LazySearchDialog,
             options: {
               // oxlint-disable-next-line typescript/no-deprecated -- the site serves a static Orama index; the replacement client uses a different search engine
               type: "static",
@@ -135,20 +76,22 @@ export function Providers({ children }: { children: React.ReactNode }) {
             },
           }}
         >
-          <AuthUIProviders>
-            {children}
-            {isPostHogConfigured && <CookieConsentBanner />}
-            <Toaster
-              richColors
-              containerAriaLabel={translate(locale, "common.notifications")}
-              toastOptions={{
-                closeButtonAriaLabel: translate(
-                  locale,
-                  "common.closeNotification",
-                ),
-              }}
-            />
-          </AuthUIProviders>
+          {authUiPage ? (
+            <AuthUIPageProviders>{children}</AuthUIPageProviders>
+          ) : (
+            children
+          )}
+          {isPostHogConfigured && <CookieConsentBanner />}
+          <Toaster
+            richColors
+            containerAriaLabel={translate(locale, "common.notifications")}
+            toastOptions={{
+              closeButtonAriaLabel: translate(
+                locale,
+                "common.closeNotification",
+              ),
+            }}
+          />
         </RootProvider>
       </ThemeProvider>
     </LocaleProvider>

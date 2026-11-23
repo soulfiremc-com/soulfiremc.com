@@ -1,6 +1,8 @@
 // Auth UI components that plugins render on auth, account, and admin pages.
 // `lazy-auth-ui.tsx` loads this module on demand, so their form, table, date,
-// OTP, and WebAuthn dependencies stay out of the entry chunk.
+// OTP, and WebAuthn dependencies stay out of the entry chunk. The provider
+// that those pages wrap their content in loads with them.
+export { AuthUIProviders } from "@/lib/auth/auth-ui-providers";
 export { AuthTurnstile } from "@/components/auth-turnstile";
 export {
   AdminActivity,

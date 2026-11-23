@@ -4,6 +4,8 @@ import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query
 import { preloadAuthUi } from "@/lib/auth/lazy-auth-ui";
 import { isAuthUiPath } from "@/lib/auth-ui-config";
 import { preloadDocsContentForHydration } from "@/lib/docs/hydration";
+import { splitLocalePath } from "@/lib/i18n";
+import { loadMessages } from "@/lib/messages";
 import { routeTree } from "./routeTree.gen";
 
 export function getRouter() {
@@ -33,6 +35,8 @@ export function getRouter() {
       await Promise.all([
         preloadDocsContentForHydration(),
         preloadAuthUiForHydration(),
+        // Server-rendered text must match the first client render.
+        loadMessages(splitLocalePath(window.location.pathname).locale),
       ]);
     },
   });

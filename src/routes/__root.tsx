@@ -1,4 +1,4 @@
-import { translate } from "@/lib/messages";
+import { loadMessages, translate } from "@/lib/messages";
 import { splitLocalePath } from "@/lib/i18n";
 import "@fontsource-variable/geist";
 import "@fontsource-variable/geist-mono";
@@ -28,6 +28,10 @@ export type RouterAppContext = {
 };
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
+  // The browser loads only the catalog of the page locale, including before a
+  // client navigation or preload switches languages.
+  beforeLoad: ({ location }) =>
+    loadMessages(splitLocalePath(location.pathname).locale),
   head: ({ matches }) => {
     // Child routes override these defaults. A global 404 has no child head, so
     // localize the fallback and keep missing pages out of search results.
