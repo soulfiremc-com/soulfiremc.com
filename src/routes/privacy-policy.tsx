@@ -16,7 +16,7 @@ function PrivacyPolicy() {
     <main className="mx-auto prose w-full max-w-3xl px-4 py-12">
       <h1>Privacy Policy</h1>
       <p>
-        <strong>Last updated:</strong> November 16, 2026
+        <strong>Last updated:</strong> November 23, 2026
       </p>
 
       <p>
@@ -27,17 +27,26 @@ function PrivacyPolicy() {
         <a href="https://soulfiremc.com">soulfiremc.com</a>, or any website of
         ours that links to this privacy notice.
       </p>
+
+      <h2>Who Is Responsible for Your Data?</h2>
       <p>
-        This privacy policy template is based on{" "}
-        <a
-          href="https://termly.io/resources/templates/privacy-policy-template/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Termly&apos;s free privacy policy template
-        </a>
-        .
+        The controller under the EU General Data Protection Regulation (GDPR)
+        is:
       </p>
+      <address className="not-italic">
+        Alexander Kremer
+        <br />
+        c/o Postflex #10581
+        <br />
+        Emsdettener Str. 10
+        <br />
+        48268 Greven
+        <br />
+        Germany
+        <br />
+        Email:{" "}
+        <a href="mailto:support@soulfiremc.com">support@soulfiremc.com</a>
+      </address>
 
       <h2>1. What Information Do We Collect?</h2>
       <h3>Personal Information You Provide</h3>
@@ -67,8 +76,8 @@ function PrivacyPolicy() {
           )
         </li>
         <li>
-          OAuth account identifiers (Discord user ID, GitHub user ID) when you
-          link social accounts
+          OAuth account identifiers (Discord, GitHub, or Google user ID) when
+          you link social accounts
         </li>
         <li>
           WebAuthn passkey credentials (public key, device type) when you
@@ -159,7 +168,9 @@ function PrivacyPolicy() {
           security service receives browser and device characteristics when a
           page loads, such as screen size, time zone, language, and graphics
           details. It uses them to recognize repeated automated requests and
-          does not store cookies on your device.
+          does not store cookies on your device. The same service records when
+          you were last active and the approximate location derived from your IP
+          address, so administrators can investigate abuse.
         </li>
         <li>
           <strong>Analyze usage and improve our website</strong> &mdash; with
@@ -189,6 +200,28 @@ function PrivacyPolicy() {
         </li>
       </ul>
 
+      <h3>Legal Bases for Processing</h3>
+      <p>Under Art. 6(1) GDPR, we rely on these legal bases:</p>
+      <ul>
+        <li>
+          <strong>Contract (Art. 6(1)(b))</strong>: your account, sign-in,
+          transactional emails, reviews, and Discord linked roles.
+        </li>
+        <li>
+          <strong>Consent (Art. 6(1)(a))</strong>: analytics cookies in PostHog.
+          You can withdraw consent at any time in the{" "}
+          <Link to="/cookie-policy" hash="cookie-settings">
+            cookie settings
+          </Link>
+          .
+        </li>
+        <li>
+          <strong>Legitimate interests (Art. 6(1)(f))</strong>: security and
+          abuse prevention, anonymous usage statistics, SEO analytics, and the
+          donation widgets.
+        </li>
+      </ul>
+
       <h2>3. When and With Whom Do We Share Your Information?</h2>
       <p>
         We do not sell your personal information. We may share your data with
@@ -215,22 +248,12 @@ function PrivacyPolicy() {
               </a>
             </TableCell>
             <TableCell>
-              Website hosting and database connection pooling
+              Website hosting (Workers), database (D1), and Turnstile CAPTCHA
             </TableCell>
-            <TableCell>All account and session data</TableCell>
-          </TableRow>
-          <TableRow>
             <TableCell>
-              <a
-                href="https://vercel.com"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Vercel
-              </a>
+              All account and session data, request metadata (IP, headers), and
+              browser interaction data for bot detection
             </TableCell>
-            <TableCell>Website hosting and CDN</TableCell>
-            <TableCell>Request metadata (IP, headers)</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
@@ -270,8 +293,13 @@ function PrivacyPolicy() {
                 Better Auth
               </a>
             </TableCell>
-            <TableCell>Sign-in security and bot detection</TableCell>
-            <TableCell>Browser and device characteristics</TableCell>
+            <TableCell>
+              Sign-in security, bot detection, and the admin dashboard
+            </TableCell>
+            <TableCell>
+              Browser and device characteristics, last active time, approximate
+              location
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
@@ -285,19 +313,6 @@ function PrivacyPolicy() {
             </TableCell>
             <TableCell>SEO analytics</TableCell>
             <TableCell>Page visit data</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>
-              <a
-                href="https://www.cloudflare.com"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Cloudflare
-              </a>
-            </TableCell>
-            <TableCell>Turnstile CAPTCHA</TableCell>
-            <TableCell>Browser interaction data for bot detection</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
@@ -328,6 +343,56 @@ function PrivacyPolicy() {
           <TableRow>
             <TableCell>
               <a
+                href="https://policies.google.com/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Google
+              </a>
+            </TableCell>
+            <TableCell>OAuth login</TableCell>
+            <TableCell>OAuth tokens, user ID</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <a
+                href="https://ko-fi.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Ko-fi
+              </a>
+            </TableCell>
+            <TableCell>
+              Donation button on every page and donation widget on the support
+              page
+            </TableCell>
+            <TableCell>
+              Request metadata (IP, headers) when the widget loads, and any
+              details you enter when you donate
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <a
+                href="https://nowpayments.io"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                NOWPayments
+              </a>
+            </TableCell>
+            <TableCell>
+              Cryptocurrency donation widget on the support page
+            </TableCell>
+            <TableCell>
+              Request metadata (IP, headers) when the widget loads, and any
+              details you enter when you donate
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <a
                 href="https://gravatar.com"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -353,6 +418,16 @@ function PrivacyPolicy() {
           </TableRow>
         </TableBody>
       </Table>
+
+      <h3>Transfers Outside the EU</h3>
+      <p>
+        Some of these providers, including Resend, GitHub, Discord, Google,
+        YouTube, Ko-fi, and NOWPayments, may process data outside the European
+        Economic Area. Where a country has no EU adequacy decision, the transfer
+        relies on the provider&apos;s safeguards, such as the EU Standard
+        Contractual Clauses or certification under the EU-U.S. Data Privacy
+        Framework.
+      </p>
 
       <h2>4. Do We Use Cookies and Tracking Technologies?</h2>
       <p>
@@ -382,7 +457,10 @@ function PrivacyPolicy() {
       </p>
       <ul>
         <li>Passwords are hashed before storage (never stored in plaintext)</li>
-        <li>Row-Level Security (RLS) is enabled on all database tables</li>
+        <li>
+          The server checks access rights for every request that reads or
+          changes account data
+        </li>
         <li>HTTPS is enforced across the entire website</li>
         <li>Content Security Policy (CSP) headers restrict script execution</li>
         <li>
@@ -440,6 +518,11 @@ function PrivacyPolicy() {
         To exercise any of these rights, contact us at{" "}
         <a href="mailto:support@soulfiremc.com">support@soulfiremc.com</a>.
       </p>
+      <p>
+        You also have the right to lodge a complaint with a data protection
+        supervisory authority, in particular in the EU member state where you
+        live or work, or where you believe an infringement took place.
+      </p>
 
       <h2>8. Do We Collect Information from Minors?</h2>
       <p>
@@ -479,6 +562,18 @@ function PrivacyPolicy() {
           </a>
         </li>
       </ul>
+
+      <p className="text-sm text-muted-foreground">
+        This policy is adapted from{" "}
+        <a
+          href="https://termly.io/resources/templates/privacy-policy-template/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Termly&apos;s free privacy policy template
+        </a>
+        .
+      </p>
     </main>
   );
 }
@@ -487,7 +582,8 @@ export const Route = createFileRoute("/privacy-policy")({
   head: () => ({
     meta: getPageMeta({
       title: "Privacy Policy - SoulFire",
-      description: "SoulFire Privacy Policy.",
+      description:
+        "How SoulFire collects, uses, and protects your account, analytics, and security data.",
       path: "/privacy-policy",
     }),
     links: getCanonicalLinks("/privacy-policy"),

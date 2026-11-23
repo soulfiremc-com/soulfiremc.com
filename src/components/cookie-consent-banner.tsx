@@ -1,5 +1,6 @@
 "use client";
 
+import { Link } from "@tanstack/react-router";
 import { useT } from "@/lib/i18n-react";
 
 import { Cookie } from "lucide-react";
@@ -114,7 +115,14 @@ const CookieConsentBanner = () => {
               {t("cookies.description")}
             </CardDescription>
             <p className="text-xs text-muted-foreground">
-              {t("cookies.acceptanceNotice")}
+              {t("cookies.acceptanceNotice")}{" "}
+              <Link
+                to="/cookie-policy"
+                hash="cookie-settings"
+                className="underline underline-offset-2"
+              >
+                {t("cookies.cookieSettings")}
+              </Link>
             </p>
           </CardContent>
           <CardFooter className="flex gap-2 px-4 sm:px-6 short:shrink-0 short:pl-0">

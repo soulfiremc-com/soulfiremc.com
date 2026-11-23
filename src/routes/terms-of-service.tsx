@@ -8,35 +8,7 @@ function TermsOfService() {
     <main className="mx-auto prose w-full max-w-3xl px-4 py-12">
       <h1>Terms of Service</h1>
       <p>
-        <strong>Last updated:</strong> February 25, 2026
-      </p>
-
-      <p>
-        This Terms of Service template is adapted from{" "}
-        <a
-          href="https://gist.github.com/devver/380029"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          a general Terms of Service template
-        </a>{" "}
-        licensed under the{" "}
-        <a
-          href="https://creativecommons.org/licenses/by/3.0/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Creative Commons Attribution 3.0 License
-        </a>
-        , originally derived from the{" "}
-        <a
-          href="https://www.heroku.com/policy/tos"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Heroku Terms of Service
-        </a>
-        .
+        <strong>Last updated:</strong> November 23, 2026
       </p>
 
       <h2>1. Agreement to Terms</h2>
@@ -81,9 +53,9 @@ function TermsOfService() {
         <li>Notify us immediately of any unauthorized use of your account</li>
       </ul>
       <p>
-        You may register using email and password, social login (Discord or
-        GitHub), email OTP, or WebAuthn passkeys. You must be at least 13 years
-        of age to create an account.
+        You may register using email and password, social login (Discord,
+        GitHub, or Google), email OTP, or WebAuthn passkeys. You must be at
+        least 13 years of age to create an account.
       </p>
       <p>
         We reserve the right to suspend or terminate accounts that violate these
@@ -230,9 +202,10 @@ function TermsOfService() {
 
       <h2>13. Governing Law</h2>
       <p>
-        These Terms shall be governed by and construed in accordance with the
-        laws applicable in the jurisdiction of your residence, without regard to
-        conflict of law principles.
+        These Terms are governed by the laws of the Federal Republic of Germany,
+        excluding its conflict of law rules. If you are a consumer, this choice
+        does not remove the protection of mandatory consumer laws in the country
+        where you live.
       </p>
 
       <h2>14. Severability</h2>
@@ -261,6 +234,34 @@ function TermsOfService() {
           </a>
         </li>
       </ul>
+
+      <p className="text-sm text-muted-foreground">
+        These Terms are is adapted from{" "}
+        <a
+          href="https://gist.github.com/devver/380029"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          a general Terms of Service template
+        </a>{" "}
+        licensed under the{" "}
+        <a
+          href="https://creativecommons.org/licenses/by/3.0/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Creative Commons Attribution 3.0 License
+        </a>
+        , originally derived from the{" "}
+        <a
+          href="https://www.heroku.com/policy/tos"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Heroku Terms of Service
+        </a>
+        .
+      </p>
     </main>
   );
 }
@@ -269,7 +270,8 @@ export const Route = createFileRoute("/terms-of-service")({
   head: () => ({
     meta: getPageMeta({
       title: "Terms of Service - SoulFire",
-      description: "SoulFire Terms of Service.",
+      description:
+        "The rules for using SoulFire accounts, reviews, and the soulfiremc.com website.",
       path: "/terms-of-service",
     }),
     links: getCanonicalLinks("/terms-of-service"),

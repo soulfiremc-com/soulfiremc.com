@@ -40,24 +40,13 @@ function CookiePolicy() {
     <main className="mx-auto prose w-full max-w-3xl px-4 py-12">
       <h1>Cookie Policy</h1>
       <p>
-        <strong>Last updated:</strong> November 16, 2026
+        <strong>Last updated:</strong> November 23, 2026
       </p>
 
       <p>
         This Cookie Policy explains how SoulFire (&quot;we,&quot;
         &quot;us,&quot; or &quot;our&quot;) uses cookies and similar tracking
         technologies on <a href="https://soulfiremc.com">soulfiremc.com</a>.
-      </p>
-      <p>
-        This cookie policy is based on the{" "}
-        <a
-          href="https://www.cookieyes.com/blog/cookie-policy-template/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          CookieYes free cookie policy template
-        </a>
-        .
       </p>
 
       <h2>1. What Are Cookies?</h2>
@@ -131,13 +120,24 @@ function CookiePolicy() {
         <TableBody>
           <TableRow>
             <TableCell>
-              <code>better-auth.session_token</code>
+              <code>__Secure-better-auth.session_token</code>
             </TableCell>
             <TableCell>SoulFire (better-auth)</TableCell>
             <TableCell>
               Maintains your authenticated session after signing in
             </TableCell>
             <TableCell>Session / up to 7 days</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <code>__Secure-better-auth.session_data</code>
+            </TableCell>
+            <TableCell>SoulFire (better-auth)</TableCell>
+            <TableCell>
+              Encrypted copy of your session so pages load without a database
+              lookup
+            </TableCell>
+            <TableCell>5 minutes</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
@@ -256,6 +256,39 @@ function CookiePolicy() {
                 rel="noopener noreferrer"
               >
                 Google Privacy Policy
+              </a>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Ko-fi</TableCell>
+            <TableCell>
+              Donation button on every page and donation widget on the support
+              page. Ko-fi may set cookies when its widget loads or when you open
+              it.
+            </TableCell>
+            <TableCell>
+              <a
+                href="https://more.ko-fi.com/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Ko-fi Privacy Policy
+              </a>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>NOWPayments</TableCell>
+            <TableCell>
+              Cryptocurrency donation widget on the support page. NOWPayments
+              may set cookies when the widget loads.
+            </TableCell>
+            <TableCell>
+              <a
+                href="https://nowpayments.io/doc/privacy-policy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                NOWPayments Privacy Policy
               </a>
             </TableCell>
           </TableRow>
@@ -435,6 +468,18 @@ function CookiePolicy() {
         For more details on how we handle your personal data, please see our{" "}
         <Link to="/privacy-policy">Privacy Policy</Link>.
       </p>
+
+      <p className="text-sm text-muted-foreground">
+        This policy is adapted from the{" "}
+        <a
+          href="https://www.cookieyes.com/blog/cookie-policy-template/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          CookieYes free cookie policy template
+        </a>
+        .
+      </p>
     </main>
   );
 }
@@ -443,7 +488,8 @@ export const Route = createFileRoute("/cookie-policy")({
   head: () => ({
     meta: getPageMeta({
       title: "Cookie Policy - SoulFire",
-      description: "SoulFire Cookie Policy.",
+      description:
+        "Which cookies and browser storage soulfiremc.com uses, and how to change your analytics choice.",
       path: "/cookie-policy",
     }),
     links: getCanonicalLinks("/cookie-policy"),
