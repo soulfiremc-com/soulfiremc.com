@@ -28,21 +28,8 @@ import type { ElementType } from "react";
 import { Image } from "@/components/image";
 
 type PaymentLogoConfig =
-  | {
-      Icon: ElementType;
-      asset?: never;
-      mark?: never;
-    }
-  | {
-      asset: string;
-      Icon?: never;
-      mark?: never;
-    }
-  | {
-      Icon?: never;
-      asset?: never;
-      mark: string;
-    };
+  | { Icon: ElementType; asset?: never }
+  | { asset: string; Icon?: never };
 
 const paymentLogos: Record<string, PaymentLogoConfig> = {
   alipay: { Icon: SiAlipay },
@@ -52,7 +39,6 @@ const paymentLogos: Record<string, PaymentLogoConfig> = {
   banktransfer: { Icon: Landmark },
   bankwire: { Icon: Landmark },
   bancontact: { asset: "/payment-methods/bancontact.svg" },
-  binancegiftcardpaypalskrill: { Icon: SiBinance },
   blik: { asset: "/payment-methods/blik.svg" },
   bitcoin: { Icon: SiBitcoin },
   btc: { Icon: SiBitcoin },
@@ -110,7 +96,7 @@ function getPaymentLogo(method: string): PaymentLogoConfig {
 function PaymentMethodLogo({ method }: { method: string }) {
   const logo = getPaymentLogo(method);
 
-  if (logo.asset) {
+  if (!logo.Icon) {
     return (
       <Image
         alt=""
@@ -122,23 +108,7 @@ function PaymentMethodLogo({ method }: { method: string }) {
     );
   }
 
-  if (logo.mark) {
-    return (
-      <span
-        aria-hidden="true"
-        className="inline-flex h-3.5 min-w-3.5 items-center justify-center rounded-xs border bg-muted px-0.5 text-4xs leading-none font-bold text-foreground"
-      >
-        {logo.mark}
-      </span>
-    );
-  }
-
-  const Icon = logo.Icon;
-
-  if (!Icon) {
-    return null;
-  }
-
+  const { Icon } = logo;
   return (
     <Icon
       aria-hidden="true"
@@ -178,8 +148,7 @@ export function PaymentMethods({ methods }: { methods?: string[] }) {
         {t("payments.payments")}
       </span>
       {methods.map((method) => {
-        const labelKey =
-          paymentLabelKeys[method.toLowerCase().replaceAll(/[^a-z0-9]/gu, "")];
+        const labelKey = paymentLabelKeys[normalizePaymentMethod(method)];
         return (
           <span
             key={method}
