@@ -80,7 +80,7 @@ Security:
 AuthMe nests most options under `settings`. The `Security` section with a capital S is a separate top-level section.
 
 <Callout type="warning">
-**Always use BCRYPT or BCRYPT2Y for password hashing.** SHA256 is vulnerable to rainbow table attacks and should never be used for password storage.
+**Always use BCRYPT or BCRYPT2Y for password hashing.** AuthMe salts SHA256 hashes, but SHA256 is fast, so an attacker with a database copy can try billions of guesses cheaply. BCRYPT is slow on purpose.
 </Callout>
 
 ### Database Backend
@@ -183,7 +183,7 @@ Manual testing covers correctness, but concurrency bugs and performance problems
 
 ### What to Test
 
-**Mass registration**: Connect 50 bots at once, each registering a unique account. Every one of them needs to succeed, with no race conditions and no duplicate key errors in the database.
+**Mass registration**: Connect 50 bots at once, each registering a unique account. Every one of them needs to succeed, with no race conditions and no duplicate key errors in the database. With `maxRegPerIp: 1`, bots from one machine fail after the first registration, so raise the limit on the test server or give each bot its own proxy. Restore the setting afterwards.
 
 **Login throughput**: Disconnect all 50, then reconnect them simultaneously. Each runs `/login`. Watch for timeouts, failed logins, or "too many connections" errors from your database.
 

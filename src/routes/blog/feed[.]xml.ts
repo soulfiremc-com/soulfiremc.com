@@ -22,22 +22,22 @@ export const Route = createFileRoute("/blog/feed.xml")({
   <channel>
     <title>SoulFire Blog</title>
     <link>${siteUrl}/blog</link>
-    <description>Latest updates, tutorials, and insights from the SoulFire team</description>
+    <description>Guides for testing Minecraft servers with bots: load, anti-bot, authentication, and proxies.</description>
     <language>en-us</language>
     <atom:link href="${siteUrl}/blog/feed.xml" rel="self" type="application/rss+xml" />
     ${posts
       .map((post) => {
+        // A post without a date gets no pubDate, so its date stays stable.
         const pubDate = post.data.date
-          ? new Date(post.data.date).toUTCString()
-          : new Date().toUTCString();
+          ? `\n      <pubDate>${new Date(post.data.date).toUTCString()}</pubDate>`
+          : "";
 
         return `
     <item>
       <title>${escapeXml(post.data.title)}</title>
       <link>${siteUrl}${post.url}</link>
       <guid isPermaLink="true">${siteUrl}${post.url}</guid>
-      <description>${escapeXml(post.data.description ?? "")}</description>
-      <pubDate>${pubDate}</pubDate>
+      <description>${escapeXml(post.data.description ?? "")}</description>${pubDate}
       ${post.data.author ? `<dc:creator>${escapeXml(post.data.author)}</dc:creator>` : ""}
       ${post.data.tags?.map((tag) => `<category>${escapeXml(tag)}</category>`).join("\n      ") || ""}
     </item>`;

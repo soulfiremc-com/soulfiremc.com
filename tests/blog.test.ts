@@ -1,9 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import {
-  formatUsd,
-  parseCalculatorNumber,
-} from "@/components/mdx/donut-calculator-format";
+import { parseCalculatorNumber } from "@/components/mdx/donut-calculator-format";
 import { formatBlogDate } from "@/lib/blog-date";
 
 void test("formatBlogDate keeps the front-matter calendar day in every time zone", () => {
@@ -26,13 +23,8 @@ void test("parseCalculatorNumber lets users clear and retype fields", () => {
   assert.equal(parseCalculatorNumber("0", bots), 1);
   assert.equal(parseCalculatorNumber("5000", bots), 1000);
 
-  const price = { min: 0, max: 1, fallback: 0 };
-  assert.equal(parseCalculatorNumber("0.", price), 0);
-  assert.equal(parseCalculatorNumber("0.07", price), 0.07);
-  assert.equal(parseCalculatorNumber("-3", price), 0);
-});
-
-void test("formatUsd keeps large results short", () => {
-  assert.equal(formatUsd(12.5), "$12.50");
-  assert.equal(formatUsd(576_000_000), "$576M");
+  const ratio = { min: 0, max: 1, fallback: 0 };
+  assert.equal(parseCalculatorNumber("0.", ratio), 0);
+  assert.equal(parseCalculatorNumber("0.07", ratio), 0.07);
+  assert.equal(parseCalculatorNumber("-3", ratio), 0);
 });

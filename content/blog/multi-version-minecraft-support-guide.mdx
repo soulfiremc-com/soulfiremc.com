@@ -150,10 +150,10 @@ For load testing, connect bots across multiple versions simultaneously. For exam
 |---------|-------------|-----|
 | "Outdated client" on join | ViaBackwards missing | Install ViaBackwards |
 | "Outdated server" on join | ViaVersion missing | Install ViaVersion |
-| Blocks invisible | Normal for legacy clients seeing newer content | Use era-appropriate blocks in key areas |
+| Blocks invisible | Missing or broken Via block mapping (newer blocks should show as placeholders) | Update ViaVersion and ViaBackwards, then report the block on GitHub |
 | Movement rubber-banding | Physics prediction mismatch | Some is expected on 1.8 clients; update the Via plugins |
 | Combat feels wrong | 1.8 vs 1.9+ attack system difference | Use OldCombatMechanics or document the expected behavior |
-| Slow chunk loading | Protocol differences in chunk format | Expected; Paper's async chunk loading helps |
+| Slow chunk loading | Chunk translation for older clients costs CPU | Pregenerate the world and check Via's CPU use in Spark |
 | Random disconnects | Unsupported protocol edge case | Update ViaVersion to latest and check GitHub issues |
 
 ## Performance

@@ -33,7 +33,7 @@ If you're starting fresh, there's no reason to pick anything else.
 
 [BungeeCord](https://www.spigotmc.org/wiki/bungeecord/) is legacy software. It still works, and it has the biggest plugin ecosystem, but its forwarding model (`ip_forward`) is insecure by design. It trusts connections based on the proxy's IP address, which means anyone who reaches a backend directly can forge any player identity. You can bolt on [BungeeGuard](https://github.com/lucko/BungeeGuard) to patch this, but you're still working around a fundamentally broken trust model.
 
-Waterfall (PaperMC's BungeeCord fork) exists, but PaperMC is basically done with it. It's in maintenance mode and still uses the same insecure forwarding.
+Waterfall (PaperMC's BungeeCord fork) reached end of life in 2024. PaperMC no longer updates it, and it still uses the same insecure forwarding.
 
 Only use BungeeCord if you're locked into plugins that genuinely have no Velocity equivalent. Even then, consider whether it's worth the security tradeoff.
 
@@ -145,7 +145,7 @@ After setup, check these three things:
 
 1. **Players get correct UUIDs.** Connect through the proxy and check your UUID on the backend (a plugin like Essentials shows it with `/whois`). It should match your Mojang/Microsoft UUID, not an offline-mode hash.
 
-2. **Skins load correctly.** If forwarding is broken, skins won't transfer to backends. In our testing, this is usually the first visible symptom of a misconfigured secret.
+2. **Skins load correctly.** If forwarding is broken, skins won't transfer to backends. Missing skins are often the first visible symptom of a misconfigured secret.
 
 3. **Direct backend connections are rejected.** Try connecting a client straight to `localhost:25565` (bypassing the proxy). With modern forwarding enabled, the backend should refuse the connection. If you can join with any username, your forwarding is broken and your network is wide open.
 
@@ -177,7 +177,7 @@ tail -f velocity-proxy/logs/latest.log | grep -i error
 
 In the proxy console, run `glist` to see how players are spread across servers. On each backend, run `spark tps` (requires [Spark](https://spark.lucko.me/)).
 
-In our testing, a properly configured Velocity proxy handles 100+ connections per second, switches servers in under 500ms, and stays under 1GB of RAM. BungeeCord can't match those numbers. We consistently saw higher latency and memory usage under the same conditions. If you see connection timeouts during bursts, increase `read-timeout` in the `[advanced]` section of velocity.toml. If switching is slow, check that backend spawn chunks are pregenerated and not causing lag on player join.
+Measure your own proxy under the staged load: connections per second, time to switch servers, and memory use. Run the same test against BungeeCord if you are deciding between the two. If you see connection timeouts during bursts, increase `read-timeout` in the `[advanced]` section of velocity.toml. If switching is slow, check that backend spawn chunks are pregenerated and not causing lag on player join.
 
 ## Troubleshooting
 
@@ -195,7 +195,7 @@ sudo iptables -A INPUT -p tcp --dport 25565 -j DROP
 
 **Random disconnects:** Usually network instability or aggressive timeouts. Increase `read-timeout` to 60000 in velocity.toml's `[advanced]` section. If the problem persists, check for packet loss on the network path between proxy and backends.
 
-**Slow server switching:** Almost always caused by backends generating terrain when players arrive. Pregenerate the spawn area with [Chunky](https://github.com/pop4959/Chunky). If backends are on different physical machines, network latency between them adds to switch time too. In our testing, keeping backends on the same machine or local network cuts switch times roughly in half compared to cross-datacenter setups.
+**Slow server switching:** Almost always caused by backends generating terrain when players arrive. Pregenerate the spawn area with [Chunky](https://github.com/pop4959/Chunky). If backends are on different physical machines, network latency between them adds to switch time too. Keep backends on the same machine or local network when switch time matters, and measure the difference on your own setup.
 
 ---
 

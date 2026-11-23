@@ -6,7 +6,7 @@ import {
   NativeSelect,
   NativeSelectOption,
 } from "@/components/ui/native-select";
-import { formatUsd, parseCalculatorNumber } from "./donut-calculator-format";
+import { parseCalculatorNumber } from "./donut-calculator-format";
 
 const METHODS = [
   {
@@ -62,12 +62,10 @@ function formatNumber(n: number): string {
 
 const MIN_BOTS = 1;
 const MAX_BOTS = 1000;
-const MAX_PRICE = 1;
 
 export function DonutCalculator() {
   const id = useId();
   const [botInput, setBotInput] = useState("5");
-  const [priceInput, setPriceInput] = useState("0.05");
   const [selectedMethod, setSelectedMethod] = useState(0);
 
   const botCount = Math.round(
@@ -77,22 +75,15 @@ export function DonutCalculator() {
       fallback: MIN_BOTS,
     }),
   );
-  const pricePerMillion = parseCalculatorNumber(priceInput, {
-    min: 0,
-    max: MAX_PRICE,
-    fallback: 0,
-  });
 
   const method = itemAt(METHODS, selectedMethod);
   const dailyMoney = method.moneyPerDay * botCount;
   const dailyShards = method.shardsPerDay * botCount;
-  const dailyUsd = (dailyMoney / 1_000_000) * pricePerMillion;
-  const monthlyUsd = dailyUsd * 30;
 
   return (
     <div className="not-prose my-6 rounded-lg border bg-fd-card p-4 text-fd-card-foreground">
       <div className="mb-4 text-lg font-semibold">
-        DonutSMP Earnings Calculator
+        DonutSMP Output Calculator
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
         <Field className="*:data-[slot=native-select-wrapper]:w-full">
@@ -131,30 +122,9 @@ export function DonutCalculator() {
             className="bg-fd-background"
           />
         </Field>
-        <Field className="sm:col-span-2">
-          <FieldLabel htmlFor={`${id}-price`}>
-            USD per Million (current market rate)
-          </FieldLabel>
-          <Input
-            id={`${id}-price`}
-            type="number"
-            inputMode="decimal"
-            min={0}
-            max={MAX_PRICE}
-            step={0.01}
-            value={priceInput}
-            onChange={(e) => {
-              setPriceInput(e.target.value);
-            }}
-            onBlur={() => {
-              setPriceInput(String(pricePerMillion));
-            }}
-            className="bg-fd-background"
-          />
-        </Field>
       </div>
 
-      <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div className="mt-4 grid grid-cols-2 gap-3" aria-live="polite">
         <div className="min-w-0 rounded-md border bg-fd-background p-3">
           <div className="text-xs text-fd-muted-foreground">Daily Money</div>
           <div className="text-lg font-bold tabular-nums">
@@ -165,18 +135,6 @@ export function DonutCalculator() {
           <div className="text-xs text-fd-muted-foreground">Daily Shards</div>
           <div className="text-lg font-bold tabular-nums">
             {formatNumber(dailyShards)}
-          </div>
-        </div>
-        <div className="min-w-0 rounded-md border bg-fd-background p-3">
-          <div className="text-xs text-fd-muted-foreground">Daily USD</div>
-          <div className="text-lg font-bold wrap-break-word text-success tabular-nums">
-            {formatUsd(dailyUsd)}
-          </div>
-        </div>
-        <div className="min-w-0 rounded-md border bg-fd-background p-3">
-          <div className="text-xs text-fd-muted-foreground">Monthly USD</div>
-          <div className="text-lg font-bold wrap-break-word text-success tabular-nums">
-            {formatUsd(monthlyUsd)}
           </div>
         </div>
       </div>

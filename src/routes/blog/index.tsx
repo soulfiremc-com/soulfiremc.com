@@ -23,7 +23,7 @@ export const Route = createFileRoute("/blog/")({
   head: () => {
     const title = "Blog - SoulFire";
     const description =
-      "Latest updates, tutorials, and insights about Minecraft bot testing, server stress testing, and SoulFire development.";
+      "Guides for testing Minecraft servers with bots: load, anti-bot, authentication, and proxies.";
 
     return {
       meta: getPageMeta({
@@ -66,7 +66,8 @@ function BlogIndexPage() {
         <div className="mb-12">
           <h1 className="mb-4 text-4xl font-bold sm:text-5xl">Blog</h1>
           <p className="text-lg text-muted-foreground sm:text-xl">
-            Latest updates, tutorials, and insights from the SoulFire team
+            Guides for testing Minecraft servers with bots: load, anti-bot,
+            authentication, and proxies.
           </p>
         </div>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">

@@ -1,6 +1,6 @@
 ---
 title: DonutSMP Money-Making Guide with SoulFire Scripts
-description: A practical breakdown of DonutSMP's economy and how SoulFire's visual scripting system can automate farming, trading, and shard generation at scale
+description: How DonutSMP's economy works, and how to model its farming and trading loops with SoulFire's visual scripts on a server you control
 author: Pistonmaster
 date: 2026-02-24
 tags: [minecraft, donutsmp, economy, automation, scripting, soulfire]
@@ -10,22 +10,18 @@ import { Tab, Tabs } from 'fumadocs-ui/components/tabs'
 import { Callout } from 'fumadocs-ui/components/callout'
 import { Step, Steps } from 'fumadocs-ui/components/steps'
 
-## DonutSMP and the Real-Money Economy
+## DonutSMP's economy
 
 DonutSMP is currently the largest Minecraft server in the world, regularly hitting 30,000+ concurrent players and peaking above 60,000. In practice, it now behaves more like a high-risk survival economy server with separate survival, duels, and AFK loops than the older hardcore-style "die once and sit out for two days" ruleset many guides still describe.
 
-What makes DonutSMP interesting from an automation perspective is that its economy still has real monetary value. Current third-party listings are much wider than the narrow $0.03-0.04/M range older guides quote: bulk Eldorado offers still show up around $0.03-0.04 per million, while smaller eBay lots often land closer to $0.05-0.10 per million. That might sound tiny, but when you're generating billions per day across multiple bots, the numbers add up fast.
+What makes DonutSMP interesting from an automation perspective is how its economy loops fit together: shards, spawners, the sell multiplier, and the auction house. This post explains those loops and shows how to model them with SoulFire's visual scripts.
 
 <Callout type="info">
 **April 2026 refresh:** the old death-ban framing is outdated, and DonutSMP's shard shop was recently flattened so every spawner now costs 1,500 shards. That makes current live prices more important than old shop-price heuristics.
 </Callout>
 
 <Callout type="warning">
-**These values fluctuate constantly.** DonutSMP's economy experiences heavy inflation, third-party rates shift daily, and the server's official rules now explicitly ban scripts, macros, auto-clickers, and off-platform trading. The numbers in this guide reflect approximate rates and public listings as of April 2026. Always check current prices before making decisions.
-</Callout>
-
-<Callout type="warning">
-**Read the rules first.** DonutSMP bans scripts, macros, auto-clickers, and off-platform trading. Bots that run there can get their accounts banned, and you carry that risk. SoulFire is built for servers that you own or have permission to test. This post explains how the economy and the node system work. It does not give you permission to break a server's rules.
+**Read the rules first.** DonutSMP bans scripts, macros, auto-clickers, and off-platform trading, and it bans associated accounts together. Do not run bots on DonutSMP. Build and test these scripts on a server you run, such as a local test server with similar economy plugins. Prices and rates change constantly; the numbers here are approximate as of April 2026.
 </Callout>
 
 ## How the Economy Works
@@ -49,7 +45,7 @@ DonutSMP runs on two currencies, three trading systems, and a sell multiplier th
 
 ### The Sell Multiplier
 
-This is the single most important mechanic for money generation. Your personal sell multiplier starts at 1.0x and climbs to 3.0x as you accumulate total sales. At max multiplier, you can order items cheaply through `/order` listings and flip them via `/sell` for triple the base price. It's essentially infinite margin once you've ground your multiplier high enough.
+This is the single most important mechanic for money generation. Your personal sell multiplier starts at 1.0x and climbs to 3.0x as you accumulate total sales. At max multiplier, you can order items cheaply through `/order` listings and flip them via `/sell` for triple the base price. The margin per item grows with the multiplier, but order supply and server-side limits still cap it.
 
 Tools like [DonutCalc](https://donutcalc.com/) help plan the grind to 3.0x. The [DonutSMP Wiki](https://donutsmp.fandom.com/wiki/Sell_Multiplier) has the full breakdown of milestones.
 
@@ -120,7 +116,7 @@ DonutSMP has a [public API](https://api.donutsmp.net/index.html) and community t
 
 ## The Earnings Calculator
 
-Play with the numbers below to get a rough idea of what different setups could generate. Adjust the bot count, farming method, and current market rate.
+Play with the numbers below to get a rough idea of the in-game output of different setups. Adjust the bot count and farming method.
 
 <DonutCalculator />
 
@@ -130,7 +126,7 @@ This calculator uses approximate values that change frequently. Farm output depe
 
 ## How SoulFire's Node Scripting Makes This Possible
 
-SoulFire isn't a simple autoclicker. It runs actual Minecraft client code built on Fabric, so the server can't distinguish it from a real player by protocol alone. But the real power is in the visual node scripting system, which lets you build complex automation without writing a single line of code.
+SoulFire isn't a simple autoclicker. It uses the real Minecraft client protocol stack through Fabric, while the bot behavior itself comes from your scripts. The real power is in the visual node scripting system, which lets you build complex automation without writing a single line of code.
 
 ### What the Scripting System Can Do
 
@@ -226,46 +222,17 @@ Running one bot is a proof of concept. Running 10+ is where things get interesti
 
 SoulFire is designed to run many bots simultaneously from a single SoulFire server. Each bot runs its own script independently. You can assign different scripts to different bots, so some farm shards while others operate spawner farms.
 
-### Proxy Rotation
-
-DonutSMP tracks IPs and can ban "associated accounts." Running all your bots from one IP is a quick way to lose everything. SoulFire supports SOCKS5 and HTTP proxies natively, so you can route each bot through a different residential proxy.
-
 ### The Death and Re-Gear Problem
 
 Death is still expensive, but not because of the old two-day lockout. The real pain now is lost gear, travel time, broken farm positioning, and the chance that another player loots whatever your bot was carrying. For AFK shard farming this isn't a huge concern since the AFK zone is relatively safe. For bots operating in the overworld near farms, other players can and will kill them for loot. Your scripts still need solid damage detection, escape logic, and post-death recovery.
 
-### Risk Assessment
+### Rules and risk
 
-| Risk | Severity | Mitigation |
-|------|----------|------------|
-| Bot detection by anti-cheat | Medium | SoulFire uses real client code, reducing protocol-level detection |
-| Admin manual review | High | Vary bot behavior, don't run identical patterns |
-| IP-based ban waves | High | Use residential proxies, one per bot |
-| Death while loaded near farms | Medium | Script damage detection, stash gear, auto-return to safe coordinates |
-| Economy crashes | Low | Diversify methods, cash out regularly |
-| ToS enforcement | High | Accept the risk or don't participate |
-
-<Callout type="danger">
-Real-money trading on DonutSMP explicitly violates their terms of service. Getting caught means permanent bans across all associated accounts. This guide explains what's technically possible, not what's endorsed. You assume all risk.
-</Callout>
-
-## Third-Party Market Landscape
-
-For context, here's where DonutSMP currency and items trade hands outside the server. These marketplaces operate in a gray area and listings change constantly.
-
-| Platform | What's Sold | Approximate Rates |
-|----------|-------------|-------------------|
-| [Eldorado.gg](https://www.eldorado.gg/donutsmp-money/g/278) | Money, items, accounts, boosting services | Bulk offers still start around ~$0.03-0.04/M |
-| [Odealo](https://odealo.com/games/donut-smp/marketplace) | Money, items, accounts | Varies |
-| eBay | Money, spawners, accounts | Small lots often land around ~$0.05-0.10/M |
-| Various `.market` sites | Money, spawners, bases | Varies |
-
-Eldorado also lists **boosting services** where sellers will AFK farm, build bases, or dig for you. That's essentially what you'd be automating with SoulFire, but doing it yourself instead of paying someone.
-
-The market supports the idea that there's real demand here. People pay for in-game currency and services, and the supply side is where bots fit in.
+DonutSMP's rules forbid scripts and real-money trading, and staff ban associated accounts together.
+Do not try to hide bots from staff or anti-cheat. Run these scripts only on servers you own or have permission to test.
 
 ## Getting Started
 
-If you want to experiment with this, start small. One bot, AFK shard farming, no real-money trading. Get comfortable with the node scripting system, understand how DonutSMP's mechanics work firsthand, and build up from there.
+If you want to experiment with this, start small on your own test server. One bot, AFK shard farming. Get comfortable with the node scripting system, understand how DonutSMP's mechanics work firsthand, and build up from there.
 
 The [SoulFire scripting documentation](/docs/scripting) covers the full node reference, and the [examples page](/docs/scripting/examples) has starter workflows you can adapt. For DonutSMP-specific economy data, [donut.auction](https://donut.auction/), [donutstats.org](https://donutstats.org/), and [donutstats.net](https://www.donutstats.net/) are the best live resources.

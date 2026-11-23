@@ -31,12 +31,14 @@ Minecraft servers have two numbers you need to watch: TPS and MSPT.
 
 **TPS (Ticks Per Second)** measures the server's tick rate, targeting 20 ticks per second. **MSPT (Milliseconds Per Tick)** measures how long each tick takes to process. MSPT is the one you should actually care about, because it shows performance trends before TPS drops. A server at 45ms MSPT is still hitting 20 TPS but has almost no headroom left.
 
+A tick has a 50ms budget, so TPS stays at 20 until MSPT goes above 50ms. Past that point, TPS is roughly 1000 divided by MSPT.
+
 | TPS | MSPT | Server State |
 |-----|------|--------------|
 | 20.0 | &lt;40ms | Healthy, has headroom |
-| 18-19 | 40-50ms | Minor lag, running near limit |
-| 15-17 | 50-70ms | Noticeable delays |
-| &lt;15 | &gt;70ms | Severe, nearly unplayable |
+| 20.0 | 40-50ms | Running near the limit, no headroom |
+| 15-20 | 50-67ms | Lagging, players notice delays |
+| &lt;15 | &gt;67ms | Severe, nearly unplayable |
 
 The best tool for monitoring both is [Spark](https://spark.lucko.me/), which works on Paper, Spigot, Fabric, Forge, and proxies. Install it, then use these commands in-game:
 
@@ -155,9 +157,9 @@ java -Xms10G -Xmx10G -XX:+UseG1GC -XX:+ParallelRefProcEnabled \
 
 **G1GC (Aikar's flags)** divides the heap into regions and collects garbage in phases, aiming for a 200ms pause time target. It still produces stop-the-world pauses that scale with heap size, but Aikar's tuning parameters optimize it for Minecraft's allocation patterns: lots of short-lived objects from chunk loading, entity processing, and packet handling. Works well on modest hardware and smaller heaps.
 
-**ZGC** does nearly all garbage collection concurrently with the application. Pause times stay under 1ms regardless of heap size. That's not a typo. Where G1GC can spike to 200ms+ (long enough for players to notice rubber-banding), ZGC pauses are measured in microseconds. brucethemoose's testing found no measurable server throughput hit, and Netflix's production data on Generational ZGC showed a 6-8% throughput improvement over G1 in allocation-heavy workloads. The tradeoff is higher CPU usage, since ZGC runs its collection threads concurrently instead of pausing everything.
+**ZGC** does nearly all garbage collection concurrently with the application. Pause times stay under 1ms regardless of heap size. That's not a typo. Where G1GC can spike to 200ms+ (long enough for players to notice rubber-banding), ZGC pauses are measured in microseconds. The tradeoff is higher CPU usage, since ZGC runs its collection threads concurrently instead of pausing everything.
 
-**Compact Object Headers** ([JEP 519](https://openjdk.org/jeps/519)) complement either collector. They shrink object headers from 12 bytes to 8 bytes, reducing heap usage and improving cache locality. The SPECjbb2015 benchmark showed 22% less heap usage and 8% less CPU time with compact headers enabled. Amazon validated these numbers across hundreds of production services. For Minecraft specifically, where the server creates millions of small, short-lived objects per tick (chunk data, entity state, packets), that 10-20% reduction in live data memory is significant.
+**Compact Object Headers** ([JEP 519](https://openjdk.org/jeps/519)) complement either collector. They shrink object headers from 12 bytes to 8 bytes, reducing heap usage and improving cache locality. The SPECjbb2015 benchmark showed 22% less heap usage and 8% less CPU time with compact headers enabled. Minecraft servers create many small, short-lived objects per tick (chunk data, entity state, packets), so they can benefit too. Measure heap use and MSPT on your own server before and after.
 
 **In practice:** If your server has 8+ cores and you're running Java 25, use ZGC. Sub-millisecond pauses mean players will never feel a GC hiccup. If you're on older Java, constrained hardware (under 8 cores), or allocating less than 6GB RAM, stick with Aikar's G1GC flags. Monitor with `/spark gc` either way.
 

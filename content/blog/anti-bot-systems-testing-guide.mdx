@@ -49,18 +49,20 @@ Rate-limit new connections and use [ipset](https://ipset.netfilter.org/) for sca
 # Allow established connections
 sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 
-# Rate limit new connections to port 25565 (3 per minute per IP)
+# Rate limit new connections to port 25565 (10 per minute per IP)
 sudo iptables -A INPUT -p tcp --dport 25565 -m state --state NEW \
   -m recent --set
 sudo iptables -A INPUT -p tcp --dport 25565 -m state --state NEW \
-  -m recent --update --seconds 60 --hitcount 4 -j DROP
+  -m recent --update --seconds 60 --hitcount 11 -j DROP
 sudo iptables -A INPUT -p tcp --dport 25565 -j ACCEPT
 
 # SYN flood protection
 sudo sysctl -w net.ipv4.tcp_syncookies=1
-sudo iptables -A INPUT -p tcp --syn -m limit --limit 1/s --limit-burst 3 -j ACCEPT
-sudo iptables -A INPUT -p tcp --syn -j DROP
 ```
+
+A normal join already opens several connections: the server list ping, the login, and a reconnect if your anti-bot plugin asks for one. Players behind one shared IP, such as a school or a household, also count together. A limit much lower than 10 per minute locks out real players.
+
+Do not add a host-wide SYN limit such as `--syn -m limit --limit 1/s`. It applies to every port, so during a flood it also drops your own SSH connections.
 
 For managing large blacklists efficiently, use ipset:
 
