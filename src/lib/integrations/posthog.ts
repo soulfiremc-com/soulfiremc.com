@@ -3,6 +3,7 @@ import {
   filterExceptionNoise,
   isMachineTranslated,
 } from "@/lib/integrations/exception-noise";
+import { redactSecretUrls } from "@/lib/integrations/url-redaction";
 import { attributeWebVitals } from "@/lib/web-vitals-attribution";
 
 const POSTHOG_KEY = import.meta.env.VITE_POSTHOG_KEY;
@@ -34,7 +35,7 @@ let client: Promise<PostHog | null> | null = null;
  * Loads and initializes posthog-js once. It is kept out of the entry chunk and
  * loads only after the visitor has answered the consent banner.
  */
-export function loadPostHog(): Promise<PostHog | null> {
+function loadPostHog(): Promise<PostHog | null> {
   if (!POSTHOG_KEY || typeof window === "undefined") {
     return Promise.resolve(null);
   }
@@ -42,7 +43,11 @@ export function loadPostHog(): Promise<PostHog | null> {
   client ??= import("posthog-js")
     .then(({ default: posthog }) => {
       posthog.init(POSTHOG_KEY, {
-        before_send: [filterExceptionNoise, attributeWebVitals],
+        before_send: [
+          filterExceptionNoise,
+          attributeWebVitals,
+          redactSecretUrls,
+        ],
         api_host: "https://t.soulfiremc.com",
         ui_host: "https://eu.posthog.com",
         defaults: "2025-05-24",
@@ -53,7 +58,9 @@ export function loadPostHog(): Promise<PostHog | null> {
           instance.register({ app_version: import.meta.env.VITE_APP_VERSION });
         },
       });
-      flushEarlyExceptions(posthog);
+      // With pending consent, cookieless_mode "on_reject" drops every capture,
+      // so queued errors wait until the visitor answers the banner.
+      if (posthog.is_capturing()) flushEarlyExceptions(posthog);
       return posthog;
     })
     .catch(() => {
@@ -62,6 +69,18 @@ export function loadPostHog(): Promise<PostHog | null> {
       return null;
     });
   return client;
+}
+
+/** Stores the visitor's banner choice and sends errors queued before it. */
+export async function applyAnalyticsConsent(
+  status: "granted" | "denied",
+): Promise<PostHog | null> {
+  const posthog = await loadPostHog();
+  if (!posthog) return null;
+  if (status === "granted") posthog.opt_in_capturing();
+  else posthog.opt_out_capturing();
+  flushEarlyExceptions(posthog);
+  return posthog;
 }
 
 /** Captures an event once consent is known. Pending consent drops it. */

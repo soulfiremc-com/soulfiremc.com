@@ -20,6 +20,7 @@ import {
 import { tanstackStartCookies } from "better-auth/tanstack-start";
 import { emailHarmony } from "better-auth-harmony";
 import { eq } from "drizzle-orm";
+import { CAPTCHA_ENDPOINTS } from "@/lib/auth/captcha-endpoints";
 import { getAvatarUrl } from "@/lib/avatar";
 import { db } from "@/lib/db";
 import * as generatedAuthSchema from "@/lib/db/auth-schema";
@@ -293,6 +294,7 @@ export const auth = betterAuth({
     captcha({
       provider: "cloudflare-turnstile",
       secretKey: process.env["TURNSTILE_SECRET_KEY"] ?? "",
+      endpoints: CAPTCHA_ENDPOINTS,
     }),
     dash({
       activityTracking: {

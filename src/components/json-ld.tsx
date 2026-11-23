@@ -1,4 +1,5 @@
 import type { Thing, WithContext } from "schema-dts";
+import { escapeScriptJson } from "@/lib/seo";
 
 /** Renders serialized JSON-LD. The JSON must already be a string. */
 export function JsonLdScript({ json }: { json: string }) {
@@ -6,7 +7,7 @@ export function JsonLdScript({ json }: { json: string }) {
     <script
       type="application/ld+json"
       // oxlint-disable-next-line react/no-danger -- JSON-LD must be the raw text of the script element
-      dangerouslySetInnerHTML={{ __html: json }}
+      dangerouslySetInnerHTML={{ __html: escapeScriptJson(json) }}
     />
   );
 }

@@ -20,7 +20,7 @@ import {
   REOPEN_EVENT,
   useAnalyticsConsent,
 } from "@/lib/cookie-consent";
-import { loadPostHog } from "@/lib/integrations/posthog";
+import { applyAnalyticsConsent } from "@/lib/integrations/posthog";
 
 const CookieConsentBanner = () => {
   const t = useT();
@@ -71,10 +71,8 @@ const CookieConsentBanner = () => {
 
   const respond = (status: "granted" | "denied") => {
     setOpenOverride(true);
-    void loadPostHog().then((posthog) => {
+    void applyAnalyticsConsent(status).then((posthog) => {
       if (!posthog) return;
-      if (status === "granted") posthog.opt_in_capturing();
-      else posthog.opt_out_capturing();
       window.dispatchEvent(new Event(CONSENT_CHANGE_EVENT));
     });
     // React commits this click's update before PostHog's document click

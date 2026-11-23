@@ -132,10 +132,19 @@ export function getCanonicalLinks(
   ];
 }
 
+/**
+ * Makes serialized JSON safe as the raw text of a script element. A string
+ * value such as a review body that contains `</script>` would otherwise end
+ * the element and let the rest of the value run as HTML.
+ */
+export function escapeScriptJson(json: string) {
+  return json.replaceAll("<", String.raw`\u003c`);
+}
+
 export function jsonLdScript(data: Record<string, unknown>) {
   return {
     type: "application/ld+json",
-    children: JSON.stringify(data),
+    children: escapeScriptJson(JSON.stringify(data)),
   };
 }
 

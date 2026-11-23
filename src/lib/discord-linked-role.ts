@@ -10,6 +10,7 @@ export type LinkedRoleStatus = (typeof linkedRoleStatuses)[number];
 
 export const LINKED_ROLE_START_PATH = "/api/discord/linked-role";
 export const LINKED_ROLE_RESULT_PATH = "/discord/linked-role";
+const PLATFORM_USERNAME_MAX_LENGTH = 100;
 
 export function isLinkedRoleStatus(value: unknown): value is LinkedRoleStatus {
   return (linkedRoleStatuses as readonly unknown[]).includes(value);
@@ -22,6 +23,11 @@ export function getLinkedRoleResultUrl(
   const url = new URL(LINKED_ROLE_RESULT_PATH, requestUrl);
   url.searchParams.set("status", status);
   return url.toString();
+}
+
+/** Discord rejects the whole role connection when the username is too long. */
+export function getLinkedRolePlatformUsername(name: string): string {
+  return Array.from(name).slice(0, PLATFORM_USERNAME_MAX_LENGTH).join("");
 }
 
 /**

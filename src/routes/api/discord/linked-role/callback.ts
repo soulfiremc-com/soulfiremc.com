@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 import { account, user } from "@/lib/db/auth-schema";
 import {
   checkLinkedRoleCallback,
+  getLinkedRolePlatformUsername,
   getLinkedRoleResultUrl,
   type LinkedRoleStatus,
 } from "@/lib/discord-linked-role";
@@ -77,7 +78,9 @@ export const Route = createFileRoute("/api/discord/linked-role/callback")({
             if (sfUser) {
               yield* pushLinkedRoleMetadataEffect(tokens.access_token, {
                 platform_name: "SoulFire",
-                platform_username: sfUser.userName,
+                platform_username: getLinkedRolePlatformUsername(
+                  sfUser.userName,
+                ),
                 metadata: {
                   verified_account: 1,
                   email_verified: sfUser.emailVerified ? 1 : 0,

@@ -1,11 +1,15 @@
 import assert from "node:assert/strict";
 import { existsSync } from "node:fs";
 import test from "node:test";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import { JsonLd, JsonLdScript } from "@/components/json-ld";
 import { SHOPS } from "@/lib/accounts-data";
 import { PROVIDERS as proxies } from "@/lib/proxies-data";
 import {
   createBlogPostingStructuredData,
   getPageMeta,
+  jsonLdScript,
   truncateDescription,
 } from "@/lib/seo";
 
@@ -84,4 +88,28 @@ void test("every provider logo has a copy that OG images can embed", () => {
     (logo) => !existsSync(new URL(`../src/assets${logo}`, import.meta.url)),
   );
   assert.deepEqual(missing, []);
+});
+
+const hostileReview = {
+  "@context": "https://schema.org",
+  "@type": "Review",
+  reviewBody: "</script><script>alert(1)</script><!--",
+} as const;
+
+void test("JSON-LD text cannot close its script element", () => {
+  const { children } = jsonLdScript(hostileReview);
+  assert.ok(!children.includes("<"));
+  assert.deepEqual(JSON.parse(children), hostileReview);
+
+  for (const element of [
+    createElement(JsonLd, { data: hostileReview }),
+    createElement(JsonLdScript, { json: JSON.stringify(hostileReview) }),
+  ]) {
+    const html = renderToStaticMarkup(element);
+    assert.equal(html.match(/<\/script>/gu)?.length, 1);
+    const json = /^<script type="application\/ld\+json">(.*)<\/script>$/u.exec(
+      html,
+    )?.[1];
+    assert.deepEqual(JSON.parse(json ?? ""), hostileReview);
+  }
 });

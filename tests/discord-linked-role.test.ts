@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   checkLinkedRoleCallback,
+  getLinkedRolePlatformUsername,
   getLinkedRoleResultUrl,
 } from "@/lib/discord-linked-role";
 
@@ -33,4 +34,11 @@ await test("linked-role result URLs stay on the request origin", () => {
     ),
     "https://soulfiremc.com/discord/linked-role?status=cancelled",
   );
+});
+
+await test("linked-role usernames fit Discord's 100 character limit", () => {
+  assert.equal(getLinkedRolePlatformUsername("Steve"), "Steve");
+  const long = getLinkedRolePlatformUsername("🔥".repeat(150));
+  assert.equal(Array.from(long).length, 100);
+  assert.equal(long, "🔥".repeat(100));
 });
