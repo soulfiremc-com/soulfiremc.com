@@ -105,7 +105,12 @@ export function ResetPasswordOtp({ className }: ResetPasswordOtpProps) {
       onSuccess: () => {
         sessionStorage.removeItem(RESET_PASSWORD_OTP_STORAGE_KEY);
         toast.success(localization.auth.passwordResetSuccess);
-        navigate({ to: `${basePaths.auth}/${viewPaths.auth.signIn}` });
+        navigate({
+          to: getAuthLinkURL(
+            `${basePaths.auth}/${viewPaths.auth.signIn}`,
+            redirectTo,
+          ),
+        });
       },
     },
   );
@@ -134,7 +139,7 @@ export function ResetPasswordOtp({ className }: ResetPasswordOtpProps) {
     },
     onSubmit: async ({ value }) => {
       await resetPasswordOtp({
-        email: value.email,
+        email: value.email.trim(),
         otp: value.code,
         password: value.password,
       });

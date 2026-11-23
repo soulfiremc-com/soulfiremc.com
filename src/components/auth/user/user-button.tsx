@@ -1,6 +1,7 @@
 "use client";
 
 import type { MultiSessionAuthClient } from "@better-auth-ui/core/plugins/multi-session";
+import { getAuthLinkURL } from "@better-auth-ui/core";
 import { useAuth, useSession } from "@better-auth-ui/react";
 import { useSetActiveSession } from "@better-auth-ui/react/plugins/multi-session";
 import {
@@ -22,6 +23,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { signInReturnPath } from "@/lib/auth-ui-config";
 import { cn } from "@/lib/utils";
 import { UserAvatar } from "./user-avatar";
 import { UserView } from "./user-view";
@@ -114,8 +116,15 @@ export function UserButton({
   links,
   hideSettings = false,
 }: UserButtonProps) {
-  const { authClient, basePaths, viewPaths, localization, plugins, navigate } =
-    useAuth<MultiSessionAuthClient>();
+  const {
+    authClient,
+    basePaths,
+    viewPaths,
+    localization,
+    plugins,
+    navigate,
+    redirectTo,
+  } = useAuth<MultiSessionAuthClient>();
 
   const { isPending: settingActiveSession } = useSetActiveSession(authClient);
   const { data: session, isPending: sessionPending } = useSession(authClient);
@@ -130,6 +139,17 @@ export function UserButton({
       renderUserLink(link, navigate, `user-button-link-${index.toString()}`),
     ];
   });
+
+  // Menu items run only in the browser, so the current page is known here.
+  // Sign-in then returns the visitor to it instead of the account settings.
+  const authLinkWithReturn = (viewPath: string) =>
+    getAuthLinkURL(
+      `${basePaths.auth}/${viewPath}`,
+      signInReturnPath(
+        `${window.location.pathname}${window.location.search}${window.location.hash}`,
+        redirectTo,
+      ),
+    );
 
   // Whether anything renders between the user info label and the
   // sign-out item, so the leading separator isn't shown with nothing
@@ -237,7 +257,7 @@ export function UserButton({
             <DropdownMenuItem
               onClick={() =>
                 navigate({
-                  to: `${basePaths.auth}/${viewPaths.auth.signIn}`,
+                  to: authLinkWithReturn(viewPaths.auth.signIn),
                 })
               }
             >
@@ -249,7 +269,7 @@ export function UserButton({
             <DropdownMenuItem
               onClick={() =>
                 navigate({
-                  to: `${basePaths.auth}/${viewPaths.auth.signUp}`,
+                  to: authLinkWithReturn(viewPaths.auth.signUp),
                 })
               }
             >

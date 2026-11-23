@@ -59,3 +59,15 @@ export function isAuthUiPath(pathname: string) {
     (basePath) => path === basePath || path.startsWith(`${basePath}/`),
   );
 }
+
+/**
+ * Where to return after signing in from the page at `currentPath`. Auth,
+ * account, and admin pages pass on their own `redirectTo` value, because
+ * returning to the form would leave the visitor where they started.
+ */
+export function signInReturnPath(currentPath: string, redirectTo: string) {
+  const pathname = currentPath.split(/[?#]/u, 1)[0] ?? "";
+  return isAuthUiPath(pathname)
+    ? authRedirectPath(redirectTo)
+    : authRedirectPath(currentPath);
+}

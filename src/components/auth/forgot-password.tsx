@@ -1,6 +1,10 @@
 "use client"
 
-import { getViewURL, validateEmailAddress } from "@better-auth-ui/core"
+import {
+  getAuthLinkURL,
+  getViewURL,
+  validateEmailAddress
+} from "@better-auth-ui/core"
 import {
   useAuth,
   useFetchOptions,
@@ -44,6 +48,7 @@ export function ForgotPassword({ className }: ForgotPasswordProps) {
     localization,
     navigate,
     plugins,
+    redirectTo,
     viewPaths,
     Link
   } = useAuth()
@@ -58,7 +63,12 @@ export function ForgotPassword({ className }: ForgotPasswordProps) {
       },
       onSuccess: (_data, { email }) => {
         sessionStorage.setItem(RESET_LINK_SENT_STORAGE_KEY, email)
-        navigate({ to: `${basePaths.auth}/${viewPaths.auth.resetLinkSent}` })
+        navigate({
+          to: getAuthLinkURL(
+            `${basePaths.auth}/${viewPaths.auth.resetLinkSent}`,
+            redirectTo
+          )
+        })
       }
     })
 
@@ -66,11 +76,11 @@ export function ForgotPassword({ className }: ForgotPasswordProps) {
     defaultValues: { email: "" },
     onSubmit: async ({ value }) =>
       await requestPasswordReset({
-        email: value.email,
-        redirectTo: getViewURL(
-          baseURL,
-          basePaths.auth,
-          viewPaths.auth.resetPassword
+        email: value.email.trim(),
+        // Keep the destination so signing in after the reset returns there.
+        redirectTo: getAuthLinkURL(
+          getViewURL(baseURL, basePaths.auth, viewPaths.auth.resetPassword),
+          redirectTo
         ),
         fetchOptions
       })
@@ -153,7 +163,10 @@ export function ForgotPassword({ className }: ForgotPasswordProps) {
           <FieldDescription className="text-center">
             {localization.auth.rememberYourPassword}{" "}
             <Link
-              href={`${basePaths.auth}/${viewPaths.auth.signIn}`}
+              href={getAuthLinkURL(
+                `${basePaths.auth}/${viewPaths.auth.signIn}`,
+                redirectTo
+              )}
               className="underline underline-offset-4"
             >
               {localization.auth.signIn}

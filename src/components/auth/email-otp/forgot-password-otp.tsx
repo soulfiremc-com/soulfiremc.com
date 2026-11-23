@@ -58,14 +58,22 @@ export function ForgotPasswordOtp({ className }: ForgotPasswordOtpProps) {
       onError: () => resetFetchOptions(),
       onSuccess: (_data, { email }) => {
         sessionStorage.setItem(RESET_PASSWORD_OTP_STORAGE_KEY, email)
-        navigate({ to: `${basePaths.auth}/${viewPaths.auth.resetPassword}` })
+        navigate({
+          to: getAuthLinkURL(
+            `${basePaths.auth}/${viewPaths.auth.resetPassword}`,
+            redirectTo
+          )
+        })
       }
     })
 
   const form = useAuthForm({
     defaultValues: { email: "" },
     onSubmit: async ({ value }) =>
-      await requestPasswordResetOtp({ email: value.email, fetchOptions })
+      await requestPasswordResetOtp({
+        email: value.email.trim(),
+        fetchOptions
+      })
   })
 
   const Captcha = plugins.find(

@@ -360,7 +360,10 @@ export function SignIn({
         <div className="flex flex-col gap-3 items-center w-full mt-4">
           {emailAndPassword?.enabled && emailAndPassword?.forgotPassword && (
             <Link
-              href={`${basePaths.auth}/${viewPaths.auth.forgotPassword}`}
+              href={getAuthLinkURL(
+                `${basePaths.auth}/${viewPaths.auth.forgotPassword}`,
+                redirectTo
+              )}
               className="self-center text-sm underline-offset-4 hover:underline"
             >
               {localization.auth.forgotPasswordLink}
