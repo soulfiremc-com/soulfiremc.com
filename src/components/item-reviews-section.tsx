@@ -6,7 +6,6 @@ import { useLocation } from "@tanstack/react-router";
 import {
   ChevronLeft,
   ChevronRight,
-  MessageSquareText,
   RotateCw,
   TriangleAlert,
 } from "lucide-react";
@@ -33,13 +32,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Empty,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-} from "@/components/ui/empty";
 import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import {
   Pagination,
@@ -48,6 +40,7 @@ import {
   PaginationLink,
 } from "@/components/ui/pagination";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { emptyWrittenReviews, useReviews } from "@/hooks/use-reviews";
 import { emptyReviewSummary, type ItemType } from "@/lib/review-core";
@@ -193,9 +186,15 @@ function ItemReviewsSectionContent({
   // Compare saved values, not objects. Each refetch, such as a change of
   // review page, returns a new object that must not discard unsaved edits.
   const sourceKey = reviewFormSourceKey(source);
-  const initialForm = {
+  // A new review starts unrated, so a quick submit cannot add five stars
+  // that the visitor never chose.
+  const initialForm: {
+    sourceKey: string | null;
+    rating: number | null;
+    body: string;
+  } = {
     sourceKey,
-    rating: source?.rating ?? 5,
+    rating: source?.rating ?? null,
     body: source?.body ?? "",
   };
   const [form, setForm] = useState(initialForm);
@@ -234,7 +233,6 @@ function ItemReviewsSectionContent({
     };
   }, [itemType, slug]);
 
-  const hasWrittenReviews = visibleReviews.length > 0;
   const hasPreviousPage = reviewPageData.page > 1;
   const hasNextPage = reviewPageData.page < reviewPageData.totalPages;
   const visibleRangeStart =
@@ -245,14 +243,9 @@ function ItemReviewsSectionContent({
     reviewPageData.totalCount === 0
       ? 0
       : visibleRangeStart + visibleReviews.length - 1;
-  const reviewCountLabel =
-    summary.reviewCount === 0
-      ? t("reviews.noRatingsYet")
-      : t("reviews.ratingsCollected", {
-          count: summary.reviewCount.toLocaleString(locale),
-        });
 
   const saveReview = async () => {
+    if (rating === null) return;
     const normalizedBody = body.trim();
     const submittedForReview =
       normalizedBody.length > 0 &&
@@ -340,21 +333,14 @@ function ItemReviewsSectionContent({
           </p>
         </div>
 
-        <Card className="gap-4 py-5">
+        <Card className="py-5">
           <CardContent>
             {loading ? (
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-                <div className="flex items-end gap-3">
-                  <Skeleton className="h-12 w-20" />
-                  <div className="flex flex-col gap-2 pb-1">
-                    <Skeleton className="h-5 w-28" />
-                    <Skeleton className="h-4 w-36" />
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-3 sm:min-w-64">
-                  {generateN(2).map((skeletonId) => (
-                    <Skeleton key={skeletonId} className="h-20 rounded-xl" />
-                  ))}
+              <div className="flex items-end gap-3">
+                <Skeleton className="h-12 w-20" />
+                <div className="flex flex-col gap-2 pb-1">
+                  <Skeleton className="h-5 w-28" />
+                  <Skeleton className="h-4 w-36" />
                 </div>
               </div>
             ) : failed ? (
@@ -381,57 +367,30 @@ function ItemReviewsSectionContent({
                 </Button>
               </div>
             ) : summary.averageRating !== null ? (
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-                <div className="flex items-end gap-3">
-                  <span className="text-5xl font-bold tracking-tight tabular-nums">
-                    {summary.averageRating.toLocaleString(locale, {
-                      minimumFractionDigits: 1,
-                      maximumFractionDigits: 1,
+              <div className="flex items-end gap-3">
+                <span className="text-5xl font-bold tracking-tight tabular-nums">
+                  {summary.averageRating.toLocaleString(locale, {
+                    minimumFractionDigits: 1,
+                    maximumFractionDigits: 1,
+                  })}
+                </span>
+                <div className="flex flex-col gap-1 pb-1">
+                  <ReviewStars value={summary.averageRating} size="lg" />
+                  <p className="text-sm text-muted-foreground">
+                    {t("reviews.ratingsCollected", {
+                      count: summary.reviewCount.toLocaleString(locale),
                     })}
-                  </span>
-                  <div className="flex flex-col gap-1 pb-1">
-                    <ReviewStars value={summary.averageRating} size="lg" />
-                    <p className="text-sm text-muted-foreground">
-                      {reviewCountLabel}
-                    </p>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-3 sm:min-w-64">
-                  <div className="rounded-xl border border-border/70 bg-muted/20 px-4 py-3">
-                    <div className="text-xs tracking-review text-muted-foreground uppercase">
-                      {t("reviews.average")}
-                    </div>
-                    <div className="mt-1 text-2xl font-semibold tabular-nums">
-                      {summary.averageRating.toLocaleString(locale, {
-                        minimumFractionDigits: 1,
-                        maximumFractionDigits: 1,
-                      })}
-                    </div>
-                  </div>
-                  <div className="rounded-xl border border-border/70 bg-muted/20 px-4 py-3">
-                    <div className="text-xs tracking-review text-muted-foreground uppercase">
-                      {t("reviews.totalRatings")}
-                    </div>
-                    <div className="mt-1 text-2xl font-semibold tabular-nums">
-                      {summary.reviewCount.toLocaleString(locale)}
-                    </div>
-                  </div>
+                  </p>
                 </div>
               </div>
             ) : (
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div className="flex flex-col gap-1">
-                  <div className="text-lg font-semibold">
-                    {t("reviews.noRatingsYet")}
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    {t("reviews.beTheFirstPersonToLeaveARatingAnd")}
-                  </p>
+              <div className="flex flex-col gap-1">
+                <div className="text-lg font-semibold">
+                  {t("reviews.noRatingsYet")}
                 </div>
-                <div className="inline-flex items-center gap-2 rounded-full border border-dashed px-4 py-2 text-sm text-muted-foreground">
-                  <MessageSquareText className="size-4" />
-                  {t("reviews.waitingForTheFirstRating")}
-                </div>
+                <p className="text-sm text-muted-foreground">
+                  {t("reviews.beTheFirstPersonToLeaveARatingAnd")}
+                </p>
               </div>
             )}
           </CardContent>
@@ -445,20 +404,20 @@ function ItemReviewsSectionContent({
             </CardDescription>
           </CardHeader>
 
-          <CardContent className="grid gap-5 px-0 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)]">
+          <CardContent className="flex max-w-2xl flex-col gap-5 px-0">
             <Field>
               <FieldLabel id={ratingLabelId}>{t("reviews.rating")}</FieldLabel>
-              <div className="rounded-xl border border-border/70 bg-muted/20 px-4 py-3">
-                <ReviewStarInput
-                  value={rating}
-                  onChange={(value) => {
-                    setForm({ sourceKey, rating: value, body });
-                  }}
-                  disabled={pending}
-                  size="lg"
-                  labelledBy={ratingLabelId}
-                />
-              </div>
+              <ReviewStarInput
+                value={rating ?? 0}
+                onChange={(value) => {
+                  setForm({ sourceKey, rating: value, body });
+                }}
+                disabled={pending || loading}
+                labelledBy={ratingLabelId}
+              />
+              {rating === null ? (
+                <FieldDescription>{t("reviews.chooseRating")}</FieldDescription>
+              ) : null}
             </Field>
 
             <Field>
@@ -474,13 +433,14 @@ function ItemReviewsSectionContent({
                 onChange={(event) => {
                   setForm({ sourceKey, rating, body: event.target.value });
                 }}
-                disabled={pending}
-                rows={6}
+                // Typing before the saved review loads would be overwritten.
+                disabled={pending || loading}
+                rows={5}
                 maxLength={2000}
                 placeholder={t("reviews.comment.placeholder")}
-                className="min-h-40 resize-y"
+                className="min-h-32 resize-y"
               />
-              <div className="flex justify-end text-xs text-muted-foreground">
+              <div className="flex justify-end text-xs text-muted-foreground tabular-nums">
                 {body.length}/2000
               </div>
               {currentReview?.body &&
@@ -501,10 +461,13 @@ function ItemReviewsSectionContent({
               ref={saveButtonRef}
               type="button"
               onClick={() => void saveReview()}
-              disabled={pending || loading || refreshing || failed}
+              disabled={
+                pending || loading || refreshing || failed || rating === null
+              }
               // Saving disables the button. Keep focus here for keyboard users.
               focusableWhenDisabled
             >
+              {pending ? <Spinner data-icon="inline-start" /> : null}
               {currentReview
                 ? t("reviews.updateReview")
                 : t("reviews.submitReview")}
@@ -525,168 +488,153 @@ function ItemReviewsSectionContent({
           </CardFooter>
         </Card>
 
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-            <div className="flex flex-col gap-1">
-              <h3 className="text-lg font-semibold">
-                {t("reviews.latestReviews")}
-              </h3>
-              {reviewPageData.totalCount > 0 ? (
-                <p className="text-sm text-muted-foreground">
-                  {t("reviews.showingReviewsOf", {
-                    start: visibleRangeStart.toLocaleString(locale),
-                    end: visibleRangeEnd.toLocaleString(locale),
-                    count: reviewPageData.totalCount.toLocaleString(locale),
-                  })}
-                </p>
+        {/* The summary card already covers the empty and failed states. */}
+        {loading || (!failed && reviewPageData.totalCount > 0) ? (
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+              <div className="flex flex-col gap-1">
+                <h3 className="text-lg font-semibold">
+                  {t("reviews.latestReviews")}
+                </h3>
+                {reviewPageData.totalCount > 0 ? (
+                  <p className="text-sm text-muted-foreground">
+                    {t("reviews.showingReviewsOf", {
+                      start: visibleRangeStart.toLocaleString(locale),
+                      end: visibleRangeEnd.toLocaleString(locale),
+                      count: reviewPageData.totalCount.toLocaleString(locale),
+                    })}
+                  </p>
+                ) : null}
+              </div>
+
+              {reviewPageData.totalPages > 1 ? (
+                <Pagination
+                  aria-label={t("reviews.reviewPages")}
+                  className="mx-0 w-auto justify-start sm:justify-end"
+                >
+                  <PaginationContent>
+                    <PaginationItem>
+                      <ReviewPageLink
+                        label={t("reviews.previousPage")}
+                        href={
+                          hasPreviousPage && !refreshing
+                            ? reviewPageHref(reviewPageData.page - 1)
+                            : undefined
+                        }
+                        onNavigate={() => {
+                          changeReviewPage(reviewPageData.page - 1);
+                        }}
+                      >
+                        <ChevronLeft />
+                        <span className="hidden sm:block">
+                          {t("common.previous")}
+                        </span>
+                      </ReviewPageLink>
+                    </PaginationItem>
+                    <PaginationItem>
+                      <span
+                        aria-current="page"
+                        className="flex h-9 min-w-24 items-center justify-center px-2 text-sm text-muted-foreground tabular-nums"
+                      >
+                        {t("reviews.pageOf", {
+                          page: reviewPageData.page,
+                          pages: reviewPageData.totalPages,
+                        })}
+                      </span>
+                    </PaginationItem>
+                    <PaginationItem>
+                      <ReviewPageLink
+                        label={t("reviews.nextPage")}
+                        href={
+                          hasNextPage && !refreshing
+                            ? reviewPageHref(reviewPageData.page + 1)
+                            : undefined
+                        }
+                        onNavigate={() => {
+                          changeReviewPage(reviewPageData.page + 1);
+                        }}
+                      >
+                        <span className="hidden sm:block">
+                          {t("common.next")}
+                        </span>
+                        <ChevronRight />
+                      </ReviewPageLink>
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
               ) : null}
             </div>
 
-            {reviewPageData.totalPages > 1 ? (
-              <Pagination
-                aria-label={t("reviews.reviewPages")}
-                className="mx-0 w-auto justify-start sm:justify-end"
-              >
-                <PaginationContent>
-                  <PaginationItem>
-                    <ReviewPageLink
-                      label={t("reviews.previousPage")}
-                      href={
-                        hasPreviousPage && !refreshing
-                          ? reviewPageHref(reviewPageData.page - 1)
-                          : undefined
-                      }
-                      onNavigate={() => {
-                        changeReviewPage(reviewPageData.page - 1);
-                      }}
-                    >
-                      <ChevronLeft />
-                      <span className="hidden sm:block">
-                        {t("common.previous")}
-                      </span>
-                    </ReviewPageLink>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <span
-                      aria-current="page"
-                      className="flex h-9 min-w-24 items-center justify-center px-2 text-sm text-muted-foreground tabular-nums"
-                    >
-                      {t("reviews.pageOf", {
-                        page: reviewPageData.page,
-                        pages: reviewPageData.totalPages,
-                      })}
-                    </span>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <ReviewPageLink
-                      label={t("reviews.nextPage")}
-                      href={
-                        hasNextPage && !refreshing
-                          ? reviewPageHref(reviewPageData.page + 1)
-                          : undefined
-                      }
-                      onNavigate={() => {
-                        changeReviewPage(reviewPageData.page + 1);
-                      }}
-                    >
-                      <span className="hidden sm:block">
-                        {t("common.next")}
-                      </span>
-                      <ChevronRight />
-                    </ReviewPageLink>
-                  </PaginationItem>
-                </PaginationContent>
-              </Pagination>
-            ) : null}
-          </div>
-
-          {loading ? (
-            <div className="grid gap-4">
-              {generateN(3).map((skeletonId) => (
-                <Card key={skeletonId} className="gap-4 p-5">
-                  <div className="flex items-center gap-3">
-                    <Skeleton className="size-10 rounded-full" />
-                    <div className="flex flex-col gap-2">
-                      <Skeleton className="h-4 w-32" />
-                      <Skeleton className="h-4 w-44" />
-                    </div>
-                  </div>
-                  <Skeleton className="h-4 w-full" />
-                  <Skeleton className="h-4 w-3/4" />
-                </Card>
-              ))}
-            </div>
-          ) : failed ? (
-            <p className="text-sm text-muted-foreground">
-              {t("reviews.errors.loadFailed")}
-            </p>
-          ) : hasWrittenReviews ? (
-            <div
-              aria-busy={refreshing}
-              className={cn(
-                "grid gap-4 transition-opacity",
-                refreshing && "opacity-60",
-              )}
-            >
-              {visibleReviews.map((entry) => (
-                <Card key={entry.id} className="gap-4 p-5">
-                  <div className="flex flex-wrap items-start justify-between gap-3">
+            {loading ? (
+              <div className="grid gap-4">
+                {generateN(3).map((skeletonId) => (
+                  <Card key={skeletonId} className="gap-4 p-5">
                     <div className="flex items-center gap-3">
-                      <Avatar size="lg">
-                        {entry.authorImage ? (
-                          <AvatarImage
-                            src={entry.authorImage}
-                            alt={entry.authorName}
-                          />
-                        ) : null}
-                        <AvatarFallback>
-                          {initial(entry.authorName)}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="flex flex-col gap-1">
-                        <p className="font-medium">{entry.authorName}</p>
-                        <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-                          <ReviewStars value={entry.rating} size="sm" />
-                          <span className="tabular-nums">
-                            {entry.rating.toLocaleString(locale, {
-                              minimumFractionDigits: 1,
-                              maximumFractionDigits: 1,
-                            })}
-                          </span>
-                          <span aria-hidden>·</span>
-                          <CustomTimeAgo date={entry.createdAt} />
+                      <Skeleton className="size-10 rounded-full" />
+                      <div className="flex flex-col gap-2">
+                        <Skeleton className="h-4 w-32" />
+                        <Skeleton className="h-4 w-44" />
+                      </div>
+                    </div>
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-3/4" />
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <div
+                aria-busy={refreshing}
+                className={cn(
+                  "grid gap-4 transition-opacity",
+                  refreshing && "opacity-60",
+                )}
+              >
+                {visibleReviews.map((entry) => (
+                  <Card key={entry.id} className="gap-4 p-5">
+                    <div className="flex flex-wrap items-start justify-between gap-3">
+                      <div className="flex items-center gap-3">
+                        <Avatar size="lg">
+                          {entry.authorImage ? (
+                            <AvatarImage
+                              src={entry.authorImage}
+                              alt={entry.authorName}
+                            />
+                          ) : null}
+                          <AvatarFallback>
+                            {initial(entry.authorName)}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className="flex flex-col gap-1">
+                          <p className="font-medium">{entry.authorName}</p>
+                          <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+                            <ReviewStars value={entry.rating} size="sm" />
+                            <span className="tabular-nums">
+                              {entry.rating.toLocaleString(locale, {
+                                minimumFractionDigits: 1,
+                                maximumFractionDigits: 1,
+                              })}
+                            </span>
+                            <span aria-hidden>·</span>
+                            <CustomTimeAgo date={entry.createdAt} />
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  {entry.body ? (
-                    <p className="text-sm/6 wrap-break-word whitespace-pre-line text-muted-foreground">
-                      {entry.body}
-                    </p>
-                  ) : entry.commentStatus === "pending" ? (
-                    <p className="text-sm text-muted-foreground/80 italic">
-                      {t("reviews.reviewPending")}
-                    </p>
-                  ) : null}
-                </Card>
-              ))}
-            </div>
-          ) : (
-            <Empty className="items-start border text-left">
-              <EmptyHeader className="items-start text-left">
-                <EmptyMedia variant="icon">
-                  <MessageSquareText />
-                </EmptyMedia>
-                <EmptyTitle>{t("reviews.noReviewsYet")}</EmptyTitle>
-                <EmptyDescription>
-                  {t(
-                    "reviews.ratingsWithoutCommentsWillStillAppearHereAndCount",
-                  )}
-                </EmptyDescription>
-              </EmptyHeader>
-            </Empty>
-          )}
-        </div>
+                    {entry.body ? (
+                      <p className="text-sm/6 wrap-break-word whitespace-pre-line text-muted-foreground">
+                        {entry.body}
+                      </p>
+                    ) : entry.commentStatus === "pending" ? (
+                      <p className="text-sm text-muted-foreground/80 italic">
+                        {t("reviews.reviewPending")}
+                      </p>
+                    ) : null}
+                  </Card>
+                ))}
+              </div>
+            )}
+          </div>
+        ) : null}
       </section>
       <ReviewRemoveDialog
         open={confirmRemove}

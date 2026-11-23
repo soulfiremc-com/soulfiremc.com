@@ -9,6 +9,7 @@ import {
   getListingOffer,
   getLiveShopData,
   getShopAggregateOffer,
+  hasLiveStock,
 } from "@/lib/accounts-offers";
 
 await test("live stock requests include cancellation and normalize category counts", async (t) => {
@@ -37,6 +38,19 @@ await test("NFA stock never counts as MFA stock", async (t) => {
     "nfa-accounts": 50,
     "mfa-accounts": 0,
   });
+});
+
+await test("shops without a stock feed skip the request and show no stock", async (t) => {
+  const shop = getShopBySlug("nicealts");
+  assert.ok(shop);
+  const fetchMock = t.mock.method(globalThis, "fetch", () =>
+    Promise.resolve(Response.json({ nfa: 5 })),
+  );
+
+  assert.equal(hasLiveStock(shop), false);
+  assert.deepEqual(await getLiveShopData(shop), {});
+  assert.equal(fetchMock.mock.callCount(), 0);
+  assert.equal(hasLiveStock({ slug: "localts" }), true);
 });
 
 await test("marketplace offers do not invent a numeric price", () => {

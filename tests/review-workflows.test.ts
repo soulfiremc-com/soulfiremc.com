@@ -392,7 +392,7 @@ await test("review submissions verify before reading or writing storage", async 
   });
 });
 
-await test("rating-only submissions keep the stored comment and its moderation status", async () => {
+await test("an empty comment clears the stored comment and needs no moderation", async () => {
   const updates: unknown[] = [];
   const run = dependencies({
     store: {
@@ -408,15 +408,10 @@ await test("rating-only submissions keep the stored comment and its moderation s
         }),
     },
   });
-  const { body: _body, ...ratingOnly } = input;
-  assert.deepEqual(await run(submitReview({ ...ratingOnly, rating: 2 })), {
+  assert.deepEqual(await run(submitReview({ ...input, body: null })), {
     ok: true,
   });
-  assert.deepEqual(updates, [{ id: "id", rating: 2 }]);
-
-  // An explicit empty or null body still clears the comment.
-  await run(submitReview({ ...input, body: null }));
-  assert.deepEqual(updates[1], {
+  assert.deepEqual(updates[0], {
     id: "id",
     rating: 5,
     body: null,
@@ -433,7 +428,7 @@ await test("rating-only submissions keep the stored comment and its moderation s
         }),
     },
   });
-  await first(submitReview(ratingOnly));
+  await first(submitReview({ ...input, body: "   " }));
   assert.equal(defined(created[0]).body, null);
   assert.equal(defined(created[0]).commentStatus, "approved");
 });

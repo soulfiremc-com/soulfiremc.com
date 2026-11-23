@@ -49,6 +49,13 @@ void test("known Better Auth error codes get friendly localized messages", () =>
     "Неверный код. Проверьте его и попробуйте снова.",
   );
   assert.equal(
+    localizedAuthErrorMessage(
+      { error: { code: "PASSWORD_COMPROMISED" } },
+      "en",
+    ),
+    "This password appeared in a data breach. Choose a different password.",
+  );
+  assert.equal(
     localizedAuthErrorMessage({ error: { code: "SOMETHING_NEW" } }, "de"),
     undefined,
   );

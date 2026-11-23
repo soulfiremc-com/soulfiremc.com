@@ -22,22 +22,18 @@ import type { SerializedPageTree } from "fumadocs-core/source/client";
 import { useFumadocsLoader } from "fumadocs-core/source/client";
 import type { OpenAPIPageProps_Spec } from "fumadocs-openapi/ui";
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
+import { ViewOptionsPopover } from "fumadocs-ui/layouts/docs/page";
 import {
   DocsBody,
   DocsDescription,
   DocsPage,
   DocsTitle,
 } from "fumadocs-ui/page";
-import { Suspense } from "react";
+import { type ComponentProps, Suspense } from "react";
 import { APIPage } from "@/components/api-page";
 import { EnderDashSponsor } from "@/components/enderdash-sponsor";
 import { Feedback } from "@/components/feedback";
-import { LLMCopyButton, ViewOptions } from "@/components/page-actions";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
+import { LLMCopyButton } from "@/components/page-actions";
 import { setDocsContentPreloader } from "@/lib/docs/hydration";
 import { docsLinkTarget } from "@/lib/docs/link-target";
 import { isOpenApiPage } from "@/lib/docs/openapi";
@@ -50,6 +46,7 @@ import {
   createWebPageStructuredData,
   getCanonicalLinks,
   getPageMeta,
+  withSiteName,
   jsonLdScript,
 } from "@/lib/seo";
 import { getSource, getDocsLanguages } from "@/lib/source";
@@ -76,6 +73,7 @@ type DocsPageLoaderData = BaseDocsLoaderData & {
 };
 
 type OpenApiPageLoaderData = BaseDocsLoaderData & {
+  markdownUrl: string;
   props: OpenAPIPageProps_Spec;
   type: "openapi";
 };
@@ -109,6 +107,7 @@ const serverLoader = createServerFn({
         languages,
         description: page.data.description,
         imageUrl,
+        markdownUrl: `${page.url}.mdx`,
         pageTree,
         props: page.data.getOpenAPIPageProps(),
         title,
@@ -143,8 +142,6 @@ const clientLoader = browserCollections.docs.createClientLoader<{
     { default: MDX, toc, frontmatter, lastModified },
     props,
   ) {
-    const locale = useLocale();
-    const t = useT();
     return (
       <DocsPage
         toc={toc}
@@ -154,73 +151,21 @@ const clientLoader = browserCollections.docs.createClientLoader<{
           container: { role: "navigation", "aria-labelledby": "toc-title" },
         }}
       >
-        <div className="flex flex-col gap-2" lang={props.contentLocale}>
-          <DocsTitle>{frontmatter.title}</DocsTitle>
-          <DocsDescription className="mb-2.5">
-            {frontmatter.description}
-          </DocsDescription>
-          <div className="flex flex-row items-center gap-2 border-b pt-2 pb-6">
-            <LLMCopyButton markdownUrl={props.markdownUrl} />
-            <ViewOptions
-              markdownUrl={props.markdownUrl}
-              githubUrl={`https://github.com/soulfiremc-com/soulfiremc.com/blob/main/content/docs/${props.currentPath}`}
-            />
-          </div>
-        </div>
+        <DocsPageHeader
+          title={frontmatter.title}
+          description={frontmatter.description}
+          contentLocale={props.contentLocale}
+          markdownUrl={props.markdownUrl}
+          githubUrl={`https://github.com/soulfiremc-com/soulfiremc.com/blob/main/content/docs/${props.currentPath}`}
+        />
         <DocsBody
           lang={props.contentLocale}
           data-docs-content-path={props.currentPath}
         >
-          <MDX
-            components={getMDXComponents({
-              a: ({ href, ...anchorProps }) => {
-                if (!href) {
-                  // oxlint-disable-next-line jsx-a11y/anchor-has-content -- the link text arrives through the spread props
-                  return <a {...anchorProps} />;
-                }
-
-                const pathname = href.split("#")[0] ?? "";
-
-                if (!pathname.startsWith("/docs")) {
-                  return (
-                    // oxlint-disable-next-line jsx-a11y/anchor-has-content -- the link text arrives through the spread props
-                    <a href={localizeHref(href, locale)} {...anchorProps} />
-                  );
-                }
-
-                return (
-                  <HoverCard>
-                    <HoverCardTrigger
-                      render={
-                        <Link
-                          {...docsLinkTarget(href, locale)}
-                          {...anchorProps}
-                        />
-                      }
-                    />
-                    <HoverCardContent className="text-sm">
-                      <p className="font-medium">{anchorProps.children}</p>
-                      <p className="text-fd-muted-foreground">{href}</p>
-                    </HoverCardContent>
-                  </HoverCard>
-                );
-              },
-            })}
-          />
+          <MDX components={docsMdxComponents} />
         </DocsBody>
-        <Feedback />
-        <EnderDashSponsor placement="docs-footer" className="mt-8" />
-        {lastModified && (
-          <p className="text-sm text-fd-muted-foreground">
-            {t("docs.lastUpdatedOn")}{" "}
-            <time
-              dateTime={new Date(lastModified).toISOString()}
-              suppressHydrationWarning
-            >
-              {formatLocaleDate(lastModified, locale)}
-            </time>
-          </p>
-        )}
+        {lastModified && <LastUpdated date={lastModified} />}
+        <DocsPageFooter />
       </DocsPage>
     );
   },
@@ -256,7 +201,7 @@ export const Route = createFileRoute("/{-$lang}/docs/$")({
     // A missing page keeps the root noindex and gets no canonical or preview.
     if (!loaderData) return { meta: [] };
     const routeLocale = isLocale(params.lang) ? params.lang : "en";
-    const title = `${loaderData.title} - SoulFire`;
+    const title = withSiteName(loaderData.title);
     const description =
       loaderData.description ??
       (loaderData.type === "openapi"
@@ -274,7 +219,7 @@ export const Route = createFileRoute("/{-$lang}/docs/$")({
           description,
           path,
           imageUrl,
-          imageAlt: `${loaderData.title} documentation preview`,
+          imageAlt: loaderData.title,
         }),
         // An English page served under /de, /pl, or /ru duplicates the English
         // original. Keep the copy out of search results but follow its links.
@@ -340,27 +285,24 @@ function DocsMarkdownContent({
 
 function DocsPageRoute() {
   const locale = useLocale();
-  const t = useT();
   const page = useFumadocsLoader<DocsLoaderData>(Route.useLoaderData());
 
   return (
     <DocsLayout tree={page.pageTree} {...getBaseLayoutOptions(locale)}>
-      {page.contentLocale !== locale && (
-        <p className="mx-auto w-full max-w-4xl px-6 pt-4 text-sm text-fd-muted-foreground">
-          {t("docs.thisGuideIsAvailableInEnglish")}
-        </p>
-      )}
       <Suspense>
         {page.type === "openapi" ? (
           <DocsPage full>
             {/* APIPage renders the operation description as Markdown below
                 the endpoint, so a page description here would repeat it. */}
-            <DocsTitle className="mb-6 border-b pb-6">{page.title}</DocsTitle>
+            <DocsPageHeader
+              title={page.title}
+              contentLocale={page.contentLocale}
+              markdownUrl={page.markdownUrl}
+            />
             <DocsBody lang={page.contentLocale}>
               <APIPage {...page.props} />
             </DocsBody>
-            <Feedback />
-            <EnderDashSponsor placement="docs-footer" className="mt-8" />
+            <DocsPageFooter />
           </DocsPage>
         ) : (
           <DocsMarkdownContent
@@ -373,3 +315,84 @@ function DocsPageRoute() {
     </DocsLayout>
   );
 }
+
+function DocsPageHeader({
+  title,
+  description,
+  contentLocale,
+  markdownUrl,
+  githubUrl,
+}: {
+  title: string;
+  description?: string;
+  contentLocale: Locale;
+  markdownUrl: string;
+  githubUrl?: string;
+}) {
+  const locale = useLocale();
+  const t = useT();
+  return (
+    <div className="flex flex-col gap-2 border-b pb-6" lang={contentLocale}>
+      <DocsTitle>{title}</DocsTitle>
+      <DocsDescription className="mb-2.5">{description}</DocsDescription>
+      {contentLocale !== locale && (
+        <p className="text-sm text-fd-muted-foreground" lang={locale}>
+          {t("docs.thisGuideIsAvailableInEnglish")}
+        </p>
+      )}
+      <div className="flex flex-row flex-wrap items-center gap-2 pt-2">
+        <LLMCopyButton markdownUrl={markdownUrl} />
+        <ViewOptionsPopover
+          markdownUrl={markdownUrl}
+          githubUrl={githubUrl}
+          // Point AI chats at the Markdown copy. It is shorter to read, and a
+          // fixed URL keeps the server and browser links the same.
+          pageUrl={new URL(markdownUrl, "https://soulfiremc.com").href}
+        />
+      </div>
+    </div>
+  );
+}
+
+function DocsPageFooter() {
+  return (
+    <>
+      <Feedback />
+      <EnderDashSponsor placement="docs-footer" className="mt-8" />
+    </>
+  );
+}
+
+function LastUpdated({ date }: { date: Date | string | number }) {
+  const locale = useLocale();
+  const t = useT();
+  return (
+    <p className="text-sm text-fd-muted-foreground">
+      {t("docs.lastUpdatedOn")}{" "}
+      <time dateTime={new Date(date).toISOString()} suppressHydrationWarning>
+        {formatLocaleDate(date, locale)}
+      </time>
+    </p>
+  );
+}
+
+/**
+ * Keep docs links inside the router so they preload, and localize links to
+ * other site pages. Defined once so React keeps the same link components
+ * across renders.
+ */
+function DocsLink({ href, ...props }: ComponentProps<"a">) {
+  const locale = useLocale();
+  if (href?.split("#")[0]?.startsWith("/docs")) {
+    return <Link {...docsLinkTarget(href, locale)} {...props} />;
+  }
+  return (
+    // oxlint-disable-next-line jsx-a11y/anchor-has-content -- the link text arrives through the spread props
+    <a
+      href={href === undefined ? href : localizeHref(href, locale)}
+      {...props}
+    />
+  );
+}
+
+const docsMdxComponents = getMDXComponents({ a: DocsLink });

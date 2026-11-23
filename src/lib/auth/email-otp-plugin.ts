@@ -1,8 +1,9 @@
-import { createAuthPlugin } from "@better-auth-ui/core";
+import { type AuthView, createAuthPlugin } from "@better-auth-ui/core";
 import {
   emailOtpPlugin as coreEmailOtpPlugin,
   type EmailOtpPluginOptions,
 } from "@better-auth-ui/core/plugins/email-otp";
+import { createElement } from "react";
 
 import { lazyAuthUi } from "@/lib/auth/lazy-auth-ui";
 
@@ -13,6 +14,15 @@ const ForgotPasswordOtp = lazyAuthUi("ForgotPasswordOtp");
 const ResetPasswordOtp = lazyAuthUi("ResetPasswordOtp");
 const VerifyEmailOtp = lazyAuthUi("VerifyEmailOtp");
 
+/**
+ * The server sets `disableSignUp`, so it sends no code to an unknown email.
+ * Offering the button on the sign-up form would leave a new user waiting for
+ * a code that never arrives.
+ */
+function SignInEmailOtpButton({ view }: { view?: AuthView }) {
+  return view === "signUp" ? null : createElement(EmailOtpButton, { view });
+}
+
 export const emailOtpPlugin = createAuthPlugin(
   coreEmailOtpPlugin.id,
   (options: EmailOtpPluginOptions = {}) => {
@@ -20,7 +30,7 @@ export const emailOtpPlugin = createAuthPlugin(
 
     return {
       ...plugin,
-      authButtons: plugin.signIn ? [EmailOtpButton] : [],
+      authButtons: plugin.signIn ? [SignInEmailOtpButton] : [],
       // Each flow is opt-in because it replaces a link-based view outright.
       // Turning one on without the matching server option would leave the
       // user waiting for a code that never arrives.

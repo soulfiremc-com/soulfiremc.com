@@ -11,6 +11,7 @@ import {
   getPageMeta,
   jsonLdScript,
   truncateDescription,
+  withSiteName,
 } from "@/lib/seo";
 
 void test("long meta descriptions end at a word boundary within 160 characters", () => {
@@ -34,6 +35,32 @@ void test("long meta descriptions end at a word boundary within 160 characters",
     );
   }
   assert.equal(truncateDescription("Short  text\n"), "Short text");
+});
+
+void test("page titles name the site once", () => {
+  assert.equal(withSiteName("Auto attack"), "Auto attack - SoulFire");
+  assert.equal(
+    withSiteName("SoulFire documentation"),
+    "SoulFire documentation",
+  );
+  assert.equal(
+    withSiteName("Run SoulFire with Docker Compose"),
+    "Run SoulFire with Docker Compose",
+  );
+});
+
+void test("social previews describe the page and declare the image size", () => {
+  const meta = getPageMeta({
+    title: "Auto attack - SoulFire",
+    description: "Configure targeting.",
+    path: "/docs/how-to/kill-aura",
+  });
+  const value = (key: string) =>
+    meta.find((entry) => (entry.property ?? entry.name) === key)?.content;
+  assert.equal(value("og:image:alt"), "Auto attack - SoulFire");
+  assert.equal(value("twitter:image:alt"), "Auto attack - SoulFire");
+  assert.equal(value("og:image:width"), "1200");
+  assert.equal(value("og:image:height"), "630");
 });
 
 void test("blog posts publish article metadata and BlogPosting data", () => {

@@ -4,7 +4,6 @@ import "@fontsource-variable/geist";
 import "@fontsource-variable/geist-mono";
 import type { QueryClient } from "@tanstack/react-query";
 import {
-  ClientOnly,
   createRootRouteWithContext,
   HeadContent,
   Outlet,
@@ -15,11 +14,11 @@ import { Providers } from "@/components/providers";
 import { NotFoundPage, RouteErrorPage } from "@/components/route-status-page";
 import {
   createStructuredDataGraph,
+  defaultSocialImageUrl,
   getOrganizationStructuredData,
   getWebsiteStructuredData,
   jsonLdScript,
   siteName,
-  siteUrl,
 } from "@/lib/seo";
 
 import appCss from "../style.css?url";
@@ -58,14 +57,13 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
         { property: "og:site_name", content: siteName },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
-        { property: "og:url", content: siteUrl },
-        { property: "og:image", content: `${siteUrl}/og/site/home/image.webp` },
+        { property: "og:image", content: defaultSocialImageUrl },
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: title },
         { name: "twitter:description", content: description },
         {
           name: "twitter:image",
-          content: `${siteUrl}/og/site/home/image.webp`,
+          content: defaultSocialImageUrl,
         },
       ],
       links: [
@@ -123,24 +121,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         />
       </head>
       <body suppressHydrationWarning>
-        <ClientOnly fallback={null}>
-          <script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js" />
-          <script
-            // oxlint-disable-next-line react/no-danger -- the Ko-fi widget is configured with a static inline script
-            dangerouslySetInnerHTML={{
-              __html: `
-                if (window.kofiWidgetOverlay) {
-                  kofiWidgetOverlay.draw('alexprogrammerde', {
-                    'type': 'floating-chat',
-                    'floating-chat.donateButton.text': ${JSON.stringify(translate(locale, "errors.supportMe"))},
-                    'floating-chat.donateButton.background-color': '#794bc4',
-                    'floating-chat.donateButton.text-color': '#fff'
-                  });
-                }
-              `,
-            }}
-          />
-        </ClientOnly>
         {children}
         <Scripts />
       </body>

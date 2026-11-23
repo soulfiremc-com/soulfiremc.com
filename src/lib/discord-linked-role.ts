@@ -10,6 +10,9 @@ export type LinkedRoleStatus = (typeof linkedRoleStatuses)[number];
 
 export const LINKED_ROLE_START_PATH = "/api/discord/linked-role";
 export const LINKED_ROLE_RESULT_PATH = "/discord/linked-role";
+/** Discord only accepts the callback URL registered for the application. */
+export const LINKED_ROLE_CALLBACK_URL =
+  "https://soulfiremc.com/api/discord/linked-role/callback";
 const PLATFORM_USERNAME_MAX_LENGTH = 100;
 
 export function isLinkedRoleStatus(value: unknown): value is LinkedRoleStatus {

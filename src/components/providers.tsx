@@ -32,7 +32,7 @@ import { authClient } from "@/lib/auth-client";
 import {
   AUTH_UI_VIEW_PATHS,
   AUTH_UI_BASE_PATHS,
-  DEFAULT_AUTH_REDIRECT_PATH,
+  authRedirectPath,
 } from "@/lib/auth-ui-config";
 import { authUiLocale } from "@/lib/auth/auth-ui-locale";
 import { translate } from "@/lib/messages";
@@ -57,25 +57,6 @@ const authUiPlugins = [
   lastLoginMethodPlugin(),
 ];
 
-const REDIRECT_BASE = "https://redirect-check.invalid";
-
-/**
- * Returns the path part of a same-site URL, or null. Parse with the URL rules
- * browsers use, since they strip tabs and newlines and so turn `/\t/evil.com`
- * into a protocol-relative URL that leaves the site.
- */
-function toSameSitePath(value: string): string | null {
-  if (!value.trim().startsWith("/")) return null;
-  try {
-    const url = new URL(value.trim(), REDIRECT_BASE);
-    return url.origin === REDIRECT_BASE
-      ? `${url.pathname}${url.search}${url.hash}`
-      : null;
-  } catch {
-    return null;
-  }
-}
-
 function AuthUIProviders({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
   const locale = useLocale();
@@ -85,13 +66,13 @@ function AuthUIProviders({ children }: { children: React.ReactNode }) {
   );
   // Better Auth UI reads `redirectTo` from `window.location`, which the server
   // render lacks. Read it from the router so server and browser links match.
-  const requestedRedirectTo = useRouterState({
-    select: (state) => {
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- redirectTo is read as unknown and checked before use
-      const value = (state.location.search as { redirectTo?: unknown })
-        .redirectTo;
-      return typeof value === "string" ? toSameSitePath(value) : null;
-    },
+  const redirectTo = useRouterState({
+    select: (state) =>
+      authRedirectPath(
+        "redirectTo" in state.location.search
+          ? state.location.search.redirectTo
+          : undefined,
+      ),
   });
 
   return (
@@ -99,7 +80,7 @@ function AuthUIProviders({ children }: { children: React.ReactNode }) {
       authClient={authClient}
       navigate={(options) => void navigate(options)}
       Link={AuthLink}
-      redirectTo={requestedRedirectTo ?? DEFAULT_AUTH_REDIRECT_PATH}
+      redirectTo={redirectTo}
       basePaths={AUTH_UI_BASE_PATHS}
       viewPaths={AUTH_UI_VIEW_PATHS}
       socialProviders={["google", "discord", "github"]}

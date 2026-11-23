@@ -24,6 +24,28 @@ export const DEFAULT_AUTH_REDIRECT_PATH = `${AUTH_UI_BASE_PATHS.settings}/${AUTH
 
 export const ADMIN_REVIEW_PATH = "reviews";
 
+const REDIRECT_BASE = "https://redirect-check.invalid";
+
+/**
+ * Where to go after sign-in: the `redirectTo` search value when it is a path
+ * on this site, otherwise the account settings. Parse with the URL rules
+ * browsers use, since they strip tabs and newlines and so turn `/\t/evil.com`
+ * into a protocol-relative URL that leaves the site.
+ */
+export function authRedirectPath(redirectTo: unknown): string {
+  if (typeof redirectTo !== "string") return DEFAULT_AUTH_REDIRECT_PATH;
+  const value = redirectTo.trim();
+  if (!value.startsWith("/")) return DEFAULT_AUTH_REDIRECT_PATH;
+  try {
+    const url = new URL(value, REDIRECT_BASE);
+    return url.origin === REDIRECT_BASE
+      ? `${url.pathname}${url.search}${url.hash}`
+      : DEFAULT_AUTH_REDIRECT_PATH;
+  } catch {
+    return DEFAULT_AUTH_REDIRECT_PATH;
+  }
+}
+
 const AUTH_UI_PAGE_BASE_PATHS = [
   AUTH_UI_BASE_PATHS.auth,
   AUTH_UI_BASE_PATHS.settings,

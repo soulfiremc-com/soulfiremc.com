@@ -55,7 +55,11 @@ import {
   type Provider,
   type Shop,
 } from "@/lib/accounts-data";
-import { getListingOffer, getShopAggregateOffer } from "@/lib/accounts-offers";
+import {
+  getListingOffer,
+  getShopAggregateOffer,
+  hasLiveStock,
+} from "@/lib/accounts-offers";
 import {
   accountDiscordInviteQueryOptions,
   accountLiveShopDataQueryOptions,
@@ -451,6 +455,9 @@ function AccountDetailPage() {
   const affiliateBadgeClassName =
     data.shop.theme === "localts" ? theme?.badge : undefined;
   const discordInviteUrl = getDiscordInviteUrl(data.shop);
+  const singleListing =
+    data.providers.length === 1 ? data.providers[0] : undefined;
+  const showsStock = hasLiveStock(data.shop);
   const reviewsQuery = useHydratedQueryResult(
     useQuery(
       reviewsQueryOptions({
@@ -546,29 +553,12 @@ function AccountDetailPage() {
                   />
                 ) : null}
               </div>
-              <p className="text-lg text-muted-foreground">
-                {data.providers
-                  .map((provider) => t(provider.summary))
-                  .join(" ")}
-              </p>
-
-              <div className="flex flex-wrap gap-2">
-                {[
-                  ...new Set(
-                    data.providers.flatMap((provider) => provider.badges),
-                  ),
-                ].map((badge) => (
-                  <ProviderBadge
-                    key={badge}
-                    badge={badge}
-                    classNameOverride={
-                      badge === "affiliate"
-                        ? affiliateBadgeClassName
-                        : undefined
-                    }
-                  />
-                ))}
-              </div>
+              {/* A shop with several listings describes each one in its card. */}
+              {singleListing ? (
+                <p className="text-lg text-muted-foreground">
+                  {t(singleListing.summary)}
+                </p>
+              ) : null}
               <PaymentMethods methods={data.shop.paymentMethods} />
 
               <div className="flex flex-wrap gap-2">
@@ -589,7 +579,8 @@ function AccountDetailPage() {
                     theme?.primaryButton /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */
                   }
                 />
-                {data.shop.websiteUrl ? (
+                {data.shop.websiteUrl &&
+                data.shop.websiteUrl !== data.shop.url ? (
                   <Button
                     render={
                       <a
@@ -685,7 +676,9 @@ function AccountDetailPage() {
                     {t(CATEGORY_CONFIG[provider.category].label)}
                   </h2>
                   <p className="text-sm text-muted-foreground">
-                    {t(CATEGORY_CONFIG[provider.category].description)}
+                    {singleListing
+                      ? t(CATEGORY_CONFIG[provider.category].description)
+                      : t(provider.summary)}
                   </p>
                 </div>
                 {/* Visitors click the price notes to compare tiers, so they
@@ -731,19 +724,21 @@ function AccountDetailPage() {
                     href={provider.url}
                   />
                 ) : null}
-                <div className="text-sm text-muted-foreground">
-                  {t("providers.accounts.availability")}{" "}
-                  {liveShopDataQuery.isPending ? (
-                    <Skeleton className="inline-block h-4 w-20 align-middle" />
-                  ) : liveOffer.availability ===
-                    "https://schema.org/OutOfStock" ? (
-                    t("providers.accounts.outOfStock")
-                  ) : liveOffer.availability ? (
-                    t("providers.accounts.inStock")
-                  ) : (
-                    t("providers.accounts.checkAvailability")
-                  )}
-                </div>
+                {/* Only shops with a stock feed have a known availability. */}
+                {showsStock &&
+                (liveShopDataQuery.isPending || liveOffer.availability) ? (
+                  <div className="text-sm text-muted-foreground">
+                    {t("providers.accounts.availability")}{" "}
+                    {liveShopDataQuery.isPending ? (
+                      <Skeleton className="inline-block h-4 w-20 align-middle" />
+                    ) : liveOffer.availability ===
+                      "https://schema.org/OutOfStock" ? (
+                      t("providers.accounts.outOfStock")
+                    ) : (
+                      t("providers.accounts.inStock")
+                    )}
+                  </div>
+                ) : null}
                 <Button
                   render={
                     <a

@@ -101,10 +101,10 @@ export const Route = createFileRoute("/og/site/{$}/image.webp")({
             image = (
               <DirectoryOgImage
                 label="Blog"
+                path="/blog"
                 title="SoulFire Blog"
                 description="Tutorials, field notes, and deep dives on Minecraft bot testing and development."
                 accent="#ffb562"
-                secondary="#ff7d99"
                 count={allPosts.length}
                 samples={allPosts.map((post) => post.data.title)}
               />
@@ -115,10 +115,10 @@ export const Route = createFileRoute("/og/site/{$}/image.webp")({
             image = (
               <DirectoryOgImage
                 label="Proxies"
+                path="/get-proxies"
                 title="Proxy Providers for SoulFire"
                 description="Residential, datacenter, ISP, and mobile networks tested with SoulFire sessions."
                 accent="#58c7ff"
-                secondary="#4a7dff"
                 count={PROXY_PROVIDERS.length}
                 samples={PROXY_PROVIDERS.map((p) => p.name)}
               />
@@ -132,10 +132,10 @@ export const Route = createFileRoute("/og/site/{$}/image.webp")({
             image = (
               <DirectoryOgImage
                 label="Accounts"
+                path="/get-accounts"
                 title="Minecraft Accounts for SoulFire"
                 description="MFA and NFA providers with pricing and delivery details."
                 accent="#75f1ba"
-                secondary="#ffb562"
                 count={uniqueProviders.length}
                 samples={uniqueProviders.map((p) => p.name)}
               />

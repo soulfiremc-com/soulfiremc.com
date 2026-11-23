@@ -67,18 +67,18 @@ export function generateStaticImages({
             });
           }
           const metadata: StaticImageManifest[string] = { width, height };
-          if (
-            info.format === "svg" ||
-            info.format === "gif" ||
-            (info.pages ?? 1) > 1 ||
-            preserveSources.includes(source)
-          )
+          if (info.format === "svg" || preserveSources.includes(source))
             return [source, metadata] as const;
 
-          const opaque = yield* operation(
-            `inspect transparency: ${source}`,
-            async () => (await sharp(bytes).stats()).isOpaque,
-          );
+          // Animated sources keep every frame in their WebP variants. A
+          // placeholder from the first frame would not match the animation.
+          const animated = (info.pages ?? 1) > 1;
+          const opaque =
+            !animated &&
+            (yield* operation(
+              `inspect transparency: ${source}`,
+              async () => (await sharp(bytes).stats()).isOpaque,
+            ));
           if (opaque) {
             metadata.background = yield* operation(
               `generate placeholder: ${source}`,
@@ -123,7 +123,7 @@ export function generateStaticImages({
                   const buffer = yield* operation(
                     `resize image: ${source} (${size}px)`,
                     () =>
-                      sharp(bytes)
+                      sharp(bytes, { animated })
                         .rotate()
                         .resize({ width: size, withoutEnlargement: true })
                         .webp({ quality: 85, effort: 4 })

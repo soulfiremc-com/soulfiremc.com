@@ -1,10 +1,22 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type { Node } from "fumadocs-core/page-tree";
+import { translate } from "@/lib/messages";
 import { absoluteUrl, siteDescription, siteName } from "@/lib/site";
 
 const textHeaders = { "Content-Type": "text/plain; charset=utf-8" };
 
 type Section = { heading: string; urls: string[] };
+
+const sitePages = [
+  ["Download", "/download", "download.meta.description"],
+  ["Pricing", "/pricing", "support.meta.description"],
+  [
+    "Minecraft account providers",
+    "/get-accounts",
+    "providers.accounts.social.description",
+  ],
+  ["Proxy providers", "/get-proxies", "providers.proxies.social.description"],
+] as const;
 
 /** Groups page URLs by sidebar folder, in sidebar order. */
 function collectSections(nodes: Node[], section: Section, sections: Section[]) {
@@ -48,7 +60,14 @@ export const Route = createFileRoute("/llms.txt")({
         const lines = [
           `# ${siteName}`,
           `> ${siteDescription}`,
-          `Each link points to a Markdown copy of a documentation page. The full documentation is also available as one file at ${absoluteUrl("/llms-full.txt")}.`,
+          `Each docs link points to a Markdown copy of a documentation page. The full documentation is also available as one file at ${absoluteUrl("/llms-full.txt")}.`,
+          "## Website",
+          sitePages
+            .map(
+              ([title, path, description]) =>
+                `- [${title}](${absoluteUrl(path)}): ${translate("en", description)}`,
+            )
+            .join("\n"),
         ];
 
         const root: Section = { heading: "Docs", urls: [] };
@@ -86,6 +105,17 @@ export const Route = createFileRoute("/llms.txt")({
               .join("\n"),
           );
         }
+
+        const { getSortedBlogPages } = await import("@/lib/blog");
+        lines.push(
+          "## Blog",
+          getSortedBlogPages()
+            .map(
+              (post) =>
+                `- [${post.data.title}](${absoluteUrl(post.url)})${post.data.description ? `: ${post.data.description}` : ""}`,
+            )
+            .join("\n"),
+        );
 
         return new Response(lines.join("\n\n"), { headers: textHeaders });
       },

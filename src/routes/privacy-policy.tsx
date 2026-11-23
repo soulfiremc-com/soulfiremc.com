@@ -363,11 +363,11 @@ function PrivacyPolicy() {
                 Ko-fi
               </a>
             </TableCell>
-            <TableCell>Donation button on every page</TableCell>
             <TableCell>
-              Request metadata (IP, headers) when the button loads, and any
-              details you enter when you donate
+              Memberships and donations on the Ko-fi site, after you follow a
+              link from our website
             </TableCell>
+            <TableCell>Any details you enter when you donate</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>

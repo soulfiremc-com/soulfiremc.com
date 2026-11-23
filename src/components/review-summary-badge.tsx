@@ -9,12 +9,10 @@ import { ReviewStars } from "./review-stars";
 export function ReviewSummaryBadge({
   summary,
   className,
-  compact = false,
   status = "ready",
 }: {
   summary: ReviewSummary;
   className?: string;
-  compact?: boolean;
   /** Loading and failed requests must not read as an item without ratings. */
   status?: ReviewSummaryStatus;
 }) {
@@ -66,7 +64,7 @@ export function ReviewSummaryBadge({
         className,
       )}
     >
-      <ReviewStars value={summary.averageRating} size={compact ? "sm" : "md"} />
+      <ReviewStars value={summary.averageRating} size="md" />
       <span className="font-semibold tabular-nums">
         {summary.averageRating.toLocaleString(locale, {
           minimumFractionDigits: 1,

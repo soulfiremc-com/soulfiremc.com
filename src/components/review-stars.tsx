@@ -16,11 +16,9 @@ const sizeClasses: Record<Size, string> = {
 export function ReviewStars({
   value,
   size = "sm",
-  className,
 }: {
   value: number;
   size?: Size;
-  className?: string;
 }) {
   const t = useT();
   const locale = useLocale();
@@ -38,7 +36,7 @@ export function ReviewStars({
       role="img"
       aria-label={label}
       // Fit the stars so a stretching flex parent cannot widen the fill area.
-      className={cn("relative inline-flex w-fit items-center", className)}
+      className="relative inline-flex w-fit items-center"
       title={label}
     >
       <div className="flex items-center gap-0.5 text-rating-muted">
@@ -64,15 +62,12 @@ export function ReviewStarInput({
   value,
   onChange,
   disabled,
-  size = "sm",
-  className,
   labelledBy,
 }: {
+  /** The selected rating, or 0 when nothing is selected yet. */
   value: number;
   onChange: (value: number) => void;
   disabled?: boolean;
-  size?: Size;
-  className?: string;
   labelledBy?: string;
 }) {
   const t = useT();
@@ -81,7 +76,7 @@ export function ReviewStarInput({
       // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- a labelled group of star buttons; fieldset would add form semantics and min-content sizing
       role="group"
       aria-labelledby={labelledBy}
-      className={cn("-m-1 inline-flex items-center", className)}
+      className="-m-1 inline-flex w-fit items-center"
     >
       {Array.from({ length: 5 }, (_, index) => {
         const starValue = index + 1;
@@ -104,7 +99,7 @@ export function ReviewStarInput({
             aria-label={t("reviews.setRating5", { count: starValue })}
             aria-pressed={value === starValue}
           >
-            <Star className={cn(sizeClasses[size], active && "fill-current")} />
+            <Star className={cn(sizeClasses.lg, active && "fill-current")} />
           </button>
         );
       })}

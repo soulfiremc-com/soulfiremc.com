@@ -25,6 +25,7 @@ const serverErrorKeys: Record<string, MessageKey> = {
   MISSING_RESPONSE: "auth.error.captchaMissing",
   OTP_EXPIRED: "auth.error.codeExpired",
   OTP_HAS_EXPIRED: "auth.error.codeExpired",
+  PASSWORD_COMPROMISED: "auth.error.passwordCompromised",
   PASSWORD_TOO_LONG: "auth.error.passwordTooLong",
   PASSWORD_TOO_SHORT: "auth.error.passwordTooShort",
   SOCIAL_ACCOUNT_ALREADY_LINKED: "auth.error.accountAlreadyLinked",

@@ -153,18 +153,6 @@ function DiscordMemberBadge({ providerSlug }: { providerSlug: string }) {
   );
 }
 
-const CATEGORIES = ["nfa-accounts", "mfa-accounts"] as const;
-
-const BADGES = [
-  "free",
-  "high-quality",
-  "instant-delivery",
-  "replacement-warranty",
-  "lifetime-warranty",
-  "12h-warranty",
-  "bulk-discount",
-] as const;
-
 const SORT_OPTIONS = [
   "default",
   "best-rated",
@@ -173,10 +161,10 @@ const SORT_OPTIONS = [
 ] as const;
 
 const accountsSearchSchema = Schema.Struct({
-  category: Schema.optional(Schema.Literals(CATEGORIES)).pipe(
+  category: Schema.optional(Schema.Literals(FILTER_CATEGORIES)).pipe(
     Schema.catchDecoding(() => Effect.succeedSome(undefined)),
   ),
-  badges: Schema.mutable(Schema.Array(Schema.Literals(BADGES))).pipe(
+  badges: Schema.mutable(Schema.Array(Schema.Literals(FILTER_BADGES))).pipe(
     Schema.catchDecoding(() => Effect.succeedSome([])),
     Schema.withDecodingDefaultType(Effect.succeed([])),
   ),
@@ -289,7 +277,7 @@ const ProviderCard = memo(function ProviderCard({
       )}
     >
       <ProviderThemeDecoration theme={provider.theme} />
-      <div className="relative flex flex-row gap-4 p-4 sm:p-6">
+      <div className="relative flex flex-row gap-4 px-4 sm:px-6">
         <div
           className={cn(
             "relative size-12 shrink-0 overflow-hidden rounded-lg bg-muted sm:size-16",
@@ -612,7 +600,7 @@ function MainContent() {
           onValueChange={([value]) => {
             updateSearch((previous) => ({
               ...previous,
-              category: isOneOf(value, CATEGORIES) ? value : undefined,
+              category: isOneOf(value, FILTER_CATEGORIES) ? value : undefined,
             }));
           }}
           spacing={2}
@@ -650,7 +638,7 @@ function MainContent() {
           onValueChange={(value) => {
             updateSearch((previous) => ({
               ...previous,
-              badges: value.filter((badge) => isOneOf(badge, BADGES)),
+              badges: value.filter((badge) => isOneOf(badge, FILTER_BADGES)),
             }));
           }}
           spacing={2}
@@ -827,7 +815,7 @@ function MainContent() {
                   <p className="text-sm text-muted-foreground">
                     {t("providers.accounts.nfa.description")}
                   </p>
-                  <p className="text-sm text-warning">
+                  <p className="text-sm text-muted-foreground">
                     <strong>{t("providers.accounts.note")}</strong>{" "}
                     {t("providers.accounts.nfa.authentication")}
                   </p>

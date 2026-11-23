@@ -1,4 +1,4 @@
-import { SiDiscord, SiGithub, SiKofi } from "@icons-pack/react-simple-icons";
+import { SiDiscord, SiGithub } from "@icons-pack/react-simple-icons";
 import { localizePath, type Locale } from "./i18n";
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
 import { Image } from "@/components/image";
@@ -29,6 +29,7 @@ export function getBaseLayoutOptions(locale: Locale = "en"): BaseLayoutProps {
         type: "icon",
         icon: <SiDiscord />,
         text: "Discord",
+        label: "Discord",
         url: getRequiredEnv(
           import.meta.env.VITE_DISCORD_LINK,
           "VITE_DISCORD_LINK",
@@ -41,14 +42,6 @@ export function getBaseLayoutOptions(locale: Locale = "en"): BaseLayoutProps {
         text: "GitHub",
         label: "GitHub",
         url: "https://github.com/soulfiremc-com/SoulFire",
-        external: true,
-      },
-      {
-        type: "icon",
-        icon: <SiKofi />,
-        text: "Ko-fi",
-        label: "Ko-fi",
-        url: "https://ko-fi.com/alexprogrammerde/tiers",
         external: true,
       },
     ],

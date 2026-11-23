@@ -46,7 +46,7 @@ const decodeManifest = Schema.decodeUnknownSync(
   ),
 );
 
-void test("generate static variants, reserve oriented dimensions, and preserve special images", async () => {
+void test("generate static variants, keep animation frames, reserve oriented dimensions, and preserve special images", async () => {
   const directory = await mkdtemp(join(tmpdir(), "static-images-"));
   const publicDirectory = join(directory, "public");
   const metadataFile = join(directory, "images.json");
@@ -120,10 +120,19 @@ void test("generate static variants, reserve oriented dimensions, and preserve s
       ],
       [80, 120],
     );
-    for (const src of ["/vector.svg", "/animated.webp", "/skin.png"]) {
+    for (const src of ["/vector.svg", "/skin.png"]) {
       assert.equal(defined(manifest[src]).variants, undefined, src);
       assert.equal(defined(manifest[src]).background, undefined, src);
     }
+    const animation = defined(manifest["/animated.webp"]);
+    assert.equal(animation.background, undefined);
+    assert.deepEqual([animation.width, animation.height], [8, 8]);
+    const animationVariant = defined(animation.variants?.[0]);
+    assert.equal(
+      (await sharp(join(publicDirectory, animationVariant.src)).metadata())
+        .pages,
+      2,
+    );
     for (const metadata of Object.values(manifest)) {
       for (const variant of metadata.variants ?? []) {
         const actual = await sharp(

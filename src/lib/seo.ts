@@ -3,9 +3,9 @@ import {
   splitLocalePath,
   hrefPath,
   localizePath,
-  isProviderPath,
   type Locale,
 } from "./i18n";
+import { getPageLanguages, localizedSitePages } from "./localized-sitemap";
 import {
   absoluteUrl,
   defaultSocialImageUrl,
@@ -20,6 +20,11 @@ export type BreadcrumbItem = {
 };
 
 const maxDescriptionLength = 160;
+
+/** Adds the site name to a page title unless the title already names it. */
+export function withSiteName(title: string) {
+  return title.includes(siteName) ? title : `${title} - ${siteName}`;
+}
 
 /** Shortens text at a word boundary so search snippets do not cut it mid-word. */
 export function truncateDescription(
@@ -40,7 +45,7 @@ export function getPageMeta({
   description,
   path,
   imageUrl = defaultSocialImageUrl,
-  imageAlt = `${siteName} social preview`,
+  imageAlt = title,
   ogType = "website",
   publishedTime,
   locale = splitLocalePath(path).locale,
@@ -58,12 +63,7 @@ export function getPageMeta({
   const summary = truncateDescription(description);
   let absoluteImageUrl = absoluteUrl(imageUrl);
   const bare = splitLocalePath(localizedPath).path;
-  if (
-    locale !== "en" &&
-    ["/", "/download", "/pricing", "/get-accounts", "/get-proxies"].includes(
-      bare,
-    )
-  ) {
+  if (locale !== "en" && localizedSitePages.includes(bare)) {
     const name = bare === "/" ? "home" : bare.slice(1);
     absoluteImageUrl = absoluteUrl(`/og/site/${locale}/${name}/image.webp`);
   }
@@ -82,6 +82,8 @@ export function getPageMeta({
     { property: "og:image", content: absoluteImageUrl },
     { property: "og:image:alt", content: imageAlt },
     { property: "og:image:type", content: "image/webp" },
+    { property: "og:image:width", content: "1200" },
+    { property: "og:image:height", content: "630" },
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: title },
     { name: "twitter:description", content: summary },
@@ -112,11 +114,7 @@ export function getCanonicalLinks(
   languages?: readonly Locale[],
 ) {
   const bare = splitLocalePath(hrefPath(path)).path;
-  const available =
-    languages ??
-    (["/", "/download", "/pricing"].includes(bare) || isProviderPath(bare)
-      ? locales
-      : ["en"]);
+  const available = languages ?? getPageLanguages(bare, {});
   return [
     {
       rel: "canonical" as const,

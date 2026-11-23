@@ -1,19 +1,8 @@
 import { labelize } from "@/lib/og";
 
 const palette = {
-  bg: "#040c18",
-  bgAlt: "#0a1628",
-  panel: "rgba(8, 20, 36, 0.85)",
-  panelStrong: "rgba(10, 24, 44, 0.94)",
-  border: "rgba(120, 170, 220, 0.18)",
-  text: "#f0f6ff",
-  muted: "#8daec8",
-  cyan: "#4cc9ff",
-  blue: "#4a7dff",
-  green: "#5ef0a8",
   amber: "#ffb04a",
-  rose: "#ff6b8a",
-  violet: "#a98aff",
+  cyan: "#4cc9ff",
 };
 
 export function BlogOgImage({
@@ -84,6 +73,9 @@ export function BlogOgImage({
             margin: 0,
             letterSpacing: "-0.05em",
             textShadow: "0 4px 12px rgba(0,0,0,0.35)",
+            lineClamp: 3,
+            textOverflow: "ellipsis",
+            overflow: "hidden",
           }}
         >
           {title}
@@ -211,6 +203,9 @@ export function DocsOgImage({
               lineHeight: 1.1,
               letterSpacing: "-0.04em",
               color: "white",
+              lineClamp: 3,
+              textOverflow: "ellipsis",
+              overflow: "hidden",
             }}
           >
             {title}

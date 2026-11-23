@@ -7,6 +7,7 @@ import {
 import { SiteShell } from "@/components/site-shell";
 import { AUTH_UI_VIEW_PATHS } from "@/lib/auth-ui-config";
 import { hasAdminRole } from "@/lib/auth/roles";
+import { translate } from "@/lib/messages";
 import { ensureRouteSession } from "@/lib/route-session";
 
 export const Route = createFileRoute("/admin")({
@@ -33,7 +34,10 @@ export const Route = createFileRoute("/admin")({
   },
   head: () => ({
     meta: [
-      { title: "Administration - SoulFire" },
+      // Admin pages have no locale prefix, so they render in English.
+      {
+        title: `${translate("en", "authUi.admin.admin")} - ${translate("en", "common.brand")}`,
+      },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),

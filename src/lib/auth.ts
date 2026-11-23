@@ -293,9 +293,7 @@ export const auth = betterAuth({
     lastLoginMethod({
       storeInDatabase: true,
     }),
-    haveIBeenPwned({
-      customPasswordCompromisedMessage: "Please choose a more secure password.",
-    }),
+    haveIBeenPwned(),
     captcha({
       provider: "cloudflare-turnstile",
       secretKey: process.env["TURNSTILE_SECRET_KEY"] ?? "",

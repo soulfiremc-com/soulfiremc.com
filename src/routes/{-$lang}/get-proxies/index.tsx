@@ -1,9 +1,6 @@
-import { translate } from "@/lib/messages";
+import { translate, type MessageKey } from "@/lib/messages";
 import { isLocale } from "@/lib/i18n";
-import {
-  formatProviderSince,
-  localizeProviderJsonLd,
-} from "@/lib/provider-i18n";
+import { localizeProviderJsonLd } from "@/lib/provider-i18n";
 import { useT, useLocale } from "@/lib/i18n-react";
 import { TranslatedMessage } from "@/components/translated-message";
 import { ProviderFaq } from "@/components/provider-faq";
@@ -22,12 +19,11 @@ import {
 import {
   ArrowDownWideNarrow,
   BookOpen,
-  Calendar,
   ExternalLink,
   Filter,
   Star,
 } from "lucide-react";
-import { memo, Suspense, useEffect, useMemo, useState } from "react";
+import { memo, Suspense, useEffect, useState } from "react";
 import { CouponCode } from "@/components/coupon-code";
 import { Image } from "@/components/image";
 import { ProviderInfoPopover } from "@/components/provider-info-popover";
@@ -47,9 +43,12 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useReviews } from "@/hooks/use-reviews";
 import {
   BADGE_CONFIG,
+  BADGES,
   type Badge,
-  FILTER_BADGES,
+  FEATURE_BADGES,
+  filterProviders,
   PROVIDERS,
+  PROXY_TYPE_BADGES,
   type Provider,
 } from "@/lib/proxies-data";
 import {
@@ -64,18 +63,6 @@ import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 import { JsonLdScript } from "@/components/json-ld";
 import { isOneOf } from "@/lib/is-one-of";
-
-const BADGES = [
-  "residential",
-  "datacenter",
-  "isp",
-  "mobile",
-  "free-tier",
-  "unlimited-bandwidth",
-  "budget-friendly",
-  "enterprise",
-  "high-quality",
-] as const;
 
 const SORT_OPTIONS = ["default", "best-rated"] as const;
 
@@ -164,7 +151,6 @@ const ProviderCard = memo(function ProviderCard({
   reviewSummaryStatus: ReviewSummaryStatus;
 }) {
   const t = useT();
-  const locale = useLocale();
   return (
     <Card className="relative overflow-hidden transition-all duration-300 hover:shadow-lg">
       <div className="relative flex flex-row gap-4 p-4 sm:p-6">
@@ -182,14 +168,6 @@ const ProviderCard = memo(function ProviderCard({
                 {provider.name}
               </Link>
             </h2>
-            {provider.startDate && (
-              <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
-                <Calendar className="size-3" />
-                {t("providers.accounts.since", {
-                  date: formatProviderSince(provider.startDate, locale),
-                })}
-              </span>
-            )}
             <div className="flex flex-wrap gap-2">
               {provider.badges.map((badge) => (
                 <ProviderBadge key={badge} badge={badge} />
@@ -263,47 +241,112 @@ function MainContent() {
     });
   };
 
-  const filteredProviders = useMemo(() => {
-    const filtered =
-      badges.length === 0
-        ? PROVIDERS
-        : PROVIDERS.filter((provider) =>
-            badges.every((filter) => provider.badges.includes(filter)),
-          );
-
-    // "Featured" keeps the curated data order and ignores reviews.
-    if (sort === "default") return filtered;
-    return filtered.toSorted(
-      (a, b) =>
-        compareReviewSummaries(
-          orderSummaries[a.slug],
-          orderSummaries[b.slug],
-          sort,
-        ) || a.name.localeCompare(b.name),
-    );
-  }, [badges, sort, orderSummaries]);
+  const matchingProviders = filterProviders(PROVIDERS, badges);
+  // "Featured" keeps the curated data order and ignores reviews.
+  const filteredProviders =
+    sort === "default"
+      ? matchingProviders
+      : matchingProviders.toSorted(
+          (a, b) =>
+            compareReviewSummaries(
+              orderSummaries[a.slug],
+              orderSummaries[b.slug],
+              sort,
+            ) || a.name.localeCompare(b.name),
+        );
 
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const hasActiveFilters = badges.length > 0 || sort !== "default";
+
+  const badgeGroup = (label: MessageKey, groupBadges: readonly Badge[]) => (
+    <div className="flex flex-col gap-2">
+      <span className="text-xs text-muted-foreground">{t(label)}</span>
+      <ToggleGroup
+        aria-label={t(label)}
+        multiple
+        value={badges.filter((badge) => groupBadges.includes(badge))}
+        onValueChange={(value) => {
+          const selected = new Set(
+            value.filter((badge) => isOneOf(badge, BADGES)),
+          );
+          void navigate({
+            search: (previous) => ({
+              ...previous,
+              badges: BADGES.filter((badge) =>
+                groupBadges.includes(badge)
+                  ? selected.has(badge)
+                  : previous.badges.includes(badge),
+              ),
+            }),
+            replace: true,
+            resetScroll: false,
+          });
+        }}
+        spacing={2}
+        className="flex-wrap"
+      >
+        {groupBadges.map((badge) => {
+          const config = BADGE_CONFIG[badge];
+          const isActive = badges.includes(badge);
+          const count = isActive
+            ? matchingProviders.length
+            : filterProviders(matchingProviders, [badge]).length;
+          return (
+            <ToggleGroupItem
+              key={badge}
+              value={badge}
+              size="sm"
+              disabled={count === 0 && !isActive}
+              className={cn(
+                "rounded-full px-3 py-1.5 text-xs",
+                isActive
+                  ? cn(
+                      config.className /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */,
+                      "ring-2 ring-current ring-offset-2 ring-offset-background",
+                    )
+                  : "bg-muted text-muted-foreground hover:bg-muted/80",
+              )}
+            >
+              {t(config.label)}
+              <span aria-hidden="true" className="tabular-nums">
+                {count}
+              </span>
+            </ToggleGroupItem>
+          );
+        })}
+      </ToggleGroup>
+    </div>
+  );
 
   const filterContent = (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center gap-2">
-        <Filter className="size-4 text-muted-foreground" />
-        <span className="text-sm font-medium">
-          {t("providers.proxies.filterByType")}
-        </span>
-        {(badges.length > 0 || sort !== "default") && (
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            onClick={clearFilters}
-            className="ml-auto h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
-          >
-            {t("providers.accounts.clear")}
-          </Button>
-        )}
+      <div className="flex flex-col gap-1">
+        <div className="flex min-h-7 items-center gap-2">
+          <Filter className="size-4 text-muted-foreground" />
+          <span className="text-sm font-medium">
+            {t("providers.accounts.filters")}
+          </span>
+          {hasActiveFilters && (
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={clearFilters}
+              className="ml-auto h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
+            >
+              {t("providers.accounts.clear")}
+            </Button>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          {t("providers.accounts.resultCount", {
+            count: filteredProviders.length,
+            total: PROVIDERS.length,
+          })}
+        </p>
       </div>
+      {badgeGroup("providers.proxies.proxyType", PROXY_TYPE_BADGES)}
+      {badgeGroup("providers.proxies.features", FEATURE_BADGES)}
       <div className="flex flex-col gap-2">
         <span className="text-xs text-muted-foreground">
           {t("providers.accounts.sort")}
@@ -342,46 +385,6 @@ function MainContent() {
           })}
         </ToggleGroup>
       </div>
-      <ToggleGroup
-        aria-label={t("providers.proxies.filterByType")}
-        multiple
-        value={badges}
-        onValueChange={(value) =>
-          void navigate({
-            search: (previous) => ({
-              ...previous,
-              badges: value.filter((badge) => isOneOf(badge, BADGES)),
-            }),
-            replace: true,
-            resetScroll: false,
-          })
-        }
-        spacing={2}
-        className="flex-wrap"
-      >
-        {FILTER_BADGES.map((badge) => {
-          const config = BADGE_CONFIG[badge];
-          const isActive = badges.includes(badge);
-          return (
-            <ToggleGroupItem
-              key={badge}
-              value={badge}
-              size="sm"
-              className={cn(
-                "rounded-full px-3 py-1.5 text-xs",
-                isActive
-                  ? cn(
-                      config.className /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */,
-                      "ring-2 ring-current ring-offset-2 ring-offset-background",
-                    )
-                  : "bg-muted text-muted-foreground hover:bg-muted/80",
-              )}
-            >
-              {t(config.label)}
-            </ToggleGroupItem>
-          );
-        })}
-      </ToggleGroup>
     </div>
   );
 
@@ -401,7 +404,7 @@ function MainContent() {
       >
         <Filter data-icon="inline-start" />
         {t("providers.accounts.filters")}
-        {(badges.length > 0 || sort !== "default") && (
+        {hasActiveFilters && (
           <span className="inline-flex items-center justify-center rounded-full bg-primary px-1.5 text-xs text-primary-foreground">
             {badges.length + (sort !== "default" ? 1 : 0)}
           </span>

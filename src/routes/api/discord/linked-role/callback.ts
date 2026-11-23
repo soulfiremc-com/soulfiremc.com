@@ -8,6 +8,7 @@ import {
   checkLinkedRoleCallback,
   getLinkedRolePlatformUsername,
   getLinkedRoleResultUrl,
+  LINKED_ROLE_CALLBACK_URL,
   type LinkedRoleStatus,
 } from "@/lib/discord-linked-role";
 import {
@@ -16,8 +17,6 @@ import {
   pushLinkedRoleMetadataEffect,
 } from "@/lib/discord";
 import { runWebsiteEffect } from "@/lib/effect-runtime";
-
-const REDIRECT_URI = "https://soulfiremc.com/api/discord/linked-role/callback";
 
 // oxlint-disable-next-line unicorn/throw-new-error -- Schema.TaggedError is a class factory.
 class DiscordAccountLookupError extends Schema.TaggedError<
@@ -47,7 +46,10 @@ export const Route = createFileRoute("/api/discord/linked-role/callback")({
 
         return runWebsiteEffect(
           Effect.gen(function* () {
-            const tokens = yield* exchangeDiscordCodeEffect(code, REDIRECT_URI);
+            const tokens = yield* exchangeDiscordCodeEffect(
+              code,
+              LINKED_ROLE_CALLBACK_URL,
+            );
             const discordUser = yield* getDiscordUserEffect(
               tokens.access_token,
             );

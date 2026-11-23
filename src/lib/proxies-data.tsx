@@ -12,18 +12,26 @@ import {
 } from "lucide-react";
 import type { SocialLink } from "@/components/social-link-buttons";
 
-export type FilterableBadge =
-  | "residential"
-  | "datacenter"
-  | "isp"
-  | "mobile"
-  | "free-tier"
-  | "unlimited-bandwidth"
-  | "budget-friendly"
-  | "enterprise"
-  | "high-quality";
+export const PROXY_TYPE_BADGES = [
+  "residential",
+  "datacenter",
+  "isp",
+  "mobile",
+] as const;
 
-export type Badge = FilterableBadge | "bedrock-udp";
+export const FEATURE_BADGES = [
+  "bedrock-udp",
+  "free-tier",
+  "unlimited-bandwidth",
+  "budget-friendly",
+  "high-quality",
+  "enterprise",
+] as const;
+
+// Cards list badges in this order: proxy types first, then features.
+export const BADGES = [...PROXY_TYPE_BADGES, ...FEATURE_BADGES] as const;
+
+export type Badge = (typeof BADGES)[number];
 
 export type Provider = {
   slug: string;
@@ -34,7 +42,6 @@ export type Provider = {
   badges: Badge[];
   couponCode?: string;
   couponDiscount?: MessageKey;
-  startDate?: string;
   paymentMethods?: string[];
   socialLinks?: SocialLink[];
 };
@@ -114,17 +121,15 @@ export function getProviderBySlug(slug: string): Provider | undefined {
   return PROVIDERS.find((provider) => provider.slug === slug);
 }
 
-export const FILTER_BADGES: FilterableBadge[] = [
-  "residential",
-  "datacenter",
-  "isp",
-  "mobile",
-  "free-tier",
-  "unlimited-bandwidth",
-  "budget-friendly",
-  "enterprise",
-  "high-quality",
-];
+/** Returns the providers that have every selected badge. */
+export function filterProviders(
+  providers: readonly Provider[],
+  badges: readonly Badge[],
+): Provider[] {
+  return providers.filter((provider) =>
+    badges.every((badge) => provider.badges.includes(badge)),
+  );
+}
 
 export const PROVIDERS: Provider[] = [
   {
@@ -153,7 +158,14 @@ export const PROVIDERS: Provider[] = [
     logo: "/providers/proxyseller.png",
     summary: "providers.proxies.proxy-seller.summary",
     url: "https://proxy-seller.com/?utm_source=soulfiremc&utm_medium=referral&utm_campaign=partner_promo&utm_term=soulfiremc&partner=GRJY71PA3XWPPP",
-    badges: ["budget-friendly", "datacenter", "isp", "mobile", "residential"],
+    badges: [
+      "budget-friendly",
+      "unlimited-bandwidth",
+      "datacenter",
+      "isp",
+      "mobile",
+      "residential",
+    ],
     couponCode: "SOULFIREMC",
     couponDiscount: "providers.proxies.proxy-seller.couponDiscount",
     paymentMethods: ["PayPal", "Visa", "Mastercard", "Crypto"],
@@ -534,3 +546,8 @@ export const PROVIDERS: Provider[] = [
     ],
   },
 ];
+
+// Cards list badges in a fixed order, so sort each provider's list once.
+for (const provider of PROVIDERS) {
+  provider.badges.sort((a, b) => BADGES.indexOf(a) - BADGES.indexOf(b));
+}

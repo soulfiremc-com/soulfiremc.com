@@ -157,12 +157,6 @@ export function useReviews(
     writtenReviewsPage,
   ]);
 
-  const refreshReviews = useCallback(async () => {
-    await queryClient.invalidateQueries({
-      queryKey: ["reviews", itemType],
-    });
-  }, [itemType, queryClient]);
-
   const mutateReview = async (
     variables: ReviewMutationVariables,
   ): Promise<ReviewMutationResult> => {
@@ -188,7 +182,7 @@ export function useReviews(
 
   const upsertReview = (
     slug: string,
-    nextReview: { rating: number; body?: string | null },
+    nextReview: { rating: number; body: string },
   ) =>
     mutateReview({
       action: "upsert",
@@ -212,6 +206,5 @@ export function useReviews(
     pendingBySlug,
     upsertReview,
     deleteReview,
-    refreshReviews,
   };
 }

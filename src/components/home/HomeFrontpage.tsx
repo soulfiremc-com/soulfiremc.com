@@ -366,19 +366,13 @@ export function HomeFrontpage({
   faqItems: { question: string; answerElement: ReactNode }[];
 }) {
   const t = useT();
-  const reducedMotion = useReducedMotion();
   return (
     <LazyMotion features={domAnimation} strict>
       <MotionConfig reducedMotion="user">
         <main className="soulfire-home">
           <section className="home-hero" aria-labelledby="hero-title">
             <div className="home-hero-inner">
-              <m.div
-                className="home-hero-copy"
-                initial={false}
-                animate={{ opacity: [0, 1], y: reducedMotion ? 0 : [18, 0] }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              >
+              <div className="home-hero-copy">
                 <a href={githubLink} className="home-source-link">
                   <SiGithub className="size-4" />
                   {t("home.openSourceOnGithub")}
@@ -407,11 +401,10 @@ export function HomeFrontpage({
                 <p className="home-platforms">
                   {t("home.freeForWindowsMacosAndLinux")}
                 </p>
-              </m.div>
+              </div>
               <VoxelScene />
             </div>
             <div className="home-hero-footer">
-              <span>{t("home.builtOnFabric")}</span>
               <a href="#features">
                 {t("home.howItWorks")}
                 <ArrowDown className="size-3.5" />
@@ -458,7 +451,6 @@ export function HomeFrontpage({
               aria-labelledby="community-title"
             >
               <Reveal>
-                <SiGithub className="home-community-icon" />
                 <h2 id="community-title">
                   <TranslatedLines text="home.comeBuildWithUs" />
                 </h2>

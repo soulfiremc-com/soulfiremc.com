@@ -22,11 +22,11 @@ export type FilterableBadge =
   | "instant-delivery"
   | "replacement-warranty"
   | "lifetime-warranty"
-  | "12h-warranty"
   | "bulk-discount";
 
 export type Badge =
   | FilterableBadge
+  | "12h-warranty"
   | "official-integration"
   | "partner"
   | "affiliate";
@@ -64,7 +64,6 @@ export type Shop = {
   slug: string;
   name: string;
   logo?: string;
-  logoUnoptimized?: boolean;
   theme?: ProviderThemeName;
   url: string;
   websiteUrl?: string;
@@ -81,7 +80,6 @@ export type Provider = {
   slug: string;
   name: string;
   logo?: string;
-  logoUnoptimized?: boolean;
   theme?: ProviderThemeName;
   summary: MessageKey;
   url: string;
@@ -289,7 +287,7 @@ export const SORT_CONFIG: Record<
   },
 };
 
-export const FILTER_BADGES: FilterableBadge[] = [
+export const FILTER_BADGES: readonly FilterableBadge[] = [
   "free",
   "high-quality",
   "instant-delivery",
@@ -298,7 +296,10 @@ export const FILTER_BADGES: FilterableBadge[] = [
   "bulk-discount",
 ];
 
-export const FILTER_CATEGORIES: Category[] = ["mfa-accounts", "nfa-accounts"];
+export const FILTER_CATEGORIES: readonly Category[] = [
+  "mfa-accounts",
+  "nfa-accounts",
+];
 
 // Shop order is arranged to preserve the recommended sort order
 // within both NFA and MFA category sections when derived into PROVIDERS.
@@ -307,7 +308,6 @@ export const SHOPS: Shop[] = [
     slug: "ravealts",
     name: "Ravealts",
     logo: "/accounts/ravealts.gif",
-    logoUnoptimized: true,
     url: "https://ravealts.com?via=soulfire",
     websiteUrl: "https://ravealts.com?via=soulfire",
     discordUrl: "https://discord.ravealts.com",
@@ -886,7 +886,6 @@ export const PROVIDERS: Provider[] = (
         slug: shop.slug,
         name: shop.name,
         logo: shop.logo,
-        logoUnoptimized: shop.logoUnoptimized,
         theme: shop.theme,
         url: shop.url,
         websiteUrl: shop.websiteUrl,

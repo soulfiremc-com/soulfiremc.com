@@ -38,6 +38,7 @@ export const Route = createFileRoute("/og/proxies/{$}/image.webp")({
           );
         return createOgImageResponse(
           <ProxyOgImage
+            slug={provider.slug}
             name={provider.name}
             summary={translate(locale, provider.summary)}
             badges={provider.badges}

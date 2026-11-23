@@ -25,10 +25,17 @@ export type LiveShopData = {
   stockByCategory?: LiveStockByCategory;
 };
 
+const LIVE_STOCK_SHOPS = ["ravealts", "localts"] as const;
+
+/** Whether the shop publishes stock that the site can show. */
+export function hasLiveStock(shop: Pick<Shop, "slug">): boolean {
+  return LIVE_STOCK_SHOPS.some((slug) => slug === shop.slug);
+}
+
 export const getLiveShopDataEffect = Effect.fn("Providers.liveStock")(
   function* (shop: Shop, options?: RequestOptions) {
-    if (shop.slug !== "ravealts" && shop.slug !== "localts") return {};
-    const slug = shop.slug;
+    const slug = LIVE_STOCK_SHOPS.find((liveSlug) => liveSlug === shop.slug);
+    if (!slug) return {};
     // Cache stock at the edge so public page loads cannot hammer the shops.
     const stockByCategory = yield* getCachedValue({
       cacheKey: `${LIVE_STOCK_CACHE_KEY_BASE}/${slug}`,

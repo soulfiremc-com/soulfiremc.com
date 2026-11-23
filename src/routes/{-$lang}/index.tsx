@@ -91,7 +91,6 @@ function HomePage() {
       priceCurrency: "USD",
     },
     downloadUrl: `https://soulfiremc.com${localizeHref("/download", locale)}`,
-    softwareVersion: "2.0",
     author: {
       "@type": "Organization",
       name: "SoulFire",
@@ -107,7 +106,6 @@ function HomePage() {
       "CLI and GUI modes",
       "Bedrock Edition support",
     ],
-    screenshot: "https://soulfiremc.com/logo.png",
     url: `https://soulfiremc.com${localizeHref("/", locale)}`,
   };
 
@@ -134,44 +132,34 @@ function HomePage() {
 }
 
 export const Route = createFileRoute("/{-$lang}/")({
-  head: ({ params }) => ({
-    meta: getPageMeta({
-      locale: isLocale(params.lang) ? params.lang : "en",
-      title: translate(
-        isLocale(params.lang) ? params.lang : "en",
-        "home.meta.title",
-      ),
-      description: translate(
-        isLocale(params.lang) ? params.lang : "en",
-        "home.meta.description",
-      ),
-      path: "/",
-      imageUrl: "/og/site/home/image.webp",
-      imageAlt: translate(
-        isLocale(params.lang) ? params.lang : "en",
-        "home.soulfireHomePagePreview",
-      ),
-    }),
-    links: getCanonicalLinks("/", isLocale(params.lang) ? params.lang : "en"),
-    scripts: [
-      jsonLdScript(
-        createStructuredDataGraph([
-          createWebPageStructuredData({
-            locale: isLocale(params.lang) ? params.lang : "en",
-            path: "/",
-            title: translate(
-              isLocale(params.lang) ? params.lang : "en",
-              "home.meta.title",
-            ),
-            description: translate(
-              isLocale(params.lang) ? params.lang : "en",
-              "home.meta.description",
-            ),
-            imageUrl: "/og/site/home/image.webp",
-          }),
-        ]),
-      ),
-    ],
-  }),
+  head: ({ params }) => {
+    const locale = isLocale(params.lang) ? params.lang : "en";
+    const title = translate(locale, "home.meta.title");
+    const description = translate(locale, "home.meta.description");
+    return {
+      meta: getPageMeta({
+        locale,
+        title,
+        description,
+        path: "/",
+        imageUrl: "/og/site/home/image.webp",
+        imageAlt: translate(locale, "home.soulfireHomePagePreview"),
+      }),
+      links: getCanonicalLinks("/", locale),
+      scripts: [
+        jsonLdScript(
+          createStructuredDataGraph([
+            createWebPageStructuredData({
+              locale,
+              path: "/",
+              title,
+              description,
+              imageUrl: "/og/site/home/image.webp",
+            }),
+          ]),
+        ),
+      ],
+    };
+  },
   component: HomePage,
 });

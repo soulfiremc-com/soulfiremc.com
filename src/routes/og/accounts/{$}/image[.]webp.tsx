@@ -49,6 +49,7 @@ export const Route = createFileRoute("/og/accounts/{$}/image.webp")({
           );
         return createOgImageResponse(
           <AccountOgImage
+            slug={shop.slug}
             name={shop.name}
             listings={listings}
             description={description}

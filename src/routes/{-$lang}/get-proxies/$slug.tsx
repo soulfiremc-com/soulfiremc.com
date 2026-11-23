@@ -1,11 +1,7 @@
 import { isLocale, localizePath, type Locale } from "@/lib/i18n";
 import { translate, type MessageKey } from "@/lib/messages";
-import {
-  formatProviderSince,
-  localizeProviderData,
-  providerSinceIsoDate,
-} from "@/lib/provider-i18n";
-import { useT, useLocale } from "@/lib/i18n-react";
+import { localizeProviderData } from "@/lib/provider-i18n";
+import { useT } from "@/lib/i18n-react";
 import { Schema } from "effect";
 import { discordEmbedScript } from "@/lib/discord-embed";
 import { noop, useQuery, useSuspenseQuery } from "@tanstack/react-query";
@@ -16,7 +12,7 @@ import {
   notFound,
   stripSearchParams,
 } from "@tanstack/react-router";
-import { ArrowLeft, Calendar, ChevronRight, ExternalLink } from "lucide-react";
+import { ArrowLeft, ChevronRight, ExternalLink } from "lucide-react";
 import { Suspense } from "react";
 import type { BreadcrumbList, Product, WebPage, WithContext } from "schema-dts";
 import { CouponCode } from "@/components/coupon-code";
@@ -138,7 +134,6 @@ function ProxyProviderPageContent({
   reviewsPage,
 }: ProxyDetailPageData) {
   const t = useT();
-  const locale = useLocale();
   const navigate = Route.useNavigate();
   const setReviewPage = (nextPage: number) => {
     void navigate({
@@ -207,14 +202,6 @@ function ProxyProviderPageContent({
               <h1 className="text-4xl font-bold tracking-tight">
                 {provider.name}
               </h1>
-              {provider.startDate ? (
-                <span className="inline-flex items-center gap-1 text-sm text-muted-foreground">
-                  <Calendar className="size-3.5" />
-                  {t("providers.accounts.since", {
-                    date: formatProviderSince(provider.startDate, locale),
-                  })}
-                </span>
-              ) : null}
               <div className="flex flex-wrap gap-2">
                 {provider.badges.map((badge) => (
                   <ProviderBadge key={badge} badge={badge} />
@@ -318,9 +305,6 @@ function getProxyDetailPageData({
     },
     url: `https://soulfiremc.com/get-proxies/${provider.slug}`,
     category: "providers.proxies.proxyService",
-    ...(provider.startDate && {
-      dateCreated: providerSinceIsoDate(provider.startDate),
-    }),
   };
 
   const breadcrumbJsonLd: WithContext<BreadcrumbList> = {

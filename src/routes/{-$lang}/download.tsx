@@ -29,7 +29,7 @@ import {
   Smartphone,
   Terminal,
 } from "lucide-react";
-import { Suspense, useEffect, useRef, useState } from "react";
+import { type ReactNode, Suspense, useEffect, useRef, useState } from "react";
 import { Image } from "@/components/image";
 import { SiteShell } from "@/components/site-shell";
 import { CustomTimeAgo } from "@/components/time-ago";
@@ -68,7 +68,7 @@ import {
 } from "@/lib/download-links";
 import { getClientReleaseManifest, getServerVersion } from "@/lib/releases";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
-import { cn, generateN } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 const FALLBACK_CPU = {
   id: "x64",
@@ -162,19 +162,6 @@ function SelectedMark() {
     <span className="absolute top-3 right-3 flex size-5 items-center justify-center rounded-full bg-primary text-primary-foreground">
       <Check className="size-3.5" aria-hidden="true" />
     </span>
-  );
-}
-
-function DownloadSelectionComponent({
-  clientDownloads,
-}: {
-  clientDownloads: DownloadLinkMap;
-}) {
-  return (
-    <>
-      <DownloadConfigurator links={clientDownloads} />
-      <DownloadTip />
-    </>
   );
 }
 
@@ -310,91 +297,83 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
             ))}
           </div>
         </div>
-        <div className="flex flex-col gap-3">
-          <p className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
-            {t("download.cpuArchitecture")}
-          </p>
-          <div
-            // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- a labelled group of choice cards; fieldset would add form semantics and min-content sizing
-            role="group"
-            aria-label={t("download.cpuArchitecture")}
-            className="grid gap-4 sm:grid-cols-2"
-          >
-            {CPU_OPTIONS.map((option) => (
-              <button
-                key={option.id}
-                type="button"
-                aria-pressed={selection.cpu === option.id}
-                onClick={() => {
-                  handleCpuChange(option.id);
-                }}
-                className={cn(
-                  "relative rounded-xl border p-4 pr-10 text-left transition outline-none hover:border-primary/60 focus-visible:ring-3 focus-visible:ring-ring/50",
-                  selection.cpu === option.id
-                    ? "border-primary bg-primary/10"
-                    : "bg-background",
-                )}
-              >
-                <div className="flex items-center gap-3">
-                  <div className="rounded-lg bg-primary/10 p-2 text-primary">
-                    {option.icon === "cpu" ? (
-                      <Cpu className="size-5 text-primary" />
-                    ) : (
-                      <CircuitBoard className="size-5 text-primary" />
-                    )}
-                  </div>
-                  <div>
-                    <div className="text-base font-semibold">
-                      {option.label}
+        {/* Flathub serves every CPU, so Linux has no CPU choice. */}
+        {selection.os !== "linux" && (
+          <div className="flex flex-col gap-3">
+            <p className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
+              {t("download.cpuArchitecture")}
+            </p>
+            <div
+              // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- a labelled group of choice cards; fieldset would add form semantics and min-content sizing
+              role="group"
+              aria-label={t("download.cpuArchitecture")}
+              className="grid gap-4 sm:grid-cols-2"
+            >
+              {CPU_OPTIONS.map((option) => (
+                <button
+                  key={option.id}
+                  type="button"
+                  aria-pressed={selection.cpu === option.id}
+                  onClick={() => {
+                    handleCpuChange(option.id);
+                  }}
+                  className={cn(
+                    "relative rounded-xl border p-4 pr-10 text-left transition outline-none hover:border-primary/60 focus-visible:ring-3 focus-visible:ring-ring/50",
+                    selection.cpu === option.id
+                      ? "border-primary bg-primary/10"
+                      : "bg-background",
+                  )}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="rounded-lg bg-primary/10 p-2 text-primary">
+                      {option.icon === "cpu" ? (
+                        <Cpu className="size-5 text-primary" />
+                      ) : (
+                        <CircuitBoard className="size-5 text-primary" />
+                      )}
                     </div>
-                    <p className="mt-1 text-sm text-muted-foreground">
-                      {t(option.detail)}
-                    </p>
+                    <div>
+                      <div className="text-base font-semibold">
+                        {option.label}
+                      </div>
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        {t(option.detail)}
+                      </p>
+                    </div>
                   </div>
-                </div>
-                {selection.cpu === option.id && <SelectedMark />}
-              </button>
-            ))}
+                  {selection.cpu === option.id && <SelectedMark />}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
-        {downloadHref ? (
-          // A real link starts the download even before hydration finishes.
-          <a
-            href={downloadHref}
-            {...downloadLinkProps}
-            onClick={() => {
-              trackClientDownload({
-                os: selection.os,
-                architecture: selection.cpu,
-                href: downloadHref,
-              });
-              setShowThankYou(true);
-            }}
-            className={cn(
-              // Phones cannot run the installers, so the copy link and demo
-              // in the notice above take the primary role there.
-              buttonVariants({
-                size: "lg",
-                variant: isMobile ? "outline" : "default",
-              }),
-              "w-full gap-2 text-xs sm:text-sm",
-            )}
-          >
-            <Download className="size-5" />
-            {downloadHref === FLATHUB_URL
-              ? t("download.getOnFlathub")
-              : t("download.downloadFor", { os: selectedOsLabel })}
-          </a>
-        ) : (
-          <Button
-            size="lg"
-            className="w-full gap-2 text-xs sm:text-sm"
-            disabled
-          >
-            <Download className="size-5" />
-            {t("download.comingSoon")}
-          </Button>
         )}
+        {/* A real link starts the download even before hydration finishes. */}
+        <a
+          href={downloadHref}
+          {...downloadLinkProps}
+          onClick={() => {
+            trackClientDownload({
+              os: selection.os,
+              architecture: selection.cpu,
+              href: downloadHref,
+            });
+            setShowThankYou(true);
+          }}
+          className={cn(
+            // Phones cannot run the installers, so the copy link and demo
+            // in the notice above take the primary role there.
+            buttonVariants({
+              size: "lg",
+              variant: isMobile ? "outline" : "default",
+            }),
+            "w-full gap-2 text-xs sm:text-sm",
+          )}
+        >
+          <Download className="size-5" />
+          {downloadHref === FLATHUB_URL
+            ? t("download.getOnFlathub")
+            : t("download.downloadFor", { os: selectedOsLabel })}
+        </a>
       </CardContent>
       <Credenza open={showThankYou} onOpenChange={setShowThankYou}>
         <CredenzaContent>
@@ -404,29 +383,32 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
               {t("download.thankYouForDownloading")}
             </CredenzaTitle>
             <CredenzaDescription>
-              <TranslatedMessage
-                text="download.yourDownloadShouldStartShortlyIfItDoesnT"
-                values={{
-                  retry: (
-                    <a
-                      href={downloadHref}
-                      onClick={() => {
-                        if (downloadHref)
+              {isReleaseAssetUrl(downloadHref) ? (
+                <TranslatedMessage
+                  text="download.yourDownloadShouldStartShortlyIfItDoesnT"
+                  values={{
+                    retry: (
+                      <a
+                        href={downloadHref}
+                        onClick={() => {
                           trackClientDownload({
                             os: selection.os,
                             architecture: selection.cpu,
                             href: downloadHref,
                             retry: true,
                           });
-                      }}
-                      className="text-primary underline"
-                      {...downloadLinkProps}
-                    >
-                      {t("download.retryTheDownload")}
-                    </a>
-                  ),
-                }}
-              />
+                        }}
+                        className="text-primary underline"
+                        {...downloadLinkProps}
+                      >
+                        {t("download.retryTheDownload")}
+                      </a>
+                    ),
+                  }}
+                />
+              ) : (
+                t("download.finishInTheNewTab")
+              )}
             </CredenzaDescription>
           </CredenzaHeader>
           <CredenzaBody>
@@ -563,88 +545,10 @@ function DownloadNextSteps({
   );
 }
 
-function DownloadTip() {
-  const t = useT();
-  return (
-    <div className="rounded-xl border bg-muted/30 p-4 text-sm">
-      <p className="font-semibold text-primary">{t("download.tip")}</p>
-      <p className="text-muted-foreground">
-        {t("download.x8664MeansIntelAndAmdCpusAarch64Refers")}
-      </p>
-    </div>
-  );
-}
-
-function DownloadSelectionSkeleton() {
-  const t = useT();
-  return (
-    <>
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-2xl">
-            {t("download.chooseYourBuild")}
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-8">
-          <div className="flex flex-col gap-3">
-            <p className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
-              {t("download.operatingSystem")}
-            </p>
-            <div className="grid gap-4 sm:grid-cols-3">
-              {generateN(3).map((skeletonId) => (
-                <div
-                  key={skeletonId}
-                  className="rounded-xl border bg-background p-4"
-                >
-                  <div className="flex items-center gap-3">
-                    <Skeleton className="size-11 rounded-lg" />
-                    <div className="flex flex-col gap-2">
-                      <Skeleton className="h-4 w-16" />
-                      <Skeleton className="h-3 w-24" />
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="flex flex-col gap-3">
-            <p className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
-              {t("download.cpuArchitecture")}
-            </p>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {generateN(2).map((skeletonId) => (
-                <div
-                  key={skeletonId}
-                  className="rounded-xl border bg-background p-4"
-                >
-                  <div className="flex items-center gap-3">
-                    <Skeleton className="size-9 rounded-lg" />
-                    <div className="flex flex-col gap-2">
-                      <Skeleton className="h-4 w-28" />
-                      <Skeleton className="h-3 w-36" />
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <Skeleton className="h-10 w-full" />
-        </CardContent>
-      </Card>
-      <div className="rounded-xl border bg-muted/30 p-4 text-sm">
-        <p className="font-semibold text-primary">{t("download.tip")}</p>
-        <p className="text-muted-foreground">
-          {t("download.x8664MeansIntelAndAmdCpusAarch64Refers")}
-        </p>
-      </div>
-    </>
-  );
-}
-
-const SERVER_ICONS = {
+const SERVER_ICONS: Record<string, ReactNode> = {
   "SoulFire CLI": <Terminal className="size-5" />,
   "SoulFire Dedicated": <Server className="size-5" />,
-} as const;
+};
 
 type DownloadPageContentProps = {
   clientDownloads: DownloadLinkMap;
@@ -671,7 +575,7 @@ function DownloadPageContent({
               {t("download.title")}
             </h1>
             <p className="max-w-2xl text-lg text-muted-foreground">
-              {t("download.pickYourOperatingSystemAndCpuArchitectureWeLl")}
+              {t("download.description")}
             </p>
           </div>
           <div className="text-sm text-muted-foreground">
@@ -714,9 +618,7 @@ function DownloadPageContent({
           </div>
         </div>
       </div>
-      <Suspense fallback={<DownloadSelectionSkeleton />}>
-        <DownloadSelectionComponent clientDownloads={clientDownloads} />
-      </Suspense>
+      <DownloadConfigurator links={clientDownloads} />
       <div className="grid gap-6 sm:grid-cols-2">
         <Card>
           <CardHeader>
@@ -751,7 +653,7 @@ function DownloadPageContent({
               href="https://demo.soulfiremc.com"
               target="_blank"
               rel="noopener noreferrer"
-              className={buttonVariants()}
+              className={buttonVariants({ variant: "outline" })}
             >
               {t("download.visitTheDemo")}
             </a>
@@ -774,7 +676,7 @@ function DownloadPageContent({
               >
                 <div className="flex items-center gap-3">
                   <div className="rounded-lg bg-primary/10 p-2 text-primary">
-                    {serverIcon(item.name) ?? <Server className="size-5" />}
+                    {SERVER_ICONS[item.name] ?? <Server className="size-5" />}
                   </div>
                   <div>
                     <p
@@ -825,7 +727,7 @@ function DownloadPageContent({
               href="https://ko-fi.com/alexprogrammerde"
               target="_blank"
               rel="noopener noreferrer"
-              className={buttonVariants()}
+              className={buttonVariants({ variant: "outline" })}
             >
               {t("download.donateOnKoFi")}
             </a>
@@ -922,8 +824,4 @@ function DownloadPage() {
       />
     </SiteShell>
   );
-}
-
-function serverIcon(name: string) {
-  return Object.entries(SERVER_ICONS).find(([key]) => key === name)?.[1];
 }

@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { RotateCwIcon, SettingsIcon } from "lucide-react";
+import { LifeBuoyIcon, RotateCwIcon, SettingsIcon } from "lucide-react";
 import { HomeButton, StatusMessage } from "@/components/route-status-page";
 import { SiteShell } from "@/components/site-shell";
 import { Button } from "@/components/ui/button";
@@ -10,7 +10,7 @@ import {
 } from "@/lib/discord-linked-role";
 import { AUTH_UI_VIEW_PATHS } from "@/lib/auth-ui-config";
 import { useT } from "@/lib/i18n-react";
-import type { MessageKey } from "@/lib/messages";
+import { type MessageKey, translate } from "@/lib/messages";
 
 const statusMessages: Record<
   LinkedRoleStatus,
@@ -42,9 +42,12 @@ export const Route = createFileRoute("/discord_/linked-role")({
   validateSearch: (search): { status: LinkedRoleStatus } => ({
     status: isLinkedRoleStatus(search["status"]) ? search["status"] : "failed",
   }),
-  head: () => ({
+  // These pages have no locale prefix, so they render in English.
+  head: ({ match }) => ({
     meta: [
-      { title: "Discord linked role - SoulFire" },
+      {
+        title: `${translate("en", statusMessages[match.search.status].title)} - ${translate("en", "common.brand")}`,
+      },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
@@ -89,6 +92,20 @@ function LinkedRoleResultPage() {
                 }
               />
               <TryAgainLink variant="outline" />
+            </>
+          ) : status === "failed" ? (
+            <>
+              <TryAgainLink variant="default" />
+              <Button
+                nativeButton={false}
+                variant="outline"
+                render={
+                  <Link to="/discord">
+                    <LifeBuoyIcon data-icon="inline-start" />
+                    {t("discordLinkedRole.getHelp")}
+                  </Link>
+                }
+              />
             </>
           ) : (
             <>

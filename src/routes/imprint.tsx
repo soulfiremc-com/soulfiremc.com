@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
 
@@ -60,19 +60,6 @@ function Imprint() {
         We are neither willing nor obliged to participate in dispute resolution
         proceedings before a consumer arbitration board.
       </p>
-
-      <h2>Related Legal Documents</h2>
-      <ul>
-        <li>
-          <Link to="/privacy-policy">Privacy Policy</Link>
-        </li>
-        <li>
-          <Link to="/terms-of-service">Terms of Service</Link>
-        </li>
-        <li>
-          <Link to="/cookie-policy">Cookie Policy</Link>
-        </li>
-      </ul>
     </main>
   );
 }

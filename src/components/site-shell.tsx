@@ -30,13 +30,11 @@ function ShellContainer({
   );
 }
 
-// The Fumadocs mobile menu ignores Escape. Close it and return focus to its
-// toggle, like the other overlays on the site.
-function closeMobileMenuOnEscape(event: KeyboardEvent) {
-  if (event.key !== "Escape" || event.defaultPrevented) return;
+function openMobileMenuToggle(): HTMLButtonElement | undefined {
   const header = document.querySelector("#nd-nav");
-  if (!(header instanceof HTMLElement) || !("open" in header.dataset)) return;
-  const toggle = Array.from(
+  if (!(header instanceof HTMLElement) || !("open" in header.dataset))
+    return undefined;
+  return Array.from(
     header.querySelectorAll<HTMLButtonElement>(
       'button[aria-expanded="true"][aria-controls]',
     ),
@@ -46,9 +44,29 @@ function closeMobileMenuOnEscape(event: KeyboardEvent) {
       !!id && header.contains(document.querySelector(`#${CSS.escape(id)}`))
     );
   });
+}
+
+// The Fumadocs mobile menu ignores Escape. Close it and return focus to its
+// toggle, like the other overlays on the site.
+function closeMobileMenuOnEscape(event: KeyboardEvent) {
+  if (event.key !== "Escape" || event.defaultPrevented) return;
+  const toggle = openMobileMenuToggle();
   if (!toggle) return;
   toggle.click();
   toggle.focus();
+}
+
+// The open menu covers the top of the page. When Tab moves past its last
+// item, close it so the newly focused content is not hidden behind it.
+// Popovers such as the language list render in a portal outside the layout,
+// so focus moving into them keeps the menu open.
+function closeMobileMenuOnFocusLeave(event: FocusEvent) {
+  const target = event.target;
+  if (!(target instanceof Node)) return;
+  const layout = document.querySelector("#nd-home-layout");
+  const header = document.querySelector("#nd-nav");
+  if (!layout?.contains(target) || header?.contains(target)) return;
+  openMobileMenuToggle()?.click();
 }
 
 export function SiteShell({ children }: { children: ReactNode }) {
@@ -58,8 +76,10 @@ export function SiteShell({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     document.addEventListener("keydown", closeMobileMenuOnEscape);
+    document.addEventListener("focusin", closeMobileMenuOnFocusLeave);
     return () => {
       document.removeEventListener("keydown", closeMobileMenuOnEscape);
+      document.removeEventListener("focusin", closeMobileMenuOnFocusLeave);
     };
   }, []);
 

@@ -260,22 +260,6 @@ function CookiePolicy() {
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell>Ko-fi</TableCell>
-            <TableCell>
-              Donation button on every page. Ko-fi may set cookies when its
-              button loads or when you open it.
-            </TableCell>
-            <TableCell>
-              <a
-                href="https://more.ko-fi.com/privacy"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Ko-fi Privacy Policy
-              </a>
-            </TableCell>
-          </TableRow>
-          <TableRow>
             <TableCell>Gravatar</TableCell>
             <TableCell>
               Avatar images loaded from Gravatar. Requests include an MD5 hash

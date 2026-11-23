@@ -600,7 +600,7 @@ export function HomeOgImage() {
   return (
     <Layout
       section="Server testing"
-      path="site/home"
+      path="soulfiremc.com"
       accent={theme.green}
       title="Minecraft bots for server testing"
       description="Run Minecraft clients as bots with the desktop app, CLI, or dedicated server."
@@ -626,11 +626,11 @@ export function HomeOgImage() {
   );
 }
 
-export function DownloadOgImage({ version }: { version?: string }) {
+export function DownloadOgImage() {
   return (
     <Layout
       section="Distribution"
-      path="site/download"
+      path="soulfiremc.com/download"
       accent={theme.orange}
       title="Download SoulFire"
       description="Native installers for every platform, with desktop and server workflows ready out of the box."
@@ -649,7 +649,6 @@ export function DownloadOgImage({ version }: { version?: string }) {
           rows={[
             { label: "Desktop", value: "Windows, macOS, Linux" },
             { label: "Server", value: "CLI and Dedicated" },
-            { label: "Version", value: version ? `v${version}` : "Latest" },
           ]}
         />
       }
@@ -661,23 +660,23 @@ export function DirectoryOgImage({
   label,
   title,
   description,
+  path,
   accent,
-  secondary: _secondary,
   count,
   samples,
 }: {
   label: string;
+  path: string;
   title: string;
   description: string;
   accent: string;
-  secondary: string;
   count?: number;
   samples: string[];
 }) {
   return (
     <Layout
       section={`${label} Directory`}
-      path={`site/${label.toLowerCase().replaceAll(/\s+/gu, "-")}`}
+      path={`soulfiremc.com${path}`}
       accent={accent}
       title={title}
       description={description}
@@ -707,6 +706,7 @@ export function DirectoryOgImage({
 }
 
 export function ProxyOgImage({
+  slug,
   name,
   summary,
   badges,
@@ -714,6 +714,7 @@ export function ProxyOgImage({
 }: {
   name: string;
   summary: string;
+  slug: string;
   badges: string[];
   logoSrc?: string | undefined;
 }) {
@@ -722,7 +723,7 @@ export function ProxyOgImage({
   return (
     <Layout
       section="Proxy Profile"
-      path="proxies/profile"
+      path={`soulfiremc.com/get-proxies/${slug}`}
       accent={theme.cyan}
       title={name}
       description={summary}
@@ -753,12 +754,14 @@ export function ProxyOgImage({
 }
 
 export function AccountOgImage({
+  slug,
   name,
   listings,
   description,
   logoSrc,
 }: {
   name: string;
+  slug: string;
   listings: { label: string; price: string }[];
   description: string;
   logoSrc?: string | undefined;
@@ -766,7 +769,7 @@ export function AccountOgImage({
   return (
     <Layout
       section="Account Provider"
-      path="accounts/provider"
+      path={`soulfiremc.com/get-accounts/${slug}`}
       accent={theme.rose}
       title={name}
       description={description}
