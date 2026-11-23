@@ -8,7 +8,7 @@ icon: Map
 import { Callout } from 'fumadocs-ui/components/callout';
 
 <Callout type="info">
-  If you are unsure, choose `GUI + integrated server (local)`.
+  If you are unsure, use the desktop app and select **Run on this computer**.
   It is the recommended default for first-time users.
 </Callout>
 
@@ -17,9 +17,9 @@ import { Callout } from 'fumadocs-ui/components/callout';
 | If you want to... | Start with... | Why |
 | --- | --- | --- |
 | Learn SoulFire with the least setup | [Connect your first bot](/docs/start-here/gui-mode) | Requires the fewest setup steps |
-| Keep bots running on a VPS or shared machine | [Dedicated server](/docs/server/automated-setup) | Keeps the backend running even when the GUI is closed |
+| Keep bots running on a VPS or shared machine | [Dedicated server](/docs/server) | Keeps the backend running even when the GUI is closed |
 | Automate from a terminal or use a system without a desktop | [CLI mode](/docs/start-here/cli-mode) | Works well for scripts and SSH sessions |
-| Share one backend with multiple users or clients | [Dedicated server](/docs/server/automated-setup) | GUI and CLI clients can connect to the same remote server |
+| Share one backend with multiple users or clients | [Dedicated server](/docs/server) | GUI and CLI clients can connect to the same remote server |
 
 ## What each part means
 
@@ -53,9 +53,9 @@ GUI and CLI clients connect to it over the network.
 
 ### Remote operator
 
-1. [Deploy a dedicated server](/docs/server/automated-setup)
-2. Connect from the GUI with the server URL and access token
-3. Use [User guide](/docs/how-to) for ongoing administration tasks
+1. [Deploy a dedicated server](/docs/server) with the setup script, Docker, or Java
+2. Connect from the GUI with the server URL and an access token. [Server access](/docs/server/access) shows how to create the token
+3. Use [Server administration](/docs/server) for upgrades, backups, and access
 
 ### Automation user
 

@@ -46,6 +46,23 @@ Use [backup and restore](/docs/server/backup-and-restore) before replacing or mo
 
 ## External MySQL databases
 
-The default is SQLite. The backend also supports `-Ddatabase=mysql` with the MySQL connection properties from its source.
+The default is SQLite. Set `-Ddatabase=mysql` to use MySQL, and pass the connection details as system properties:
+
+| Property | Default |
+| --- | --- |
+| `mysql.host` | `localhost` |
+| `mysql.port` | `3306` |
+| `mysql.database` | `soulfire` |
+| `mysql.user` | (none) |
+| `mysql.password` | (none) |
+| `mysql.sslMode` | `disable` |
+| `mysql.minimumIdle` | `1` |
+| `mysql.maximumPoolSize` | `10` |
+
+```bash
+java -Ddatabase=mysql -Dmysql.host=db.internal -Dmysql.user=soulfire -Dmysql.password=YOUR_PASSWORD -Dmysql.sslMode=required -jar SoulFireDedicated.jar
+```
+
+Use `mysql.sslMode=required` when the database is on another machine.
 An external database needs its own consistent backup in addition to the filesystem data and signing key.
 The stopped SQLite procedure does not back up an external MySQL server.

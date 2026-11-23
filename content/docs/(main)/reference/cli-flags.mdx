@@ -1,14 +1,21 @@
 ---
 title: Command-line flags
 sidebarTitle: "CLI flags"
-description: Configure the SoulFire client with command-line flags.
+description: Configure bots, accounts, proxies, and plugins when you start the SoulFire CLI.
 icon: Flag
 ---
 
 ## About command-line flags
 
-Command-line flags configure the client before it connects bots.
-They control bot behavior and the connection between the CLI and server.
+These flags apply to the CLI client. They set bot, account, proxy, and plugin settings before the bots connect.
+The GUI does not read them.
+
+The CLI connects to a remote server through JVM system properties, not flags.
+See [Use the CLI with a remote server](/docs/start-here/cli-mode) for `sf.remoteAddress` and `sf.remoteToken`.
+
+`--account-type` takes an account type such as `OFFLINE` or `MICROSOFT_JAVA_CREDENTIALS`.
+`--proxy-type` takes `HTTP`, `SOCKS4`, or `SOCKS5`.
+[Account formats](/docs/reference/account-formats#cli-values) and [proxy formats](/docs/reference/proxy-formats#cli-values) list every value.
 
 ## List of flags
 
@@ -43,7 +50,7 @@ They control bot behavior and the connection between the CLI and server.
 | `--proxy-proxy-check-concurrency` | `10` | Amount of proxies to check at the same time |
 | `--proxy-proxy-check-timeout` | `30` | How long to wait for a proxy check response before considering it failed (seconds) |
 | `--ai-api-base-url` | `https://api.openai.com/v1` | API server base URL, can also be changed to other providers |
-| `--ai-api-key` | `` | API key or none if using a custom provider |
+| `--ai-api-key` | (empty) | API key or none if using a custom provider |
 | `--ai-api-request-timeout` | `60` | API request timeout (seconds) |
 | `--ai-api-max-retries` | `5` | API request max retries |
 | `--pathfinding-allow-breaking-undiggable` | `false` | Allow the bot to attempt breaking blocks that are normally undiggable (like bedrock) |

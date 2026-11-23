@@ -16,6 +16,11 @@ import { Callout } from 'fumadocs-ui/components/callout';
 | **SOCKS5** | None, username, or username and password | Common choice for bot traffic |
 | **URI** | Depends on the scheme | Lets one file mix HTTP, SOCKS4, and SOCKS5 entries |
 
+### CLI values [#cli-values]
+
+Pass `HTTP`, `SOCKS4`, or `SOCKS5` to `--proxy-type`, for example `--proxy-type SOCKS5`.
+Omit `--proxy-type` for a URI file. SoulFire then reads each line's scheme.
+
 <Callout type="info">
   SoulFire does not accept `https://` proxy URLs.
   Use HTTP, SOCKS4, SOCKS5, or URI entries with these schemes.
@@ -114,8 +119,9 @@ Bots that cannot lease proxy capacity remain queued until capacity becomes avail
 
 | Setting | Default | What it does |
 | --- | --- | --- |
-| **Bots per proxy** | `-1` | Limits how many bots can use one proxy |
+| **Bots per proxy** | `-1` | Limits how many bots can use one proxy. `-1` means no limit |
 | **Shuffle proxies** | `false` | Randomizes proxy order before bots join |
+| **Sticky proxies** | `false` | Reuses the last working proxy when a bot reconnects |
 | **Proxy check address** | `mc.hypixel.net` | The server address used for proxy validation |
 | **Proxy check concurrency** | `10` | How many proxy checks run at once |
 | **Proxy check timeout** | `30` | How many seconds SoulFire waits before a check fails |

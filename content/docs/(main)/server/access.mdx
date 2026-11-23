@@ -21,6 +21,17 @@ Check the identity with `whoami` in the authenticated terminal.
 The API and WebDAV use separate token audiences.
 A token from `generate-token webdav` is not an API token.
 
+## Revoke a token
+
+A new token does not revoke older tokens.
+To revoke a leaked token, invalidate the user's sessions.
+This ends every API token issued to that user before that moment.
+
+- A user invalidates their own sessions with `ClientService.InvalidateSelfSessions`.
+- An administrator invalidates another user's sessions with `UserService.InvalidateSessions`.
+
+Then generate a new token for each client that still needs access.
+
 ## Use HTTPS for remote clients
 
 Terminate HTTPS at a reverse proxy or tunnel in front of SoulFire.
@@ -28,7 +39,8 @@ Use the [automated setup](/docs/server/automated-setup) or the HTTPS examples in
 The configured hostname must match the certificate presented to the client.
 
 For a local connection, the default backend port is `38765`.
-Keep a local-only listener or published port bound to loopback when remote access is unnecessary.
+A dedicated server listens on all network interfaces (`0.0.0.0`) over plain HTTP by default.
+Set `-Dsf.grpc.host=127.0.0.1` when remote access is unnecessary, or when a reverse proxy on the same host provides HTTPS.
 The [Java guide](/docs/server/java) describes `sf.grpc.host` and `sf.grpc.port`.
 
 ## Grant project access

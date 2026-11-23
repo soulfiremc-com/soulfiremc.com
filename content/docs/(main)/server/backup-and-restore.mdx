@@ -12,7 +12,8 @@ For a named volume or Java deployment, use the same stop-copy-restore sequence w
 
 Locate your Compose file, data directory, plugin files, and current image tag or digest.
 Choose a backup destination outside the deployment directory.
-A copy of a running SQLite database alone is not a complete backup.
+Do not copy `soulfire.sqlite` while the backend runs, because the copy can be inconsistent.
+Back up the complete data directory, not only the database.
 
 ## Create a stopped backup
 
@@ -34,7 +35,11 @@ docker compose start
 ```
 
 Check authenticated client access and the saved project list.
-Keep the backup private. It can contain account credentials and the token signing key.
+The backup contains account credentials and the token signing key. Protect it like a password:
+
+- Encrypt the backup and restrict file permissions, for example with `chmod 600`.
+- Keep one copy off the host, so a lost server does not take the backup with it.
+- Keep several dated copies, and make a new backup on a schedule and before every upgrade.
 
 ## Verify recovery in isolation
 

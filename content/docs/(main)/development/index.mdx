@@ -51,26 +51,30 @@ For your first plugin, read these pages in order:
 2. [Build your first plugin](/docs/development/first-plugin) to get one jar loading inside SoulFire
 3. [Gradle and project layout](/docs/development/gradle-and-project-layout) when you start changing the template
 4. [Event system](/docs/development/event-system) and [Settings and metadata](/docs/development/settings-and-metadata) for normal plugin work
-5. [Bot control and direct access](/docs/development/bot-control-and-direct-access) only when you need real runtime objects or controlling tasks
+5. [Bot control and direct access](/docs/development/bot-control-and-direct-access) only when you need real runtime objects or `ControlTask` sequences
 6. [Mixins and access wideners](/docs/development/mixins-and-access-wideners) only when the public API is not enough
 7. [Architecture and protocols](/docs/development/architecture-and-protocols) when you need to trace how SoulFire wires the internals together
+
+The constructor and `@EventHandler` methods cover most plugin work.
+To offer RPCs, events, or tasks to SDK clients, override `onLoad(PluginContext)` in the same plugin class, and start runtime work in `onEnable`.
+[Plugin APIs](/docs/sdk/plugins) covers that lifecycle.
 
 ## Development map
 
 <Cards>
-  <Card
-    icon={<Code />}
-    title="Build your first plugin"
-    href="/docs/development/first-plugin"
-  >
-    Start from the official template, register an `ExternalPlugin`, build the jar, and load it into SoulFire.
-  </Card>
   <Card
     icon={<Wrench />}
     title="Environment setup"
     href="/docs/development/environment-setup"
   >
     Set up Java, Gradle, IntelliJ, and a local source checkout that matches the SoulFire version you target.
+  </Card>
+  <Card
+    icon={<Code />}
+    title="Build your first plugin"
+    href="/docs/development/first-plugin"
+  >
+    Start from the official template, register an `ExternalPlugin`, build the jar, and load it into SoulFire.
   </Card>
   <Card
     icon={<GitBranchPlus />}

@@ -30,7 +30,7 @@ It only takes over the parts of control needed for targeting, looking, swinging,
 | `look-range` | How close a target must be before the bot starts looking at it |
 | `swing-range` | How close a target must be before the bot swings its arm |
 | `hit-range` | How close a target must be before the bot actually attacks |
-| `check-walls` | Ignores targets behind walls when enabled |
+| `check-walls` | Only picks targets with a visible point when enabled |
 | `ignore-cooldown` | Whether to ignore the normal 1.9+ attack cooldown model |
 | `attack-delay-ticks` | Extra randomized delay used for pre-1.9 behavior, or when cooldown is ignored |
 
@@ -94,9 +94,8 @@ If you set it to `0`, swing-only behavior is disabled.
 ### Hit range
 
 This is the real attack threshold.
-Keep it conservative unless you are explicitly testing edge cases.
-
-If your `hit-range` is too aggressive, you are more likely to create behavior that is unrealistic or inconsistent with the target environment.
+Vanilla reach and crosshair targeting still limit each attack, so a larger value cannot make the bot hit further than a player could.
+While the bot moves, SoulFire also caps the range at 2.65 blocks.
 
 ## Cooldown and version behavior
 
@@ -113,15 +112,12 @@ If you leave `ignore-cooldown` off on modern versions, normal attack readiness r
 
 ## Wall checks and visibility
 
-With `check-walls` enabled, the bot avoids targets that it cannot clearly see or reach.
+`check-walls` controls target selection only.
+With it enabled, the bot only picks targets that have a visible point.
+With it disabled, the bot can pick a target behind a wall and turn toward it.
 
-That is the safer choice for realistic testing.
-
-Turn it off only if:
-
-- you are testing a very specific environment
-- you understand the tradeoff
-- you do not care about natural-looking line-of-sight behavior
+Attacks always respect walls, so the bot cannot hit through them either way.
+Keep it enabled for realistic testing, so bots do not stare at players they cannot see.
 
 ## Safe tuning workflow
 
@@ -147,10 +143,10 @@ If you alter every range and timing value at once, it becomes much harder to und
 
 Your `swing-range` is larger than needed for the environment you are testing.
 
-**The bot attacks through unrealistic angles**
+**The bot turns toward targets it cannot see**
 
 Make sure that `check-walls` is enabled.
-Then decrease the attack ranges.
+Then decrease `look-range`.
 
 **Friendly or protected players get targeted**
 

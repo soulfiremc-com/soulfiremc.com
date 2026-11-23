@@ -7,13 +7,10 @@ icon: Puzzle
 
 import { Callout } from 'fumadocs-ui/components/callout';
 
-## SoulFire 2.0: Built on Fabric
+## Plugins are Fabric mods
 
-<Callout type="info">
-  SoulFire 2.0 runs the official Minecraft client code as a special **Fabric mod**.
-  **SoulFire plugins are Fabric mods** that use the standard Fabric mod loader.
-</Callout>
-
+SoulFire runs the official Minecraft client code as a **Fabric mod**.
+SoulFire plugins are also Fabric mods, and the standard Fabric mod loader loads them during startup.
 This design lets plugins use Minecraft and Fabric APIs directly.
 
 ### Why Fabric?
@@ -25,17 +22,10 @@ This design lets plugins use Minecraft and Fabric APIs directly.
 - **Feature development**: Developers can build features on existing Minecraft code.
 - **Third-party mods**: Some Fabric mods work with SoulFire without changes.
 
-## Plugins are Fabric mods
-
-<Callout type="warn">
-  SoulFire plugins are standard Fabric mods.
-  The Fabric mod loader loads them during startup.
-</Callout>
-
-Since SoulFire plugins are Fabric mods:
+### What this means for plugins
 
 - Plugins use the standard Fabric mod structure, including `fabric.mod.json` and entrypoints
-- Plugins are loaded from the `minecraft/mods` directory by the Fabric mod loader
+- The Fabric mod loader loads plugins from `minecraft/mods` in the [SoulFire data directory](/docs/server/data)
 - Plugins can use **Mixins** to modify both Minecraft and SoulFire code
 - Plugins have full access to the Minecraft codebase and Fabric APIs
 - Some existing Fabric mods work with SoulFire without changes
@@ -70,8 +60,10 @@ The short version:
 
 1. Start from the official [SoulFirePluginExample](https://github.com/soulfiremc-com/SoulFirePluginExample) template
 2. Add the current SoulFire dependencies from [CodeMC Maven](https://repo.codemc.org/repository/maven-public/)
-3. Register your plugin with `SoulFireAPI.registerServerExtension(...)`
+3. Call `SoulFireAPI.loadPlugin(new MyPlugin())` from your Fabric `ModInitializer`
 4. Build a standard Fabric mod jar and place it in `minecraft/mods`
+
+[Write your first plugin](/docs/development/first-plugin) shows each step.
 
 See [Development](/docs/development) for the full developer workflow.
 It covers setup, Gradle, settings, events, bot control, Mixins, access wideners, architecture, and API references.

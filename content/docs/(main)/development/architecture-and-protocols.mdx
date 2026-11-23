@@ -100,7 +100,7 @@ Examples from the current implementation:
 
 - movement RPCs write to `ControlState`
 - rotation, hotbar, inventory, mouse, and dialog actions typically use `ControlTask.once(...)`
-- multi-step automation uses staged controlling tasks
+- multi-step automation uses `ControlTask` sequences
 - input booleans become real player movement through SoulFire's keyboard input mixin
 
 ## Script protocol

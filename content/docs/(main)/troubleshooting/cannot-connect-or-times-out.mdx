@@ -29,9 +29,9 @@ Do not paste `/docs`, `/mcp`, or `/webdav` into the normal server login field.
 
 ### Use a new access token
 
-Generate a fresh token from the server side:
+Generate a fresh token. Run this in the SoulFire server console or the app **Terminal**:
 
-```bash
+```text
 generate-token api
 ```
 
@@ -46,7 +46,7 @@ If this is a dedicated server:
 - view the container health and logs
 - make sure that the shown access URL matches the address in the client
 
-If you deliberately chose HTTP-only mode, remember that some setups behave better behind HTTPS.
+If you chose HTTP-only mode, the client must use an `http://` URL. An `https://` URL fails against an HTTP-only server.
 
 ### Test the client connection
 

@@ -18,7 +18,7 @@ Releases up to 2.10.7 label the plugins **AI Chat Bot** and **Captcha Solver**. 
 4. Review **API Request Timeout** and **API Max Retries**.
 5. Set a model explicitly in the feature you will use.
 
-The pinned source uses a 60-second request timeout and five maximum retries.
+The defaults are a 60-second timeout and 5 retries.
 A long timeout or many retries can delay the result without correcting a rejected request.
 The provider must support the request format used by that feature.
 An OpenAI-compatible label does not guarantee support for images or every parameter.
@@ -57,10 +57,17 @@ Use rate limits and bounded execution for repeated work.
 
 Choose the target server's actual challenge format:
 
-| Mode or source | Purpose |
+**Captcha trigger** (`captcha-trigger`) decides what starts the solver:
+
+| Value | Purpose |
 | --- | --- |
 | `CHAT_MESSAGE` | A chat message triggers an image request |
 | `TEXT_BASED` | A regular expression captures a code already present in chat |
+
+**Image source** (`image-source`) decides where an image challenge comes from:
+
+| Value | Purpose |
+| --- | --- |
 | `MAP_IN_HAND` | The challenge image comes from a map held by the bot |
 | `POV_RENDER` | The challenge image comes from a rendered bot view |
 

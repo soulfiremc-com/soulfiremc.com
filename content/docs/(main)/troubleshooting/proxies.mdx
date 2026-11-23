@@ -1,5 +1,6 @@
 ---
 title: Proxies
+sidebarTitle: "Proxies"
 description: Fix proxy import, validation, and connection problems.
 icon: ShieldAlert
 ---
@@ -35,6 +36,15 @@ Start with:
 - a known-good target server
 
 If that fails, the pool is not good enough for production use yet.
+
+## Check proxies against your target
+
+The proxy check connects to **Proxy check address**, which defaults to `mc.hypixel.net`.
+A proxy can pass that check and still fail to reach your server, for example when your server blocks its network.
+
+1. Set **Proxy check address** to the server that you test.
+2. Run the proxy check.
+3. Remove the proxies that fail, then connect bots.
 
 ## Separate gameplay proxies from account-auth proxies
 

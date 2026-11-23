@@ -44,7 +44,7 @@ Use a supported SoulFire release and Java version before you test authentication
 Before going deeper:
 
 - make sure that you use the SoulFire release that you intend to run
-- use the Java/runtime version required by the current install docs
+- use Java 25, as [Run the dedicated JAR with Java](/docs/server/java) describes
 - retest with one account before importing a large batch
 
 ## Re-import a minimal sample
@@ -73,9 +73,9 @@ At that point, continue with [Cannot connect or times out](/docs/troubleshooting
 
 ## Access tokens for remote SoulFire servers
 
-If the problem is your GUI or CLI login to a remote SoulFire server, generate a fresh API token:
+If the problem is your GUI or CLI login to a remote SoulFire server, generate a fresh API token. Run this in the SoulFire server console or the app **Terminal**:
 
-```bash
+```text
 generate-token api
 ```
 

@@ -7,16 +7,21 @@ icon: FileUser
 
 ## Supported account types
 
-| Type | What you provide | Notes |
-| --- | --- | --- |
-| **Microsoft Java Credentials** | `email:password` | The account must own Minecraft Java Edition |
-| **Microsoft Java Device Code** | Browser sign-in | Good when you do not want to paste credentials |
-| **Microsoft Bedrock Credentials** | `email:password` | Required for Bedrock server connections |
-| **Microsoft Bedrock Device Code** | Browser sign-in | Browser-based Bedrock login |
-| **Microsoft Java Refresh Token** | One refresh token per line | Suitable for long-lived imports |
-| **Microsoft Java Cookies** | Exported `login.live.com` cookies | SoulFire exchanges them for a refreshable auth chain |
-| **Microsoft Java Access Token** | Raw Minecraft access token | Short-lived and cannot be refreshed |
-| **Offline** | One username per line | Only works on servers that accept offline accounts |
+| Type | CLI value | What you provide | Notes |
+| --- | --- | --- | --- |
+| **Microsoft Java Credentials** | `MICROSOFT_JAVA_CREDENTIALS` | `email:password` | The account must own Minecraft Java Edition |
+| **Microsoft Java Device Code** | `MICROSOFT_JAVA_DEVICE_CODE` | Browser sign-in | Good when you do not want to paste credentials |
+| **Microsoft Bedrock Credentials** | `MICROSOFT_BEDROCK_CREDENTIALS` | `email:password` | Bedrock login with email and password |
+| **Microsoft Bedrock Device Code** | `MICROSOFT_BEDROCK_DEVICE_CODE` | Browser sign-in | Browser-based Bedrock login |
+| **Microsoft Java Refresh Token** | `MICROSOFT_JAVA_REFRESH_TOKEN` | One refresh token per line | Suitable for long-lived imports |
+| **Microsoft Java Cookies** | `MICROSOFT_JAVA_COOKIES` | Exported `login.live.com` cookies | SoulFire exchanges them for a refreshable auth chain |
+| **Microsoft Java Access Token** | `MICROSOFT_JAVA_ACCESS_TOKEN` | Raw Minecraft access token | Short-lived and cannot be refreshed |
+| **Offline** | `OFFLINE` | One username per line | Only works on servers that accept offline accounts |
+
+### CLI values [#cli-values]
+
+Pass the **CLI value** to `--account-type`, for example `--account-type OFFLINE`.
+The CLI also accepts `THE_ALTENING` for TheAltening tokens.
 
 ## Import formats
 

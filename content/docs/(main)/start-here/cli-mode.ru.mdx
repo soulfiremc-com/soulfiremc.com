@@ -9,7 +9,7 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 ## Когда использовать CLI [#when-to-use-the-cli]
 
-<Callout type="info" emoji="ℹ️">
+<Callout type="info">
   Если вы не знакомы с инструментами командной строки, начните с урока [Подключите первого бота](/docs/start-here/gui-mode).
 </Callout>
 
@@ -61,7 +61,7 @@ java $SF_JVM_FLAGS -jar SoulFireCLI.jar
 Укажите свойства перед `-jar`:
 
 ```bash
-java -Dsf.remoteAddress=domain.com -Dsf.remoteToken=abcdefg $SF_JVM_FLAGS -jar SoulFireCLI.jar
+java -Dsf.remoteAddress=soulfire.example.com:38765 -Dsf.remoteToken=YOUR_API_TOKEN $SF_JVM_FLAGS -jar SoulFireCLI.jar
 ```
 
 ## Флаги CLI [#cli-flags]
@@ -95,7 +95,7 @@ java $SF_JVM_FLAGS -jar SoulFireCLI.jar \
 
 ## Импорт данных [#importing-data]
 
-С помощью флагов CLI можно импортировать профили, аккаунты и прокси.
+Флаги `--account-file` и `--account-type` импортируют аккаунты, а `--proxy-file` импортирует прокси.
 При импорте аккаунтов нужно выбрать тип аккаунта.
 Тип прокси необязателен. Без типа SoulFire считает файл универсальным файлом прокси.
 

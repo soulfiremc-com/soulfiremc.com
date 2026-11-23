@@ -9,7 +9,7 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 ## Wann du die CLI nutzt [#when-to-use-the-cli]
 
-<Callout type="info" emoji="ℹ️">
+<Callout type="info">
   Wenn du dich mit Kommandozeilen-Tools nicht auskennst, beginne mit [Deinen ersten Bot verbinden](/docs/start-here/gui-mode).
 </Callout>
 
@@ -61,7 +61,7 @@ Für einen entfernten dedizierten Server setzt du diese JVM-Eigenschaften:
 Setze die Eigenschaften vor `-jar`:
 
 ```bash
-java -Dsf.remoteAddress=domain.com -Dsf.remoteToken=abcdefg $SF_JVM_FLAGS -jar SoulFireCLI.jar
+java -Dsf.remoteAddress=soulfire.example.com:38765 -Dsf.remoteToken=YOUR_API_TOKEN $SF_JVM_FLAGS -jar SoulFireCLI.jar
 ```
 
 ## CLI-Flags [#cli-flags]
@@ -95,7 +95,7 @@ Setze `-Dterminal.ansi=true` oder `-Dterminal.ansi=false`, um Terminalfarben ein
 
 ## Daten importieren [#importing-data]
 
-Mit CLI-Flags importierst du Profile, Konten und Proxys.
+Mit `--account-file` und `--account-type` importierst du Konten, mit `--proxy-file` Proxys.
 Beim Import von Konten musst du einen Kontotyp wählen.
 Der Proxytyp ist optional. Ohne Typ behandelt SoulFire die Datei als universelle Proxy-Datei.
 

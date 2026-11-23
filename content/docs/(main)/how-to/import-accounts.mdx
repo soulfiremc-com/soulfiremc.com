@@ -79,9 +79,13 @@ It does not turn a name format into a persistent server setting.
 CLI imports use two flags:
 
 - `--account-file` points to the file that contains the accounts.
-- `--account-type` tells SoulFire how to parse that file.
+- `--account-type` tells SoulFire how to parse that file. [Account formats](/docs/reference/account-formats#cli-values) lists the values.
 
-Add the other CLI flags that your setup needs.
+```bash
+java -jar SoulFireCLI.jar --account-file accounts.txt --account-type OFFLINE
+```
+
+Add the other CLI flags that your setup needs, as [CLI mode](/docs/start-here/cli-mode) shows.
 For the full flag list, see [Command line flags](/docs/reference/cli-flags).
 
 ## Settings that matter most

@@ -57,13 +57,20 @@ Then [connect one bot](/docs/start-here/gui-mode) to check the complete workflow
 | `sf.grpc.host` | `0.0.0.0` | Address to bind |
 | `sf.grpc.port` | `38765` | API port |
 
-Pass system properties before `-jar`:
+<Callout type="warn">
+  Without `-Dsf.grpc.host`, the API listens on all network interfaces over plain HTTP.
+  Anyone who can reach the port can try to log in, and tokens cross the network unencrypted.
+</Callout>
+
+Pass system properties before `-jar`.
+This example listens only on loopback and moves the API to port `38766`, for example because another SoulFire instance uses `38765`:
 
 ```bash
 java -Xmx2G -XX:+EnableDynamicAgentLoading -Dsf.grpc.host=127.0.0.1 -Dsf.grpc.port=38766 -jar SoulFireDedicated.jar
 ```
 
-For remote clients, configure a suitable listener and [HTTPS access](/docs/server/access).
+For remote clients, keep the listener on loopback and put a reverse proxy or tunnel with HTTPS in front of it.
+See [Manage access and HTTPS](/docs/server/access).
 A remote client's `127.0.0.1` refers to that client, not this backend.
 
 ## Console and shutdown

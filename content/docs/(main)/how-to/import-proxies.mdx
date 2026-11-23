@@ -56,6 +56,12 @@ CLI imports use these flags:
 - `--proxy-type` selects the format when all entries use one type.
 - If the file uses URI format with mixed proxy types, omit `--proxy-type`.
 
+```bash
+java -jar SoulFireCLI.jar --proxy-file proxies.txt --proxy-type SOCKS5
+```
+
+`--proxy-type` accepts `HTTP`, `SOCKS4`, or `SOCKS5`.
+
 For the full flag list, see [Command line flags](/docs/reference/cli-flags).
 
 ## Settings that matter most

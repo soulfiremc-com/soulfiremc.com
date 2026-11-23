@@ -9,7 +9,7 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 ## When to use the CLI
 
-<Callout type="info" emoji="ℹ️">
+<Callout type="info">
   If you are not familiar with command-line tools, start with [Connect your first bot](/docs/start-here/gui-mode).
 </Callout>
 
@@ -53,16 +53,19 @@ Next, choose where the bots will run.
 For a local server, continue to [CLI flags](#cli-flags).
 For a remote dedicated server, set these JVM properties:
 
-| Property           | Description               |
-|--------------------|---------------------------|
-| `sf.remoteAddress` | The address to connect to |
-| `sf.remoteToken`   | The token to login with   |
+| Property           | Description                                                        |
+|--------------------|--------------------------------------------------------------------|
+| `sf.remoteAddress` | The server host and port, such as `host:38765`. The port defaults to `38765`. |
+| `sf.remoteToken`   | An API token for the server. See [Server access](/docs/server/access). |
 
 Put the properties before `-jar`:
 
 ```bash
-java -Dsf.remoteAddress=domain.com -Dsf.remoteToken=abcdefg $SF_JVM_FLAGS -jar SoulFireCLI.jar
+java -Dsf.remoteAddress=soulfire.example.com:38765 -Dsf.remoteToken=YOUR_API_TOKEN $SF_JVM_FLAGS -jar SoulFireCLI.jar
 ```
+
+The token appears in your shell history and in the process list.
+On a shared machine, read it from a file instead, for example `-Dsf.remoteToken="$(cat token.txt)"`.
 
 ## CLI flags
 
@@ -95,8 +98,8 @@ Set `-Dterminal.ansi=true` or `-Dterminal.ansi=false` to enable or disable termi
 
 ## Importing data
 
-Use CLI flags to import profiles, accounts, and proxies.
-You must select an account type when you import accounts.
+Use `--account-file` with `--account-type` to import accounts, and `--proxy-file` to import proxies.
+You must select an account type when you import accounts. See [account formats](/docs/reference/account-formats) for the values.
 The proxy type is optional. SoulFire treats the file as a universal proxy file when you omit the type.
 
 ## Run commands

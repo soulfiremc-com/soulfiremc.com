@@ -33,8 +33,8 @@ Through MCP, an AI assistant can:
 The MCP endpoint requires a JWT API token.
 Create one in any of these ways:
 
-1. **The SoulFire GUI**: Go to your profile settings and generate an API token
-2. **The CLI**: Use the `generate-token api` command
+1. **The SoulFire GUI**: Open the **Access** page and generate an API token
+2. **The SoulFire console or app Terminal**: Run the `generate-token api` command
 3. **The gRPC API**: Call `ClientService.GenerateAPIToken` or `UserService.GenerateUserAPIToken`
 
 ## MCP endpoint
@@ -42,9 +42,11 @@ Create one in any of these ways:
 The MCP endpoint is available at:
 
 ```text
-http://your-server:port/mcp
+https://your-server/mcp
 ```
 
+For a SoulFire server on your own computer, use `http://127.0.0.1:38765/mcp`.
+Use HTTPS for any other server, because the API token is sent with every request.
 The endpoint uses the Streamable HTTP transport.
 
 ## Connect Claude Desktop
@@ -79,7 +81,7 @@ Use these settings with other MCP clients:
 | Parameter | Value |
 |-----------|-------|
 | **Transport** | Streamable HTTP |
-| **URL** | `http://your-server:port/mcp` |
+| **URL** | `https://your-server/mcp` |
 | **Auth Header** | `Authorization: Bearer YOUR_API_TOKEN` |
 
 ## Available tools
@@ -95,17 +97,17 @@ SoulFire groups its MCP tools by purpose:
 - `update_instance_config_entry`: Update a configuration setting
 - `get_audit_log`: View the project audit log
 
-### Account & Proxy Management
+### Account and proxy management
 - `add_instance_account`: Add an offline Minecraft account
 - `remove_instance_account`: Remove an account
 - `add_instance_proxy`: Add a proxy (HTTP, SOCKS4, SOCKS5)
 - `remove_instance_proxy`: Remove a proxy
 
-### Command Execution
+### Command execution
 - `execute_command`: Execute a SoulFire command (global, project, or bot scope)
 - `tab_complete_command`: Get tab-completion suggestions
 
-### Bot Control
+### Bot control
 - `set_bots_desired_state`: Keep selected bots running or stopped
 - `restart_bots`: Reconnect selected bots
 - `get_bot_list`: List all bots in a project
@@ -119,22 +121,22 @@ SoulFire groups its MCP tools by purpose:
 - `open_bot_inventory`: Open bot inventory
 - `close_bot_container`: Close an open container
 
-### Server Configuration
+### Server configuration
 - `get_server_info`: Get server settings and plugins
 - `update_server_config_entry`: Update server settings
 
-### User Management
+### User management
 - `list_users`: List all users
 - `create_user`: Create a new user
 - `delete_user`: Delete a user
 - `get_user_info`: Get user details
 - `generate_user_api_token`: Generate an API token for a user
 
-### Self/Client Tools
+### Self and client tools
 - `get_client_data`: Get current user info and permissions
 - `generate_api_token`: Generate a new API token
 
-### Metrics & Logs
+### Metrics and logs
 - `get_instance_metrics`: Project performance metrics
 - `get_server_metrics`: Server system metrics (CPU, memory, etc.)
 - `get_previous_logs`: Retrieve recent log entries
@@ -175,7 +177,7 @@ Once connected, you can talk to SoulFire in plain language:
 
 - Use HTTPS to protect API tokens during transfer
 - API tokens have the same permissions as the user who generated them
-- Rotate tokens regularly using the `generate_api_token` tool
+- A new token does not revoke older tokens. To revoke a leaked token, invalidate the user's sessions, then generate a new token. Invalidation ends every token issued before that moment. See [Manage access and HTTPS](/docs/server/access)
 - Create dedicated users with only the permissions that each assistant needs
 
 ## Related pages

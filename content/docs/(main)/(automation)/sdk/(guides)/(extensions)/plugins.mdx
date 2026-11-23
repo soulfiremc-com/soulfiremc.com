@@ -21,10 +21,24 @@ Applications have two ways to consume a plugin:
 Declare plugin APIs in `onLoad`.
 Each plugin gets a `PluginContext` for permissions, RPCs, tasks, events, and SDK information.
 Start runtime work in `onEnable` and stop it in `onDisable`.
+This is the same plugin class that [Write your first plugin](/docs/development/first-plugin) creates. Load it with `SoulFireAPI.loadPlugin(...)` as that page shows.
+
+In this example, `Tick` is a message generated from your plugin's protobuf file, and `ExampleService` is your implementation of its generated gRPC service. Imports are omitted.
 
 ```java
 public final class ExamplePlugin extends ExternalPlugin {
   private PluginEventRegistration<Tick> ticks;
+
+  public ExamplePlugin() {
+    super(new PluginInfo(
+      "example",
+      "1.0.0",
+      "Example plugin API",
+      "YourName",
+      "MIT",
+      "https://example.com"
+    ));
+  }
 
   @Override
   protected void onLoad(PluginContext context) {
@@ -40,6 +54,7 @@ public final class ExamplePlugin extends ExternalPlugin {
     context.rpc().register(new ExampleService());
   }
 
+  // Call this from runtime work that onEnable starts.
   private void publishTick(UUID instanceId, int sequence) {
     ticks.publish(
       PluginEventTarget.instance(instanceId),
@@ -91,7 +106,7 @@ bunx soulfire-sdk generate \
 ```
 
 The TypeScript output returns Effect operations and streams.
-The Python output requires CPython 3.14 and returns effect-py operations and scoped streams.
+The Python output requires CPython 3.14 or newer and returns effect-py operations and scoped streams.
 Both packages contain the validated API description, version data, generated protobuf types, and typed event methods.
 They also contain a module for `plugins.require(...)`.
 
@@ -219,6 +234,7 @@ Generated companion packages expose the provider as a typed method:
   <Tab value="Python">
     ```python
     extension = soulfire.plugins.require(skyblock_plugin)
+    bot = soulfire.instance(instance_id).bot(bot_id)
     task = yield from extension.build_island(
         bot.tasks,
         BuildIslandTask(template="cobblestone-generator"),
@@ -229,6 +245,7 @@ Generated companion packages expose the provider as a typed method:
   <Tab value="Reflective">
     ```ts
     const extension = yield* soulfire.plugins.reflective("skyblock");
+    const bot = soulfire.instance(instanceId).bot(botId);
     const task = yield* extension.startTask(
       bot.tasks,
       "type.googleapis.com/soulfire.plugin.skyblock.v1.BuildIslandTask",

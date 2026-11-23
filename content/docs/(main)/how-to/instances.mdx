@@ -11,7 +11,7 @@ Use a separate project for each test target or independent workflow.
 The updated app calls these containers **Projects**. Releases up to 2.10.7 call them **Instances**.
 The API keeps its existing `instance` names. See [names and compatibility](/docs/reference/naming).
 
-## Create a run
+## Create a project
 
 1. Open **Projects** and create a project with a descriptive name.
 2. Open the project and set its Minecraft target in **Bot Settings**.
@@ -50,10 +50,6 @@ Then delete the project from the project management page.
 Deletion removes its saved data. A script export is not a full project backup.
 For recovery of server data, use [backup and restore](/docs/server/backup-and-restore).
 
-## Related concepts
-
-Read [bot state and task ownership](/docs/concepts/bot-lifecycle) for reconnects, connection epochs, and control resources.
-
 ## Copy and export configuration
 
 Use **Create from configuration** to make another project from a saved configuration and icon.
@@ -63,3 +59,7 @@ Scripts, files, permissions, and history are not copied. The new project belongs
 **Export configuration** writes settings, accounts and their credentials, proxies, and account persistent metadata.
 The app currently omits project-level persistent metadata from exports. Keep exported files private.
 A configuration export is not a complete project backup. Existing profile JSON files remain importable.
+
+## Related concepts
+
+Read [bot state and task ownership](/docs/concepts/bot-lifecycle) for reconnects, connection epochs, and control resources.

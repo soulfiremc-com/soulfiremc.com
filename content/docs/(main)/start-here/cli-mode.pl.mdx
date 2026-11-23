@@ -9,7 +9,7 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 ## Kiedy używać CLI [#when-to-use-the-cli]
 
-<Callout type="info" emoji="ℹ️">
+<Callout type="info">
   Jeśli nie znasz narzędzi wiersza poleceń, zacznij od samouczka [Połącz pierwszego bota](/docs/start-here/gui-mode).
 </Callout>
 
@@ -61,7 +61,7 @@ W przypadku zdalnego serwera dedykowanego ustaw te właściwości JVM:
 Umieść właściwości przed `-jar`:
 
 ```bash
-java -Dsf.remoteAddress=domain.com -Dsf.remoteToken=abcdefg $SF_JVM_FLAGS -jar SoulFireCLI.jar
+java -Dsf.remoteAddress=soulfire.example.com:38765 -Dsf.remoteToken=YOUR_API_TOKEN $SF_JVM_FLAGS -jar SoulFireCLI.jar
 ```
 
 ## Flagi CLI [#cli-flags]
@@ -95,7 +95,7 @@ Ustaw `-Dterminal.ansi=true` lub `-Dterminal.ansi=false`, aby włączyć lub wy�
 
 ## Importowanie danych [#importing-data]
 
-Flagi CLI pozwalają importować profile, konta i proxy.
+`--account-file` z `--account-type` importuje konta, a `--proxy-file` importuje proxy.
 Przy imporcie kont musisz wybrać typ konta.
 Typ proxy jest opcjonalny. Bez typu SoulFire traktuje plik jako uniwersalny plik proxy.
 

@@ -68,7 +68,8 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
     Put the `.jar` file in `minecraft/mods`.
 
     - **Integrated server (GUI/CLI)**: Open `Help -> Data directory`, then go to `soulfire/minecraft/mods`
-    - **Dedicated server**: Use the `minecraft/mods` directory next to the server `.jar`
+    - **Dedicated JAR**: Use `minecraft/mods` in the directory you start Java from. See [Server data](/docs/server/data)
+    - **Docker**: Use `/soulfire/data/minecraft/mods` inside the container, which is the mounted data directory on the host
   </Step>
 
   <Step>

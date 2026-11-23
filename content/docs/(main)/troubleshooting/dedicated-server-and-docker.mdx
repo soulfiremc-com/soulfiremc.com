@@ -41,9 +41,8 @@ If the management menu already shows the stack is unhealthy, troubleshoot there 
 Use HTTPS with Cloudflared and Traefik.
 If you chose HTTP-only mode, remember:
 
-- traffic is unencrypted
-- some environments behave worse over plain HTTP
-- some clients work poorly with HTTP-only deployments
+- traffic, including API tokens, is unencrypted
+- Windows refuses to mount WebDAV over plain HTTP with Basic authentication by default
 
 Use HTTP-only mainly for LAN or controlled testing.
 
@@ -93,9 +92,9 @@ An explicit `org.lwjgl.vulkan.libname` override bypasses the bundled runtime.
 
 ## If remote login fails
 
-Generate a fresh API token from the server side:
+Generate a fresh API token. Run this in the SoulFire server console:
 
-```bash
+```text
 generate-token api
 ```
 
