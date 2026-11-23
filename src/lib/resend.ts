@@ -1,6 +1,6 @@
 import { Context, Schema, Effect } from "effect";
 import { render } from "react-email";
-import { Resend } from "resend";
+import { ExternalRequestError, requestVoid } from "@/lib/backend-http";
 import { runWebsiteEffect } from "@/lib/effect-runtime";
 
 // oxlint-disable-next-line unicorn/throw-new-error -- Schema.TaggedError is a class factory.
@@ -38,10 +38,54 @@ export class WebsiteMailer extends Context.Service<
   }
 >()("soulfiremc.com/lib/resend/WebsiteMailer") {}
 
+const RESEND_EMAILS_URL = "https://api.resend.com/emails";
+/** Bounds a hung submission so the sign-up or reset request still settles. */
+const RESEND_TIMEOUT_MS = 15_000;
+
+/**
+ * Submits one email through Resend's REST API with the shared HTTP helper, so
+ * the call has a deadline and is never retried. A non-2xx response is a
+ * rejection; a transport failure or timeout throws.
+ */
+async function submitToResend(
+  email: WebsiteEmailSubmission,
+): Promise<{ error: unknown }> {
+  const html = await render(email.react);
+  try {
+    await Effect.runPromise(
+      requestVoid(RESEND_EMAILS_URL, {
+        init: {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${process.env["RESEND_API_KEY"] ?? ""}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            from: email.from,
+            to: email.to,
+            reply_to: email.replyTo,
+            subject: email.subject,
+            html,
+            text: email.text,
+          }),
+        },
+        timeoutMs: RESEND_TIMEOUT_MS,
+        retries: 0,
+      }),
+    );
+    return { error: null };
+  } catch (error) {
+    if (error instanceof ExternalRequestError && error.reason === "status") {
+      return { error };
+    }
+    throw error;
+  }
+}
+
 export function makeWebsiteMailer(
-  submit: (email: WebsiteEmailSubmission) => Promise<{ error: unknown }> = (
-    email,
-  ) => new Resend(process.env["RESEND_API_KEY"]).emails.send(email),
+  submit: (
+    email: WebsiteEmailSubmission,
+  ) => Promise<{ error: unknown }> = submitToResend,
 ): Context.Service.Shape<typeof WebsiteMailer> {
   const submitEmail = (email: WebsiteEmailSubmission) =>
     Effect.tryPromise({
@@ -56,7 +100,7 @@ export function makeWebsiteMailer(
           : Effect.void,
       ),
       // Email submission may have succeeded despite a lost acknowledgement.
-      // Wait for its one SDK call; never retry it or return before it settles.
+      // Wait for its one call; never retry it or return before it settles.
       Effect.uninterruptible,
     );
 
