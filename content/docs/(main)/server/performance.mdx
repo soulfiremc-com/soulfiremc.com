@@ -1,11 +1,11 @@
 ---
-title: Read logs and measure backend performance
+title: Read logs and measure SoulFire server performance
 sidebarTitle: "Logs and performance"
-description: Separate backend limits from Minecraft target problems.
+description: Separate SoulFire server limits from Minecraft target problems.
 icon: Gauge
 ---
 
-## Read the backend log
+## Read the SoulFire server log
 
 For Docker Compose, run:
 
@@ -23,8 +23,8 @@ The first error can explain later reconnect or task errors.
 ## Identify which server failed
 
 Lag can come from either machine.
-A healthy SoulFire backend can have bots rejected by Minecraft.
-A healthy Minecraft server can receive too little load from an overloaded bot backend.
+A healthy SoulFire server can have bots rejected by Minecraft.
+A healthy Minecraft server can receive too little load from an overloaded SoulFire server.
 Compare logs and resource metrics from both machines before changing settings.
 
 ## Measure before tuning
@@ -32,7 +32,7 @@ Compare logs and resource metrics from both machines before changing settings.
 Record CPU, memory (RAM), network throughput, connected bots, active scripts, and tasks.
 Add load in stages with [the testing procedure](/docs/testing/load-test).
 Inspect a profiler capture if CPU remains high or a repeated action stalls.
-The backend's `spark` command exposes its profiling tools. Run `spark` alone to list its subcommands.
+The SoulFire server's `spark` command exposes its profiling tools. Run `spark` alone to list its subcommands.
 For long-term graphs, enable the Prometheus endpoint described in the [Java guide](/docs/server/java#other-listener-properties).
 
 ## Tune one factor at a time
@@ -42,7 +42,7 @@ For long-term graphs, enable the Prometheus endpoint described in the [Java guid
 - Change the Java heap limit only with evidence of memory pressure.
 - Keep memory available for the operating system and other processes.
 
-How many bots one backend can run depends on world activity, server versions, plugins, hardware, and workload.
+How many bots one SoulFire server can run depends on world activity, server versions, plugins, hardware, and workload.
 Use measured results for your deployment instead of treating a fixed bots-per-gigabyte table as a guarantee.
 
 For startup failures, use [dedicated server troubleshooting](/docs/troubleshooting/dedicated-server-and-docker).

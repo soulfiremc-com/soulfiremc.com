@@ -45,13 +45,13 @@ const program = Effect.scoped(
 NodeRuntime.runMain(program);
 ```
 
-`createBot` downloads the backend and Java, provisions the account, starts it, and waits for the initial player snapshot.
+`createBot` downloads the SoulFire server and Java, provisions the account, starts it, and waits for the initial player snapshot.
 Scope exit closes observations and the managed process.
-Use `SoulFire.install()` once and named provisioning when several bots share a backend.
+Use `SoulFire.install()` once and named provisioning when several bots share a SoulFire server.
 See [named instances and bots](/docs/sdk/discover-bots).
 
 Use `@soulfiremc/sdk/bun` for managed installation on Bun.
-The universal and browser entry points connect to existing backends.
+The universal and browser entry points connect to existing SoulFire servers.
 
 ### Control managed installation
 
@@ -59,7 +59,7 @@ Downloads and server data stay in `.soulfire` under the working directory.
 Pass these fields through `installation` in `createBot`, or directly to `install`:
 
 - `directory`: choose a persistent data directory.
-- `version`: pin a released backend instead of selecting the latest release.
+- `version`: pin a released SoulFire server instead of selecting the latest release.
 - `jarPath`: use an existing dedicated JAR, including a source build.
 - `javaPath`: use an existing Java 25 executable.
 - `javaArgs`, `port`, `startupTimeoutMs`, and `onLog`: configure the managed process.
@@ -91,7 +91,7 @@ await Effect.runPromise(program);
 ```
 
 The connection handshake checks server compatibility and required capabilities.
-For a new account on that backend, use `client.createBot` or `instance.getOrCreateBot`.
+For a new account on that SoulFire server, use `client.createBot` or `instance.getOrCreateBot`.
 
 ## Provide an Effect v4 HTTP client
 

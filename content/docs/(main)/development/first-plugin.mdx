@@ -14,16 +14,16 @@ The template already contains the Fabric, Loom, and SoulFire setup.
 
 - Install Java 25 and Git.
 - Use IntelliJ IDEA, or another IDE that supports Gradle and Fabric Loom.
-- Have a SoulFire backend where you can copy JARs into `minecraft/mods`.
+- Have a SoulFire server where you can copy JARs into `minecraft/mods`.
 
-## Align the template with your backend
+## Align the template with your SoulFire server
 
-The template's `gradle/libs.versions.toml` can pin an older SoulFire and Minecraft version than your backend.
+The template's `gradle/libs.versions.toml` can pin an older SoulFire and Minecraft version than your SoulFire server.
 The examples below compile against the [%SOULFIRE_SDK_VERSION% release baseline](/docs/sdk/compatibility), which runs Minecraft `%SOULFIRE_MINECRAFT_VERSION%`.
 
 Update the Minecraft, Fabric Loader, and SoulFire versions together.
 Changing only the SoulFire version leaves Minecraft classes that do not match the runtime.
-If the [CodeMC metadata](https://repo.codemc.org/repository/maven-public/com/soulfiremc/mod/maven-metadata.xml) does not list your backend version, build that SoulFire release tag from source and publish it to your local Maven repository.
+If the [CodeMC metadata](https://repo.codemc.org/repository/maven-public/com/soulfiremc/mod/maven-metadata.xml) does not list your SoulFire server version, build that SoulFire release tag from source and publish it to your local Maven repository.
 The template already reads `mavenLocal()`.
 
 Read [Gradle and project layout](/docs/development/gradle-and-project-layout) before making that change.
@@ -132,11 +132,11 @@ Read [Gradle and project layout](/docs/development/gradle-and-project-layout) be
 
     Copy the jar into SoulFire's Fabric mods directory and restart SoulFire:
 
-    - all deployments: `minecraft/mods` under the backend's base directory
+    - all deployments: `minecraft/mods` under the SoulFire server's base directory
     - Docker: `/soulfire/data/minecraft/mods` inside the container
 
     Use [persistent data](/docs/server/data) to locate that directory.
-    The remote client's installation directory is not the backend's mod directory.
+    The remote client's installation directory is not the SoulFire server's mod directory.
   </Step>
 </Steps>
 
@@ -154,7 +154,7 @@ For Fabric errors, see [Gradle and project layout](/docs/development/gradle-and-
 ## Check the event with one bot
 
 Start one bot in a test project.
-Expect the backend log to include `Bot <account name> was initialized`.
+Expect the SoulFire server log to include `Bot <account name> was initialized`.
 This event fires before the bot has a usable player or world.
 For actions that need a joined player, use a tick event such as `BotPostTickEvent` and check that `connection.minecraft().player` is not `null`.
 

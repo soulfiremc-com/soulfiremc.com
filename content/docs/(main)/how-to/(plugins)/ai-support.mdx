@@ -5,14 +5,14 @@ description: Connect a compatible provider and verify one chat or image workflow
 icon: BrainCircuit
 ---
 
-SoulFire calls an AI provider through its shared **AI Settings**.
+SoulFire calls an AI provider through its shared **AI settings**.
 The visual **LLM Chat** node, the **AI chat** plugin, and the image-based **Captcha solver** use that connection.
 Releases up to 2.10.7 label the plugins **AI Chat Bot** and **Captcha Solver**. Their IDs stay `ai-chat-bot` and `captcha-solver`.
 [MCP](/docs/how-to/mcp) works in the other direction: an external assistant calls SoulFire tools.
 
 ## Configure the provider
 
-1. Open **AI Settings** in the intended project.
+1. Open **AI settings** in the intended project.
 2. Set **API Base URL** to the provider's compatible API base.
 3. Set **API Key** to a key accepted by that provider.
 4. Review **API Request Timeout** and **API Max Retries**.
@@ -25,17 +25,17 @@ An OpenAI-compatible label does not guarantee support for images or every parame
 
 For OpenAI, consult the [API reference](https://developers.openai.com/api/reference/overview) and [model catalog](https://developers.openai.com/api/docs/models/all).
 For another provider or local server, use its current compatibility documentation and exact model IDs.
-The provider URL must be reachable from the SoulFire backend, including inside Docker.
+The provider URL must be reachable from the SoulFire server, including inside Docker.
 
 ## Verify AI chat
 
 1. Configure the provider first.
-2. Enable **AI chat** in the project's plugin settings.
-3. Select a text-capable model that your provider account can use.
-4. Set a trigger keyword such as `!ai` and a short prompt.
+2. Open **Plugins** and enable **AI chat**. Then expand **Plugins** and open **AI chat**.
+3. Set **AI Model** to a text-capable model that your provider account can use.
+4. Set **Keyword** to a trigger such as `!ai`, and set a short **AI System prompt**.
 5. Start one bot and send `!ai hello` from a normal Minecraft player.
 
-Expect one reply from the bot. Inspect backend logs if no reply appears.
+Expect one reply from the bot. Inspect SoulFire server logs if no reply appears.
 The plugin retains a limited per-connection history and limits output for Minecraft chat.
 A message containing `<keyword> reset` clears that connection's history.
 Use **Filter keyword** if the response must omit the trigger text.
@@ -57,14 +57,14 @@ Use rate limits and bounded execution for repeated work.
 
 Choose the target server's actual challenge format:
 
-**Captcha trigger** (`captcha-trigger`) decides what starts the solver:
+**Captcha Trigger** (`captcha-trigger`) decides what starts the solver:
 
 | Value | Purpose |
 | --- | --- |
 | `CHAT_MESSAGE` | A chat message triggers an image request |
 | `TEXT_BASED` | A regular expression captures a code already present in chat |
 
-**Image source** (`image-source`) decides where an image challenge comes from:
+**Image Source** (`image-source`) decides where an image challenge comes from:
 
 | Value | Purpose |
 | --- | --- |
@@ -72,7 +72,7 @@ Choose the target server's actual challenge format:
 | `POV_RENDER` | The challenge image comes from a rendered bot view |
 
 For an image workflow, select a model that accepts image input.
-Set the trigger text, image source, prompt, and response command in the plugin settings.
+Expand **Plugins** and open **Captcha solver**. Set **Text Trigger**, **Image Source**, **AI System prompt**, and **Response Command** there.
 For text capture, use a regular expression with a capture group and the matching response command.
 Check the captured value and sent command with one bot on your test target.
 
@@ -85,7 +85,7 @@ Inspect the captured image first. Use [bot view inspection](/docs/how-to/pov) fo
 | --- | --- |
 | Authentication or permission error | Provider key, project access, and model availability |
 | Model not found | Exact model ID for that provider |
-| Timeout or connection error | Backend route, base URL, and provider status |
+| Timeout or connection error | Network route from the SoulFire server, base URL, and provider status |
 | No request occurs | Enabled state, trigger keyword, and graph execution |
 | Repeated requests | Trigger frequency, loops, reconnects, and rate limits |
 | Unusable response | Prompt, input image, output limits, and model capabilities |

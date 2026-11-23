@@ -41,7 +41,7 @@ Choose the entry point for your application:
 | Workers, Deno, or custom transport | `@soulfiremc/sdk` | No |
 
 A managed local server means the SDK can download and start SoulFire for you.
-The other entry points connect to a backend that is already running.
+The other entry points connect to a SoulFire server that is already running.
 See the [TypeScript runtime guide](/docs/sdk/typescript-runtime#provide-an-effect-v4-http-client) to supply your own HTTP client.
 
 Continue with [your first TypeScript program](/docs/sdk/typescript).
@@ -62,14 +62,14 @@ The SDK also installs `effect-python==0.1.0a2`, which you import as `effect_py`.
 
 Continue with [your first Python program](/docs/sdk/python).
 
-## Choose a backend
+## Choose a SoulFire server
 
 For a local script, `SoulFire.createBot` or Python `SoulFire.create_bot` downloads SoulFire and Java when needed.
 It creates or reuses the instance and account, starts the bot, and waits for its initial player snapshot.
-The tutorials pin the managed backend with `installation.version` or Python `installation={"version": "%SOULFIRE_SDK_VERSION%"}`.
+The tutorials pin the managed SoulFire server with `installation.version` or Python `installation={"version": "%SOULFIRE_SDK_VERSION%"}`.
 Without a version, managed installation selects the latest release.
 
-For an existing backend, use `SoulFire.connect` with its API URL and token.
+For an existing SoulFire server, use `SoulFire.connect` with its API URL and token.
 The handshake checks API versions, capabilities, and required plugins.
 Named instance provisioning requires the `instance.provisioning.v1` capability.
 See [named setup and existing bots](/docs/sdk/discover-bots).
@@ -88,8 +88,8 @@ Python:
 .venv/bin/python -c "from importlib.metadata import version; print(version('soulfire'))"
 ```
 
-Expect SDK version `%SOULFIRE_SDK_VERSION%`. A matching version label alone does not prove backend compatibility.
-The backend must also pass the connection handshake.
+Expect SDK version `%SOULFIRE_SDK_VERSION%`. A matching version label alone does not prove SoulFire server compatibility.
+The SoulFire server must also pass the connection handshake.
 
 ## Migrate older applications
 
@@ -115,8 +115,7 @@ Compare the version with your SoulFire server before you copy an example.
 | [Node reference](/docs/scripting/node-reference) | `%SOULFIRE_SDK_VERSION%` source | Generated from the same revision |
 | [HTTP API reference](/docs/openapi) | `2.11.0` | Generated from the development branch, which is ahead of the latest release |
 | App labels in the guides | After `2.10.7` | The guides use the updated names. Each page names the earlier label. |
-| App screenshots | `2.10.1` | Each caption states its version |
-| Plugin template | `2.9.1-SNAPSHOT` | The [first-plugin guide](/docs/development/first-plugin#align-the-template-with-your-backend) explains how to align it |
+| Plugin template | `2.10.1` | The [first-plugin guide](/docs/development/first-plugin#align-the-template-with-your-soulfire-server) explains how to align it |
 
 A newer SoulFire server can add or rename a field that an older page does not show.
 The connected server is the authority for its own commands, nodes, and capabilities.
@@ -127,7 +126,7 @@ The documentation uses the [%SOULFIRE_SDK_VERSION% release source](https://githu
 The [node reference](/docs/scripting/node-reference) links to that revision.
 The [TypeScript API](https://ts.soulfiremc.com/) and [Python API](https://py.soulfiremc.com/) show their SDK version and source.
 The [HTTP schema](/docs/openapi) reports its own version and covers unary JSON operations.
-The connected backend's metadata and node palette describe its installed capabilities.
+The connected SoulFire server's metadata and node palette describe its installed capabilities.
 
 For SDK development, clone the same revision, run `bun install --frozen-lockfile`, and build from `sdk/typescript`.
 For a Python source install, use:

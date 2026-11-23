@@ -35,7 +35,7 @@ The schema also describes Basic compatibility with `username:api-jwt` as its enc
 Use an API-audience token. A WebDAV token has a different audience.
 `LoginService` is public. Other operations require an accepted API token and the relevant permissions.
 
-Use your own backend URL and HTTPS for remote requests.
+Use your own SoulFire server URL and HTTPS for remote requests.
 The schema's loopback server address is an example, not a hosted public SoulFire API.
 
 ## Read an operation
@@ -44,5 +44,5 @@ Each page shows its method, path, request body, response, and generated schemas.
 Check the required permission and failure conditions in the service description.
 A successful API request does not necessarily mean a Minecraft action completed.
 
-Compare your backend version with the [documentation baseline](/docs/sdk/compatibility) before copying a contract.
+Compare your SoulFire server version with the [documentation baseline](/docs/sdk/compatibility) before copying a contract.
 The page's copy-for-AI text includes request, response, authentication, and referenced schemas.

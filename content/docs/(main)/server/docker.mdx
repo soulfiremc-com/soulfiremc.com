@@ -47,11 +47,11 @@ docker compose logs --tail=100 app
 curl -f http://127.0.0.1:38765/health
 ```
 
-Wait for startup to complete. A successful health response checks backend availability, not Minecraft connectivity.
+Wait for startup to complete. A successful health response checks SoulFire server availability, not Minecraft connectivity.
 
 ## Generate access
 
-Attach to the backend console:
+Attach to the SoulFire server console:
 
 ```bash
 docker compose attach app

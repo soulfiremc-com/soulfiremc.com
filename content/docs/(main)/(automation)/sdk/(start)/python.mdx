@@ -56,17 +56,17 @@ The SDK supplies the local SoulFire API URL and token and creates or finds the i
 ```
 
 On Windows, run `.venv\Scripts\python first_bot.py`.
-The first run downloads a dedicated backend and Java into `.soulfire` under the working directory.
+The first run downloads a dedicated SoulFire server and Java into `.soulfire` under the working directory.
 Later runs reuse those files and the saved account.
 Expect `Hello from SoulFire` in Minecraft chat and a player snapshot in the terminal.
-The scope closes subscriptions and the managed backend when the program finishes.
+The scope closes subscriptions and the managed SoulFire server when the program finishes.
 
-Use `installation={"directory": "...", "version": "%SOULFIRE_SDK_VERSION%"}` to choose the data directory and backend version.
+Use `installation={"directory": "...", "version": "%SOULFIRE_SDK_VERSION%"}` to choose the data directory and SoulFire server version.
 Without a version, managed installation selects the latest release.
 
 ## Read the code
 
-`SoulFire.create_bot` installs a local backend and returns a ready, observed bot.
+`SoulFire.create_bot` installs a local SoulFire server and returns a ready, observed bot.
 It waits for the initial player snapshot, with a default 30-second deadline.
 Set `ready_timeout` in seconds to change that deadline.
 `bot.state` contains the latest synchronized state.
@@ -83,6 +83,6 @@ Constructing an effect alone does not send a request.
 
 ## Next step
 
-Use [named instances and bots](/docs/sdk/discover-bots) to reuse one backend for several accounts or connect to an existing server.
+Use [named instances and bots](/docs/sdk/discover-bots) to reuse one SoulFire server for several accounts or connect to an existing server.
 Try [replying to chat](/docs/sdk/recipes/reply-to-chat), or read the [runtime guide](/docs/sdk/python-runtime) for layers and streams.
 Read [task ownership](/docs/concepts/bot-lifecycle) before submitting durable work.

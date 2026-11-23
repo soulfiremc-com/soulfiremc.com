@@ -16,7 +16,7 @@ A SoulFire plugin is a Fabric Loom project that depends on SoulFire.
 | Plugin dependency | `com.soulfiremc:mod` |
 | Release metadata | `https://repo.codemc.org/repository/maven-public/com/soulfiremc/mod/maven-metadata.xml` |
 
-Pick the version that matches the backend you run.
+Pick the version that matches the SoulFire server you run.
 CodeMC can lag behind GitHub releases. If your version is missing, build that SoulFire release tag and publish it to your local Maven repository.
 Releases up to 2.9.0 also published `com.soulfiremc:shared`. Current releases keep those classes in `mod`, so do not add `shared`.
 
@@ -60,7 +60,7 @@ loom {
 
 `accessWidenerPath` points to your optional access widener.
 The template removes Loom run configurations because a plugin cannot start on its own.
-Test the plugin in a real SoulFire backend.
+Test the plugin in a real SoulFire server.
 
 ## File layout
 

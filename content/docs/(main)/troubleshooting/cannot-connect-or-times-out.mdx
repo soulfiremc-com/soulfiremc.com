@@ -57,10 +57,10 @@ If the timeouts disappear, see [Proxies](/docs/troubleshooting/proxies).
 
 ### Reduce load
 
-Test with fewer bots and a higher **Min Join Delay (ms)** and **Max Join Delay (ms)** in **Bot Settings**.
+Test with fewer bots and a higher **Min Join Delay (ms)** and **Max Join Delay (ms)** in **Bot settings**.
 If fewer bots connect, the server or network limits the join rate.
 
-### Review Bot Settings
+### Review bot settings
 
 Make sure that these values are correct:
 
@@ -83,7 +83,7 @@ Later messages often come from reconnect attempts.
 
 | Message contains | Likely cause | Next check |
 | --- | --- | --- |
-| `Connection refused` | Wrong address or port, or the Minecraft server is not running | Join the same address with a normal client, then check the target address in **Bot Settings** |
+| `Connection refused` | Wrong address or port, or the Minecraft server is not running | Join the same address with a normal client, then check the target address in **Bot settings** |
 | `timed out` | The server, proxy, or network stopped responding | Test without proxies and with fewer bots |
 | `Connection throttled` | The server limits how fast one address can join | Increase the join delay |
 | `Outdated client` or `Outdated server` | The protocol version does not match the server | Set the protocol version and see [Supported versions](/docs/reference/versions) |

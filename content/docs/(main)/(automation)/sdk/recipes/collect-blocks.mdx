@@ -99,5 +99,6 @@ const result = yield* bot.collect("#logs", { count: 16, searchRadius: 32 });
 result = yield from bot.collect("#logs", count=16, search_radius=32)
 ```
 
+A `#` prefix selects a block tag. Selectors without a namespace use `minecraft`, so `#logs` selects `#minecraft:logs`.
 `collect` waits for the result and cancels unfinished work on interruption.
 Use `tasks.collectBlocks` / `tasks.collect_blocks` when you need a durable task ID for progress or later reattachment.

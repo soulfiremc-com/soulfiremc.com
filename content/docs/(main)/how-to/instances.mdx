@@ -14,12 +14,12 @@ The API keeps its existing `instance` names. See [names and compatibility](/docs
 ## Create a project
 
 1. Open **Projects** and create a project with a descriptive name.
-2. Open the project and set its Minecraft target in **Bot Settings**.
+2. Open the project and set its Minecraft target in **Bot settings**.
 3. Add the accounts that this run needs.
 4. Review enabled plugins and scripts before starting bots.
 
 Check that the target and account count match your intended run.
-A project name does not select a different SoulFire backend.
+A project name does not select a different SoulFire server.
 
 ## Start only the bots you need
 
@@ -28,7 +28,7 @@ Use **Start all** only when you want every stopped account to run.
 Use a bot's context menu for its individual lifecycle actions.
 
 A request to run is not proof of a connection.
-The backend can be connecting, waiting to retry, or disconnected while the requested state remains running.
+The SoulFire server can be connecting, waiting to retry, or disconnected while the requested state remains running.
 Check the runtime state and disconnect reason as well as the requested state.
 
 ## Stop a run
@@ -46,7 +46,7 @@ Closing an SDK connection closes local subscriptions. It does not cancel all ser
 ## Remove a project
 
 Stop its bots and export any scripts you want to keep.
-Then delete the project from the project management page.
+Then open the project menu at the top of the sidebar and select **Delete project**.
 Deletion removes its saved data. A script export is not a full project backup.
 For recovery of server data, use [backup and restore](/docs/server/backup-and-restore).
 

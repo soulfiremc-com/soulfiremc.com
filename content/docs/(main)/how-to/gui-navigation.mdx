@@ -5,9 +5,7 @@ description: Find the main areas of the SoulFire interface and where common task
 icon: AppWindow
 ---
 
-![SoulFire demo overview showing the project sidebar, bot controls, and online count](/docs/images/instance-overview.jpg)
-
-The screenshot shows demo data in client 2.10.1, which uses **Instance**. The updated app uses **Project**.
+This page describes the sidebar in SoulFire 2.10.8.
 Labels and available pages can differ with your permissions and version. See [names and compatibility](/docs/reference/naming).
 
 ## Top-level navigation
@@ -33,9 +31,8 @@ These entries require admin access on the connected server.
 | **Logs** | Inspect server logs |
 | **Terminal** | Run server-scoped commands |
 | **Users** | Create users and manage permissions |
-| **Scripts** | Manage server-scoped scripts when your setup uses them |
-| **Server Settings** | Change server configuration |
-| **Dev Settings** | Adjust advanced developer options |
+| **Server settings** | Change server configuration |
+| **Dev settings** | Adjust advanced developer options |
 
 <a id="inside-an-instance" />
 
@@ -47,27 +44,29 @@ Most day-to-day work happens inside a project.
 
 | Area | Use it for |
 | --- | --- |
-| **Overview** | Start, restart, stop, and inspect individual bots or groups |
+| **Overview** | Start, restart, and stop bots, and see project status |
 | **Terminal** | Run commands against that project |
-| **Audit Log** | Review actions taken on the project |
+| **Bots** | Inspect individual bots and open Bot view |
+| **Accounts** | Import accounts and control how they are used |
+| **Proxies** | Import proxies and set proxy behavior |
+| **Audit log** | Review actions taken on the project |
 
 ### Settings
 
 | Area | Use it for |
 | --- | --- |
-| **Bot Settings** | Set server address, protocol version, join delays, and timeouts |
-| **Account Settings** | Import accounts and control how they are used |
-| **Proxy Settings** | Import proxies and set proxy behavior |
-| **AI Settings** | Configure AI-backed features |
-| **Project settings** | Edit the project name and icon |
+| **Bot settings** | Set server address, protocol version, join delays, and timeouts |
+| **AI settings** | Configure AI-backed features |
+| **Pathfinding settings** | Tune how bots find paths |
+| **Project settings** | Edit the project name and icon. Requires permission to change the project |
 
-### Automation and extensions
+### Extensions
 
 | Area | Use it for |
 | --- | --- |
-| **Plugins** | Enable or disable built-in plugins |
-| **Plugin Settings** | Configure enabled plugins, including **Auto reconnect** |
+| **Plugins** | Enable or disable plugins. Expand it to open the settings page of each enabled plugin, such as **Auto reconnect** |
 | **Scripts** | Build and manage visual automation for the project |
+| **SDK quickstart** | Copy connection details for a local SDK script or a coding agent |
 
 ## Control a bot in Bot view
 

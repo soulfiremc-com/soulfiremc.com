@@ -15,7 +15,7 @@ generate-token api
 
 The token works as the API key for the SoulFire API, MCP, and SDK clients.
 It uses the permissions of the current SoulFire user.
-For a remote client, enter the backend URL and that token.
+For a remote client, enter the SoulFire server URL and that token.
 Check the identity with `whoami` in the authenticated terminal.
 
 The API and WebDAV use separate token audiences.
@@ -36,10 +36,10 @@ Then generate a new token for each client that still needs access.
 
 Terminate HTTPS at a reverse proxy or tunnel in front of SoulFire.
 Use the [automated setup](/docs/server/automated-setup) or the HTTPS examples in [Docker deployment](/docs/server/docker).
-If you already manage a certificate, the backend can also serve HTTPS itself with the [`sf.grpc.tls.*` properties](/docs/server/java#other-listener-properties).
+If you already manage a certificate, the SoulFire server can also serve HTTPS itself with the [`sf.grpc.tls.*` properties](/docs/server/java#other-listener-properties).
 The configured hostname must match the certificate presented to the client.
 
-For a local connection, the default backend port is `38765`.
+For a local connection, the default SoulFire server port is `38765`.
 A dedicated server listens on all network interfaces (`0.0.0.0`) over plain HTTP by default.
 Set `-Dsf.grpc.host=127.0.0.1` when remote access is unnecessary, or when a reverse proxy on the same host provides HTTPS.
 The [Java guide](/docs/server/java) describes `sf.grpc.host` and `sf.grpc.port`.
@@ -62,5 +62,5 @@ For programmatic management, use the [administration guide](/docs/sdk/administra
 - A denied action with a valid login points to the user's permissions.
 - A successful API login does not grant Minecraft permissions to the bot.
 
-Check backend logs and the full error before creating another token.
+Check SoulFire server logs and the full error before creating another token.
 Use [account and authentication troubleshooting](/docs/troubleshooting/accounts-and-authentication) to distinguish API access from Minecraft login.

@@ -12,14 +12,14 @@ For a named volume or Java deployment, use the same stop-copy-restore sequence w
 
 Locate your Compose file, data directory, plugin files, and current image tag or digest.
 Choose a backup destination outside the deployment directory.
-Do not copy `soulfire.sqlite` while the backend runs, because the copy can be inconsistent.
+Do not copy `soulfire.sqlite` while the SoulFire server runs, because the copy can be inconsistent.
 Back up the complete data directory, not only the database.
 
 ## Create a stopped backup
 
 1. Pause scripts and cancel work that must not resume later.
 2. Stop all bots and check the Minecraft player list.
-3. Stop the backend cleanly from its deployment directory:
+3. Stop the SoulFire server cleanly from its deployment directory:
 
 ```bash
 docker compose stop
@@ -28,7 +28,7 @@ docker compose stop
 4. Copy the complete data directory to your backup destination.
 5. Copy the Compose file, environment file, installed plugins, and launch configuration.
 6. Record the SoulFire version, image digest, date, and file ownership.
-7. Start the backend with the original deployment:
+7. Start the SoulFire server with the original deployment:
 
 ```bash
 docker compose start
@@ -48,7 +48,7 @@ The backup contains account credentials and the token signing key. Protect it li
 3. Use the recorded software version and plugin set.
 4. Bind its listener to a different local port.
 5. Keep test bots stopped and prevent accidental access to the production target.
-6. Start the restored backend and connect an authenticated client.
+6. Start the restored SoulFire server and connect an authenticated client.
 
 Check users, projects, account counts, settings, and scripts.
 Run one disposable bot against a test Minecraft server to check the complete connection path.
@@ -56,12 +56,12 @@ Do not mark the backup usable until this recovery check succeeds.
 
 ## Restore the original deployment
 
-Stop the current backend before replacing its data.
+Stop the current SoulFire server before replacing its data.
 Preserve its current data in a separate directory first.
 Restore the verified backup and its matching software and plugins.
 Preserve file ownership, especially the container's UID/GID `1001` for writable data.
 
-Start the backend. Repeat the authenticated access and project checks.
+Start the SoulFire server. Repeat the authenticated access and project checks.
 Start one bot before resuming the remaining workload.
 
 ## Signing keys and rollback

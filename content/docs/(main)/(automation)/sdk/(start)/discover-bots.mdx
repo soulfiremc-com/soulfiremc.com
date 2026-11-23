@@ -9,9 +9,9 @@ Use names for normal setup. Instance names belong to the authenticated SoulFire 
 Repeated calls reuse saved accounts and preserve their configuration.
 Conflicting server addresses, usernames, or authentication methods fail explicitly.
 
-## Reuse one managed backend
+## Reuse one managed SoulFire server
 
-Install once when several bots share a backend.
+Install once when several bots share a SoulFire server.
 These complete programs create two ready bots in the same instance:
 
 ```ts title="named-bots.ts" doc-test lineNumbers
@@ -59,11 +59,11 @@ Both bots and the managed process stay inside the scope.
 Set `instanceName` / `instance_name` or `name` to choose other names.
 For multiple bots, use one installed client as shown above.
 
-## Connect to an existing backend
+## Connect to an existing SoulFire server
 
-Generate an API token with `generate-token api` in the backend console or authenticated terminal.
+Generate an API token with `generate-token api` in the SoulFire server console or authenticated terminal.
 See [server access](/docs/server/access).
-Set the backend address and token in the terminal that will run your program:
+Set the SoulFire server address and token in the terminal that will run your program:
 
 ```bash
 export SOULFIRE_URL="http://127.0.0.1:38765"
@@ -71,7 +71,7 @@ export SOULFIRE_TOKEN="YOUR_API_TOKEN"
 ```
 
 `SOULFIRE_URL` is the SoulFire API address. The `server` argument is the Minecraft address.
-Use HTTPS for a remote backend. On PowerShell, use `$env:SOULFIRE_URL = "..."` and `$env:SOULFIRE_TOKEN = "..."`.
+Use HTTPS for a remote SoulFire server. On PowerShell, use `$env:SOULFIRE_URL = "..."` and `$env:SOULFIRE_TOKEN = "..."`.
 
 The TypeScript client provides `createBot` after the connection handshake:
 
@@ -96,7 +96,7 @@ await Effect.runPromise(program);
 ```
 
 In Python, provision names through the connected instance.
-`SoulFire.create_bot` is the managed-installation shortcut, so use `get_or_create_bot` for an existing backend:
+`SoulFire.create_bot` is the managed-installation shortcut, so use `get_or_create_bot` for an existing SoulFire server:
 
 ```python title="existing_server.py" doc-test lineNumbers
 import asyncio

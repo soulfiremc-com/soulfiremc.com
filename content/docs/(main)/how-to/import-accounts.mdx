@@ -16,25 +16,27 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 <Callout type="info">
   Need more test accounts (alts)? See [Get Accounts](/get-accounts).
-  If you use Ravealts, SoulFire can import purchases directly from the account settings dialog.
+  If you use Ravealts, SoulFire can import purchases directly from the **Add accounts** menu.
 </Callout>
 
 ## Choose the right account type
 
+Select **Add accounts** on the **Accounts** page. The menu groups the types under **Java Edition** and **Bedrock Edition**.
+
 | Type | Use it when |
 | --- | --- |
-| **Microsoft Java Credentials** | You have a normal Java account with email and password |
-| **Microsoft Java Device Code** | You want to sign in through a browser instead of storing credentials |
-| **Microsoft Bedrock Credentials** | You want to connect to Bedrock servers |
-| **Microsoft Bedrock Device Code** | You want browser-based Bedrock sign-in |
-| **Microsoft Java Refresh Token** | You already have refresh tokens and want long-lived imports |
-| **Microsoft Java Cookies** | You want to import a browser login session |
-| **Microsoft Java Access Token** | You only have a short-lived access token |
+| **Microsoft credentials** | You have a normal account with email and password |
+| **Microsoft device code** | You want to sign in through a browser instead of storing credentials |
+| **Microsoft refresh token** (Java only) | You already have refresh tokens and want long-lived imports |
+| **Microsoft cookies** (Java only) | You want to import a browser login session |
+| **Microsoft access token** (Java only) | You only have a short-lived access token |
 | **Offline** | The target server accepts offline-mode accounts |
+
+Choose the type under **Bedrock Edition** to connect to Bedrock servers.
 
 ## Generate offline accounts
 
-Open **Account Settings** and use the offline account generation dialog.
+Open **Accounts** and select **Generate accounts**.
 Set the amount and a name format such as `TestBot_%d`.
 The client replaces `%d` with a number, starting at `1`.
 Review the duplicate-handling mode before generating accounts.
@@ -46,15 +48,15 @@ If you press **Start** with an empty list, the client can open this dialog for y
 
 <Steps>
   <Step>
-    ### Open the account settings
+    ### Open the Accounts page
 
-    Open a project and go to **Account Settings**.
+    Open a project and go to **Accounts**.
   </Step>
 
   <Step>
     ### Select the account type
 
-    Choose the type that matches the data you want to import.
+    Select **Add accounts**, then choose the type that matches the data you want to import.
   </Step>
 
   <Step>
