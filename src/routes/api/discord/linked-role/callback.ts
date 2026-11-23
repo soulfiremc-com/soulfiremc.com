@@ -33,8 +33,13 @@ export const Route = createFileRoute("/api/discord/linked-role/callback")({
           getCookie("discord_oauth_state"),
         );
         deleteCookie("discord_oauth_state", { path: "/" });
+        // Response.redirect() has immutable headers, and TanStack Start must
+        // append the cookie deletion to this response.
         const showResult = (status: LinkedRoleStatus) =>
-          Response.redirect(getLinkedRoleResultUrl(status, request.url));
+          new Response(null, {
+            status: 302,
+            headers: { Location: getLinkedRoleResultUrl(status, request.url) },
+          });
 
         if ("status" in check) return showResult(check.status);
         const { code } = check;

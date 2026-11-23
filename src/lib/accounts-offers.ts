@@ -1,5 +1,6 @@
 import { Effect, Schema } from "effect";
 import { requestJson, type RequestOptions } from "@/lib/backend-http";
+import { getCachedValue } from "@/lib/edge-cache";
 import { runWebsiteEffect } from "@/lib/effect-runtime";
 import type { AggregateOffer, Offer } from "schema-dts";
 import type { Category, Shop } from "@/lib/accounts-data";
@@ -8,6 +9,15 @@ const RAVEALTS_STOCK_URL = "https://api.ravealts.com/alts/stock";
 const LOCALTS_PRODUCTS_URL = "https://localts.store/v1/products";
 const OUT_OF_STOCK_THRESHOLD = 0;
 const LIVE_SHOP_REQUEST_TIMEOUT_MS = 5000;
+const LIVE_STOCK_CACHE_KEY_BASE =
+  "https://soulfiremc.com/__internal/cache/providers/v1/stock";
+const LIVE_STOCK_CACHE_TTL_SECONDS = 60;
+const LIVE_STOCK_NEGATIVE_CACHE_TTL_SECONDS = 30;
+
+const liveStockSchema = Schema.Struct({
+  "nfa-accounts": Schema.optional(Schema.Finite),
+  "mfa-accounts": Schema.optional(Schema.Finite),
+});
 
 type LiveStockByCategory = Partial<Record<Category, number>>;
 
@@ -18,26 +28,35 @@ export type LiveShopData = {
 export const getLiveShopDataEffect = Effect.fn("Providers.liveStock")(
   function* (shop: Shop, options?: RequestOptions) {
     if (shop.slug !== "ravealts" && shop.slug !== "localts") return {};
-    return yield* requestJson(
-      shop.slug === "ravealts" ? RAVEALTS_STOCK_URL : LOCALTS_PRODUCTS_URL,
-      Schema.Unknown,
-      {
-        ...options,
-        timeoutMs: options?.timeoutMs ?? LIVE_SHOP_REQUEST_TIMEOUT_MS,
-        retries: 0,
-        init: { headers: { Accept: "application/json" } },
-      },
-    ).pipe(
-      Effect.map((payload): LiveShopData => {
-        const stockByCategory =
-          shop.slug === "ravealts"
-            ? parseRavealtsStockByCategory(payload)
-            : parseLocaltsStockByCategory(payload);
-        return stockByCategory ? { stockByCategory } : {};
-      }),
-      // Missing live stock remains unknown, rather than implying availability.
-      Effect.orElseSucceed((): LiveShopData => ({})),
-    );
+    const slug = shop.slug;
+    // Cache stock at the edge so public page loads cannot hammer the shops.
+    const stockByCategory = yield* getCachedValue({
+      cacheKey: `${LIVE_STOCK_CACHE_KEY_BASE}/${slug}`,
+      load: requestJson(
+        slug === "ravealts" ? RAVEALTS_STOCK_URL : LOCALTS_PRODUCTS_URL,
+        Schema.Unknown,
+        {
+          ...options,
+          timeoutMs: options?.timeoutMs ?? LIVE_SHOP_REQUEST_TIMEOUT_MS,
+          retries: 0,
+          init: { headers: { Accept: "application/json" } },
+        },
+      ).pipe(
+        Effect.map(
+          (payload) =>
+            (slug === "ravealts"
+              ? parseRavealtsStockByCategory(payload)
+              : parseLocaltsStockByCategory(payload)) ?? null,
+        ),
+        // Missing live stock remains unknown, rather than implying availability.
+        Effect.orElseSucceed(() => null),
+      ),
+      pendingLoads: new Map(),
+      successTtlSeconds: LIVE_STOCK_CACHE_TTL_SECONDS,
+      negativeTtlSeconds: LIVE_STOCK_NEGATIVE_CACHE_TTL_SECONDS,
+      schema: liveStockSchema,
+    });
+    return stockByCategory ? { stockByCategory } : {};
   },
 );
 
@@ -192,7 +211,8 @@ function parseRavealtsStockByCategory(
   }
 
   const nfaStock = pickByTokens(flatMap, ["nfa", "token", "cookie"]);
-  const mfaStock = pickByTokens(flatMap, ["mfa", "full", "fa"]);
+  // Bare "fa" would also match "nfa" keys and report NFA stock as MFA.
+  const mfaStock = pickByTokens(flatMap, ["mfa", "full"]);
 
   if (nfaStock === undefined && mfaStock === undefined) {
     return undefined;

@@ -79,6 +79,13 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: bunx cf deploy --prebuilt
 
+      - name: Apply migrations to the preview database
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          CF_SEND_TELEMETRY: "false"
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: bun run db:migrate:preview
+
       - name: Deploy preview to Cloudflare
         id: preview
         if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository

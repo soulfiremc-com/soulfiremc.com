@@ -1,12 +1,8 @@
-import { Config, ConfigProvider, Deferred, Effect, Schema } from "effect";
+import type { Deferred } from "effect";
+import { Config, ConfigProvider, Effect, Schema } from "effect";
 import { AsyncLocalStorage } from "node:async_hooks";
 import { requestJson, requestVoid } from "@/lib/backend-http";
-
-// oxlint-disable-next-line unicorn/throw-new-error -- Schema.TaggedError is a class factory.
-class DiscordCacheError extends Schema.TaggedError<
-  DiscordCacheError,
-  { readonly brand: unique symbol }
->()("DiscordCacheError", { cause: Schema.Unknown }) {}
+import { getCachedValue } from "@/lib/edge-cache";
 
 // oxlint-disable-next-line unicorn/throw-new-error -- Schema.TaggedError is a class factory.
 class DiscordRequestError extends Schema.TaggedError<
@@ -151,134 +147,8 @@ function normalizeInviteUrl(url: string): string | null {
   }
 }
 
-function getCloudflareCache(): Cache | null {
-  if (typeof caches === "undefined") return null;
-  const cloudflareCaches = caches as CacheStorage & {
-    readonly default?: Cache;
-  };
-  return cloudflareCaches.default ?? null;
-}
-
 function getDiscordCacheKey(namespace: string, key: string): string {
   return `${DISCORD_CACHE_KEY_BASE}/${namespace}/${encodeURIComponent(key)}`;
-}
-
-function readCachedValue<T>(
-  cache: Cache,
-  cacheKey: string,
-  schema: Schema.Decoder<T>,
-) {
-  return Effect.gen(function* () {
-    const response = yield* Effect.tryPromise({
-      try: () => cache.match(cacheKey),
-      catch: (cause) => DiscordCacheError.make({ cause }),
-    });
-    if (!response) return { hit: false } as const;
-
-    const payload: unknown = yield* Effect.tryPromise({
-      try: () => response.json(),
-      catch: (cause) => DiscordCacheError.make({ cause }),
-    });
-    const entry = yield* Schema.decodeUnknownEffect(
-      Schema.Struct({ value: Schema.NullOr(schema) }),
-    )(payload);
-    return { hit: true, value: entry.value } as const;
-  }).pipe(
-    Effect.catch(() =>
-      Effect.tryPromise({
-        try: () => cache.delete(cacheKey),
-        catch: (cause) => DiscordCacheError.make({ cause }),
-      }).pipe(Effect.ignore, Effect.as({ hit: false } as const)),
-    ),
-  );
-}
-
-function writeCachedValue(
-  cache: Cache,
-  cacheKey: string,
-  value: unknown,
-  ttlSeconds: number,
-) {
-  return Effect.tryPromise({
-    try: () =>
-      cache.put(
-        cacheKey,
-        Response.json(
-          { value },
-          {
-            headers: {
-              "Cache-Control": `public, max-age=${ttlSeconds}`,
-              "Content-Type": "application/json; charset=utf-8",
-            },
-          },
-        ),
-      ),
-    catch: (cause) => DiscordCacheError.make({ cause }),
-  }).pipe(Effect.ignore);
-}
-
-// Complete every waiter and remove the slot even if a lookup fails or is interrupted.
-function coalesceLoad<T>(
-  pendingLoads: Map<string, Deferred.Deferred<T | null>>,
-  key: string,
-  load: Effect.Effect<T | null>,
-) {
-  return Effect.suspend(() => {
-    const pendingLoad = pendingLoads.get(key);
-    if (pendingLoad) return Deferred.await(pendingLoad);
-
-    const nextLoad = Deferred.makeUnsafe<T | null>();
-    pendingLoads.set(key, nextLoad);
-    return load.pipe(
-      Effect.onExit((exit) => Deferred.done(nextLoad, exit)),
-      Effect.ensuring(
-        Effect.sync(() => {
-          pendingLoads.delete(key);
-        }),
-      ),
-    );
-  });
-}
-
-function getCachedValue<T>({
-  cacheKey,
-  load,
-  pendingLoads,
-  successTtlSeconds,
-  schema,
-}: {
-  cacheKey: string;
-  load: Effect.Effect<T | null>;
-  pendingLoads: Map<string, Deferred.Deferred<T | null>>;
-  successTtlSeconds: number;
-  schema: Schema.Decoder<T>;
-}) {
-  return Effect.gen(function* () {
-    const cache = getCloudflareCache();
-    if (cache) {
-      const cachedValue = yield* readCachedValue(cache, cacheKey, schema);
-      if (cachedValue.hit) return cachedValue.value;
-    }
-
-    return yield* coalesceLoad(
-      pendingLoads,
-      cacheKey,
-      Effect.gen(function* () {
-        const value = yield* load;
-        if (cache) {
-          yield* writeCachedValue(
-            cache,
-            cacheKey,
-            value,
-            value === null
-              ? DISCORD_NEGATIVE_CACHE_TTL_SECONDS
-              : successTtlSeconds,
-          );
-        }
-        return value;
-      }),
-    );
-  });
 }
 
 function followInviteRedirects(initialUrl: string, maxRedirects: number) {
@@ -332,6 +202,7 @@ function resolveDiscordInviteCodeEffect(
       "invite-resolution",
       `${maxRedirects}:${initialUrl}`,
     ),
+    negativeTtlSeconds: DISCORD_NEGATIVE_CACHE_TTL_SECONDS,
     load: followInviteRedirects(initialUrl, maxRedirects),
     pendingLoads:
       lookupStorage.getStore()?.resolutions ??
@@ -360,6 +231,7 @@ export const fetchDiscordInviteEffect = Effect.fn("fetchDiscordInvite")(
 
     return yield* getCachedValue({
       cacheKey: getDiscordCacheKey("invite", inviteCode),
+      negativeTtlSeconds: DISCORD_NEGATIVE_CACHE_TTL_SECONDS,
       load: Effect.gen(function* () {
         const token = yield* Config.String("DISCORD_BOT_TOKEN").pipe(
           Config.withDefault(""),

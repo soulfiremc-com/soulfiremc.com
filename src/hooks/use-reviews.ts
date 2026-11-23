@@ -194,7 +194,6 @@ export function useReviews(
       action: "upsert",
       slug,
       ...nextReview,
-      needsTurnstile: !reviewsData?.userReviews[slug],
     });
 
   const deleteReview = (slug: string) =>

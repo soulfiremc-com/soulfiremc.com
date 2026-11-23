@@ -7,6 +7,7 @@ import {
   type ReviewSummary,
   type UserReviewRecord,
 } from "@/lib/review-core";
+import { hasAdminRole } from "@/lib/auth/roles";
 import type { PendingReviewCommentRecord } from "@/lib/reviews";
 import type { TurnstileVerificationError } from "@/lib/turnstile";
 
@@ -50,6 +51,8 @@ export class ReviewSession extends Context.Service<
   ReviewSession,
   {
     readonly currentUser: Effect.Effect<ReviewUser | null, ReviewSessionError>;
+    /** Reads the session from the database, skipping the cookie cache. */
+    readonly freshUser: Effect.Effect<ReviewUser | null, ReviewSessionError>;
   }
 >()("soulfiremc.com/lib/review-workflows/ReviewSession") {}
 
@@ -83,10 +86,12 @@ export type ReviewStoreService = {
     PendingReviewCommentRecord[],
     ReviewStoreError
   >;
+  /** Returns false when the comment is no longer pending with this body. */
   moderate(
     id: string,
     status: "approved" | "rejected",
-  ): Effect.Effect<void, ReviewStoreError>;
+    body: string,
+  ): Effect.Effect<boolean, ReviewStoreError>;
   delete(
     userId: string,
     itemType: ItemType,
@@ -136,7 +141,7 @@ export type GetPendingReviewCommentsResult =
   | { ok: false; error: "unauthorized" };
 export type ModerateReviewCommentResult =
   | { ok: true }
-  | { ok: false; error: "unauthorized" };
+  | { ok: false; error: "unauthorized" | "stale" };
 
 const requireUser = Effect.gen(function* () {
   const { currentUser } = yield* ReviewSession;
@@ -144,16 +149,17 @@ const requireUser = Effect.gen(function* () {
   if (!user) return yield* ReviewUnauthorizedError.make();
   return user;
 });
-const requireAdmin = requireUser.pipe(
-  Effect.flatMap((user) => {
-    const roles = user.role
-      ?.split(",")
-      .map((role) => role.trim().toLowerCase());
-    return roles?.includes("admin")
-      ? Effect.succeed(user)
-      : Effect.fail(ReviewUnauthorizedError.make());
-  }),
-);
+
+// Admin checks read the session from the database, so a removed role or a ban
+// takes effect at once instead of after the cookie cache expires.
+const requireAdmin = Effect.gen(function* () {
+  const { freshUser } = yield* ReviewSession;
+  const user = yield* freshUser;
+  if (!user || !hasAdminRole(user.role)) {
+    return yield* ReviewUnauthorizedError.make();
+  }
+  return user;
+});
 
 function emptyReviews(
   slugs: string[],
@@ -231,6 +237,10 @@ export const submitReview = Effect.fn("submitReview")(function* (
 ) {
   return yield* Effect.gen(function* () {
     const user = yield* requireUser;
+    // Every write needs a fresh challenge, so edits cannot flood the
+    // database or the moderation queue.
+    const { verify } = yield* ReviewVerification;
+    yield* verify;
     const store = yield* ReviewStore;
     const existing = yield* store.find(user.id, input.itemType, input.itemSlug);
     const body = input.body?.trim().slice(0, 2000) || null;
@@ -248,8 +258,6 @@ export const submitReview = Effect.fn("submitReview")(function* (
         commentStatus,
       });
     } else {
-      const { verify } = yield* ReviewVerification;
-      yield* verify;
       yield* store.create({
         itemType: input.itemType,
         itemSlug: input.itemSlug,
@@ -287,12 +295,20 @@ export const getPendingComments = Effect.gen(function* () {
 export const moderateReview = Effect.fn("moderateReview")(function* (input: {
   reviewId: string;
   commentStatus: "approved" | "rejected";
+  /** The comment text the moderator saw. */
+  body: string;
 }) {
   return yield* Effect.gen(function* () {
     yield* requireAdmin;
     const store = yield* ReviewStore;
-    yield* store.moderate(input.reviewId, input.commentStatus);
-    return { ok: true } as const;
+    const moderated = yield* store.moderate(
+      input.reviewId,
+      input.commentStatus,
+      input.body,
+    );
+    return moderated
+      ? ({ ok: true } as const)
+      : ({ ok: false, error: "stale" } as const);
   }).pipe(
     Effect.catchTag("ReviewUnauthorizedError", () =>
       Effect.succeed({ ok: false, error: "unauthorized" } as const),

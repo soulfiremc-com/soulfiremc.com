@@ -51,6 +51,11 @@ class ModerationAccessError extends Schema.TaggedError<
   ModerationAccessError,
   { readonly brand: unique symbol }
 >()("ModerationAccessError", {}) {}
+// oxlint-disable-next-line unicorn/throw-new-error -- Schema.TaggedError is a class factory.
+class ModerationStaleError extends Schema.TaggedError<
+  ModerationStaleError,
+  { readonly brand: unique symbol }
+>()("ModerationStaleError", {}) {}
 
 function getInitial(name: string) {
   return name.trim().charAt(0).toUpperCase() || "?";
@@ -151,21 +156,34 @@ export function ReviewModeration() {
   });
   const moderation = useMutation({
     mutationFn: async ({
+      body,
       commentStatus,
       reviewId,
     }: {
+      body: string;
       commentStatus: "approved" | "rejected";
       reviewId: string;
     }) => {
       const result = await moderateReviewCommentServerFn({
-        data: { commentStatus, reviewId },
+        data: { body, commentStatus, reviewId },
       });
 
       if (!result.ok) {
-        throw ModerationAccessError.make();
+        throw result.error === "stale"
+          ? ModerationStaleError.make()
+          : ModerationAccessError.make();
       }
     },
     onError: (error) => {
+      if (error instanceof ModerationStaleError) {
+        toast.error("This comment changed", {
+          description: "The author edited it. Review the new text.",
+        });
+        void queryClient.invalidateQueries({
+          queryKey: pendingReviewCommentsQueryKey,
+        });
+        return;
+      }
       // Request and validation errors are not useful to show as raw text.
       toast.error("Could not moderate comment", {
         description:
@@ -207,16 +225,19 @@ export function ReviewModeration() {
         return;
       }
 
-      const reviewId = new FormData(event.currentTarget).get("reviewId");
+      const formData = new FormData(event.currentTarget);
+      const reviewId = formData.get("reviewId");
+      const body = formData.get("body");
       const commentStatus = submitter.value;
       if (
         typeof reviewId !== "string" ||
+        typeof body !== "string" ||
         (commentStatus !== "approved" && commentStatus !== "rejected")
       ) {
         return;
       }
 
-      moderateReview({ reviewId, commentStatus });
+      moderateReview({ body, commentStatus, reviewId });
     },
     [moderateReview],
   );
@@ -341,6 +362,7 @@ export function ReviewModeration() {
                 <CardFooter>
                   <form className="flex gap-2" onSubmit={moderateComment}>
                     <input type="hidden" name="reviewId" value={comment.id} />
+                    <input type="hidden" name="body" value={comment.body} />
                     <Button
                       type="submit"
                       name="commentStatus"

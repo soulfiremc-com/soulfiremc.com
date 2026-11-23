@@ -1,7 +1,10 @@
 import { createServerFn } from "@tanstack/react-start";
 import { getRequest, getRequestHost } from "@tanstack/react-start/server";
 import { Effect, Schema } from "effect";
+import { getShopBySlug } from "@/lib/accounts-data";
 import { runWebsiteEffect } from "@/lib/effect-runtime";
+import { getProviderBySlug } from "@/lib/proxies-data";
+import type { ItemType } from "@/lib/review-core";
 import { auth } from "@/lib/auth";
 import { reviewStore } from "@/lib/review-store";
 import {
@@ -54,7 +57,9 @@ const getReviewsInputSchema = Schema.Struct({
 
 const submitReviewInputSchema = Schema.Struct({
   itemType: itemTypeSchema,
-  itemSlug: Schema.String.check(Schema.isMinLength(1)),
+  itemSlug: Schema.String.check(Schema.isMinLength(1)).check(
+    Schema.isMaxLength(100),
+  ),
   rating: Schema.Finite.check(Schema.isInt())
     .check(Schema.isGreaterThanOrEqualTo(1))
     .check(Schema.isLessThanOrEqualTo(5)),
@@ -74,7 +79,40 @@ const deleteReviewInputSchema = Schema.Struct({
 const moderateReviewCommentInputSchema = Schema.Struct({
   reviewId: Schema.String.check(Schema.isUUID()),
   commentStatus: Schema.Literals(["approved", "rejected"]),
+  body: Schema.String.check(Schema.isMaxLength(2000)),
 });
+
+/** Only listed shops and providers accept reviews. */
+function isReviewableItem(itemType: ItemType, itemSlug: string) {
+  switch (itemType) {
+    case "account": {
+      return getShopBySlug(itemSlug) !== undefined;
+    }
+    case "proxy": {
+      return getProviderBySlug(itemSlug) !== undefined;
+    }
+    case "resource": {
+      return false;
+    }
+    default: {
+      return itemType satisfies never;
+    }
+  }
+}
+
+function readSessionUser(request: Request, disableCookieCache: boolean) {
+  return Effect.tryPromise({
+    try: () =>
+      auth.api.getSession({
+        headers: request.headers,
+        query: { disableCookieCache },
+      }),
+    catch: (cause) => ReviewSessionError.make({ operation: "session", cause }),
+  }).pipe(
+    Effect.uninterruptible,
+    Effect.map((session) => session?.user ?? null),
+  );
+}
 
 function runReviewWorkflow<A, E>(
   program: Effect.Effect<A, E, ReviewSession | ReviewStore>,
@@ -84,14 +122,8 @@ function runReviewWorkflow<A, E>(
     program.pipe(
       Effect.provideService(ReviewStore, reviewStore),
       Effect.provideService(ReviewSession, {
-        currentUser: Effect.tryPromise({
-          try: () => auth.api.getSession({ headers: request.headers }),
-          catch: (cause) =>
-            ReviewSessionError.make({ operation: "session", cause }),
-        }).pipe(
-          Effect.uninterruptible,
-          Effect.map((session) => session?.user ?? null),
-        ),
+        currentUser: readSessionUser(request, false),
+        freshUser: readSessionUser(request, true),
       }),
     ),
     request.signal,
@@ -107,6 +139,9 @@ export const getReviewsServerFn = createServerFn({ method: "GET" })
 export const submitReviewServerFn = createServerFn({ method: "POST" })
   .validator(Schema.toStandardSchemaV1(submitReviewInputSchema))
   .handler(({ data }): Promise<SubmitReviewResult> => {
+    if (!isReviewableItem(data.itemType, data.itemSlug)) {
+      throw new Error("This item cannot be reviewed.");
+    }
     const request = getRequest();
     return runReviewWorkflow(
       submitReview(data).pipe(

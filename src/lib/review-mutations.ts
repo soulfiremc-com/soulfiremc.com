@@ -23,7 +23,6 @@ export type ReviewMutationVariables = { slug: string } & (
       action: "upsert";
       rating: number;
       body?: string | null;
-      needsTurnstile: boolean;
     }
 );
 
@@ -83,16 +82,14 @@ export function reviewMutationOptions({
       return { error: result.ok ? null : result.error };
     }
 
-    const turnstileToken = variables.needsTurnstile
-      ? yield* Effect.tryPromise({
-          try: executeTurnstile,
-          catch: (cause) =>
-            ReviewChallengeError.make({
-              message: "Cloudflare Turnstile could not verify this review.",
-              cause,
-            }),
-        })
-      : null;
+    const turnstileToken = yield* Effect.tryPromise({
+      try: executeTurnstile,
+      catch: (cause) =>
+        ReviewChallengeError.make({
+          message: "Cloudflare Turnstile could not verify this review.",
+          cause,
+        }),
+    });
     const result = yield* request("submit", () =>
       submitReview({
         data: {

@@ -24,9 +24,14 @@ export const Route = createFileRoute("/api/discord/linked-role/")({
           state,
         });
 
-        return Response.redirect(
-          `https://discord.com/oauth2/authorize?${params}`,
-        );
+        // Response.redirect() has immutable headers, and TanStack Start must
+        // append the state cookie to this response.
+        return new Response(null, {
+          status: 302,
+          headers: {
+            Location: `https://discord.com/oauth2/authorize?${params}`,
+          },
+        });
       },
     },
   },

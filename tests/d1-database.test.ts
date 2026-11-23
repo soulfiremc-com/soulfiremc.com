@@ -120,6 +120,7 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
             Effect.provideService(ReviewStore, reviewStore),
             Effect.provideService(ReviewSession, {
               currentUser: Effect.succeed({ id: userId, role: "admin" }),
+              freshUser: Effect.succeed({ id: userId, role: "admin" }),
             }),
             Effect.provideService(ReviewVerification, {
               verify: Effect.void,
@@ -154,8 +155,25 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
           const entry = result.writtenReviews?.entries[0];
           assert.ok(entry);
           assert.equal(entry.body, null);
-          await run(
-            moderateReview({ reviewId: entry.id, commentStatus: "approved" }),
+          assert.deepEqual(
+            await run(
+              moderateReview({
+                reviewId: entry.id,
+                commentStatus: "approved",
+                body: "Edited before moderation",
+              }),
+            ),
+            { ok: false, error: "stale" },
+          );
+          assert.deepEqual(
+            await run(
+              moderateReview({
+                reviewId: entry.id,
+                commentStatus: "approved",
+                body: input.body,
+              }),
+            ),
+            { ok: true },
           );
           await run(submitReview({ ...input, rating: 4 }));
           result = await run(
@@ -291,7 +309,12 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
           assert.ok(entry);
           assert.equal(entry.body, null);
           assert.ok(Number.isFinite(Date.parse(entry.createdAt)));
-          await runQuery(updateReviewCommentStatus(entry.id, "approved"));
+          assert.equal(
+            await runQuery(
+              updateReviewCommentStatus(entry.id, "approved", firstSlug),
+            ),
+            true,
+          );
           assert.equal(
             defined(
               (await runQuery(getWrittenReviews("account", firstSlug)))[0],

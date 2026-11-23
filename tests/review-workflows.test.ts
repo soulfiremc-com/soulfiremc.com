@@ -25,11 +25,16 @@ function dependencies({
   user = { id: "user-1", role: "user" },
   verify = Effect.void,
   currentUser = Effect.succeed(user),
+  freshUser = currentUser,
 }: {
   store?: Partial<ReviewStoreService>;
   user?: { id: string; role: string } | null;
   verify?: Effect.Effect<void, TurnstileVerificationError>;
   currentUser?: Effect.Effect<
+    { id: string; role?: string | null } | null,
+    ReviewSessionError
+  >;
+  freshUser?: Effect.Effect<
     { id: string; role?: string | null } | null,
     ReviewSessionError
   >;
@@ -58,6 +63,7 @@ function dependencies({
       Effect.provideService(ReviewStore, repository),
       Effect.provideService(ReviewSession, {
         currentUser,
+        freshUser,
       }),
       Effect.provideService(ReviewVerification, { verify }),
       Effect.runPromise,
@@ -79,13 +85,15 @@ const readInput: GetReviewsInput = {
 
 await test("review writes and moderation require the correct session before accessing storage", async () => {
   const anonymous = dependencies({ user: null });
-  for (const program of [
-    submitReview(input),
-    deleteReview(input),
-    getPendingComments,
-    moderateReview({ reviewId: "id", commentStatus: "approved" }),
+  for (const result of [
+    await anonymous(submitReview(input)),
+    await anonymous(deleteReview(input)),
+    await anonymous(getPendingComments),
+    await anonymous(
+      moderateReview({ reviewId: "id", commentStatus: "approved", body: "x" }),
+    ),
   ]) {
-    assert.deepEqual(await anonymous(program), {
+    assert.deepEqual(result, {
       ok: false,
       error: "unauthorized",
     });
@@ -96,7 +104,9 @@ await test("review writes and moderation require the correct session before acce
     error: "unauthorized",
   });
   assert.deepEqual(
-    await member(moderateReview({ reviewId: "id", commentStatus: "rejected" })),
+    await member(
+      moderateReview({ reviewId: "id", commentStatus: "rejected", body: "x" }),
+    ),
     { ok: false, error: "unauthorized" },
   );
 });
@@ -133,7 +143,7 @@ await test("new reviews verify before inserting and normalize comments for moder
   assert.equal(defined(written[2]).body?.length, 2000);
 });
 
-await test("review edits skip verification and retain approval only for unchanged approved comments", async () => {
+await test("review edits verify again and retain approval only for unchanged approved comments", async () => {
   const cases: [ExistingReview, string | null, string][] = [
     [
       { id: "id", body: "Helpful service", commentStatus: "approved" },
@@ -159,6 +169,7 @@ await test("review edits skip verification and retain approval only for unchange
   ];
   for (const [existing, body, commentStatus] of cases) {
     let update: unknown;
+    let verified = 0;
     const run = dependencies({
       store: {
         find: () => Effect.succeed(existing),
@@ -167,9 +178,12 @@ await test("review edits skip verification and retain approval only for unchange
             update = { id, ...value };
           }),
       },
-      verify: Effect.die(new Error("Existing reviews must not verify again")),
+      verify: Effect.sync(() => {
+        verified++;
+      }),
     });
     assert.deepEqual(await run(submitReview({ ...input, body })), { ok: true });
+    assert.equal(verified, 1);
     assert.deepEqual(update, {
       id: "id",
       rating: 5,
@@ -181,9 +195,6 @@ await test("review edits skip verification and retain approval only for unchange
 
 await test("verification failures keep their public result and database failures are never retried", async () => {
   const rejected = dependencies({
-    store: {
-      find: () => Effect.succeed<ExistingReview | undefined>(undefined),
-    },
     verify: Effect.fail(
       TurnstileVerificationError.make({ errorCodes: ["action-mismatch"] }),
     ),
@@ -314,9 +325,10 @@ await test("moderation checks admin roles and deletion scopes the write to the s
     user: { id: "admin-1", role: "user, ADMIN " },
     store: {
       pendingComments: Effect.succeed([]),
-      moderate: (id, status) =>
+      moderate: (id, status, body) =>
         Effect.sync(() => {
-          writes.push({ id, status });
+          writes.push({ id, status, body });
+          return true;
         }),
       delete: (userId, itemType, itemSlug) =>
         Effect.sync(() => {
@@ -327,13 +339,55 @@ await test("moderation checks admin roles and deletion scopes the write to the s
   assert.deepEqual(await run(getPendingComments), { ok: true, comments: [] });
   assert.deepEqual(
     await run(
-      moderateReview({ reviewId: "review-id", commentStatus: "rejected" }),
+      moderateReview({
+        reviewId: "review-id",
+        commentStatus: "rejected",
+        body: "Seen text",
+      }),
     ),
     { ok: true },
   );
   assert.deepEqual(await run(deleteReview(input)), { ok: true });
   assert.deepEqual(writes, [
-    { id: "review-id", status: "rejected" },
+    { id: "review-id", status: "rejected", body: "Seen text" },
     { userId: "admin-1", itemType: "account", itemSlug: "shop" },
   ]);
+});
+
+await test("admin checks use the uncached session and stale moderation is reported", async () => {
+  const demoted = dependencies({
+    currentUser: Effect.succeed({ id: "admin-1", role: "admin" }),
+    freshUser: Effect.succeed({ id: "admin-1", role: "user" }),
+  });
+  assert.deepEqual(await demoted(getPendingComments), {
+    ok: false,
+    error: "unauthorized",
+  });
+  const stale = dependencies({
+    user: { id: "admin-1", role: "admin" },
+    store: { moderate: () => Effect.succeed(false) },
+  });
+  assert.deepEqual(
+    await stale(
+      moderateReview({
+        reviewId: "review-id",
+        commentStatus: "approved",
+        body: "Old text",
+      }),
+    ),
+    { ok: false, error: "stale" },
+  );
+});
+
+await test("review submissions verify before reading or writing storage", async () => {
+  const run = dependencies({
+    verify: Effect.fail(
+      TurnstileVerificationError.make({ errorCodes: ["timeout-or-duplicate"] }),
+    ),
+  });
+  assert.deepEqual(await run(submitReview(input)), {
+    ok: false,
+    error: "verification",
+    errorCodes: ["timeout-or-duplicate"],
+  });
 });

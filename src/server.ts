@@ -10,6 +10,7 @@ const securityHeaders = [
   ["X-XSS-Protection", "0"],
   ["X-Frame-Options", "SAMEORIGIN"],
   ["X-Content-Type-Options", "nosniff"],
+  ["Strict-Transport-Security", "max-age=31536000"],
   [
     "Content-Security-Policy",
     "frame-ancestors 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests",

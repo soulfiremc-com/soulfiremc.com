@@ -57,7 +57,6 @@ await test("pending mutations remain shared through verification and cache refre
     action: "upsert",
     slug: "shop",
     rating: 5,
-    needsTurnstile: true,
   });
   assert.equal(queryClient.isMutating(filters), 1);
   assert.equal(
@@ -92,7 +91,6 @@ await test("verification failures skip submission and invalidation and release p
       action: "upsert",
       slug: "shop",
       rating: 5,
-      needsTurnstile: true,
     }),
     { error: "verification" },
   );
@@ -100,11 +98,11 @@ await test("verification failures skip submission and invalidation and release p
   queryClient.clear();
 });
 
-await test("edits bypass verification and rejected deletes do not refresh reviews", async () => {
+await test("edits verify again and rejected deletes do not refresh reviews", async () => {
   const { queryClient, observer } = setup({
-    executeTurnstile: () => assert.fail(),
+    executeTurnstile: () => Promise.resolve("edit-token"),
     submitReview: ({ data }) => {
-      assert.equal(data.turnstileToken, null);
+      assert.equal(data.turnstileToken, "edit-token");
       assert.equal(data.body, null);
       return Promise.resolve({ ok: true });
     },
@@ -115,7 +113,6 @@ await test("edits bypass verification and rejected deletes do not refresh review
       action: "upsert",
       slug: "shop",
       rating: 3,
-      needsTurnstile: false,
     }),
     { error: null },
   );
@@ -162,7 +159,6 @@ await test("server rejections preserve their result and skip review cache refres
         action: "upsert",
         slug: "shop",
         rating: 5,
-        needsTurnstile: false,
       }),
       { error },
     );
@@ -186,7 +182,6 @@ await test("refresh failures preserve their cause and never resubmit a successfu
       action: "upsert",
       slug: "shop",
       rating: 5,
-      needsTurnstile: false,
     }),
     (error) => error === failure,
   );

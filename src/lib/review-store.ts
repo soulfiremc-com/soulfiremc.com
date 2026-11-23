@@ -46,16 +46,29 @@ export function makeReviewStore(database: {
           )
           .limit(1),
       ).pipe(Effect.map((rows) => rows[0])),
+    // Two first submissions can race past `find`, so the insert updates the
+    // existing row instead of failing on the unique index.
     create: (input) =>
-      reviewQuery("create", () => reviewsDb.insert(review).values(input)).pipe(
-        Effect.asVoid,
-      ),
+      reviewQuery("create", () =>
+        reviewsDb
+          .insert(review)
+          .values(input)
+          .onConflictDoUpdate({
+            target: [review.userId, review.itemType, review.itemSlug],
+            set: {
+              rating: input.rating,
+              body: input.body,
+              commentStatus: input.commentStatus,
+            },
+          }),
+      ).pipe(Effect.asVoid),
     update: (id, input) =>
       reviewQuery("update", () =>
         reviewsDb.update(review).set(input).where(eq(review.id, id)),
       ).pipe(Effect.asVoid),
     pendingComments: provide(getPendingReviewComments()),
-    moderate: (id, status) => provide(updateReviewCommentStatus(id, status)),
+    moderate: (id, status, body) =>
+      provide(updateReviewCommentStatus(id, status, body)),
     delete: (userId, itemType, slug) =>
       reviewQuery("delete", () =>
         reviewsDb

@@ -1,6 +1,6 @@
 import * as entrypoint from "./src/server.ts" with { type: "cf-worker" };
 import { bindings, defineConfig } from "cf/config";
-export default defineConfig({
+export default defineConfig(({ isPreview }) => ({
   accountId: "4dd0e72d7bf89402be905fb40cdb230a",
   worker: {
     name: "soulfire-website",
@@ -41,10 +41,17 @@ export default defineConfig({
       TURNSTILE_SECRET_KEY: bindings.secret(),
       REVIEW_TURNSTILE_SECRET_KEY: bindings.secret(),
       DISCORD_BOT_TOKEN: bindings.secret(),
-      DB: bindings.d1({
-        name: "soulfire-website",
-        id: "68aff6f2-3d21-48bd-b24e-7286f6e0b5a4",
-      }),
+      // Previews get their own database so pull request code never touches
+      // production data or schema.
+      DB: isPreview
+        ? bindings.d1({
+            name: "soulfire-website-preview",
+            id: "b8d38016-07e3-4fac-b19f-4017277c5bd3",
+          })
+        : bindings.d1({
+            name: "soulfire-website",
+            id: "68aff6f2-3d21-48bd-b24e-7286f6e0b5a4",
+          }),
     },
   },
-});
+}));

@@ -264,6 +264,8 @@ export type PendingReviewCommentRecord = {
   authorImage: string | null;
 };
 
+const PENDING_COMMENTS_LIMIT = 100;
+
 export const getPendingReviewComments = Effect.fn(
   "Reviews.getPendingReviewComments",
 )(function* () {
@@ -291,7 +293,8 @@ export const getPendingReviewComments = Effect.fn(
           sql`trim(${review.body}) <> ''`,
         ),
       )
-      .orderBy(desc(review.createdAt)),
+      .orderBy(desc(review.createdAt))
+      .limit(PENDING_COMMENTS_LIMIT),
   );
 
   return rows.flatMap((row) => {
@@ -321,12 +324,24 @@ export const updateReviewCommentStatus = Effect.fn(
 )(function* (
   reviewId: string,
   commentStatus: Extract<ReviewCommentStatus, "approved" | "rejected">,
+  expectedBody: string,
 ) {
   const { reviews: reviewDb } = yield* ReviewDatabase;
-  yield* reviewQuery("moderate", () =>
+  // Only moderate the text the admin saw. An edit since then resets the
+  // comment to pending with a new body, and must be reviewed again.
+  const rows = yield* reviewQuery("moderate", () =>
     reviewDb
       .update(review)
       .set({ commentStatus })
-      .where(eq(review.id, reviewId)),
+      .where(
+        and(
+          eq(review.id, reviewId),
+          // The pending list shows trimmed text, so compare it the same way.
+          sql`trim(${review.body}) = ${expectedBody}`,
+          or(eq(review.commentStatus, "pending"), isNull(review.commentStatus)),
+        ),
+      )
+      .returning({ id: review.id }),
   );
+  return rows.length > 0;
 });

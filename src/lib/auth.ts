@@ -304,9 +304,15 @@ export const auth = betterAuth({
   ],
   trustedOrigins: [
     "https://soulfiremc.com",
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
+    // Local origins must never be trusted in production, or reset and
+    // callback links could send tokens to whatever runs on these ports.
+    ...(import.meta.env.DEV
+      ? [
+          "http://localhost:3000",
+          "http://127.0.0.1:3000",
+          "http://localhost:5173",
+          "http://127.0.0.1:5173",
+        ]
+      : []),
   ],
 } satisfies BetterAuthOptions);

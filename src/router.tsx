@@ -1,4 +1,4 @@
-import { QueryClient } from "@tanstack/react-query";
+import { environmentManager, QueryClient } from "@tanstack/react-query";
 import { createRouter, deepEqual } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
 import { preloadAuthUi } from "@/lib/auth/lazy-auth-ui";
@@ -10,7 +10,9 @@ export function getRouter() {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        retry: 3,
+        // A failed server render should fail fast instead of stalling the
+        // document through retry backoff.
+        retry: environmentManager.isServer() ? 0 : 3,
         structuralSharing: (previous, next) =>
           deepEqual(previous, next) ? previous : next,
       },

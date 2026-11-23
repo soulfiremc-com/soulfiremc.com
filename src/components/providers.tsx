@@ -57,6 +57,25 @@ const authUiPlugins = [
   lastLoginMethodPlugin(),
 ];
 
+const REDIRECT_BASE = "https://redirect-check.invalid";
+
+/**
+ * Returns the path part of a same-site URL, or null. Parse with the URL rules
+ * browsers use, since they strip tabs and newlines and so turn `/\t/evil.com`
+ * into a protocol-relative URL that leaves the site.
+ */
+function toSameSitePath(value: string): string | null {
+  if (!value.trim().startsWith("/")) return null;
+  try {
+    const url = new URL(value.trim(), REDIRECT_BASE);
+    return url.origin === REDIRECT_BASE
+      ? `${url.pathname}${url.search}${url.hash}`
+      : null;
+  } catch {
+    return null;
+  }
+}
+
 function AuthUIProviders({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
   const locale = useLocale();
@@ -71,10 +90,7 @@ function AuthUIProviders({ children }: { children: React.ReactNode }) {
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- redirectTo is read as unknown and checked before use
       const value = (state.location.search as { redirectTo?: unknown })
         .redirectTo;
-      // Only same-site paths. Protocol-relative URLs leave the site.
-      return typeof value === "string" && /^\/(?![/\\])/u.test(value.trim())
-        ? value.trim()
-        : null;
+      return typeof value === "string" ? toSameSitePath(value) : null;
     },
   });
 

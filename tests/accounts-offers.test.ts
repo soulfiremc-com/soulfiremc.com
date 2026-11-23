@@ -24,6 +24,21 @@ await test("live stock requests include cancellation and normalize category coun
   assert.deepEqual(result.stockByCategory, { "mfa-accounts": 8 });
 });
 
+await test("NFA stock never counts as MFA stock", async (t) => {
+  const shop = getShopBySlug("ravealts");
+  assert.ok(shop);
+
+  t.mock.method(globalThis, "fetch", () =>
+    Promise.resolve(Response.json({ nfa: 50, mfa: 0 })),
+  );
+
+  const result = await getLiveShopData(shop);
+  assert.deepEqual(result.stockByCategory, {
+    "nfa-accounts": 50,
+    "mfa-accounts": 0,
+  });
+});
+
 await test("marketplace offers do not invent a numeric price", () => {
   const shop = getShopBySlug("gameboost");
   assert.ok(shop);
