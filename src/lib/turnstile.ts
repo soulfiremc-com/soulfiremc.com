@@ -43,8 +43,14 @@ export function getTurnstileRemoteIp(headers: Headers): string | null {
   );
 }
 
-export function getExpectedTurnstileHostname(hostname: string): string | null {
-  const normalizedHostname = hostname.toLowerCase();
+/** Siteverify reports a bare hostname, but the Host header can include a port. */
+export function getExpectedTurnstileHostname(host: string): string | null {
+  let normalizedHostname: string;
+  try {
+    normalizedHostname = new URL(`http://${host}`).hostname;
+  } catch {
+    normalizedHostname = host.toLowerCase();
+  }
   if (LOCAL_HOSTNAMES.has(normalizedHostname)) {
     return null;
   }

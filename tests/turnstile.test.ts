@@ -1,6 +1,9 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { validateTurnstileToken } from "@/lib/turnstile";
+import {
+  getExpectedTurnstileHostname,
+  validateTurnstileToken,
+} from "@/lib/turnstile";
 
 await test("Turnstile validates tokens and configuration before making requests", async (t) => {
   const original = process.env["REVIEW_TURNSTILE_SECRET_KEY"];
@@ -99,4 +102,18 @@ await test("Turnstile checks response schemas, action and hostname without retry
     errorCodes: ["internal-error"],
   });
   assert.equal(fetch.mock.callCount(), before + 1);
+});
+
+await test("Turnstile expects the bare request hostname without its port", () => {
+  assert.equal(
+    getExpectedTurnstileHostname("SoulFireMC.com"),
+    "soulfiremc.com",
+  );
+  assert.equal(
+    getExpectedTurnstileHostname("preview.example.com:8443"),
+    "preview.example.com",
+  );
+  for (const host of ["localhost:3000", "127.0.0.1:8787", "[::1]:3000"]) {
+    assert.equal(getExpectedTurnstileHostname(host), null);
+  }
 });

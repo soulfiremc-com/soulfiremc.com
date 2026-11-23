@@ -63,9 +63,8 @@ const submitReviewInputSchema = Schema.Struct({
   rating: Schema.Finite.check(Schema.isInt())
     .check(Schema.isGreaterThanOrEqualTo(1))
     .check(Schema.isLessThanOrEqualTo(5)),
-  body: Schema.NullOr(Schema.String).pipe(
-    Schema.withDecodingDefaultType(Effect.succeed(null)),
-  ),
+  // Omitted when only the rating changes, so the stored comment stays.
+  body: Schema.optional(Schema.NullOr(Schema.String)),
   turnstileToken: Schema.NullOr(Schema.String).pipe(
     Schema.withDecodingDefaultType(Effect.succeed(null)),
   ),

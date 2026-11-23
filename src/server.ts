@@ -1,6 +1,6 @@
 import handler from "@tanstack/react-start/server-entry";
 import { runWithD1Database } from "@/lib/db";
-import { createReviewSession, setReviewBookmark } from "@/lib/db/replication";
+import { createRequestSessions, setReviewBookmark } from "@/lib/db/replication";
 import { runWithDiscordLookupScope } from "@/lib/discord";
 
 // Keep in sync with the `/*` block in public/_headers, which covers
@@ -25,14 +25,12 @@ const securityHeaders = [
 
 export default {
   fetch: async (request: Request, env: Cloudflare.Env) => {
-    const reviewSession = createReviewSession(env.DB, request);
-    const originalResponse = await runWithD1Database(
-      env.DB,
-      reviewSession,
-      () => runWithDiscordLookupScope(() => handler.fetch(request)),
+    const sessions = createRequestSessions(env.DB, request);
+    const originalResponse = await runWithD1Database(sessions, () =>
+      runWithDiscordLookupScope(() => handler.fetch(request)),
     );
     const response = new Response(originalResponse.body, originalResponse);
-    setReviewBookmark(request, response, reviewSession);
+    setReviewBookmark(request, response, sessions.reviews);
 
     for (const [key, value] of securityHeaders) {
       if (!response.headers.has(key)) {

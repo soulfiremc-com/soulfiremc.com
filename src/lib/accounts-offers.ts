@@ -1,4 +1,4 @@
-import { Effect, Schema } from "effect";
+import { type Deferred, Effect, Schema } from "effect";
 import { requestJson, type RequestOptions } from "@/lib/backend-http";
 import { getCachedValue } from "@/lib/edge-cache";
 import { runWebsiteEffect } from "@/lib/effect-runtime";
@@ -20,6 +20,12 @@ const liveStockSchema = Schema.Struct({
 });
 
 type LiveStockByCategory = Partial<Record<Category, number>>;
+
+// Shared across requests so concurrent cache misses make one shop request.
+const pendingLiveStockLoads = new Map<
+  string,
+  Deferred.Deferred<typeof liveStockSchema.Type | null>
+>();
 
 export type LiveShopData = {
   stockByCategory?: LiveStockByCategory;
@@ -51,7 +57,7 @@ export const getLiveShopDataEffect = Effect.fn("Providers.liveStock")(
         // Missing live stock remains unknown, rather than implying availability.
         Effect.orElseSucceed(() => null),
       ),
-      pendingLoads: new Map(),
+      pendingLoads: pendingLiveStockLoads,
       successTtlSeconds: LIVE_STOCK_CACHE_TTL_SECONDS,
       negativeTtlSeconds: LIVE_STOCK_NEGATIVE_CACHE_TTL_SECONDS,
       schema: liveStockSchema,

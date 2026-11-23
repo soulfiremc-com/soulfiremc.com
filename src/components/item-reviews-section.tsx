@@ -53,6 +53,7 @@ import { emptyWrittenReviews, useReviews } from "@/hooks/use-reviews";
 import { emptyReviewSummary, type ItemType } from "@/lib/review-core";
 import {
   type ReviewDraft,
+  reviewFormSourceKey,
   saveReviewDraft,
   takeReviewDraft,
 } from "@/lib/review-draft";
@@ -189,14 +190,17 @@ function ItemReviewsSectionContent({
   // A draft saved before sign-in replaces the stored review until it is saved.
   const [draft, setDraft] = useState<ReviewDraft | null>(null);
   const source = draft ?? currentReview;
+  // Compare saved values, not objects. Each refetch, such as a change of
+  // review page, returns a new object that must not discard unsaved edits.
+  const sourceKey = reviewFormSourceKey(source);
   const initialForm = {
-    source,
+    sourceKey,
     rating: source?.rating ?? 5,
     body: source?.body ?? "",
   };
   const [form, setForm] = useState(initialForm);
-  const { rating, body } = form.source === source ? form : initialForm;
-  if (form.source !== source) {
+  const { rating, body } = form.sourceKey === sourceKey ? form : initialForm;
+  if (form.sourceKey !== sourceKey) {
     setForm(initialForm);
   }
   const ratingLabelId = useId();
@@ -448,7 +452,7 @@ function ItemReviewsSectionContent({
                 <ReviewStarInput
                   value={rating}
                   onChange={(value) => {
-                    setForm({ source, rating: value, body });
+                    setForm({ sourceKey, rating: value, body });
                   }}
                   disabled={pending}
                   size="lg"
@@ -468,7 +472,7 @@ function ItemReviewsSectionContent({
                 id={`review-body-${slug}`}
                 value={body}
                 onChange={(event) => {
-                  setForm({ source, rating, body: event.target.value });
+                  setForm({ sourceKey, rating, body: event.target.value });
                 }}
                 disabled={pending}
                 rows={6}

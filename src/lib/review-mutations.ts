@@ -95,7 +95,8 @@ export function reviewMutationOptions({
         data: {
           ...data,
           rating: variables.rating,
-          body: variables.body ?? null,
+          // A rating without a body keeps the stored comment.
+          ...(variables.body === undefined ? {} : { body: variables.body }),
           turnstileToken,
         },
       }),

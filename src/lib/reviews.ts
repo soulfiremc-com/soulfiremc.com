@@ -191,7 +191,9 @@ export const getWrittenReviews = Effect.fn("Reviews.getWrittenReviews")(
         .from(review)
         .leftJoin(user, eq(review.userId, user.id))
         .where(and(eq(review.itemType, itemType), eq(review.itemSlug, slug)))
-        .orderBy(desc(review.createdAt))
+        // The id breaks ties, so reviews created in the same millisecond keep
+        // one order across pages instead of repeating or going missing.
+        .orderBy(desc(review.createdAt), desc(review.id))
         .limit(pageSize)
         .offset(offset),
     );

@@ -1,7 +1,11 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { getReviewSummaryStatus } from "@/lib/review-core";
-import { saveReviewDraft, takeReviewDraft } from "@/lib/review-draft";
+import {
+  reviewFormSourceKey,
+  saveReviewDraft,
+  takeReviewDraft,
+} from "@/lib/review-draft";
 
 function memoryStorage() {
   const values = new Map<string, string>();
@@ -81,4 +85,23 @@ await test("review summary status separates loading and failures from no ratings
     "unavailable",
   );
   assert.equal(getReviewSummaryStatus({ data: {}, isPending: false }), "ready");
+});
+
+await test("review form sources match by saved values, not object identity", () => {
+  const stored = { rating: 4, body: "Fast", commentStatus: "approved" };
+  // A refetch, such as another review page, returns an equal new object.
+  assert.equal(
+    reviewFormSourceKey(stored),
+    reviewFormSourceKey(structuredClone(stored)),
+  );
+  assert.notEqual(
+    reviewFormSourceKey(stored),
+    reviewFormSourceKey({ ...stored, body: "Slow" }),
+  );
+  assert.notEqual(
+    reviewFormSourceKey(stored),
+    reviewFormSourceKey({ ...stored, rating: 5 }),
+  );
+  assert.equal(reviewFormSourceKey(undefined), null);
+  assert.notEqual(reviewFormSourceKey({ rating: 5, body: null }), null);
 });

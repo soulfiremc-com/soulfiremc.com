@@ -80,7 +80,8 @@ export type ReviewStoreService = {
   create(input: ReviewWrite): Effect.Effect<void, ReviewStoreError>;
   update(
     id: string,
-    input: Pick<ReviewWrite, "rating" | "body" | "commentStatus">,
+    input: Pick<ReviewWrite, "rating"> &
+      Partial<Pick<ReviewWrite, "body" | "commentStatus">>,
   ): Effect.Effect<void, ReviewStoreError>;
   pendingComments: Effect.Effect<
     PendingReviewCommentRecord[],
@@ -120,7 +121,8 @@ export type SubmitReviewInput = {
   itemType: ItemType;
   itemSlug: string;
   rating: number;
-  body: string | null;
+  /** Omit to change only the rating and keep the current comment. */
+  body?: string | null | undefined;
 };
 export type GetReviewsResult = {
   summaries: Record<string, ReviewSummary>;
@@ -243,7 +245,15 @@ export const submitReview = Effect.fn("submitReview")(function* (
     yield* verify;
     const store = yield* ReviewStore;
     const existing = yield* store.find(user.id, input.itemType, input.itemSlug);
-    const body = input.body?.trim().slice(0, 2000) || null;
+    // Inline star ratings send no comment. Keep the stored comment and its
+    // moderation status instead of erasing it.
+    if (input.body === undefined && existing) {
+      yield* store.update(existing.id, { rating: input.rating });
+      return { ok: true } as const;
+    }
+    // Trim again after the cut, so the stored text matches the trimmed text
+    // that moderators see and send back.
+    const body = input.body?.trim().slice(0, 2000).trimEnd() || null;
     const commentStatus: ReviewCommentStatus =
       !body ||
       (existing?.commentStatus === "approved" &&

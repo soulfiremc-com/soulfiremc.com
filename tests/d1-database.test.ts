@@ -14,7 +14,7 @@ import { Miniflare } from "miniflare";
 import { db, dbSchema, reviewDb, runWithD1Database } from "../src/lib/db";
 import { user, verification } from "../src/lib/db/auth-schema";
 import {
-  createReviewSession,
+  createRequestSessions,
   setReviewBookmark,
 } from "../src/lib/db/replication";
 import { review } from "../src/lib/db/schema";
@@ -88,7 +88,8 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
       }
     }
     const session = binding.withSession("first-primary");
-    await runWithD1Database(binding, session, async () => {
+    const sessions = { primary: session, reviews: session };
+    await runWithD1Database(sessions, async () => {
       const auth = betterAuth({
         baseURL: "http://localhost:3000",
         secret: "d1-integration-test-secret-at-least-32-characters",
@@ -356,7 +357,7 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
     await t.test("concurrent requests keep their own D1 binding", async () => {
       await Promise.all(
         [binding, otherBinding].map((database) =>
-          runWithD1Database(database, database.withSession(), async () => {
+          runWithD1Database(createSessions(database), async () => {
             const id = crypto.randomUUID();
             await db
               .insert(user)
@@ -392,10 +393,39 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
         ),
       );
     });
+
+    await t.test(
+      "a write request bookmarks auth writes for later review reads",
+      async () => {
+        const write = new Request("https://soulfiremc.com/settings", {
+          method: "POST",
+        });
+        const writeSessions = createRequestSessions(binding, write);
+        const id = crypto.randomUUID();
+        await runWithD1Database(writeSessions, async () => {
+          await db
+            .insert(user)
+            .values({ id, name: id, email: `${id}@example.com` });
+        });
+        const response = new Response();
+        setReviewBookmark(write, response, writeSessions.reviews);
+        assert.match(
+          response.headers.get("set-cookie") ?? "",
+          /^soulfire-d1-bookmark=/u,
+        );
+      },
+    );
   } finally {
     await runtime.dispose();
   }
 });
+
+function createSessions(database: D1Database) {
+  return {
+    primary: database.withSession("first-primary"),
+    reviews: database.withSession(),
+  };
+}
 
 test("review sessions carry write bookmarks without GET responses overwriting them", () => {
   const bookmark = crypto.randomUUID();
@@ -412,21 +442,24 @@ test("review sessions carry write bookmarks without GET responses overwriting th
   const write = new Request("https://soulfiremc.com/reviews", {
     method: "POST",
   });
-  createReviewSession(database, write);
-  assert.equal(constraints.pop(), "first-primary");
+  createRequestSessions(database, write);
+  assert.deepEqual(constraints.splice(0), ["first-primary"]);
   const response = new Response();
   setReviewBookmark(write, response, session);
   const cookie = response.headers.get("set-cookie");
   assert.ok(cookie);
   const read = new Request(write.url, { headers: { cookie } });
-  createReviewSession(database, read);
-  assert.equal(constraints.pop(), bookmark);
+  createRequestSessions(database, read);
+  assert.deepEqual(constraints.splice(0), ["first-primary", bookmark]);
   const readResponse = new Response();
   setReviewBookmark(read, readResponse, session);
   assert.equal(readResponse.headers.get("set-cookie"), null);
-  createReviewSession(
+  createRequestSessions(
     database,
     new Request(write.url, { headers: { cookie: "soulfire-d1-bookmark=%" } }),
   );
-  assert.equal(constraints.pop(), "first-unconstrained");
+  assert.deepEqual(constraints.splice(0), [
+    "first-primary",
+    "first-unconstrained",
+  ]);
 });

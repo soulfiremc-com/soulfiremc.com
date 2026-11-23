@@ -1,8 +1,19 @@
 const BOOKMARK_COOKIE = "soulfire-d1-bookmark";
 
-export function createReviewSession(database: D1Database, request: Request) {
+export type RequestSessions = {
+  primary: D1DatabaseSession;
+  reviews: D1DatabaseSession;
+};
+
+export function createRequestSessions(
+  database: D1Database,
+  request: Request,
+): RequestSessions {
   if (request.method !== "GET" && request.method !== "HEAD") {
-    return database.withSession("first-primary");
+    // Auth writes such as a username change also show in review lists, so
+    // the bookmark must cover writes through both database handles.
+    const session = database.withSession("first-primary");
+    return { primary: session, reviews: session };
   }
 
   const cookie = request.headers
@@ -18,7 +29,10 @@ export function createReviewSession(database: D1Database, request: Request) {
       // Ignore malformed cookies and start a new read session.
     }
   }
-  return database.withSession(bookmark || "first-unconstrained");
+  return {
+    primary: database.withSession("first-primary"),
+    reviews: database.withSession(bookmark || "first-unconstrained"),
+  };
 }
 
 export function setReviewBookmark(

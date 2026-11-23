@@ -103,7 +103,8 @@ await test("edits verify again and rejected deletes do not refresh reviews", asy
     executeTurnstile: () => Promise.resolve("edit-token"),
     submitReview: ({ data }) => {
       assert.equal(data.turnstileToken, "edit-token");
-      assert.equal(data.body, null);
+      // A rating without a body must not clear the stored comment.
+      assert.equal("body" in data, false);
       return Promise.resolve({ ok: true });
     },
     deleteReview: () => Promise.resolve({ ok: false, error: "unauthorized" }),

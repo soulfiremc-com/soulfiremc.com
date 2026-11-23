@@ -1,24 +1,18 @@
 import { AsyncLocalStorage } from "node:async_hooks";
 import { drizzle } from "drizzle-orm/d1";
 import * as generatedAuthSchema from "./auth-schema";
+import type { RequestSessions } from "./replication";
 import * as schema from "./schema";
 
 export const dbSchema = { ...generatedAuthSchema, ...schema };
 
-const databaseStorage = new AsyncLocalStorage<{
-  primary: D1DatabaseSession;
-  reviews: D1DatabaseSession;
-}>();
+const databaseStorage = new AsyncLocalStorage<RequestSessions>();
 
 export function runWithD1Database<T>(
-  binding: D1Database,
-  reviewSession: D1DatabaseSession,
+  sessions: RequestSessions,
   callback: () => T,
 ): T {
-  return databaseStorage.run(
-    { primary: binding.withSession("first-primary"), reviews: reviewSession },
-    callback,
-  );
+  return databaseStorage.run(sessions, callback);
 }
 
 function createDatabase(target: "primary" | "reviews") {

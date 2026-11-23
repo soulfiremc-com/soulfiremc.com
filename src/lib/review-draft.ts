@@ -2,6 +2,16 @@ import type { ItemType } from "@/lib/review-core";
 
 export type ReviewDraft = { rating: number; body: string };
 
+/**
+ * Identify the saved values a review form starts from. Equal values give the
+ * same key, so refetched data does not reset unsaved edits.
+ */
+export function reviewFormSourceKey(
+  source: { rating: number; body: string | null } | null | undefined,
+) {
+  return source ? JSON.stringify([source.rating, source.body ?? ""]) : null;
+}
+
 type DraftStorage = Pick<Storage, "getItem" | "setItem" | "removeItem">;
 
 function reviewDraftKey(itemType: ItemType, slug: string) {

@@ -391,3 +391,68 @@ await test("review submissions verify before reading or writing storage", async 
     errorCodes: ["timeout-or-duplicate"],
   });
 });
+
+await test("rating-only submissions keep the stored comment and its moderation status", async () => {
+  const updates: unknown[] = [];
+  const run = dependencies({
+    store: {
+      find: () =>
+        Effect.succeed<ExistingReview | undefined>({
+          id: "id",
+          body: "Written comment",
+          commentStatus: "rejected",
+        }),
+      update: (id, value) =>
+        Effect.sync(() => {
+          updates.push({ id, ...value });
+        }),
+    },
+  });
+  const { body: _body, ...ratingOnly } = input;
+  assert.deepEqual(await run(submitReview({ ...ratingOnly, rating: 2 })), {
+    ok: true,
+  });
+  assert.deepEqual(updates, [{ id: "id", rating: 2 }]);
+
+  // An explicit empty or null body still clears the comment.
+  await run(submitReview({ ...input, body: null }));
+  assert.deepEqual(updates[1], {
+    id: "id",
+    rating: 5,
+    body: null,
+    commentStatus: "approved",
+  });
+
+  const created: ReviewWrite[] = [];
+  const first = dependencies({
+    store: {
+      find: () => Effect.succeed<ExistingReview | undefined>(undefined),
+      create: (value) =>
+        Effect.sync(() => {
+          created.push(value);
+        }),
+    },
+  });
+  await first(submitReview(ratingOnly));
+  assert.equal(defined(created[0]).body, null);
+  assert.equal(defined(created[0]).commentStatus, "approved");
+});
+
+await test("cut comments are stored as trimmed text that moderation can match", async () => {
+  const written: ReviewWrite[] = [];
+  const run = dependencies({
+    store: {
+      find: () => Effect.succeed<ExistingReview | undefined>(undefined),
+      create: (value) =>
+        Effect.sync(() => {
+          written.push(value);
+        }),
+    },
+  });
+  await run(
+    submitReview({ ...input, body: `${"x".repeat(1999)}\n${"y".repeat(10)}` }),
+  );
+  const body = defined(defined(written[0]).body);
+  assert.equal(body, "x".repeat(1999));
+  assert.equal(body, body.trim());
+});
