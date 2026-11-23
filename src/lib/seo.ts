@@ -207,6 +207,12 @@ export function createWebPageStructuredData({
   };
 }
 
+/** Posts signed by the project, not a person, credit the Organization node. */
+function isOrganizationAuthor(author: string) {
+  const name = author.trim().toLowerCase();
+  return name === siteName.toLowerCase() || name === "soulfire team";
+}
+
 export function createBlogPostingStructuredData({
   path,
   title,
@@ -233,7 +239,9 @@ export function createBlogPostingStructuredData({
     url,
     mainEntityOfPage: { "@id": `${url}#webpage` },
     image: absoluteUrl(imageUrl),
-    author: { "@type": "Person", name: author },
+    author: isOrganizationAuthor(author)
+      ? { "@id": `${siteUrl}/#organization` }
+      : { "@type": "Person", name: author },
     publisher: { "@id": `${siteUrl}/#organization` },
     inLanguage: "en",
     ...(datePublished ? { datePublished } : {}),

@@ -58,11 +58,16 @@ export const documentationPageText = Effect.fn("Documentation.pageText")(
   },
 );
 
+/**
+ * Joins the guide pages into one text. Generated API reference pages are left
+ * out: they repeat the OpenAPI spec and would make up most of the file.
+ */
 export const fullDocumentationText = Effect.fn("Documentation.fullText")(
   function* () {
     const source = yield* DocumentationSource;
     const pages = yield* source.pages;
-    const text = yield* Effect.forEach(pages, documentationPageText, {
+    const guides = pages.filter((page) => page.data.type !== "openapi");
+    const text = yield* Effect.forEach(guides, documentationPageText, {
       concurrency: 4,
     });
     return text.join("\n\n");

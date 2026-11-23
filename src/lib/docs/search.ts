@@ -1,6 +1,6 @@
+import type * as PageTree from "fumadocs-core/page-tree";
 import { createFromSource } from "fumadocs-core/search/server";
 import type { Locale } from "@/lib/i18n";
-import { translate } from "@/lib/messages";
 import { replaceSdkReleaseTokens } from "@/lib/sdk-release";
 
 type SearchStructuredData = {
@@ -63,6 +63,46 @@ function withSdkRelease(
   };
 }
 
+/**
+ * Map each page URL to the sidebar folders above it, so search results use
+ * the same localized section names as the sidebar. The tree root and the
+ * page's own folder name are left out, because every result shares the root
+ * and a folder's index page already shows its own title.
+ */
+export function getSidebarBreadcrumbs(
+  tree: PageTree.Root,
+): Map<string, string[]> {
+  const breadcrumbs = new Map<string, string[]>();
+
+  function collect(nodes: PageTree.Node[], parents: string[]) {
+    // A separator names the pages below it, like the generated API groups.
+    let current = parents;
+    for (const node of nodes) {
+      if (node.type === "separator") {
+        current =
+          typeof node.name === "string" && node.name
+            ? [...parents, node.name]
+            : parents;
+      } else if (node.type === "page") {
+        if (!breadcrumbs.has(node.url)) breadcrumbs.set(node.url, current);
+      } else {
+        if (node.index && !breadcrumbs.has(node.index.url)) {
+          breadcrumbs.set(node.index.url, current);
+        }
+        collect(
+          node.children,
+          typeof node.name === "string" && node.name
+            ? [...current, node.name]
+            : current,
+        );
+      }
+    }
+  }
+
+  collect(tree.children, []);
+  return breadcrumbs;
+}
+
 const searchAPIs = new Map<Locale, ReturnType<typeof createSearchAPI>>();
 
 export async function exportDocsSearch(locale: Locale) {
@@ -82,6 +122,7 @@ async function createSearchAPI(locale: Locale) {
     await Promise.all([import("@/lib/docs/openapi"), import("@/lib/source")]);
 
   const source = await getSource();
+  const breadcrumbs = getSidebarBreadcrumbs(source.getPageTree(locale));
   return createFromSource(
     { ...source, getPages: () => source.getPages(locale) },
     {
@@ -89,17 +130,6 @@ async function createSearchAPI(locale: Locale) {
       // the static index that every visitor downloads when opening search.
       sort: { enabled: false },
       buildIndex: async (page) => {
-        const breadcrumbs = [translate(locale, "nav.docs")];
-        for (let index = 0; index < page.slugs.length - 1; index++) {
-          const parentPage = source.getPage(
-            page.slugs.slice(0, index + 1),
-            page.locale,
-          );
-          if (parentPage?.data.title) {
-            breadcrumbs.push(parentPage.data.title);
-          }
-        }
-
         const pageData: unknown = page.data;
         const structuredData = isOpenApiPage(page)
           ? getOpenApiStructuredData(page)
@@ -116,7 +146,7 @@ async function createSearchAPI(locale: Locale) {
         }
 
         return {
-          breadcrumbs,
+          breadcrumbs: breadcrumbs.get(page.url) ?? [],
           description: page.data.description,
           id: page.url,
           structuredData: withSdkRelease(

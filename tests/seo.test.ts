@@ -107,6 +107,17 @@ void test("blog posts publish article metadata and BlogPosting data", () => {
       keywords: "minecraft, testing",
     },
   );
+
+  assert.deepEqual(
+    createBlogPostingStructuredData({
+      path: "/blog/post",
+      title: "Post",
+      description: "A post.",
+      imageUrl: "/og/blog/post/image.webp",
+      author: "SoulFire Team",
+    }).author,
+    { "@id": "https://soulfiremc.com/#organization" },
+  );
 });
 
 void test("every provider logo has a copy that OG images can embed", () => {

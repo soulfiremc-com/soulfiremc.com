@@ -29,8 +29,7 @@ import {
   DocsPage,
   DocsTitle,
 } from "fumadocs-ui/page";
-import { type ComponentProps, Suspense } from "react";
-import { APIPage } from "@/components/api-page";
+import { type ComponentProps, lazy, Suspense } from "react";
 import { EnderDashSponsor } from "@/components/enderdash-sponsor";
 import { Feedback } from "@/components/feedback";
 import { LLMCopyButton } from "@/components/page-actions";
@@ -39,6 +38,7 @@ import { docsLinkTarget } from "@/lib/docs/link-target";
 import { isOpenApiPage } from "@/lib/docs/openapi";
 import { docsRedirects } from "@/lib/docs/redirects";
 import { getBaseLayoutOptions } from "@/lib/layout-options";
+import { translate } from "@/lib/messages";
 import { getDocsPageImage } from "@/lib/og";
 import {
   createBreadcrumbStructuredData,
@@ -51,6 +51,11 @@ import {
 } from "@/lib/seo";
 import { getSource, getDocsLanguages } from "@/lib/source";
 import { getMDXComponents } from "@/mdx-components";
+
+// Only API reference pages need the OpenAPI UI and its Markdown renderer, so
+// keep them out of the chunk that every docs page loads.
+const loadAPIPage = () => import("@/components/api-page");
+const APIPage = lazy(async () => ({ default: (await loadAPIPage()).APIPage }));
 
 const docsSlugsInputSchema = Schema.mutable(Schema.Array(Schema.String));
 
@@ -150,6 +155,8 @@ const clientLoader = browserCollections.docs.createClientLoader<{
           // Expose the side table of contents as a navigation landmark.
           container: { role: "navigation", "aria-labelledby": "toc-title" },
         }}
+        // Keep previous and next right after the page, before the sponsor.
+        footer={{ children: <DocsSponsor /> }}
       >
         <DocsPageHeader
           title={frontmatter.title}
@@ -165,7 +172,7 @@ const clientLoader = browserCollections.docs.createClientLoader<{
           <MDX components={docsMdxComponents} />
         </DocsBody>
         {lastModified && <LastUpdated date={lastModified} />}
-        <DocsPageFooter />
+        <Feedback />
       </DocsPage>
     );
   },
@@ -193,6 +200,8 @@ export const Route = createFileRoute("/{-$lang}/docs/$")({
 
     if (data.type === "docs") {
       await clientLoader.preload(data.path);
+    } else {
+      await loadAPIPage();
     }
 
     return data;
@@ -206,7 +215,7 @@ export const Route = createFileRoute("/{-$lang}/docs/$")({
       loaderData.description ??
       (loaderData.type === "openapi"
         ? `Request and response reference for the ${loaderData.title} endpoint in the SoulFire API.`
-        : "SoulFire documentation");
+        : translate(loaderData.contentLocale, "docs.metaDescription"));
     const path = localizePath(loaderData.url, loaderData.contentLocale);
     const docsPath = localizePath("/docs", loaderData.contentLocale);
     const imageUrl = loaderData.imageUrl;
@@ -257,10 +266,13 @@ export const Route = createFileRoute("/{-$lang}/docs/$")({
             }),
             createBreadcrumbStructuredData(path, [
               {
-                name: "Home",
+                name: translate(loaderData.contentLocale, "nav.home"),
                 path: localizePath("/", loaderData.contentLocale),
               },
-              { name: "Docs", path: docsPath },
+              {
+                name: translate(loaderData.contentLocale, "nav.docs"),
+                path: docsPath,
+              },
               ...(path !== docsPath ? [{ name: loaderData.title, path }] : []),
             ]),
           ]),
@@ -354,11 +366,15 @@ function DocsPageHeader({
   );
 }
 
+function DocsSponsor() {
+  return <EnderDashSponsor placement="docs-footer" className="mt-4" />;
+}
+
 function DocsPageFooter() {
   return (
     <>
       <Feedback />
-      <EnderDashSponsor placement="docs-footer" className="mt-8" />
+      <DocsSponsor />
     </>
   );
 }

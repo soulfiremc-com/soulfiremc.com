@@ -23,7 +23,7 @@ export function BlogOgImage({
   logoSrc?: string;
 }) {
   const category = tags?.[0] ? labelize(tags[0]) : "Blog";
-  const byline = author || "SoulFire Team";
+  const byline = author || "SoulFire";
   const metadata = [date, readTime].filter(Boolean).join("  •  ");
   const titleSize = fitTitleSize(title, {
     base: 86,

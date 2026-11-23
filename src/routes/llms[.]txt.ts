@@ -1,11 +1,26 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type { Node } from "fumadocs-core/page-tree";
 import { translate } from "@/lib/messages";
+import { truncateDescription } from "@/lib/seo";
 import { absoluteUrl, siteDescription, siteName } from "@/lib/site";
 
 const textHeaders = { "Content-Type": "text/plain; charset=utf-8" };
 
 type Section = { heading: string; urls: string[] };
+type DocsPage = {
+  data: { title?: string; description?: string; type?: string };
+  slugs: string[];
+  url: string;
+};
+
+/** One Markdown list entry. Descriptions are kept to one short line. */
+function pageEntry(page: DocsPage) {
+  const title = page.data.title ?? page.slugs.at(-1) ?? "Docs";
+  const description = page.data.description
+    ? truncateDescription(page.data.description)
+    : "";
+  return `- [${title}](${absoluteUrl(`${page.url}.mdx`)})${description ? `: ${description}` : ""}`;
+}
 
 const sitePages = [
   ["Download", "/download", "download.meta.description"],
@@ -57,10 +72,13 @@ export const Route = createFileRoute("/llms.txt")({
           source.getPages("en").map((page) => [page.url, page]),
         );
         const listed = new Set<string>();
+        // Generated API reference pages go under "Optional", which the
+        // llms.txt format marks as safe to skip when context is short.
+        const apiReference: string[] = [];
         const lines = [
           `# ${siteName}`,
           `> ${siteDescription}`,
-          `Each docs link points to a Markdown copy of a documentation page. The full documentation is also available as one file at ${absoluteUrl("/llms-full.txt")}.`,
+          `Each docs link points to a Markdown copy of a documentation page. All guide pages are also available as one file at ${absoluteUrl("/llms-full.txt")}. The HTTP API reference is listed under Optional.`,
           "## Website",
           sitePages
             .map(
@@ -81,11 +99,11 @@ export const Route = createFileRoute("/llms.txt")({
             const page = pages.get(url);
             if (!page || listed.has(url)) return [];
             listed.add(url);
-            const title = page.data.title ?? page.slugs.at(-1) ?? "Docs";
-            const description = page.data.description?.trim();
-            return [
-              `- [${title}](${absoluteUrl(`${url}.mdx`)})${description ? `: ${description}` : ""}`,
-            ];
+            if (page.data.type === "openapi") {
+              apiReference.push(pageEntry(page));
+              return [];
+            }
+            return [pageEntry(page)];
           });
           if (entries.length > 0)
             lines.push(`## ${heading}`, entries.join("\n"));
@@ -94,16 +112,14 @@ export const Route = createFileRoute("/llms.txt")({
         const unlisted = [...pages.values()].filter(
           (page) => !listed.has(page.url),
         );
-        if (unlisted.length > 0) {
-          lines.push(
-            "## Other pages",
-            unlisted
-              .map(
-                (page) =>
-                  `- [${page.data.title ?? page.slugs.at(-1) ?? "Docs"}](${absoluteUrl(`${page.url}.mdx`)})`,
-              )
-              .join("\n"),
+        const otherPages: string[] = [];
+        for (const page of unlisted) {
+          (page.data.type === "openapi" ? apiReference : otherPages).push(
+            pageEntry(page),
           );
+        }
+        if (otherPages.length > 0) {
+          lines.push("## Other pages", otherPages.join("\n"));
         }
 
         const { getSortedBlogPages } = await import("@/lib/blog");
@@ -115,6 +131,11 @@ export const Route = createFileRoute("/llms.txt")({
                 `- [${post.data.title}](${absoluteUrl(post.url)})${post.data.description ? `: ${post.data.description}` : ""}`,
             )
             .join("\n"),
+          "## Optional",
+          [
+            `- [OpenAPI spec](${absoluteUrl("/sf-openapi.json")}): Machine-readable OpenAPI document for the ${siteName} HTTP API.`,
+            ...apiReference,
+          ].join("\n"),
         );
 
         return new Response(lines.join("\n\n"), { headers: textHeaders });

@@ -1,18 +1,49 @@
 import { isLocale, localizePath } from "@/lib/i18n";
-import { translate } from "@/lib/messages";
+import { type MessageKey, translate } from "@/lib/messages";
 import { DocsOgImage } from "@/components/og/soulfire";
 import { soulfireLogoDataUri, createOgImageResponse } from "@/lib/og-image";
 import { createFileRoute } from "@tanstack/react-router";
-import type { ReactElement } from "react";
-import {
-  DirectoryOgImage,
-  DownloadOgImage,
-  HomeOgImage,
-} from "@/components/og/site";
-import { PROVIDERS as ACCOUNT_PROVIDERS } from "@/lib/accounts-data";
-import { getSortedBlogPages } from "@/lib/blog";
 import { stripOgSuffix } from "@/lib/og";
-import { PROVIDERS as PROXY_PROVIDERS } from "@/lib/proxies-data";
+
+type SitePageImage = {
+  path: string;
+  title: MessageKey;
+  description: MessageKey;
+  section: MessageKey;
+};
+
+const sitePageImages: Record<string, SitePageImage> = {
+  home: {
+    path: "/",
+    title: "home.meta.title",
+    description: "home.meta.description",
+    section: "common.brand",
+  },
+  download: {
+    path: "/download",
+    title: "download.title",
+    description: "download.meta.description",
+    section: "nav.downloads",
+  },
+  pricing: {
+    path: "/pricing",
+    title: "support.meta.title",
+    description: "support.meta.description",
+    section: "nav.pricing",
+  },
+  "get-accounts": {
+    path: "/get-accounts",
+    title: "common.minecraftAltsMfaNfaAccounts",
+    description: "providers.accounts.social.description",
+    section: "nav.accounts",
+  },
+  "get-proxies": {
+    path: "/get-proxies",
+    title: "common.proxyProvidersForSoulfire",
+    description: "providers.proxies.social.description",
+    section: "nav.proxies",
+  },
+};
 
 export const Route = createFileRoute("/og/site/{$}/image.webp")({
   server: {
@@ -23,131 +54,34 @@ export const Route = createFileRoute("/og/site/{$}/image.webp")({
         if (isLocale(slugs[0])) slugs.shift();
         const [page] = stripOgSuffix(slugs);
 
-        if (!page) return new Response(null, { status: 404 });
-
-        if (locale !== "en" && ["get-accounts", "get-proxies"].includes(page)) {
-          const accounts = page === "get-accounts";
+        // The blog has no localized copies, so its image stays English.
+        if (page === "blog" && locale === "en") {
           return createOgImageResponse(
             <DocsOgImage
-              title={translate(
-                locale,
-                accounts
-                  ? "common.minecraftAltsMfaNfaAccounts"
-                  : "common.proxyProvidersForSoulfire",
-              )}
-              description={translate(
-                locale,
-                accounts
-                  ? "providers.accounts.social.description"
-                  : "providers.proxies.social.description",
-              )}
-              section={translate(
-                locale,
-                accounts ? "nav.accounts" : "nav.proxies",
-              )}
-              slugs={[]}
-              siteLabel={`soulfiremc.com${localizePath(`/${page}`, locale)}`}
+              title="SoulFire Blog"
+              description="Guides for testing Minecraft servers with bots: load, anti-bot, authentication, and proxies."
+              section={translate(locale, "nav.blog")}
+              siteLabel="soulfiremc.com/blog"
               logoSrc={soulfireLogoDataUri}
             />,
           );
         }
-        if (
-          (locale !== "en" && ["home", "download", "pricing"].includes(page)) ||
-          page === "pricing"
-        ) {
-          const title =
-            page === "home"
-              ? "home.meta.title"
-              : page === "download"
-                ? "download.title"
-                : "support.meta.title";
-          const description =
-            page === "home"
-              ? "home.meta.description"
-              : page === "download"
-                ? "download.meta.description"
-                : "support.meta.description";
-          return createOgImageResponse(
-            <DocsOgImage
-              title={translate(locale, title)}
-              description={translate(locale, description)}
-              slugs={[]}
-              section={translate(
-                locale,
-                page === "home"
-                  ? "common.brand"
-                  : page === "download"
-                    ? "nav.downloads"
-                    : "nav.pricing",
-              )}
-              siteLabel={`soulfiremc.com${localizePath(page === "home" ? "/" : `/${page}`, locale)}`}
-              logoSrc={soulfireLogoDataUri}
-            />,
-          );
-        }
-        let image: ReactElement;
 
-        switch (page) {
-          case "home": {
-            image = <HomeOgImage />;
-            break;
-          }
-          case "download": {
-            image = <DownloadOgImage />;
-            break;
-          }
-          case "blog": {
-            const allPosts = getSortedBlogPages();
-            image = (
-              <DirectoryOgImage
-                label="Blog"
-                path="/blog"
-                title="SoulFire Blog"
-                description="Tutorials, field notes, and deep dives on Minecraft bot testing and development."
-                accent="#ffb562"
-                count={allPosts.length}
-                samples={allPosts.map((post) => post.data.title)}
-              />
-            );
-            break;
-          }
-          case "get-proxies": {
-            image = (
-              <DirectoryOgImage
-                label="Proxies"
-                path="/get-proxies"
-                title="Proxy Providers for SoulFire"
-                description="Residential, datacenter, ISP, and mobile networks tested with SoulFire sessions."
-                accent="#58c7ff"
-                count={PROXY_PROVIDERS.length}
-                samples={PROXY_PROVIDERS.map((p) => p.name)}
-              />
-            );
-            break;
-          }
-          case "get-accounts": {
-            const uniqueProviders = [
-              ...new Map(ACCOUNT_PROVIDERS.map((p) => [p.slug, p])).values(),
-            ];
-            image = (
-              <DirectoryOgImage
-                label="Accounts"
-                path="/get-accounts"
-                title="Minecraft Accounts for SoulFire"
-                description="MFA and NFA providers with pricing and delivery details."
-                accent="#75f1ba"
-                count={uniqueProviders.length}
-                samples={uniqueProviders.map((p) => p.name)}
-              />
-            );
-            break;
-          }
-          default: {
-            return new Response(null, { status: 404 });
-          }
-        }
+        const image =
+          page && Object.hasOwn(sitePageImages, page)
+            ? sitePageImages[page]
+            : undefined;
+        if (!image) return new Response(null, { status: 404 });
 
-        return createOgImageResponse(image);
+        return createOgImageResponse(
+          <DocsOgImage
+            title={translate(locale, image.title)}
+            description={translate(locale, image.description)}
+            section={translate(locale, image.section)}
+            siteLabel={`soulfiremc.com${localizePath(image.path, locale).replace(/\/$/u, "")}`}
+            logoSrc={soulfireLogoDataUri}
+          />,
+        );
       },
     },
   },

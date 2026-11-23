@@ -1,5 +1,5 @@
 import { isLocale, localizePath } from "@/lib/i18n";
-import { translate, resolveMessage } from "@/lib/messages";
+import { translate } from "@/lib/messages";
 import { DocsOgImage } from "@/components/og/soulfire";
 import {
   soulfireLogoDataUri,
@@ -7,7 +7,6 @@ import {
   getEmbeddedLogo,
 } from "@/lib/og-image";
 import { createFileRoute } from "@tanstack/react-router";
-import { AccountOgImage } from "@/components/og/site";
 import { getShopBySlug } from "@/lib/accounts-data";
 import { stripOgSuffix } from "@/lib/og";
 
@@ -23,37 +22,16 @@ export const Route = createFileRoute("/og/accounts/{$}/image.webp")({
 
         if (!shop) return new Response(null, { status: 404 });
 
-        const listings = Object.entries(shop.listings).map(
-          ([category, listing]) => ({
-            label: category === "mfa-accounts" ? "MFA" : "NFA",
-            price: resolveMessage(locale, listing.price),
-          }),
-        );
-        const description =
-          Object.values(shop.listings).map((listing) =>
-            translate(locale, listing.summary),
-          )[0] ?? "Minecraft account provider for SoulFire bot testing.";
-
-        if (locale !== "en")
-          return createOgImageResponse(
-            <DocsOgImage
-              title={shop.name}
-              description={Object.values(shop.listings)
-                .map((listing) => translate(locale, listing.summary))
-                .join(" ")}
-              slugs={[]}
-              section={translate(locale, "common.getAccounts")}
-              siteLabel={`soulfiremc.com${localizePath(`/get-accounts/${shop.slug}`, locale)}`}
-              logoSrc={getEmbeddedLogo(shop.logo) || soulfireLogoDataUri}
-            />,
-          );
         return createOgImageResponse(
-          <AccountOgImage
-            slug={shop.slug}
-            name={shop.name}
-            listings={listings}
-            description={description}
-            logoSrc={getEmbeddedLogo(shop.logo)}
+          <DocsOgImage
+            title={shop.name}
+            description={Object.values(shop.listings)
+              .map((listing) => translate(locale, listing.summary))
+              .join(" ")}
+            slugs={[]}
+            section={translate(locale, "common.getAccounts")}
+            siteLabel={`soulfiremc.com${localizePath(`/get-accounts/${shop.slug}`, locale)}`}
+            logoSrc={getEmbeddedLogo(shop.logo) || soulfireLogoDataUri}
           />,
         );
       },

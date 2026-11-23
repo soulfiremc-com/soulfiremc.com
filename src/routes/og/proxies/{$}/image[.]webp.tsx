@@ -7,7 +7,6 @@ import {
   getEmbeddedLogo,
 } from "@/lib/og-image";
 import { createFileRoute } from "@tanstack/react-router";
-import { ProxyOgImage } from "@/components/og/site";
 import { stripOgSuffix } from "@/lib/og";
 import { getProviderBySlug } from "@/lib/proxies-data";
 
@@ -25,24 +24,14 @@ export const Route = createFileRoute("/og/proxies/{$}/image.webp")({
 
         if (!provider) return new Response(null, { status: 404 });
 
-        if (locale !== "en")
-          return createOgImageResponse(
-            <DocsOgImage
-              title={provider.name}
-              description={translate(locale, provider.summary)}
-              slugs={[]}
-              section={translate(locale, "common.getProxies")}
-              siteLabel={`soulfiremc.com${localizePath(`/get-proxies/${provider.slug}`, locale)}`}
-              logoSrc={getEmbeddedLogo(provider.logo) || soulfireLogoDataUri}
-            />,
-          );
         return createOgImageResponse(
-          <ProxyOgImage
-            slug={provider.slug}
-            name={provider.name}
-            summary={translate(locale, provider.summary)}
-            badges={provider.badges}
-            logoSrc={getEmbeddedLogo(provider.logo)}
+          <DocsOgImage
+            title={provider.name}
+            description={translate(locale, provider.summary)}
+            slugs={[]}
+            section={translate(locale, "common.getProxies")}
+            siteLabel={`soulfiremc.com${localizePath(`/get-proxies/${provider.slug}`, locale)}`}
+            logoSrc={getEmbeddedLogo(provider.logo) || soulfireLogoDataUri}
           />,
         );
       },
