@@ -1,0 +1,64 @@
+---
+title: State
+description: Inputs, outputs, and defaults of the 2 built-in nodes in the State category.
+---
+
+Generated from the [pinned SoulFire source](https://github.com/soulfiremc-com/SoulFire/tree/eb2b29fb0a4190d759135270a63344d53fdcf819). Regenerate these pages with `bun run generate-node-reference`.
+
+## Cache
+
+`state.cache`
+
+In-memory key-value cache with optional TTL
+
+Also called: store, memory, ttl, temporary.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `operation` (Operation) | `string` | `"get"` | Operation: get, set, delete, clear, has |
+| `key` (Key) | `string` | `""` | Cache key |
+| `value` (Value) | `any` | `null` | Value to store (for set) |
+| `ttlMs` (TTL (ms)) | `number` | `0` | Time-to-live (0 = no expiry) |
+| `namespace` (Namespace) | `string` | `"default"` | Cache namespace |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `value` (Value) | `any` | Retrieved value |
+| `found` (Found) | `boolean` | Whether key was found |
+| `success` (Success) | `boolean` | Whether operation succeeded |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/state/CacheNode.java)
+
+## State Machine
+
+`state.state_machine`
+
+Simple state machine for bot behavior management
+
+Also called: state, machine, fsm, behavior, mode, transition.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `stateId` (State ID) | `string` | `"main"` | State machine identifier |
+| `operation` (Operation) | `string` | `"get"` | Operation: get, set, transition |
+| `newState` (New State) | `string` | `""` | New state (for set/transition) |
+| `allowedTransitions` (Allowed Transitions) | `string` | `"{}"` | JSON map of allowed transitions |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `currentState` (Current State) | `string` | Current state value |
+| `previousState` (Previous State) | `string` | Previous state (after transition) |
+| `transitionAllowed` (Transition Allowed) | `boolean` | Whether transition was allowed |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/state/StateNode.java)

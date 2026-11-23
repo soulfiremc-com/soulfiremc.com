@@ -1,0 +1,364 @@
+---
+title: String
+description: Inputs, outputs, and defaults of the 15 built-in nodes in the String category.
+---
+
+Generated from the [pinned SoulFire source](https://github.com/soulfiremc-com/SoulFire/tree/eb2b29fb0a4190d759135270a63344d53fdcf819). Regenerate these pages with `bun run generate-node-reference`.
+
+## Concat
+
+`string.concat`
+
+Concatenates two strings together
+
+Also called: string, concatenate, join, append, combine.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `a` (A) | `string` | `""` | First string |
+| `b` (B) | `string` | `""` | Second string |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `string` | Concatenated string |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/ConcatNode.java)
+
+## Ends With
+
+`string.ends_with`
+
+Checks if a string ends with a suffix
+
+Also called: string, ends, suffix, end.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `text` (Text) | `string` | `""` | Input string to check |
+| `suffix` (Suffix) | `string` | `""` | Suffix to check for |
+| `ignoreCase` (Ignore Case) | `boolean` | `false` | Whether to ignore case when checking |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `boolean` | True if text ends with suffix |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/EndsWithNode.java)
+
+## Format
+
+`string.format`
+
+Formats a template string by replacing placeholders such as {0} and {1} with arguments
+
+Also called: string, template, placeholder, interpolate.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `template` (Template) | `string` | `""` | Template string with {0}, {1}, etc. placeholders |
+| `args` (Arguments) | `list<any>` | Required | List of values to substitute into placeholders |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `string` | Formatted string |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/FormatNode.java)
+
+## Index Of
+
+`string.index_of`
+
+Finds the index of the first occurrence of a substring
+
+Also called: string, index, find, search, position, location.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `text` (Text) | `string` | `""` | Input string to search in |
+| `search` (Search) | `string` | `""` | Substring to search for |
+| `ignoreCase` (Ignore Case) | `boolean` | `false` | Whether to ignore case when searching |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `index` (Index) | `number` | Index of first occurrence (-1 if not found) |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/IndexOfNode.java)
+
+## Regex Match
+
+`string.regex_match`
+
+Tests if a string matches a regex pattern and extracts capture groups
+
+Also called: regex, match, pattern, test, find, capture, group.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `input` (Input) | `string` | Required | String to test |
+| `pattern` (Pattern) | `string` | Required | Regex pattern |
+| `flags` (Flags) | `string` | `""` | Regex flags (i=case-insensitive, m=multiline, s=dotall) |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `matches` (Matches) | `boolean` | Whether the pattern matched |
+| `fullMatch` (Full Match) | `string` | The entire matched string |
+| `groups` (Groups) | `list<string>` | List of captured groups |
+| `allMatches` (All Matches) | `list<string>` | All matches found |
+| `error` (Error) | `string` | Error message if pattern is invalid |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/RegexMatchNode.java)
+
+## Regex Replace
+
+`string.regex_replace`
+
+Replaces matches of a regex pattern with a replacement string
+
+Also called: regex, replace, substitute, pattern, sed.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `input` (Input) | `string` | Required | String to modify |
+| `pattern` (Pattern) | `string` | Required | Regex pattern to match |
+| `replacement` (Replacement) | `string` | Required | Replacement string (supports $1, $2 for groups) |
+| `replaceAll` (Replace All) | `boolean` | `true` | Replace all matches or just first |
+| `flags` (Flags) | `string` | `""` | Regex flags |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `string` | String with replacements made |
+| `count` (Count) | `number` | Number of replacements made |
+| `error` (Error) | `string` | Error message if pattern is invalid |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/RegexReplaceNode.java)
+
+## Replace
+
+`string.replace`
+
+Replaces occurrences of a substring with another string
+
+Also called: string, substitute, swap.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `text` (Text) | `string` | `""` | Input string |
+| `search` (Search) | `string` | `""` | Substring to search for |
+| `replacement` (Replacement) | `string` | `""` | Replacement string |
+| `replaceAll` (Replace All) | `boolean` | `true` | Replace all occurrences or just the first |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `string` | String with replacements made |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/ReplaceNode.java)
+
+## Split
+
+`string.split`
+
+Splits a string into a list by a delimiter
+
+Also called: string, divide, separate, tokenize.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `text` (Text) | `string` | `""` | Input string to split |
+| `delimiter` (Delimiter) | `string` | `" "` | Delimiter to split by |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `list<string>` | List of split strings |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/SplitNode.java)
+
+## Starts With
+
+`string.starts_with`
+
+Checks if a string starts with a prefix
+
+Also called: string, starts, prefix, begin.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `text` (Text) | `string` | `""` | Input string to check |
+| `prefix` (Prefix) | `string` | `""` | Prefix to check for |
+| `ignoreCase` (Ignore Case) | `boolean` | `false` | Whether to ignore case when checking |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `boolean` | True if text starts with prefix |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/StartsWithNode.java)
+
+## String Contains
+
+`string.contains`
+
+Checks if a string contains a substring
+
+Also called: string, contains, includes, has, search, find.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `text` (Text) | `string` | `""` | Input string to search in |
+| `search` (Search) | `string` | `""` | Substring to search for |
+| `ignoreCase` (Ignore Case) | `boolean` | `false` | Whether to ignore case when searching |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `boolean` | True if text contains search string |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/StringContainsNode.java)
+
+## String Length
+
+`string.length`
+
+Returns the length of a string
+
+Also called: string, length, count, size.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `text` (Text) | `string` | `""` | Input string |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `length` (Length) | `number` | Length of the string |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/StringLengthNode.java)
+
+## Substring
+
+`string.substring`
+
+Extracts a substring from start index to end index
+
+Also called: string, slice, extract, sub.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `text` (Text) | `string` | `""` | Input string |
+| `start` (Start) | `number` | `0` | Start index (inclusive) |
+| `end` (End) | `number` | `-1` | End index (exclusive, -1 for end of string) |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `string` | Extracted substring |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/SubstringNode.java)
+
+## To Lower Case
+
+`string.to_lower_case`
+
+Converts a string to lowercase
+
+Also called: string, lowercase, lower, case.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `text` (Text) | `string` | `""` | Input string |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `string` | Lowercase string |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/ToLowerCaseNode.java)
+
+## To Upper Case
+
+`string.to_upper_case`
+
+Converts a string to uppercase
+
+Also called: string, uppercase, upper, capital, case.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `text` (Text) | `string` | `""` | Input string |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `string` | Uppercase string |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/ToUpperCaseNode.java)
+
+## Trim
+
+`string.trim`
+
+Removes whitespace from both ends of a string
+
+Also called: string, whitespace, strip.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `text` (Text) | `string` | `""` | Input string |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `string` | Trimmed string |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/string/TrimNode.java)

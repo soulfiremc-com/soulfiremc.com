@@ -1,0 +1,36 @@
+---
+title: Integration
+description: Inputs, outputs, and defaults of the 1 built-in node in the Integration category.
+---
+
+Generated from the [pinned SoulFire source](https://github.com/soulfiremc-com/SoulFire/tree/eb2b29fb0a4190d759135270a63344d53fdcf819). Regenerate these pages with `bun run generate-node-reference`.
+
+## Discord Webhook
+
+`integration.discord_webhook` (expensive operation)
+
+Sends messages to a Discord webhook
+
+Also called: discord, webhook, notify, message, alert, integration.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `webhookUrl` (Webhook URL) | `string` | Required | Discord webhook URL |
+| `content` (Content) | `string` | `""` | Message content (max 2000 chars) |
+| `username` (Username) | `string` | `""` | Override webhook username |
+| `avatarUrl` (Avatar URL) | `string` | `""` | Override webhook avatar |
+| `embedJson` (Embed JSON) | `string` | `""` | Optional embed as JSON |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `exec_success` (Success) | `exec` | Success execution path |
+| `exec_error` (Error) | `exec` | Error execution path |
+| `success` (Success) | `boolean` | Whether message was sent |
+| `errorMessage` (Error Message) | `string` | Error details if failed |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/integration/DiscordWebhookNode.java)

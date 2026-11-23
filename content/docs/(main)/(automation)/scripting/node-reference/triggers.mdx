@@ -1,0 +1,277 @@
+---
+title: Triggers
+description: Inputs, outputs, and defaults of the 12 built-in nodes in the Triggers category.
+---
+
+Generated from the [pinned SoulFire source](https://github.com/soulfiremc-com/SoulFire/tree/eb2b29fb0a4190d759135270a63344d53fdcf819). Regenerate these pages with `bun run generate-node-reference`.
+
+## On Chat
+
+`trigger.on_chat` (trigger)
+
+Fires when a chat message is received
+
+Also called: chat, message, text, say, talk, receive.
+
+**Inputs**
+
+None.
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `bot` (Bot) | `bot` | The bot that received the message |
+| `message` (Message) | `any` | The chat message component |
+| `messagePlainText` (Message (Plain Text)) | `string` | The chat message as plain text |
+| `timestamp` (Timestamp) | `number` | Timestamp when the message was received |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnChatNode.java)
+
+## On connection created
+
+`trigger.on_bot_init` (trigger)
+
+Fires early when the bot connection is initialized (before player is ready)
+
+Also called: On Bot Init, init, initialize, start, connect, early.
+
+**Inputs**
+
+None.
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `bot` (Bot) | `bot` | The bot being initialized |
+| `serverAddress` (Server Address) | `string` | The server address |
+| `username` (Username) | `string` | The bot's username |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnBotInitNode.java)
+
+## On Container Open
+
+`trigger.on_container_open` (trigger)
+
+Fires when a any container has been opened
+
+Also called: inventory, container, menu, open.
+
+**Inputs**
+
+None.
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `bot` (Bot) | `bot` | The bot that opened the container |
+| `containerId` (Container ID) | `number` | The ID of opened container |
+| `containerName` (Container Name) | `string` | The name of opened container |
+| `containerType` (Container Type) | `string` | The type of opened container |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnContainerOpenNode.java)
+
+## On Damage
+
+`trigger.on_damage` (trigger)
+
+Fires when the bot takes damage (health decreases)
+
+Also called: damage, hurt, health, attack, hit.
+
+**Inputs**
+
+None.
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `bot` (Bot) | `bot` | The bot that took damage |
+| `amount` (Amount) | `number` | Amount of damage taken |
+| `previousHealth` (Previous Health) | `number` | Health before damage |
+| `newHealth` (New Health) | `number` | Health after damage |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnDamageNode.java)
+
+## On Death
+
+`trigger.on_death` (trigger)
+
+Fires when the bot dies
+
+Also called: death, die, dead, killed, respawn.
+
+**Inputs**
+
+None.
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `bot` (Bot) | `bot` | The bot that died |
+| `shouldRespawn` (Should Respawn) | `boolean` | Whether the bot should respawn |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnDeathNode.java)
+
+## On Disconnect
+
+`trigger.on_disconnect` (trigger)
+
+Fires when the bot is disconnected from the server
+
+Also called: disconnect, leave, kick, timeout, connection.
+
+**Inputs**
+
+None.
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `bot` (Bot) | `bot` | The bot that was disconnected |
+| `reason` (Reason) | `string` | The disconnect reason message |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnDisconnectNode.java)
+
+## On Interval
+
+`trigger.on_interval` (trigger)
+
+Fires at a configurable interval. Does not provide a bot; use GetBots + ForEachBot downstream for bot actions.
+
+Also called: interval, timer, repeat, periodic, schedule.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `intervalMs` (Interval (ms)) | `number` | `1000` | Interval in milliseconds between executions |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `executionCount` (Execution Count) | `number` | Number of times this trigger has fired |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnIntervalNode.java)
+
+## On player ready
+
+`trigger.on_join` (trigger)
+
+Fires when the bot has fully joined and the player is ready to interact
+
+Also called: On Join, join, connect, login, server, spawn, ready.
+
+**Inputs**
+
+None.
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `bot` (Bot) | `bot` | The bot that joined |
+| `serverAddress` (Server Address) | `string` | The server address |
+| `username` (Username) | `string` | The bot's username |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnJoinNode.java)
+
+## On Post Entity Tick
+
+`trigger.on_post_entity_tick` (trigger)
+
+Fires after entity physics each tick (synchronous on tick thread)
+
+Also called: tick, update, loop, post, entity, after, attack.
+
+**Inputs**
+
+None.
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `bot` (Bot) | `bot` | The bot that ticked |
+| `tickCount` (Tick Count) | `number` | Ticks since script started |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnPostEntityTickNode.java)
+
+## On Pre Entity Tick
+
+`trigger.on_pre_entity_tick` (trigger)
+
+Fires before entity physics each tick (synchronous on tick thread)
+
+Also called: tick, update, loop, pre, entity, before, rotation.
+
+**Inputs**
+
+None.
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `bot` (Bot) | `bot` | The bot that ticked |
+| `tickCount` (Tick Count) | `number` | Ticks since script started |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnPreEntityTickNode.java)
+
+## On Script End
+
+`trigger.on_script_end` (trigger)
+
+Fires once when the script is being stopped
+
+Also called: end, stop, finish, script, cleanup, shutdown.
+
+**Inputs**
+
+None.
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `timestamp` (Timestamp) | `number` | The timestamp when the script is ending |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnScriptEndNode.java)
+
+## On Script Init
+
+`trigger.on_script_init` (trigger)
+
+Fires once when the script is started
+
+Also called: init, start, begin, script, launch.
+
+**Inputs**
+
+None.
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `timestamp` (Timestamp) | `number` | The timestamp when the script was initialized |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/trigger/OnScriptInitNode.java)

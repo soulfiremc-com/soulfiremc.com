@@ -1,0 +1,121 @@
+---
+title: Logic
+description: Inputs, outputs, and defaults of the 5 built-in nodes in the Logic category.
+---
+
+Generated from the [pinned SoulFire source](https://github.com/soulfiremc-com/SoulFire/tree/eb2b29fb0a4190d759135270a63344d53fdcf819). Regenerate these pages with `bun run generate-node-reference`.
+
+## And
+
+`logic.and`
+
+Returns true if both inputs are true
+
+Also called: both, all, logic.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `a` (A) | `boolean` | `false` | First boolean |
+| `b` (B) | `boolean` | `false` | Second boolean |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `boolean` | A AND B |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/logic/AndNode.java)
+
+## Compare
+
+`logic.compare`
+
+Compares two values using a specified operator
+
+Also called: equal, greater, less, equals.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `a` (A) | `number` | `0` | First value |
+| `b` (B) | `number` | `0` | Second value |
+| `operator` (Operator) | `string` | `"=="` | Comparison operator (==, !=, &lt;, &gt;, &lt;=, &gt;=) |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `boolean` | Comparison result |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/logic/CompareNode.java)
+
+## Not
+
+`logic.not`
+
+Inverts a boolean value
+
+Also called: negate, invert, logic.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `value` (Value) | `boolean` | `false` | Boolean to negate |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `boolean` | NOT value |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/logic/NotNode.java)
+
+## Or
+
+`logic.or`
+
+Returns true if either input is true
+
+Also called: either, any, logic.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `a` (A) | `boolean` | `false` | First boolean |
+| `b` (B) | `boolean` | `false` | Second boolean |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `boolean` | A OR B |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/logic/OrNode.java)
+
+## Xor
+
+`logic.xor`
+
+Returns true if exactly one input is true
+
+Also called: exclusive, different, logic.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `a` (A) | `boolean` | `false` | First boolean |
+| `b` (B) | `boolean` | `false` | Second boolean |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `boolean` | A XOR B |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/logic/XorNode.java)

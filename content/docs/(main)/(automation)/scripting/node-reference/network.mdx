@@ -1,0 +1,39 @@
+---
+title: Network
+description: Inputs, outputs, and defaults of the 1 built-in node in the Network category.
+---
+
+Generated from the [pinned SoulFire source](https://github.com/soulfiremc-com/SoulFire/tree/eb2b29fb0a4190d759135270a63344d53fdcf819). Regenerate these pages with `bun run generate-node-reference`.
+
+## Web Fetch
+
+`network.web_fetch` (expensive operation)
+
+Performs HTTP requests with full control over method, headers, and body
+
+Also called: http, fetch, request, api, rest, web, url, get, post.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `url` (URL) | `string` | Required | The URL to fetch |
+| `method` (Method) | `string` | `"GET"` | HTTP method (GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS) |
+| `headers` (Headers) | `string` | `"{}"` | JSON object of headers |
+| `body` (Body) | `string` | `""` | Request body (for POST/PUT/PATCH) |
+| `timeout` (Timeout) | `number` | `30000` | Timeout in milliseconds |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `exec_success` (Success) | `exec` | Executes on successful request |
+| `exec_error` (Error) | `exec` | Executes on failed request |
+| `response` (Response) | `string` | Response body as string |
+| `statusCode` (Status Code) | `number` | HTTP status code |
+| `responseHeaders` (Response Headers) | `string` | Response headers as JSON object |
+| `success` (Success) | `boolean` | Whether request succeeded (2xx status) |
+| `errorMessage` (Error Message) | `string` | Error message if failed |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/network/WebFetchNode.java)

@@ -1,0 +1,782 @@
+---
+title: Data
+description: Inputs, outputs, and defaults of the 29 built-in nodes in the Data category.
+---
+
+Generated from the [pinned SoulFire source](https://github.com/soulfiremc-com/SoulFire/tree/eb2b29fb0a4190d759135270a63344d53fdcf819). Regenerate these pages with `bun run generate-node-reference`.
+
+## Can See Position
+
+`data.can_see_position`
+
+Checks if the bot has line-of-sight to a position (raytrace)
+
+Also called: see, visible, sight, raytrace, line, wall, block.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `target` (Target) | `vector3` | Required | Position to check visibility to |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `visible` (Visible) | `boolean` | Whether the position is visible |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/CanSeePositionNode.java)
+
+## Filter Bots
+
+`data.filter_bots`
+
+Filters a list of bots by name using a regex pattern
+
+Also called: filter, bots, regex, match, name.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bots` (Bots) | `list<bot>` | Required | List of bots to filter |
+| `pattern` (Pattern) | `string` | `".*"` | Regex pattern to match bot names |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `bots` (Bots) | `list<bot>` | Filtered list of bots |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/FilterBotsNode.java)
+
+## Find Block
+
+`data.find_block`
+
+Finds the nearest block of a specific type within range
+
+Also called: find, block, search, nearest, ore, locate.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `blockType` (Block Type) | `string` | `"minecraft:diamond_ore"` | Block ID to search for |
+| `maxDistance` (Max Distance) | `number` | `16` | Maximum search radius |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `found` (Found) | `boolean` | Whether a block was found |
+| `position` (Position) | `vector3` | Block position |
+| `distance` (Distance) | `number` | Distance to the block |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/FindBlockNode.java)
+
+## Find Entity
+
+`data.find_entity`
+
+Finds the nearest entity of a specific type within range
+
+Also called: find, entity, search, nearest, mob, player, locate.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `entityType` (Entity Type) | `string` | `"any"` | Entity ID or 'any' for any entity |
+| `maxDistance` (Max Distance) | `number` | `32` | Maximum search radius |
+| `excludeDead` (Exclude Dead) | `boolean` | `true` | Skip dead or non-enemy entities |
+| `playersOnly` (Players Only) | `boolean` | `false` | Only return player entities |
+| `excludeBots` (Exclude Bots) | `boolean` | `false` | Skip other SoulFire bots in the same instance |
+| `mustBeSeen` (Must Be Seen) | `boolean` | `false` | Only return entities with line-of-sight (raytrace) |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `found` (Found) | `boolean` | Whether an entity was found |
+| `position` (Position) | `vector3` | Entity position |
+| `entityId` (Entity ID) | `number` | The entity's ID |
+| `distance` (Distance) | `number` | Distance to the entity |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/FindEntityNode.java)
+
+## Find Item
+
+`data.find_item`
+
+Searches inventory for items by ID or food filter
+
+Also called: find, item, inventory, search, food, slot.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `itemId` (Item ID) | `string` | Optional | Item registry name to search for (empty = any) |
+| `foodOnly` (Food Only) | `boolean` | `false` | Only match edible food items |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `found` (Found) | `boolean` | Whether a matching item was found |
+| `slot` (Slot) | `number` | Inventory menu slot index of the match |
+| `itemId` (Item ID) | `string` | Registry name of the found item |
+| `count` (Count) | `number` | Stack count of the found item |
+| `isHotbar` (Is Hotbar) | `boolean` | Whether the slot is in the hotbar |
+| `hotbarIndex` (Hotbar Index) | `number` | Hotbar index (0-8), or -1 if not hotbar |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/FindItemNode.java)
+
+## Get Armor
+
+`data.get_armor`
+
+Gets the bot's armor value and toughness
+
+Also called: armor, defence, protection, toughness.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `armorValue` (Armor) | `number` | Total armor points |
+| `armorToughness` (Toughness) | `number` | Armor toughness value |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetArmorNode.java)
+
+## Get Biome
+
+`data.get_biome`
+
+Gets the biome at the bot's current position
+
+Also called: biome, terrain, environment, forest, desert, ocean.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `biome` (Biome) | `string` | Current biome identifier |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBiomeNode.java)
+
+## Get Block
+
+`data.get_block`
+
+Gets information about a block at a specific position
+
+Also called: block, get, info, type, world.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `x` (X) | `number` | `0` | Block X coordinate |
+| `y` (Y) | `number` | `64` | Block Y coordinate |
+| `z` (Z) | `number` | `0` | Block Z coordinate |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `blockId` (Block ID) | `string` | The block's ID |
+| `isAir` (Is Air) | `boolean` | Whether the block is air |
+| `isSolid` (Is Solid) | `boolean` | Whether the block is solid |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBlockNode.java)
+
+## Get Bot By Name
+
+`data.get_bot_by_name`
+
+Finds a bot by its account name
+
+Also called: bot, name, find, get, search.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `name` (Name) | `string` | `""` | The bot's account name |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `bot` (Bot) | `bot` | The found bot (null if not found) |
+| `found` (Found) | `boolean` | Whether the bot was found |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBotByNameNode.java)
+
+## Get Bot Info
+
+`data.get_bot_info`
+
+Gets basic information about the bot
+
+Also called: name, username, uuid, identity, info.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `name` (Name) | `string` | Bot's username |
+| `uuid` (UUID) | `string` | Bot's unique identifier |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBotInfoNode.java)
+
+## Get Bots
+
+`data.get_bots`
+
+Returns all connected bots in the instance
+
+Also called: bots, all, list, connections.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `bots` (Bots) | `list<bot>` | List of all connected bots |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBotsNode.java)
+
+## Get Dimension
+
+`data.get_dimension`
+
+Gets the bot's current dimension
+
+Also called: dimension, world, overworld, nether, end.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `dimension` (Dimension) | `string` | Current dimension name |
+| `isOverworld` (Is Overworld) | `boolean` | True if in overworld |
+| `isNether` (Is Nether) | `boolean` | True if in nether |
+| `isEnd` (Is End) | `boolean` | True if in the end |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetDimensionNode.java)
+
+## Get Effects
+
+`data.get_effects`
+
+Gets the bot's active potion effects
+
+Also called: effects, potion, buff, debuff, status.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `effectCount` (Count) | `number` | Number of active effects |
+| `effectNames` (Effects) | `string` | Comma-separated effect names |
+| `hasEffects` (Has Effects) | `boolean` | True if any effects are active |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetEffectsNode.java)
+
+## Get Entity State
+
+`data.get_entity_state`
+
+Gets an entity state by integer ID or UUID, including its position, health, and game mode
+
+Also called: entity, state, health, alive, player, gamemode, sprint, position, uuid, rotation, motion.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `entityId` (Entity ID) | `number` | `-1` | The entity's integer ID |
+| `entityUuid` (Entity UUID) | `string` | `""` | The entity's UUID (takes priority over ID) |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `found` (Found) | `boolean` | Whether the entity was found |
+| `position` (Position) | `vector3` | Entity position |
+| `health` (Health) | `number` | Current health |
+| `maxHealth` (Max Health) | `number` | Maximum health |
+| `isAlive` (Is Alive) | `boolean` | Whether the entity is alive |
+| `isPlayer` (Is Player) | `boolean` | Whether the entity is a player |
+| `name` (Name) | `string` | Entity name or player username |
+| `gamemode` (Gamemode) | `string` | Player gamemode (survival, creative, etc.) |
+| `isSprinting` (Is Sprinting) | `boolean` | Whether the entity is sprinting |
+| `yaw` (Yaw) | `number` | Entity yaw rotation (horizontal) |
+| `pitch` (Pitch) | `number` | Entity pitch rotation (vertical) |
+| `motion` (Motion) | `vector3` | Entity motion/velocity vector |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetEntityStateNode.java)
+
+## Get Experience
+
+`data.get_experience`
+
+Gets the bot's experience level and points
+
+Also called: experience, xp, level, points.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `level` (Level) | `number` | Current experience level |
+| `totalXp` (Total XP) | `number` | Total experience points |
+| `xpProgress` (XP Progress) | `number` | Progress to next level (0-1) |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetExperienceNode.java)
+
+## Get Gamemode
+
+`data.get_gamemode`
+
+Gets the bot's current gamemode
+
+Also called: gamemode, survival, creative, adventure, spectator.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `gamemode` (Gamemode) | `string` | Current gamemode name |
+| `isSurvival` (Is Survival) | `boolean` | True if in survival mode |
+| `isCreative` (Is Creative) | `boolean` | True if in creative mode |
+| `isAdventure` (Is Adventure) | `boolean` | True if in adventure mode |
+| `isSpectator` (Is Spectator) | `boolean` | True if in spectator mode |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetGamemodeNode.java)
+
+## Get Health
+
+`data.get_health`
+
+Gets the bot's current health and max health
+
+Also called: health, hp, hearts, life.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `health` (Health) | `number` | Current health |
+| `maxHealth` (Max Health) | `number` | Maximum health |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetHealthNode.java)
+
+## Get Hunger
+
+`data.get_hunger`
+
+Gets the bot's food level and saturation
+
+Also called: hunger, food, saturation, eat.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `foodLevel` (Food Level) | `number` | Current food level (0-20) |
+| `saturation` (Saturation) | `number` | Current saturation |
+| `needsFood` (Needs Food) | `boolean` | Whether the bot needs food (food level &lt; 20) |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetHungerNode.java)
+
+## Get Inventory
+
+`data.get_inventory`
+
+Gets information about an item in a specific inventory slot
+
+Also called: inventory, item, slot, count, stack.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `slot` (Slot) | `number` | `0` | Inventory slot (0-35 main, 36-39 armor, 40 offhand) |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `itemId` (Item ID) | `string` | The item's registry ID |
+| `count` (Count) | `number` | Stack count |
+| `isEmpty` (Is Empty) | `boolean` | Whether the slot is empty |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetInventoryNode.java)
+
+## Get Light Level
+
+`data.get_light_level`
+
+Gets the light level at the bot's current position
+
+Also called: light, brightness, dark, spawn, mob.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `blockLight` (Block Light) | `number` | Light from blocks (0-15) |
+| `skyLight` (Sky Light) | `number` | Light from sky (0-15) |
+| `combinedLight` (Combined) | `number` | Maximum of block and sky light |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetLightLevelNode.java)
+
+## Get movement state
+
+`data.get_bot_state`
+
+Gets various movement and state flags of the bot
+
+Also called: Get Bot State, state, ground, water, swimming, sprinting, sneaking, flying, elytra.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `isOnGround` (On Ground) | `boolean` | True if bot is on ground |
+| `isInWater` (In Water) | `boolean` | True if bot is in water |
+| `isSwimming` (Swimming) | `boolean` | True if bot is swimming |
+| `isSprinting` (Sprinting) | `boolean` | True if bot is sprinting |
+| `isSneaking` (Sneaking) | `boolean` | True if bot is sneaking |
+| `isFallFlying` (Elytra Flying) | `boolean` | True if bot is elytra flying |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetBotStateNode.java)
+
+## Get Position
+
+`data.get_position`
+
+Gets the bot's current position in the world
+
+Also called: position, location, coordinates, xyz.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `position` (Position) | `vector3` | Current position |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetPositionNode.java)
+
+## Get Rotation
+
+`data.get_rotation`
+
+Gets the bot's current rotation (yaw and pitch)
+
+Also called: rotation, yaw, pitch, angle, direction.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `yaw` (Yaw) | `number` | Horizontal rotation (-180 to 180) |
+| `pitch` (Pitch) | `number` | Vertical rotation (-90 to 90) |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetRotationNode.java)
+
+## Get Selected Slot
+
+`data.get_selected_slot`
+
+Gets the bot's currently selected hotbar slot and item
+
+Also called: slot, hotbar, selected, hand, held.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `slot` (Slot) | `number` | Selected hotbar slot (0-8) |
+| `itemId` (Item ID) | `string` | Item in selected slot |
+| `itemCount` (Count) | `number` | Stack count in selected slot |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetSelectedSlotNode.java)
+
+## Get Target Block
+
+`data.get_target_block`
+
+Gets the block the bot is currently looking at (raycast)
+
+Also called: target, look, raycast, crosshair, aim.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `maxDistance` (Max Distance) | `number` | `5` | Maximum raycast distance |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `found` (Found) | `boolean` | True if a block was found |
+| `blockId` (Block ID) | `string` | Block identifier |
+| `position` (Position) | `vector3` | Block position |
+| `distance` (Distance) | `number` | Distance to block |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetTargetBlockNode.java)
+
+## Get Time
+
+`data.get_time`
+
+Gets the current game time and day/night status
+
+Also called: time, day, night, tick, clock.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `gameTime` (Game Time) | `number` | Total game time in ticks |
+| `dayTime` (Day Time) | `number` | Time of day (0-24000) |
+| `isDay` (Is Day) | `boolean` | True if daytime (6000-18000) |
+| `isNight` (Is Night) | `boolean` | True if nighttime |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetTimeNode.java)
+
+## Get Velocity
+
+`data.get_velocity`
+
+Gets the bot's current velocity and speed
+
+Also called: velocity, speed, movement, motion.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `velocity` (Velocity) | `vector3` | Current velocity vector |
+| `speed` (Speed) | `number` | Movement speed (magnitude) |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetVelocityNode.java)
+
+## Get Weather
+
+`data.get_weather`
+
+Gets the current weather conditions
+
+Also called: weather, rain, thunder, storm, clear.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `isRaining` (Is Raining) | `boolean` | True if raining |
+| `isThundering` (Is Thundering) | `boolean` | True if thunderstorm |
+| `rainLevel` (Rain Level) | `number` | Rain intensity (0-1) |
+| `thunderLevel` (Thunder Level) | `number` | Thunder intensity (0-1) |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/GetWeatherNode.java)
+
+## Is Container Open
+
+`data.is_container_open`
+
+Checks if a container or inventory screen is open
+
+Also called: container, inventory, open, screen, check.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `isOpen` (Is Open) | `boolean` | Whether a container or inventory screen is open |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/data/IsContainerOpenNode.java)

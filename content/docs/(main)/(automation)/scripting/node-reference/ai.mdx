@@ -1,0 +1,39 @@
+---
+title: AI
+description: Inputs, outputs, and defaults of the 1 built-in node in the AI category.
+---
+
+Generated from the [pinned SoulFire source](https://github.com/soulfiremc-com/SoulFire/tree/eb2b29fb0a4190d759135270a63344d53fdcf819). Regenerate these pages with `bun run generate-node-reference`.
+
+## LLM Chat
+
+`ai.llm_chat` (expensive operation)
+
+Sends a prompt to an LLM and returns the response using the bot's AI settings
+
+Also called: ai, llm, gpt, chat, openai, prompt, completion, generate.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `prompt` (Prompt) | `string` | Required | The prompt/message to send |
+| `systemPrompt` (System Prompt) | `string` | `""` | Optional system prompt for context |
+| `model` (Model) | `string` | `""` | Model override (empty = use bot default) |
+| `temperature` (Temperature) | `number` | `0.7` | Creativity (0.0-2.0) |
+| `maxTokens` (Max Tokens) | `number` | `1024` | Maximum response tokens |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `exec_success` (Success) | `exec` | Executes on successful response |
+| `exec_error` (Error) | `exec` | Executes on failed request |
+| `response` (Response) | `string` | LLM response text |
+| `success` (Success) | `boolean` | Whether the request succeeded |
+| `errorMessage` (Error Message) | `string` | Error message if failed |
+| `tokensUsed` (Tokens Used) | `number` | Total tokens used |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/ai/LLMChatNode.java)

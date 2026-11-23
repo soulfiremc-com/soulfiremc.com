@@ -1,0 +1,366 @@
+---
+title: Collection
+description: Inputs, outputs, and defaults of the 16 built-in nodes in the Collection category.
+---
+
+Generated from the [pinned SoulFire source](https://github.com/soulfiremc-com/SoulFire/tree/eb2b29fb0a4190d759135270a63344d53fdcf819). Regenerate these pages with `bun run generate-node-reference`.
+
+## Collection Add
+
+`collection.add`
+
+Returns a new collection with the item added
+
+Also called: collection, add, append, insert.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `collection` (Collection) | `C` | Required | The collection to extend |
+| `item` (Item) | `T` | Required | The item to add |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `collection` (Collection) | `C` | The updated collection |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionAddNode.java)
+
+## Collection Add All
+
+`collection.add_all`
+
+Returns a new collection with all items from another collection added
+
+Also called: collection, add all, concat, merge.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `collection` (Collection) | `C` | Required | The collection to extend |
+| `other` (Other) | `D` | Required | The collection whose items should be added |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `collection` (Collection) | `C` | The updated collection |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionAddAllNode.java)
+
+## Collection Contains
+
+`collection.contains`
+
+Checks if a list or set contains a specific item
+
+Also called: collection, contains, includes, has.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `collection` (Collection) | `C` | Required | The collection to search in |
+| `item` (Item) | `T` | Required | The item to search for |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `boolean` | Whether the collection contains the item |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionContainsNode.java)
+
+## Collection Is Empty
+
+`collection.is_empty`
+
+Checks if a list or set is empty
+
+Also called: collection, empty, size.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `collection` (Collection) | `C` | Required | The collection to inspect |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `boolean` | Whether the collection is empty |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionIsEmptyNode.java)
+
+## Collection Remove
+
+`collection.remove`
+
+Returns a new collection with the first matching item removed
+
+Also called: collection, remove, delete.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `collection` (Collection) | `C` | Required | The collection to modify |
+| `item` (Item) | `T` | Required | The item to remove |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `collection` (Collection) | `C` | The updated collection |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionRemoveNode.java)
+
+## Collection Remove All
+
+`collection.remove_all`
+
+Returns a new collection with all matching items removed
+
+Also called: collection, remove all, subtract.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `collection` (Collection) | `C` | Required | The collection to modify |
+| `other` (Other) | `D` | Required | Items to remove |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `collection` (Collection) | `C` | The updated collection |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionRemoveAllNode.java)
+
+## Collection Retain All
+
+`collection.retain_all`
+
+Returns a new collection that keeps only items present in the other collection
+
+Also called: collection, retain all, intersect, filter.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `collection` (Collection) | `C` | Required | The collection to modify |
+| `other` (Other) | `D` | Required | Items to retain |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `collection` (Collection) | `C` | The updated collection |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionRetainAllNode.java)
+
+## Collection Size
+
+`collection.size`
+
+Returns the size of a list or set
+
+Also called: collection, size, length, count.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `collection` (Collection) | `C` | Required | The collection to measure |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `size` (Size) | `number` | The number of items in the collection |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionSizeNode.java)
+
+## Collection to List
+
+`collection.to_list`
+
+Converts a collection to a list
+
+Also called: collection, to list, convert.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `collection` (Collection) | `C` | Required | The collection to convert |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `list` (List) | `list<any>` | The collection as an ordered list |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionToListNode.java)
+
+## Collection to Set
+
+`collection.to_set`
+
+Converts a collection to a set
+
+Also called: collection, to set, convert, distinct.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `collection` (Collection) | `C` | Required | The collection to convert |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `set` (Set) | `set<any>` | The collection as an ordered set |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/CollectionToSetNode.java)
+
+## List Add
+
+`list.add`
+
+Returns a new list with an item appended
+
+Also called: list, add, append.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `list` (List) | `list<T>` | Required | The list to extend |
+| `item` (Item) | `T` | Required | The item to append |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `list` (List) | `list<T>` | The updated list |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/ListAddNode.java)
+
+## List Create
+
+`list.create`
+
+Creates a native list from ordered inputs
+
+Also called: list, create, build, collection.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `items` (Items) | `any` | Optional | Items to include in the list Multi-input collection is not implemented by the reactive engine. |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `list` (List) | `list<any>` | The created list |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/ListCreateNode.java)
+
+## List Remove At
+
+`list.remove_at`
+
+Returns a new list with the item at the given index removed
+
+Also called: list, remove, index, delete.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `list` (List) | `list<T>` | Required | The list to modify |
+| `index` (Index) | `number` | Required | The index to remove |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `list` (List) | `list<T>` | The updated list |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/ListRemoveAtNode.java)
+
+## Map Keys
+
+`map.keys`
+
+Returns the keys of a map/object as a list
+
+Also called: map, keys, keyset, json, object.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `map` (Map) | `map` | Required | The map whose keys should be returned |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `keys` (Keys) | `list<string>` | The keys of the map |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/MapKeysNode.java)
+
+## Map Values
+
+`map.values`
+
+Returns the values of a map/object as a list in insertion order
+
+Also called: map, values, json, object.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `map` (Map) | `map` | Required | The map whose values should be returned |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `values` (Values) | `list<any>` | The values of the map |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/MapValuesNode.java)
+
+## Set Create
+
+`set.create`
+
+Creates a native set from inputs while preserving first-seen order
+
+Also called: set, create, build, distinct, collection.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `items` (Items) | `any` | Optional | Items to include in the set Multi-input collection is not implemented by the reactive engine. |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `set` (Set) | `set<any>` | The created set |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/collection/SetCreateNode.java)

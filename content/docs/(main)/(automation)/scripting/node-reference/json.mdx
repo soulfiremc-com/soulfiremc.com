@@ -1,0 +1,148 @@
+---
+title: JSON
+description: Inputs, outputs, and defaults of the 6 built-in nodes in the JSON category.
+---
+
+Generated from the [pinned SoulFire source](https://github.com/soulfiremc-com/SoulFire/tree/eb2b29fb0a4190d759135270a63344d53fdcf819). Regenerate these pages with `bun run generate-node-reference`.
+
+## JSON Array
+
+`json.array`
+
+Creates a JSON array from multiple inputs
+
+Also called: json, array, list, create, build.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `items` (Items) | `any` | Optional | Items to include in array Multi-input collection is not implemented by the reactive engine. |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `array` (Array) | `string` | JSON array string |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonArrayNode.java)
+
+## JSON Get
+
+`json.get`
+
+Extracts a value from JSON using a path expression
+
+Also called: json, get, extract, path, query, access.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `json` (JSON) | `string` | Required | JSON string or object |
+| `path` (Path) | `string` | Required | Path expression (e.g., data.users[0].name) |
+| `defaultValue` (Default) | `any` | `null` | Value if path not found |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `value` (Value) | `any` | Extracted value |
+| `found` (Found) | `boolean` | Whether the path was found |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonGetNode.java)
+
+## JSON Object
+
+`json.object`
+
+Creates a JSON object from key-value pairs
+
+Also called: json, object, map, create, build, dictionary.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `keys` (Keys) | `list<string>` | Required | List of keys |
+| `values` (Values) | `list<any>` | Required | List of values |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `object` (Object) | `string` | JSON object string |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonObjectNode.java)
+
+## JSON Parse
+
+`json.parse`
+
+Parses a JSON string into a usable object
+
+Also called: json, parse, deserialize, decode.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `json` (JSON) | `string` | Required | JSON string to parse |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `any` | Parsed JSON value |
+| `success` (Success) | `boolean` | Whether parsing succeeded |
+| `errorMessage` (Error Message) | `string` | Parse error if failed |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonParseNode.java)
+
+## JSON Set
+
+`json.set`
+
+Sets a value in JSON at a specified path
+
+Also called: json, set, modify, update, write.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `json` (JSON) | `string` | `"{}"` | JSON string to modify |
+| `path` (Path) | `string` | Required | Path where to set value |
+| `value` (Value) | `any` | Required | Value to set |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `string` | Modified JSON string |
+| `success` (Success) | `boolean` | Whether the operation succeeded |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonSetNode.java)
+
+## JSON Stringify
+
+`json.stringify`
+
+Converts a value to a JSON string with optional pretty printing
+
+Also called: json, stringify, serialize, encode, format.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `value` (Value) | `any` | Required | Value to convert |
+| `pretty` (Pretty) | `boolean` | `false` | Pretty print with indentation |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `json` (JSON) | `string` | JSON string representation |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/json/JsonStringifyNode.java)

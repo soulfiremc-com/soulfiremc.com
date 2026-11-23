@@ -1,0 +1,168 @@
+---
+title: List
+description: Inputs, outputs, and defaults of the 7 built-in nodes in the List category.
+---
+
+Generated from the [pinned SoulFire source](https://github.com/soulfiremc-com/SoulFire/tree/eb2b29fb0a4190d759135270a63344d53fdcf819). Regenerate these pages with `bun run generate-node-reference`.
+
+## First
+
+`list.first`
+
+Gets the first item in a list
+
+Also called: list, head, front, start.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `list` (List) | `list<T>` | Required | The input list |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `item` (Item) | `T` | The first item in the list |
+| `found` (Found) | `boolean` | Whether the list was non-empty |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/list/FirstNode.java)
+
+## Get At Index
+
+`list.get_at`
+
+Gets an item at a specific index in a list
+
+Also called: list, get, index, at, element, access.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `list` (List) | `list<T>` | Required | The input list |
+| `index` (Index) | `number` | `0` | The index to retrieve (0-based) |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `item` (Item) | `T` | The item at the specified index |
+| `found` (Found) | `boolean` | Whether the index was valid |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/list/GetAtNode.java)
+
+## Join to String
+
+`list.join`
+
+Joins list items into a string with a separator
+
+Also called: list, join, string, concat, combine, separator.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `list` (List) | `list<T>` | Required | The list to join |
+| `separator` (Separator) | `string` | `", "` | The separator between items |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `string` | The joined string |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/list/JoinToStringNode.java)
+
+## Last
+
+`list.last`
+
+Gets the last item in a list
+
+Also called: list, tail, back, end.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `list` (List) | `list<T>` | Required | The input list |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `item` (Item) | `T` | The last item in the list |
+| `found` (Found) | `boolean` | Whether the list was non-empty |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/list/LastNode.java)
+
+## List Contains
+
+`list.contains`
+
+Checks if a list contains a specific item
+
+Also called: list, contains, includes, has, find, search.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `list` (List) | `list<T>` | Required | The list to search in |
+| `item` (Item) | `T` | Required | The item to search for |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `boolean` | Whether the list contains the item |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/list/ListContainsNode.java)
+
+## List Length
+
+`list.length`
+
+Returns the length of a list
+
+Also called: list, length, count, size.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `list` (List) | `list<T>` | Required | The input list |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `length` (Length) | `number` | Number of items in the list |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/list/ListLengthNode.java)
+
+## Range
+
+`list.range`
+
+Generates a list of numbers from start to end with a given step
+
+Also called: list, sequence, numbers, generate, create.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `start` (Start) | `number` | `0` | Starting value (inclusive) |
+| `end` (End) | `number` | `10` | Ending value (exclusive) |
+| `step` (Step) | `number` | `1` | Step increment between values |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `list` (List) | `list<number>` | Generated list of numbers |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/list/RangeNode.java)

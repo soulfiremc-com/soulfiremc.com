@@ -1,0 +1,218 @@
+---
+title: Variables
+description: Inputs, outputs, and defaults of the 8 built-in nodes in the Variables category.
+---
+
+Generated from the [pinned SoulFire source](https://github.com/soulfiremc-com/SoulFire/tree/eb2b29fb0a4190d759135270a63344d53fdcf819). Regenerate these pages with `bun run generate-node-reference`.
+
+## Get connection variable
+
+`variable.get_session_bot`
+
+Reads temporary data for this bot connection. A new connection starts without these values.
+
+Also called: Get Session Bot Variable, variable, session, bot, temporary, get, retrieve, memory.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `key` (Key) | `string` | Required | Variable key |
+| `defaultValue` (Default) | `any` | `null` | Value if not found |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `value` (Value) | `any` | Retrieved value |
+| `found` (Found) | `boolean` | Whether variable was found |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/GetSessionBotVariableNode.java)
+
+## Get persistent bot variable
+
+`variable.get_persistent_bot`
+
+Reads persistent metadata for the bot account, which survives reconnects and SoulFire server restarts.
+
+Also called: variable, persistent, bot, load, get, retrieve, permanent.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `namespace` (Namespace) | `string` | `"script"` | Variable namespace |
+| `key` (Key) | `string` | Required | Variable key |
+| `defaultValue` (Default) | `any` | `null` | Value if not found |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `value` (Value) | `any` | Retrieved value |
+| `found` (Found) | `boolean` | Whether variable was found |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/GetPersistentBotVariableNode.java)
+
+## Get persistent project variable
+
+`variable.get_persistent_instance`
+
+Reads persistent project metadata, which survives SoulFire server restarts.
+
+Also called: Get Persistent Instance Variable, variable, persistent, instance, load, get, retrieve, permanent.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `namespace` (Namespace) | `string` | `"script"` | Variable namespace |
+| `key` (Key) | `string` | Required | Variable key |
+| `defaultValue` (Default) | `any` | `null` | Value if not found |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `value` (Value) | `any` | Retrieved value |
+| `found` (Found) | `boolean` | Whether variable was found |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/GetPersistentInstanceVariableNode.java)
+
+## Get project runtime variable
+
+`variable.get_session_instance`
+
+Reads temporary data for this project runtime. Values reset when the SoulFire server restarts.
+
+Also called: Get Session Instance Variable, variable, session, instance, temporary, get, retrieve, memory.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `key` (Key) | `string` | Required | Variable key |
+| `defaultValue` (Default) | `any` | `null` | Value if not found |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `value` (Value) | `any` | Retrieved value |
+| `found` (Found) | `boolean` | Whether variable was found |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/GetSessionInstanceVariableNode.java)
+
+## Set connection variable
+
+`variable.set_session_bot`
+
+Stores temporary data for this bot connection. A new connection starts without these values.
+
+Also called: Set Session Bot Variable, variable, session, bot, temporary, store, set, memory.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `key` (Key) | `string` | Required | Variable key |
+| `value` (Value) | `any` | Required | Value to store |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `success` (Success) | `boolean` | Whether storage succeeded |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/SetSessionBotVariableNode.java)
+
+## Set persistent bot variable
+
+`variable.set_persistent_bot`
+
+Stores persistent metadata for the bot account, which survives reconnects and SoulFire server restarts.
+
+Also called: variable, persistent, bot, save, store, set, permanent.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `namespace` (Namespace) | `string` | `"script"` | Variable namespace |
+| `key` (Key) | `string` | Required | Variable key |
+| `value` (Value) | `any` | Required | Value to store |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `success` (Success) | `boolean` | Whether storage succeeded |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/SetPersistentBotVariableNode.java)
+
+## Set persistent project variable
+
+`variable.set_persistent_instance`
+
+Stores persistent project metadata, which survives SoulFire server restarts.
+
+Also called: Set Persistent Instance Variable, variable, persistent, instance, save, store, set, permanent.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `namespace` (Namespace) | `string` | `"script"` | Variable namespace |
+| `key` (Key) | `string` | Required | Variable key |
+| `value` (Value) | `any` | Required | Value to store |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `success` (Success) | `boolean` | Whether storage succeeded |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/SetPersistentInstanceVariableNode.java)
+
+## Set project runtime variable
+
+`variable.set_session_instance`
+
+Stores temporary data for this project runtime. Values reset when the SoulFire server restarts.
+
+Also called: Set Session Instance Variable, variable, session, instance, temporary, store, set, memory.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `key` (Key) | `string` | Required | Variable key |
+| `value` (Value) | `any` | Required | Value to store |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `success` (Success) | `boolean` | Whether storage succeeded |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/variable/SetSessionInstanceVariableNode.java)

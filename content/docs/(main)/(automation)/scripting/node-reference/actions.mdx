@@ -1,0 +1,641 @@
+---
+title: Actions
+description: Inputs, outputs, and defaults of the 26 built-in nodes in the Actions category.
+---
+
+Generated from the [pinned SoulFire source](https://github.com/soulfiremc-com/SoulFire/tree/eb2b29fb0a4190d759135270a63344d53fdcf819). Regenerate these pages with `bun run generate-node-reference`.
+
+## Attack
+
+`action.attack`
+
+Makes the bot attack the entity it's looking at (left click)
+
+Also called: hit, fight, damage, combat, left click.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/AttackNode.java)
+
+## Break Block
+
+`action.break_block`
+
+Pathfinds to and breaks a block at the specified position
+
+Also called: break, mine, dig, destroy, block.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `position` (Position) | `vector3` | Required | Block position to break |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `exec_error` (Error) | `exec` | Executes on failure |
+| `success` (Success) | `boolean` | Whether it succeeded |
+| `errorMessage` (Error Message) | `string` | Error details |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/BreakBlockNode.java)
+
+## Click Slot
+
+`action.click_slot`
+
+Clicks an inventory slot (left, right, or shift click)
+
+Also called: click, slot, inventory, move, item, swap.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `slot` (Slot) | `number` | `0` | Inventory menu slot index to click (-999 to drop the carried item) |
+| `clickType` (Click Type) | `string` | `"left"` | Click type: left, right, or shift |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/ClickSlotNode.java)
+
+## Close Inventory
+
+`action.close_inventory`
+
+Closes any open container or inventory screen
+
+Also called: close, inventory, container, screen.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/CloseInventoryNode.java)
+
+## Drop cursor item
+
+`action.drop_item`
+
+Drops the item currently held on the cursor
+
+Also called: Drop Item, drop, item, cursor, throw, discard.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `dropAll` (Drop All) | `boolean` | `true` | Drop entire stack (true) or one item (false) |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/DropItemNode.java)
+
+## Drop Slot
+
+`action.drop_slot`
+
+Picks up an item from a slot and drops it outside the inventory
+
+Also called: drop, slot, inventory, throw, discard, remove.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `slot` (Slot) | `number` | `0` | Inventory menu slot index to drop from |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/DropSlotNode.java)
+
+## Go to position
+
+`action.pathfind_to`
+
+Moves the bot to a target position using pathfinding
+
+Also called: Pathfind To, pathfind, walk, move, goto, navigate.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `destination` (Destination) | `vector3` | Required | Target position to pathfind to |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `exec_error` (Error) | `exec` | Executes on failure |
+| `success` (Success) | `boolean` | Whether it succeeded |
+| `errorMessage` (Error Message) | `string` | Error details |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/PathfindToNode.java)
+
+## Jump
+
+`action.jump`
+
+Makes the bot jump once
+
+Also called: hop, leap.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/JumpNode.java)
+
+## Log message
+
+`action.print`
+
+Logs a message for debugging purposes
+
+Also called: Print, print, log, debug, console, output, message.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `message` (Message) | `any` | Required | The message to log |
+| `level` (Level) | `string` | `"info"` | Log level (debug, info, warn, error) |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/PrintNode.java)
+
+## Look At
+
+`action.look_at`
+
+Makes the bot look at a specific position in the world
+
+Also called: look, face, turn, aim, view.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `target` (Target) | `vector3` | Required | Position to look at |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/LookAtNode.java)
+
+## Move Backward
+
+`action.move_backward`
+
+Sets the bot's backward movement state (S key)
+
+Also called: move, backward, back, s-key, wasd.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `enabled` (Enabled) | `boolean` | `true` | Whether to move backward |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/MoveBackwardNode.java)
+
+## Move Forward
+
+`action.move_forward`
+
+Sets the bot's forward movement state (W key)
+
+Also called: move, forward, walk, w-key, wasd.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `enabled` (Enabled) | `boolean` | `true` | Whether to move forward |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/MoveForwardNode.java)
+
+## Open Inventory
+
+`action.open_inventory`
+
+Opens the player's inventory screen
+
+Also called: open, inventory, container, screen.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/OpenInventoryNode.java)
+
+## Pathfind Away From
+
+`action.pathfind_away_from`
+
+Moves the bot away from a position using pathfinding
+
+Also called: pathfind, away, flee, escape, move, afk.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `position` (Position) | `vector3` | Required | Position to move away from |
+| `distance` (Distance) | `number` | `10` | Minimum distance to move away |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `exec_error` (Error) | `exec` | Executes on failure |
+| `success` (Success) | `boolean` | Whether it succeeded |
+| `errorMessage` (Error Message) | `string` | Error details |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/PathfindAwayFromNode.java)
+
+## Place Block
+
+`action.place_block`
+
+Pathfinds to and places a block at the specified position
+
+Also called: place, build, put, block.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `position` (Position) | `vector3` | Required | Block position to place at |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `exec_error` (Error) | `exec` | Executes on failure |
+| `success` (Success) | `boolean` | Whether it succeeded |
+| `errorMessage` (Error Message) | `string` | Error details |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/PlaceBlockNode.java)
+
+## Respawn
+
+`action.respawn`
+
+Respawns the bot after death
+
+Also called: death, revive, alive.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/RespawnNode.java)
+
+## Select hotbar slot
+
+`action.select_slot`
+
+Selects a hotbar slot (0-8)
+
+Also called: Select Slot, slot, hotbar, select, inventory, hand.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `slot` (Slot) | `number` | `0` | Hotbar slot (0-8) |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SelectSlotNode.java)
+
+## Send Chat
+
+`action.send_chat`
+
+Sends a chat message or command
+
+Also called: chat, message, send, say, command.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `message` (Message) | `string` | `""` | The message to send |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SendChatNode.java)
+
+## Set Rotation
+
+`action.set_rotation`
+
+Sets the bot's rotation (yaw and pitch in degrees)
+
+Also called: rotation, yaw, pitch, turn, face, angle.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `yaw` (Yaw) | `number` | `0` | Horizontal rotation (-180 to 180) |
+| `pitch` (Pitch) | `number` | `0` | Vertical rotation (-90 to 90) |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SetRotationNode.java)
+
+## Sneak
+
+`action.sneak`
+
+Sets the bot's sneaking state
+
+Also called: crouch, shift, stealth.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `enabled` (Enabled) | `boolean` | `true` | Whether to sneak |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SneakNode.java)
+
+## Sprint
+
+`action.sprint`
+
+Sets the bot's sprinting state
+
+Also called: run, fast, speed.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `enabled` (Enabled) | `boolean` | `true` | Whether to sprint |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SprintNode.java)
+
+## Strafe Left
+
+`action.strafe_left`
+
+Sets the bot's left strafe movement state (A key)
+
+Also called: move, strafe, left, a-key, wasd.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `enabled` (Enabled) | `boolean` | `true` | Whether to strafe left |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/StrafeLeftNode.java)
+
+## Strafe Right
+
+`action.strafe_right`
+
+Sets the bot's right strafe movement state (D key)
+
+Also called: move, strafe, right, d-key, wasd.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+| `enabled` (Enabled) | `boolean` | `true` | Whether to strafe right |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/StrafeRightNode.java)
+
+## Swing Hand
+
+`action.swing_hand`
+
+Swings the bot's arm without attacking (cosmetic swing)
+
+Also called: swing, arm, wave, miss, fake.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/SwingHandNode.java)
+
+## Use Item
+
+`action.use_item`
+
+Uses the item in the bot's hand (right click)
+
+Also called: use, item, right click, interact, eat, drink.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `bot` (Bot) | `bot` | Optional | Optional override of the bot in execution context |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/UseItemNode.java)
+
+## Wait
+
+`action.wait` (expensive operation)
+
+Delays execution for a specified duration with optional random jitter
+
+Also called: delay, sleep, pause, timer, jitter.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `baseMs` (Duration (ms)) | `number` | `1000` | Base delay in milliseconds |
+| `jitterMs` (Jitter (ms)) | `number` | `0` | Random jitter +/- this value (0 = no jitter) |
+| `minMs` (Min (ms)) | `number` | `0` | Minimum delay (clamp) |
+| `maxMs` (Max (ms)) | `number` | `60000` | Maximum delay (clamp) |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `actualMs` (Actual (ms)) | `number` | Actual delay used |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/action/WaitNode.java)

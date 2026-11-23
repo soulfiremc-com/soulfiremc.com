@@ -1,0 +1,171 @@
+---
+title: Utility
+description: Inputs, outputs, and defaults of the 7 built-in nodes in the Utility category.
+---
+
+Generated from the [pinned SoulFire source](https://github.com/soulfiremc-com/SoulFire/tree/eb2b29fb0a4190d759135270a63344d53fdcf819). Regenerate these pages with `bun run generate-node-reference`.
+
+## Create Vector3
+
+`util.create_vector3`
+
+Creates a 3D vector from x, y, z components
+
+Also called: vector, vec3, position, coordinates, xyz, create.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `x` (X) | `number` | `0` | X component |
+| `y` (Y) | `number` | `0` | Y component |
+| `z` (Z) | `number` | `0` | Z component |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `vector` (Vector) | `vector3` | Created 3D vector |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/util/CreateVector3Node.java)
+
+## Is Empty
+
+`util.is_empty`
+
+Checks if a value is null or empty (works with strings and lists)
+
+Also called: empty, check, null, blank, validate, length.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `value` (Value) | `any` | Required | Value to check for empty |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `boolean` | True if value is null or empty |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/util/IsEmptyNode.java)
+
+## Is Null
+
+`util.is_null`
+
+Checks if a value is null
+
+Also called: null, check, undefined, missing, validate.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `value` (Value) | `any` | Required | Value to check for null |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `boolean` | True if value is null |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/util/IsNullNode.java)
+
+## Split Vector3
+
+`util.split_vector3`
+
+Splits a 3D vector into x, y, z components
+
+Also called: vector, vec3, position, coordinates, xyz, split, decompose.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `vector` (Vector) | `vector3` | Required | 3D vector to split |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `x` (X) | `number` | X component |
+| `y` (Y) | `number` | Y component |
+| `z` (Z) | `number` | Z component |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/util/SplitVector3Node.java)
+
+## Timestamp
+
+`utility.timestamp`
+
+Gets the current timestamp in various formats
+
+Also called: time, date, now, epoch, clock.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `in` (In) | `exec` | Optional | Execution input |
+| `format` (Format) | `string` | `""` | Date format pattern (empty = epoch ms) |
+| `timezone` (Timezone) | `string` | `"UTC"` | Timezone ID (e.g., America/New_York) |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `out` (Out) | `exec` | Execution output |
+| `timestamp` (Timestamp) | `number` | Epoch milliseconds |
+| `formatted` (Formatted) | `string` | Formatted date string |
+| `iso` (ISO) | `string` | ISO 8601 formatted string |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/util/TimestampNode.java)
+
+## To Number
+
+`util.to_number`
+
+Parses a string to a number
+
+Also called: convert, number, parse, cast, integer, float.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `value` (Value) | `string` | Optional | Value to parse as number |
+| `default` (Default) | `number` | `0` | Default value if parsing fails |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `number` | Parsed number or default |
+| `success` (Success) | `boolean` | Whether parsing succeeded |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/util/ToNumberNode.java)
+
+## To String
+
+`util.to_string`
+
+Converts any value to a string
+
+Also called: convert, string, text, cast.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `value` (Value) | `any` | Required | Value to convert |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `string` | String representation |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/util/ToStringNode.java)

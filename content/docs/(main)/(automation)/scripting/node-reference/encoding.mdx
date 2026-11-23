@@ -1,0 +1,153 @@
+---
+title: Encoding
+description: Inputs, outputs, and defaults of the 6 built-in nodes in the Encoding category.
+---
+
+Generated from the [pinned SoulFire source](https://github.com/soulfiremc-com/SoulFire/tree/eb2b29fb0a4190d759135270a63344d53fdcf819). Regenerate these pages with `bun run generate-node-reference`.
+
+## Base64 Decode
+
+`encoding.base64_decode`
+
+Decodes a Base64 string
+
+Also called: base64, decode, decoding.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `input` (Input) | `string` | Required | Base64 string to decode |
+| `urlSafe` (URL Safe) | `boolean` | `false` | Input uses URL-safe alphabet |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `decoded` (Decoded) | `string` | Decoded string |
+| `success` (Success) | `boolean` | Whether decoding succeeded |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/Base64DecodeNode.java)
+
+## Base64 Encode
+
+`encoding.base64_encode`
+
+Encodes a string to Base64
+
+Also called: base64, encode, encoding.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `input` (Input) | `string` | Required | String to encode |
+| `urlSafe` (URL Safe) | `boolean` | `false` | Use URL-safe alphabet |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `encoded` (Encoded) | `string` | Base64 encoded string |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/Base64EncodeNode.java)
+
+## Compress/Decompress
+
+`encoding.compress`
+
+Compresses or decompresses data using GZIP
+
+Also called: compress, gzip, decompress, zip, deflate.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `input` (Input) | `string` | Required | Data to compress/decompress |
+| `decompress` (Decompress) | `boolean` | `false` | Decompress instead of compress |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `output` (Output) | `string` | Compressed (base64) or decompressed data |
+| `success` (Success) | `boolean` | Whether operation succeeded |
+| `ratio` (Ratio) | `number` | Compression ratio (original/compressed) |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/CompressionNode.java)
+
+## Decrypt
+
+`encoding.decrypt`
+
+Decrypts an AES-encrypted string
+
+Also called: aes, cipher, decipher.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `ciphertext` (Ciphertext) | `string` | Required | Base64-encoded encrypted data |
+| `key` (Key) | `string` | Required | Decryption key |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `plaintext` (Plaintext) | `string` | Decrypted text |
+| `success` (Success) | `boolean` | Whether decryption succeeded |
+| `errorMessage` (Error Message) | `string` | Error message if failed |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/DecryptNode.java)
+
+## Encrypt
+
+`encoding.encrypt`
+
+Encrypts a string using AES encryption
+
+Also called: aes, cipher, secure, protection.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `plaintext` (Plaintext) | `string` | Required | Text to encrypt |
+| `key` (Key) | `string` | Required | Encryption key (will be hashed to 256 bits) |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `ciphertext` (Ciphertext) | `string` | Base64-encoded encrypted data (includes IV) |
+| `success` (Success) | `boolean` | Whether encryption succeeded |
+| `errorMessage` (Error Message) | `string` | Error message if failed |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/EncryptNode.java)
+
+## Hash
+
+`encoding.hash`
+
+Computes a cryptographic hash of the input
+
+Also called: md5, sha, sha256, checksum, digest.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `input` (Input) | `string` | Required | String to hash |
+| `algorithm` (Algorithm) | `string` | `"SHA-256"` | Hash algorithm (MD5, SHA-1, SHA-256, SHA-512) |
+| `encoding` (Encoding) | `string` | `"hex"` | Output encoding (hex, base64) |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `hash` (Hash) | `string` | Computed hash |
+| `success` (Success) | `boolean` | Whether hashing succeeded |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/encoding/HashNode.java)

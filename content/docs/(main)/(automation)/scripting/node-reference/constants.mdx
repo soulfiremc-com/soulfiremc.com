@@ -1,0 +1,99 @@
+---
+title: Constants
+description: Inputs, outputs, and defaults of the 4 built-in nodes in the Constants category.
+---
+
+Generated from the [pinned SoulFire source](https://github.com/soulfiremc-com/SoulFire/tree/eb2b29fb0a4190d759135270a63344d53fdcf819). Regenerate these pages with `bun run generate-node-reference`.
+
+## Boolean
+
+`constant.boolean`
+
+Outputs a constant boolean value
+
+Also called: bool, true, false, constant, value.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `value` (Value) | `boolean` | `false` | The constant value |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `value` (Value) | `boolean` | The constant value |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/constant/BooleanConstantNode.java)
+
+## Number
+
+`constant.number`
+
+Outputs a constant number value
+
+Also called: constant, value.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `value` (Value) | `number` | `0` | The constant value |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `value` (Value) | `number` | The constant value |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/constant/NumberConstantNode.java)
+
+## String
+
+`constant.string`
+
+Outputs a constant string value
+
+Also called: text, constant, value.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `value` (Value) | `string` | Optional | The constant value |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `value` (Value) | `string` | The constant value |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/constant/StringConstantNode.java)
+
+## Vector3
+
+`constant.vector3`
+
+Outputs a constant 3D vector with both a typed vector and x, y, z components
+
+Also called: vector, xyz, position, coordinate, constant.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `x` (X) | `number` | `0` | X component |
+| `y` (Y) | `number` | `0` | Y component |
+| `z` (Z) | `number` | `0` | Z component |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `vector` (Vector) | `vector3` | Vector value |
+| `x` (X) | `number` | X component |
+| `y` (Y) | `number` | Y component |
+| `z` (Z) | `number` | Z component |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/constant/Vector3ConstantNode.java)

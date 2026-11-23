@@ -1,0 +1,515 @@
+---
+title: Math
+description: Inputs, outputs, and defaults of the 22 built-in nodes in the Math category.
+---
+
+Generated from the [pinned SoulFire source](https://github.com/soulfiremc-com/SoulFire/tree/eb2b29fb0a4190d759135270a63344d53fdcf819). Regenerate these pages with `bun run generate-node-reference`.
+
+## Absolute
+
+`math.abs`
+
+Returns the absolute value of a number
+
+Also called: abs, positive, magnitude.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `value` (Value) | `number` | `0` | Input number |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `number` | Absolute value |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/AbsNode.java)
+
+## Add
+
+`math.add`
+
+Adds two numbers together
+
+Also called: plus, sum, arithmetic.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `a` (A) | `number` | `0` | First number |
+| `b` (B) | `number` | `0` | Second number |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `number` | Sum of A and B |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/AddNode.java)
+
+## B-Spline
+
+`math.bspline`
+
+Performs cubic B-spline curve interpolation
+
+Also called: bspline, spline, curve, interpolate.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `p0` (P0) | `number` | `0` | First control point |
+| `p1` (P1) | `number` | `0` | Second control point |
+| `p2` (P2) | `number` | `1` | Third control point |
+| `p3` (P3) | `number` | `1` | Fourth control point |
+| `t` (T) | `number` | `0.5` | Interpolation factor (0-1) |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `number` | Interpolated value |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/BSplineNode.java)
+
+## Ceiling
+
+`math.ceil`
+
+Rounds a number up to the nearest integer
+
+Also called: ceil, round, up, integer.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `value` (Value) | `number` | `0` | Input number |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `number` | Rounded up value |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/CeilNode.java)
+
+## Clamp
+
+`math.clamp`
+
+Constrains a value within a range
+
+Also called: constrain, limit, bound.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `value` (Value) | `number` | `0` | Value to clamp |
+| `min` (Min) | `number` | `0` | Minimum bound |
+| `max` (Max) | `number` | `1` | Maximum bound |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `number` | Clamped value |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/ClampNode.java)
+
+## Cosine
+
+`math.cos`
+
+Calculates the cosine of an angle in degrees
+
+Also called: cos, trig, trigonometry.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `angle` (Angle) | `number` | `0` | Angle in degrees |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `number` | Cosine of angle |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/CosNode.java)
+
+## Distance
+
+`math.distance`
+
+Calculates the distance between two 3D points
+
+Also called: length, measure, vector.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `a` (Point A) | `vector3` | Required | First 3D point |
+| `b` (Point B) | `vector3` | Required | Second 3D point |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `distance` (Distance) | `number` | Distance between points |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/DistanceNode.java)
+
+## Divide
+
+`math.divide`
+
+Divides A by B
+
+Also called: quotient, fraction, arithmetic.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `a` (A) | `number` | `0` | Dividend |
+| `b` (B) | `number` | `1` | Divisor |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `number` | A divided by B |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/DivideNode.java)
+
+## Floor
+
+`math.floor`
+
+Rounds a number down to the nearest integer
+
+Also called: round, down, integer.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `value` (Value) | `number` | `0` | Input number |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `number` | Rounded down value |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/FloorNode.java)
+
+## Formula
+
+`math.formula`
+
+Evaluates a custom mathematical expression
+
+Also called: expression, evaluate, math.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `expression` (Expression) | `string` | `"a + b"` | Mathematical expression |
+| `a` (A) | `number` | `0` | Variable a |
+| `b` (B) | `number` | `0` | Variable b |
+| `c` (C) | `number` | `0` | Variable c |
+| `d` (D) | `number` | `0` | Variable d |
+| `e` (E) | `number` | `0` | Variable e |
+| `f` (F) | `number` | `0` | Variable f |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `number` | Expression result |
+| `error` (Error) | `string` | Error message if any |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/FormulaNode.java)
+
+## Lerp
+
+`math.lerp`
+
+Linearly interpolates between two values
+
+Also called: interpolate, blend, mix.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `a` (A) | `number` | `0` | Start value |
+| `b` (B) | `number` | `1` | End value |
+| `t` (T) | `number` | `0.5` | Interpolation factor (0-1) |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `number` | Interpolated value |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/LerpNode.java)
+
+## Maximum
+
+`math.max`
+
+Returns the larger of two numbers
+
+Also called: max, larger, greatest.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `a` (A) | `number` | `0` | First number |
+| `b` (B) | `number` | `0` | Second number |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `number` | Larger of A and B |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/MaxNode.java)
+
+## Minimum
+
+`math.min`
+
+Returns the smaller of two numbers
+
+Also called: min, smaller, least.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `a` (A) | `number` | `0` | First number |
+| `b` (B) | `number` | `0` | Second number |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `number` | Smaller of A and B |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/MinNode.java)
+
+## Modulo
+
+`math.modulo`
+
+Computes the remainder of A divided by B
+
+Also called: mod, remainder, arithmetic.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `a` (A) | `number` | `0` | Dividend |
+| `b` (B) | `number` | `1` | Divisor |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `number` | Remainder of A divided by B |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/ModuloNode.java)
+
+## Multiply
+
+`math.multiply`
+
+Multiplies two numbers together
+
+Also called: times, product, arithmetic.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `a` (A) | `number` | `0` | First number |
+| `b` (B) | `number` | `0` | Second number |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `number` | A times B |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/MultiplyNode.java)
+
+## Power
+
+`math.pow`
+
+Raises a number to a power
+
+Also called: pow, exponent, raise.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `base` (Base) | `number` | `0` | Base number |
+| `exponent` (Exponent) | `number` | `1` | Exponent |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `number` | Base raised to exponent |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/PowNode.java)
+
+## Random
+
+`math.random`
+
+Generates a random number within a range
+
+Also called: rand, chance, dice.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `min` (Min) | `number` | `0` | Minimum value |
+| `max` (Max) | `number` | `1` | Maximum value |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `number` | Random number between min and max |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/RandomNode.java)
+
+## Round
+
+`math.round`
+
+Rounds a number to the nearest integer
+
+Also called: nearest, integer.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `value` (Value) | `number` | `0` | Input number |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `number` | Rounded value |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/RoundNode.java)
+
+## Sine
+
+`math.sin`
+
+Calculates the sine of an angle in degrees
+
+Also called: sin, trig, trigonometry.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `angle` (Angle) | `number` | `0` | Angle in degrees |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `number` | Sine of angle |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/SinNode.java)
+
+## Square Root
+
+`math.sqrt`
+
+Calculates the square root of a number
+
+Also called: sqrt, square, root.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `value` (Value) | `number` | `0` | Input number |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `number` | Square root |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/SqrtNode.java)
+
+## Subtract
+
+`math.subtract`
+
+Subtracts B from A
+
+Also called: minus, difference, arithmetic.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `a` (A) | `number` | `0` | First number |
+| `b` (B) | `number` | `0` | Second number |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `number` | A minus B |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/SubtractNode.java)
+
+## Tangent
+
+`math.tan`
+
+Calculates the tangent of an angle in degrees
+
+Also called: tan, trig, trigonometry.
+
+**Inputs**
+
+| Port | Type | Required / default | Description |
+| --- | --- | --- | --- |
+| `angle` (Angle) | `number` | `0` | Angle in degrees |
+
+**Outputs**
+
+| Port | Type | Description |
+| --- | --- | --- |
+| `result` (Result) | `number` | Tangent of angle |
+
+[Implementation](https://github.com/soulfiremc-com/SoulFire/blob/eb2b29fb0a4190d759135270a63344d53fdcf819/mod/src/main/java/com/soulfiremc/server/script/nodes/math/TanNode.java)

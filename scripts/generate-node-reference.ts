@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync } from "node:fs";
+import { readFileSync, readdirSync, rmSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 import { sdkRepository, sdkRevision, sdkSource } from "./sdk-source";
 import { docsOutput } from "./lib/docs-output";
@@ -171,20 +171,48 @@ const portsTable = (ports: NodePort[], input: boolean) =>
   ports.length > 0
     ? `| Port | Type | ${input ? "Required / default" : "Description"} |${input ? " Description |" : ""}\n| --- | --- | --- |${input ? " --- |" : ""}\n${ports.map((port) => `| \`${port.id}\` (${escape(port.name)}) | \`${codeCell(port.type)}\` | ${input ? `${port.defaultValue !== undefined ? `\`${codeCell(JSON.stringify(port.defaultValue))}\`` : port.required ? "Required" : "Optional"} | ` : ""}${escape(port.description)}${port.multiInput ? " Multi-input collection is not implemented by the reactive engine." : ""} |`).join("\n")}`
     : "None.";
-const body = categories
-  .map((category) => {
-    const items = nodes
+const nodeSection = (node: Node) =>
+  `## ${node.name}\n\n\`${node.type}\`${node.trigger ? " (trigger)" : ""}${node.expensive ? " (expensive operation)" : ""}\n\n${escape(node.description)}${aliases(node)}\n\n**Inputs**\n\n${portsTable(node.inputs, true)}\n\n**Outputs**\n\n${portsTable(node.outputs, false)}\n\n[Implementation](${node.source})`;
+const categoryPages = categories
+  .map((category) => ({
+    category,
+    slug: category.id.toLowerCase().replaceAll(/[^a-z0-9]+/gu, "-"),
+    items: nodes
       .filter((node) => node.category === category.id)
-      .toSorted((a, b) => a.name.localeCompare(b.name, "en"));
-    if (items.length === 0) return "";
-    return `## ${category.name}\n\n${items.map((node) => `### ${node.name}\n\n\`${node.type}\`${node.trigger ? " (trigger)" : ""}${node.expensive ? " (expensive operation)" : ""}\n\n${escape(node.description)}${aliases(node)}\n\n**Inputs**\n\n${portsTable(node.inputs, true)}\n\n**Outputs**\n\n${portsTable(node.outputs, false)}\n\n[Implementation](${node.source})`).join("\n\n")}`;
-  })
-  .filter(Boolean)
-  .join("\n\n");
-docsOutput(
-  resolve("content/docs/(main)/(automation)/scripting/node-reference.mdx"),
-  `---\ntitle: Node reference\ndescription: Built-in node IDs, input defaults, output ports, and source links.\nicon: Workflow\n---\n\nGenerated from the [pinned SoulFire source](${sdkRepository}/tree/${sdkRevision}). This snapshot contains ${nodes.length} built-in nodes in ${categories.length} categories. Plugins can add other nodes. The connected server's palette is authoritative for its installed version.\n\nInput defaults are JSON values. An execution wire selects when an action runs. A data wire supplies a value. An optional bot input overrides the bot in execution context. Read [execution and data](/docs/scripting/execution-and-data) before wiring a graph.\n\nThe SDK and node reference use the [documented source baseline](/docs/sdk/compatibility). Regenerate this page with \`bun run generate-node-reference\`.\n\n${body}\n`,
+      .toSorted((a, b) => a.name.localeCompare(b.name, "en")),
+  }))
+  .filter((page) => page.items.length > 0);
+const outputDir = resolve(
+  "content/docs/(main)/(automation)/scripting/node-reference",
 );
+// One page per category keeps each page short enough to scan. Remove pages
+// for categories that no longer exist before writing the new set.
+if (!process.argv.includes("--check"))
+  rmSync(outputDir, { recursive: true, force: true });
+const generatedNote = `Generated from the [pinned SoulFire source](${sdkRepository}/tree/${sdkRevision}). Regenerate these pages with \`bun run generate-node-reference\`.`;
+docsOutput(
+  join(outputDir, "index.mdx"),
+  `---\ntitle: Node reference\ndescription: Built-in node IDs, input defaults, output ports, and source links.\nicon: Workflow\n---\n\nThis snapshot contains ${nodes.length} built-in nodes in ${categoryPages.length} categories. Plugins can add other nodes. The connected server's palette is authoritative for its installed version.\n\nInput defaults are JSON values. An execution wire selects when an action runs. A data wire supplies a value. An optional bot input overrides the bot in execution context. Read [execution and data](/docs/scripting/execution-and-data) before wiring a graph.\n\nThe SDK and node reference use the [documented source baseline](/docs/sdk/compatibility). ${generatedNote}\n\n## Categories\n\n${categoryPages.map((page) => `- [${page.category.name}](/docs/scripting/node-reference/${page.slug}): ${page.items.length} ${page.items.length === 1 ? "node" : "nodes"}`).join("\n")}\n`,
+);
+for (const page of categoryPages) {
+  docsOutput(
+    join(outputDir, `${page.slug}.mdx`),
+    `---\ntitle: ${page.category.name}\ndescription: Inputs, outputs, and defaults of the ${page.items.length} built-in ${page.items.length === 1 ? "node" : "nodes"} in the ${page.category.name} category.\n---\n\n${generatedNote}\n\n${page.items.map(nodeSection).join("\n\n")}\n`,
+  );
+}
+const metaPages = categoryPages.map((page) => page.slug);
+const folderTitles = {
+  "": "Node reference",
+  ".de": "Knotenreferenz",
+  ".pl": "Dokumentacja węzłów",
+  ".ru": "Справочник узлов",
+};
+for (const [suffix, title] of Object.entries(folderTitles)) {
+  docsOutput(
+    join(outputDir, `meta${suffix}.json`),
+    `${JSON.stringify({ title, defaultOpen: false, pages: metaPages }, null, 2)}\n`,
+  );
+}
 docsOutput(
   resolve("public/docs/node-catalog.json"),
   `${JSON.stringify({ revision: sdkRevision, categories, nodes }, null, 2)}\n`,
