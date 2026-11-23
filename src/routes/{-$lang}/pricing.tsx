@@ -25,6 +25,7 @@ import {
   getPageMeta,
   jsonLdScript,
 } from "@/lib/seo";
+import { kofiTiersUrl, kofiUrl } from "@/lib/support-links";
 
 const freeTierFeatures = [
   "support.fullSoulfireBotFramework",
@@ -63,7 +64,9 @@ function PricingPageContent() {
               <div className="rounded-lg bg-muted p-2">
                 <Users className="size-5" />
               </div>
-              <CardTitle className="text-xl">{t("common.free")}</CardTitle>
+              <CardTitle className="text-xl">
+                <h2>{t("common.free")}</h2>
+              </CardTitle>
             </div>
             <span className="text-4xl font-bold">{formatEuro(0, locale)}</span>
             <CardDescription>
@@ -97,7 +100,7 @@ function PricingPageContent() {
                 <Heart className="size-5 text-primary" />
               </div>
               <CardTitle className="text-xl">
-                {t("support.supporter")}
+                <h2>{t("support.supporter")}</h2>
               </CardTitle>
               <Badge variant="secondary">{t("support.optional")}</Badge>
             </div>
@@ -125,7 +128,7 @@ function PricingPageContent() {
           </CardContent>
           <CardFooter>
             <a
-              href="https://ko-fi.com/alexprogrammerde/tiers"
+              href={kofiTiersUrl}
               target="_blank"
               rel="noopener noreferrer"
               className={cn(buttonVariants(), "w-full")}
@@ -167,9 +170,11 @@ function PricingPageContent() {
       <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-2">
         <Card className="flex flex-col">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-xl">
-              <SiKofi aria-hidden className="size-5" />
-              Ko-fi
+            <CardTitle className="text-xl">
+              <h3 className="flex items-center gap-2">
+                <SiKofi aria-hidden className="size-5" />
+                Ko-fi
+              </h3>
             </CardTitle>
             <CardDescription>
               {t("support.donateOnceViaPaypalOrCard")}
@@ -177,7 +182,7 @@ function PricingPageContent() {
           </CardHeader>
           <CardFooter className="mt-auto">
             <a
-              href="https://ko-fi.com/alexprogrammerde"
+              href={kofiUrl}
               target="_blank"
               rel="noopener noreferrer"
               className={cn(buttonVariants({ variant: "outline" }), "w-full")}
@@ -189,9 +194,11 @@ function PricingPageContent() {
         </Card>
         <Card className="flex flex-col">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-xl">
-              <Coins className="size-5" />
-              {t("support.crypto")}
+            <CardTitle className="text-xl">
+              <h3 className="flex items-center gap-2">
+                <Coins className="size-5" />
+                {t("support.crypto")}
+              </h3>
             </CardTitle>
             <CardDescription>
               {t("support.donateWithCryptocurrencyViaNowpayments")}

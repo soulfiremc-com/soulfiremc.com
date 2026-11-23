@@ -12,6 +12,7 @@ import {
   createFileRoute,
   Link,
   stripSearchParams,
+  useHydrated,
   useRouterState,
 } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
@@ -61,6 +62,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   createClientDownloads,
   createServerDownloads,
+  CLIENT_RELEASES_URL,
   type DownloadLinkMap,
   FLATHUB_URL,
   getClientReleaseNotesUrl,
@@ -68,6 +70,7 @@ import {
 } from "@/lib/download-links";
 import { getClientReleaseManifest, getServerVersion } from "@/lib/releases";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
+import { kofiUrl } from "@/lib/support-links";
 import { cn } from "@/lib/utils";
 
 const FALLBACK_CPU = {
@@ -80,7 +83,7 @@ const FALLBACK_CPU = {
 const ARM_CPU = {
   id: "arm64",
   label: "AArch64 / ARM64",
-  detail: "download.appleSiliconOrArmServers",
+  detail: "download.appleSiliconSnapdragonOrArmServers",
   icon: "circuit",
 } as const;
 
@@ -182,6 +185,16 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
   const hasChosenPlatform = useRef(false);
   const [showThankYou, setShowThankYou] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  // The page is prerendered, so the server cannot know the visitor's platform.
+  // Show no selection until detection settles so the cards do not visibly
+  // switch from the default build to the detected one.
+  const [isDetectionSettled, setIsDetectionSettled] = useState(false);
+  const hydrated = useHydrated();
+  // Phones and links with both search params skip detection.
+  const isPlatformResolved =
+    isDetectionSettled ||
+    isMobile ||
+    (hydrated && hasExplicitOs && hasExplicitCpu);
 
   useEffect(() => {
     if (hasDetectedPlatform.current) return;
@@ -190,32 +203,43 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
     setIsMobile(mobile);
     if (mobile || (hasExplicitOs && hasExplicitCpu)) return;
 
-    void detectDownloadCpuFromHints(window.navigator).then((hintedCpu) => {
-      // Keep a choice the visitor made while the browser answered.
-      if (hasChosenPlatform.current) return undefined;
-      const detectedCpu = hintedCpu ?? cpu;
-      if (!os && !detectedCpu) return undefined;
-      return navigate({
-        search: (previous) => {
-          const nextOs = hasExplicitOs ? previous.os : (os ?? previous.os);
-          // This computer's CPU only applies to its own operating system.
-          const cpuForOs =
-            detectedCpu && (!os || os === nextOs)
-              ? detectedCpu
-              : PREFERRED_CPU_BY_OS[nextOs];
-          return {
-            ...previous,
-            os: nextOs,
-            cpu: hasExplicitCpu ? previous.cpu : cpuForOs,
-          };
-        },
-        replace: true,
-        resetScroll: false,
-      }).catch(ignoreAbortError);
-    });
+    void detectDownloadCpuFromHints(window.navigator)
+      .then((hintedCpu) => {
+        // Keep a choice the visitor made while the browser answered.
+        if (hasChosenPlatform.current) return undefined;
+        const detectedCpu = hintedCpu ?? cpu;
+        if (!os && !detectedCpu) return undefined;
+        return navigate({
+          search: (previous) => {
+            const nextOs = hasExplicitOs ? previous.os : (os ?? previous.os);
+            // This computer's CPU only applies to its own operating system.
+            const cpuForOs =
+              detectedCpu && (!os || os === nextOs)
+                ? detectedCpu
+                : PREFERRED_CPU_BY_OS[nextOs];
+            return {
+              ...previous,
+              os: nextOs,
+              cpu: hasExplicitCpu ? previous.cpu : cpuForOs,
+            };
+          },
+          replace: true,
+          resetScroll: false,
+        }).catch(ignoreAbortError);
+      })
+      .finally(() => {
+        setIsDetectionSettled(true);
+      });
   }, [hasExplicitOs, hasExplicitCpu, navigate]);
 
-  const downloadHref = links[selection.os][selection.cpu];
+  const selectedOs = isPlatformResolved ? selection.os : null;
+  // Flathub serves every CPU, so Linux has no CPU choice.
+  const selectedCpu =
+    isPlatformResolved && selection.os !== "linux" ? selection.cpu : null;
+  // Until detection settles, the link opens the release page with every build.
+  const downloadHref = isPlatformResolved
+    ? links[selection.os][selection.cpu]
+    : CLIENT_RELEASES_URL;
   const downloadLinkProps = releaseLinkProps(downloadHref);
   const selectedOsLabel =
     OS_OPTIONS.find((option) => option.id === selection.os)?.label ??
@@ -223,6 +247,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
 
   const handleOsChange = (os: DownloadSelection["os"]) => {
     hasChosenPlatform.current = true;
+    setIsDetectionSettled(true);
     void navigate({
       search: (previous) => ({ ...previous, os, cpu: PREFERRED_CPU_BY_OS[os] }),
       replace: true,
@@ -232,6 +257,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
 
   const handleCpuChange = (cpu: DownloadSelection["cpu"]) => {
     hasChosenPlatform.current = true;
+    setIsDetectionSettled(true);
     void navigate({
       search: (previous) => ({ ...previous, cpu }),
       replace: true,
@@ -247,7 +273,6 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
         </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-8">
-        {isMobile && <MobileDownloadNotice />}
         <div className="flex flex-col gap-3">
           <p className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
             {t("download.operatingSystem")}
@@ -262,13 +287,13 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
               <button
                 key={option.id}
                 type="button"
-                aria-pressed={selection.os === option.id}
+                aria-pressed={selectedOs === option.id}
                 onClick={() => {
                   handleOsChange(option.id);
                 }}
                 className={cn(
                   "relative rounded-xl border p-4 pr-10 text-left transition outline-none hover:border-primary/60 focus-visible:ring-3 focus-visible:ring-ring/50",
-                  selection.os === option.id
+                  selectedOs === option.id
                     ? "border-primary bg-primary/10"
                     : "bg-background",
                 )}
@@ -292,66 +317,84 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
                     </p>
                   </div>
                 </div>
-                {selection.os === option.id && <SelectedMark />}
+                {selectedOs === option.id && <SelectedMark />}
               </button>
             ))}
           </div>
         </div>
-        {/* Flathub serves every CPU, so Linux has no CPU choice. */}
-        {selection.os !== "linux" && (
-          <div className="flex flex-col gap-3">
+        {/* The CPU choice stays mounted for Linux so the layout never shifts. */}
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
             <p className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
               {t("download.cpuArchitecture")}
             </p>
-            <div
-              // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- a labelled group of choice cards; fieldset would add form semantics and min-content sizing
-              role="group"
-              aria-label={t("download.cpuArchitecture")}
-              className="grid gap-4 sm:grid-cols-2"
+            {/* Always rendered so the hint keeps its line when it wraps. */}
+            <p
+              id="download-cpu-hint"
+              className={cn(
+                "text-sm text-muted-foreground",
+                selectedOs !== "linux" && "invisible",
+              )}
             >
-              {CPU_OPTIONS.map((option) => (
-                <button
-                  key={option.id}
-                  type="button"
-                  aria-pressed={selection.cpu === option.id}
-                  onClick={() => {
-                    handleCpuChange(option.id);
-                  }}
-                  className={cn(
-                    "relative rounded-xl border p-4 pr-10 text-left transition outline-none hover:border-primary/60 focus-visible:ring-3 focus-visible:ring-ring/50",
-                    selection.cpu === option.id
-                      ? "border-primary bg-primary/10"
-                      : "bg-background",
-                  )}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="rounded-lg bg-primary/10 p-2 text-primary">
-                      {option.icon === "cpu" ? (
-                        <Cpu className="size-5 text-primary" />
-                      ) : (
-                        <CircuitBoard className="size-5 text-primary" />
-                      )}
-                    </div>
-                    <div>
-                      <div className="text-base font-semibold">
-                        {option.label}
-                      </div>
-                      <p className="mt-1 text-sm text-muted-foreground">
-                        {t(option.detail)}
-                      </p>
-                    </div>
-                  </div>
-                  {selection.cpu === option.id && <SelectedMark />}
-                </button>
-              ))}
-            </div>
+              {t("download.flathubPicksTheArchitecture")}
+            </p>
           </div>
-        )}
+          <div
+            // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- a labelled group of choice cards; fieldset would add form semantics and min-content sizing
+            role="group"
+            aria-label={t("download.cpuArchitecture")}
+            aria-describedby={
+              selectedOs === "linux" ? "download-cpu-hint" : undefined
+            }
+            className="grid gap-4 sm:grid-cols-2"
+          >
+            {CPU_OPTIONS.map((option) => (
+              <button
+                key={option.id}
+                type="button"
+                aria-pressed={selectedCpu === option.id}
+                disabled={selectedOs === "linux"}
+                onClick={() => {
+                  handleCpuChange(option.id);
+                }}
+                className={cn(
+                  "relative rounded-xl border p-4 pr-10 text-left transition outline-none focus-visible:ring-3 focus-visible:ring-ring/50 enabled:hover:border-primary/60 disabled:opacity-50",
+                  selectedCpu === option.id
+                    ? "border-primary bg-primary/10"
+                    : "bg-background",
+                )}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="rounded-lg bg-primary/10 p-2 text-primary">
+                    {option.icon === "cpu" ? (
+                      <Cpu className="size-5 text-primary" />
+                    ) : (
+                      <CircuitBoard className="size-5 text-primary" />
+                    )}
+                  </div>
+                  <div>
+                    <div className="text-base font-semibold">
+                      {option.label}
+                    </div>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      {t(option.detail)}
+                    </p>
+                  </div>
+                </div>
+                {selectedCpu === option.id && <SelectedMark />}
+              </button>
+            ))}
+          </div>
+        </div>
+        {/* On phones the notice sits below the fold, so it does not push visible content down. */}
+        {isMobile && <MobileDownloadNotice />}
         {/* A real link starts the download even before hydration finishes. */}
         <a
           href={downloadHref}
           {...downloadLinkProps}
           onClick={() => {
+            // Before detection settles, the link is a plain release page visit.
+            if (!isPlatformResolved) return;
             trackClientDownload({
               os: selection.os,
               architecture: selection.cpu,
@@ -361,7 +404,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
           }}
           className={cn(
             // Phones cannot run the installers, so the copy link and demo
-            // in the notice above take the primary role there.
+            // in the notice take the primary role there.
             buttonVariants({
               size: "lg",
               variant: isMobile ? "outline" : "default",
@@ -370,9 +413,11 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
           )}
         >
           <Download className="size-5" />
-          {downloadHref === FLATHUB_URL
-            ? t("download.getOnFlathub")
-            : t("download.downloadFor", { os: selectedOsLabel })}
+          {!isPlatformResolved
+            ? t("download.title")
+            : downloadHref === FLATHUB_URL
+              ? t("download.getOnFlathub")
+              : t("download.downloadFor", { os: selectedOsLabel })}
         </a>
       </CardContent>
       <Credenza open={showThankYou} onOpenChange={setShowThankYou}>
@@ -418,7 +463,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
             </p>
             <div className="mt-4 flex flex-col gap-3">
               <a
-                href="https://ko-fi.com/alexprogrammerde"
+                href={kofiUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(
@@ -724,7 +769,7 @@ function DownloadPageContent({
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <a
-              href="https://ko-fi.com/alexprogrammerde"
+              href={kofiUrl}
               target="_blank"
               rel="noopener noreferrer"
               className={buttonVariants({ variant: "outline" })}

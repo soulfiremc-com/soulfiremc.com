@@ -420,9 +420,9 @@ export function HomeFrontpage({
             >
               <Reveal className="home-section-heading">
                 <h2 id="intro-title">
-                  <TranslatedLines text="home.seeHowYourServerHoldsUp" />
+                  <TranslatedLines text="home.realClientsForTheServersYouRun" />
                 </h2>
-                <p>{t("home.findOutHowYourServerHandlesPlayersJoiningAnd")}</p>
+                <p>{t("home.botsRunMinecraftSOwnClientCodeJoinJava")}</p>
               </Reveal>
               <div className="home-capabilities">
                 {capabilities.map(({ icon: Icon, title, text, link, path }) => (

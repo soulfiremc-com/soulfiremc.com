@@ -6,7 +6,6 @@ interface ImportMetaEnv {
   readonly VITE_APP_VERSION?: string;
   readonly VITE_BETTER_AUTH_IDENTIFY_URL?: string;
   readonly VITE_DISCORD_LINK?: string;
-  readonly VITE_DONATE_LINK?: string;
   readonly VITE_GITHUB_LINK?: string;
   readonly VITE_POSTHOG_KEY?: string;
   readonly VITE_REVIEW_TURNSTILE_SITE_KEY?: string;

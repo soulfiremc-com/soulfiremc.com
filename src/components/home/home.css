@@ -763,12 +763,16 @@
     font-size: 15px;
     line-height: 1.7;
   }
+  /* Stack both actions at full width so the ghost button lines up with
+     Download instead of wrapping under it with a padded, indented look. */
   .home-hero-actions {
+    display: grid;
     margin-top: 25px;
     gap: 8px;
   }
   .home-hero-actions [data-slot="button"] {
-    font-size: 13px;
+    width: 100%;
+    font-size: 14px;
     padding-inline: 18px;
   }
   .home-hero-copy > .home-platforms {
