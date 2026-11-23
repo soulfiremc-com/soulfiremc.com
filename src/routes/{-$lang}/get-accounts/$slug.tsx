@@ -48,6 +48,7 @@ import {
   BADGE_CONFIG,
   type Badge,
   CATEGORY_CONFIG,
+  FILTER_CATEGORIES,
   getDiscordInviteUrl,
   getShopBySlug,
   PROVIDER_THEMES,
@@ -168,7 +169,14 @@ function getAccountDetailPageData({
     throw notFound();
   }
 
-  const providers = PROVIDERS.filter((provider) => provider.slug === shop.slug);
+  // Show listings in the same category order as the shop list.
+  const providers = PROVIDERS.filter(
+    (provider) => provider.slug === shop.slug,
+  ).toSorted(
+    (a, b) =>
+      FILTER_CATEGORIES.indexOf(a.category) -
+      FILTER_CATEGORIES.indexOf(b.category),
+  );
   const dateCreated = shop.startDate
     ? providerSinceIsoDate(shop.startDate)
     : undefined;
@@ -328,7 +336,7 @@ function ShopLogo({ src, name }: { src?: string; name: string }) {
         src={src}
         alt={t("providers.accounts.logo", { provider: name })}
         fill
-        sizes="56px"
+        sizes="(min-width: 640px) 80px, 56px"
         breakpoints={[56, 112, 168]}
         className="size-full object-contain p-3"
       />
@@ -523,18 +531,20 @@ function AccountDetailPage() {
           )}
         >
           <ProviderThemeDecoration theme={data.shop.theme} />
-          <div className="relative flex flex-col gap-6 sm:flex-row">
-            <div
-              className={cn(
-                "relative size-20 shrink-0 overflow-hidden rounded-xl bg-muted",
-                theme?.logo,
-              )}
-            >
-              <ShopLogo src={data.shop.logo} name={data.shop.name} />
-            </div>
-            <div className="flex flex-1 flex-col gap-4">
-              <div className="flex flex-wrap items-center gap-3">
-                <h1 className="text-4xl font-bold tracking-tight">
+          <div className="relative flex flex-col gap-4">
+            {/* On phones the logo sits beside the name and the details use
+                the full card width. From "sm" up they line up with the name. */}
+            <div className="flex items-center gap-4 sm:items-start sm:gap-6">
+              <div
+                className={cn(
+                  "relative size-14 shrink-0 overflow-hidden rounded-xl bg-muted sm:size-20",
+                  theme?.logo,
+                )}
+              >
+                <ShopLogo src={data.shop.logo} name={data.shop.name} />
+              </div>
+              <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-3 gap-y-2 sm:min-h-20">
+                <h1 className="text-3xl font-bold tracking-tight wrap-break-word sm:text-4xl">
                   {data.shop.name}
                 </h1>
                 {data.shop.startDate ? (
@@ -553,6 +563,8 @@ function AccountDetailPage() {
                   />
                 ) : null}
               </div>
+            </div>
+            <div className="flex flex-col gap-4 sm:pl-26">
               {/* A shop with several listings describes each one in its card. */}
               {singleListing ? (
                 <p className="text-lg text-muted-foreground">
@@ -753,6 +765,8 @@ function AccountDetailPage() {
                     </a>
                   }
                   nativeButton={false}
+                  // Keeps the buy buttons level when two listings sit side by side.
+                  className="mt-auto"
                 />
               </Card>
             );

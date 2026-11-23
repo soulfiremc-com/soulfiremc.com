@@ -277,17 +277,19 @@ const ProviderCard = memo(function ProviderCard({
       )}
     >
       <ProviderThemeDecoration theme={provider.theme} />
-      <div className="relative flex flex-row gap-4 px-4 sm:px-6">
-        <div
-          className={cn(
-            "relative size-12 shrink-0 overflow-hidden rounded-lg bg-muted sm:size-16",
-            theme?.logo,
-          )}
-        >
-          <ProviderLogo provider={provider} />
-        </div>
-        <div className="flex flex-1 flex-col gap-3">
-          <div className="flex flex-wrap items-center gap-3">
+      {/* On phones the summary and actions use the full card width. From
+          "sm" up they line up with the name, right of the logo. */}
+      <div className="relative flex flex-col gap-3 px-4 sm:px-6">
+        <div className="flex flex-row gap-4">
+          <div
+            className={cn(
+              "relative size-12 shrink-0 overflow-hidden rounded-lg bg-muted sm:size-16",
+              theme?.logo,
+            )}
+          >
+            <ProviderLogo provider={provider} />
+          </div>
+          <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-3 gap-y-2 self-start">
             <h3 className="text-xl font-semibold">
               {/* The overlay makes the whole card open the provider page. */}
               <Link
@@ -379,6 +381,8 @@ const ProviderCard = memo(function ProviderCard({
               ))}
             </div>
           </div>
+        </div>
+        <div className="flex flex-col gap-3 sm:pl-20">
           <p className="text-muted-foreground">{t(provider.summary)}</p>
           {provider.couponCode ? (
             <div className="relative z-10">

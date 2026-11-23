@@ -56,6 +56,7 @@ export function ReviewSummaryBadge({
     );
   }
 
+  const reviewCount = summary.reviewCount.toLocaleString(locale);
   return (
     <Badge
       variant="outline"
@@ -71,10 +72,12 @@ export function ReviewSummaryBadge({
           maximumFractionDigits: 1,
         })}
       </span>
-      <span className="text-muted-foreground">
-        {t("reviews.ratings", {
-          count: summary.reviewCount.toLocaleString(locale),
-        })}
+      {/* "(12)" needs no plural form. Screen readers get the full label. */}
+      <span className="text-muted-foreground tabular-nums" aria-hidden="true">
+        ({reviewCount})
+      </span>
+      <span className="sr-only">
+        {t("reviews.totalRatings", { count: reviewCount })}
       </span>
     </Badge>
   );

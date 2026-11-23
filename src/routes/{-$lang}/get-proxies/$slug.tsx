@@ -16,26 +16,22 @@ import { ArrowLeft, ChevronRight, ExternalLink } from "lucide-react";
 import { Suspense } from "react";
 import type { BreadcrumbList, Product, WebPage, WithContext } from "schema-dts";
 import { CouponCode } from "@/components/coupon-code";
-import { Image } from "@/components/image";
-import { ProviderInfoPopover } from "@/components/provider-info-popover";
 import { ItemReviewsSection } from "@/components/item-reviews-section";
 import { JsonLd } from "@/components/json-ld";
 import { PaymentMethods } from "@/components/payment-methods";
+import {
+  ProxyProviderBadge,
+  ProxyProviderLogo,
+} from "@/components/proxy-provider";
 import { ReviewSummaryBadge } from "@/components/review-summary-badge";
 import { SiteShell } from "@/components/site-shell";
 import { SocialLinkButtons } from "@/components/social-link-buttons";
-import { Badge as UiBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useHydratedQueryResult } from "@/hooks/use-hydrated-query-result";
 import { getProxyPageImage } from "@/lib/og";
-import {
-  BADGE_CONFIG,
-  type Badge,
-  getProviderBySlug,
-  type Provider,
-} from "@/lib/proxies-data";
+import { getProviderBySlug, type Provider } from "@/lib/proxies-data";
 import {
   emptyReviewSummary,
   getReviewSummaryStatus,
@@ -45,7 +41,6 @@ import {
 import { reviewsQueryOptions } from "@/lib/reviews-query";
 import { reviewsSearchSchema } from "@/lib/reviews-search-params";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
-import { cn } from "@/lib/utils";
 
 type ProxyDetailPageData = {
   breadcrumbJsonLd: WithContext<BreadcrumbList>;
@@ -54,50 +49,6 @@ type ProxyDetailPageData = {
   provider: Provider;
   reviewsPage: number;
 };
-
-function ProviderLogo({ provider }: { provider: Provider }) {
-  const t = useT();
-  if (provider.logo) {
-    return (
-      <Image
-        src={provider.logo}
-        alt={t("providers.accounts.logo", { provider: provider.name })}
-        fill
-        sizes="56px"
-        breakpoints={[56, 112, 168]}
-        className="size-full object-contain p-3"
-      />
-    );
-  }
-  return (
-    <div className="flex size-full items-center justify-center bg-linear-to-br from-primary/20 to-primary/5 text-4xl font-bold text-primary">
-      {provider.name.charAt(0).toUpperCase()}
-    </div>
-  );
-}
-
-function ProviderBadge({ badge }: { badge: Badge }) {
-  const t = useT();
-  const config = BADGE_CONFIG[badge];
-  return (
-    <ProviderInfoPopover
-      trigger={
-        <UiBadge
-          variant="outline"
-          className={cn(
-            "cursor-help border-transparent",
-            config.className /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */,
-          )}
-        >
-          {config.icon}
-          {t(config.label)}
-        </UiBadge>
-      }
-    >
-      <p>{t(config.description)}</p>
-    </ProviderInfoPopover>
-  );
-}
 
 function ProxyProductStructuredData({
   productJsonLd,
@@ -195,7 +146,7 @@ function ProxyProviderPageContent({
       <Card className="relative gap-5 overflow-hidden p-6">
         <div className="relative flex flex-col gap-6 sm:flex-row">
           <div className="relative size-20 shrink-0 overflow-hidden rounded-xl bg-muted">
-            <ProviderLogo provider={provider} />
+            <ProxyProviderLogo provider={provider} size="page" />
           </div>
           <div className="flex flex-1 flex-col gap-4">
             <div className="flex flex-wrap items-center gap-3">
@@ -204,7 +155,7 @@ function ProxyProviderPageContent({
               </h1>
               <div className="flex flex-wrap gap-2">
                 {provider.badges.map((badge) => (
-                  <ProviderBadge key={badge} badge={badge} />
+                  <ProxyProviderBadge key={badge} badge={badge} />
                 ))}
               </div>
             </div>

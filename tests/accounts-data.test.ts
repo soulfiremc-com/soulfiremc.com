@@ -3,9 +3,11 @@ import test from "node:test";
 import { PROVIDERS } from "@/lib/accounts-data";
 import { resolveMessage } from "@/lib/messages";
 
-// Reads the lowest USD amount from a shown price such as "$4.00-$5.50",
-// "10-15¢" or "0.8-1¢/credit".
+// Reads the lowest USD account price from a shown price such as
+// "$4.00-$5.50" or "10-15¢". A per-credit price such as "0.8-1¢/credit" has
+// no account price.
 function lowestShownPrice(price: string): number | undefined {
+  if (price.includes("/")) return undefined;
   const match = /^(\$)?(\d+(?:\.\d+)?)/u.exec(price);
   if (!match) return undefined;
   const amount = Number(match[2]);

@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
+  BADGES,
+  FILTER_BADGES,
   filterProviders,
   PROVIDERS,
   PROXY_TYPE_BADGES,
@@ -32,5 +34,17 @@ void test("proxy provider cards list proxy types before features", () => {
       provider.slug,
     );
     assert.equal(new Set(provider.badges).size, provider.badges.length);
+  }
+});
+
+void test("proxy filters offer only badges that narrow the list", () => {
+  assert.ok(FILTER_BADGES.length > 0);
+  for (const badge of BADGES) {
+    const matches = filterProviders(PROVIDERS, [badge]).length;
+    assert.equal(
+      FILTER_BADGES.includes(badge),
+      matches < PROVIDERS.length,
+      badge,
+    );
   }
 });

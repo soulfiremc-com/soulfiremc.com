@@ -155,7 +155,7 @@ void test("rating labels and numeric formatting follow the page language", () =>
     }),
   );
   assert.match(html, /4,5/u);
-  assert.match(html, /Bewertungen: 3/u);
+  assert.match(html, /Bewertungen insgesamt: 3/u);
   assert.match(html, /Bewertung setzen: 3\/5/u);
   assert.ok(!html.includes("ratings"));
 });

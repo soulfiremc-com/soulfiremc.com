@@ -36,6 +36,9 @@ import {
 } from "@/components/ui/empty";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
+import { type Locale, localizePath } from "@/lib/i18n";
+import { useLocale, useT } from "@/lib/i18n-react";
+import type { MessageKey } from "@/lib/messages";
 import type { ItemType } from "@/lib/review-core";
 import {
   type GetPendingReviewCommentsResult,
@@ -61,30 +64,19 @@ function getInitial(name: string) {
   return name.trim().charAt(0).toUpperCase() || "?";
 }
 
-function getItemTypeLabel(itemType: ItemType) {
-  switch (itemType) {
-    case "account": {
-      return "Account";
-    }
-    case "proxy": {
-      return "Proxy";
-    }
-    case "resource": {
-      return "Resource";
-    }
-    default: {
-      return itemType satisfies never;
-    }
-  }
-}
+const itemTypeLabelKeys = {
+  account: "admin.reviews.itemType.account",
+  proxy: "admin.reviews.itemType.proxy",
+  resource: "admin.reviews.itemType.resource",
+} as const satisfies Record<ItemType, MessageKey>;
 
-function getItemPath(itemType: ItemType, itemSlug: string) {
+function getItemPath(itemType: ItemType, itemSlug: string, locale: Locale) {
   switch (itemType) {
     case "account": {
-      return `/get-accounts/${itemSlug}`;
+      return localizePath(`/get-accounts/${itemSlug}`, locale);
     }
     case "proxy": {
-      return `/get-proxies/${itemSlug}`;
+      return localizePath(`/get-proxies/${itemSlug}`, locale);
     }
     case "resource": {
       return null;
@@ -149,6 +141,8 @@ function ReviewModerationState({
 }
 
 export function ReviewModeration() {
+  const t = useT();
+  const locale = useLocale();
   const queryClient = useQueryClient();
   const pendingReviews = useQuery({
     queryKey: pendingReviewCommentsQueryKey,
@@ -176,8 +170,8 @@ export function ReviewModeration() {
     },
     onError: (error) => {
       if (error instanceof ModerationStaleError) {
-        toast.error("This comment changed", {
-          description: "The author edited it. Review the new text.",
+        toast.error(t("admin.reviews.stale.title"), {
+          description: t("admin.reviews.stale.description"),
         });
         void queryClient.invalidateQueries({
           queryKey: pendingReviewCommentsQueryKey,
@@ -185,11 +179,12 @@ export function ReviewModeration() {
         return;
       }
       // Request and validation errors are not useful to show as raw text.
-      toast.error("Could not moderate comment", {
-        description:
+      toast.error(t("admin.reviews.moderateFailed"), {
+        description: t(
           error instanceof ModerationAccessError
-            ? "Your account does not have admin access."
-            : "Check your connection and try again.",
+            ? "admin.reviews.noAdminAccess"
+            : "reviews.errors.connectionDescription",
+        ),
       });
     },
     onSuccess: (_, variables) => {
@@ -208,9 +203,11 @@ export function ReviewModeration() {
       // Public review pages cache comments, so refresh them after moderation.
       void queryClient.invalidateQueries({ queryKey: ["reviews"] });
       toast(
-        variables.commentStatus === "approved"
-          ? "Comment approved"
-          : "Comment rejected",
+        t(
+          variables.commentStatus === "approved"
+            ? "admin.reviews.approved"
+            : "admin.reviews.rejected",
+        ),
       );
     },
   });
@@ -250,155 +247,143 @@ export function ReviewModeration() {
     : undefined;
   const result = pendingReviews.data;
 
-  return (
-    <section className="flex flex-col gap-4">
-      <div className="flex flex-col gap-1">
-        <h2 className="text-xl font-semibold tracking-tight">
-          Review moderation
-        </h2>
-        <p className="text-sm text-muted-foreground">
-          Approve written comments before they appear on public reviews.
-        </p>
-      </div>
-
-      {pendingReviews.isPending ? (
-        <ReviewModerationSkeleton />
-      ) : pendingReviews.isError ? (
-        <ReviewModerationState
-          icon={ShieldAlert}
-          title="Could not load comments"
-          description="Check your connection and try again."
-          action={
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => void pendingReviews.refetch()}
-              disabled={pendingReviews.isFetching}
-            >
-              <RotateCw data-icon="inline-start" />
-              Try again
-            </Button>
-          }
-        />
-      ) : !result?.ok ? (
-        <ReviewModerationState
-          icon={ShieldAlert}
-          title="Admin access required"
-          description="Your account cannot moderate review comments."
-        />
-      ) : result.comments.length === 0 ? (
-        <ReviewModerationState
-          icon={Inbox}
-          title="No pending comments"
-          description="New written comments will appear here for review."
-        />
-      ) : (
-        <div className="grid gap-4">
-          {result.comments.map((comment) => {
-            const itemPath = getItemPath(comment.itemType, comment.itemSlug);
-            return (
-              <Card key={comment.id} className="gap-5">
-                <CardHeader className="gap-3">
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                    <div className="flex min-w-0 items-center gap-3">
-                      <Avatar size="lg">
-                        {comment.authorImage ? (
-                          <AvatarImage
-                            src={comment.authorImage}
-                            alt={comment.authorName}
-                          />
-                        ) : null}
-                        <AvatarFallback>
-                          {getInitial(comment.authorName)}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="min-w-0">
-                        <CardTitle className="truncate text-base">
-                          {comment.authorName}
-                        </CardTitle>
-                        {comment.authorEmail ? (
-                          <p className="truncate text-sm text-muted-foreground">
-                            {comment.authorEmail}
-                          </p>
-                        ) : null}
-                      </div>
-                    </div>
-
-                    <div className="flex min-w-0 flex-wrap items-center gap-2">
-                      <Badge variant="secondary">
-                        {getItemTypeLabel(comment.itemType)}
-                      </Badge>
-                      {itemPath ? (
-                        <a
-                          href={itemPath}
-                          className="inline-flex min-w-0 items-center gap-1 text-sm break-all text-muted-foreground transition-colors hover:text-foreground"
-                        >
-                          {comment.itemSlug}
-                          <ExternalLink className="size-3" />
-                        </a>
-                      ) : (
-                        <span className="text-sm text-muted-foreground">
-                          {comment.itemSlug}
-                        </span>
-                      )}
-                    </div>
+  return pendingReviews.isPending ? (
+    <ReviewModerationSkeleton />
+  ) : pendingReviews.isError ? (
+    <ReviewModerationState
+      icon={ShieldAlert}
+      title={t("admin.reviews.loadFailed")}
+      description={t("reviews.errors.connectionDescription")}
+      action={
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => void pendingReviews.refetch()}
+          disabled={pendingReviews.isFetching}
+        >
+          <RotateCw data-icon="inline-start" />
+          {t("errors.tryAgain")}
+        </Button>
+      }
+    />
+  ) : !result?.ok ? (
+    <ReviewModerationState
+      icon={ShieldAlert}
+      title={t("admin.reviews.accessRequired.title")}
+      description={t("admin.reviews.accessRequired.description")}
+    />
+  ) : result.comments.length === 0 ? (
+    <ReviewModerationState
+      icon={Inbox}
+      title={t("admin.reviews.empty.title")}
+      description={t("admin.reviews.empty.description")}
+    />
+  ) : (
+    <div className="grid gap-4">
+      {result.comments.map((comment) => {
+        const itemPath = getItemPath(
+          comment.itemType,
+          comment.itemSlug,
+          locale,
+        );
+        return (
+          <Card key={comment.id} className="gap-5">
+            <CardHeader className="gap-3">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <div className="flex min-w-0 items-center gap-3">
+                  <Avatar size="lg">
+                    {comment.authorImage ? (
+                      <AvatarImage
+                        src={comment.authorImage}
+                        alt={comment.authorName}
+                      />
+                    ) : null}
+                    <AvatarFallback>
+                      {getInitial(comment.authorName)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="min-w-0">
+                    <CardTitle className="truncate text-base">
+                      {comment.authorName}
+                    </CardTitle>
+                    {comment.authorEmail ? (
+                      <p className="truncate text-sm text-muted-foreground">
+                        {comment.authorEmail}
+                      </p>
+                    ) : null}
                   </div>
-                </CardHeader>
+                </div>
 
-                <CardContent className="flex flex-col gap-4">
-                  <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-                    <ReviewStars value={comment.rating} size="sm" />
-                    <span className="tabular-nums">
-                      {comment.rating.toFixed(1)}
+                <div className="flex min-w-0 flex-wrap items-center gap-2">
+                  <Badge variant="secondary">
+                    {t(itemTypeLabelKeys[comment.itemType])}
+                  </Badge>
+                  {itemPath ? (
+                    <a
+                      href={itemPath}
+                      className="inline-flex min-w-0 items-center gap-1 text-sm break-all text-muted-foreground transition-colors hover:text-foreground"
+                    >
+                      {comment.itemSlug}
+                      <ExternalLink className="size-3" />
+                    </a>
+                  ) : (
+                    <span className="text-sm text-muted-foreground">
+                      {comment.itemSlug}
                     </span>
-                    <span aria-hidden="true">·</span>
-                    <CustomTimeAgo date={comment.createdAt} />
-                  </div>
-                  <p className="rounded-md border bg-muted/20 p-3 text-sm/6 wrap-break-word whitespace-pre-line">
-                    {comment.body}
-                  </p>
-                </CardContent>
+                  )}
+                </div>
+              </div>
+            </CardHeader>
 
-                <CardFooter>
-                  <form className="flex gap-2" onSubmit={moderateComment}>
-                    <input type="hidden" name="reviewId" value={comment.id} />
-                    <input type="hidden" name="body" value={comment.body} />
-                    <Button
-                      type="submit"
-                      name="commentStatus"
-                      value="approved"
-                      disabled={moderation.isPending}
-                    >
-                      {pendingReviewId === comment.id &&
-                      pendingReviewStatus === "approved" ? (
-                        <Spinner data-icon="inline-start" />
-                      ) : (
-                        <Check data-icon="inline-start" />
-                      )}
-                      Approve
-                    </Button>
-                    <Button
-                      type="submit"
-                      name="commentStatus"
-                      value="rejected"
-                      variant="outline"
-                      disabled={moderation.isPending}
-                    >
-                      {pendingReviewId === comment.id &&
-                      pendingReviewStatus === "rejected" ? (
-                        <Spinner data-icon="inline-start" />
-                      ) : (
-                        <X data-icon="inline-start" />
-                      )}
-                      Reject
-                    </Button>
-                  </form>
-                </CardFooter>
-              </Card>
-            );
-          })}
-        </div>
-      )}
-    </section>
+            <CardContent className="flex flex-col gap-4">
+              <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+                <ReviewStars value={comment.rating} size="sm" />
+                <span aria-hidden="true">·</span>
+                <CustomTimeAgo date={comment.createdAt} />
+              </div>
+              <p className="rounded-md border bg-muted/20 p-3 text-sm/6 wrap-break-word whitespace-pre-line">
+                {comment.body}
+              </p>
+            </CardContent>
+
+            <CardFooter>
+              <form className="flex gap-2" onSubmit={moderateComment}>
+                <input type="hidden" name="reviewId" value={comment.id} />
+                <input type="hidden" name="body" value={comment.body} />
+                <Button
+                  type="submit"
+                  name="commentStatus"
+                  value="approved"
+                  disabled={moderation.isPending}
+                >
+                  {pendingReviewId === comment.id &&
+                  pendingReviewStatus === "approved" ? (
+                    <Spinner data-icon="inline-start" />
+                  ) : (
+                    <Check data-icon="inline-start" />
+                  )}
+                  {t("admin.reviews.approve")}
+                </Button>
+                <Button
+                  type="submit"
+                  name="commentStatus"
+                  value="rejected"
+                  variant="outline"
+                  disabled={moderation.isPending}
+                >
+                  {pendingReviewId === comment.id &&
+                  pendingReviewStatus === "rejected" ? (
+                    <Spinner data-icon="inline-start" />
+                  ) : (
+                    <X data-icon="inline-start" />
+                  )}
+                  {t("admin.reviews.reject")}
+                </Button>
+              </form>
+            </CardFooter>
+          </Card>
+        );
+      })}
+    </div>
   );
 }

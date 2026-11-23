@@ -12,6 +12,7 @@ const validAdminPathSegments = new Set([
 const sectionTitleKeys = new Map<string, MessageKey>([
   [AUTH_UI_VIEW_PATHS.admin.users, "authUi.admin.users"],
   [AUTH_UI_VIEW_PATHS.settings.activity, "authUi.dash.activity"],
+  [ADMIN_REVIEW_PATH, "admin.reviews.tab"],
 ]);
 
 export const Route = createFileRoute("/admin/$path")({

@@ -25,14 +25,16 @@ import {
 } from "lucide-react";
 import { memo, Suspense, useEffect, useState } from "react";
 import { CouponCode } from "@/components/coupon-code";
-import { Image } from "@/components/image";
-import { ProviderInfoPopover } from "@/components/provider-info-popover";
+import {
+  ProxyProviderBadge,
+  ProxyProviderLogo,
+  ProxyTypeList,
+} from "@/components/proxy-provider";
 import { ReviewSummaryBadge } from "@/components/review-summary-badge";
 import { ReviewTurnstileProvider } from "@/components/review-turnstile-provider";
 import { SiteShell } from "@/components/site-shell";
-import { Badge as UiBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Empty,
   EmptyDescription,
@@ -46,7 +48,9 @@ import {
   BADGES,
   type Badge,
   FEATURE_BADGES,
+  FILTER_BADGES,
   filterProviders,
+  isProxyTypeBadge,
   PROVIDERS,
   PROXY_TYPE_BADGES,
   type Provider,
@@ -96,50 +100,6 @@ const SORT_CONFIG = {
   },
 } as const;
 
-function ProviderBadge({ badge }: { badge: Badge }) {
-  const t = useT();
-  const config = BADGE_CONFIG[badge];
-  return (
-    <ProviderInfoPopover
-      trigger={
-        <UiBadge
-          variant="outline"
-          className={cn(
-            "cursor-help border-transparent",
-            config.className /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */,
-          )}
-        >
-          {config.icon}
-          {t(config.label)}
-        </UiBadge>
-      }
-    >
-      <p>{t(config.description)}</p>
-    </ProviderInfoPopover>
-  );
-}
-
-function ProviderLogo({ provider }: { provider: Provider }) {
-  const t = useT();
-  if (provider.logo) {
-    return (
-      <Image
-        src={provider.logo}
-        alt={t("providers.accounts.logo", { provider: provider.name })}
-        fill
-        sizes="48px"
-        breakpoints={[48, 96, 144]}
-        className="size-full object-contain p-2"
-      />
-    );
-  }
-  return (
-    <div className="flex size-full items-center justify-center bg-linear-to-br from-primary/20 to-primary/5 text-2xl font-bold text-primary">
-      {provider.name.charAt(0).toUpperCase()}
-    </div>
-  );
-}
-
 // Memoized so a filter change renders only the cards that it adds.
 const ProviderCard = memo(function ProviderCard({
   provider,
@@ -153,12 +113,14 @@ const ProviderCard = memo(function ProviderCard({
   const t = useT();
   return (
     <Card className="relative overflow-hidden transition-all duration-300 hover:shadow-lg">
-      <div className="relative flex flex-row gap-4 p-4 sm:p-6">
-        <div className="relative size-12 shrink-0 overflow-hidden rounded-lg bg-muted sm:size-16">
-          <ProviderLogo provider={provider} />
-        </div>
-        <div className="flex flex-1 flex-col gap-3">
-          <div className="flex flex-wrap items-center gap-3">
+      <CardContent className="flex flex-col gap-3">
+        {/* The logo sits beside the name, so narrow screens give the rest of
+          the card the full width. */}
+        <div className="flex items-center gap-4">
+          <div className="relative size-12 shrink-0 overflow-hidden rounded-lg bg-muted sm:size-16">
+            <ProxyProviderLogo provider={provider} size="card" />
+          </div>
+          <div className="flex min-w-0 flex-col gap-1">
             <h2 className="text-xl font-semibold">
               <Link
                 to="/{-$lang}/get-proxies/$slug"
@@ -168,42 +130,47 @@ const ProviderCard = memo(function ProviderCard({
                 {provider.name}
               </Link>
             </h2>
-            <div className="flex flex-wrap gap-2">
-              {provider.badges.map((badge) => (
-                <ProviderBadge key={badge} badge={badge} />
-              ))}
-            </div>
-          </div>
-          <p className="text-muted-foreground">{t(provider.summary)}</p>
-          {provider.couponCode && (
-            <CouponCode
-              code={provider.couponCode}
-              discount={provider.couponDiscount}
-            />
-          )}
-          {/* The list compares providers. Payment methods, contact links,
-              and rating live on each provider's own page. */}
-          <div className="flex flex-wrap items-center gap-3">
-            <Button
-              render={
-                <a
-                  href={provider.url}
-                  target="_blank"
-                  rel="noopener noreferrer nofollow"
-                >
-                  {t("common.getProxies")}
-                  <ExternalLink data-icon="inline-end" />
-                </a>
-              }
-              nativeButton={false}
-            />
-            <ReviewSummaryBadge
-              summary={reviewSummary}
-              status={reviewSummaryStatus}
-            />
+            <ProxyTypeList types={provider.badges.filter(isProxyTypeBadge)} />
           </div>
         </div>
-      </div>
+        {provider.badges.some((badge) => !isProxyTypeBadge(badge)) && (
+          <div className="flex flex-wrap gap-2">
+            {provider.badges
+              .filter((badge) => !isProxyTypeBadge(badge))
+              .map((badge) => (
+                <ProxyProviderBadge key={badge} badge={badge} />
+              ))}
+          </div>
+        )}
+        <p className="text-muted-foreground">{t(provider.summary)}</p>
+        {provider.couponCode && (
+          <CouponCode
+            code={provider.couponCode}
+            discount={provider.couponDiscount}
+          />
+        )}
+        {/* The list compares providers. Payment methods, contact links,
+          and rating live on each provider's own page. */}
+        <div className="flex flex-wrap items-center gap-3">
+          <Button
+            render={
+              <a
+                href={provider.url}
+                target="_blank"
+                rel="noopener noreferrer nofollow"
+              >
+                {t("common.getProxies")}
+                <ExternalLink data-icon="inline-end" />
+              </a>
+            }
+            nativeButton={false}
+          />
+          <ReviewSummaryBadge
+            summary={reviewSummary}
+            status={reviewSummaryStatus}
+          />
+        </div>
+      </CardContent>
     </Card>
   );
 });
@@ -211,10 +178,14 @@ const ProviderCard = memo(function ProviderCard({
 function MainContent() {
   const t = useT();
   const { summaries, summaryStatus } = useReviews("proxy", proxyReviewSlugs);
-  const { badges, sort } = usePrerenderedSearch(
+  const search = usePrerenderedSearch(
     Route.useSearch(),
     Schema.decodeSync(proxiesSearchSchema)({}),
   );
+  const { sort } = search;
+  // Older links can name a badge that every provider has. It cannot narrow
+  // the list, so ignore it.
+  const badges = search.badges.filter((badge) => FILTER_BADGES.includes(badge));
   const navigate = Route.useNavigate();
   const hydrated = useHydrated();
   const orderSummaries = usePrerenderedSearchOrder(
@@ -258,65 +229,73 @@ function MainContent() {
   const [filtersOpen, setFiltersOpen] = useState(false);
   const hasActiveFilters = badges.length > 0 || sort !== "default";
 
-  const badgeGroup = (label: MessageKey, groupBadges: readonly Badge[]) => (
-    <div className="flex flex-col gap-2">
-      <span className="text-xs text-muted-foreground">{t(label)}</span>
-      <ToggleGroup
-        aria-label={t(label)}
-        multiple
-        value={badges.filter((badge) => groupBadges.includes(badge))}
-        onValueChange={(value) => {
-          const selected = new Set(
-            value.filter((badge) => isOneOf(badge, BADGES)),
-          );
-          void navigate({
-            search: (previous) => ({
-              ...previous,
-              badges: BADGES.filter((badge) =>
-                groupBadges.includes(badge)
-                  ? selected.has(badge)
-                  : previous.badges.includes(badge),
-              ),
-            }),
-            replace: true,
-            resetScroll: false,
-          });
-        }}
-        spacing={2}
-        className="flex-wrap"
-      >
-        {groupBadges.map((badge) => {
-          const config = BADGE_CONFIG[badge];
-          const isActive = badges.includes(badge);
-          const count = isActive
-            ? matchingProviders.length
-            : filterProviders(matchingProviders, [badge]).length;
-          return (
-            <ToggleGroupItem
-              key={badge}
-              value={badge}
-              size="sm"
-              disabled={count === 0 && !isActive}
-              className={cn(
-                "rounded-full px-3 py-1.5 text-xs",
-                isActive
-                  ? cn(
-                      config.className /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */,
-                      "ring-2 ring-current ring-offset-2 ring-offset-background",
-                    )
-                  : "bg-muted text-muted-foreground hover:bg-muted/80",
-              )}
-            >
-              {t(config.label)}
-              <span aria-hidden="true" className="tabular-nums">
-                {count}
-              </span>
-            </ToggleGroupItem>
-          );
-        })}
-      </ToggleGroup>
-    </div>
-  );
+  const badgeGroup = (label: MessageKey, groupBadges: readonly Badge[]) => {
+    const options = groupBadges.filter((badge) =>
+      FILTER_BADGES.includes(badge),
+    );
+    if (options.length === 0) {
+      return null;
+    }
+    return (
+      <div className="flex flex-col gap-2">
+        <span className="text-xs text-muted-foreground">{t(label)}</span>
+        <ToggleGroup
+          aria-label={t(label)}
+          multiple
+          value={badges.filter((badge) => options.includes(badge))}
+          onValueChange={(value) => {
+            const selected = new Set(
+              value.filter((badge) => isOneOf(badge, BADGES)),
+            );
+            void navigate({
+              search: (previous) => ({
+                ...previous,
+                badges: FILTER_BADGES.filter((badge) =>
+                  options.includes(badge)
+                    ? selected.has(badge)
+                    : previous.badges.includes(badge),
+                ),
+              }),
+              replace: true,
+              resetScroll: false,
+            });
+          }}
+          spacing={2}
+          className="flex-wrap"
+        >
+          {options.map((badge) => {
+            const config = BADGE_CONFIG[badge];
+            const isActive = badges.includes(badge);
+            const count = isActive
+              ? matchingProviders.length
+              : filterProviders(matchingProviders, [badge]).length;
+            return (
+              <ToggleGroupItem
+                key={badge}
+                value={badge}
+                size="sm"
+                disabled={count === 0 && !isActive}
+                className={cn(
+                  "rounded-full px-3 py-1.5 text-xs",
+                  isActive
+                    ? cn(
+                        config.className /* oxlint-disable-line shadcn/require-static-classes -- Classes come from a finite provider or badge theme map. */,
+                        "ring-2 ring-current ring-offset-2 ring-offset-background",
+                      )
+                    : "bg-muted text-muted-foreground hover:bg-muted/80",
+                )}
+              >
+                {t(config.label)}
+                <span aria-hidden="true" className="tabular-nums">
+                  {count}
+                </span>
+              </ToggleGroupItem>
+            );
+          })}
+        </ToggleGroup>
+      </div>
+    );
+  };
 
   const filterContent = (
     <div className="flex flex-col gap-4">
@@ -349,10 +328,10 @@ function MainContent() {
       {badgeGroup("providers.proxies.features", FEATURE_BADGES)}
       <div className="flex flex-col gap-2">
         <span className="text-xs text-muted-foreground">
-          {t("providers.accounts.sort")}
+          {t("providers.proxies.sort")}
         </span>
         <ToggleGroup
-          aria-label={t("providers.accounts.sort")}
+          aria-label={t("providers.proxies.sort")}
           value={[sort]}
           onValueChange={([value]) => {
             if (isOneOf(value, SORT_OPTIONS)) {

@@ -33,6 +33,10 @@ export const BADGES = [...PROXY_TYPE_BADGES, ...FEATURE_BADGES] as const;
 
 export type Badge = (typeof BADGES)[number];
 
+export function isProxyTypeBadge(badge: Badge): boolean {
+  return PROXY_TYPE_BADGES.some((type) => type === badge);
+}
+
 export type Provider = {
   slug: string;
   name: string;
@@ -551,3 +555,11 @@ export const PROVIDERS: Provider[] = [
 for (const provider of PROVIDERS) {
   provider.badges.sort((a, b) => BADGES.indexOf(a) - BADGES.indexOf(b));
 }
+
+/**
+ * Badges that at least one provider lacks. A filter for a badge that every
+ * provider has would never narrow the list, so the page offers only these.
+ */
+export const FILTER_BADGES: readonly Badge[] = BADGES.filter((badge) =>
+  PROVIDERS.some((provider) => !provider.badges.includes(badge)),
+);

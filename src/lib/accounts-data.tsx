@@ -52,7 +52,8 @@ export type Listing = {
   summary: MessageKey;
   badges: Badge[];
   price: string;
-  // USD catalog price, when a comparable account price is available.
+  // Lowest USD price for one account. Leave it out for per-credit,
+  // subscription, and marketplace prices, which do not compare.
   priceValue?: number;
   couponCode?: string;
   couponDiscount?: MessageKey;
@@ -417,8 +418,9 @@ export const SHOPS: Shop[] = [
       "nfa-accounts": {
         summary: "providers.accounts.atomic-nfas.nfa.summary",
         badges: ["instant-delivery", "bulk-discount"],
+        // A per-credit price is not a per-account price, so it is not
+        // sorted or published as one.
         price: "providers.accounts.atomic-nfas.nfa.price",
-        priceValue: 0.008,
         couponCode: "SOULFIRE",
         couponDiscount: "offers.tenPercentOff",
         priceDetails: "providers.accounts.atomic-nfas.nfa.priceDetails",
@@ -595,8 +597,9 @@ export const SHOPS: Shop[] = [
       "nfa-accounts": {
         summary: "providers.accounts.mog-alts.nfa.summary",
         badges: ["instant-delivery", "bulk-discount"],
+        // A per-credit price is not a per-account price, so it is not
+        // sorted or published as one.
         price: "providers.accounts.mog-alts.nfa.price",
-        priceValue: 0.008,
         priceDetails: "providers.accounts.mog-alts.nfa.priceDetails",
       },
     },

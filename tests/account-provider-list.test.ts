@@ -67,6 +67,25 @@ await test("explicit price sorting includes promoted listings and preserves the 
   assert.deepEqual(providers, [paid, promoted, free]);
 });
 
+await test("price sorting keeps per-credit and subscription listings after account prices", () => {
+  const nfa = PROVIDERS.filter(
+    (provider) => provider.category === "nfa-accounts",
+  );
+  for (const sort of ["price-asc", "price-desc"] as const) {
+    const slugs = sortAccountProviders(nfa, sort, {}, now).map(
+      (provider) => provider.slug,
+    );
+    const firstUnpriced = slugs.findIndex((slug) =>
+      ["atomic-nfas", "mog-alts", "skycron"].includes(slug),
+    );
+    assert.deepEqual(slugs.slice(firstUnpriced).toSorted(), [
+      "atomic-nfas",
+      "mog-alts",
+      "skycron",
+    ]);
+  }
+});
+
 await test("promotion affects default ordering but not an explicit rating sort", () => {
   const summaries = {
     localts: { ...emptyReviewSummary(), averageRating: 2, reviewCount: 100 },

@@ -377,7 +377,7 @@ function ItemReviewsSectionContent({
                 <div className="flex flex-col gap-1 pb-1">
                   <ReviewStars value={summary.averageRating} size="lg" />
                   <p className="text-sm text-muted-foreground">
-                    {t("reviews.ratingsCollected", {
+                    {t("reviews.totalRatings", {
                       count: summary.reviewCount.toLocaleString(locale),
                     })}
                   </p>
@@ -608,12 +608,6 @@ function ItemReviewsSectionContent({
                           <p className="font-medium">{entry.authorName}</p>
                           <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
                             <ReviewStars value={entry.rating} size="sm" />
-                            <span className="tabular-nums">
-                              {entry.rating.toLocaleString(locale, {
-                                minimumFractionDigits: 1,
-                                maximumFractionDigits: 1,
-                              })}
-                            </span>
                             <span aria-hidden>·</span>
                             <CustomTimeAgo date={entry.createdAt} />
                           </div>
