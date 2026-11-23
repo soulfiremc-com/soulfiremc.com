@@ -43,6 +43,7 @@ export function createStillScene(seed: number) {
     Array.from(mesh.vertices.subarray(0, mesh.opaque * VERTEX_STRIDE)),
   );
   const faces: StillFace[] = [];
+  const seen = new Set<string>();
   for (let offset = 0; offset < vertices.length; offset += VERTEX_STRIDE * 6) {
     const corners = [0, 1, 2, 5].map((index) => {
       const start = offset + index * VERTEX_STRIDE;
@@ -52,6 +53,11 @@ export function createStillScene(seed: number) {
         itemAt(vertices, start + 2),
       ] as const;
     });
+    const id = corners.flat().join(":");
+    // Overlapping actors can emit the same face twice. Draw it once so every
+    // face keeps a unique key.
+    if (seen.has(id)) continue;
+    seen.add(id);
     const points = corners
       .map(
         ([x, y, z]) =>
@@ -59,7 +65,7 @@ export function createStillScene(seed: number) {
       )
       .join(" ");
     faces.push({
-      id: corners.flat().join(":"),
+      id,
       points,
       depth: corners.reduce((sum, [x, y, z]) => sum + x + y + z, 0),
       color: `rgb(${vertices

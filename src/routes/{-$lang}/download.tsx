@@ -64,6 +64,7 @@ import {
   type DownloadLinkMap,
   FLATHUB_URL,
   getClientReleaseNotesUrl,
+  isReleaseAssetUrl,
 } from "@/lib/download-links";
 import { getClientReleaseManifest, getServerVersion } from "@/lib/releases";
 import { getCanonicalLinks, getPageMeta } from "@/lib/seo";
@@ -149,6 +150,13 @@ function ignoreAbortError(error: unknown) {
   throw error;
 }
 
+function releaseLinkProps(href: string) {
+  // Without a resolved version the link is a release page, not a file.
+  return isReleaseAssetUrl(href)
+    ? { download: "" }
+    : { target: "_blank", rel: "noopener noreferrer" };
+}
+
 function SelectedMark() {
   return (
     <span className="absolute top-3 right-3 flex size-5 items-center justify-center rounded-full bg-primary text-primary-foreground">
@@ -225,10 +233,7 @@ function DownloadConfigurator({ links }: { links: DownloadLinkMap }) {
   }, [hasExplicitOs, hasExplicitCpu, navigate]);
 
   const downloadHref = links[selection.os][selection.cpu];
-  const isDirectGithubDownload = downloadHref.includes("github.com");
-  const downloadLinkProps = isDirectGithubDownload
-    ? { download: "" }
-    : { target: "_blank", rel: "noopener noreferrer" };
+  const downloadLinkProps = releaseLinkProps(downloadHref);
   const selectedOsLabel =
     OS_OPTIONS.find((option) => option.id === selection.os)?.label ??
     selection.os;
@@ -825,7 +830,7 @@ function DownloadPageContent({
                 </div>
                 <a
                   href={item.url}
-                  download
+                  {...releaseLinkProps(item.url)}
                   aria-describedby={`server-download-${item.name.toLowerCase().replaceAll(" ", "-")}`}
                   className={cn(
                     buttonVariants({ size: "sm" }),

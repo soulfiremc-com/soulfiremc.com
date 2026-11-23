@@ -14,6 +14,7 @@ import { usePrerenderedSearchOrder } from "@/hooks/use-prerendered-search-order"
 import { SiDiscord, SiTrustpilot } from "@icons-pack/react-simple-icons";
 import { noop, useSuspenseQuery } from "@tanstack/react-query";
 import {
+  CatchBoundary,
   createFileRoute,
   Link,
   stripSearchParams,
@@ -100,6 +101,19 @@ import { cn } from "@/lib/utils";
 import { JsonLdScript } from "@/components/json-ld";
 import { isOneOf } from "@/lib/is-one-of";
 
+function UnknownDiscordMemberBadge() {
+  const t = useT();
+  return (
+    <UiBadge
+      variant="outline"
+      className="border-transparent bg-discord/10 text-discord"
+    >
+      <Users />
+      {t("providers.accounts.unknown")}
+    </UiBadge>
+  );
+}
+
 function DiscordMemberBadge({ providerSlug }: { providerSlug: string }) {
   const t = useT();
   const locale = useLocale();
@@ -109,15 +123,7 @@ function DiscordMemberBadge({ providerSlug }: { providerSlug: string }) {
   const info = discordInvites[providerSlug] ?? null;
 
   if (!info?.approximate_member_count) {
-    return (
-      <UiBadge
-        variant="outline"
-        className="border-transparent bg-discord/10 text-discord"
-      >
-        <Users />
-        {t("providers.accounts.unknown")}
-      </UiBadge>
-    );
+    return <UnknownDiscordMemberBadge />;
   }
 
   return (
@@ -374,18 +380,24 @@ const ProviderCard = memo(function ProviderCard({
             {/* Shops without a Discord server have no member count. */}
             {discordInviteUrl && (
               <span className="relative z-10 inline-flex">
-                <Suspense
-                  fallback={
-                    <Skeleton
-                      aria-label={t(
-                        "providers.accounts.loadingDiscordMemberCount",
-                      )}
-                      className="h-5 w-16"
-                    />
-                  }
+                {/* A failed invite request must not replace the page. */}
+                <CatchBoundary
+                  getResetKey={() => provider.slug}
+                  errorComponent={UnknownDiscordMemberBadge}
                 >
-                  <DiscordMemberBadge providerSlug={provider.slug} />
-                </Suspense>
+                  <Suspense
+                    fallback={
+                      <Skeleton
+                        aria-label={t(
+                          "providers.accounts.loadingDiscordMemberCount",
+                        )}
+                        className="h-5 w-16"
+                      />
+                    }
+                  >
+                    <DiscordMemberBadge providerSlug={provider.slug} />
+                  </Suspense>
+                </CatchBoundary>
               </span>
             )}
             <div className="relative z-10 flex flex-wrap gap-2">
@@ -1208,21 +1220,23 @@ export const Route = createFileRoute("/{-$lang}/get-accounts/")({
 
 function GetAccountsPage() {
   const locale = useLocale();
+  const baseItemListJsonLd = (
+    <JsonLdScript
+      json={localizeProviderJsonLd(createAccountsItemListJsonLd(), locale)}
+    />
+  );
   return (
     <SiteShell>
       <JsonLdScript json={localizeProviderJsonLd(accountsPageJsonLd, locale)} />
-      <Suspense
-        fallback={
-          <JsonLdScript
-            json={localizeProviderJsonLd(
-              createAccountsItemListJsonLd(),
-              locale,
-            )}
-          />
-        }
+      {/* A failed review or stock request must not replace the page. */}
+      <CatchBoundary
+        getResetKey={() => locale}
+        errorComponent={() => baseItemListJsonLd}
       >
-        <AccountsItemListStructuredData />
-      </Suspense>
+        <Suspense fallback={baseItemListJsonLd}>
+          <AccountsItemListStructuredData />
+        </Suspense>
+      </CatchBoundary>
       <JsonLdScript
         json={JSON.stringify(createProviderFaqJsonLd("accounts", locale))}
       />

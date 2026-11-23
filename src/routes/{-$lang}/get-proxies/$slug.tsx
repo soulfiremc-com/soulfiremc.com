@@ -1,6 +1,10 @@
 import { isLocale, localizePath, type Locale } from "@/lib/i18n";
 import { translate, type MessageKey } from "@/lib/messages";
-import { formatProviderSince, localizeProviderData } from "@/lib/provider-i18n";
+import {
+  formatProviderSince,
+  localizeProviderData,
+  providerSinceIsoDate,
+} from "@/lib/provider-i18n";
 import { useT, useLocale } from "@/lib/i18n-react";
 import { Schema } from "effect";
 import { discordEmbedScript } from "@/lib/discord-embed";
@@ -325,7 +329,9 @@ function getProxyDetailPageData({
     },
     url: `https://soulfiremc.com/get-proxies/${provider.slug}`,
     category: "providers.proxies.proxyService",
-    ...(provider.startDate && { dateCreated: provider.startDate }),
+    ...(provider.startDate && {
+      dateCreated: providerSinceIsoDate(provider.startDate),
+    }),
     ...(provider.gallery &&
       provider.gallery.length > 0 && {
         image: provider.gallery.map((img): ImageObject => ({

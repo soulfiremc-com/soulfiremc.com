@@ -1,9 +1,12 @@
 import * as React from "react";
 
-const MOBILE_BREAKPOINT = 768;
+// Matches Tailwind's `max-md` variant. Reading the same media query that
+// drives the change event keeps the value in sync at fractional zoom widths,
+// where `window.innerWidth` is rounded.
+const MOBILE_QUERY = "(width < 48rem)";
 
 function subscribeToMobileQuery(onChange: () => void) {
-  const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
+  const mql = window.matchMedia(MOBILE_QUERY);
   mql.addEventListener("change", onChange);
   return () => {
     mql.removeEventListener("change", onChange);
@@ -13,7 +16,7 @@ function subscribeToMobileQuery(onChange: () => void) {
 export function useIsMobile() {
   return React.useSyncExternalStore(
     subscribeToMobileQuery,
-    () => window.innerWidth < MOBILE_BREAKPOINT,
+    () => window.matchMedia(MOBILE_QUERY).matches,
     () => false,
   );
 }

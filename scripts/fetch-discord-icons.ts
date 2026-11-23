@@ -103,4 +103,5 @@ try {
   await main();
 } catch (error) {
   printError(error);
+  process.exitCode = 1;
 }

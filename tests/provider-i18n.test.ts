@@ -20,7 +20,11 @@ import {
 import { LocaleProvider } from "@/components/locale-provider";
 import { translate } from "@/lib/messages";
 import { getAccountPageImage, getProxyPageImage } from "@/lib/og";
-import { formatProviderSince, localizeProviderData } from "@/lib/provider-i18n";
+import {
+  formatProviderSince,
+  localizeProviderData,
+  providerSinceIsoDate,
+} from "@/lib/provider-i18n";
 import { getPageMeta } from "@/lib/seo";
 
 void test("all provider descriptions, offer details, badges and FAQs have translations", () => {
@@ -194,4 +198,14 @@ void test("provider start dates use localized month forms without changing year-
   assert.equal(formatProviderSince("May 2026", "ru"), "мая 2026");
   assert.equal(formatProviderSince("May 2026", "en"), "May 2026");
   assert.equal(formatProviderSince("2018", "ru"), "2018");
+});
+
+void test("provider start dates become ISO 8601 dates for structured data", () => {
+  assert.equal(providerSinceIsoDate("Jul 2025"), "2025-07");
+  assert.equal(providerSinceIsoDate("Dec 2025"), "2025-12");
+  assert.equal(providerSinceIsoDate("2018"), "2018");
+  assert.equal(providerSinceIsoDate("Summer 2025"), undefined);
+  for (const provider of accounts)
+    if (provider.startDate)
+      assert.ok(providerSinceIsoDate(provider.startDate), provider.startDate);
 });

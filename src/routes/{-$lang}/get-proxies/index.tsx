@@ -13,6 +13,7 @@ import { usePrerenderedSearch } from "@/hooks/use-prerendered-search";
 import { usePrerenderedSearchOrder } from "@/hooks/use-prerendered-search-order";
 import { noop, useSuspenseQuery } from "@tanstack/react-query";
 import {
+  CatchBoundary,
   createFileRoute,
   Link,
   stripSearchParams,
@@ -735,23 +736,25 @@ export const Route = createFileRoute("/{-$lang}/get-proxies/")({
 
 function GetProxiesPage() {
   const locale = useLocale();
+  const staticItemListJsonLd = (
+    <JsonLdScript
+      json={localizeProviderJsonLd(proxiesPageData.itemListJsonLd, locale)}
+    />
+  );
   return (
     <SiteShell>
       <JsonLdScript
         json={localizeProviderJsonLd(proxiesPageData.pageJsonLd, locale)}
       />
-      <Suspense
-        fallback={
-          <JsonLdScript
-            json={localizeProviderJsonLd(
-              proxiesPageData.itemListJsonLd,
-              locale,
-            )}
-          />
-        }
+      {/* A failed review request must not replace the page with an error. */}
+      <CatchBoundary
+        getResetKey={() => locale}
+        errorComponent={() => staticItemListJsonLd}
       >
-        <ProxiesItemListStructuredData />
-      </Suspense>
+        <Suspense fallback={staticItemListJsonLd}>
+          <ProxiesItemListStructuredData />
+        </Suspense>
+      </CatchBoundary>
       <JsonLdScript
         json={JSON.stringify(createProviderFaqJsonLd("proxies", locale))}
       />

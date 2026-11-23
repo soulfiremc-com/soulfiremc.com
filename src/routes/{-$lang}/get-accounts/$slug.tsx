@@ -1,6 +1,10 @@
 import { translate, resolveMessage, type MessageKey } from "@/lib/messages";
 import { isLocale, localizePath, type Locale } from "@/lib/i18n";
-import { formatProviderSince, localizeProviderData } from "@/lib/provider-i18n";
+import {
+  formatProviderSince,
+  localizeProviderData,
+  providerSinceIsoDate,
+} from "@/lib/provider-i18n";
 import { useT, useLocale } from "@/lib/i18n-react";
 import { Schema } from "effect";
 import { discordEmbedScript } from "@/lib/discord-embed";
@@ -162,6 +166,9 @@ function getAccountDetailPageData({
   }
 
   const providers = PROVIDERS.filter((provider) => provider.slug === shop.slug);
+  const dateCreated = shop.startDate
+    ? providerSinceIsoDate(shop.startDate)
+    : undefined;
   const productJsonLd: WithContext<Product> = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -179,7 +186,7 @@ function getAccountDetailPageData({
     },
     url: `https://soulfiremc.com/get-accounts/${shop.slug}`,
     category: "providers.accounts.minecraftAccounts",
-    ...(shop.startDate && { dateCreated: shop.startDate }),
+    ...(dateCreated && { dateCreated }),
   };
 
   const breadcrumbJsonLd: WithContext<BreadcrumbList> = {
@@ -421,7 +428,7 @@ export const Route = createFileRoute("/{-$lang}/get-accounts/$slug")({
         links: [
           { label: t("providers.accounts.visitShop"), url: data.shop.url },
           ...(data.shop.discordUrl
-            ? [{ label: "social.discord", url: data.shop.discordUrl }]
+            ? [{ label: t("social.discord"), url: data.shop.discordUrl }]
             : []),
         ],
       }),

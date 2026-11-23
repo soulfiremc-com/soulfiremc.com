@@ -40,7 +40,6 @@ type OpenApiOperation = {
 type OpenApiSection = {
   content: string;
   heading: string;
-  id: string;
 };
 
 type OpenApiContentDocument = {
@@ -104,18 +103,19 @@ export function getOpenApiPageText(page: OpenApiPageLike) {
   return lines.join("\n");
 }
 
+/**
+ * The API page renders no element with a section ID, so search results link
+ * to the page itself. The section heading stays searchable in the content.
+ */
 export function getOpenApiStructuredData(page: OpenApiPageLike) {
   const sections = getOpenApiSections(page);
 
   return {
     contents: sections.map((section) => ({
-      content: section.content,
-      heading: section.id,
+      content: `${section.heading}\n\n${section.content}`,
+      heading: undefined,
     })),
-    headings: sections.map((section) => ({
-      content: section.heading,
-      id: section.id,
-    })),
+    headings: [],
   };
 }
 
@@ -138,7 +138,6 @@ function getOpenApiSections(
         ? formatContractContent(operation ?? {}, document)
         : formatSectionContent(operation ?? {}),
       heading: `${item.method.toUpperCase()} ${item.path}`,
-      id: toHeadingId(item.method, item.path),
     });
   }
 
@@ -152,7 +151,6 @@ function getOpenApiSections(
         ? formatContractContent(operation ?? {}, document)
         : formatSectionContent(operation ?? {}),
       heading: `Webhook ${item.method.toUpperCase()} /${item.name}`,
-      id: toHeadingId(item.method, item.name),
     });
   }
 
@@ -166,7 +164,6 @@ function getOpenApiSections(
         ? cleanText(page.data.description)
         : "Generated SoulFire API reference page.",
       heading: page.data.title,
-      id: toHeadingId("page", page.slugs.join("/")),
     },
   ];
 }
@@ -254,11 +251,4 @@ function formatSectionContent({
   }
 
   return lines.join("\n\n");
-}
-
-function toHeadingId(method: string, value: string) {
-  return `${method.toLowerCase()}-${value}`
-    .replaceAll(/[^a-z0-9]+/giu, "-")
-    .replaceAll(/^-+|-+$/gu, "")
-    .toLowerCase();
 }

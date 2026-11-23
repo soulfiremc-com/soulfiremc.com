@@ -3,19 +3,14 @@ import {
   locales,
   localeNames,
   localeDestination,
-  localizeHref,
   splitLocalePath,
 } from "@/lib/i18n";
+import { LocaleLink } from "@/components/locale-link";
 import { LocaleProvider } from "@/components/locale-provider";
 import { useLocale } from "@/lib/i18n-react";
 import { fumadocsMessages } from "@/lib/messages/fumadocs";
 import { captchaPlugin } from "@better-auth-ui/react/plugins/captcha";
-import {
-  Link,
-  useNavigate,
-  useRouter,
-  useRouterState,
-} from "@tanstack/react-router";
+import { useNavigate, useRouter, useRouterState } from "@tanstack/react-router";
 import { useMemo } from "react";
 import { RootProvider } from "fumadocs-ui/provider/tanstack";
 import { ContentImage } from "@/components/content-image";
@@ -177,59 +172,4 @@ export function Providers({ children }: { children: React.ReactNode }) {
       </ThemeProvider>
     </LocaleProvider>
   );
-}
-
-function LocaleLink({
-  href = "",
-  prefetch = true,
-  onClick,
-  ...props
-}: React.ComponentProps<"a"> & { prefetch?: boolean }) {
-  const locale = useLocale();
-  const to = localizeHref(href, locale);
-  return (
-    <Link
-      to={to}
-      preload={prefetch ? "intent" : false}
-      onClick={(event) => {
-        onClick?.(event);
-        if (!isSamePageClick(event, to)) return;
-        // The router restores the current scroll position on a same-URL
-        // navigation, which cancels the scroll. Skip that no-op navigation.
-        event.preventDefault();
-        scrollToTop();
-      }}
-      {...props}
-    />
-  );
-}
-
-/** A link to the current page navigates nowhere, so return to the top instead. */
-function isSamePageClick(
-  event: React.MouseEvent<HTMLAnchorElement>,
-  to: string,
-) {
-  if (
-    event.defaultPrevented ||
-    event.button !== 0 ||
-    event.metaKey ||
-    event.ctrlKey ||
-    event.shiftKey ||
-    event.altKey ||
-    !to.startsWith("/") ||
-    to.includes("#")
-  )
-    return false;
-  const target = new URL(to, window.location.href);
-  return (
-    target.pathname === window.location.pathname &&
-    target.search === window.location.search
-  );
-}
-
-function scrollToTop() {
-  const reduceMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)",
-  ).matches;
-  window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
 }

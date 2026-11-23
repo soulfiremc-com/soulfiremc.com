@@ -5,6 +5,7 @@ import {
   createClientDownloads,
   createServerDownloads,
   getClientReleaseNotesUrl,
+  isReleaseAssetUrl,
 } from "@/lib/download-links";
 
 test("createClientDownloads builds desktop installer URLs and keeps Linux on Flathub", () => {
@@ -73,4 +74,19 @@ test("createServerDownloads links versioned jars or the release page when the ve
       ],
     );
   }
+});
+
+test("isReleaseAssetUrl only marks versioned release files as direct downloads", () => {
+  const client = createClientDownloads({ version: "2.10.8" });
+  const fallback = createClientDownloads(null);
+  const servers = createServerDownloads("2.10.8");
+  assert.equal(isReleaseAssetUrl(client.windows.arm64), true);
+  assert.equal(isReleaseAssetUrl(client.macos.x64), true);
+  for (const item of servers) assert.equal(isReleaseAssetUrl(item.url), true);
+
+  // Release and store pages must open in a new tab instead of replacing the page.
+  assert.equal(isReleaseAssetUrl(fallback.windows.x64), false);
+  assert.equal(isReleaseAssetUrl(fallback.linux.x64), false);
+  for (const item of createServerDownloads("latest"))
+    assert.equal(isReleaseAssetUrl(item.url), false);
 });

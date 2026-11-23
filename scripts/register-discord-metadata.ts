@@ -26,7 +26,7 @@ const metadata = [
     key: "account_created",
     name: "Account Created",
     description: "Account creation date",
-    type: 6, // datetime_less_than_or_equal
+    type: 6, // datetime_greater_than_or_equal
   },
 ];
 
@@ -56,5 +56,9 @@ async function main() {
   );
 }
 
-// oxlint-disable-next-line unicorn/prefer-top-level-await -- this file has no imports, so TypeScript compiles it as a script without top-level await
-main().catch(printError);
+try {
+  await main();
+} catch (error) {
+  printError(error);
+  process.exitCode = 1;
+}

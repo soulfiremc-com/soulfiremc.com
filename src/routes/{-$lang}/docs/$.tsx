@@ -39,6 +39,7 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { setDocsContentPreloader } from "@/lib/docs/hydration";
+import { docsLinkTarget } from "@/lib/docs/link-target";
 import { isOpenApiPage } from "@/lib/docs/openapi";
 import { docsRedirects } from "@/lib/docs/redirects";
 import { getBaseLayoutOptions } from "@/lib/layout-options";
@@ -192,7 +193,7 @@ const clientLoader = browserCollections.docs.createClientLoader<{
                     <HoverCardTrigger
                       render={
                         <Link
-                          to={localizeHref(href, locale)}
+                          {...docsLinkTarget(href, locale)}
                           {...anchorProps}
                         />
                       }
@@ -265,6 +266,7 @@ export const Route = createFileRoute("/{-$lang}/docs/$")({
         ? `Request and response reference for the ${loaderData.title} endpoint in the SoulFire API.`
         : "SoulFire documentation");
     const path = localizePath(loaderData.url, loaderData.contentLocale);
+    const docsPath = localizePath("/docs", loaderData.contentLocale);
     const imageUrl = loaderData.imageUrl;
 
     return {
@@ -305,9 +307,12 @@ export const Route = createFileRoute("/{-$lang}/docs/$")({
               withBreadcrumb: true,
             }),
             createBreadcrumbStructuredData(path, [
-              { name: "Home", path: "/" },
-              { name: "Docs", path: "/docs" },
-              ...(path !== "/docs" ? [{ name: loaderData.title, path }] : []),
+              {
+                name: "Home",
+                path: localizePath("/", loaderData.contentLocale),
+              },
+              { name: "Docs", path: docsPath },
+              ...(path !== docsPath ? [{ name: loaderData.title, path }] : []),
             ]),
           ]),
         ),

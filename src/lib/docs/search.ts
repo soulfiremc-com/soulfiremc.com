@@ -4,7 +4,7 @@ import { translate } from "@/lib/messages";
 import { replaceSdkReleaseTokens } from "@/lib/sdk-release";
 
 type SearchStructuredData = {
-  contents: { content: string; heading: string }[];
+  contents: { content: string; heading: string | undefined }[];
   headings: { content: string; id: string }[];
 };
 
@@ -44,7 +44,8 @@ export function withoutNavigationSections(
   return {
     ...structuredData,
     contents: structuredData.contents.filter(
-      (item) => !navigationSectionIds.has(item.heading),
+      (item) =>
+        item.heading === undefined || !navigationSectionIds.has(item.heading),
     ),
   };
 }

@@ -1,4 +1,5 @@
 import type { InferPageType } from "fumadocs-core/source";
+import { pickRelatedPosts } from "@/lib/blog-related";
 import { blogSource } from "@/lib/source";
 
 type BlogPage = InferPageType<typeof blogSource>;
@@ -59,15 +60,7 @@ export function getBlogPostData(slug: string) {
   }
 
   const post = getBlogPostSummary(page);
-  const relatedPosts =
-    post.tags.length > 0
-      ? getAllBlogPostSummaries()
-          .filter((candidate) => candidate.slug !== slug)
-          .filter((candidate) =>
-            candidate.tags.some((tag) => post.tags.includes(tag)),
-          )
-          .slice(0, 3)
-      : [];
+  const relatedPosts = pickRelatedPosts(post, getAllBlogPostSummaries());
 
   return {
     path: page.path,

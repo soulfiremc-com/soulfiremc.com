@@ -26,6 +26,14 @@ const GH_SERVER_BASE =
 const CLIENT_RELEASE_DOWNLOAD_BASE =
   "https://github.com/soulfiremc-com/SoulFireClient/releases/download";
 
+/** Release assets download in place. Release and store pages open in a new tab. */
+export function isReleaseAssetUrl(href: string): boolean {
+  return (
+    href.startsWith(`${CLIENT_RELEASE_DOWNLOAD_BASE}/`) ||
+    href.startsWith(`${GH_SERVER_BASE}/`)
+  );
+}
+
 export function getClientReleaseNotesUrl(version: string | undefined): string {
   const tag = version?.trim();
   return tag && tag !== "latest"

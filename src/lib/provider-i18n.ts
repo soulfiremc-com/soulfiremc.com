@@ -1,25 +1,42 @@
 import { hrefPath, isProviderPath, localizePath, type Locale } from "./i18n";
 import { resolveMessage } from "./messages";
 
-export function formatProviderSince(date: string, locale: Locale) {
+const MONTHS = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
+function parseProviderSince(date: string) {
   const [, monthName, year] =
     /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{4})$/u.exec(date) ??
     [];
-  if (monthName === undefined || year === undefined) return date;
-  const month = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ].indexOf(monthName);
+  if (monthName === undefined || year === undefined) return undefined;
+  return { month: MONTHS.indexOf(monthName), year };
+}
+
+/** Converts a catalog date such as "Jul 2025" to an ISO 8601 date ("2025-07"). */
+export function providerSinceIsoDate(date: string) {
+  const parsed = parseProviderSince(date);
+  if (parsed) {
+    return `${parsed.year}-${String(parsed.month + 1).padStart(2, "0")}`;
+  }
+  return /^\d{4}$/u.test(date) ? date : undefined;
+}
+
+export function formatProviderSince(date: string, locale: Locale) {
+  const parsed = parseProviderSince(date);
+  if (!parsed) return date;
+  const { month, year } = parsed;
   // A day gives Polish and Russian the month form needed after "since".
   const parts = new Intl.DateTimeFormat(locale, {
     day: "numeric",
