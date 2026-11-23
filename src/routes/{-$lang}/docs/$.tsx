@@ -252,9 +252,10 @@ export const Route = createFileRoute("/{-$lang}/docs/$")({
 
     return data;
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData, params }) => {
     // A missing page keeps the root noindex and gets no canonical or preview.
     if (!loaderData) return { meta: [] };
+    const routeLocale = isLocale(params.lang) ? params.lang : "en";
     const title = `${loaderData.title} - SoulFire`;
     const description =
       loaderData.description ??
@@ -266,14 +267,21 @@ export const Route = createFileRoute("/{-$lang}/docs/$")({
     const imageUrl = loaderData.imageUrl;
 
     return {
-      meta: getPageMeta({
-        locale: loaderData.contentLocale,
-        title,
-        description,
-        path,
-        imageUrl,
-        imageAlt: `${loaderData.title} documentation preview`,
-      }),
+      meta: [
+        ...getPageMeta({
+          locale: loaderData.contentLocale,
+          title,
+          description,
+          path,
+          imageUrl,
+          imageAlt: `${loaderData.title} documentation preview`,
+        }),
+        // An English page served under /de, /pl, or /ru duplicates the English
+        // original. Keep the copy out of search results but follow its links.
+        ...(routeLocale === loaderData.contentLocale
+          ? []
+          : [{ name: "robots", content: "noindex, follow" }]),
+      ],
       links: getCanonicalLinks(
         path,
         loaderData.contentLocale,
