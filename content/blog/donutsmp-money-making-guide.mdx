@@ -1,238 +1,129 @@
 ---
-title: DonutSMP Money-Making Guide with SoulFire Scripts
-description: How DonutSMP's economy works, and how to model its farming and trading loops with SoulFire's visual scripts on a server you control
+title: How DonutSMP's Economy Works, and How to Test Your Own
+description: How DonutSMP's shards, sell multiplier, orders, and auction house fit together, and how to test the same loops on your own economy server with SoulFire bots.
 author: Pistonmaster
 date: 2026-02-24
-tags: [minecraft, donutsmp, economy, automation, scripting, soulfire]
+tags: [minecraft, donutsmp, economy, scripting, load-testing]
 ---
 
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs'
 import { Callout } from 'fumadocs-ui/components/callout'
 import { Step, Steps } from 'fumadocs-ui/components/steps'
 
-## DonutSMP's economy
+## The short answer
 
-DonutSMP is currently the largest Minecraft server in the world, regularly hitting 30,000+ concurrent players and peaking above 60,000. In practice, it now behaves more like a high-risk survival economy server with separate survival, duels, and AFK loops than the older hardcore-style "die once and sit out for two days" ruleset many guides still describe.
+DonutSMP's economy has two currencies and four main loops: AFK shards, spawner farms, selling to the server with a sell multiplier, and player trading through orders and the auction house. If you run a server with a similar economy, each loop is a place where automated players can create too much money or too much lag.
 
-What makes DonutSMP interesting from an automation perspective is how its economy loops fit together: shards, spawners, the sell multiplier, and the auction house. This post explains those loops and shows how to model them with SoulFire's visual scripts.
-
-<Callout type="info">
-**April 2026 refresh:** the old death-ban framing is outdated, and DonutSMP's shard shop was recently flattened so every spawner now costs 1,500 shards. That makes current live prices more important than old shop-price heuristics.
-</Callout>
+This post explains the loops, then shows how to test them on your own server with [SoulFire](/download) bots before real players find the weak spots.
 
 <Callout type="warning">
-**Read the rules first.** DonutSMP bans scripts, macros, auto-clickers, and off-platform trading, and it bans associated accounts together. Do not run bots on DonutSMP. Build and test these scripts on a server you run, such as a local test server with similar economy plugins. Prices and rates change constantly; the numbers here are approximate as of April 2026.
+**Do not run bots on DonutSMP.** Its rules ban scripts, macros, and auto-clickers, and staff ban associated accounts together. Everything in this post is for a server that you own or have permission to test.
 </Callout>
 
-## How the Economy Works
+## How DonutSMP's economy works
 
-DonutSMP runs on two currencies, three trading systems, and a sell multiplier that turns patient players into money printers.
+DonutSMP changes prices and rates often. The [DonutSMP Wiki](https://donutsmp.fandom.com/wiki/Sell_Multiplier) and the server's own `/shop` show the current values.
 
 ### Currencies
 
-| Currency | How You Earn It | What It Buys |
-|----------|----------------|--------------|
-| **Money** | `/sell` items, auction house sales, filling `/order` listings | Everything on `/ah`, player trades |
-| **Shards** | AFK zone (1/min), kills (10/kill), Donut+ everywhere | Any shop spawner (1,500 shards each), common/crimson keys via `/shop` |
+| Currency | How players earn it | What it buys |
+|----------|---------------------|--------------|
+| **Money** | `/sell`, auction house sales, filling `/order` listings | Items on `/ah`, player trades |
+| **Shards** | Time in the AFK zone, kills, and some store perks | Spawners and crates in `/shop` |
 
-### Trading Systems
+### Trading systems
 
-| System | Command | Best For |
-|--------|---------|----------|
-| **Auction House** | `/ah` | Buying and selling individual items, flipping |
-| **Orders** | `/order` or `/orders` | Bulk purchasing at below-market prices |
-| **Direct Sell** | `/sell` | Selling items to the server at fixed rates (affected by multiplier) |
+| System | Command | What it does |
+|--------|---------|--------------|
+| **Auction house** | `/ah` | Players list and buy single items |
+| **Orders** | `/order` | Players post bulk buy requests that others fill |
+| **Direct sell** | `/sell` | The server buys items at fixed prices, scaled by the seller's multiplier |
 
-### The Sell Multiplier
+### The sell multiplier
 
-This is the single most important mechanic for money generation. Your personal sell multiplier starts at 1.0x and climbs to 3.0x as you accumulate total sales. At max multiplier, you can order items cheaply through `/order` listings and flip them via `/sell` for triple the base price. The margin per item grows with the multiplier, but order supply and server-side limits still cap it.
+Each player's sell multiplier grows with their total sales, up to 3x. A player at a high multiplier can buy items from other players through `/order` and sell them to the server for more than they paid. Order supply limits how far this scales.
 
-Tools like [DonutCalc](https://donutcalc.com/) help plan the grind to 3.0x. The [DonutSMP Wiki](https://donutsmp.fandom.com/wiki/Sell_Multiplier) has the full breakdown of milestones.
+## Where an economy like this breaks
 
-## Money-Making Methods That Scale with Bots
+Each loop has a failure mode that only shows up with many players, or with players who automate.
 
-Not every farming method benefits from automation. Here are the ones that do, ordered by how well they pair with SoulFire.
+- **AFK rewards create money from nothing.** The total grows with every account that stays online. Bots or alt accounts multiply it.
+- **Spawner farms keep chunks loaded.** A player who stands next to a farm keeps it running, so each farm adds to the tick time all day.
+- **The sell multiplier enables arbitrage.** If an item's sell price times the multiplier is higher than what players accept for it in an order, buying and selling it creates money with no work.
+- **The auction house rewards speed.** A script that polls `/ah` can buy underpriced listings before any human, and the command itself costs server time.
 
-<Tabs items={['AFK Shards', 'Spawner Farms', 'Sell Arbitrage', 'AH Flipping']}>
-  <Tab value="AFK Shards">
-### AFK Shard Farming
-
-The simplest method. Bots join the AFK zone with `/afk <lobby>` and idle. That's it. Each bot earns 1 shard per minute, or 1,440 shards per day. With a 4x shard booster from an Amethyst package, that jumps to 5,760 per day.
-
-Shards themselves aren't directly tradeable, but they buy spawners from `/shop`. Since every spawner now costs 1,500 shards, one bot earns roughly one shop spawner per day. That flattened pricing matters: you're no longer forced into one "correct" shard sink just because some mobs used to be cheaper than others.
-
-Donut+ also changes the equation a bit. The official store currently lists Donut+ at $4.99 for 30 days, and one of its perks is earning shards anywhere on the server instead of only in AFK. That can matter if your bots need to stay near farms rather than in the AFK zone.
-
-**Why it works with SoulFire:** Zero interaction needed after joining. The bot just has to stay connected. SoulFire's node scripting can handle reconnection on disconnect, lobby selection, and even auto-claiming shard rewards.
-
-| Metric | Without Booster | With 4x Booster |
-|--------|----------------|-----------------|
-| Shards/day/bot | 1,440 | 5,760 |
-| Days per 1,500-shard spawner | ~1.04 | ~0.26 |
-| Spawners/month (10 bots) | ~288 | ~1,152 |
-  </Tab>
-
-  <Tab value="Spawner Farms">
-### Spawner Farms After the 1,500-Shard Change
-
-Spawner farms still scale extremely well with bots, but the old "just buy iron golems" rule of thumb is weaker now that every shop spawner costs the same 1,500 shards. The right farm depends more on output, collection overhead, and whether you're monetizing through `/sell`, `/order`, or `/ah`.
-
-On a live Donut.Auction snapshot while refreshing this post, Iron Ingots were around $123.5k per stack on the auction house, Sugar Cane around $73.6k/stack, Bone Blocks around $52.7k/stack, and Bamboo around $10.1k/stack. That doesn't make one farm universally "best," but it does show why live price tracking now matters more than old shard-shop heuristics.
-
-The catch is that someone needs to be nearby to keep the chunks loaded. That's where SoulFire bots come in. They stand near the farm, collect drops periodically, and `/sell` them or route them into whatever exit path currently pays best. The farm runs 24/7 as long as the bot stays online.
-
-**Why it works with SoulFire:** Bots act as chunk loaders and item collectors. Node scripts can handle periodic inventory collection, selling, and reconnection after kicks or disconnects.
-
-| Live AH Snapshot | Approximate Value per Stack |
-|------------------|-----------------------------|
-| Iron Ingots | ~$123,541 |
-| Sugar Cane | ~$73,589 |
-| Bone Blocks | ~$52,716 |
-| Bamboo | ~$10,087 |
-  </Tab>
-
-  <Tab value="Sell Arbitrage">
-### Sell Multiplier Arbitrage
-
-Once your sell multiplier hits 3.0x, you can buy items through `/order` listings at base price and `/sell` them for triple. The margin is built into the game's own mechanics.
-
-The bot places bulk orders for cheap items (kelp blocks, iron, bones), waits for other players to fill them, collects the deliveries, and runs `/sell`. Rinse and repeat.
-
-**Why it works with SoulFire:** The entire loop can be scripted. Place order, wait, collect from GUI, sell, repeat. Node scripting handles the GUI interactions through inventory click nodes.
-
-The main bottleneck is order fill speed. Popular items get filled quickly, but niche items might sit for hours. A smart script rotates through multiple item types.
-  </Tab>
-
-  <Tab value="AH Flipping">
-### Auction House Flipping
-
-New players constantly list items below market value on `/ah`. Buy low, sell high. Classic arbitrage.
-
-DonutSMP has a [public API](https://api.donutsmp.net/index.html) and community tools like [donut.auction](https://donut.auction/), [DonutSMP Stats](https://donutstats.org/), and [Donut Stats](https://www.donutstats.net/) that track price history and server activity. A bot that knows current market prices can snipe underpriced listings faster than any human.
-
-**Why it works with SoulFire:** The Web Fetch node can query price APIs. Combined with chat parsing and inventory interaction, a script can monitor the AH, detect deals, and buy them automatically.
-  </Tab>
-</Tabs>
-
-## The Earnings Calculator
-
-Play with the numbers below to get a rough idea of the in-game output of different setups. Adjust the bot count and farming method.
+The calculator below estimates how much currency an AFK reward creates per day. Enter your own server's values.
 
 <DonutCalculator />
 
-<Callout type="warning">
-This calculator uses approximate values that change frequently. Farm output depends on your specific design, server TPS, collection path, and whether chunks stay loaded. Real results will vary. Check [donut.auction](https://donut.auction/) for live pricing data.
-</Callout>
+## Test each loop with bots
 
-## How SoulFire's Node Scripting Makes This Possible
-
-SoulFire isn't a simple autoclicker. It uses the real Minecraft client protocol stack through Fabric, while the bot behavior itself comes from your scripts. The real power is in the visual node scripting system, which lets you build complex automation without writing a single line of code.
-
-### What the Scripting System Can Do
-
-The node editor gives you 179+ nodes across categories like bot control, inventory management, chat interaction, world queries, and even external API calls. You connect them visually, like wiring up a circuit.
-
-Here's what matters for DonutSMP farming. SoulFire 2.10.8 renamed some nodes, so older releases show **On Join** for **On player ready** and **Pathfind To** for **Go to position**.
-
-| Capability | Relevant Nodes | Use Case |
-|-----------|---------------|----------|
-| **Send commands** | Send Chat | `/sell`, `/ah`, `/order`, `/afk`, `/shop` |
-| **Read chat** | On Chat, String Contains, Regex Match | Parse sell confirmations, order notifications |
-| **Manage inventory** | Open Inventory, Click Slot, Get Inventory | Interact with shop GUIs, collect order deliveries |
-| **Stay alive** | On Damage, Get Health, Use Item | Eat food when low, equip armor |
-| **Navigate** | Go to position, Get Position | Walk to AFK zone, move between farm and sell point |
-| **Query APIs** | Web Fetch, JSON Parse | Check live market prices from donut.auction |
-| **Reconnect** | On Disconnect, On player ready | Auto-rejoin after kicks or network drops |
-| **Track state** | Persistent bot variable, Connection variable | Remember sell multiplier progress, earnings |
-| **Alert you** | Discord Webhook | Notify on death, ban, or earnings milestones |
-
-### Example: AFK Shard Farmer Script
-
-A basic shard farming setup only needs a handful of nodes:
+Run these tests on a copy of your server with the same economy plugins. SoulFire bots run Minecraft client code, so they use your commands and GUIs the same way a player does. The [testing guide](/docs/testing) covers how to prepare a run and record results.
 
 <Steps>
 <Step>
 
-### Connect and Navigate
+### AFK reward rate
 
-Use the **On player ready** trigger to detect when the bot enters the server. Connect it to a **Send Chat** node that runs `/afk 1` to teleport to the AFK lobby. Add a short **Wait** node before the command to let the connection stabilize.
-
-</Step>
-<Step>
-
-### Handle Disconnects
-
-Add an **On Disconnect** trigger that connects to a **Wait** node (30 seconds to avoid rapid reconnection loops), then the bot reconnects. The **Auto reconnect** plugin handles the actual reconnection. The script just needs to re-run the `/afk` command on the next **On player ready** event.
+Connect 10 bots and send them to the AFK area with an **On player ready** trigger and a **Send Chat** node that runs your AFK command. After one hour, compare each bot's balance with your configured rate. Then check whether your AFK plugin limits rewards per IP address, because all bots from one machine share one address.
 
 </Step>
 <Step>
 
-### Monitor and Alert
+### Farm and chunk load
 
-Wire an **On Interval** trigger (every hour) to a **Discord Webhook** node that posts the bot's current shard count and uptime. That way you know everything's running without checking manually.
+Place bots next to a test spawner farm, and run a [Spark](https://spark.lucko.me/) profile with no bots, then with 10, then with 50. If entity ticking grows faster than the bot count, lower the farm's stack size or spawn rate. The [stress testing guide](/blog/stress-testing-minecraft-servers) explains how to read the profile.
+
+</Step>
+<Step>
+
+### Sell multiplier arbitrage
+
+Give a test account the maximum multiplier. Post an order for a cheap item, fill it from a second account, and `/sell` the delivery. If the loop ends with more money than it started with, set a minimum order price or exclude ordered items from the multiplier.
+
+</Step>
+<Step>
+
+### Command rate limits
+
+Run a script that sends `/ah` or `/sell` from 20 bots on an **On Interval** trigger every few seconds. Watch TPS and the plugin's cooldown messages. A plugin without a per-player cooldown lets one script slow the whole server.
 
 </Step>
 </Steps>
 
-### Example: Spawner Farm Operator
+## Build the test scripts
 
-This one's more involved. The bot needs to stand near the farm, periodically open collection chests, grab items, and sell them.
+SoulFire's [visual scripting](/docs/scripting) connects nodes into a graph, so you can build these tests without code. Releases before 2.10.8 show **On Join** for **On player ready** and **Pathfind To** for **Go to position**.
 
-```text
-On Interval (every 5 min)
-  → Get Position (verify bot is at farm)
-  → Branch (at farm?)
-    → Yes: Open Inventory → Click Slot (collect items) → Close Inventory
-           → Wait (1s) → Send Chat ("/sell all")
-    → No: Go to position (farm coordinates)
-           → loop back to collect step
+| Test | Nodes |
+|------|-------|
+| Run commands | **Send Chat** |
+| Read confirmations | **On Chat**, **String Contains**, **Regex Match** |
+| Use shop GUIs | **On Container Open**, **Click Slot**, **Close Inventory** |
+| Move to a farm | **Go to position**, **Get Position** |
+| Repeat on a timer | **On Interval**, **Rate Limit** |
+| Record balances | **Set persistent bot variable**, **Discord Webhook** |
 
-On Damage
-  → Get Health → Compare (< 8?)
-    → Yes: Use Item (golden apple) → select food slot first
-    → No: continue
-
-On Death
-  → Discord Webhook ("Bot died, re-gear or route back to farm")
-```
-
-### Example: Market-Aware AH Flipper
-
-This is the most advanced setup, combining external API calls with in-game actions:
+A script that checks the AFK reward rate looks like this:
 
 ```text
-On Interval (every 30s)
-  → Web Fetch (donut.auction API for current prices)
-  → JSON Parse (extract item prices into variables)
-  → Send Chat ("/ah") → parse results from chat
-  → For Each (listed item)
-    → Compare (listed price < market price * 0.7?)
-      → Yes: buy the item
-      → No: skip
-  → Web Fetch (log purchase to external tracker)
+On player ready
+  → Wait (3s)
+  → Send Chat ("/afk")
+
+On Interval (every 10 min)
+  → Send Chat ("/balance")
+
+On Chat
+  → Regex Match (balance line)
+  → Set persistent bot variable ("balance")
+  → Discord Webhook (bot name and balance)
 ```
 
-The **Web Fetch** node supports GET, POST, PUT, and DELETE with full header and body control. You can integrate with any external API, whether that's a price tracker, a Discord bot, or your own dashboard.
+The [script examples](/docs/scripting/examples) have starter graphs for chat commands, timers, and Discord alerts that you can adapt.
 
-## Scaling Up
+## Next steps
 
-Running one bot is a proof of concept. Running 10+ is where things get interesting. A few considerations for scaling:
-
-### Multi-Account Management
-
-SoulFire is designed to run many bots simultaneously from a single SoulFire server. Each bot runs its own script independently. You can assign different scripts to different bots, so some farm shards while others operate spawner farms.
-
-### The Death and Re-Gear Problem
-
-Death is still expensive, but not because of the old two-day lockout. The real pain now is lost gear, travel time, broken farm positioning, and the chance that another player loots whatever your bot was carrying. For AFK shard farming this isn't a huge concern since the AFK zone is relatively safe. For bots operating in the overworld near farms, other players can and will kill them for loot. Your scripts still need solid damage detection, escape logic, and post-death recovery.
-
-### Rules and risk
-
-DonutSMP's rules forbid scripts and real-money trading, and staff ban associated accounts together.
-Do not try to hide bots from staff or anti-cheat. Run these scripts only on servers you own or have permission to test.
-
-## Getting Started
-
-If you want to experiment with this, start small on your own test server. One bot, AFK shard farming. Get comfortable with the node scripting system, understand how DonutSMP's mechanics work firsthand, and build up from there.
-
-The [SoulFire scripting documentation](/docs/scripting) covers the full node reference, and the [examples page](/docs/scripting/examples) has starter workflows you can adapt. For DonutSMP-specific economy data, [donut.auction](https://donut.auction/), [donutstats.org](https://donutstats.org/), and [donutstats.net](https://www.donutstats.net/) are the best live resources.
+1. Copy your economy server to a test machine.
+2. Put your AFK reward rate into the calculator above and decide on a daily limit.
+3. [Download SoulFire](/download), build the AFK script, and run it with 10 bots for an hour.
+4. Add the farm, arbitrage, and rate limit tests, and run them again after every economy change.

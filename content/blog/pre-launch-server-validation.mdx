@@ -1,17 +1,17 @@
 ---
 title: Minecraft Server Pre-Launch Checklist
-description: Checklist for validating your Minecraft server before launch, from performance testing to spawn optimization and player experience
+description: A week-by-week checklist for a Minecraft server launch. Test hardware, backups, plugins, and the new-player path, then load test the launch surge with bots.
 author: Pistonmaster
 date: 2026-02-12
-tags: [minecraft, server-launch, testing, optimization, checklist, preparation]
+tags: [minecraft, load-testing, performance, server-launch]
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout'
 import { Step, Steps } from 'fumadocs-ui/components/steps'
 
-## The High Stakes of Launch Day
+## What to check before launch
 
-Players who hit lag or broken features on day one don't come back. And the "laggy server" label? Nearly impossible to shake. This guide covers what to check so launch day doesn't blow up.
+Launch day brings your largest wave of new players, and a laggy or broken first visit gives them a reason not to return. Work through the phases below in order. The most important single test is the [launch surge load test](#phase-5-load-testing-2-3-days-out): connect at least twice your expected peak in bots to a copy of your server, and watch TPS, errors, and join failures.
 
 ## Pre-Launch Validation
 
@@ -19,32 +19,24 @@ Players who hit lag or broken features on day one don't come back. And the "lagg
   <Step>
     ### Phase 1: Infrastructure (2-4 Weeks Out)
 
-    Start with the foundation. No amount of plugin tuning saves you from bad hardware or missing backups.
+    Start with the foundation. Plugin tuning cannot fix slow hardware or missing backups. The load test in phase 5 tells you whether your hardware is enough, so leave time to upgrade after it.
 
-    **Hardware requirements by server size:**
-
-    | Server Size | RAM | CPU | Disk | Network |
-    |-------------|-----|-----|------|---------|
-    | Small (10-20 players) | 4GB | 2 cores | 20GB SSD | 100 Mbps |
-    | Medium (50-100) | 8GB | 4 cores | 50GB SSD | 500 Mbps |
-    | Large (200+) | 16GB+ | 8+ cores | 100GB+ SSD | 1 Gbps |
-
-    Run baseline checks on your hardware before anything else:
+    Run baseline checks on your hardware first:
 
     ```bash
     # Disk I/O speed: target >200 MB/s for SSD (run in the server directory)
     dd if=/dev/zero of=./ddtest bs=1G count=1 oflag=direct && rm ./ddtest
 
-    # Network bandwidth
-    iperf3 -c speedtest.server.com
+    # Network bandwidth (needs an iperf3 server that you control)
+    iperf3 -c iperf.example.com
 
     # Disk space: keep >50% free for headroom
     df -h
     ```
 
-    Red flags include HDD storage, less RAM than the table above lists for your expected player count, and shared hosting with unknown neighbors.
+    Red flags include HDD storage and shared hosting where other customers can use up the CPU.
 
-    Your backup system needs to actually work *before* your first crash, not after. Create a full backup, extract it to a separate directory, and confirm the world loads cleanly. Then schedule automated backups via cron: every 6 hours locally and daily offsite.
+    Test your backups before your first crash. Create a full backup, extract it to a separate directory, and confirm the world loads cleanly. Then schedule automated backups via cron: every 6 hours locally and daily offsite.
 
     On security: lock down your firewall to only the ports you need (25565, 22, 80/443 if applicable). Disable SSH password authentication, install Fail2ban, and keep the backend IP hidden behind a proxy if you can.
   </Step>
@@ -61,9 +53,9 @@ Players who hit lag or broken features on day one don't come back. And the "lagg
     **Configuration checklist:**
 
     - **View and simulation distance:** Lower simulation distance reduces entity processing overhead without sacrificing player visibility. See the [stress testing guide](/blog/stress-testing-minecraft-servers#view-and-simulation-distance) for recommended values by server size.
-    - **Entity limits:** Tighten Paper's mob spawn caps and collision limits. Default values are far too generous for servers expecting 50+ players.
-    - **World pregeneration:** Non-negotiable. Without it, 100 players exploring on launch day forces on-demand chunk generation and TPS drops to single digits. Use [Chunky](https://github.com/pop4959/Chunky) to pregenerate at least a 5,000-block radius from spawn. This can take hours, so plan accordingly.
-    - **JVM flags:** On Java 25+ with 8+ cores, use [ZGC with Compact Object Headers](/blog/stress-testing-minecraft-servers#java-flags) for sub-millisecond GC pauses. On older Java or smaller hardware, use [Aikar's G1GC flags](https://docs.papermc.io/paper/aikars-flags). Match Xms and Xmx to your available RAM.
+    - **Entity limits:** Tighten Paper's mob spawn caps and collision limits if your profile shows entities as a large cost.
+    - **World pregeneration:** Without it, many players exploring on launch day force chunk generation and can drop TPS far below 20. Use [Chunky](https://github.com/pop4959/Chunky) to pregenerate at least a 5,000-block radius from spawn. This can take hours, so plan accordingly.
+    - **JVM flags:** On Java 25+ with 8+ cores, use [ZGC with Compact Object Headers](/blog/stress-testing-minecraft-servers#java-flags) for short GC pauses. On older Java or smaller hardware, use [Aikar's G1GC flags](https://docs.papermc.io/paper/aikars-flags). Match Xms and Xmx to your available RAM.
     - **Server software:** [Paper](https://papermc.io/) is the baseline. For 100+ player targets, consider [Pufferfish](https://pufferfish.host/).
 
     Check each setting, restart, and make sure your numbers haven't gotten worse before moving on.
@@ -80,7 +72,7 @@ Players who hit lag or broken features on day one don't come back. And the "lagg
 
     Common sources of trouble include multiple economy plugins conflicting, duplicate feature plugins (two claim systems), and version mismatches. For each critical plugin, including economy, permissions, claims, chat, teleportation, and anti-cheat, confirm it loads cleanly, test its primary features, test its interactions with other plugins, and check that permissions are correctly assigned.
 
-    Walk through each rank (default, member, VIP, moderator, admin) and make sure players can use exactly the commands they should, and nothing more. Check chat prefixes, tab list formatting, and look for permission leaks that give default players access to moderation commands. This is the kind of thing that ruins trust fast.
+    Walk through each rank (default, member, VIP, moderator, admin) and make sure players can use exactly the commands they should, and nothing more. Check chat prefixes, tab list formatting, and look for permission leaks that give default players access to moderation commands.
   </Step>
 
   <Step>
@@ -88,29 +80,41 @@ Players who hit lag or broken features on day one don't come back. And the "lagg
 
     Join your own server like you've never seen it before. Read the welcome message. Follow the instructions. Complete the starter tasks. The whole thing should take 10-20 minutes and leave a new player with basic tools, a sense of direction, and a reason to keep playing.
 
-    At spawn, look for dark patches in the lighting, unfinished builds (leftover scaffolding is classic), unreadable signs, hazards near the spawn point, and a `/help` command that actually tells players something useful. Post your rules where people can find them.
+    At spawn, look for dark patches in the lighting, unfinished builds (leftover scaffolding is classic), unreadable signs, hazards near the spawn point, and a `/help` command that tells players something useful. Post your rules where people can find them.
 
-    Then walk through the progression path. A new player should make their first purchase within 15 minutes and reach iron tools within 30. Diamond tools should take 2-3 hours, endgame items 20-40 hours. If one earning method vastly outperforms everything else, your economy will collapse within the first week.
+    Then walk through the progression path and time it: first purchase, iron tools, diamond tools. Compare each earning method. If one pays far more than the others, players will find it in the first days and prices will inflate.
   </Step>
 
   <Step>
     ### Phase 5: Load Testing (2-3 Days Out)
 
-    Now you need bots. You can't click around with five friends and call that a load test. Our [stress testing guide](/blog/stress-testing-minecraft-servers) covers the full methodology: incremental load ramps, realistic bot behavior, spike testing, and endurance runs. Follow that process, but focus on these launch-specific scenarios:
+    Five friends cannot show you how the server behaves with 100 players. You need bots. The [stress testing guide](/blog/stress-testing-minecraft-servers) covers the full method: staged load, realistic bot behavior, spike tests, and endurance runs. Run the test on a copy of your server, and focus on these launch scenarios:
 
     - **Mass join:** Simulate 50-100 players connecting within a few minutes. This is the launch surge. Keep an eye on connection failures, spawn area performance, and TPS dips during the initial flood.
     - **Spawn pressure:** Your spawn area will bear the heaviest load on day one. Test it at your full target player count and look for rubber-banding or block interaction delays.
     - **Endurance:** Run at 50-75% of target capacity for 4-12 hours. Monitor for memory leaks, TPS degradation over time, increasing GC pauses, and accumulating errors in the log.
 
-    Also test connectivity from your target regions. Under 100ms is good, 100-200ms is acceptable, above 250ms and players will feel it.
+    With [SoulFire](/download), a launch simulation looks like this: 100 bots that join over 10 minutes (a join delay of about 6 seconds), with **Anti AFK** turned on. **Auto respawn** and **Auto reconnect** are on by default. Let it run for 2 hours while you watch Spark and the console. If an anti-bot plugin or the server's connection throttle rejects the bots, allow your test IP on the test copy only, and keep the real limits for launch. The [SoulFire testing guide](/docs/testing) shows how to prepare the run, add load in stages, and record the results.
+
+    **Your server is ready when:**
+
+    - 95 or more of 100 bots connect
+    - TPS stays above 18 during the surge and above 19 once joins stop
+    - The console shows no new errors or exceptions
+    - Spawn handles the full bot count without rubber-banding
+    - Commands stay responsive
+
+    If fewer than 85 bots connect, TPS drops below 15, or memory use passes 90%, fix the configuration, plugin errors, or hardware before launch. Test with 100 bots before you advertise for 50 players.
+
+    Also test latency from the regions where your players live. Under 100ms is good, and 100-200ms is acceptable.
   </Step>
 
   <Step>
     ### Phase 6: Staff and Communications (1-2 Days Out)
 
-    Your staff need to know what to do when things go wrong, because things will go wrong. Write up a quick-reference doc with the three or four most common issues: "can't claim land" (check their balance), "can't use command" (check their rank), "grief reported" (use `/co inspect`, rollback if needed). Make sure everyone has tested these commands on the actual server, not just read about them. Set up an on-call schedule so you have coverage during peak hours.
+    Your staff need to know what to do when something breaks. Write up a quick-reference doc with the three or four most common issues: "can't claim land" (check their balance), "can't use command" (check their rank), "grief reported" (use `/co inspect`, rollback if needed). Make sure everyone has tested these commands on the actual server, not just read about them. Set up an on-call schedule so you have coverage during peak hours.
 
-    On Discord: have your announcement drafted, your channel permissions locked down so launch-day chaos doesn't spill everywhere, and at least one staff bot responding to commands. Don't wing this part.
+    On Discord: have your announcement drafted, your channel permissions locked down so launch-day chaos doesn't spill everywhere, and at least one staff bot responding to commands.
   </Step>
 
   <Step>
@@ -145,7 +149,7 @@ Players who hit lag or broken features on day one don't come back. And the "lagg
 <Callout type="warning" title="Launch Day Priorities">
 - **Stability over features:** disable anything that isn't rock-solid
 - **Have a rollback plan:** be ready to revert if critical issues emerge
-- **Communicate delays immediately:** players appreciate honesty
+- **Announce delays right away**
 - **All staff online:** no exceptions during the launch window
 </Callout>
 
@@ -153,32 +157,16 @@ One hour out, restart the server fresh. Clear temporary files. Confirm TPS is at
 
 When you flip the switch, whether that means removing the whitelist or starting to add players, send your announcement and start monitoring. Watch player count, TPS, chat, and console errors. Staff should be actively welcoming players and answering questions, not lurking in a staff channel.
 
-In the first hour, fix anything that blocks core gameplay immediately: broken claims, connection issues, economy bugs. Cosmetic stuff like sign typos can wait until tomorrow. But a crash in the first hour? That costs you more players than at any other time.
+In the first hour, fix anything that blocks core gameplay right away: broken claims, connection issues, economy bugs. Cosmetic problems such as sign typos can wait until tomorrow.
 
 ## Post-Launch
 
 For the first 24 hours, track the numbers that matter: peak concurrent players, total unique joins, average session length, minimum TPS during peak, crashes, and plugin errors.
 
-During the first week, dig into what actually happened. Which plugins threw errors? Where did players get stuck or confused? Did the economy hold up or did someone find an exploit on day two? Fix things fast. The first week sets the tone for everything that follows.
+During the first week, review what happened. Which plugins threw errors? Where did players get stuck or confused? Did the economy hold up or did someone find an exploit on day two? Fix what you find, and run the bot load test again before your next large update.
 
-## Using SoulFire for Load Testing
+## Next steps
 
-Testing features by hand is fine, but it won't tell you the one thing that actually matters: can your server survive 100 players joining at once? [SoulFire](/download) runs actual Fabric client code, so bots behave like real players at the protocol level.
-
-Configure a launch simulation: 100 bots joining over 10 minutes (a join delay of about 6 seconds), with **Auto respawn**, **Anti AFK**, and **Auto reconnect** enabled. Let it run for 2 hours while monitoring with Spark and watching the console for errors.
-
-```bash
-# Monitor during the test
-tail -f logs/latest.log | grep -E "(ERROR|WARN|Exception)"
-```
-
-**Your server is ready when:**
-- 95+ bots connect successfully
-- TPS stays above 18 during the surge and above 19 after stabilization
-- No errors, exceptions, or crashes
-- Spawn area handles the full player count without rubber-banding
-- Commands remain responsive throughout
-
-If you're hitting less than 85% connection success, TPS drops below 15, or memory usage exceeds 90%, you need to optimize your configuration, fix plugin errors, or upgrade hardware before going live.
-
-Launch day isn't the time to discover your server buckles at 50 players. Test with 100 before you advertise for 50. The [SoulFire testing guide](/docs/testing) shows how to prepare the run, add load in stages, and record the results.
+1. Copy your server to a test machine and work through phases 1-4.
+2. [Download SoulFire](/download) and run the launch surge test from phase 5.
+3. Fix what the Spark profile shows, then run the same test again before you announce a launch date.

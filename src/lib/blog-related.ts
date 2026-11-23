@@ -3,16 +3,20 @@ const RELATED_POST_LIMIT = 3;
 /**
  * Picks the posts that share the most tags with `post`. Candidates arrive
  * newest first, and the stable sort keeps that order between equal matches.
- * Ranking by overlap matters because broad tags such as "minecraft" are on
- * every post and would otherwise always select the newest posts.
+ * A tag on every post, such as "minecraft", says nothing about the topic, so
+ * it does not count as a match.
  */
 export function pickRelatedPosts<T extends { slug: string; tags: string[] }>(
   post: T,
   candidates: T[],
 ) {
-  const tags = new Set(post.tags);
-  return candidates
-    .filter((candidate) => candidate.slug !== post.slug)
+  const others = candidates.filter((candidate) => candidate.slug !== post.slug);
+  const tags = new Set(
+    post.tags.filter(
+      (tag) => !others.every((candidate) => candidate.tags.includes(tag)),
+    ),
+  );
+  return others
     .map((candidate) => ({
       candidate,
       shared: candidate.tags.filter((tag) => tags.has(tag)).length,

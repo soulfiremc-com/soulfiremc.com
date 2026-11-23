@@ -1,12 +1,11 @@
 ---
 title: Multi-Version Minecraft Servers with ViaVersion
-description: Learn how to support multiple Minecraft versions with ViaVersion, ViaBackwards, and ViaRewind, plus testing strategies for cross-version compatibility
+description: Let older and newer Minecraft clients join one server with ViaVersion, ViaBackwards, and ViaRewind, then test each client version with bots.
 author: Pistonmaster
 date: 2026-02-10
-tags: [minecraft, viaversion, multi-version, protocol, compatibility, testing]
+tags: [minecraft, viaversion, compatibility, plugins, load-testing]
 ---
 
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs'
 import { Callout } from 'fumadocs-ui/components/callout'
 
 ## Understanding Protocol Versioning
@@ -14,6 +13,8 @@ import { Callout } from 'fumadocs-ui/components/callout'
 Every Minecraft version speaks a different network protocol. A 1.20 client can't talk to a 1.21 server because the packets differ. Normally this means players must run the exact version your server is on, which fractures your player base every time Mojang ships an update.
 
 The [ViaVersion](https://github.com/ViaVersion/ViaVersion) suite fixes this by translating packets on the fly, so a single server can accept clients from 1.7 all the way to the latest release.
+
+**The short version:** install ViaVersion, ViaBackwards, and ViaRewind on your Paper server, keep builds inside y=0-255 if you accept clients older than 1.17, then join with one client per version era. Bots let you repeat that check after every update. Only send bots to servers that you own or have permission to test.
 
 ## The ViaVersion Suite
 
@@ -25,7 +26,7 @@ ViaVersion is really three plugins, each covering a different direction of trans
 | **ViaBackwards** | Older clients -> newer server | 1.19 client joins a 1.21 server |
 | **ViaRewind** | 1.7 and 1.8 clients -> 1.9+ server | 1.8 client joins a 1.21 server |
 
-ViaBackwards requires ViaVersion. ViaRewind requires both. Install all three for maximum coverage. Download the latest release of each from [ViaVersion](https://github.com/ViaVersion/ViaVersion/releases), [ViaBackwards](https://github.com/ViaVersion/ViaBackwards/releases), and [ViaRewind](https://github.com/ViaVersion/ViaRewind/releases). Use matching versions, because new Minecraft releases need updates to all three.
+ViaBackwards requires ViaVersion. ViaRewind requires both. Install all three to accept the widest range of versions. Download the latest release of each from [ViaVersion](https://github.com/ViaVersion/ViaVersion/releases), [ViaBackwards](https://github.com/ViaVersion/ViaBackwards/releases), and [ViaRewind](https://github.com/ViaVersion/ViaRewind/releases). Use matching versions, because new Minecraft releases need updates to all three.
 
 ```bash title="Terminal"
 # Place all three in the plugins folder
@@ -37,11 +38,11 @@ mv ViaVersion-*.jar ViaBackwards-*.jar ViaRewind-*.jar plugins/
 | Your Server | Plugins Installed | Client Support |
 |-------------|-------------------|----------------|
 | 1.21 | ViaVersion only | 1.21+ |
-| 1.21 | + ViaBackwards | 1.9.3 - 1.21+ |
+| 1.21 | + ViaBackwards | 1.9 - 1.21+ |
 | 1.21 | + ViaBackwards + ViaRewind | 1.7 - 1.21+ |
 
 <Callout type="info">
-ViaBackwards reaches back to 1.9.3 clients. ViaRewind adds 1.7 and 1.8, and 1.8 remains popular for PvP servers. 1.8 PvP support through ViaRewind is impressive, but expect some jank. The version gap is massive and not everything translates cleanly.
+ViaBackwards reaches back to 1.9 clients. ViaRewind adds 1.7 and 1.8, and 1.8 remains popular for PvP servers. Expect some rough edges on 1.8 clients, because many newer features have no 1.8 equivalent.
 </Callout>
 
 ## Configuration
@@ -79,28 +80,19 @@ Not everything translates perfectly. Players on older versions will see approxim
 |---------|------------|---------------------------|
 | New blocks (copper, deepslate) | Varies | Rendered as a placeholder like stone |
 | New items (netherite) | Varies | Shown as a similar older item |
-| Extended world height | 1.18 | Pre-1.18 clients can't see below y=0 or above y=255 |
+| Extended world height | 1.18 | Clients older than 1.17 can't see below y=0 or above y=255 |
 | New mobs (warden, allay) | Varies | Rendered as a different mob with correct hitbox |
 | Hex chat colors | 1.16 | Fall back to nearest legacy color code |
 
 ## Proxy Multi-Version Support
 
-On networks using [Velocity](https://papermc.io/software/velocity/) or [BungeeCord](https://www.spigotmc.org/wiki/bungeecord/), installing ViaVersion on the proxy is the way to go. It handles translation in one place instead of on every backend server, and it lets backends run different Minecraft versions behind a single entry point.
+On networks using [Velocity](https://papermc.io/software/velocity/) or [BungeeCord](https://www.spigotmc.org/wiki/bungeecord/), you can install the Via plugins on the backends or on the proxy. The ViaVersion README notes that it has the highest performance and state accuracy on Paper, so install it on Paper backends when you can. A proxy install translates in one place, which helps when you cannot add plugins to every backend.
 
-<Tabs items={['Velocity', 'BungeeCord']}>
-  <Tab value="Velocity">
+The ViaVersion jar runs on Velocity directly. BungeeCord needs the separate [ViaBungee](https://github.com/ViaVersion/ViaBungee) platform.
+
 ```bash title="Installing on Velocity"
 mv ViaVersion-*.jar ViaBackwards-*.jar ViaRewind-*.jar velocity/plugins/
 ```
-  </Tab>
-  <Tab value="BungeeCord">
-```bash title="Installing on BungeeCord"
-mv ViaVersion-*.jar ViaBackwards-*.jar ViaRewind-*.jar bungeecord/plugins/
-```
-  </Tab>
-</Tabs>
-
-A typical proxy network might have a 1.21 lobby, a 1.20.4 survival world, and a 1.19 creative world. With ViaVersion on the proxy, any client version can move between all three backends without reconnecting.
 
 <Callout type="warning">
 When combining ViaVersion with proxy-level protocol forwarding (e.g., Velocity modern forwarding), make sure UUIDs and skins resolve correctly for every client version. This is the most common source of subtle bugs, especially for players on 1.12.2 and below.
@@ -108,11 +100,11 @@ When combining ViaVersion with proxy-level protocol forwarding (e.g., Velocity m
 
 ## ViaFabricPlus (Client-Side)
 
-[ViaFabricPlus](https://github.com/ViaVersion/ViaFabricPlus) is a client-side Fabric mod that lets a modern client connect to virtually any server version, including Alpha, Beta, and even Bedrock. One client installation can test connectivity against every version your server supports, which makes it invaluable for quick smoke tests.
+[ViaFabricPlus](https://github.com/ViaVersion/ViaFabricPlus) is a client-side Fabric mod that lets a modern client connect to almost any server version, including Alpha, Beta, and Bedrock. With one client installation, you can join your server as each version you support.
 
 ## Testing Multi-Version Support
 
-Just installing the plugins isn't enough. You need to actually test it.
+Test each supported version after you install the plugins.
 
 ### What to Test
 
@@ -121,9 +113,9 @@ Cover these areas across your supported client versions:
 - **Connection**: Client joins without errors, spawns normally, server console is clean.
 - **Movement**: Walking, sprinting, jumping, and swimming feel correct. Some rubber-banding on 1.8 clients is expected due to physics prediction differences.
 - **Blocks and items**: Newer content appears as placeholders on legacy clients. Collision and breaking should still work.
-- **Combat**: The combat differences between 1.8 and 1.9+ are the #1 source of player complaints on multi-version servers. 1.8 clients use spam-clicking; 1.9+ clients use attack cooldowns. Both should register hits, but the feel will always differ. Consider [OldCombatMechanics](https://github.com/kernitus/BukkitOldCombatMechanics) if you want to normalize this.
+- **Combat**: The combat differences between 1.8 and 1.9+ cause many player complaints on multi-version servers. 1.8 clients use spam-clicking; 1.9+ clients use attack cooldowns. Both should register hits, but the feel will always differ. Consider [OldCombatMechanics](https://github.com/kernitus/BukkitOldCombatMechanics) if you want to normalize this.
 - **Chat**: Messages and commands work. Avoid hex colors (`&#FF5555`) in messages sent to pre-1.16 clients; stick to legacy color codes (`&c`) for universal compatibility.
-- **World height**: On 1.18+ servers, clients below 1.18 can't see blocks outside the classic y=0-255 range. Build important structures within that safe zone.
+- **World height**: On 1.18+ servers, clients older than 1.17 can't see blocks outside the classic y=0-255 range. Build important structures within that safe zone.
 - **Entities**: New mobs render as substitute mobs on pre-1.19 clients. Hitboxes and server-side AI remain correct.
 
 ### Minimum Test Matrix
@@ -138,11 +130,11 @@ If all six connect and the core areas above work, your Via suite is configured c
 
 ### Automating Tests with Bots
 
-Manually launching six different client versions after every server update gets old fast. Bots solve this.
+Bots let you repeat the same version check after every server update without six client installs.
 
 [SoulFire](/download) includes [ViaFabricPlus](https://github.com/ViaVersion/ViaFabricPlus), so its bots can connect with any [supported protocol version](/docs/reference/versions). Point it at your server, select the protocol version (e.g., 1.16.5) in **Bot Settings**, launch a handful of bots, and confirm they connect without protocol errors. Repeat for each version in your test matrix. The [compatibility checklist](/docs/testing/compatibility) covers the details.
 
-For load testing, connect bots across multiple versions simultaneously. For example, create one SoulFire project per version and run 5 bots each on 1.21, 1.20.4, 1.19, 1.16.5, 1.12.2, and 1.8.9 (30 bots total). Let them stay online for 15-30 minutes and monitor TPS. If the server holds 19-20 TPS with no protocol errors, your setup is solid.
+For load testing, connect bots across multiple versions simultaneously. For example, create one SoulFire project per version and run 5 bots each on 1.21, 1.20.4, 1.19, 1.16.5, 1.12.2, and 1.8.9 (30 bots total). Let them stay online for 15-30 minutes and monitor TPS. If the server holds 19-20 TPS and the console shows no protocol errors, the setup passes.
 
 ## Common Issues
 
@@ -158,20 +150,24 @@ For load testing, connect bots across multiple versions simultaneously. For exam
 
 ## Performance
 
-ViaVersion's overhead is real but often overstated. The honest answer is: for most servers under 100 players, you won't notice it. The packet translation cost is negligible compared to what chunk loading, entity ticking, and world generation already demand from your CPU.
+Packet translation costs CPU, but on most servers it is small compared to chunk loading, entity ticking, and world generation. Measure it with Spark during a multi-version bot test instead of guessing.
 
 Where it does get expensive: bridging large version gaps. Translating packets between 1.20 and 1.21 is trivial, but a 1.8 client connecting to a 1.21 server means every packet passes through years of protocol changes. If you still run a 1.8 server for newer clients, ViaVersion's `simulate-pt` and `nms-player-ticking` options (both on by default) simulate player ticks so eating, drinking, and nether portals work for 1.9+ clients. That work shows up in spark profiles. Turning them off saves some CPU but breaks those actions for cross-version players.
 
 On pre-1.13 servers, ViaVersion also computes block connections (fences, glass panes, redstone) for 1.13+ clients. The `packet` method costs some memory and CPU. The `world` method is marked highly experimental, so test it on a copy of your server before you switch.
 
-For proxy networks, running ViaVersion on the proxy (Velocity/BungeeCord) rather than on each backend is the best move for performance. It centralizes the translation work and keeps your game servers focused on what they're good at.
-
 ## What to Watch Out For
 
-The things that'll actually bite you in production:
+Watch for these problems on a live server:
 
-- **World height on pre-1.18 clients.** If your spawn has a basement at y=-10, anyone on 1.17 or below just falls into the void. Keep critical builds within y=0-255.
-- **Combat system mismatch.** This generates more tickets than everything else combined. Document what players on each version should expect, or standardize with OldCombatMechanics.
+- **World height on pre-1.18 clients.** If your spawn has a basement at y=-10, anyone on 1.16.5 or older falls into the void. Keep critical builds within y=0-255.
+- **Combat system mismatch.** Document what players on each version should expect, or standardize with OldCombatMechanics.
 - **Block placeholders.** A build made entirely of copper and deepslate looks like a stone box to someone on 1.12.2. If you care about aesthetics for legacy players, stick to older block palettes in public areas.
 
-Keep your Via plugins up to date, because the team ships performance and compatibility fixes constantly. When you hit a weird edge case (you will), the [ViaVersion Discord](https://discord.gg/viaversion) is one of the better Minecraft support communities. To check the whole network under load, follow the [stress testing guide](/blog/stress-testing-minecraft-servers) with bots on several versions.
+Keep your Via plugins up to date, because new Minecraft releases need new Via releases. For edge cases, ask on the [ViaVersion Discord](https://viaversion.com/discord).
+
+## Next steps
+
+1. Pick the client versions you support and write them down as your test matrix.
+2. Run the [compatibility checklist](/docs/testing/compatibility) with one bot per version in [SoulFire](/download).
+3. Load the server with bots on several versions at once, following the [stress testing guide](/blog/stress-testing-minecraft-servers).

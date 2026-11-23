@@ -53,3 +53,18 @@ void test("pickRelatedPosts ranks posts by shared tags before recency", () => {
   );
   assert.deepEqual(pickRelatedPosts(post("untagged", []), candidates), []);
 });
+
+void test("pickRelatedPosts ignores a tag that every other post has", () => {
+  const stress = post("stress", ["minecraft", "performance"]);
+  const candidates = [
+    post("donut", ["minecraft", "economy"]),
+    post("pre-launch", ["minecraft", "performance"]),
+    stress,
+    post("auth", ["minecraft", "security"]),
+  ];
+
+  assert.deepEqual(
+    pickRelatedPosts(stress, candidates).map((related) => related.slug),
+    ["pre-launch"],
+  );
+});

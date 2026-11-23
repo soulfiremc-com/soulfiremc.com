@@ -1,19 +1,21 @@
 ---
 title: Stress Testing Minecraft Servers
-description: Learn how to properly stress test your Minecraft server, measure performance metrics, identify bottlenecks, and optimize for peak player loads
+description: Find out how many players your Minecraft server can handle. Measure TPS and MSPT with Spark, add bots in stages, and use the profile to fix bottlenecks.
 author: Pistonmaster
 date: 2026-02-04
-tags: [minecraft, stress-testing, performance, optimization, tps, mspt]
+tags: [minecraft, load-testing, performance, spark]
 ---
 
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs'
 import { Callout } from 'fumadocs-ui/components/callout'
 
-## Understanding Server Stress Testing
+## What a stress test tells you
 
-Stress testing simulates high player loads so you can find performance problems before real players find them for you. The point isn't to see when the server crashes. It's to figure out how many players you can actually handle and where things start falling apart.
+A stress test connects bots to your server in steps and records how tick time grows with each step. The result is a player count your server can hold, and a profile that shows what limits it.
 
-A new plugin might work fine with 10 players and tank the server at 50. A VPS upgrade might not deliver the improvement you were hoping for. Stress testing gives you hard numbers instead of guesses.
+A new plugin can run fine with 10 players and lag the server at 50. A VPS upgrade can deliver less than you expected. A test gives you numbers for both questions.
+
+Only test servers that you own or have permission to test. Run the test on a copy of your server when you can, so real players are not affected.
 
 **The short version:**
 
@@ -23,13 +25,13 @@ A new plugin might work fine with 10 players and tank the server at 50. A VPS up
 4. Run a Spark profile at each step and stop when MSPT passes 50ms.
 5. Fix what the profile shows, then run the same test again.
 
-You need a bot tool for steps 3 and 4. [SoulFire](/download) is free and open source, and the rest of this guide shows how to use it.
+You need a bot tool for steps 3 and 4. [SoulFire](/download) is free and open source. The [SoulFire section](#using-soulfire-for-testing) below shows the settings to use.
 
 ### Key Performance Metrics
 
 Minecraft servers have two numbers you need to watch: TPS and MSPT.
 
-**TPS (Ticks Per Second)** measures the server's tick rate, targeting 20 ticks per second. **MSPT (Milliseconds Per Tick)** measures how long each tick takes to process. MSPT is the one you should actually care about, because it shows performance trends before TPS drops. A server at 45ms MSPT is still hitting 20 TPS but has almost no headroom left.
+**TPS (Ticks Per Second)** measures the server's tick rate, targeting 20 ticks per second. **MSPT (Milliseconds Per Tick)** measures how long each tick takes to process. Watch MSPT closely, because it shows performance trends before TPS drops. A server at 45ms MSPT is still hitting 20 TPS but has almost no headroom left.
 
 A tick has a 50ms budget, so TPS stays at 20 until MSPT goes above 50ms. Past that point, TPS is roughly 1000 divided by MSPT.
 
@@ -50,12 +52,12 @@ The best tool for monitoring both is [Spark](https://spark.lucko.me/), which wor
 /spark gc               # Garbage collection activity
 ```
 
-Spark's profiler generates flamegraphs showing exactly where server time is spent. Look for the widest sections; those are eating the most time. If a plugin name shows up disproportionately large, that's your problem.
+Spark's profiler shows where each tick spends its time. Look for the widest sections first. A plugin that takes a large share of the tick is the first thing to check.
 
 ## Optimize Before Testing
 
 <Callout type="warning">
-Testing an unoptimized server wastes time. You'll just discover it needs optimization. Get your server running well first, then stress test to see what it can handle.
+A test of an unoptimized server only tells you that it needs optimization. Apply the basics below first, then test.
 </Callout>
 
 ### Server Software
@@ -64,7 +66,7 @@ Testing an unoptimized server wastes time. You'll just discover it needs optimiz
 
 ### View and Simulation Distance
 
-These two settings make the biggest difference out of anything you'll touch.
+These two settings usually have the largest effect.
 
 ```properties title="server.properties"
 view-distance=8
@@ -103,7 +105,7 @@ collisions:
 
 ### Pregenerate Chunks
 
-Chunk generation is brutally expensive. TPS can plummet from 20 down to 2-8 while generating new terrain. Use the [Chunky](https://modrinth.com/plugin/chunky) plugin to pregenerate before players explore:
+Chunk generation is expensive, and players who explore new terrain can drop TPS far below 20. Use the [Chunky](https://modrinth.com/plugin/chunky) plugin to pregenerate before players explore:
 
 ```text
 /chunky world world
@@ -129,7 +131,7 @@ java -Xms10G -Xmx10G -XX:+UseZGC \
   -XX:+UseDynamicNumberOfGCThreads -jar paper.jar --nogui
 ```
 
-ZGC is self-tuning, so you don't need to hand-tune GC parameters. Compact Object Headers reduce per-object header size from 12 to 8 bytes, lowering memory usage and GC pressure across the board.
+ZGC tunes itself, so you do not set GC parameters by hand. Compact Object Headers make each object header smaller, which lowers memory use and GC work.
 
 **Requirements:** 8+ CPU cores and 6GB+ allocated RAM. On smaller hardware, use G1GC instead.
 
@@ -157,17 +159,17 @@ java -Xms10G -Xmx10G -XX:+UseG1GC -XX:+ParallelRefProcEnabled \
 
 **G1GC (Aikar's flags)** divides the heap into regions and collects garbage in phases, aiming for a 200ms pause time target. It still produces stop-the-world pauses that scale with heap size, but Aikar's tuning parameters optimize it for Minecraft's allocation patterns: lots of short-lived objects from chunk loading, entity processing, and packet handling. Works well on modest hardware and smaller heaps.
 
-**ZGC** does nearly all garbage collection concurrently with the application. Pause times stay under 1ms regardless of heap size. That's not a typo. Where G1GC can spike to 200ms+ (long enough for players to notice rubber-banding), ZGC pauses are measured in microseconds. The tradeoff is higher CPU usage, since ZGC runs its collection threads concurrently instead of pausing everything.
+**ZGC** does nearly all garbage collection concurrently with the application. Its pauses usually stay under 1ms, independent of heap size. G1GC pauses can reach 200ms or more, which players notice as rubber-banding. The tradeoff is higher CPU usage, since ZGC runs its collection threads concurrently instead of pausing everything.
 
 **Compact Object Headers** ([JEP 519](https://openjdk.org/jeps/519)) complement either collector. They shrink object headers from 12 bytes to 8 bytes, reducing heap usage and improving cache locality. The SPECjbb2015 benchmark showed 22% less heap usage and 8% less CPU time with compact headers enabled. Minecraft servers create many small, short-lived objects per tick (chunk data, entity state, packets), so they can benefit too. Measure heap use and MSPT on your own server before and after.
 
-**In practice:** If your server has 8+ cores and you're running Java 25, use ZGC. Sub-millisecond pauses mean players will never feel a GC hiccup. If you're on older Java, constrained hardware (under 8 cores), or allocating less than 6GB RAM, stick with Aikar's G1GC flags. Monitor with `/spark gc` either way.
+**In practice:** If your server has 8+ cores and you're running Java 25, use ZGC. If you're on older Java, constrained hardware (under 8 cores), or allocating less than 6GB RAM, stick with Aikar's G1GC flags. Monitor with `/spark gc` either way.
 
 For deeper benchmarks and analysis, see [brucethemoose's Minecraft Performance Flags Benchmarks](https://github.com/brucethemoose/Minecraft-Performance-Flags-Benchmarks) and [Obydux's modern startup flags](https://github.com/Obydux/Minecraft-startup-flags).
 
 ## Conducting the Stress Test
 
-The key is testing incrementally. Connecting 500 bots at once teaches you nothing except "it crashes."
+Add load in steps. If you connect 500 bots at once and the server fails, you do not learn at which point it started to fail.
 
 ### Phase 1: Baseline
 
@@ -189,7 +191,7 @@ At each step, record TPS, MSPT (current, median, and 95th percentile), memory tr
 
 ### Phase 3: Realistic Behavior
 
-Idle bots standing still don't represent real players. Add movement and actions to actually hit the parts that slow down:
+Idle bots do not load the server like real players. Add movement and actions that use the systems you want to measure:
 
 <Tabs>
 <Tab value="movement" label="Movement" default>
@@ -199,7 +201,7 @@ Tests entity tracking, pathfinding, collision detection, and chunk loading. Rand
 </Tab>
 <Tab value="exploration" label="Exploration">
 
-Tests world I/O and chunk generation. Bots flying or moving to unexplored areas reveal whether your pregeneration was sufficient. Watch for disk I/O spikes and TPS drops.
+Tests world I/O and chunk generation. Bots that walk to unexplored areas show whether your pregeneration covers enough of the world. Watch for disk I/O spikes and TPS drops.
 
 </Tab>
 <Tab value="combat" label="Combat">
@@ -211,7 +213,7 @@ Tests mob AI, damage calculations, and entity death/spawn cycles. High entity AI
 
 ### Phase 4: Spike Testing
 
-Real servers get sudden load spikes. Think 100 players joining within 30 seconds during an event. Start with 10 bots connected, then join 50 simultaneously. Watch whether TPS drops below 15 during the surge and how long recovery takes.
+Events cause sudden spikes, such as 100 players who join within 30 seconds. Start with 10 bots connected, then join 50 simultaneously. Watch whether TPS drops below 15 during the surge and how long recovery takes.
 
 ### Phase 5: Endurance
 
@@ -219,9 +221,9 @@ Some issues only show up after hours: memory leaks, gradual resource exhaustion,
 
 ## Identifying Bottlenecks
 
-**TPS drops proportionally with player count.** This is general overhead from entities, chunks, and networking. The fix is straightforward: reduce view/simulation distance and entity caps.
+**TPS drops proportionally with player count.** This is general overhead from entities, chunks, and networking. To fix it, reduce view/simulation distance and entity caps.
 
-**Random TPS spikes** are a different beast. Usually it's chunk generation, large redstone devices, or a plugin running heavy tasks on the main thread. Pregenerate more of the world and profile during the spikes. The flamegraph will tell you exactly what's blocking.
+**Random TPS spikes** have other causes. Usually it's chunk generation, large redstone devices, or a plugin running heavy tasks on the main thread. Pregenerate more of the world and profile during the spikes. The profile shows what blocks the tick.
 
 **MSPT creeping up over time** points to memory pressure or resource exhaustion. Pull up Spark's heap summary and look for unusual object counts or memory usage that just keeps growing.
 
@@ -231,22 +233,20 @@ When Spark shows a specific plugin consuming more than 10% of CPU, investigate i
 
 ## Using SoulFire for Testing
 
-I'd recommend [SoulFire](/download) for this. Unlike most bot frameworks that reimplement the Minecraft protocol from scratch, SoulFire runs actual Fabric client code, so bots behave exactly like real players at the protocol level. You don't get weird packet timing or broken physics that throws off your results. The load is basically identical to real players, which is the whole point.
+[SoulFire](/download) runs Minecraft client code on Fabric, so its bots log in, move, and send packets through the same client code paths as a real player of that version. It supports many Minecraft versions through ViaFabricPlus, so you can test the version your server runs.
 
-It also supports multiple Minecraft versions through ViaFabricPlus, so you can test whatever version you're running without hunting for a compatible tool.
+**A typical run:**
 
-**Here's how I usually run a test:**
+1. Set the target server and bot count in a SoulFire project.
+2. Set a join delay. If the bots all come from one IP address, Paper's `connection-throttle` in `bukkit.yml` can reject joins that come too fast. Raise the join delay or disable the throttle on the test server. The [connection troubleshooting page](/docs/troubleshooting/cannot-connect-or-times-out) lists this and other kick reasons.
+3. Use offline accounts only if the test server runs in offline mode. An online-mode server needs [Microsoft accounts](/docs/how-to/import-accounts).
+4. Turn on **Anti AFK** or **Random jump**, or use a [visual script](/docs/scripting/first-script) for a fixed route, so bots do not stand still.
+5. Keep Spark running on the server for the whole test, and hold each load level for 10-15 minutes before you add more bots.
 
-1. Set your target server and bot count in the SoulFire interface
-2. Set the join delay to 1-3 seconds between bots so you don't flood the login server
-3. Turn on **Anti AFK** or **Random jump**, or use a [visual script](/docs/scripting/first-script) for a fixed route, so bots aren't just standing there
-4. Keep Spark running on the server the whole time
-5. Hold each load level for 10-15 minutes before bumping it up
-
-The [SoulFire testing guide](/docs/testing) walks through the same run step by step, including what to record at each stage.
+The [SoulFire testing guide](/docs/testing) covers the same run step by step, including what to record at each stage.
 
 ## When to Test
 
-Don't just test once. Run tests before launches, after major plugin updates, before events with expected high turnout, and after hardware changes. A monthly baseline test catches gradual degradation from accumulating data and slow memory leaks that daily monitoring misses.
+Test before launches, after major plugin updates, before events with high expected turnout, and after hardware changes. A monthly baseline test also catches slow memory leaks and degradation from growing world and plugin data.
 
-The process is: optimize first, monitor with Spark, test incrementally with realistic behavior, fix what the profiles reveal, and retest. To run your first test, [download SoulFire](/download) and follow the [load testing steps](/docs/testing/load-test) in the docs.
+To run your first test, [download SoulFire](/download) and follow the [load testing steps](/docs/testing/load-test) in the docs. Before a launch, also work through the [pre-launch checklist](/blog/pre-launch-server-validation).

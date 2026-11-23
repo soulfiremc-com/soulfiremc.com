@@ -3,7 +3,7 @@ title: Testing Velocity and BungeeCord Proxy Networks
 description: Set up and test a Velocity or BungeeCord network. Secure player info forwarding, lock down backends, load test with bots, and fix common errors.
 author: Pistonmaster
 date: 2026-02-07
-tags: [minecraft, bungeecord, velocity, proxy, networking, server-network]
+tags: [minecraft, networking, velocity, bungeecord, load-testing]
 ---
 
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs'
@@ -13,9 +13,11 @@ import { Callout } from 'fumadocs-ui/components/callout'
 
 A proxy sits between players and your backend servers, routing connections so people can hop between lobbies, survival worlds, and minigames without disconnecting. This guide covers how to set up, secure, and test proxy networks using [Velocity](https://papermc.io/software/velocity/) and [BungeeCord](https://www.spigotmc.org/wiki/bungeecord/).
 
+**The short version:** use Velocity with modern forwarding, make backends reachable only from the proxy, and confirm that a direct backend join fails. Then connect bots through the proxy in stages and switch them between servers. Run bot tests only on a network that you own or have permission to test.
+
 ### Why Run a Proxy?
 
-Without a proxy, each server is its own island. Players disconnect, swap IPs, and reconnect. A proxy gives them a single address and handles the routing. You also get centralized player management and backend IPs that stay hidden from the public internet.
+Without a proxy, players must disconnect and join a different address to change servers. A proxy gives them a single address and handles the routing. You also get centralized player management and backend IPs that stay hidden from the public internet.
 
 A minimal network is one proxy, one lobby, and one or more game servers. The proxy itself is lightweight (512MB to 1GB of RAM) since it's only routing packets.
 
@@ -24,18 +26,16 @@ A minimal network is one proxy, one lobby, and one or more game servers. The pro
 <Tabs>
 <Tab value="velocity" label="Velocity" default>
 
-[Velocity](https://papermc.io/software/velocity/) is the only correct choice for new networks. It's built by the PaperMC team, supports HMAC-signed modern forwarding (not the "trust the IP" model BungeeCord relies on), and it's noticeably faster under load. The plugin ecosystem is smaller than BungeeCord's, but every major plugin already supports it.
-
-If you're starting fresh, there's no reason to pick anything else.
+[Velocity](https://papermc.io/software/velocity/) is the recommended choice for new networks. The PaperMC team maintains it, and it supports modern forwarding, which signs player data with a shared secret. BungeeCord's forwarding trusts the connection's IP address instead. Velocity's plugin ecosystem is smaller than BungeeCord's, so check that your proxy plugins support it.
 
 </Tab>
 <Tab value="bungeecord" label="BungeeCord">
 
-[BungeeCord](https://www.spigotmc.org/wiki/bungeecord/) is legacy software. It still works, and it has the biggest plugin ecosystem, but its forwarding model (`ip_forward`) is insecure by design. It trusts connections based on the proxy's IP address, which means anyone who reaches a backend directly can forge any player identity. You can bolt on [BungeeGuard](https://github.com/lucko/BungeeGuard) to patch this, but you're still working around a fundamentally broken trust model.
+[BungeeCord](https://www.spigotmc.org/wiki/bungeecord/) still works and has the largest plugin ecosystem, but its forwarding model (`ip_forward`) is insecure by design. It trusts connections based on the proxy's IP address, which means anyone who reaches a backend directly can forge any player identity. [BungeeGuard](https://github.com/lucko/BungeeGuard) adds a token check that closes this gap.
 
 Waterfall (PaperMC's BungeeCord fork) reached end of life in 2024. PaperMC no longer updates it, and it still uses the same insecure forwarding.
 
-Only use BungeeCord if you're locked into plugins that genuinely have no Velocity equivalent. Even then, consider whether it's worth the security tradeoff.
+Use BungeeCord only if you depend on plugins that have no Velocity equivalent.
 
 </Tab>
 </Tabs>
@@ -71,7 +71,7 @@ try = ["lobby"]
 Velocity's generated config uses `player-info-forwarding-mode = "NONE"`, so set `player-info-forwarding-mode = "modern"` yourself. Velocity also generates a `forwarding.secret` file with a random token. This shared secret is how the proxy proves to backends that a player is who they claim to be.
 
 <Callout type="warning" title="Forwarding Secret">
-The forwarding secret is the single most important credential in your network. If it leaks, an attacker can connect directly to a backend and impersonate any player by forging identity data. Generate a strong random value, keep it out of version control, and make sure it matches exactly between Velocity and every backend.
+Protect the forwarding secret like a password. If it leaks, an attacker can connect directly to a backend and impersonate any player by forging identity data. Generate a strong random value, keep it out of version control, and make sure it matches exactly between Velocity and every backend.
 </Callout>
 
 ### Backend Server Configuration
@@ -107,7 +107,7 @@ Start the backends first, then the proxy. Connect to `localhost:25577` and run `
 
 ## BungeeCord Setup
 
-If you're stuck with BungeeCord, the setup is simpler but fundamentally less secure:
+If you use BungeeCord, the setup is shorter but less secure:
 
 ```yaml title="config.yml"
 listeners:
@@ -129,15 +129,15 @@ priorities:
   - lobby
 ```
 
-On backends, set `online-mode=false` in server.properties and `bungeecord: true` in spigot.yml. Since BungeeCord's legacy forwarding blindly trusts any connection from the proxy IP, you should also install [BungeeGuard](https://github.com/lucko/BungeeGuard) to add token-based authentication on top. It's a band-aid, but it's better than nothing.
+On backends, set `online-mode=false` in server.properties and `bungeecord: true` in spigot.yml. BungeeCord's legacy forwarding trusts the player data from any connection that reaches the backend, so firewall the backend ports and also install [BungeeGuard](https://github.com/lucko/BungeeGuard) to add token-based authentication on top.
 
 ## Player Info Forwarding
 
-Forwarding is how the proxy tells backend servers who a player actually is: their username, UUID, and skin data. This is where most people break their setup.
+Forwarding is how the proxy tells backend servers who a player is: their username, UUID, and skin data. Most broken network setups fail here.
 
 **Velocity Modern Forwarding** signs player data with an HMAC using the shared secret. The backend checks the signature before accepting the connection. Without the secret, nobody can fake a player identity. This is the only forwarding mode you should be using on a new network.
 
-**Legacy Forwarding** (BungeeCord and Velocity's legacy mode) sends player data as plain text in the handshake. The backend trusts it because the connection came from the proxy's IP. Think about what that means: if an attacker reaches a backend directly (through a misconfigured firewall, a leaked IP, anything), they can log in as any player, including admins. You can mitigate this with firewalls and BungeeGuard, but you're layering defenses on top of a protocol that was never secure in the first place. Modern forwarding just solves the problem.
+**Legacy Forwarding** (BungeeCord and Velocity's legacy mode) sends player data as plain text in the handshake. The backend trusts it because the connection came from the proxy's IP. If an attacker reaches a backend directly (through a misconfigured firewall, a leaked IP, anything), they can log in as any player, including admins. Firewalls and BungeeGuard reduce this risk. Modern forwarding removes it.
 
 ### Confirming Forwarding Works
 
@@ -159,11 +159,16 @@ Start with basic connectivity. Connect through the proxy, confirm you land in th
 
 Manual testing doesn't cover concurrent load. You need bots to find out whether your proxy holds up when 50 players switch servers at the same time, connect in a burst, or stay online for hours.
 
-[SoulFire](/download) works well for this. Point it at your proxy address, set a join delay of 1-2 seconds between bots, and start with 10-20 connections. Use the **Chat logger** plugin to watch server messages and **Auto reconnect** to test connection stability over time. To make bots switch servers, send `/server survival` with [scoped commands](/docs/how-to/commands) or a [visual script](/docs/scripting/first-script).
+[SoulFire](/download) can run these tests. Point it at your proxy address and start with 10-20 bots. Two proxy settings affect bot tests:
+
+- **Login rate limit.** Velocity's `login-ratelimit` and BungeeCord's `connection_throttle` reject joins that come from one IP address too quickly. Bots from one machine share an IP address, so raise the join delay above the limit, give the bots [proxies](/docs/how-to/import-proxies), or lower the limit on the test proxy only.
+- **Online mode.** With `online-mode = true` on the proxy, each bot needs a [Microsoft account](/docs/how-to/import-accounts). For offline bot accounts, set the test proxy to offline mode, and set `proxies.velocity.online-mode: false` on its backends.
+
+ Use the **Chat logger** plugin to watch server messages and **Auto reconnect** to test connection stability over time. To make bots switch servers, send `/server survival` with [scoped commands](/docs/how-to/commands) or a [visual script](/docs/scripting/first-script).
 
 **What to test at scale:**
 
-- **Connection bursts.** Connect 50 bots within 10 seconds. All should reach the lobby without errors.
+- **Connection bursts.** Connect 50 bots as fast as your login rate limit allows. All should reach the lobby without errors.
 - **Simultaneous switching.** With 50 bots in the lobby, have them all run `/server survival` at once. Monitor proxy and backend logs for errors. Check TPS on both servers during the migration.
 - **Long-duration stability.** Leave 20 bots connected for several hours, periodically switching servers. Watch for memory leaks in the proxy, timeout disconnects, or gradual TPS degradation.
 - **Backend failure recovery.** Kill a backend server while bots are on it. Confirm fallback behavior matches your config.
@@ -197,8 +202,9 @@ sudo iptables -A INPUT -p tcp --dport 25565 -j DROP
 
 **Slow server switching:** Almost always caused by backends generating terrain when players arrive. Pregenerate the spawn area with [Chunky](https://github.com/pop4959/Chunky). If backends are on different physical machines, network latency between them adds to switch time too. Keep backends on the same machine or local network when switch time matters, and measure the difference on your own setup.
 
----
+## Next steps
 
-Misconfigured forwarding isn't just a bug. It's a security hole. Use Velocity, use modern forwarding, lock down your backends, and load test with bots before you open to players. The setup takes maybe an hour. Fixing a compromised network after the fact takes a lot longer.
-
-Next, protect the proxy itself with [DDoS protection](/blog/ddos-protection-minecraft-servers), and check that every client version works with the [multi-version guide](/blog/multi-version-minecraft-support-guide).
+1. Set modern forwarding and confirm that a direct backend join fails.
+2. Run the functional tests with a real client.
+3. Follow the [staged load test](/docs/testing/load-test) through the proxy with [SoulFire](/download), then add server switching with [scoped commands](/docs/how-to/commands).
+4. Protect the proxy address with [DDoS protection](/blog/ddos-protection-minecraft-servers), and check client versions with the [multi-version guide](/blog/multi-version-minecraft-support-guide).

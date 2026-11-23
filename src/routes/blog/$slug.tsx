@@ -15,6 +15,7 @@ import {
   createWebPageStructuredData,
   getCanonicalLinks,
   getPageMeta,
+  withSiteName,
   jsonLdScript,
 } from "@/lib/seo";
 import { getMDXComponents } from "@/mdx-components";
@@ -91,7 +92,7 @@ export const Route = createFileRoute("/blog/$slug")({
     // A missing post keeps the root noindex and gets no canonical or preview.
     if (!loaderData) return { meta: [] };
     const data = loaderData;
-    const title = `${data.post.title} - SoulFire`;
+    const title = withSiteName(data.post.title);
     const description = data.post.description ?? "SoulFire blog post";
     const path = data.post.url;
     const imageUrl = getBlogPageImage({ slugs: [data.post.slug] }).url;
@@ -182,16 +183,6 @@ function BlogPostPage() {
             </span>
           </nav>
 
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
-            {data.post.date ? (
-              <time dateTime={new Date(data.post.date).toISOString()}>
-                {formatBlogDate(data.post.date)}
-              </time>
-            ) : null}
-            <span>{data.post.author}</span>
-            <span>{data.post.readingTime} min read</span>
-          </div>
-
           <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
             {data.post.title}
           </h1>
@@ -202,18 +193,19 @@ function BlogPostPage() {
             </p>
           ) : null}
 
-          {data.post.tags.length > 0 ? (
-            <div className="flex flex-wrap gap-2">
-              {data.post.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-md border bg-muted/30 px-2 py-1 text-xs font-medium"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          ) : null}
+          <div className="flex flex-wrap items-center gap-x-2 text-sm text-muted-foreground">
+            <span>{data.post.author}</span>
+            {data.post.date ? (
+              <>
+                <span aria-hidden="true">·</span>
+                <time dateTime={new Date(data.post.date).toISOString()}>
+                  {formatBlogDate(data.post.date)}
+                </time>
+              </>
+            ) : null}
+            <span aria-hidden="true">·</span>
+            <span>{data.post.readingTime} min read</span>
+          </div>
         </div>
 
         <div className="mx-auto w-full max-w-3xl min-w-0">
