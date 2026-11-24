@@ -872,6 +872,23 @@ export const SHOPS: Shop[] = [
       },
     },
   },
+  {
+    slug: "shibamc",
+    name: "shibamc",
+    logo: "/accounts/shibamc.svg",
+    url: "https://shibamc.club",
+    websiteUrl: "https://shibamc.club",
+    paymentMethods: ["Crypto (LTC, SOL)"],
+    socialLinks: [{ platform: "email", url: "mailto:shibamc.club@gmail.com" }],
+    listings: {
+      "mfa-accounts": {
+        summary: "providers.accounts.shibamc.mfa.summary",
+        badges: [],
+        price: "common.variesBySeller",
+        priceDetails: "providers.accounts.shibamc.mfa.priceDetails",
+      },
+    },
+  },
 ];
 
 export function getShopBySlug(slug: string): Shop | undefined {
