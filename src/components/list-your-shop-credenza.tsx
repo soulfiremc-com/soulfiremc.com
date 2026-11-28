@@ -27,7 +27,7 @@ import {
 import type { ProviderKind } from "@/lib/provider-faq-data";
 
 const DISCORD_USERNAME = "pistonmaster";
-const CONTACT_EMAIL = "mail@pistonmaster.net";
+const CONTACT_EMAIL = "contact@soulfiremc.com";
 const TELEGRAM_USERNAME = "pistondev";
 
 const LISTING_COPY = {
