@@ -4,6 +4,7 @@ import { localizeProviderJsonLd } from "@/lib/provider-i18n";
 import { useT, useLocale } from "@/lib/i18n-react";
 import { TranslatedMessage } from "@/components/translated-message";
 import { ProviderFaq } from "@/components/provider-faq";
+import { ListYourShopCredenza } from "@/components/list-your-shop-credenza";
 import { createProviderFaqJsonLd } from "@/lib/provider-faq-data";
 import { Schema, Effect } from "effect";
 import { usePrerenderedSearch } from "@/hooks/use-prerendered-search";
@@ -477,6 +478,7 @@ function GetProxiesClient() {
             }}
           />
         </p>
+        <ListYourShopCredenza kind="proxies" />
       </div>
 
       <ReviewTurnstileProvider>
@@ -496,16 +498,6 @@ function GetProxiesClient() {
           <TranslatedMessage
             text="providers.corrections.description"
             values={{
-              github: (
-                <a
-                  href="https://github.com/soulfiremc-com/soulfiremc.com/edit/main/src/lib/proxies-data.tsx"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline hover:text-foreground"
-                >
-                  GitHub
-                </a>
-              ),
               discord: (
                 <Link to="/discord" className="underline hover:text-foreground">
                   Discord
