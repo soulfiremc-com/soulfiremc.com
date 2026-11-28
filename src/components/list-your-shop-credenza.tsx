@@ -147,7 +147,7 @@ export function ListYourShopCredenza({ kind }: { kind: ProviderKind }) {
                 <ContactItem
                   icon={<SiDiscord />}
                   title={t("providers.listing.discord.title")}
-                  value={DISCORD_USERNAME}
+                  value={`@${DISCORD_USERNAME}`}
                   copyLabel={t("providers.listing.discord.copy")}
                   action={
                     <Button
