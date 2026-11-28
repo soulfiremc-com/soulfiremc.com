@@ -2,10 +2,14 @@
 
 import { useT, useLocale } from "@/lib/i18n-react";
 
-import { useLocation } from "@tanstack/react-router";
+import { useHydrated, useLocation, useSearch } from "@tanstack/react-router";
+import { useCopyButton } from "fumadocs-ui/utils/use-copy-button";
 import {
+  Check,
   ChevronLeft,
   ChevronRight,
+  Link2,
+  MailOpen,
   RotateCw,
   TriangleAlert,
 } from "lucide-react";
@@ -18,11 +22,15 @@ import {
   useState,
 } from "react";
 import { toast } from "sonner";
+import { AdminRemoveReviewButton } from "@/components/admin-remove-review-button";
+import { ProviderInfoPopover } from "@/components/provider-info-popover";
 import { ReviewRemoveDialog } from "@/components/review-remove-dialog";
 import { ReviewTurnstileProvider } from "@/components/review-turnstile-provider";
 import { SignInRequiredCredenza } from "@/components/sign-in-required-credenza";
 import { CustomTimeAgo } from "@/components/time-ago";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -50,6 +58,7 @@ import {
   saveReviewDraft,
   takeReviewDraft,
 } from "@/lib/review-draft";
+import { getReviewLinkUrl } from "@/lib/review-links";
 import type { ReviewMutationResult } from "@/lib/review-mutations";
 import { cn, generateN } from "@/lib/utils";
 import { ReviewStarInput, ReviewStars } from "./review-stars";
@@ -75,6 +84,53 @@ function handleMutationError(
       description: t("reviews.errors.reviewVerification"),
     });
   }
+}
+
+function CopyReviewLinkButton({ slug }: { slug: string }) {
+  const t = useT();
+  const [copied, handleCopy] = useCopyButton(() =>
+    navigator.clipboard.writeText(getReviewLinkUrl(slug)),
+  );
+
+  return (
+    <>
+      <Button
+        type="button"
+        variant="outline"
+        size="sm"
+        onClick={handleCopy}
+        className="self-start sm:self-auto"
+      >
+        {copied ? (
+          <Check data-icon="inline-start" className="text-success" />
+        ) : (
+          <Link2 data-icon="inline-start" />
+        )}
+        {t("reviews.invite.copyLink")}
+      </Button>
+      <span className="sr-only" aria-live="polite">
+        {copied ? t("reviews.invite.linkCopied") : ""}
+      </span>
+    </>
+  );
+}
+
+function InvitedBadge() {
+  const t = useT();
+  return (
+    <ProviderInfoPopover
+      trigger={
+        <Badge variant="outline" className="cursor-help">
+          <MailOpen />
+          {t("reviews.invite.label")}
+        </Badge>
+      }
+    >
+      <p className="text-muted-foreground">
+        {t("reviews.invite.labelDescription")}
+      </p>
+    </ProviderInfoPopover>
+  );
 }
 
 function ReviewPageLink({
@@ -204,6 +260,13 @@ function ItemReviewsSectionContent({
   }
   const ratingLabelId = useId();
   const location = useLocation();
+  // Prerendered pages render without the search, so read it after hydration.
+  const hydrated = useHydrated();
+  const inviteParam = useSearch({
+    strict: false,
+    select: (search) => search.invite === true,
+  });
+  const invited = hydrated && inviteParam;
   const reviewPageHref = (page: number) => {
     const search = new URLSearchParams(location.searchStr);
     if (page > 1) {
@@ -256,6 +319,7 @@ function ItemReviewsSectionContent({
       result = await upsertReview(slug, {
         rating,
         body,
+        invited,
       });
     } catch {
       toast.error(t("reviews.errors.saveFailed"), {
@@ -276,7 +340,7 @@ function ItemReviewsSectionContent({
       setDraft(null);
       toast(
         t(
-          submittedForReview
+          submittedForReview || result.held
             ? "reviews.reviewSubmittedForModeration"
             : currentReview
               ? "reviews.reviewUpdated"
@@ -324,13 +388,16 @@ function ItemReviewsSectionContent({
         className="flex scroll-mt-20 flex-col gap-6"
         id={REVIEWS_SECTION_ID}
       >
-        <div className="flex flex-col gap-1">
-          <h2 className="text-2xl font-semibold">
-            {t("reviews.ratingsReviews")}
-          </h2>
-          <p className="text-sm text-muted-foreground">
-            {t("reviews.moderation.description")}
-          </p>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div className="flex flex-col gap-1">
+            <h2 className="text-2xl font-semibold">
+              {t("reviews.ratingsReviews")}
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              {t("reviews.moderation.description")}
+            </p>
+          </div>
+          <CopyReviewLinkButton slug={slug} />
         </div>
 
         <Card className="py-5">
@@ -405,6 +472,15 @@ function ItemReviewsSectionContent({
           </CardHeader>
 
           <CardContent className="flex max-w-2xl flex-col gap-5 px-0">
+            {invited ? (
+              <Alert>
+                <MailOpen />
+                <AlertTitle>{t("reviews.invite.noticeTitle")}</AlertTitle>
+                <AlertDescription>
+                  {t("reviews.invite.noticeDescription")}
+                </AlertDescription>
+              </Alert>
+            ) : null}
             <Field>
               <FieldLabel id={ratingLabelId}>{t("reviews.rating")}</FieldLabel>
               <ReviewStarInput
@@ -417,6 +493,10 @@ function ItemReviewsSectionContent({
               />
               {rating === null ? (
                 <FieldDescription>{t("reviews.chooseRating")}</FieldDescription>
+              ) : currentReview?.ratingStatus === "pending" ? (
+                <FieldDescription>
+                  {t("reviews.ratingHeldNotice")}
+                </FieldDescription>
               ) : null}
             </Field>
 
@@ -444,6 +524,7 @@ function ItemReviewsSectionContent({
                 {body.length}/2000
               </div>
               {currentReview?.body &&
+              currentReview.ratingStatus === "approved" &&
               currentReview.commentStatus !== "approved" ? (
                 <FieldDescription>
                   {t(
@@ -610,9 +691,11 @@ function ItemReviewsSectionContent({
                             <ReviewStars value={entry.rating} size="sm" />
                             <span aria-hidden>·</span>
                             <CustomTimeAgo date={entry.createdAt} />
+                            {entry.invited ? <InvitedBadge /> : null}
                           </div>
                         </div>
                       </div>
+                      <AdminRemoveReviewButton reviewId={entry.id} />
                     </div>
                     {entry.body ? (
                       <p className="text-sm/6 wrap-break-word whitespace-pre-line text-muted-foreground">

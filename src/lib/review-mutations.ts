@@ -15,6 +15,8 @@ export type ReviewMutationResult = {
   error: "unauthorized" | "verification" | null;
   /** Another request was running, so this one did not reach the server. */
   skipped?: true;
+  /** The rating waits for a moderator before it counts. */
+  held?: true;
 };
 
 export type ReviewMutationVariables = { slug: string } & (
@@ -23,6 +25,7 @@ export type ReviewMutationVariables = { slug: string } & (
       action: "upsert";
       rating: number;
       body: string;
+      invited: boolean;
     }
 );
 
@@ -96,11 +99,15 @@ export function reviewMutationOptions({
           ...data,
           rating: variables.rating,
           body: variables.body,
+          invited: variables.invited,
           turnstileToken,
         },
       }),
     );
-    return { error: result.ok ? null : result.error };
+    if (!result.ok) return { error: result.error };
+    return result.ratingStatus === "pending"
+      ? ({ error: null, held: true } as const)
+      : { error: null };
   });
 
   return mutationOptions({

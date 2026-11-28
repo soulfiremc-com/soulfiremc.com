@@ -1,0 +1,1 @@
+ALTER TABLE `review` ADD `invited` integer DEFAULT false NOT NULL;

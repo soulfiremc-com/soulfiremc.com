@@ -182,7 +182,7 @@ export function useReviews(
 
   const upsertReview = (
     slug: string,
-    nextReview: { rating: number; body: string },
+    nextReview: { rating: number; body: string; invited: boolean },
   ) =>
     mutateReview({
       action: "upsert",

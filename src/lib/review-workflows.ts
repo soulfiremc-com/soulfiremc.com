@@ -1,9 +1,10 @@
-import { Context, Schema, Effect } from "effect";
+import { Clock, Context, Schema, Effect } from "effect";
 import {
   emptyReviewSummary,
   type ItemType,
   type PaginatedPublicReviewRecords,
   type ReviewCommentStatus,
+  type ReviewRatingStatus,
   type ReviewSummary,
   type UserReviewRecord,
 } from "@/lib/review-core";
@@ -13,11 +14,19 @@ import type { TurnstileVerificationError } from "@/lib/turnstile";
 
 const REVIEWS_PAGE_SIZE = 8;
 
-type ReviewUser = { id: string; role?: string | null };
+/**
+ * Ratings from accounts younger than this wait for a moderator, so a batch of
+ * fresh accounts cannot move an average on its own.
+ */
+export const NEW_ACCOUNT_HOLD_MS = 24 * 60 * 60 * 1000;
+
+type ReviewUser = { id: string; role?: string | null; createdAt: Date };
 export type ExistingReview = {
   id: string;
   body: string | null;
   commentStatus: ReviewCommentStatus | null;
+  ratingStatus: ReviewRatingStatus;
+  invited: boolean;
 };
 export type ReviewWrite = {
   userId: string;
@@ -26,6 +35,8 @@ export type ReviewWrite = {
   rating: number;
   body: string | null;
   commentStatus: ReviewCommentStatus;
+  ratingStatus: ReviewRatingStatus;
+  invited: boolean;
 };
 
 // oxlint-disable-next-line unicorn/throw-new-error -- Schema.TaggedError is a class factory.
@@ -80,7 +91,7 @@ export type ReviewStoreService = {
   create(input: ReviewWrite): Effect.Effect<void, ReviewStoreError>;
   update(
     id: string,
-    input: Pick<ReviewWrite, "rating" | "body" | "commentStatus">,
+    input: Pick<ReviewWrite, "rating" | "body" | "commentStatus" | "invited">,
   ): Effect.Effect<void, ReviewStoreError>;
   pendingComments: Effect.Effect<
     PendingReviewCommentRecord[],
@@ -92,6 +103,8 @@ export type ReviewStoreService = {
     status: "approved" | "rejected",
     body: string,
   ): Effect.Effect<boolean, ReviewStoreError>;
+  /** Deletes a review by id. Used by moderators. */
+  remove(id: string): Effect.Effect<void, ReviewStoreError>;
   delete(
     userId: string,
     itemType: ItemType,
@@ -121,6 +134,8 @@ export type SubmitReviewInput = {
   itemSlug: string;
   rating: number;
   body: string | null;
+  /** The reviewer opened the shop's review link. */
+  invited: boolean;
 };
 export type GetReviewsResult = {
   summaries: Record<string, ReviewSummary>;
@@ -130,7 +145,7 @@ export type GetReviewsResult = {
   unavailable?: true;
 };
 export type SubmitReviewResult =
-  | { ok: true }
+  | { ok: true; ratingStatus: ReviewRatingStatus }
   | { ok: false; error: "unauthorized" }
   | { ok: false; error: "verification"; errorCodes: string[] };
 export type DeleteReviewResult =
@@ -138,6 +153,9 @@ export type DeleteReviewResult =
   | { ok: false; error: "unauthorized" };
 export type GetPendingReviewCommentsResult =
   | { ok: true; comments: PendingReviewCommentRecord[] }
+  | { ok: false; error: "unauthorized" };
+export type RemoveReviewResult =
+  | { ok: true }
   | { ok: false; error: "unauthorized" };
 export type ModerateReviewCommentResult =
   | { ok: true }
@@ -243,6 +261,7 @@ export const submitReview = Effect.fn("submitReview")(function* (
     yield* verify;
     const store = yield* ReviewStore;
     const existing = yield* store.find(user.id, input.itemType, input.itemSlug);
+    const now = yield* Clock.currentTimeMillis;
     // Trim again after the cut, so the stored text matches the trimmed text
     // that moderators see and send back.
     const body = input.body?.trim().slice(0, 2000).trimEnd() || null;
@@ -253,11 +272,21 @@ export const submitReview = Effect.fn("submitReview")(function* (
         ? "approved"
         : "pending";
 
+    // An edit keeps the status of the first submission. Otherwise a held
+    // reviewer could wait out the hold and edit the rating into the average.
+    const ratingStatus: ReviewRatingStatus =
+      existing?.ratingStatus ??
+      (now - user.createdAt.getTime() < NEW_ACCOUNT_HOLD_MS
+        ? "pending"
+        : "approved");
+
     if (existing) {
       yield* store.update(existing.id, {
         rating: input.rating,
         body,
         commentStatus,
+        // An invitation that prompts an edit still shaped the review.
+        invited: existing.invited || input.invited,
       });
     } else {
       yield* store.create({
@@ -267,9 +296,11 @@ export const submitReview = Effect.fn("submitReview")(function* (
         userId: user.id,
         body,
         commentStatus,
+        ratingStatus,
+        invited: input.invited,
       });
     }
-    return { ok: true } as const;
+    return { ok: true, ratingStatus } as const;
   }).pipe(
     Effect.catchTags({
       ReviewUnauthorizedError: () =>
@@ -311,6 +342,21 @@ export const moderateReview = Effect.fn("moderateReview")(function* (input: {
     return moderated
       ? ({ ok: true } as const)
       : ({ ok: false, error: "stale" } as const);
+  }).pipe(
+    Effect.catchTag("ReviewUnauthorizedError", () =>
+      Effect.succeed({ ok: false, error: "unauthorized" } as const),
+    ),
+  );
+});
+
+export const removeReview = Effect.fn("removeReview")(function* (input: {
+  reviewId: string;
+}) {
+  return yield* Effect.gen(function* () {
+    yield* requireAdmin;
+    const store = yield* ReviewStore;
+    yield* store.remove(input.reviewId);
+    return { ok: true } as const;
   }).pipe(
     Effect.catchTag("ReviewUnauthorizedError", () =>
       Effect.succeed({ ok: false, error: "unauthorized" } as const),

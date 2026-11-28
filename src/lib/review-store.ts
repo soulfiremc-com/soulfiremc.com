@@ -1,4 +1,4 @@
-import { and, eq } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 import { Effect } from "effect";
 import { db, reviewDb } from "@/lib/db";
 import { ReviewDatabase, reviewQuery } from "@/lib/review-database";
@@ -9,6 +9,7 @@ import {
   getPendingReviewComments,
   getReviewSummaries,
   getUserReviews,
+  removeReviewById,
   updateReviewCommentStatus,
 } from "@/lib/reviews";
 
@@ -35,6 +36,8 @@ export function makeReviewStore(database: {
             id: review.id,
             body: review.body,
             commentStatus: review.commentStatus,
+            ratingStatus: review.ratingStatus,
+            invited: review.invited,
           })
           .from(review)
           .where(
@@ -59,6 +62,7 @@ export function makeReviewStore(database: {
               rating: input.rating,
               body: input.body,
               commentStatus: input.commentStatus,
+              invited: sql`max(${review.invited}, excluded.invited)`,
             },
           }),
       ).pipe(Effect.asVoid),
@@ -69,6 +73,7 @@ export function makeReviewStore(database: {
     pendingComments: provide(getPendingReviewComments()),
     moderate: (id, status, body) =>
       provide(updateReviewCommentStatus(id, status, body)),
+    remove: (id) => provide(removeReviewById(id)),
     delete: (userId, itemType, slug) =>
       reviewQuery("delete", () =>
         reviewsDb

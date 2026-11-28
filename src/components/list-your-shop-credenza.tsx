@@ -218,6 +218,9 @@ export function ListYourShopCredenza({ kind }: { kind: ProviderKind }) {
               <p className="text-sm text-muted-foreground">
                 {t("providers.listing.badges")}
               </p>
+              <p className="text-sm text-muted-foreground">
+                {t("providers.listing.reviews")}
+              </p>
             </div>
           </CredenzaBody>
           <CredenzaFooter>

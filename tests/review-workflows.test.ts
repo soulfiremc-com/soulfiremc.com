@@ -7,6 +7,8 @@ import {
   getPendingComments,
   getReviews,
   moderateReview,
+  NEW_ACCOUNT_HOLD_MS,
+  removeReview,
   ReviewSession,
   ReviewSessionError,
   ReviewStore,
@@ -20,22 +22,25 @@ import {
 } from "@/lib/review-workflows";
 import { TurnstileVerificationError } from "@/lib/turnstile";
 
+// Accounts older than the new-account hold, so their ratings count at once.
+const OLD_ACCOUNT = new Date(0);
+
 function dependencies({
   store = {},
-  user = { id: "user-1", role: "user" },
+  user = { id: "user-1", role: "user", createdAt: OLD_ACCOUNT },
   verify = Effect.void,
   currentUser = Effect.succeed(user),
   freshUser = currentUser,
 }: {
   store?: Partial<ReviewStoreService>;
-  user?: { id: string; role: string } | null;
+  user?: { id: string; role: string; createdAt: Date } | null;
   verify?: Effect.Effect<void, TurnstileVerificationError>;
   currentUser?: Effect.Effect<
-    { id: string; role?: string | null } | null,
+    { id: string; role?: string | null; createdAt: Date } | null,
     ReviewSessionError
   >;
   freshUser?: Effect.Effect<
-    { id: string; role?: string | null } | null,
+    { id: string; role?: string | null; createdAt: Date } | null,
     ReviewSessionError
   >;
 } = {}) {
@@ -49,6 +54,7 @@ function dependencies({
     update: () => unexpected,
     pendingComments: unexpected,
     moderate: () => unexpected,
+    remove: () => unexpected,
     delete: () => unexpected,
     ...store,
   };
@@ -75,6 +81,7 @@ const input = {
   itemSlug: "shop",
   rating: 5,
   body: "  Helpful service  ",
+  invited: false,
 } as const;
 const readInput: GetReviewsInput = {
   itemType: "account",
@@ -128,13 +135,17 @@ await test("new reviews verify before inserting and normalize comments for moder
     }),
   });
   const submitted = { ...input, turnstileToken: "one-use-token" };
-  assert.deepEqual(await run(submitReview(submitted)), { ok: true });
+  assert.deepEqual(await run(submitReview(submitted)), {
+    ok: true,
+    ratingStatus: "approved",
+  });
   assert.deepEqual(events, ["verify", "write"]);
   assert.deepEqual(written[0], {
     ...input,
     userId: "user-1",
     body: "Helpful service",
     commentStatus: "pending",
+    ratingStatus: "approved",
   });
   await run(submitReview({ ...input, body: "  " }));
   assert.equal(defined(written[1]).body, null);
@@ -146,26 +157,60 @@ await test("new reviews verify before inserting and normalize comments for moder
 await test("review edits verify again and retain approval only for unchanged approved comments", async () => {
   const cases: [ExistingReview, string | null, string][] = [
     [
-      { id: "id", body: "Helpful service", commentStatus: "approved" },
+      {
+        id: "id",
+        body: "Helpful service",
+        commentStatus: "approved",
+        invited: false,
+        ratingStatus: "approved",
+      },
       input.body,
       "approved",
     ],
     [
-      { id: "id", body: "old", commentStatus: "approved" },
+      {
+        id: "id",
+        body: "old",
+        commentStatus: "approved",
+        invited: false,
+        ratingStatus: "approved",
+      },
       "changed",
       "pending",
     ],
     [
-      { id: "id", body: "Helpful service", commentStatus: "pending" },
+      {
+        id: "id",
+        body: "Helpful service",
+        commentStatus: "pending",
+        invited: false,
+        ratingStatus: "approved",
+      },
       input.body,
       "pending",
     ],
     [
-      { id: "id", body: "Helpful service", commentStatus: "rejected" },
+      {
+        id: "id",
+        body: "Helpful service",
+        commentStatus: "rejected",
+        invited: false,
+        ratingStatus: "approved",
+      },
       input.body,
       "pending",
     ],
-    [{ id: "id", body: "old", commentStatus: null }, null, "approved"],
+    [
+      {
+        id: "id",
+        body: "old",
+        commentStatus: null,
+        invited: false,
+        ratingStatus: "approved",
+      },
+      null,
+      "approved",
+    ],
   ];
   for (const [existing, body, commentStatus] of cases) {
     let update: unknown;
@@ -182,14 +227,59 @@ await test("review edits verify again and retain approval only for unchanged app
         verified++;
       }),
     });
-    assert.deepEqual(await run(submitReview({ ...input, body })), { ok: true });
+    assert.deepEqual(await run(submitReview({ ...input, body })), {
+      ok: true,
+      ratingStatus: "approved",
+    });
     assert.equal(verified, 1);
     assert.deepEqual(update, {
       id: "id",
       rating: 5,
       body: body?.trim() || null,
       commentStatus,
+      invited: false,
     });
+  }
+});
+
+await test("reviews from a review link stay invited through later edits", async () => {
+  const written: ReviewWrite[] = [];
+  const created = dependencies({
+    store: {
+      find: () => Effect.succeed<ExistingReview | undefined>(undefined),
+      create: (value) =>
+        Effect.sync(() => {
+          written.push(value);
+        }),
+    },
+  });
+  await created(submitReview({ ...input, invited: true }));
+  assert.equal(defined(written[0]).invited, true);
+
+  for (const [existingInvited, submittedInvited] of [
+    [true, false],
+    [false, true],
+    [false, false],
+  ] as const) {
+    let invited: boolean | undefined;
+    const run = dependencies({
+      store: {
+        find: () =>
+          Effect.succeed<ExistingReview>({
+            id: "id",
+            body: null,
+            commentStatus: null,
+            invited: existingInvited,
+            ratingStatus: "approved",
+          }),
+        update: (_id, value) =>
+          Effect.sync(() => {
+            invited = value.invited;
+          }),
+      },
+    });
+    await run(submitReview({ ...input, invited: submittedInvited }));
+    assert.equal(invited, existingInvited || submittedInvited);
   }
 });
 
@@ -228,7 +318,12 @@ await test("verification failures keep their public result and database failures
 await test("review reads preserve personal reviews and pagination, and skip personal reads for guests", async () => {
   const summaries = { shop: { averageRating: 5, reviewCount: 9 } };
   const userReviews = {
-    shop: { rating: 5, body: null, commentStatus: "approved" as const },
+    shop: {
+      rating: 5,
+      body: null,
+      commentStatus: "approved" as const,
+      ratingStatus: "approved" as const,
+    },
   };
   const page = {
     entries: [],
@@ -322,7 +417,7 @@ await test("review reads fall back for operational failures while defects still 
 await test("moderation checks admin roles and deletion scopes the write to the signed-in user", async () => {
   const writes: unknown[] = [];
   const run = dependencies({
-    user: { id: "admin-1", role: "user, ADMIN " },
+    user: { id: "admin-1", role: "user, ADMIN ", createdAt: OLD_ACCOUNT },
     store: {
       pendingComments: Effect.succeed([]),
       moderate: (id, status, body) =>
@@ -356,15 +451,23 @@ await test("moderation checks admin roles and deletion scopes the write to the s
 
 await test("admin checks use the uncached session and stale moderation is reported", async () => {
   const demoted = dependencies({
-    currentUser: Effect.succeed({ id: "admin-1", role: "admin" }),
-    freshUser: Effect.succeed({ id: "admin-1", role: "user" }),
+    currentUser: Effect.succeed({
+      id: "admin-1",
+      role: "admin",
+      createdAt: OLD_ACCOUNT,
+    }),
+    freshUser: Effect.succeed({
+      id: "admin-1",
+      role: "user",
+      createdAt: OLD_ACCOUNT,
+    }),
   });
   assert.deepEqual(await demoted(getPendingComments), {
     ok: false,
     error: "unauthorized",
   });
   const stale = dependencies({
-    user: { id: "admin-1", role: "admin" },
+    user: { id: "admin-1", role: "admin", createdAt: OLD_ACCOUNT },
     store: { moderate: () => Effect.succeed(false) },
   });
   assert.deepEqual(
@@ -401,6 +504,8 @@ await test("an empty comment clears the stored comment and needs no moderation",
           id: "id",
           body: "Written comment",
           commentStatus: "rejected",
+          invited: false,
+          ratingStatus: "approved",
         }),
       update: (id, value) =>
         Effect.sync(() => {
@@ -410,12 +515,14 @@ await test("an empty comment clears the stored comment and needs no moderation",
   });
   assert.deepEqual(await run(submitReview({ ...input, body: null })), {
     ok: true,
+    ratingStatus: "approved",
   });
   assert.deepEqual(updates[0], {
     id: "id",
     rating: 5,
     body: null,
     commentStatus: "approved",
+    invited: false,
   });
 
   const created: ReviewWrite[] = [];
@@ -450,4 +557,77 @@ await test("cut comments are stored as trimmed text that moderation can match", 
   const body = defined(defined(written[0]).body);
   assert.equal(body, "x".repeat(1999));
   assert.equal(body, body.trim());
+});
+
+await test("ratings from new accounts wait for a moderator and edits keep the hold", async () => {
+  const now = Date.now();
+  const written: ReviewWrite[] = [];
+  const submitAs = (ageMs: number) =>
+    dependencies({
+      user: { id: "user-1", role: "user", createdAt: new Date(now - ageMs) },
+      store: {
+        find: () => Effect.succeed<ExistingReview | undefined>(undefined),
+        create: (value) =>
+          Effect.sync(() => {
+            written.push(value);
+          }),
+      },
+    })(submitReview(input));
+  assert.deepEqual(await submitAs(60 * 60 * 1000), {
+    ok: true,
+    ratingStatus: "pending",
+  });
+  assert.equal(defined(written[0]).ratingStatus, "pending");
+  assert.deepEqual(await submitAs(NEW_ACCOUNT_HOLD_MS + 60_000), {
+    ok: true,
+    ratingStatus: "approved",
+  });
+  assert.equal(defined(written[1]).ratingStatus, "approved");
+
+  // A held review stays held after the account ages, so waiting out the hold
+  // and editing does not move the average. Edits never write the status.
+  let update: Record<string, unknown> | undefined;
+  const edit = dependencies({
+    store: {
+      find: () =>
+        Effect.succeed<ExistingReview>({
+          id: "id",
+          body: null,
+          commentStatus: null,
+          invited: false,
+          ratingStatus: "pending",
+        }),
+      update: (_id, value) =>
+        Effect.sync(() => {
+          update = value;
+        }),
+    },
+  });
+  assert.deepEqual(await edit(submitReview({ ...input, rating: 1 })), {
+    ok: true,
+    ratingStatus: "pending",
+  });
+  assert.equal(update !== undefined && "ratingStatus" in update, false);
+});
+
+await test("only admins remove other users' reviews", async () => {
+  const member = dependencies();
+  assert.deepEqual(await member(removeReview({ reviewId: "review-id" })), {
+    ok: false,
+    error: "unauthorized",
+  });
+  const removed: string[] = [];
+  const admin = dependencies({
+    user: { id: "admin-1", role: "admin", createdAt: OLD_ACCOUNT },
+    store: {
+      remove: (id) =>
+        Effect.sync(() => {
+          removed.push(id);
+        }),
+    },
+  });
+  assert.deepEqual(await admin(removeReview({ reviewId: "review-id" })), {
+    ok: true,
+  });
+  assert.deepEqual(removed, ["review-id"]);
 });

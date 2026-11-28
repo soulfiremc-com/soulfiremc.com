@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { type ReactNode, type SubmitEvent, useCallback } from "react";
 import { toast } from "sonner";
+import { AdminRemoveReviewButton } from "@/components/admin-remove-review-button";
 import { ReviewStars } from "@/components/review-stars";
 import { CustomTimeAgo } from "@/components/time-ago";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -148,6 +149,23 @@ export function ReviewModeration() {
     queryKey: pendingReviewCommentsQueryKey,
     queryFn: () => getPendingReviewCommentsServerFn(),
   });
+  const dropFromQueue = useCallback(
+    (reviewId: string) => {
+      queryClient.setQueryData<GetPendingReviewCommentsResult>(
+        pendingReviewCommentsQueryKey,
+        (current) =>
+          current?.ok
+            ? {
+                ...current,
+                comments: current.comments.filter(
+                  (comment) => comment.id !== reviewId,
+                ),
+              }
+            : current,
+      );
+    },
+    [queryClient],
+  );
   const moderation = useMutation({
     mutationFn: async ({
       body,
@@ -188,18 +206,7 @@ export function ReviewModeration() {
       });
     },
     onSuccess: (_, variables) => {
-      queryClient.setQueryData<GetPendingReviewCommentsResult>(
-        pendingReviewCommentsQueryKey,
-        (current) =>
-          current?.ok
-            ? {
-                ...current,
-                comments: current.comments.filter(
-                  (comment) => comment.id !== variables.reviewId,
-                ),
-              }
-            : current,
-      );
+      dropFromQueue(variables.reviewId);
       // Public review pages cache comments, so refresh them after moderation.
       void queryClient.invalidateQueries({ queryKey: ["reviews"] });
       toast(
@@ -318,6 +325,14 @@ export function ReviewModeration() {
                   <Badge variant="secondary">
                     {t(itemTypeLabelKeys[comment.itemType])}
                   </Badge>
+                  {comment.ratingHeld ? (
+                    <Badge variant="secondary">
+                      {t("admin.reviews.ratingHeld")}
+                    </Badge>
+                  ) : null}
+                  {comment.invited ? (
+                    <Badge variant="outline">{t("reviews.invite.label")}</Badge>
+                  ) : null}
                   {itemPath ? (
                     <a
                       href={itemPath}
@@ -341,15 +356,26 @@ export function ReviewModeration() {
                 <span aria-hidden="true">·</span>
                 <CustomTimeAgo date={comment.createdAt} />
               </div>
-              <p className="rounded-md border bg-muted/20 p-3 text-sm/6 wrap-break-word whitespace-pre-line">
-                {comment.body}
-              </p>
+              {comment.ratingHeld ? (
+                <p className="text-sm text-muted-foreground">
+                  {t("admin.reviews.ratingHeldDescription")}
+                </p>
+              ) : null}
+              {comment.body ? (
+                <p className="rounded-md border bg-muted/20 p-3 text-sm/6 wrap-break-word whitespace-pre-line">
+                  {comment.body}
+                </p>
+              ) : (
+                <p className="text-sm text-muted-foreground italic">
+                  {t("admin.reviews.noComment")}
+                </p>
+              )}
             </CardContent>
 
             <CardFooter>
-              <form className="flex gap-2" onSubmit={moderateComment}>
+              <form className="flex flex-wrap gap-2" onSubmit={moderateComment}>
                 <input type="hidden" name="reviewId" value={comment.id} />
-                <input type="hidden" name="body" value={comment.body} />
+                <input type="hidden" name="body" value={comment.body ?? ""} />
                 <Button
                   type="submit"
                   name="commentStatus"
@@ -364,21 +390,31 @@ export function ReviewModeration() {
                   )}
                   {t("admin.reviews.approve")}
                 </Button>
-                <Button
-                  type="submit"
-                  name="commentStatus"
-                  value="rejected"
-                  variant="outline"
-                  disabled={moderation.isPending}
-                >
-                  {pendingReviewId === comment.id &&
-                  pendingReviewStatus === "rejected" ? (
-                    <Spinner data-icon="inline-start" />
-                  ) : (
-                    <X data-icon="inline-start" />
-                  )}
-                  {t("admin.reviews.reject")}
-                </Button>
+                {/* A held rating is approved or removed as a whole. */}
+                {comment.ratingHeld ? null : (
+                  <Button
+                    type="submit"
+                    name="commentStatus"
+                    value="rejected"
+                    variant="outline"
+                    disabled={moderation.isPending}
+                  >
+                    {pendingReviewId === comment.id &&
+                    pendingReviewStatus === "rejected" ? (
+                      <Spinner data-icon="inline-start" />
+                    ) : (
+                      <X data-icon="inline-start" />
+                    )}
+                    {t("admin.reviews.reject")}
+                  </Button>
+                )}
+                <AdminRemoveReviewButton
+                  reviewId={comment.id}
+                  size="default"
+                  onRemoved={() => {
+                    dropFromQueue(comment.id);
+                  }}
+                />
               </form>
             </CardFooter>
           </Card>

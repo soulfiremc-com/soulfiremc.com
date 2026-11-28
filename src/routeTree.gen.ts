@@ -45,6 +45,7 @@ import { Route as Char123LangChar125GetAccountsIndexRouteImport } from './routes
 import { Route as Char123LangChar125GetAccountsSlugRouteImport } from './routes/{-$lang}/get-accounts/$slug'
 import { Route as Char123LangChar125GetProxiesIndexRouteImport } from './routes/{-$lang}/get-proxies/index'
 import { Route as Char123LangChar125GetProxiesSlugRouteImport } from './routes/{-$lang}/get-proxies/$slug'
+import { Route as Char123LangChar125ReviewSlugRouteImport } from './routes/{-$lang}/review/$slug'
 import { Route as ApiDiscordLinkedRoleIndexRouteImport } from './routes/api/discord/linked-role/index'
 import { Route as ApiDiscordLinkedRoleCallbackRouteImport } from './routes/api/discord/linked-role/callback'
 import { Route as OgAccountsChar123Char125ImageDotwebpRouteImport } from './routes/og/accounts/{$}/image[.]webp'
@@ -243,6 +244,12 @@ const Char123LangChar125GetProxiesSlugRoute =
     path: '/get-proxies/$slug',
     getParentRoute: () => Char123LangChar125RouteRoute,
   } as any)
+const Char123LangChar125ReviewSlugRoute =
+  Char123LangChar125ReviewSlugRouteImport.update({
+    id: '/review/$slug',
+    path: '/review/$slug',
+    getParentRoute: () => Char123LangChar125RouteRoute,
+  } as any)
 const ApiDiscordLinkedRoleIndexRoute =
   ApiDiscordLinkedRoleIndexRouteImport.update({
     id: '/api/discord/linked-role/',
@@ -321,6 +328,7 @@ export interface FileRoutesByFullPath {
   '/{-$lang}/docs/{$}.mdx': typeof Char123LangChar125DocsChar123Char125DotmdxRoute
   '/{-$lang}/get-accounts/$slug': typeof Char123LangChar125GetAccountsSlugRoute
   '/{-$lang}/get-proxies/$slug': typeof Char123LangChar125GetProxiesSlugRoute
+  '/{-$lang}/review/$slug': typeof Char123LangChar125ReviewSlugRoute
   '/{-$lang}/get-accounts/': typeof Char123LangChar125GetAccountsIndexRoute
   '/{-$lang}/get-proxies/': typeof Char123LangChar125GetProxiesIndexRoute
   '/api/discord/linked-role/callback': typeof ApiDiscordLinkedRoleCallbackRoute
@@ -364,6 +372,7 @@ export interface FileRoutesByTo {
   '/{-$lang}/docs/{$}.mdx': typeof Char123LangChar125DocsChar123Char125DotmdxRoute
   '/{-$lang}/get-accounts/$slug': typeof Char123LangChar125GetAccountsSlugRoute
   '/{-$lang}/get-proxies/$slug': typeof Char123LangChar125GetProxiesSlugRoute
+  '/{-$lang}/review/$slug': typeof Char123LangChar125ReviewSlugRoute
   '/{-$lang}/get-accounts': typeof Char123LangChar125GetAccountsIndexRoute
   '/{-$lang}/get-proxies': typeof Char123LangChar125GetProxiesIndexRoute
   '/api/discord/linked-role/callback': typeof ApiDiscordLinkedRoleCallbackRoute
@@ -410,6 +419,7 @@ export interface FileRoutesById {
   '/{-$lang}/docs/{$}.mdx': typeof Char123LangChar125DocsChar123Char125DotmdxRoute
   '/{-$lang}/get-accounts/$slug': typeof Char123LangChar125GetAccountsSlugRoute
   '/{-$lang}/get-proxies/$slug': typeof Char123LangChar125GetProxiesSlugRoute
+  '/{-$lang}/review/$slug': typeof Char123LangChar125ReviewSlugRoute
   '/{-$lang}/get-accounts/': typeof Char123LangChar125GetAccountsIndexRoute
   '/{-$lang}/get-proxies/': typeof Char123LangChar125GetProxiesIndexRoute
   '/api/discord/linked-role/callback': typeof ApiDiscordLinkedRoleCallbackRoute
@@ -457,6 +467,7 @@ export interface FileRouteTypes {
     | '/{-$lang}/docs/{$}.mdx'
     | '/{-$lang}/get-accounts/$slug'
     | '/{-$lang}/get-proxies/$slug'
+    | '/{-$lang}/review/$slug'
     | '/{-$lang}/get-accounts/'
     | '/{-$lang}/get-proxies/'
     | '/api/discord/linked-role/callback'
@@ -500,6 +511,7 @@ export interface FileRouteTypes {
     | '/{-$lang}/docs/{$}.mdx'
     | '/{-$lang}/get-accounts/$slug'
     | '/{-$lang}/get-proxies/$slug'
+    | '/{-$lang}/review/$slug'
     | '/{-$lang}/get-accounts'
     | '/{-$lang}/get-proxies'
     | '/api/discord/linked-role/callback'
@@ -545,6 +557,7 @@ export interface FileRouteTypes {
     | '/{-$lang}/docs/{$}.mdx'
     | '/{-$lang}/get-accounts/$slug'
     | '/{-$lang}/get-proxies/$slug'
+    | '/{-$lang}/review/$slug'
     | '/{-$lang}/get-accounts/'
     | '/{-$lang}/get-proxies/'
     | '/api/discord/linked-role/callback'
@@ -843,6 +856,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char123LangChar125GetProxiesSlugRouteImport
       parentRoute: typeof Char123LangChar125RouteRoute
     }
+    '/{-$lang}/review/$slug': {
+      id: '/{-$lang}/review/$slug'
+      path: '/review/$slug'
+      fullPath: '/{-$lang}/review/$slug'
+      preLoaderRoute: typeof Char123LangChar125ReviewSlugRouteImport
+      parentRoute: typeof Char123LangChar125RouteRoute
+    }
     '/api/discord/linked-role/': {
       id: '/api/discord/linked-role/'
       path: '/api/discord/linked-role'
@@ -905,6 +925,7 @@ interface Char123LangChar125RouteRouteChildren {
   Char123LangChar125DocsChar123Char125DotmdxRoute: typeof Char123LangChar125DocsChar123Char125DotmdxRoute
   Char123LangChar125GetAccountsSlugRoute: typeof Char123LangChar125GetAccountsSlugRoute
   Char123LangChar125GetProxiesSlugRoute: typeof Char123LangChar125GetProxiesSlugRoute
+  Char123LangChar125ReviewSlugRoute: typeof Char123LangChar125ReviewSlugRoute
   Char123LangChar125GetAccountsIndexRoute: typeof Char123LangChar125GetAccountsIndexRoute
   Char123LangChar125GetProxiesIndexRoute: typeof Char123LangChar125GetProxiesIndexRoute
 }
@@ -923,6 +944,7 @@ const Char123LangChar125RouteRouteChildren: Char123LangChar125RouteRouteChildren
       Char123LangChar125GetAccountsSlugRoute,
     Char123LangChar125GetProxiesSlugRoute:
       Char123LangChar125GetProxiesSlugRoute,
+    Char123LangChar125ReviewSlugRoute: Char123LangChar125ReviewSlugRoute,
     Char123LangChar125GetAccountsIndexRoute:
       Char123LangChar125GetAccountsIndexRoute,
     Char123LangChar125GetProxiesIndexRoute:

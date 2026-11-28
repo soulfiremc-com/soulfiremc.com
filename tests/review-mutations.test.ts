@@ -7,6 +7,8 @@ import {
   selectReviewMutationSlug,
 } from "@/lib/review-mutations";
 
+const savedReview = { ok: true, ratingStatus: "approved" } as const;
+
 function deferred<T>() {
   let resolve!: (value: T | PromiseLike<T>) => void;
   const promise = new Promise<T>((resolvePromise) => {
@@ -24,7 +26,7 @@ function setup(
     viewerId: "viewer",
     queryClient,
     executeTurnstile: () => Promise.resolve("token"),
-    submitReview: () => Promise.resolve({ ok: true }),
+    submitReview: () => Promise.resolve(savedReview),
     deleteReview: () => Promise.resolve({ ok: true }),
     ...overrides,
   });
@@ -39,7 +41,7 @@ await test("pending mutations remain shared through verification and cache refre
     executeTurnstile: () => verification.promise,
     submitReview: ({ data }) => {
       assert.equal(data.turnstileToken, "verified");
-      return Promise.resolve({ ok: true });
+      return Promise.resolve(savedReview);
     },
   });
   queryClient.invalidateQueries = async (filters) => {
@@ -58,6 +60,7 @@ await test("pending mutations remain shared through verification and cache refre
     slug: "shop",
     rating: 5,
     body: "",
+    invited: false,
   });
   assert.equal(queryClient.isMutating(filters), 1);
   assert.equal(
@@ -93,6 +96,7 @@ await test("verification failures skip submission and invalidation and release p
       slug: "shop",
       rating: 5,
       body: "",
+      invited: false,
     }),
     { error: "verification" },
   );
@@ -106,7 +110,8 @@ await test("edits verify again and rejected deletes do not refresh reviews", asy
     submitReview: ({ data }) => {
       assert.equal(data.turnstileToken, "edit-token");
       assert.equal(data.body, "");
-      return Promise.resolve({ ok: true });
+      assert.equal(data.invited, true);
+      return Promise.resolve(savedReview);
     },
     deleteReview: () => Promise.resolve({ ok: false, error: "unauthorized" }),
   });
@@ -116,6 +121,7 @@ await test("edits verify again and rejected deletes do not refresh reviews", asy
       slug: "shop",
       rating: 3,
       body: "",
+      invited: true,
     }),
     { error: null },
   );
@@ -163,6 +169,7 @@ await test("server rejections preserve their result and skip review cache refres
         slug: "shop",
         rating: 5,
         body: "",
+        invited: false,
       }),
       { error },
     );
@@ -177,7 +184,7 @@ await test("refresh failures preserve their cause and never resubmit a successfu
   const { queryClient, observer } = setup({
     submitReview: () => {
       writes++;
-      return Promise.resolve({ ok: true });
+      return Promise.resolve(savedReview);
     },
   });
   queryClient.invalidateQueries = () => Promise.reject(failure);
@@ -187,10 +194,29 @@ await test("refresh failures preserve their cause and never resubmit a successfu
       slug: "shop",
       rating: 5,
       body: "",
+      invited: false,
     }),
     (error) => error === failure,
   );
   assert.equal(writes, 1);
   assert.equal(queryClient.isMutating(), 0);
+  queryClient.clear();
+});
+
+await test("held ratings report the hold so the form can say so", async () => {
+  const { queryClient, observer } = setup({
+    submitReview: () => Promise.resolve({ ok: true, ratingStatus: "pending" }),
+  });
+  queryClient.invalidateQueries = () => Promise.resolve();
+  assert.deepEqual(
+    await observer.mutate({
+      action: "upsert",
+      slug: "shop",
+      rating: 1,
+      body: "",
+      invited: false,
+    }),
+    { error: null, held: true },
+  );
   queryClient.clear();
 });

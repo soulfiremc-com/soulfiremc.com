@@ -13,6 +13,8 @@ import { user } from "./auth-schema";
 
 const reviewCommentStatuses = ["approved", "pending", "rejected"] as const;
 
+const reviewRatingStatuses = ["approved", "pending"] as const;
+
 const reviewItemTypes = ["account", "proxy", "resource"] as const;
 
 export const review = sqliteTable(
@@ -29,6 +31,15 @@ export const review = sqliteTable(
     rating: integer("rating").notNull().default(5),
     body: text("body"),
     commentStatus: text("comment_status", { enum: reviewCommentStatuses }),
+    // Ratings from new accounts wait for a moderator before they count.
+    // No CHECK constraint: adding one makes SQLite rebuild the table, and
+    // dropping the old table would cascade-delete review replies.
+    ratingStatus: text("rating_status", { enum: reviewRatingStatuses })
+      .notNull()
+      .default("approved"),
+    // Set when the reviewer arrived through a shop's review link. It stays set
+    // after later edits, because the invitation prompted the review.
+    invited: integer("invited", { mode: "boolean" }).notNull().default(false),
     createdAt: integer("created_at", { mode: "timestamp_ms" })
       .notNull()
       .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`),
@@ -50,6 +61,7 @@ export const review = sqliteTable(
       table.createdAt,
     ),
     index("review_comment_status_idx").on(table.commentStatus),
+    index("review_rating_status_idx").on(table.ratingStatus),
     check(
       "review_item_type_check",
       sql`${table.itemType} IN ('account', 'proxy', 'resource')`,

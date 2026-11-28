@@ -21,8 +21,10 @@ import { review } from "../src/lib/db/schema";
 import { reviewStore } from "../src/lib/review-store";
 import {
   deleteReview,
+  getPendingComments,
   getReviews,
   moderateReview,
+  removeReview,
   ReviewSession,
   ReviewStore,
   ReviewVerification,
@@ -108,6 +110,8 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
         body: { email, password, name: "D1 user" },
       });
       const userId = created.user.id;
+      // An established account, so its ratings count without a hold.
+      const admin = { id: userId, role: "admin", createdAt: new Date(0) };
 
       const run = <A, E>(
         program: Effect.Effect<
@@ -120,8 +124,8 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
           program.pipe(
             Effect.provideService(ReviewStore, reviewStore),
             Effect.provideService(ReviewSession, {
-              currentUser: Effect.succeed({ id: userId, role: "admin" }),
-              freshUser: Effect.succeed({ id: userId, role: "admin" }),
+              currentUser: Effect.succeed(admin),
+              freshUser: Effect.succeed(admin),
             }),
             Effect.provideService(ReviewVerification, {
               verify: Effect.void,
@@ -138,8 +142,12 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
             itemSlug: slug,
             rating: 5,
             body: "Useful service",
+            invited: false,
           } as const;
-          assert.deepEqual(await run(submitReview(input)), { ok: true });
+          assert.deepEqual(await run(submitReview(input)), {
+            ok: true,
+            ratingStatus: "approved",
+          });
           let result = await run(
             getReviews({
               itemType: "account",
@@ -156,6 +164,7 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
           const entry = result.writtenReviews?.entries[0];
           assert.ok(entry);
           assert.equal(entry.body, null);
+          assert.equal(entry.invited, false);
           assert.deepEqual(
             await run(
               moderateReview({
@@ -176,7 +185,22 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
             ),
             { ok: true },
           );
+          await run(submitReview({ ...input, rating: 4, invited: true }));
+          // A later edit without the review link keeps the invited label.
           await run(submitReview({ ...input, rating: 4 }));
+          // So does an insert that races into the existing row.
+          await run(
+            reviewStore.create({
+              userId,
+              itemType: "account",
+              itemSlug: slug,
+              rating: 4,
+              body: input.body,
+              commentStatus: "approved",
+              ratingStatus: "approved",
+              invited: false,
+            }),
+          );
           result = await run(
             getReviews({
               itemType: "account",
@@ -190,6 +214,10 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
             "Useful service",
           );
           assert.equal(defined(result.summaries[slug]).averageRating, 4);
+          assert.equal(
+            defined(result.writtenReviews?.entries[0]).invited,
+            true,
+          );
           await run(deleteReview(input));
           assert.equal(
             defined(
@@ -197,6 +225,126 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
             ).reviewCount,
             0,
           );
+        },
+      );
+
+      await t.test(
+        "new-account holds, bans, and admin removal control what counts",
+        async () => {
+          const authorId = crypto.randomUUID();
+          await db.insert(user).values({
+            id: authorId,
+            name: "New author",
+            email: `${authorId}@example.com`,
+          });
+          const author = { id: authorId, role: "user", createdAt: new Date() };
+          const runAuthor = <A, E>(
+            program: Effect.Effect<
+              A,
+              E,
+              ReviewSession | ReviewStore | ReviewVerification
+            >,
+          ) =>
+            Effect.runPromise(
+              program.pipe(
+                Effect.provideService(ReviewStore, reviewStore),
+                Effect.provideService(ReviewSession, {
+                  currentUser: Effect.succeed(author),
+                  freshUser: Effect.succeed(author),
+                }),
+                Effect.provideService(ReviewVerification, {
+                  verify: Effect.void,
+                }),
+              ),
+            );
+          const slug = crypto.randomUUID();
+          const counted = async () =>
+            defined(
+              (await runQuery(getReviewSummaries("account", [slug])))[slug],
+            ).reviewCount;
+
+          assert.deepEqual(
+            await runAuthor(
+              submitReview({
+                itemType: "account",
+                itemSlug: slug,
+                rating: 1,
+                body: null,
+                invited: false,
+              }),
+            ),
+            { ok: true, ratingStatus: "pending" },
+          );
+          assert.equal(await counted(), 0);
+          assert.equal(
+            (await runQuery(getWrittenReviews("account", slug))).length,
+            0,
+          );
+          assert.equal(
+            defined(
+              (await runQuery(getUserReviews(authorId, "account", [slug])))[
+                slug
+              ],
+            ).ratingStatus,
+            "pending",
+          );
+          const queue = await run(getPendingComments);
+          assert.ok(queue.ok);
+          const queued = queue.comments.find(
+            (comment) => comment.itemSlug === slug,
+          );
+          assert.ok(queued);
+          assert.equal(queued.ratingHeld, true);
+          assert.equal(queued.body, null);
+          // A held rating is approved or removed, never only rejected.
+          assert.deepEqual(
+            await run(
+              moderateReview({
+                reviewId: queued.id,
+                commentStatus: "rejected",
+                body: "",
+              }),
+            ),
+            { ok: false, error: "stale" },
+          );
+          assert.deepEqual(
+            await run(
+              moderateReview({
+                reviewId: queued.id,
+                commentStatus: "approved",
+                body: "",
+              }),
+            ),
+            { ok: true },
+          );
+          assert.equal(await counted(), 1);
+
+          await db
+            .update(user)
+            .set({ banned: true })
+            .where(eq(user.id, authorId));
+          assert.equal(await counted(), 0);
+          assert.equal(
+            (await runQuery(getWrittenReviews("account", slug))).length,
+            0,
+          );
+          await db
+            .update(user)
+            .set({ banExpires: new Date(Date.now() + 60_000) })
+            .where(eq(user.id, authorId));
+          assert.equal(await counted(), 0);
+          // Better Auth clears an expired ban only at the next sign-in.
+          await db
+            .update(user)
+            .set({ banExpires: new Date(Date.now() - 60_000) })
+            .where(eq(user.id, authorId));
+          assert.equal(await counted(), 1);
+
+          assert.deepEqual(await run(removeReview({ reviewId: queued.id })), {
+            ok: true,
+          });
+          assert.equal(await counted(), 0);
+          await db.delete(user).where(eq(user.id, authorId));
         },
       );
 
@@ -378,6 +526,8 @@ test("D1 supports auth, review queries, constraints, and request isolation", asy
                   rating: 5,
                   body: null,
                   commentStatus: "approved",
+                  ratingStatus: "approved",
+                  invited: false,
                 });
                 const entry = yield* reviewStore.find(id, "account", slug);
                 assert.ok(entry);

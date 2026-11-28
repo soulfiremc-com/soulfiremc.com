@@ -7,4 +7,9 @@ export const reviewsSearchSchema = Schema.Struct({
       Schema.catchDecoding(() => Effect.succeedSome(1)),
       Schema.withDecodingDefaultType(Effect.succeed(1)),
     ),
+  // Set by a shop's review link, so the review records the invitation.
+  invite: Schema.Boolean.pipe(
+    Schema.catchDecoding(() => Effect.succeedSome(false)),
+    Schema.withDecodingDefaultType(Effect.succeed(false)),
+  ),
 });

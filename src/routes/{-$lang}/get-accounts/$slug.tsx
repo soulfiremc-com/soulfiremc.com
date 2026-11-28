@@ -370,7 +370,7 @@ function SocialLinks({
 export const Route = createFileRoute("/{-$lang}/get-accounts/$slug")({
   validateSearch: Schema.toStandardSchemaV1(reviewsSearchSchema),
   search: {
-    middlewares: [stripSearchParams({ reviewsPage: 1 })],
+    middlewares: [stripSearchParams({ reviewsPage: 1, invite: false })],
   },
   loaderDeps: ({ search }) => ({
     reviewsPage: search.reviewsPage,

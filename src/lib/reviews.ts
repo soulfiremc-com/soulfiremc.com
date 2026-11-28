@@ -17,6 +17,13 @@ import {
 // Leave room for filters within D1's 100 bound parameters per statement.
 const REVIEW_SLUG_BATCH_SIZE = 90;
 
+// Better Auth leaves `banned` set after a timed ban ends until the user signs
+// in again, so an expired ban counts as lifted here.
+const authorNotBanned = sql`(coalesce(${user.banned}, 0) = 0 OR ${user.banExpires} <= cast(unixepoch('subsecond') * 1000 as integer))`;
+
+/** Reviews that count toward averages and appear on public pages. */
+const publicReview = and(eq(review.ratingStatus, "approved"), authorNotBanned);
+
 export const getReviewSummaries = Effect.fn("Reviews.getReviewSummaries")(
   function* (itemType: ItemType, slugs: string[]) {
     const { reviews: reviewDb } = yield* ReviewDatabase;
@@ -37,9 +44,11 @@ export const getReviewSummaries = Effect.fn("Reviews.getReviewSummaries")(
               averageRating: sql<number>`round(avg(${review.rating}), 2)`,
             })
             .from(review)
+            .innerJoin(user, eq(review.userId, user.id))
             .where(
               and(
                 eq(review.itemType, itemType),
+                publicReview,
                 inArray(
                   review.itemSlug,
                   slugs.slice(offset, offset + REVIEW_SLUG_BATCH_SIZE),
@@ -89,6 +98,7 @@ export const getUserReviews = Effect.fn("Reviews.getUserReviews")(function* (
             rating: review.rating,
             body: review.body,
             commentStatus: review.commentStatus,
+            ratingStatus: review.ratingStatus,
           })
           .from(review)
           .where(
@@ -115,6 +125,7 @@ export const getUserReviews = Effect.fn("Reviews.getUserReviews")(function* (
           body: row.body,
           commentStatus: row.commentStatus,
         }),
+        ratingStatus: row.ratingStatus,
       },
     ]),
   );
@@ -182,6 +193,7 @@ export const getWrittenReviews = Effect.fn("Reviews.getWrittenReviews")(
           rating: review.rating,
           body: review.body,
           commentStatus: review.commentStatus,
+          invited: review.invited,
           createdAt: review.createdAt,
           username: user.username,
           displayUsername: user.displayUsername,
@@ -189,8 +201,14 @@ export const getWrittenReviews = Effect.fn("Reviews.getWrittenReviews")(
           userImage: user.image,
         })
         .from(review)
-        .leftJoin(user, eq(review.userId, user.id))
-        .where(and(eq(review.itemType, itemType), eq(review.itemSlug, slug)))
+        .innerJoin(user, eq(review.userId, user.id))
+        .where(
+          and(
+            eq(review.itemType, itemType),
+            eq(review.itemSlug, slug),
+            publicReview,
+          ),
+        )
         // The id breaks ties, so reviews created in the same millisecond keep
         // one order across pages instead of repeating or going missing.
         .orderBy(desc(review.createdAt), desc(review.id))
@@ -211,6 +229,7 @@ export const getWrittenReviews = Effect.fn("Reviews.getWrittenReviews")(
         rating: row.rating,
         body: publicComment.body,
         commentStatus: publicComment.commentStatus,
+        invited: row.invited,
         createdAt: row.createdAt.toISOString(),
         authorName,
         authorImage: getAvatarUrl(row.userImage, row.userEmail),
@@ -259,7 +278,11 @@ export type PendingReviewCommentRecord = {
   itemType: ItemType;
   itemSlug: string;
   rating: number;
-  body: string;
+  /** Set when the comment waits for moderation. */
+  body: string | null;
+  /** The rating does not count until a moderator approves it. */
+  ratingHeld: boolean;
+  invited: boolean;
   createdAt: string;
   authorName: string;
   authorEmail: string | null;
@@ -267,6 +290,11 @@ export type PendingReviewCommentRecord = {
 };
 
 const PENDING_COMMENTS_LIMIT = 100;
+
+const commentPending = and(
+  or(eq(review.commentStatus, "pending"), isNull(review.commentStatus)),
+  sql`trim(coalesce(${review.body}, '')) <> ''`,
+);
 
 export const getPendingReviewComments = Effect.fn(
   "Reviews.getPendingReviewComments",
@@ -280,6 +308,9 @@ export const getPendingReviewComments = Effect.fn(
         itemSlug: review.itemSlug,
         rating: review.rating,
         body: review.body,
+        commentStatus: review.commentStatus,
+        ratingStatus: review.ratingStatus,
+        invited: review.invited,
         createdAt: review.createdAt,
         username: user.username,
         displayUsername: user.displayUsername,
@@ -287,37 +318,38 @@ export const getPendingReviewComments = Effect.fn(
         userImage: user.image,
       })
       .from(review)
-      .leftJoin(user, eq(review.userId, user.id))
+      .innerJoin(user, eq(review.userId, user.id))
       .where(
         and(
-          or(eq(review.commentStatus, "pending"), isNull(review.commentStatus)),
-          sql`${review.body} IS NOT NULL`,
-          sql`trim(${review.body}) <> ''`,
+          or(commentPending, eq(review.ratingStatus, "pending")),
+          // Banned authors' reviews stay hidden, so they need no decision.
+          authorNotBanned,
         ),
       )
       .orderBy(desc(review.createdAt))
       .limit(PENDING_COMMENTS_LIMIT),
   );
 
-  return rows.flatMap((row) => {
-    const body = row.body?.trim();
-    if (!body) {
-      return [];
-    }
-
-    return [
-      {
-        id: row.id,
-        itemType: row.itemType,
-        itemSlug: row.itemSlug,
-        rating: row.rating,
-        body,
-        createdAt: row.createdAt.toISOString(),
-        authorName: row.displayUsername ?? row.username ?? "User",
-        authorEmail: row.userEmail,
-        authorImage: getAvatarUrl(row.userImage, row.userEmail),
-      },
-    ];
+  return rows.map((row): PendingReviewCommentRecord => {
+    const body = row.body?.trim() || null;
+    return {
+      id: row.id,
+      itemType: row.itemType,
+      itemSlug: row.itemSlug,
+      rating: row.rating,
+      body:
+        body &&
+        row.commentStatus !== "approved" &&
+        row.commentStatus !== "rejected"
+          ? body
+          : null,
+      ratingHeld: row.ratingStatus === "pending",
+      invited: row.invited,
+      createdAt: row.createdAt.toISOString(),
+      authorName: row.displayUsername ?? row.username ?? "User",
+      authorEmail: row.userEmail,
+      authorImage: getAvatarUrl(row.userImage, row.userEmail),
+    };
   });
 });
 
@@ -325,25 +357,50 @@ export const updateReviewCommentStatus = Effect.fn(
   "Reviews.updateReviewCommentStatus",
 )(function* (
   reviewId: string,
-  commentStatus: Extract<ReviewCommentStatus, "approved" | "rejected">,
+  decision: Extract<ReviewCommentStatus, "approved" | "rejected">,
   expectedBody: string,
 ) {
   const { reviews: reviewDb } = yield* ReviewDatabase;
   // Only moderate the text the admin saw. An edit since then resets the
-  // comment to pending with a new body, and must be reviewed again.
+  // comment to pending with a new body, and must be reviewed again. The
+  // queue shows trimmed text, or none for a held rating without a comment.
+  const sameBody = sql`trim(coalesce(${review.body}, '')) = ${expectedBody}`;
   const rows = yield* reviewQuery("moderate", () =>
-    reviewDb
-      .update(review)
-      .set({ commentStatus })
-      .where(
-        and(
-          eq(review.id, reviewId),
-          // The pending list shows trimmed text, so compare it the same way.
-          sql`trim(${review.body}) = ${expectedBody}`,
-          or(eq(review.commentStatus, "pending"), isNull(review.commentStatus)),
-        ),
-      )
-      .returning({ id: review.id }),
+    decision === "approved"
+      ? reviewDb
+          .update(review)
+          .set({ commentStatus: "approved", ratingStatus: "approved" })
+          .where(
+            and(
+              eq(review.id, reviewId),
+              sameBody,
+              or(commentPending, eq(review.ratingStatus, "pending")),
+            ),
+          )
+          .returning({ id: review.id })
+      : // A held rating is approved or removed as a whole, so rejecting only
+        // its comment would leave a rating that no one can approve.
+        reviewDb
+          .update(review)
+          .set({ commentStatus: "rejected" })
+          .where(
+            and(
+              eq(review.id, reviewId),
+              sameBody,
+              commentPending,
+              eq(review.ratingStatus, "approved"),
+            ),
+          )
+          .returning({ id: review.id }),
   );
   return rows.length > 0;
 });
+
+export const removeReviewById = Effect.fn("Reviews.removeReviewById")(
+  function* (reviewId: string) {
+    const { reviews: reviewDb } = yield* ReviewDatabase;
+    yield* reviewQuery("remove", () =>
+      reviewDb.delete(review).where(eq(review.id, reviewId)),
+    );
+  },
+);

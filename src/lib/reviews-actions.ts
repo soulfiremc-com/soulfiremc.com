@@ -12,6 +12,7 @@ import {
   getPendingComments,
   getReviews,
   moderateReview,
+  removeReview,
   ReviewSession,
   ReviewSessionError,
   ReviewStore,
@@ -21,6 +22,7 @@ import {
   type GetPendingReviewCommentsResult,
   type GetReviewsResult,
   type ModerateReviewCommentResult,
+  type RemoveReviewResult,
   type SubmitReviewResult,
 } from "@/lib/review-workflows";
 import {
@@ -35,6 +37,7 @@ export type {
   GetPendingReviewCommentsResult,
   GetReviewsResult,
   ModerateReviewCommentResult,
+  RemoveReviewResult,
   SubmitReviewResult,
 } from "@/lib/review-workflows";
 
@@ -67,6 +70,9 @@ const submitReviewInputSchema = Schema.Struct({
   turnstileToken: Schema.NullOr(Schema.String).pipe(
     Schema.withDecodingDefaultType(Effect.succeed(null)),
   ),
+  invited: Schema.Boolean.pipe(
+    Schema.withDecodingDefaultType(Effect.succeed(false)),
+  ),
 });
 
 const deleteReviewInputSchema = Schema.Struct({
@@ -78,6 +84,10 @@ const moderateReviewCommentInputSchema = Schema.Struct({
   reviewId: Schema.String.check(Schema.isUUID()),
   commentStatus: Schema.Literals(["approved", "rejected"]),
   body: Schema.String.check(Schema.isMaxLength(2000)),
+});
+
+const removeReviewInputSchema = Schema.Struct({
+  reviewId: Schema.String.check(Schema.isUUID()),
 });
 
 /** Only listed shops and providers accept reviews. */
@@ -108,7 +118,17 @@ function readSessionUser(request: Request, disableCookieCache: boolean) {
     catch: (cause) => ReviewSessionError.make({ operation: "session", cause }),
   }).pipe(
     Effect.uninterruptible,
-    Effect.map((session) => session?.user ?? null),
+    Effect.map((session) =>
+      session
+        ? {
+            id: session.user.id,
+            role: session.user.role,
+            // The cookie cache stores the session as JSON, so the date can
+            // arrive as a string.
+            createdAt: new Date(session.user.createdAt),
+          }
+        : null,
+    ),
   );
 }
 
@@ -166,6 +186,12 @@ export const moderateReviewCommentServerFn = createServerFn({ method: "POST" })
   .validator(Schema.toStandardSchemaV1(moderateReviewCommentInputSchema))
   .handler(({ data }): Promise<ModerateReviewCommentResult> =>
     runReviewWorkflow(moderateReview(data), getRequest()),
+  );
+
+export const removeReviewServerFn = createServerFn({ method: "POST" })
+  .validator(Schema.toStandardSchemaV1(removeReviewInputSchema))
+  .handler(({ data }): Promise<RemoveReviewResult> =>
+    runReviewWorkflow(removeReview(data), getRequest()),
   );
 
 export const deleteReviewServerFn = createServerFn({ method: "POST" })

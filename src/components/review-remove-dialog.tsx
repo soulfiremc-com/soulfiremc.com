@@ -20,10 +20,15 @@ export function ReviewRemoveDialog({
   open,
   onOpenChange,
   onConfirm,
+  title,
+  description,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onConfirm: () => void;
+  /** Defaults to the text for removing your own review. */
+  title?: string;
+  description?: string;
 }) {
   const t = useT();
 
@@ -35,10 +40,10 @@ export function ReviewRemoveDialog({
             <Trash2 />
           </AlertDialogMedia>
           <AlertDialogTitle>
-            {t("reviews.removeConfirm.title")}
+            {title ?? t("reviews.removeConfirm.title")}
           </AlertDialogTitle>
           <AlertDialogDescription>
-            {t("reviews.removeConfirm.description")}
+            {description ?? t("reviews.removeConfirm.description")}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

@@ -46,6 +46,8 @@ export function isSameReviewItems(
 
 export type ReviewCommentStatus = "approved" | "pending" | "rejected";
 
+export type ReviewRatingStatus = "approved" | "pending";
+
 export type ReviewSummary = {
   averageRating: number | null;
   reviewCount: number;
@@ -68,6 +70,8 @@ export type UserReviewRecord = {
   rating: number;
   body: string | null;
   commentStatus: ReviewCommentStatus;
+  /** Pending ratings do not count until a moderator approves them. */
+  ratingStatus: ReviewRatingStatus;
 };
 
 export type PublicReviewRecord = {
@@ -76,6 +80,8 @@ export type PublicReviewRecord = {
   rating: number;
   body: string | null;
   commentStatus: ReviewCommentStatus;
+  /** The reviewer arrived through the shop's review link. */
+  invited: boolean;
   createdAt: string;
   authorName: string;
   authorImage: string | null;
